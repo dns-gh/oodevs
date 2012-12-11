@@ -222,7 +222,7 @@
 
     <target name="web_control_plugin_dll" depends="web_control_plugin" description="build web_control_plugin dynamic library">
         <build-lib name="web_control_plugin_dll" outtype="shared" depends="boost,protobuf,xerces" pattern="web_control_plugin"
-            libs="mongoose@{suffix},
+            libs="tools,mongoose@{suffix},
                   lib${ant.project.name}_web_control_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
             failonwarning="${failonwarning}">
@@ -401,7 +401,7 @@
     </target>
 
     <target name="module_tester_test">
-        <build-test name="module_tester" depends="boost" libs="core@{suffix}" failonwarning="${failonwarning}"/>
+        <build-test name="module_tester" depends="boost" libs="tools,core@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="movement_module" description="build movement module">
@@ -430,11 +430,11 @@
 
     <target name="perception_module_dll" depends="wrapper,perception_module" description="build perception module dll">
         <build-lib name="perception_module_dll" outtype="shared" pattern="perception_module" depends="boost,xerces"
-                   libs="libperception_module-${platform}-mt@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" failonwarning="${failonwarning}"/>
+                   libs="tools,libperception_module-${platform}-mt@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="perception_module_test" depends="perception_module_dll">
-        <build-test name="perception_module" depends="boost" libs="libperception_module-${platform}-mt@{suffix},core@{suffix}" failonwarning="${failonwarning}">
+        <build-test name="perception_module" depends="boost" libs="tools,libperception_module-${platform}-mt@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
@@ -448,11 +448,11 @@
 
     <target name="fire_module_dll"  depends="wrapper,fire_module" description="build fire module dll">
         <build-lib name="fire_module_dll" outtype="shared" pattern="fire_module" depends="boost,xerces"
-                   libs="libfire_module-${platform}-mt@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" failonwarning="${failonwarning}"/>
+                   libs="tools,libfire_module-${platform}-mt@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="fire_module_test" depends="fire_module_dll">
-        <build-test name="fire_module" depends="boost" libs="libfire_module-${platform}-mt@{suffix},core@{suffix}" failonwarning="${failonwarning}">
+        <build-test name="fire_module" depends="boost" libs="tools,libfire_module-${platform}-mt@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
@@ -466,11 +466,11 @@
 
     <target name="propagation_module_dll" depends="wrapper,propagation_module" description="build propagation module dll">
         <build-lib name="propagation_module_dll" outtype="shared" pattern="propagation_module" depends="boost"
-                   libs="libpropagation_module-${platform}-mt@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" failonwarning="${failonwarning}"/>
+                   libs="tools,libpropagation_module-${platform}-mt@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="propagation_module_test" depends="propagation_module_dll">
-        <build-test name="propagation_module" depends="boost" libs="libpropagation_module-${platform}-mt@{suffix},core@{suffix}" failonwarning="${failonwarning}">
+        <build-test name="propagation_module" depends="boost" libs="tools,libpropagation_module-${platform}-mt@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
@@ -661,7 +661,8 @@
     <target name="loadtester_app" depends="protocol,tools" description="build Sword load testing executable">
         <build-app name="loadtester_app" subsystem="console"
                    depends="boost,protobuf" failonwarning="${failonwarning}"
-                   libs="lib${ant.project.name}_protocol-${platform}-mt,
+                   libs="tools,
+                         lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
@@ -714,7 +715,8 @@
 
     <target name="shield_app" depends="MT_Tools,protocol,shield,tools" description="Build shield test application">
         <build-app name="shield_app" depends="qt4,boost,protobuf"
-                   libs="lib${ant.project.name}_MT_Tools-${platform}-mt,
+                   libs="tools,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_shield-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt"
@@ -733,7 +735,7 @@
     </target>
 
     <target name="package_app" description="build Sword Package deployment executable">
-        <build-app name="package_app" depends="boost" subsystem="console" failonwarning="${failonwarning}">
+        <build-app name="package_app" depends="boost" subsystem="console" failonwarning="${failonwarning}" libs="tools">
             <syslibset libs="user32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
@@ -741,7 +743,8 @@
 
     <target name="launcher_test_app" depends="protocol,frontend,shield" description="build application">
         <build-app name="launcher_test_app" subsystem="console" depends="qt4,boost,xerces,protobuf"
-            libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+            libs="tools,
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
@@ -900,10 +903,10 @@
 
     <target name="shield_test" depends="shield">
         <build-test name="shield" depends="boost,protobuf" excludes="**/*.h"
-            libs="lib${ant.project.name}_tools-${platform}-mt,
-                 lib${ant.project.name}_MT_Tools-${platform}-mt,
-                 lib${ant.project.name}_shield-${platform}-mt,
-                 lib${ant.project.name}_protocol-${platform}-mt"
+            libs="tools,lib${ant.project.name}_tools-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
+                  lib${ant.project.name}_shield-${platform}-mt,
+                  lib${ant.project.name}_protocol-${platform}-mt"
             failonwarning="${failonwarning}"/>
     </target>
 
@@ -942,7 +945,8 @@
 
     <target name="client_proxy_test" depends="client_proxy,protocol,tools,MT_Tools">
         <build-test name="client_proxy" depends="boost,protobuf"
-            libs="lib${ant.project.name}_tools-${platform}-mt,
+            libs="tools,
+                  lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_client_proxy-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt"
@@ -989,12 +993,12 @@
     </target>
 
     <target name="propagation_test" depends="propagation">
-        <build-test name="propagation" depends="boost,xerces" libs="gdal_i,lib${ant.project.name}_propagation-${platform}-mt" failonwarning="${failonwarning}"/>
+        <build-test name="propagation" depends="boost,xerces" libs="tools,gdal_i,lib${ant.project.name}_propagation-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="positions_plugin_test" depends="protocol,positions_plugin">
         <build-test name="positions_plugin" depends="boost,protobuf"
-            libs="lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"
+            libs="tools,lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"
             failonwarning="${failonwarning}"/>
     </target>
 
@@ -1222,7 +1226,7 @@
 
     <target name="protocol_test" description="build protocol test application" depends="protocol,tools">
         <build-test name="protocol" depends="boost,protobuf"
-            libs="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+            libs="tools,lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
             failonwarning="${failonwarning}"/>
