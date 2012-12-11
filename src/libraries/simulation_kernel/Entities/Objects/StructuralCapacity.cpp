@@ -340,7 +340,9 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
         for( ; start != points.end(); ++start, ++end )
         {
             if( end == points.end() )
-                end =points.begin();
+                end = points.begin();
+            if( *start == *end )
+                continue;
             MT_Line line( *start, *end );
             if( surface.Intersect2D( line ) )
                 lines.push_back( line );
