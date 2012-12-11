@@ -832,7 +832,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Workspace.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathResult.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathSection_ABC.cpp" />
@@ -1716,7 +1715,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Tools.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\decision\DEC_Workspace.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFactory.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathResult.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathSection_ABC.h" />

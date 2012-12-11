@@ -13,7 +13,8 @@
 #include "DEC_PathFind_Manager.h"
 #include "DEC_Path_ABC.h"
 #include "DEC_PathType.h"
-#include "DEC_PathFactory.h"
+#include "DEC_Agent_PathClass.h"
+#include "DEC_Population_PathClass.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -72,8 +73,8 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config,
     MT_LOG_INFO_MSG( MT_FormatString(
         "Setting pathfind.max-calculation-time=%u", nMaxComputationDuration_))
     DEC_PathType   ::Initialize();
-    DEC_PathFactory::Initialize( xis, dangerousObjects );
-
+    DEC_Agent_PathClass::Initialize( xis, dangerousObjects );
+    DEC_Population_PathClass::Initialize( xis, dangerousObjects );
     xis >> xml::end;
 }
 
@@ -83,7 +84,8 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config,
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::~DEC_PathFind_Manager()
 {
-    DEC_PathFactory::Terminate();
+    DEC_Population_PathClass::Terminate();
+    DEC_Agent_PathClass::Terminate();
     DEC_PathType::Terminate();
 }
 

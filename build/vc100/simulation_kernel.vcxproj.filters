@@ -2226,9 +2226,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.cpp">
       <Filter>Source Files\Decision\Path</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFactory.cpp">
-      <Filter>Source Files\Decision\Path</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.cpp">
       <Filter>Source Files\Decision\Path</Filter>
     </ClCompile>
@@ -4734,9 +4731,6 @@
       <Filter>Source Files\Decision</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path_ABC.h">
-      <Filter>Source Files\Decision\Path</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFactory.h">
       <Filter>Source Files\Decision\Path</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager.h">
