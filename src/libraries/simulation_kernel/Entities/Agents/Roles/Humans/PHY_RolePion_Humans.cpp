@@ -615,7 +615,7 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
     for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
-        if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
+        if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ )
             return false;
     }
     return true;
