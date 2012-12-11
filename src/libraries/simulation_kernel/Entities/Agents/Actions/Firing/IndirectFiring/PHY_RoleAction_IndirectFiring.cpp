@@ -111,7 +111,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     {
         if( !pFirerWeapon->IndirectFire( pion_, *pEffect ) )
         {
-            pEffect->ForceFlying();
+            pEffect->StartFlying();
             if( pEffect->GetNbrAmmoFired() )
                 return eFinished;
             else

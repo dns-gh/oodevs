@@ -41,6 +41,7 @@ MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, un
     , vTargetPosition_( -1., -1. )
     , nTargetKnowledgeID_( nTargetKnowledgeID )
     , nNbrAmmoFired_( 0 )
+    , fireResultId_( 0 )
     , bIsFlying_( false )
     , bFired_( false )
     , bArrived_( false )
@@ -192,6 +193,7 @@ void MIL_Effect_IndirectFire::StartFlying()
     bFired_ = true;
     if( !pFireResult_ )
         pFireResult_ = new PHY_FireResults_Pion( firer_, vTargetPosition_, indirectDotationCategory_.GetDotationCategory() );
+    fireResultId_ = pFireResult_->GetID();
 
     if( !bIsFlying_ )
     {
@@ -212,11 +214,8 @@ void MIL_Effect_IndirectFire::StopFlying()
         MIL_EffectManager::GetEffectManager().UnregisterFlyingShell( *this );
     }
 
-    if( pFireResult_ )
-    {
-        delete pFireResult_;
-        pFireResult_ = 0;
-    }
+    delete pFireResult_;
+    pFireResult_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +241,6 @@ bool MIL_Effect_IndirectFire::IsFlyingThroughLocalisation( const TER_Localisatio
 {
     if( !bIsFlying_ )
         return false;
-    assert( pFireResult_ );
     MT_Line lineTmp( vSourcePosition_, vTargetPosition_ );
     return localisation.Intersect2D( lineTmp );
 }
@@ -253,8 +251,7 @@ bool MIL_Effect_IndirectFire::IsFlyingThroughLocalisation( const TER_Localisatio
 // -----------------------------------------------------------------------------
 unsigned int MIL_Effect_IndirectFire::GetFireID() const
 {
-    assert( pFireResult_ );
-    return pFireResult_->GetID();
+    return fireResultId_;
 }
 
 // -----------------------------------------------------------------------------
@@ -325,15 +322,6 @@ void MIL_Effect_IndirectFire::DecRef()
     assert( nNbrRefs_ > 0 );
     if( --nNbrRefs_ == 0 )
         delete this;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Effect_IndirectFire::ForceFlying
-// Created: NLD 2004-10-12
-// -----------------------------------------------------------------------------
-void MIL_Effect_IndirectFire::ForceFlying()
-{
-    StartFlying();
 }
 
 // -----------------------------------------------------------------------------

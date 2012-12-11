@@ -68,10 +68,7 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 void PHY_ActionIndirectFire_Knowledge::StopAction()
 {
     if( pEffect_ )
-    {
-        pEffect_->ForceFlying();
         pEffect_->DecRef();
-    }
     PHY_ActionIndirectFire_ABC::StopAction();
 }
 

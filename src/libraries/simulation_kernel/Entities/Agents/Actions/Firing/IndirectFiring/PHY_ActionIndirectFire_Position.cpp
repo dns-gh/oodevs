@@ -55,10 +55,7 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 void PHY_ActionIndirectFire_Position::StopAction()
 {
     if( pEffect_ )
-    {
-        pEffect_->ForceFlying();
         pEffect_->DecRef();
-    }
     PHY_ActionIndirectFire_ABC::StopAction();
 }
 
