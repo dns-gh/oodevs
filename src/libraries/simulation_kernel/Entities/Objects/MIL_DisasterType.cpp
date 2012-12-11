@@ -201,7 +201,7 @@ const PHY_HumanWound& MIL_DisasterType::GetRandomWound( int threshold ) const
 bool MIL_DisasterType::IsContaminated( float dose ) const
 {
     for( auto it = attritions_.begin(); it != attritions_.end(); ++it )
-        if( dose >= it->second.get< 0 >() )
+        if( dose >= it->second.get< 0 >() && it->second.get< 3 >() )
             return true;
     return false;
 }
