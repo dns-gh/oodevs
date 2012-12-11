@@ -50,6 +50,7 @@ public:
         ePopulationDensity,
         ePopulationModifier,
         eDetectionDelay,
+        eActivationOnRequest,
         eLimitedSensorsList, // LTO
         eLimitedToSensors, // LTO
         ePreviewModifSizes,

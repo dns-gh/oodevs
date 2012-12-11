@@ -4055,6 +4055,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Detection threshold</source>
         <translation>Detection threshold</translation>
     </message>
+    <message>
+        <source>Activated on request</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>

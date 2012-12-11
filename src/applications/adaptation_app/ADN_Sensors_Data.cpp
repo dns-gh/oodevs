@@ -556,6 +556,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     , vModifStance_        ( false )
     , vModifTargetStance_  ( false )
     , detectionDelay_      ( "0h" )
+    , activatedOnRequest_  ( false )
 {
     // initialize illumination modificator infos
     unsigned int i = 0;
@@ -623,8 +624,9 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     pCopy->bCanDetectAgents_    = bCanDetectAgents_.GetData();
     pCopy->bLimitedToSensors_   = bLimitedToSensors_.GetData(); // LTO
     pCopy->bCanDetectObjects_   = bCanDetectObjects_.GetData();
-    pCopy->bCanDetectDisasters_   = bCanDetectDisasters_.GetData();
-    pCopy->detectionDelay_ = detectionDelay_.GetData();
+    pCopy->bCanDetectDisasters_ = bCanDetectDisasters_.GetData();
+    pCopy->detectionDelay_      = detectionDelay_.GetData();
+    pCopy->activatedOnRequest_  = activatedOnRequest_.GetData();
     pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
     for( T_TargetsInfos_Vector::iterator itTarget = vTargets_.begin(); itTarget != vTargets_.end(); ++itTarget )
@@ -909,6 +911,8 @@ void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "detection-delay", detectionDelay_ )
+          >> xml::optional
+          >> xml::attribute( "activation-on-request", activatedOnRequest_ )
           >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
 }
 
@@ -921,6 +925,8 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "sensor" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "detection-delay", detectionDelay_ );
+    if( activatedOnRequest_.GetData() )
+    output << xml::attribute( "activation-on-request", true );
 
     if( bCanDetectAgents_.GetData() )
     {

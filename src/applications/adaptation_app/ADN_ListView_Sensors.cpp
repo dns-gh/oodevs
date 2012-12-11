@@ -78,6 +78,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     // Order is important.
     vItemConnectors_[ADN_Sensors_GUI::eLimitedToSensors]->Connect( &pInfos->bLimitedToSensors_, bConnect ); // LTO
     vItemConnectors_[ADN_Sensors_GUI::eDetectionDelay]->Connect( &pInfos->detectionDelay_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eActivationOnRequest]->Connect( &pInfos->activatedOnRequest_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectAgents]->Connect( &pInfos->bCanDetectAgents_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectObjects]->Connect( &pInfos->bCanDetectObjects_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectDiasters]->Connect( &pInfos->bCanDetectDisasters_, bConnect );

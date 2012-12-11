@@ -374,6 +374,7 @@ public:
         ADN_Type_Double                         rDistReco_;
         ADN_Type_Double                         rDistIdent_;
         ADN_Type_Time                           detectionDelay_;
+        ADN_Type_Bool                           activatedOnRequest_;
         T_LimitedToSensorsInfos_Vector          vLimitedToSensorsInfos_; // LTO
         T_ModificatorSizeInfos_Vector           vModifSizes_;
         T_ModificatorMeteoInfos_Vector          vModifWeather_;

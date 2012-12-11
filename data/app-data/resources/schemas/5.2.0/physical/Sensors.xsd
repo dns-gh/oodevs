@@ -513,6 +513,7 @@
 				<xs:documentation xml:lang="fr">Délai de détection</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="activation-on-request" type="xs:boolean" use="optional"/>
 	</xs:complexType>
 	<xs:complexType name="T_Modifier">
 		<xs:attribute name="type" type="xs:string" use="required">

@@ -4058,6 +4058,10 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <source>Detection threshold</source>
         <translation>Seuil de détection</translation>
     </message>
+    <message>
+        <source>Activated on request</source>
+        <translation>Activation sur décision</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>

@@ -180,6 +180,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
     // Detection delay
     builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Delay" ), vConnectors[ eDetectionDelay ] );
+    // Activated on request
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Activated on request" ), vConnectors[ eActivationOnRequest ] );
 
     // Agent detection parameters
     ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( tr( "Can detect units" ) );
