@@ -1440,16 +1440,21 @@
         <safe-move file="${output}"/>
     </target>
 	 <target name="package.otpack.defense.scipioForTrunk" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
-        <pack name="FranceRefSim" description="Package defense-france">
-            <include name="data/models/ada/decisional/bms/**"/>
-            <include name="data/models/ada/decisional/dia5/**"/>
-            <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
-            <exclude name="data/models/ada/decisional/dia5/integration/**"/>
-            <include name="data/models/ada/decisional/decisional.xml"/>
-             <zipfileset dir="${data.dir}/data/models/ada/physical/scipio/" prefix="data/models/ada/physical/france/">
-			 <include name="**"/>
-			 </zipfileset>
-        </pack>
+       <local name="output"/>
+        <property name="output" value="${out.dir}/decisionalFrance.otpak"/>
+		  <zip destfile="${output}" filesonly="true">
+            <zipfileset dir="${data.dir}">
+              <include name="data/models/ada/decisional/bms/**"/>
+              <include name="data/models/ada/decisional/dia5/**"/>
+              <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
+              <exclude name="data/models/ada/decisional/dia5/integration/**"/>
+              <include name="data/models/ada/decisional/decisional.xml"/>
+		    </zipfileset>
+            <zipfileset dir="${data.dir}/data/models/ada/physical/scipio/" prefix="data/models/ada/physical/france/">
+			  <include name="**"/>
+			</zipfileset>
+         </zip>
+		 <safe-move file="${output}"/>
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
