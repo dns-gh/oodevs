@@ -19,7 +19,7 @@
 */
 // Created: JSR 2012-12-11
 // =============================================================================
-struct TargetIdentifierValue : public InstantValueIdentifier< NumericValue >
+struct TargetIdentifierValue : public Value< NumericValue >
 {
     enum { has_parameter = false };
     //! @name Operations

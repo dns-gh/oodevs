@@ -19,7 +19,7 @@
 */
 // Created: JSR 2012-12-11
 // =============================================================================
-struct FirerIdentifierValue : public InstantValueIdentifier< NumericValue >
+struct FirerIdentifierValue : public Value< NumericValue >
 {
     enum { has_parameter = false };
     //! @name Operations

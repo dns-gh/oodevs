@@ -14,14 +14,34 @@
 
 // =============================================================================
 /** @class  Value
-    @brief  Value base
+    @brief  Always pushes a value, with default one if not set
 */
-// Created: AGE 2007-08-30
+// Created: JSR 2012-12-11
 // =============================================================================
+// $$$$ _RC_ JSR 2012-12-11: to rename
 template< typename T >
 struct Value
 {
     typedef T Type;
+
+    explicit Value()
+        : value_()
+    {
+        // NOTHING
+    }
+    void Prepare()
+    {
+        // NOTHING
+    }
+    void Set( const Type& value )
+    {
+        value_ = value;
+    }
+    void Push( ValueHandler_ABC< Type >& handler )
+    {
+        handler.Handle( value_ );
+    }
+    Type value_;
 };
 
 // =============================================================================
@@ -34,26 +54,20 @@ template< typename T >
 struct ContinuousValue : public Value< T >
 {
     ContinuousValue()
-        : value_()
-        , set_( false )
-    {
-        // NOTHING
-    }
-    void Prepare()
+        : set_( false )
     {
         // NOTHING
     }
     void Set( const Type& value )
     {
         set_ = true;
-        value_ = value;
+        Value< T >::Set( value );
     }
     void Push( ValueHandler_ABC< Type >& handler )
     {
         if( set_ )
-            handler.Handle( value_ );
+            Value< T >::Push( handler );
     }
-    Type value_;
     bool set_;
 };
 
@@ -93,48 +107,16 @@ struct InstantValue : public ContinuousValue< T >
 };
 
 // =============================================================================
-/** @class  InstantValueIdentifier
-    @brief  Always pushes a value, with default one if not set
-*/
-// Created: FPO 2011-06-27
-// =============================================================================
-// $$$$ _RC_ JSR 2012-12-11: to rename
-template< typename T >
-struct InstantValueIdentifier : public Value< T >
-{
-    explicit InstantValueIdentifier()
-        : value_()
-    {
-        // NOTHING
-    }
-    void Prepare()
-    {
-        // NOTHING
-    }
-    void Set( const Type& value )
-    {
-        value_ = value;
-    }
-    void Push( ValueHandler_ABC< Type >& handler )
-    {
-        handler.Handle( value_ );
-    }
-    Type value_;
-};
-
-// =============================================================================
 /** @class  PulsedValue
     @brief  Same as ContinuousValue, except that it can be reset to its initial state, i.e. not set.
 */
 // Created: AGE 2007-08-30
 // =============================================================================
 template< typename T >
-struct PulsedValue : public Value< T >
+struct PulsedValue : public ContinuousValue< T >
 {
     PulsedValue()
-        : value_()
-        , flagForReset_( false )
-        , set_( false )
+        : flagForReset_( false )
     {
         // NOTHING
     }
@@ -146,23 +128,11 @@ struct PulsedValue : public Value< T >
             flagForReset_ = false;
         }
     }
-    void Push( ValueHandler_ABC< Type >& handler )
-    {
-        if( set_ )
-            handler.Handle( value_ );
-    }
-    void Set( const Type& value )
-    {
-        value_ = value;
-        set_ = true;
-    }
     void Reset()
     {
         flagForReset_ = true;
     }
-    Type value_;
     bool flagForReset_;
-    bool set_;
 };
 
 // =============================================================================
@@ -173,11 +143,9 @@ struct PulsedValue : public Value< T >
 // =============================================================================
 // $$$$ _RC_ JSR 2012-12-11: to rename
 template< typename T >
-struct TickValue : public Value< T >
+struct TickValue : public ContinuousValue< T >
 {
     TickValue()
-        : value_()
-        , set_( false )
     {
         // NOTHING
     }
@@ -186,19 +154,12 @@ struct TickValue : public Value< T >
         set_ = false;
         value_ = Type();
     }
-    void Push( ValueHandler_ABC< Type >& handler )
-    {
-        if( set_ )
-            handler.Handle( value_ );
-    }
     // $$$$ _RC_ JSR 2012-12-11: to rename (Sum?)
     void Set( const Type& value )
     {
         value_ += value;
         set_ = true;
     }
-    Type value_;
-    bool set_;
 };
 
 // =============================================================================

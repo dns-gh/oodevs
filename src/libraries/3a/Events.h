@@ -16,7 +16,7 @@
 #include "CrowdHumanDamages.h"
 
 // =============================================================================
-/** @namespace  Existences
+/** @namespace  events
     @brief      Model values linked to fire/reports/whatever events
 */
 // Created: AGE 2007-10-02
@@ -24,7 +24,7 @@
 namespace events
 {
     template< typename Extractor >
-    struct TickPeriod : public TickValue< typename Extractor::Type >
+    struct TickPeriod : public PoolValue< typename Extractor::Type >
     {
         enum { has_parameter = Extractor::has_parameter };
 

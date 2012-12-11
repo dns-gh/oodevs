@@ -16,7 +16,7 @@
 */
 // Created: AGE 2007-08-28
 // =============================================================================
-struct IdentifierValue : public InstantValueIdentifier< NumericValue >
+struct IdentifierValue : public Value< NumericValue >
 {
     enum { has_parameter = false };
 
