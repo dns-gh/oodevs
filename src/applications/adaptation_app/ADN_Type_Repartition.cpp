@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Type_Repartition.h"
-#include "ADN_DataException.h"
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -79,14 +78,14 @@ void ADN_Type_Repartition::WriteArchive( xml::xostream& output ) const
 // Name: ADN_Type_Repartition::WriteArchive
 // Created: MGD 2011-02-22
 //-----------------------------------------------------------------------------
-void ADN_Type_Repartition::CheckNoError( const std::string& filename, const QString& dataName ) const
+void ADN_Type_Repartition::CheckNoError( const QString& dataName ) const
 {
     double total = male_.GetData() + female_.GetData() + children_.GetData();
     if( total!= 100 )
-        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition",
-                                                             "Invalid repartition on tab \'%1\' -"
-                                                             " Males/Females/Children repartition must be 100%."
-                                                             " Current value for \'%2\': %3%." ).arg( parentGuiName_ )
-                                                                                                .arg( dataName )
-                                                                                                .arg( total ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_Type_Repartition", "Invalid repartition on tab \'%1\' -"
+                                                                        " Males/Females/Children repartition must be 100%."
+                                                                        " Current value for \'%2\': %3%." )
+                                                                        .arg( parentGuiName_ )
+                                                                        .arg( dataName )
+                                                                        .arg( total ).toStdString() );
 }

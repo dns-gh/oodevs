@@ -139,11 +139,18 @@
     </message>
     <message>
         <source>Force ratio feedback time</source>
-        <translation type="unfinished">Force ratio feedback time</translation>
+        <translation>Force ratio feedback time</translation>
     </message>
     <message>
         <source>Default force ratio feedback time</source>
-        <translation type="unfinished"></translation>
+        <translation>Default force ratio feedback time</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_App</name>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
@@ -272,7 +279,7 @@ Parked engine running</translation>
     <name>ADN_Automata_GUI</name>
     <message>
         <source>Name</source>
-        <translation></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Type</source>
@@ -681,7 +688,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>%1 has lower case EMAT8 code.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 has lower case EMAT8 code.</translation>
     </message>
 </context>
 <context>
@@ -889,13 +896,6 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_DataException</name>
-    <message>
-        <source>Data error</source>
-        <translation>Data error</translation>
-    </message>
-</context>
-<context>
     <name>ADN_DialogLog</name>
     <message>
         <source>&amp;OK</source>
@@ -922,7 +922,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Protections</source>
-        <translation type="unfinished">Protection</translation>
+        <translation>Protection</translation>
     </message>
 </context>
 <context>
@@ -1543,10 +1543,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
 <context>
     <name>ADN_FireClass_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</translation>
     </message>
@@ -1561,10 +1557,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
 </context>
 <context>
     <name>ADN_FireClass_Data::FireClassInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
         <translation>Fire class - Invalid extinguisher agent &apos;%1&apos;</translation>
@@ -2015,7 +2007,7 @@ posture</translation>
     </message>
     <message>
         <source>&lt;nobr&gt;&lt;b&gt;Used by the following &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</source>
-        <translation></translation>
+        <translation>&lt;nobr&gt;&lt;b&gt;Used by the following &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</translation>
     </message>
     <message>
         <source>Create as copy of</source>
@@ -2411,6 +2403,10 @@ posture</translation>
         <source>Save changes to project %1?</source>
         <translation>Save changes to project %1?</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
@@ -2604,10 +2600,6 @@ posture</translation>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
-    <message>
-        <source>Invalid mission</source>
-        <translation>Invalid mission</translation>
-    </message>
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation>&apos;%1&apos; parameter should have at least one object.</translation>
@@ -2848,20 +2840,12 @@ The spawn capacity will be disabled.</translation>
 <context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
         <translation>Fire propagation modifier - Invalid fire class &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
         <translation>Object - Invalid Urban Material type &apos;%1&apos;</translation>
@@ -3483,20 +3467,12 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
 <context>
     <name>ADN_Resources_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation>Equipment - Invalid resource type &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipment - Invalid armor type &apos;%1&apos;</translation>
@@ -3512,10 +3488,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
 </context>
 <context>
     <name>ADN_Resources_Data::IndirectAmmoInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation>Equipment - Invalid posture &apos;%1&apos;</translation>
@@ -3775,19 +3747,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
-    <name>ADN_SaveFile_Exception</name>
-    <message>
-        <source>File error</source>
-        <translation>File error</translation>
-    </message>
-    <message>
-        <source>Could not save file &apos;%1&apos;.
-Make sure that the file is not write-protected.</source>
-        <translation>Could not save file &apos;%1&apos;.
-Make sure that the file is not write-protected.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Schedule_Table</name>
     <message>
         <source>Day</source>
@@ -3817,12 +3776,8 @@ Make sure that the file is not write-protected.</translation>
 <context>
     <name>ADN_Sensors_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Invalid data</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensors - Invalid disaster &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3908,15 +3863,15 @@ Make sure that the file is not write-protected.</translation>
     <name>ADN_Sensors_DisastersListView</name>
     <message>
         <source>Disasters</source>
-        <translation type="unfinished">Disasters</translation>
+        <translation>Disasters</translation>
     </message>
     <message>
         <source>Add disaster</source>
-        <translation type="unfinished"></translation>
+        <translation>Add disaster</translation>
     </message>
     <message>
         <source>Remove disaster</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove disaster</translation>
     </message>
 </context>
 <context>
@@ -4094,11 +4049,11 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Can detect disasters</source>
-        <translation type="unfinished"></translation>
+        <translation>Can detect disasters</translation>
     </message>
     <message>
         <source>Detection threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Detection threshold</translation>
     </message>
 </context>
 <context>
@@ -4388,7 +4343,7 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>UE (%)</source>
-        <translation type="unfinished"></translation>
+        <translation>UE (%)</translation>
     </message>
 </context>
 <context>
@@ -5480,10 +5435,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipment - Invalid armor type &apos;%1&apos;</translation>
     </message>
@@ -5904,6 +5855,12 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>ADN - Data export</source>
         <translation>ADN - Data export</translation>
     </message>
+    <message>
+        <source>Could not save file &apos;%1&apos;.
+Make sure that the file is not write-protected.</source>
+        <translation>Could not save file &apos;%1&apos;.
+Make sure that the file is not write-protected.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_WoundTable</name>
@@ -5935,10 +5892,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
         <translation>Equipment - Invalid amunition &apos;%1/%2&apos;</translation>
     </message>
@@ -5949,10 +5902,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>AiEngine_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
         <translation>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</translation>
@@ -5988,10 +5937,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Automata_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Automat - Invalid unit type &apos;%1&apos;</source>
         <translation>Automaton - Invalid unit type &apos;%1&apos;</translation>
     </message>
@@ -6002,10 +5947,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Breakdowns - Invalid part &apos;%1&apos;</source>
         <translation>Breakdowns - Invalid part &apos;%1&apos;</translation>
@@ -6025,10 +5966,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Categories_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
         <translation>Categories - Duplicated volume type name &apos;%1&apos;</translation>
@@ -6068,10 +6005,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation>Equipment - Invalid resource nature &apos;%1&apos;</translation>
@@ -6124,10 +6057,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Funeral_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Invalid resource &apos;%1&apos;</source>
         <translation>Invalid resource &apos;%1&apos;</translation>
     </message>
@@ -6135,20 +6064,12 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Health_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Logistic medical system - Invalid wound type &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
         <translation>Doctrine models - Invalid frag order &apos;%1&apos;</translation>
@@ -6160,10 +6081,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>NBC_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</translation>
@@ -6202,10 +6119,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>People_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Population - Invalid resource &apos;%1/%2&apos;</source>
         <translation>Population - Invalid resource &apos;%1/%2&apos;</translation>
@@ -6276,10 +6189,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>New special sensor</translation>
     </message>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid radar type &apos;%1&apos;</source>
         <translation>Sensors - Invalid radar type &apos;%1&apos;</translation>
     </message>
@@ -6310,10 +6219,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Sensor_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation>Sensors - Invalid posture &apos;%1&apos;</translation>
     </message>
@@ -6333,10 +6238,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Supply_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
         <translation>Logistic supply system - Invalid unit &apos;%1&apos;</translation>
     </message>
@@ -6347,10 +6248,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Units_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation>Unit types - Invalid equipment &apos;%1&apos;</translation>
@@ -6399,10 +6296,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Urban_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Material attribute is empty for &apos;%1&apos; template.</source>
         <translation>Material attribute is empty for &apos;%1&apos; template.</translation>
     </message>
@@ -6417,10 +6310,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
         <translation>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</translation>
@@ -6448,10 +6337,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>helpers::ArmorInfos</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation>Categories - Invalid armor type &apos;%1&apos;</translation>
     </message>
@@ -6462,10 +6347,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Categories - Invalid equipment state &apos;%1&apos;</source>
         <translation>Categories - Invalid equipment state &apos;%1&apos;</translation>

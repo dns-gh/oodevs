@@ -15,7 +15,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_AiEngine_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
 #include "tools/Loader_ABC.h"

@@ -14,7 +14,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
-#include "ADN_DataException.h"
 
 // -----------------------------------------------------------------------------
 // Name: WoundInfo::WoundInfo
@@ -123,7 +122,7 @@ void ADN_Health_Data::ReadInjury( xml::xistream& input )
     {
         E_DoctorSkills skill = ADN_Tr::ConvertToDoctorSkills( category );
         if( skill == E_DoctorSkills( -1 ) )
-            throw ADN_DataException( tools::translate( "Health_Data", "Invalid data" ).toStdString(), tools::translate( "Health_Data", "Logistic medical system - Invalid wound type '%1'" ).arg( category.c_str() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "Health_Data", "Logistic medical system - Invalid wound type '%1'" ).arg( category.c_str() ).toStdString() );
         wounds[skill].ReadArchive( input );
     }
 }

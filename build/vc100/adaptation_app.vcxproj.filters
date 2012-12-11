@@ -14,9 +14,6 @@
     <Filter Include="Source Files\Tools\Wizard Tools">
       <UniqueIdentifier>{8be4b818-a4d2-461e-b811-f74f3898baff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Tools\Exceptions">
-      <UniqueIdentifier>{1fb00eb9-35b3-472f-bd1a-56bad1f9747b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace">
       <UniqueIdentifier>{80e9ce1e-29f3-4797-9181-34fc1f79c84b}</UniqueIdentifier>
     </Filter>
@@ -441,15 +438,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp">
       <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
-      <Filter>Source Files\Tools\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.cpp">
-      <Filter>Source Files\Tools\Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.cpp">
-      <Filter>Source Files\Tools\Exceptions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.cpp">
       <Filter>Source Files\Workspace</Filter>
@@ -1262,15 +1250,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h">
       <Filter>Source Files\Tools\Wizard Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h">
-      <Filter>Source Files\Tools\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h">
-      <Filter>Source Files\Tools\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.h">
-      <Filter>Source Files\Tools\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FileLoaderObserver.h">
       <Filter>Source Files\Workspace</Filter>

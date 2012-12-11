@@ -20,7 +20,6 @@
 #include "GQ_Plot.h"
 #include "moc_GQ_Plot.cpp"
 #include "GQ_PlotToolTip.h"
-#include "ADN_DataException.h"
 #include <cassert>
 
 #pragma warning( disable : 4355 )
@@ -347,11 +346,11 @@ GQ_Plot::T_DataIndex GQ_Plot::GetNextDataIndex( T_DataIndex dataIndex ) const
 GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
 {
     if( dataIndex.second == -1 )
-        throw ADN_DataException( "GQ_Plot", "invalid iterator" );
+        throw MASA_EXCEPTION( "invalid iterator" );
 
     CIT_LayerMap it = layerMap_.find( dataIndex.first );
     if( it == layerMap_.end() || dataIndex.second >= ( int )it->second.size() )
-        throw ADN_DataException( "GQ_Plot", "invalid iterator" );
+        throw MASA_EXCEPTION( "invalid iterator" );
 
     const T_PlotLayer& layer = it->second;
     GQ_PlotData* pData = layer[ dataIndex.second ];

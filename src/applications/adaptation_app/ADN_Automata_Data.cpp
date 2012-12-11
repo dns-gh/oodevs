@@ -12,7 +12,6 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
 
@@ -53,7 +52,7 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", type );
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( type );
     if( ! pUnit )
-        throw ADN_DataException( tools::translate( "Automata_Data", "Invalid data" ).toStdString(), tools::translate( "Automata_Data", "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Automata_Data", "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).toStdString() );
     ptrUnit_ = pUnit;
     input >> xml::optional >> xml::attribute( "min-occurs", min_ )
           >> xml::optional >> xml::attribute( "max-occurs", max_ );
@@ -166,7 +165,7 @@ void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
     nAgentType_ = ADN_Tr::ConvertToAgentTypeAutomate( strType );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindAutomataModel( strModel );
     if( !pModel )
-        throw ADN_DataException( tools::translate( "Automata_Data", "Invalid data" ).toStdString(), tools::translate( "Automata_Data", "Automat - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Automata_Data", "Automat - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
 
     input >> xml::list( "unit", *this, &ADN_Automata_Data::AutomatonInfos::ReadUnit );

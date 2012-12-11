@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "clients_gui/ApplicationMonitor.h"
 #include "ADN_App.h"
-#include "ADN_Exception_ABC.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Version.h"
 #include "tools/Version.h"
@@ -26,21 +25,15 @@ namespace
             ADN_App app( monitor, argc, argv );
             return app.Run();
         }
-        catch( ADN_Exception_ABC& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( e.GetExceptionMessage().c_str() );
+            MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
             if( !silent )
-                QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
-        }
-        catch( std::exception& exception )
-        {
-            MT_LOG_ERROR_MSG( exception.what() );
-            if( !silent )
-                QMessageBox::critical( 0, "Critical", exception.what() );
+                QMessageBox::critical( 0, "Critical", tools::GetExceptionMsg( e ).c_str() );
         }
         catch( ... )
         {
-            const char* error = "Unknown error !";
+            const char* error = "Unhandled error";
             MT_LOG_ERROR_MSG( error );
             if( !silent )
                 QMessageBox::critical( 0, "Critical", error );

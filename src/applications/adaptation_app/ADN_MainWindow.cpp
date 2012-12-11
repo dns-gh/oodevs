@@ -20,7 +20,6 @@
 #include "ADN_ListViewDialog.h"
 #include "ADN_MainTabWidget.h"
 #include "ADN_Enums.h"
-#include "ADN_Exception_ABC.h"
 #include "ADN_OpenMode_Dialog.h"
 #include "ADN_RunProcessDialog.h"
 #include "ADN_Project_Data.h"
@@ -284,10 +283,10 @@ void ADN_MainWindow::DoSaveProject()
         consistencyDialog_->CheckConsistency();
         bNoReadOnlyFiles = workspace_.Save( *fileLoader_ );
     }
-    catch( ADN_Exception_ABC& exception )
+    catch( const std::exception& e )
     {
         QApplication::restoreOverrideCursor();    // restore original cursor
-        QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
+        QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         return;
     }
 
@@ -332,10 +331,10 @@ void ADN_MainWindow::SaveAsProject()
         if( !hasSaved )
             QMessageBox::critical( this, tr( "Saving error" ), tr( "Something went wrong during the saving process." ) );
     }
-    catch( ADN_Exception_ABC& exception )
+    catch( const std::exception& e )
     {
         hasSaved = false;
-        QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
+        QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
     }
 
     QApplication::restoreOverrideCursor();    // restore original cursor
@@ -391,16 +390,11 @@ void ADN_MainWindow::OpenProject()
     {
         OpenProject( qfilename.toStdString() );
     }
-    catch( ADN_Exception_ABC& exception )
-    {
-        QApplication::restoreOverrideCursor();    // restore original cursor
-        QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
-    }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         QApplication::restoreOverrideCursor();    // restore original cursor
         workspace_.ResetProgressIndicator();
-        QMessageBox::critical( 0, "Error", e.what() );
+        QMessageBox::critical( 0, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         CloseProject();
     }
 }
@@ -506,7 +500,7 @@ void ADN_MainWindow::TestData()
     }
     catch( const std::exception& e )
     {
-        QMessageBox::critical( this, tr( "Data test" ), tr( "Data test failed" ) + "\n" + e.what() );
+        QMessageBox::critical( this, tr( "Data test" ), tr( "Data test failed" ) + "\n" + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 

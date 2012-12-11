@@ -147,6 +147,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_App</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Units</source>
@@ -877,13 +884,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_DataException</name>
-    <message>
-        <source>Data error</source>
-        <translation type="unfinished">خطأ في البيانات</translation>
-    </message>
-</context>
-<context>
     <name>ADN_DialogLog</name>
     <message>
         <source>&amp;OK</source>
@@ -1531,10 +1531,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_FireClass_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished">النار--الجرح البيانات &apos;%1&apos; &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
     </message>
@@ -1549,10 +1545,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 </context>
 <context>
     <name>ADN_FireClass_Data::FireClassInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
         <translation type="unfinished">فئة النار-عامل مطفأة غير صالح &apos;%1&apos;</translation>
@@ -2398,6 +2390,10 @@ stance</source>
         <source>Save changes to project %1?</source>
         <translation type="unfinished">هل تريد حفظ التغييرات في المشروع %1؟</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
@@ -2591,10 +2587,6 @@ stance</source>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
-    <message>
-        <source>Invalid mission</source>
-        <translation type="unfinished">مهمة غير صالح</translation>
-    </message>
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation type="unfinished">يجب أن تحتوي المعلمة &apos;%1&apos; كائن واحد على الأقل.</translation>
@@ -2835,20 +2827,12 @@ The spawn capacity will be disabled.</source>
 <context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
         <translation type="unfinished">معدل نشر النار-فئة النار غير صالح &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
         <translation type="unfinished">كائن-نوع &quot;المواد الحضرية&quot; غير صالح &apos;%1&apos;</translation>
@@ -3470,20 +3454,12 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
 <context>
     <name>ADN_Resources_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
@@ -3499,10 +3475,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
 </context>
 <context>
     <name>ADN_Resources_Data::IndirectAmmoInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished">معدات-موقف غير صالح &apos;%1&apos;</translation>
@@ -3762,19 +3734,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
-    <name>ADN_SaveFile_Exception</name>
-    <message>
-        <source>File error</source>
-        <translation type="unfinished">خطأ في ملف</translation>
-    </message>
-    <message>
-        <source>Could not save file &apos;%1&apos;.
-Make sure that the file is not write-protected.</source>
-        <translation type="unfinished">تعذر حفظ الملف &apos;%1&apos;.
-تأكد من أن الملف غير محمي ضد الكتابة.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Schedule_Table</name>
     <message>
         <source>Day</source>
@@ -3803,10 +3762,6 @@ Make sure that the file is not write-protected.</source>
 </context>
 <context>
     <name>ADN_Sensors_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -5467,10 +5422,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
     </message>
@@ -5891,6 +5842,12 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>ADN - Data export</source>
         <translation type="unfinished">ADN-تصدير البيانات</translation>
     </message>
+    <message>
+        <source>Could not save file &apos;%1&apos;.
+Make sure that the file is not write-protected.</source>
+        <translation type="unfinished">تعذر حفظ الملف &apos;%1&apos;.
+تأكد من أن الملف غير محمي ضد الكتابة.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_WoundTable</name>
@@ -5922,10 +5879,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
         <translation type="unfinished">معدات-أمونيتيون غير صالح &apos;%1/%2&apos;</translation>
     </message>
@@ -5936,10 +5889,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>AiEngine_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
         <translation type="unfinished">المرجع مؤشرات-إدارة مؤشر الترابط-غير صالح أهمية تأثير قيمة (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
@@ -5975,10 +5924,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Automata_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Automat - Invalid unit type &apos;%1&apos;</source>
         <translation type="unfinished">[اوتومت]-نوع الوحدة غير صالح &apos;%1&apos;</translation>
     </message>
@@ -5989,10 +5934,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Breakdowns - Invalid part &apos;%1&apos;</source>
         <translation type="unfinished">أعطال-جزء غير صالح &apos;%1&apos;</translation>
@@ -6012,10 +5953,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Categories_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
         <translation type="unfinished">فئات-اسم نوع وحدة التخزين المكررة &apos;%1&apos;</translation>
@@ -6055,10 +5992,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
@@ -6111,10 +6044,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Funeral_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Invalid resource &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6122,20 +6051,12 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Health_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation type="unfinished">النظام الطبي السوقي-صالح الجرح النوع &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
         <translation type="unfinished">نماذج نظرية-frag غير صالحة من أجل &apos;%1&apos;</translation>
@@ -6147,10 +6068,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>NBC_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished">أن بي سي--البيانات &apos;%1&apos; الجرح &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
@@ -6189,10 +6106,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>People_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Population - Invalid resource &apos;%1/%2&apos;</source>
         <translation type="unfinished">السكان-الموارد غير صالح &apos;%1/%2&apos;</translation>
@@ -6263,10 +6176,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">أجهزة الاستشعار الخاصة الجديدة</translation>
     </message>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid radar type &apos;%1&apos;</source>
         <translation type="unfinished">أجهزة الاستشعار--اكتب الرادار غير صالح &apos;%1&apos;</translation>
     </message>
@@ -6297,10 +6206,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Sensor_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished">أجهزة الاستشعار-موقف غير صالح &apos;%1&apos;</translation>
     </message>
@@ -6320,10 +6225,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Supply_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
         <translation type="unfinished">نظام الإمداد اللوجستي-وحدة غير صالح &apos;%1&apos;</translation>
     </message>
@@ -6334,10 +6235,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Units_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation type="unfinished">أنواع وحدة-معدات غير صالحة &apos;%1&apos;</translation>
@@ -6386,10 +6283,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Urban_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Material attribute is empty for &apos;%1&apos; template.</source>
         <translation type="unfinished">السمة المادية فارغ للقالب &apos;%1&apos;.</translation>
     </message>
@@ -6404,10 +6297,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
         <translation type="unfinished">سلاح نظم &apos;%1&apos;/&apos;%2&apos;--نوع المشغل غير صالحة</translation>
@@ -6435,10 +6324,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>helpers::ArmorInfos</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">فئات--اكتب الدروع غير صالح &apos;%1&apos;</translation>
     </message>
@@ -6449,10 +6334,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Categories - Invalid equipment state &apos;%1&apos;</source>
         <translation type="unfinished">فئات-المعدات غير صالح الدولة &apos;%1&apos;</translation>

@@ -14,7 +14,6 @@
 #include "ADN_Workspace.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 
@@ -55,7 +54,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "quantity", nNbr_ );
     ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
-        throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).toStdString() );
     ptrPart_ = pCategory;
 }
 
@@ -147,7 +146,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "variance", repairTimeVariance_ );
     nType_ = ADN_Tr::ConvertToBreakdownType( type );
     if( nType_ == E_BreakdownType( -1 ) )
-        throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).toStdString() );
     input >> xml::list( "part", *this, &ADN_Breakdowns_Data::BreakdownInfo::ReadPart );
 }
 

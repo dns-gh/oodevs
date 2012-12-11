@@ -16,7 +16,6 @@
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Tr.h"
 #include "ADN_Breakdowns_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
@@ -414,7 +413,7 @@ void ADN_Equipments_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
         bIsCarrier_ = true;
         helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( strNature );
         if( !pNature )
-            throw ADN_DataException( tools::translate( "Equipments_Data", "Invalid data" ).toStdString(), tools::translate( "Equipments_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Equipment - Invalid resource nature '%1'" ).arg( strNature.c_str() ).toStdString() );
         ptrResourceNature_ = pNature;
     }
 }
@@ -544,7 +543,7 @@ void ADN_Equipments_Data::BreakdownInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "percentage", rPercentage_ );
     ADN_Breakdowns_Data::BreakdownInfo* pBreakdown = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().FindBreakdown( strName );
     if( pBreakdown == 0 )
-        throw ADN_DataException( tools::translate( "Equipments_Data", "Invalid data" ).toStdString(), tools::translate( "Equipments_Data", "Equipment - Invalid breakdown type '%1'" ).arg( strName.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Equipment - Invalid breakdown type '%1'" ).arg( strName.c_str() ).toStdString() );
     ptrBreakdown_ = pBreakdown;
     ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
 }
@@ -641,7 +640,7 @@ void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& outp
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
     if( rSum != 100.0 )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toStdString() );
 
     for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         (*it)->WriteArchive( strName_, output );
@@ -718,7 +717,7 @@ void ADN_Equipments_Data::SensorInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     ADN_Sensors_Data::SensorInfos* pSensor = ADN_Workspace::GetWorkspace().GetSensors().GetData().FindSensor( type );
     if( pSensor == NULL )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(),  tools::translate( "Equipments_Data", "Equipment - Invalid sensor type '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION(  tools::translate( "Equipments_Data", "Equipment - Invalid sensor type '%1'" ).arg( type.c_str() ).toStdString() );
     ptrSensor_ = pSensor;
 }
 
@@ -766,7 +765,7 @@ void ADN_Equipments_Data::RadarInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", strRadarName );
     ADN_Radars_Data::RadarInfos* pRadar = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.FindRadar( strRadarName );
     if( pRadar == 0 )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(),  tools::translate( "Equipments_Data", "Equipment - Invalid radar type '%1'" ).arg( strRadarName.c_str() ).toStdString() );
+        throw MASA_EXCEPTION(  tools::translate( "Equipments_Data", "Equipment - Invalid radar type '%1'" ).arg( strRadarName.c_str() ).toStdString() );
     ptrRadar_ = pRadar;
     strName_ = strRadarName;
 }
@@ -826,7 +825,7 @@ void ADN_Equipments_Data::WeaponInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "munition", strAmmunition );
     ADN_Weapons_Data::WeaponInfos* pWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmunition );
     if( !pWeapon )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid weapon system '%1/%2'" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid weapon system '%1/%2'" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
     ptrWeapon_ = pWeapon;
     strName_ = pWeapon->strName_.GetData();
 }
@@ -923,7 +922,7 @@ void ADN_Equipments_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& in
     input >> xml::attribute( "name", strActiveProtectionName );
     ADN_ActiveProtections_Data::ActiveProtectionsInfos* pActiveProtection = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().FindActiveProtection( strActiveProtectionName );
     if( pActiveProtection == 0 )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid active protection type '%1'" ).arg( strActiveProtectionName.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid active protection type '%1'" ).arg( strActiveProtectionName.c_str() ).toStdString() );
     ptrActiveProtections_ = pActiveProtection;
     strName_ = strActiveProtectionName;
 }
@@ -981,7 +980,7 @@ void ADN_Equipments_Data::CategoryInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
     ADN_Resources_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
     if( !pCat )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( strCategory.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( strCategory.c_str() ).toStdString() );
     ptrCategory_ = pCat;
 }
 
@@ -1154,7 +1153,7 @@ void ADN_Equipments_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 
     ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
     if( !pObject )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid object type '%1'" ).arg( strType.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid object type '%1'" ).arg( strType.c_str() ).toStdString() );
     ptrObject_ = pObject;
 
     input >> xml::optional >> xml::attribute( "initial-construction-time", initialBuildTime_ )
@@ -1284,7 +1283,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& inp
     input >> xml::attribute( "status", status );
     E_ConsumptionType type = ADN_Tr::ConvertToConsumptionType( status );
     if( type == E_ConsumptionType( -1 ) )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).toStdString() );
     input >> xml::list( "resource", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadDotation, type, equipmentCategories );
 }
 
@@ -1299,7 +1298,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input,
           >> xml::attribute( "name", name );
     ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( category, name );
     if( !pCategory )
-        throw ADN_DataException( tools::translate( "Equipments_Data", "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
 
     ADN_Equipments_Data::CategoryInfos* pEquipmentCategory = 0;
     for( auto it = equipmentCategories.begin(); it != equipmentCategories.end(); ++it )
@@ -1605,9 +1604,9 @@ void ADN_Equipments_Data::EquipmentInfos::ReadSpeed( xml::xistream& input )
         E_Location nLocation = ENT_Tr::ConvertToLocation( strLocation );
         vSpeeds_.at( nLocation )->ReadArchive( input );
     }
-    catch ( const std::exception& /*ex*/ )
+    catch( const std::exception& /*e*/ )
     {
-        throw ADN_DataException( tools::translate( "Equipments_Data", "Invalid data" ).toStdString(), tools::translate( "Equipments_Data", "Equipment - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data", "Equipment - Invalid terrain type '%1'" ).arg( strLocation.c_str() ).toStdString() );
     }
 }
 
@@ -1693,7 +1692,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     ptrArmor_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
     ptrSize_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
     if( ! ptrArmor_.GetData() || ! ptrSize_.GetData() )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid armor and/or volume" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid armor and/or volume" ).toStdString() );
 
     input >> xml::start( "speeds" )
             >> xml::attribute( "max", rMaxSpeed_ )

@@ -14,7 +14,6 @@
 #include "ADN_Workspace.h"
 #include "ADN_Objects_Data.h"
 #include "XmlResources.cpp"
-#include "ADN_DataException.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
@@ -325,7 +324,7 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
         char *pTempDir = ( char* )malloc( sizeof( char ) * ( _MAX_PATH + 1 ) );
         int len = GetTempPath( _MAX_PATH + 1, pTempDir );
         if( !len )
-            throw std::runtime_error( "Unable to access temp directory" );
+            throw MASA_EXCEPTION( "Unable to access temp directory" );
         std::string res( pTempDir );
         std::replace( res.begin(), res.end(), '\\', '/' );
         std::stringstream stream;

@@ -52,7 +52,7 @@ void ADN_RunProcessDialog::RunCommand( const std::string& strCommandLine )
     connect( pProcess_, SIGNAL( processExited() ), this, SLOT( ProcessFinished() ) );
 
     if( !pProcess_->start() )
-        throw std::exception( "error starting process" );
+        throw MASA_EXCEPTION( "error starting process" );
     show();
 }
 

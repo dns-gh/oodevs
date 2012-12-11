@@ -18,7 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "GQ_PlotAxis.h"
-#include "ADN_DataException.h"
 #include "moc_GQ_PlotAxis.cpp"
 #include <cassert>
 #include <cmath>
@@ -254,10 +253,10 @@ void GQ_PlotAxis::SetTickMultiples( double rMultiplesBase, const std::vector< ui
         return;
 
     if( rMultiplesBase <= 1.0 )
-        throw ADN_DataException( "GQ_PlotAxis", "invalid tick multiples base (should be > 1)." );
+        throw MASA_EXCEPTION( "invalid tick multiples base (should be > 1)." );
 
     if( multiples.empty() )
-        throw ADN_DataException( "GQ_PlotAxis", "invalid tick multiples set (empty)." );
+        throw MASA_EXCEPTION( "invalid tick multiples set (empty)." );
 
     rMultiplesBase_ = rMultiplesBase;
     nMinBasePower_  = nMinBasePower;
@@ -472,7 +471,7 @@ void GQ_PlotAxis::SetAxisLength( uint nLength )
         return;
 
     if( nLength <= 1 )
-        throw ADN_DataException( "GQ_PlotAxis", "null axis length forbidden." );
+        throw MASA_EXCEPTION( "null axis length forbidden." );
 
     nAxisLength_ = nLength;
     Touch();

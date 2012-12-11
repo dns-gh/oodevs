@@ -215,7 +215,7 @@ void ADN_Resources_AttritionGraph::Update()
                     localData = &visuNoEvac;
                     break;
                 default:
-                    throw std::exception( "Bad Equipment State" );
+                    throw MASA_EXCEPTION( "Bad Equipment State" );
                     break;
                 }
 
@@ -312,7 +312,7 @@ void ADN_Resources_AttritionGraph::paintEvent( QPaintEvent* )
     const double ratio = (double) graphHeight / 100.;
 
     if( effectStrings_.size() != effectColors_.size() )
-        throw std::exception( "Attrition graph: Strings and Colors not coherent" );
+        throw MASA_EXCEPTION( "Attrition graph: Strings and Colors not coherent" );
 
     // Legends with color
     int index = 0;

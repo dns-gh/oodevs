@@ -13,7 +13,6 @@
 #include "ADN_Workspace.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Project_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
@@ -49,7 +48,7 @@ void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ );
     ADN_Missions_FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
     if( !fragOrder )
-        throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toStdString(), tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     fragOrder_ = fragOrder;
 }
 
@@ -140,7 +139,7 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ );
     ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
     if( !mission )
-        throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toStdString(), tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     mission_ = mission;
     mission_.GetData()->strName_.Connect( &strName_ );
     input >> xml::list( "fragorder", *this, &ADN_Models_Data::MissionInfos::ReadFragOrder );

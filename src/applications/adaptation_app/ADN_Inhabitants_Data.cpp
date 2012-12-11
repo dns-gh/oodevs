@@ -11,7 +11,6 @@
 #include "ADN_Inhabitants_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tr.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
@@ -74,7 +73,7 @@ void ADN_Inhabitants_Data::EventInfos::ReadArchive( xml::xistream& input )
 
     ADN_Urban_Data::AccommodationInfos* pAccommodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( accommodation );
     if( !pAccommodation )
-        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toStdString(), tools::translate( "People_Data", "Population - Invalid accommodation '%1'" ).arg( accommodation.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "People_Data", "Population - Invalid accommodation '%1'" ).arg( accommodation.c_str() ).toStdString() );
     ptrAccommodation_ = pAccommodation;
 }
 
@@ -136,7 +135,7 @@ void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistre
         >> xml::attribute( "need", consumption_ );
     ADN_ResourceNetworks_Data::ResourceNetworkInfos* pResource = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().FindResourceNetwork( strResource );
     if( !pResource )
-        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toStdString(), tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toStdString() );
     ptrResource_ = pResource;
 }
 
@@ -239,7 +238,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadArchive( xml::xistream& input )
 
     ADN_Crowds_Data::CrowdsInfos* pModel = ADN_Workspace::GetWorkspace().GetCrowds().GetData().FindCrowd( strModel );
     if( !pModel )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
 
     input >> xml::start( "repartition" );
@@ -270,14 +269,14 @@ namespace
         std::vector< std::string > result;
         boost::algorithm::split( result, date, boost::algorithm::is_any_of( ":" ) );
         if( result.size() != 2 )
-            throw std::runtime_error( "Invalid date event" );
+            throw MASA_EXCEPTION( "Invalid date event" );
         try
         {
             return QTime( boost::lexical_cast< int >( result.front() ), boost::lexical_cast< int >( result.back() ) );
         }
-        catch( boost::bad_lexical_cast& /*e*/ )
+        catch( const std::exception& /*e*/ )
         {
-            throw std::runtime_error( "Invalid date event" );
+            throw MASA_EXCEPTION( "Invalid date event" );
         }
     }
 
@@ -303,7 +302,7 @@ const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
                 return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +
                                          "- " + ( *it1 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it1 )->from_.GetData() + " / " + ( *it1 )->to_.GetData() + "\n" +
                                          "- " + ( *it2 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n";
-    repartition_.CheckNoError( "ADN_Inhabitants_Data", strName_.GetData().c_str() );
+    repartition_.CheckNoError( strName_.GetData().c_str() );
     return "";
 }
 
@@ -315,7 +314,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output
 {
     const std::string error = CheckErrors();
     if( error != "" )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toStdString(), error );
+        throw MASA_EXCEPTION( error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nId_ )

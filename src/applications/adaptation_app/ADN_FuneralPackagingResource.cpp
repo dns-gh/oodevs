@@ -11,7 +11,6 @@
 #include "ADN_FuneralPackagingResource.h"
 #include "ADN_Workspace.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 
@@ -47,7 +46,7 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
           >> xml::attribute( "terminal", terminal_ );
     ADN_Resources_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( resourceName );
     if( resource == 0 )
-        throw ADN_DataException( tools::translate( "Funeral_Data", "Invalid data" ).toStdString(), tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toStdString() );
     resource_ = resource;
 }
 

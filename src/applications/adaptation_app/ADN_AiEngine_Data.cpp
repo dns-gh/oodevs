@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AiEngine_Data.h"
 
-#include "ADN_DataException.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
@@ -82,13 +81,13 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::end;
 
     if( rPertinenceMaxDecrease_.GetData() < 0.0 || rPertinenceMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( tools::translate( "AiEngine_Data",  "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid relevance effect value(must be >=0 and <= 100)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid relevance effect value(must be >=0 and <= 100)" ).toStdString() );
 
     if( rOperationalStateMaxDecrease_.GetData() < 0.0 || rOperationalStateMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( tools::translate( "AiEngine_Data","Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid operational state effect value (must be >=0 and <= 100)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid operational state effect value (must be >=0 and <= 100)" ).toStdString() );
 
     if( rNeutralizedStateMaxDecrease_.GetData() < 0.0 || rNeutralizedStateMaxDecrease_.GetData() > 100.0 )
-        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid neutralization state effect value (must be >=0 and <= 100)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Thread management - Invalid neutralization state effect value (must be >=0 and <= 100)" ).toStdString() );
 
     input >> xml::start( "operational-state-weights" )
             >> xml::attribute( "component", rMinorEquipmentWeight_ )
@@ -98,19 +97,19 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
           >> xml::end;
 
     if( rMinorEquipmentWeight_.GetData() < 0.f || rMinorEquipmentWeight_.GetData() > 1.f )
-        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).toStdString() );
 
     if( rMajorEquipmentWeight_.GetData() < 0.f || rMajorEquipmentWeight_.GetData() > 1.f )
-        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).toStdString() );
 
     if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.f )
-        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).toStdString() );
 
     if( rDecisionalThreshold_.GetData() < 0.f || rDecisionalThreshold_.GetData() > 1.f )
-        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid threshold (must be >=0 and <= 1)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid threshold (must be >=0 and <= 1)" ).toStdString() );
 
     if( rHumanWeight_.GetData() < 0.f || rHumanWeight_.GetData() > 1.f )
-        throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).toStdString(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).toStdString() );
 
     input >> xml::start( "force-ratio" )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )

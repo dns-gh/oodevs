@@ -20,7 +20,6 @@
 #include "ADN_Crowds_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
@@ -509,7 +508,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "armed-individuals", rArmedIndividuals );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
     if( !pModel )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Crowd types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Population_Data", "Crowd types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
 
     input >> xml::start( "slowing-effects" )
@@ -547,7 +546,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadSlowingEffect( xml::xistream& input )
     input >> xml::attribute( "population-attitude", strAttitude );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( nAttitude == (E_PopulationAttitude)-1 )
-        throw ADN_DataException( "Invalid data",tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
     vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
 
@@ -560,7 +559,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadAttritionEffect( xml::xistream& input )
     std::string strAttitude = input.attribute< std::string >( "population-attitude" );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( nAttitude == (E_PopulationAttitude)-1 )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
     vFireEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
 
@@ -574,7 +573,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadFireEffect( xml::xistream& input )
     input >> xml::attribute( "rule-of-engagment", strROE );
     uint nROE = ENT_Tr::ConvertToPopulationRoe( strROE );
     if( nROE == (E_PopulationRoe)-1 )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Crowd types - Invalid crowd 'rules of engagment' '%1'" ).arg( strROE.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Population_Data", "Crowd types - Invalid crowd 'rules of engagment' '%1'" ).arg( strROE.c_str() ).toStdString() );
     for( IT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
         if( ( *it )->GetRoe() == nROE )
             ( *it )->ReadArchive( input );
@@ -589,7 +588,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadUrbanEffect( xml::xistream& input )
     std::string strAttitude = input.attribute< std::string >( "attitude" );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( nAttitude == (E_PopulationAttitude)-1 )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
 
     vUrbanEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
@@ -600,7 +599,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadUrbanEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
 {
-    repartition_.CheckNoError( "ADN_Crowds_Data", strName_.GetData().c_str() );
+    repartition_.CheckNoError( strName_.GetData().c_str() );
 
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )

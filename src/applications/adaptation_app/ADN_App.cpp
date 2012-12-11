@@ -13,7 +13,6 @@
 #include "ADN_MainWindow.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
-#include "ADN_Exception_ABC.h"
 #include "ADN_Config.h"
 #include "ADN_Workspace.h"
 #pragma warning( push, 1 )
@@ -141,14 +140,14 @@ int ADN_App::Run()
             return EXIT_SUCCESS;
         }
     }
-    catch( ADN_Exception_ABC& e )
+    catch( const std::exception& e )
     {
         if( outputFile_.empty() )
-            QMessageBox::critical( mainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+            QMessageBox::critical( mainWindow_, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         else
         {
             std::stringstream ss;
-            ss << e.GetExceptionTitle().c_str() << std::endl << e.GetExceptionMessage().c_str() << std::endl;
+            ss << tools::GetExceptionMsg( e ).c_str() << std::endl;
             MT_LOG_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
         }
         return EXIT_FAILURE;

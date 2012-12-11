@@ -13,7 +13,6 @@
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"
-#include "ADN_DataException.h"
 
 #include <boost/bind.hpp>
 
@@ -208,7 +207,7 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
         values_[i]->WriteArchive( output, i );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
     if( type_.GetData() == eMissionParameterTypeGenObject && !HasGenObjects() )
-        throw ADN_DataException( tools::translate( "ADN_Missions_Parameter",  "Invalid mission" ).toStdString(),
+        throw MASA_EXCEPTION(
             tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." )
                 .arg( strName_.GetData().c_str() ).toStdString() );
     Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );

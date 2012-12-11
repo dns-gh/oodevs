@@ -321,24 +321,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|win32'">EnableFastChecks</BasicRuntimeChecks>
-      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='debug|x64'">EnableFastChecks</BasicRuntimeChecks>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|win32'">MaxSpeed</Optimization>
-      <Optimization Condition="'$(Configuration)|$(Platform)'=='release|x64'">MaxSpeed</Optimization>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FileLoaderObserver.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_ABC.cpp" />
@@ -1875,9 +1857,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

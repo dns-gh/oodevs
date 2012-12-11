@@ -11,7 +11,6 @@
 #include "ADN_Resources_GUI.h"
 #include "moc_ADN_Resources_GUI.cpp"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_DataException.h"
 #include "ADN_Resources_AmmoListView.h"
 #include "ADN_Resources_AttritionGraph.h"
 #include "ADN_Resources_AttritionTable.h"
@@ -436,7 +435,7 @@ helpers::ArmorInfos* ADN_Resources_GUI::GetSelectedArmor() const
 {
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pArmorCombos_.find( currentTab_ );
     if( it == pArmorCombos_.end() )
-        throw std::out_of_range( "cannot find armor element" );
+        throw MASA_EXCEPTION( "cannot find armor element" );
     return static_cast< helpers::ArmorInfos* >( it->second->GetCurrentData() );
 }
 
@@ -448,7 +447,7 @@ helpers::ADN_UrbanAttritionInfos* ADN_Resources_GUI::GetSelectedMaterial() const
 {
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pMaterialCombos_.find( currentTab_ );
     if( it == pMaterialCombos_.end() )
-        throw std::out_of_range( "cannot find material element" );
+        throw MASA_EXCEPTION( "cannot find material element" );
     return static_cast< helpers::ADN_UrbanAttritionInfos* >( it->second->GetCurrentData() );
 }
 

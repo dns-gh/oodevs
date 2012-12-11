@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_FireClass_Data.h"
-#include "ADN_DataException.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
@@ -61,10 +60,10 @@ void ADN_FireClass_Data::FireInjuryInfos::ReadInjury( xml::xistream& input )
     {
         *pWound = static_cast< int >( input.attribute< double >( "percentage" ) * 100. );
         if( pWound->GetData() < 0 || pWound->GetData() > 100 )
-            throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toStdString(), tools::translate( "ADN_FireClass_Data", "Fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "ADN_FireClass_Data", "Fire - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
     }
     else
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toStdString(),tools::translate( "ADN_FireClass_Data", "Fire - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
+        throw MASA_EXCEPTION(tools::translate( "ADN_FireClass_Data", "Fire - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +74,7 @@ void ADN_FireClass_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::list( "injury", *this, &ADN_FireClass_Data::FireInjuryInfos::ReadInjury );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toStdString(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +85,7 @@ void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toStdString(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toStdString() );
     output  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -268,7 +267,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadAgent( xml::xistream& input )
     std::string agent = input.attribute< std::string >( "agent" );
     IT_ExtinguisherAgentInfos_Vector itAgent = std::find_if( agents_.begin(), agents_.end(), ADN_ExtinguisherAgentInfos::Cmp( agent ));
     if( itAgent == agents_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Fire class - Invalid extinguisher agent '%1'" ).arg( agent.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tr( "Fire class - Invalid extinguisher agent '%1'" ).arg( agent.c_str() ).toStdString() );
     ( *itAgent )->ReadArchive( input );
 }
 
@@ -292,7 +291,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input 
     std::string material = input.attribute< std::string >( "material-type" );
     helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Fire class - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tr( "Fire class - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
     ( *it )->ReadArchive( input );
 }
 
@@ -305,10 +304,10 @@ void ADN_FireClass_Data::FireClassInfos::ReadSurface( xml::xistream& input )
     std::string type = input.attribute< std::string >( "type" );
     /*E_Location location = ENT_Tr::ConvertToLocation( type );
     if( location == static_cast< E_Location >( -1 ) )
-        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Fire - Invalid location type '%1'" ).arg( type.c_str() ).toStdString() );*/
+        throw MASA_EXCEPTION( tr( "Fire - Invalid location type '%1'" ).arg( type.c_str() ).toStdString() );*/
     IT_FireSurfaceInfos_Vector it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
     if( it == surfaceInfos_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Fire - Location type not found '%1'" ).arg( type.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tr( "Fire - Location type not found '%1'" ).arg( type.c_str() ).toStdString() );
     ( *it )->ReadArchive( input );
 }
 

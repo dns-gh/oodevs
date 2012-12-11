@@ -17,7 +17,6 @@
 #include "ADN_Units_GUI.h"
 #include "ADN_SymbolWidget.h"
 #include "clients_kernel/SymbolFactory.h"
-#include "ADN_DataException.h"
 #include "ADN_UnitSymbols_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
@@ -78,7 +77,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "loadable", bLoadable_ );
     ADN_Equipments_Data::EquipmentInfos* pComposante = ADN_Workspace::GetWorkspace().GetEquipments().GetData().FindEquipment( strName );
     if( pComposante == 0 )
-        throw ADN_DataException( tools::translate( "Units_Data",  "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).toStdString() );
     ptrComposante_ = pComposante;
 }
 
@@ -89,7 +88,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous ) const
 {
     if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit has no crew in equipment '%1'" ).arg( ptrComposante_.GetData()->strName_.GetData().c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit has no crew in equipment '%1'" ).arg( ptrComposante_.GetData()->strName_.GetData().c_str() ).toStdString() );
 
     output << xml::start( "equipment" )
             << xml::attribute( "type", ptrComposante_.GetData()->strName_ )
@@ -132,7 +131,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 
     helpers::LogisticSupplyClass* pClass = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindLogisticSupplyClass( strLogisticSupplyClass );
     if( !pClass )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit - Invalid resource logistic supply class '%1'" ).arg( strLogisticSupplyClass.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit - Invalid resource logistic supply class '%1'" ).arg( strLogisticSupplyClass.c_str() ).toStdString() );
     ptrLogisticSupplyClass_ = pClass;
 }
 
@@ -531,7 +530,7 @@ void ADN_Units_Data::UnitInfos::ReadPosture( xml::xistream& input )
     if( itPosture != vPostures_.end() )
         (*itPosture)->ReadArchive( input );
     else
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid stance '%1'" ).arg( posture.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid stance '%1'" ).arg( posture.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -558,11 +557,11 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
     if( eTypeId_ == (E_AgentTypePion)-1 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid unit type '%1'" ).arg( strType.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid unit type '%1'" ).arg( strType.c_str() ).toStdString() );
 
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
     if( !pModel )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
 
     std::string level, atlas;
@@ -575,12 +574,12 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
     if( eNatureLevelType == (E_NatureLevel)-1 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid hierarchical level '%1'" ).arg( level.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid hierarchical level '%1'" ).arg( level.c_str() ).toStdString() );
     eNatureLevel_=eNatureLevelType;
 
     E_NatureAtlasType eNatureAtlasType = ADN_Tr::ConvertToNatureAtlasType( atlas );
     if( eNatureAtlasType == (E_NatureAtlasType)-1 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid 'Atlas' attribute '%1'" ).arg( atlas.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid 'Atlas' attribute '%1'" ).arg( atlas.c_str() ).toStdString() );
     eNatureAtlas_=eNatureAtlasType;
 
     ADN_UnitSymbols_Data& unitSymbols = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
@@ -635,7 +634,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     eNbcSuit_ = ENT_Tr::ConvertToAgentNbcSuit( nbcSuit );
     if( eNbcSuit_ == ( E_AgentNbcSuit )-1 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid nbc suit level '%1'" ).arg( nbcSuit.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid nbc suit level '%1'" ).arg( nbcSuit.c_str() ).toStdString() );
 
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
     bRanges_ = nSensorRange_ != 0 || nEquipmentRange_ != 0;
@@ -669,7 +668,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     E_CrossingHeight eCrossingHeight = ADN_Tr::ConvertToCrossingHeight( crossingHeight );
     if( eCrossingHeight == ( E_CrossingHeight )-1 )
-        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid crossing height '%1'" ).arg( crossingHeight.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid crossing height '%1'" ).arg( crossingHeight.c_str() ).toStdString() );
     eCrossingHeight_ = eCrossingHeight;
 
     input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ );
@@ -775,7 +774,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 
     if( bIsCivilian_.GetData() )
     {
-        repartition_.CheckNoError( "ADN_Units_Data", strName_.GetData().c_str() );
+        repartition_.CheckNoError( strName_.GetData().c_str() );
         output << xml::start( "repartition" );
         repartition_.WriteArchive( output );
         output  << xml::end;

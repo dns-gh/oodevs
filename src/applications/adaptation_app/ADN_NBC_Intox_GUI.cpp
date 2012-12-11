@@ -51,7 +51,7 @@ namespace
 
         void SetDataPrivate( void* /*pData*/ )
         {
-            throw std::runtime_error( "Not to be called" );
+            throw MASA_EXCEPTION( "Not to be called" );
         }
 
     private:

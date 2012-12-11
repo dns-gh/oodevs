@@ -63,7 +63,6 @@
 #include "ADN_Reports_GUI.h"
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_ResourceNetworks_GUI.h"
-#include "ADN_SaveFile_Exception.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
 #include "ADN_Symbols_Data.h"
@@ -482,7 +481,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
 
         dirInfos.UseTempDirectory( false );
     }
-    catch( ADN_Exception_ABC& )
+    catch( const std::exception& )
     {
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
         ResetProgressIndicator();
@@ -497,7 +496,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
             {
                 dirInfos.SetWorkingDirectory( szOldWorkDir );
                 ResetProgressIndicator();
-                throw ADN_SaveFile_Exception( *it );
+                throw MASA_EXCEPTION( tr( "Could not save file '%1'.\nMake sure that the file is not write-protected." ).arg( it->c_str() ).toStdString() );
             }
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )

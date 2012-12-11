@@ -67,7 +67,7 @@ namespace
         {
             ADN_Objects_Data_ObjectInfos::CIT_CapacityMap cit = infos_.capacities_.find( T::TAG );
             if( cit == infos_.capacities_.end() )
-                throw std::runtime_error( "unregister object capacity: " + T::TAG );
+                throw MASA_EXCEPTION( "unregister object capacity: " + T::TAG );
         }
 
         template< typename T >

@@ -147,6 +147,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_App</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Units</source>
@@ -889,13 +896,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_DataException</name>
-    <message>
-        <source>Data error</source>
-        <translation>Error de datos</translation>
-    </message>
-</context>
-<context>
     <name>ADN_DialogLog</name>
     <message>
         <source>&amp;OK</source>
@@ -1546,10 +1546,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 <context>
     <name>ADN_FireClass_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1564,10 +1560,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
 </context>
 <context>
     <name>ADN_FireClass_Data::FireClassInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -2414,6 +2406,10 @@ tirador</translation>
         <source>Consistency analysis</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
@@ -2607,10 +2603,6 @@ tirador</translation>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
-    <message>
-        <source>Invalid mission</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation type="unfinished"></translation>
@@ -2849,20 +2841,12 @@ The spawn capacity will be disabled.</source>
 <context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
     <message>
         <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -3484,20 +3468,12 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
 <context>
     <name>ADN_Resources_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation type="unfinished">Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>ADN_Resources_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished">Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
@@ -3513,10 +3489,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
 </context>
 <context>
     <name>ADN_Resources_Data::IndirectAmmoInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished">Equipo - Postura inválida &apos;%1&apos;</translation>
@@ -3776,19 +3748,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
-    <name>ADN_SaveFile_Exception</name>
-    <message>
-        <source>File error</source>
-        <translation>Error de archivo</translation>
-    </message>
-    <message>
-        <source>Could not save file &apos;%1&apos;.
-Make sure that the file is not write-protected.</source>
-        <translation>No se puede grabar archivo &apos;%1&apos;.
-Asegúrese que el archivo no esta protegido contra escritura.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Schedule_Table</name>
     <message>
         <source>Day</source>
@@ -3817,10 +3776,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 </context>
 <context>
     <name>ADN_Sensors_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
     <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -5483,10 +5438,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
         <translation>Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
     </message>
@@ -5907,6 +5858,12 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>ADN - Data export</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Could not save file &apos;%1&apos;.
+Make sure that the file is not write-protected.</source>
+        <translation type="unfinished">No se puede grabar archivo &apos;%1&apos;.
+Asegúrese que el archivo no esta protegido contra escritura.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_WoundTable</name>
@@ -5938,10 +5895,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
         <translation>Equipo – munición inválida &apos;%1/%2&apos;</translation>
     </message>
@@ -5952,10 +5905,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>AiEngine_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
         <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de relevancia es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
@@ -5991,10 +5940,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Automata_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Automat - Invalid unit type &apos;%1&apos;</source>
         <translation>Autómata – Tipo de unidad inválido &apos;%1&apos;</translation>
     </message>
@@ -6005,10 +5950,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Breakdowns - Invalid part &apos;%1&apos;</source>
         <translation>Fallas – Parte inválida &apos;%1&apos;</translation>
@@ -6028,10 +5969,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Categories_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
         <translation>Categorías - Nombre de tipo de volúmen duplicado &apos;%1&apos;</translation>
@@ -6071,10 +6008,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Equipments_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -6127,10 +6060,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Funeral_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
-    <message>
         <source>Invalid resource &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6138,20 +6067,12 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Health_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Sistema logístico médico - Tipo de herido inválido&apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
         <translation>Modelos de doctrina - Orden parcial inválida &apos;%1&apos;</translation>
@@ -6163,10 +6084,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>NBC_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
         <translation>NBC - Herido &apos;%1&apos; valores &lt; 0 or &gt; 1</translation>
@@ -6205,10 +6122,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>People_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Population - Invalid resource &apos;%1/%2&apos;</source>
         <translation type="unfinished"></translation>
@@ -6279,10 +6192,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation>Nuevo sensor especial</translation>
     </message>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid radar type &apos;%1&apos;</source>
         <translation>Sensores - Tipo de rada inválido &apos;%1&apos;</translation>
     </message>
@@ -6313,10 +6222,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Sensor_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6336,10 +6241,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Supply_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6350,10 +6251,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Units_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -6402,10 +6299,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Urban_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6420,10 +6313,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
     <message>
         <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
         <translation type="unfinished"></translation>
@@ -6451,10 +6340,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>helpers::ArmorInfos</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
-    <message>
         <source>Categories - Invalid armor type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6465,10 +6350,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>helpers::AttritionEffectOnHuman</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
     <message>
         <source>Categories - Invalid equipment state &apos;%1&apos;</source>
         <translation type="unfinished"></translation>

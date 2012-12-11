@@ -220,7 +220,7 @@ inline
 ADN_Project_Data& ADN_Workspace::GetProject()
 {
     if( !projectData_ )
-        throw std::runtime_error( "Project data not initialized" );
+        throw MASA_EXCEPTION( "Project data not initialized" );
     return *projectData_;
 }
 

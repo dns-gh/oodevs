@@ -17,7 +17,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
-#include "ADN_DataException.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -132,20 +131,20 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 
     dotationSupplyConvoyType_ = ADN_Tr::ConvertToSupplyConvoyType( dotationSupplyConvoyType );
     if( dotationSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( dotationSupplyConvoyType.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( dotationSupplyConvoyType.c_str() ).toStdString() );
     stockSupplyConvoyType_ = ADN_Tr::ConvertToSupplyConvoyType( stockSupplyConvoyType );
     if( stockSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).toStdString() );
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toStdString() );
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( mission == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toStdString() );
     ptrSupplyMission_ = mission;
 
     input >> xml::start( "resource-availability-alerts" )

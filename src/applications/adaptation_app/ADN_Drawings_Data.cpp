@@ -406,9 +406,9 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
     {
         drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        std::cout << "Error reading drawing template " << e.what() << std::endl;
+        std::cout << "Error reading drawing template " << tools::GetExceptionMsg( e ) << std::endl;
     }
 }
 
