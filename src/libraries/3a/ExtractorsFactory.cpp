@@ -9,8 +9,11 @@
 
 #include "ExtractorsFactory.h"
 #include "Attributes.h"
+#include "Damages.h"
 #include "Existences.h"
-#include "Events.h"
+#include "Fires.h"
+#include "FirerIdentifierValue.h"
+#include "TargetIdentifierValue.h"
 #include "IdentifierValue.h"
 #include "DispatchedFunctionHelper.h"
 #include "Connectors.h"
@@ -72,26 +75,26 @@ namespace
             ( "close-combat-power"                    , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
             ( "carriers"                              , BuildExtractor< Value, existences::Carriers >() )
             ( "crowd-states"                          , BuildExtractor< Value, attributes::CrowdStates >() )
-            ( "damage-indirect-fires"                 , BuildExtractor< Value, events::DamageIndirectFire >() )
+            ( "damage-indirect-fires"                 , BuildExtractor< Value, damages::DamageIndirectFire >() )
             ( "detecting-unit"                        , BuildExtractor< Value, attributes::Detections >() )
             ( "direct-fire-power"                     , BuildExtractor< Value, attributes::DirectFirePower >( model ) )
-            ( "direct-fire-targets"                   , BuildExtractor< Value, existences::DirectFireTargetsId >() )
-            ( "direct-fire-unit"                      , BuildExtractor< Value, existences::DirectFireUnitsId >() )        // A VIRER
-            ( "direct-fire-units"                     , BuildExtractor< Value, existences::DirectFireUnitsId >() )
+            ( "direct-fire-targets"                   , BuildExtractor< Value, fires::DirectFireTargetsId >() )
+            ( "direct-fire-unit"                      , BuildExtractor< Value, fires::DirectFireUnitsId >() )        // A VIRER
+            ( "direct-fire-units"                     , BuildExtractor< Value, fires::DirectFireUnitsId >() )
             ( "engineering-power"                     , BuildExtractor< Value, attributes::EngineeringPower >( model ) )
             ( "equipments"                            , BuildExtractor< Value, attributes::Equipments >() )
-            ( "fire-component-damage"                 , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() ) // A VIRER
-            ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
-            ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
-            ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
-            ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
-            ( "fire-human-loss-by-crowd-fires"        , BuildExtractor< Value, events::CrowdHumanDamages >() )
+            ( "fire-component-damage"                 , BuildExtractor< Value, damages::FireComponentDamages, FirerIdentifierValue >() ) // A VIRER
+            ( "fire-component-damages"                , BuildExtractor< Value, damages::FireComponentDamages, FirerIdentifierValue >() )
+            ( "fire-component-loss"                   , BuildExtractor< Value, damages::FireComponentDamages, TargetIdentifierValue >() )
+            ( "fire-human-damages"                    , BuildExtractor< Value, damages::FireHumanDamages, FirerIdentifierValue >() )
+            ( "fire-human-loss"                       , BuildExtractor< Value, damages::FireHumanDamages, TargetIdentifierValue >() )
+            ( "fire-human-loss-by-crowd-fires"        , BuildExtractor< Value, damages::CrowdHumanDamages >() )
             ( "force-ratio"                           , BuildExtractor< Value, attributes::ForceRatioValue >() )
             ( "humans"                                , BuildExtractor< Value, attributes::Humans >() )
-            ( "indirect-fire-positions"               , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
+            ( "indirect-fire-positions"               , BuildExtractor< Value, fires::IndirectFireTargetsPositions >() )
             ( "indirect-fire-power"                   , BuildExtractor< Value, attributes::IndirectFirePower >( model ) )
-            ( "indirect-fire-unit"                    , BuildExtractor< Value, existences::IndirectFireUnitsId >() )      // A VIRER
-            ( "indirect-fire-units"                   , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
+            ( "indirect-fire-unit"                    , BuildExtractor< Value, fires::IndirectFireUnitsId >() )      // A VIRER
+            ( "indirect-fire-units"                   , BuildExtractor< Value, fires::IndirectFireUnitsId >() )
             ( "infrastructures-functional-states"     , BuildExtractor< Value, attributes::StructuralStates >() )
             ( "maintenances"                          , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
             ( "maintenance-handling-unit"             , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() ) // A VIRER

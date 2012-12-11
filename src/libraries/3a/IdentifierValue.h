@@ -10,17 +10,14 @@
 #ifndef __IdentifierValue_h_
 #define __IdentifierValue_h_
 
-#include "IdentifierValue_ABC.h"
-
 // =============================================================================
 /** @class  IdentifierValue
     @brief  IdentifierValue
 */
 // Created: AGE 2007-08-28
 // =============================================================================
-struct IdentifierValue : public IdentifierValue_ABC
+struct IdentifierValue : public Value< NumericValue >
 {
-
     enum { has_parameter = false };
 
 #define SET_OID( tag, var )                             \

@@ -353,7 +353,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
     task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
     task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. )( 1. )( 1. );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 0. )( 0. )( 1. )( 0. );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -391,7 +391,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDirectFireInZone, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::StopFire( 1000, 16 ) );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 0. )( 0. );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -421,7 +421,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestIndirectFireInZone, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 0. )( 0. );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -459,7 +459,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestIndirectFireFromZone, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::StopFire( 44, 23 ) );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 0. )( 0. );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -502,7 +502,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfIndirectFiresWithUnitFilter, Fixture
     task->Receive( TestTools::CreateIndirectFire( 18, 13 ) );
     task->Receive( TestTools::CreateIndirectFire( 19, 14 ) );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. )( 1. )( 1. );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 0. )( 0. )( 1. )( 0. );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -762,7 +762,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
     task->Receive( TestTools::StopFire( 14, 16 ) );
     task->Receive( TestTools::StopFire( 15, 13 ) );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 4 )( 8 )( 10 );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 )( 4 )( 4 );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -1361,7 +1361,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFires, Fixture )
     task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
     task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 2. )( 4. )( 2. )( 2. )( 3. );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2. )( 2. )( 0. )( 2. )( 2. );
     MakeExpectation( expectedResult );
     task->Commit();
 }
@@ -1624,7 +1624,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEfficaciteTirsIndirects2, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 )( 1 )( 0 );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 0 )( 0 )( 0 );
     MakeExpectation( expectedResult );
     task->Commit();
 }
