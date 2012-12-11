@@ -121,9 +121,6 @@
     <ClInclude Include="..\..\src\libraries\3a\IdentifierValue.h">
       <Filter>Source Files\model\values</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\3a\IdentifierValue_ABC.h">
-      <Filter>Source Files\model\values</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\3a\LogMaintenanceEquipments.h">
       <Filter>Source Files\model\values</Filter>
     </ClInclude>
@@ -278,6 +275,12 @@
       <Filter>Source Files\model\values</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\3a\Carriers.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\TargetIdentifierValue.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\FirerIdentifierValue.h">
       <Filter>Source Files\model\values</Filter>
     </ClInclude>
   </ItemGroup>

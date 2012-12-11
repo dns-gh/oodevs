@@ -11,6 +11,8 @@
 #include "Attributes.h"
 #include "Existences.h"
 #include "Events.h"
+#include "FirerIdentifierValue.h"
+#include "TargetIdentifierValue.h"
 #include "IdentifierValue.h"
 #include "DispatchedFunctionHelper.h"
 #include "Connectors.h"
@@ -81,11 +83,11 @@ namespace
             ( "direct-fire-units"                     , BuildExtractor< Value, existences::DirectFireUnitsId >() )
             ( "engineering-power"                     , BuildExtractor< Value, attributes::EngineeringPower >( model ) )
             ( "equipments"                            , BuildExtractor< Value, attributes::Equipments >() )
-            ( "fire-component-damage"                 , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() ) // A VIRER
-            ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
-            ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
-            ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
-            ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
+            ( "fire-component-damage"                 , BuildExtractor< Value, events::FireComponentDamages, FirerIdentifierValue >() ) // A VIRER
+            ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, FirerIdentifierValue >() )
+            ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, TargetIdentifierValue >() )
+            ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, FirerIdentifierValue >() )
+            ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, TargetIdentifierValue >() )
             ( "fire-human-loss-by-crowd-fires"        , BuildExtractor< Value, events::CrowdHumanDamages >() )
             ( "force-ratio"                           , BuildExtractor< Value, attributes::ForceRatioValue >() )
             ( "humans"                                , BuildExtractor< Value, attributes::Humans >() )

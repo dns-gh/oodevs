@@ -97,9 +97,11 @@
     <ClInclude Include="..\..\src\libraries\3a\Carriers.h" />
     <ClInclude Include="..\..\src\libraries\3a\DPRESatisfaction.h" />
     <ClInclude Include="..\..\src\libraries\3a\FilterHelper.h" />
+    <ClInclude Include="..\..\src\libraries\3a\FirerIdentifierValue.h" />
     <ClInclude Include="..\..\src\libraries\3a\Indicator.h" />
     <ClInclude Include="..\..\src\libraries\3a\Plotter.h" />
     <ClInclude Include="..\..\src\libraries\3a\Result_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\3a\TargetIdentifierValue.h" />
     <ClInclude Include="..\..\src\libraries\3a\TypeChecks.h" />
     <ClInclude Include="..\..\src\libraries\3a\Constant.h" />
     <ClInclude Include="..\..\src\libraries\3a\DispatchedFunction.h" />
@@ -127,7 +129,6 @@
     <ClInclude Include="..\..\src\libraries\3a\ForceRatioValue.h" />
     <ClInclude Include="..\..\src\libraries\3a\Humans.h" />
     <ClInclude Include="..\..\src\libraries\3a\IdentifierValue.h" />
-    <ClInclude Include="..\..\src\libraries\3a\IdentifierValue_ABC.h" />
     <ClInclude Include="..\..\src\libraries\3a\LogMaintenanceEquipments.h" />
     <ClInclude Include="..\..\src\libraries\3a\LogMedicalEquipments.h" />
     <ClInclude Include="..\..\src\libraries\3a\LogMedicalWaitingAttention.h" />

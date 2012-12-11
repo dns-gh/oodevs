@@ -13,8 +13,6 @@
 #include "Extractors.h"
 #include "FilterHelper.h"
 
-#include "IdentifierValue_ABC.h"
-
 namespace extractors
 {
 
@@ -29,30 +27,6 @@ class FireHumanDamages : public Extractor< NumericValue >
 public:
     //! @name Types
     //@{
-    struct IdentifierValueFirer : public IdentifierValue_ABC
-    {
-        enum { has_parameter = false };
-        //! @name Operations
-        //@{
-        virtual void Receive( const sword::SimToClient& wrapper )
-        {
-            if( wrapper.message().has_unit_damaged_by_unit_fire() )
-                Set( wrapper.message().unit_damaged_by_unit_fire().firer().id() );
-        }
-        //@}
-    };
-    struct IdentifierValueTarget : public IdentifierValue_ABC
-    {
-        enum { has_parameter = false };
-        //! @name Operations
-        //@{
-        virtual void Receive( const sword::SimToClient& wrapper )
-        {
-            if( wrapper.message().has_unit_damaged_by_unit_fire() )
-                Set( wrapper.message().unit_damaged_by_unit_fire().unit().id() );
-        }
-        //@}
-    };
     enum { has_parameter = true };
     //@}
 
