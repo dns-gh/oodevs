@@ -36,7 +36,6 @@ namespace xml
 
 class DEC_Workspace;
 class DEC_PathFind_Manager;
-class MIL_Agent_ABC;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
 class MIL_EntityManager;
