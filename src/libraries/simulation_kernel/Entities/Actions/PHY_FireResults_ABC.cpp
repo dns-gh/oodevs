@@ -116,7 +116,6 @@ void PHY_FireResults_ABC::SendDamagesCrowd( const MIL_Population& firer, unsigne
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Agent& PHY_FireResults_ABC::GetDamages( const MIL_Agent_ABC& target )
 {
-    assert( agentsDamages_.size() <= 1 ); // $$$$ MCO 2012-05-04: added by me to verify what I suspect
     return agentsDamages_[ &target ];
 }
 
