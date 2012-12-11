@@ -15,7 +15,6 @@
 #include "NET_AgentServer.h"
 #include "NET_Simulation_ABC.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
-#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_Publisher_ABC.h"

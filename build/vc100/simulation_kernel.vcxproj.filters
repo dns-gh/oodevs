@@ -1764,9 +1764,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.cpp">
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TacticalLineManager.cpp">
-      <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.cpp">
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClCompile>
@@ -2170,9 +2167,6 @@
       <Filter>Source Files\CheckPoints</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.cpp">
-      <Filter>Source Files\Workspace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Singletons.cpp">
       <Filter>Source Files\Workspace</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_AffinitiesMap.cpp">
@@ -2663,6 +2657,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Time_ABC.cpp">
+      <Filter>Source Files\Workspace</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.cpp">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
@@ -4226,9 +4223,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.h">
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TacticalLineManager.h">
-      <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.h">
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClInclude>
@@ -4674,9 +4668,6 @@
       <Filter>Source Files\CheckPoints</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.h">
-      <Filter>Source Files\Workspace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Singletons.h">
       <Filter>Source Files\Workspace</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Time_ABC.h">

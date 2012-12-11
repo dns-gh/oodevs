@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter )
     in.mutable_value()->Add()->mutable_agentknowledge()->set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver.ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
 

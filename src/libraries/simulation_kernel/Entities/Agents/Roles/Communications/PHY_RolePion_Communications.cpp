@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Communications.h"
-#include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "SpeedComputer_ABC.h"
 #include "WeaponReloadingComputer_ABC.h"
@@ -249,7 +248,7 @@ void PHY_RolePion_Communications::SendChangedState( client::UnitAttributes& msg 
 void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
     if( bHasChanged_ && pJammingKnowledgeGroup_.get() )
-        pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
+        pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     if( bHasChanged_ )
         owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }

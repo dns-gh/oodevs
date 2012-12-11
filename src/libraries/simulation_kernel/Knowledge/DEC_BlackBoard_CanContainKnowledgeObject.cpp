@@ -15,10 +15,11 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "MIL_AgentServer.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
@@ -318,7 +319,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeig
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL_Army_ABC& team )
 {
-    const std::set< MIL_Object_ABC* >& universalObjects = MIL_EntityManager_ABC::GetSingleton().GetUniversalObjects();
+    const std::set< MIL_Object_ABC* >& universalObjects = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUniversalObjects();
     for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
     {
         if( !HasKnowledgeObject( **it ) && !(*it)->IsMarkedForDestruction() )

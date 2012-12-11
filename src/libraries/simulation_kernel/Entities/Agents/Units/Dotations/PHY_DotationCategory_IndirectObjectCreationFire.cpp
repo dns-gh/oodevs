@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectObjectCreationFire.h"
 #include "MIL_AgentServer.h"
-#include "MIL_Singletons.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -93,7 +92,7 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
 
     try
     {
-        MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, pFirer ? &pFirer->GetArmy() : 0, localisation );
+        MIL_Object_ABC* pObject = MIL_EntityManager_ABC::GetSingleton().CreateObject( objectType_, pFirer ? &pFirer->GetArmy() : 0, localisation ); // $$$$ _RC_ SLI 2012-12-07: only for TestScramblingAmmo
         ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
         if( pAttribute )
             pAttribute->Build( 1. );

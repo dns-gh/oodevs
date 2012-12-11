@@ -208,6 +208,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Time_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -678,7 +679,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaFunction.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaListParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TacticalLineManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrderType.cpp" />
@@ -814,7 +814,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\checkpoints\MIL_CheckPointManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\CheckPoints\MIL_CheckPointOutArchive.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Singletons.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_AffinitiesMap.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Color.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_Config.cpp" />
@@ -1540,7 +1539,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaFunction.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaListParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TacticalLineManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrderType.h" />
@@ -1696,7 +1694,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\CheckPoints\MIL_CheckPointOutArchive.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\CheckPoints\SerializationTools.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Singletons.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Time_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_AffinitiesMap.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Color.h" />

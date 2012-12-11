@@ -16,11 +16,7 @@ class SingletonTerminator
 {
 public:
      SingletonTerminator();
-     SingletonTerminator( StubMIL_Time_ABC* time );
     ~SingletonTerminator();
-
-private:
-    StubMIL_Time_ABC* time_;
 };
 
 #endif  //SIMULATION_KERNEL_TEST_SINGLETONTERMINATOR_H

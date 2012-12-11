@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "StubMIL_Time_ABC.h"
+#include "MockMIL_Time_ABC.h"
 #include "SingletonTerminator.h"
 #include "simulation_kernel/Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "simulation_kernel/Entities/Agents/Units/Composantes/PHY_ComposanteState.h"
@@ -39,8 +39,9 @@ BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
 BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )
 {
     // Need time to generate probability tables for protections...
-    StubMIL_Time_ABC time;
-    SingletonTerminator timeGuard( &time );
+    MockMIL_Time_ABC time;
+    SingletonTerminator timeGuard;
+    MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
 
     xml::xistringstream xdotationLogisticType(
         "<logistic-supply-classes>"

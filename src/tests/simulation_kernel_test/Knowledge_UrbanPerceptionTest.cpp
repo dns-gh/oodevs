@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 
         {
             MockMIL_Time_ABC time;
-            MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+            MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
             DEC_Knowledge_UrbanPerception kn( *pion.pPion_, pObject->GetID() );
         }
     }

@@ -13,7 +13,6 @@
 #include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Objects/ResourceTools.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
-#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -62,7 +61,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pEntityManager_       ( 0 )
     , pWorkspaceDIA_        ( 0 )
     , pMeteoDataManager_    ( 0 )
-    , pTacticalLineManager_ ( new MIL_TacticalLineManager() )
     , pPathFindManager_     ( 0 )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
@@ -118,7 +116,6 @@ MIL_AgentServer::~MIL_AgentServer()
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );
 //    delete pEntityManager_;
-//    delete pTacticalLineManager_;
 //    delete pMeteoDataManager_;
 //    MT_LOG_INFO_MSG( "Terminating DirectIA" );
 //    delete pWorkspaceDIA_;
@@ -309,7 +306,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << pEntityManager_
 //         << pWorkspaceDIA_        // uniquement données statiques
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
-//         << pTacticalLineManager_ // plus de limit et de lima
 //         << pPathFindManager_     // pas stockés
          << pCheckPointManager_
 //         << pAgentServer_         // moi-même ( static )
@@ -335,7 +331,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> pEntityManager_
 //         >> pWorkspaceDIA_
 //         >> timerManager_
-//         >> pTacticalLineManager_
 //         >> pPathFindManager_
          >> pCheckPointManager_
 //         >> pAgentServer_

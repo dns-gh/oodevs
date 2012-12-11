@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_MovingUnderground.h"
 #include "DetectionComputer_ABC.h"
-#include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "Checkpoints/SerializationTools.h"
@@ -126,7 +125,7 @@ bool PHY_RoleAction_MovingUnderground::Run()
         pDestination_.reset();
         return false;
     }
-    transferTime_ -= MIL_Singletons::GetTime().GetTickDuration();
+    transferTime_ -= MIL_Time_ABC::GetTime().GetTickDuration();
     if( transferTime_ <= 0 )
     {
         bHasChanged_ = true;
@@ -199,7 +198,7 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
         return false;
     bHasChanged_ = true;
     preparingToHide_ = true;
-    unsigned int duration = MIL_Singletons::GetTime().GetTickDuration();
+    unsigned int duration = MIL_Time_ABC::GetTime().GetTickDuration();
     speed_ = duration == 0 ? 0 : owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
     preparingToHide_ = false;
     pCurrentLocation_ = pKnowledge;

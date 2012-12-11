@@ -50,7 +50,7 @@ namespace
         {
             WorldInitialize( "worldwide/Paris" );
             PHY_ConsumptionType::Initialize();
-            MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+            MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
         }
         ~ObjectKnowledgeSerializationFixture()
         {

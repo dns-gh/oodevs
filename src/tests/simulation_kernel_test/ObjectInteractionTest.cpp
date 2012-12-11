@@ -313,7 +313,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapac
 
     MockAgent intruder;
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTick ).once().returns( 1u );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).once().returns( 1u );
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
 
     MOCK_EXPECT( animator.GetRole< MockRolePerceiver >().NotifyExternalPerception )
@@ -352,7 +352,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
     MockAgent intruder;
     intruder.RegisterRole( *new MockRoleLocation() );
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTick ).once().returns( 1u );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).once().returns( 1u );
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
     mock::verify( army );
     mock::verify( intruder );
@@ -365,7 +365,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
     detector.RegisterRole( *new MockRolePerceiver( detector ) );
     static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
 
-    MOCK_EXPECT( time.GetCurrentTick ).once().returns( 3u );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).once().returns( 3u );
 
     MOCK_EXPECT( intruder.GetRole< MockRoleLocation >().NotifyTerrainObjectCollision ).once();
     MOCK_EXPECT( detector.GetRole< MockRolePerceiver >().NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );

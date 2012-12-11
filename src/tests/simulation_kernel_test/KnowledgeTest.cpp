@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     MockArmy army;
     MOCK_EXPECT( army.GetID ).returns( 42u );
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
     boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
     boost::shared_ptr< MIL_KnowledgeGroup > group1( CreateKnowledgeGroup( army, armyGroup, 2, "GTIA" ) );
     boost::shared_ptr< MIL_KnowledgeGroup > group2( CreateKnowledgeGroup( army, armyGroup, 3, "GTIA" ) );
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
 {
     MockArmy army;
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
     boost::shared_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1 ) );
     boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup   ( CreateKnowledgeGroup( army, armyGroup, 2, "GTIA" ) );
     DEC_KnowledgeBlackBoard_Army blackboard( army );

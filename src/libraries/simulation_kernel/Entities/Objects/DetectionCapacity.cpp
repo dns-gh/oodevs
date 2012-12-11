@@ -8,12 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "MIL_AgentServer.h"
-#include "AnimatorAttribute.h"
 #include "DetectionCapacity.h"
-#include "MIL_Singletons.h"
+#include "AnimatorAttribute.h"
 #include "DetectorAttribute.h"
+#include "MIL_Time_ABC.h"
 #include "MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -211,7 +209,7 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
     CIT_AgentMap it = agentInsideMap_.find( &agent );
     if( it != agentInsideMap_.end() )
     {
-        int currentTime = MIL_Singletons::GetTime().GetCurrentTick();
+        int currentTime = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         int detectionTime = it->second;
         int maxAnimators = object.GetAttribute< AnimatorAttribute >().GetMaxAnimators();
         AnimatorAttribute::T_AgentSet animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
@@ -259,7 +257,7 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
 // -----------------------------------------------------------------------------
 void DetectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    agentInsideMap_.insert( std::make_pair( &agent, MIL_Singletons::GetTime().GetCurrentTick() ) );
+    agentInsideMap_.insert( std::make_pair( &agent, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) );
 }
 
 // -----------------------------------------------------------------------------

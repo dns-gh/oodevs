@@ -14,7 +14,7 @@
 #include "HumansComposante_ABC.h"
 #include "PHY_HumanRank.h"
 #include "PHY_HumanWound.h"
-#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
@@ -74,7 +74,7 @@ PHY_Human::PHY_Human( const PHY_Human& rhs )
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human()
     : Human_ABC()
-    , time_( MIL_Singletons::GetTime() )
+    , time_( MIL_Time_ABC::GetTime() )
     , pComposante_( 0 )
     , pRank_( 0 )
     , pWound_( 0 )

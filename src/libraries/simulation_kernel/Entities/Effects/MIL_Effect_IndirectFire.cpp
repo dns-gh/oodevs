@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_IndirectFire.h"
-#include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
@@ -132,7 +131,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
     UpdateTargetPositionFromKnowledge();
 
     const double rNewTimeBeforeImpact = vSourcePosition_.Distance( vTargetPosition_ ) / weaponType.GetAverageSpeed();
-    rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Singletons::GetTime().GetCurrentTick() );
+    rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
 
     nNbrAmmoFired_ += nNbrAmmoReserved;
     if( indirectDotationCategory_.GetDotationCategory().ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
@@ -155,7 +154,7 @@ bool MIL_Effect_IndirectFire::Execute()
     if( !bIsFlying_ )
         return true;
 
-    if( MIL_Singletons::GetTime().GetCurrentTick() < rImpactTimeStep_ )
+    if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() < rImpactTimeStep_ )
         return true;
 
     if( nNbrAmmoFired_ > 0 )

@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
 
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound' death-threshold='95'>"
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_available_count() );
         BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( 0 ).available_count() );
 
-        MOCK_EXPECT( time.GetCurrentTick ).returns( 2 );
+        MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 2 );
         {
             PHY_InjuredHuman injuredHuman;
             capacity.ReceivePatient( injuredHuman );
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
     SingletonTerminator terminator;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound1' death-threshold='95'>"
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
     SingletonTerminator terminator;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound1' death-threshold='95'>"
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
     SingletonTerminator terminator;
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetTickDuration ).returns( 10 );
-    MOCK_EXPECT( time.GetCurrentTick ).returns( 1 );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
     {
         xml::xistringstream xisMedical( "<medical-treatments>"
             "<medical-treatment id='0' name='Wound1' death-threshold='95'>"

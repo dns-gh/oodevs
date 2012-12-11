@@ -3,40 +3,46 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "DEC_Knowledge_ABC.h"
 #include "MIL_Time_ABC.h"
-#include <boost/serialization/export.hpp>
+#include "MIL_AgentServer.h"
 
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ABC )
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ABC constructor
-// Created: NLD 2004-03-12
-// -----------------------------------------------------------------------------
-DEC_Knowledge_ABC::DEC_Knowledge_ABC()
+namespace
 {
-    // NOTHING
+    const MIL_Time_ABC* pTime_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ABC destructor
-// Created: NLD 2004-03-12
+// Name: MIL_Time_ABC::GetTime
+// Created: SLI 2012-12-06
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ABC::~DEC_Knowledge_ABC()
+const MIL_Time_ABC& MIL_Time_ABC::GetTime()
 {
-    // NOTHING
+    return pTime_ ? *pTime_ : MIL_AgentServer::GetWorkspace();
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ABC::GetCurrentTimeStep
-// Created: NLD 2004-03-16
+// Name: MIL_Time_ABC::RegisterTime
+// Created: LDC 2010-01-04
 // -----------------------------------------------------------------------------
-unsigned int DEC_Knowledge_ABC::GetCurrentTimeStep() const
+void MIL_Time_ABC::RegisterTime( const MIL_Time_ABC& time )
 {
-    return MIL_Time_ABC::GetTime().GetCurrentTimeStep();
+    if( pTime_ )
+        throw std::runtime_error( "Time already registered" );
+    pTime_ = &time;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Time_ABC::UnregisterTime
+// Created: LDC 2010-01-04
+// -----------------------------------------------------------------------------
+void MIL_Time_ABC::UnregisterTime( const MIL_Time_ABC& time )
+{
+    if( &time != pTime_ )
+        throw std::runtime_error( "Unregistering wrong time" );
+    pTime_ = 0;
 }

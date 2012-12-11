@@ -40,7 +40,6 @@ class MIL_Agent_ABC;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
 class MIL_EntityManager;
-class MIL_TacticalLineManager;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
 class ProcessMonitor;
@@ -115,7 +114,6 @@ public:
     MIL_UrbanCache& GetUrbanCache() const;
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
-    MIL_TacticalLineManager& GetTacticalLineManager() const;
     DEC_PathFind_Manager& GetPathFindManager() const;
     PHY_MeteoDataManager& GetMeteoDataManager() const;
     MIL_CheckPointManager& GetCheckPointManager() const;
@@ -195,7 +193,6 @@ private:
     DEC_Workspace* pWorkspaceDIA_;
     PHY_MeteoDataManager* pMeteoDataManager_;
     MT_TimerManager timerManager_;
-    MIL_TacticalLineManager* pTacticalLineManager_;
     DEC_PathFind_Manager* pPathFindManager_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;

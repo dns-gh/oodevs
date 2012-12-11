@@ -27,10 +27,18 @@ public:
 
     //! @name Operations
     //@{
+    static const MIL_Time_ABC& GetTime();
     virtual unsigned int GetCurrentTick() const = 0;
     virtual unsigned int GetTickDuration() const = 0;
     virtual unsigned int GetRealTime() const = 0;
     virtual unsigned int GetCurrentTimeStep() const = 0;
+    //@}
+
+protected:
+    //! @name For tests only
+    //@{
+    static void RegisterTime( const MIL_Time_ABC& time );
+    static void UnregisterTime( const MIL_Time_ABC& time );
     //@}
 };
 

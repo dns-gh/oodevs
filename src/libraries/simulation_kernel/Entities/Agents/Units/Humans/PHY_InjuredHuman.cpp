@@ -14,7 +14,6 @@
 #include "MIL_Injury_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Objects/MedicalTreatmentAttribute.h"
-#include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_InjuredHuman )
@@ -29,7 +28,7 @@ PHY_InjuredHuman::PHY_InjuredHuman()
     , injuryID_( 0 )
     , isTreated_( false )
     , pComposantePion_( 0 )
-    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
     , treatment_( 0 )
 {
     // NOTHING
@@ -46,7 +45,7 @@ PHY_InjuredHuman::PHY_InjuredHuman( const PHY_InjuredHuman& rhs )
     , isTreated_( rhs.isTreated_ )
     , injuriesList_( rhs.injuriesList_ )
     , pComposantePion_( rhs.pComposantePion_ )
-    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
     , treatment_( rhs.treatment_ )
 {
     // NOTHING
@@ -62,7 +61,7 @@ PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury , const PHY_Composant
     , injuryID_( injury.GetInjuryID() )
     , isTreated_( false )
     , pComposantePion_( &composantePion )
-    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
     , treatment_( 0 )
 {
     AddInjury( injury );
@@ -78,7 +77,7 @@ PHY_InjuredHuman::PHY_InjuredHuman( MIL_Injury_ABC& injury )
     , injuryID_( injury.GetInjuryID() )
     , isTreated_( false )
     , pComposantePion_( 0 )
-    , timeOfLastUpdate_( static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() ) )
+    , timeOfLastUpdate_( static_cast< float >( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
     , treatment_( 0 )
 {
     AddInjury( injury );
@@ -202,7 +201,7 @@ void PHY_InjuredHuman::Update()
     //If the Injured Human isn't dead, update its parameters
     if( IsAlive() && !treatment_ )
     {
-        const float currentTime = static_cast< float >( MIL_Singletons::GetTime().GetCurrentTick() );
+        const float currentTime = static_cast< float >( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
 
         //Update the characteristics of all injuries
         UpdateInjuriesInfo( currentTime );

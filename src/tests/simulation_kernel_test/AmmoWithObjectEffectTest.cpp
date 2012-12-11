@@ -1,5 +1,6 @@
 #include "simulation_kernel_test_pch.h"
 #include "SingletonTerminator.h"
+#include "MockMIL_Time_ABC.h"
 #include "MockAgent.h"
 #include "MockArmy.h"
 #include "MockMIL_EntityManager_ABC.h"
@@ -54,6 +55,7 @@ namespace
 BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
     SingletonTerminator terminator;
+    MockMIL_Time_ABC time;
     WorldInitialize( "worldwide/Paris" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
 
@@ -75,8 +77,8 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         PHY_RoleAction_MovingUnderground* roleMovingUnderground = new PHY_RoleAction_MovingUnderground( pion );
         pion.RegisterRole( *roleMovingUnderground );
 
-        MockMIL_Time_ABC time;
         MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 10u );
         MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
         TestIndirectFireModifier* testRole = new TestIndirectFireModifier( time, effectManager, pion, dotations );
         pion.RegisterRole< TestIndirectFireModifier >( *testRole );

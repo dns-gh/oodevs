@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Population_PathClass.h"
-#include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "entities/Objects/MIL_Object_ABC.h"

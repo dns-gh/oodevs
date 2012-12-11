@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposantePion.h"
-#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 #include "WeaponAvailabilityComputer_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
@@ -81,7 +81,7 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion()
     : PHY_Composante_ABC()
-    , time_( MIL_Singletons::GetTime() )
+    , time_( MIL_Time_ABC::GetTime() )
     , pRole_( 0 )
     , pState_( 0 )
     , pType_( 0 )

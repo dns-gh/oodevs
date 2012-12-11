@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
-#include "MIL_Singletons.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager_ABC.h"
@@ -160,7 +159,7 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
 // -----------------------------------------------------------------------------
 void DEC_ObjectFunctions::MagicDestroyObjectId( int objectId )
 {
-    MIL_EntityManager_ABC& entityManager = MIL_Singletons::GetEntityManager();
+    MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
     MIL_Object_ABC* pObject = entityManager.FindObject( objectId );
     if( pObject && ( *pObject )().CanBeDestroyed() )
     {

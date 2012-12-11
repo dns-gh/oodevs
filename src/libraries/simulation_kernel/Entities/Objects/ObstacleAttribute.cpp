@@ -9,8 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ObstacleAttribute.h"
-#include "MIL_AgentServer.h"
-#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 #include "Object.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
@@ -50,7 +49,7 @@ ObstacleAttribute::ObstacleAttribute()
     , bActivated_    ( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
-    , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
+    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
 {
     // NOTHING
 }
@@ -64,7 +63,7 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
     , bActivated_    ( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
-    , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
+    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
 {
     // NOTHING
 }
@@ -78,7 +77,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     , bActivated_    ( xis.attribute< bool >( "activated", false ) )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
-    , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
+    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
 {
     xis >> xml::optional
         >> xml::start( "activation-time" )
@@ -99,7 +98,7 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
     , activityTime_  ( attributes.list( 4 ).quantity() )
-    , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
+    , creationTime_  ( MIL_Time_ABC::GetTime().GetRealTime() )
 {
     // NOTHING
 }

@@ -33,7 +33,7 @@ struct FixturePion : private boost::noncopyable
 
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) ) );
         MockMIL_Time_ABC time;
-        MOCK_EXPECT( time.GetCurrentTick ).returns( 1u );
+        MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );

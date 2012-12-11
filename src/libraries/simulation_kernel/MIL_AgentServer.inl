@@ -40,17 +40,6 @@ NET_AgentServer& MIL_AgentServer::GetAgentServer() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetTacticalLineManager
-// Created: NLD 2002-08-08
-//-----------------------------------------------------------------------------
-inline
-MIL_TacticalLineManager& MIL_AgentServer::GetTacticalLineManager() const
-{
-    assert( pTacticalLineManager_ );
-    return *pTacticalLineManager_;
-}
-
-//-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetMeteoDataManager
 // Created: JVT 02-10-21
 //-----------------------------------------------------------------------------

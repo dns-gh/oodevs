@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_Explosion.h"
-#include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
@@ -26,7 +25,7 @@
 // -----------------------------------------------------------------------------
 MIL_Effect_Explosion::MIL_Effect_Explosion( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, bool neutralization )
     : MIL_Effect_Fire_ABC( surface, ammoCategory )
-    , nLifeLastTimeStep_ ( MIL_Singletons::GetTime().GetCurrentTick() + (unsigned int)rLifeDuration )
+    , nLifeLastTimeStep_ ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + (unsigned int)rLifeDuration )
     , neutralization_    ( neutralization )
     , started_           ( false )
 {
@@ -53,7 +52,7 @@ bool MIL_Effect_Explosion::Execute()
         SendMsgStartEffect( neutralization_ ? sword::StartFireEffect::neutralization : sword::StartFireEffect::explosion );
         started_ = true;
     }
-    if( nLifeLastTimeStep_ <= MIL_Singletons::GetTime().GetCurrentTick() )
+    if( nLifeLastTimeStep_ <= MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     {
         SendMsgStopEffect();
         delete this;

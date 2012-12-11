@@ -17,7 +17,6 @@
 #include "FormationFactory.h"
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
-#include "MIL_Singletons.h"
 #include "MissionController.h"
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
@@ -258,7 +257,7 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     Sink_ABC* sink;
     archive >> sink;
     std::auto_ptr< Sink_ABC > pSink( sink );
-    ::new( manager )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
+    ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
                                        MIL_AgentServer::GetWorkspace().GetObjectFactory(),
                                        pSink,
                                        MIL_AgentServer::GetWorkspace().GetConfig() );

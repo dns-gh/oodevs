@@ -67,6 +67,7 @@ namespace
 BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 {
     SingletonTerminator terminator;
+    MockMIL_Time_ABC time;
     WorldInitialize( "worldwide/Paris" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
     {
@@ -85,9 +86,10 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         PHY_RoleAction_MovingUnderground* roleMovingUnderground = new PHY_RoleAction_MovingUnderground( pion );
         pion.RegisterRole( *roleMovingUnderground );
 
-        MockMIL_Time_ABC time;
+
         MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
         MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
+        MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 10u );
 
         const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.2' repairable-without-evacuation='0.8'/></attritions>"
