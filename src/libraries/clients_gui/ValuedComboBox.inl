@@ -135,7 +135,7 @@ T ValuedComboBox<T>::GetValue()
 {
     int nIndex = currentItem();
     if( nIndex == -1 || nIndex > int( values_.size() ) )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid index." );
     return values_[nIndex];
 }
 

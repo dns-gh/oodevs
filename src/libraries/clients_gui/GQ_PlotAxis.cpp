@@ -258,10 +258,10 @@ void GQ_PlotAxis::SetTickMultiples( double rMultiplesBase, const std::vector< un
         return;
 
     if( rMultiplesBase <= 1.0 )
-        throw std::runtime_error( "GQ_PlotAxis : invalid tick multiples base (should be > 1)." );
+        throw MASA_EXCEPTION( "GQ_PlotAxis : invalid tick multiples base (should be > 1)." );
 
     if( multiples.empty() )
-        throw std::runtime_error( "GQ_PlotAxis : invalid tick multiples set (empty)." );
+        throw MASA_EXCEPTION( "GQ_PlotAxis : invalid tick multiples set (empty)." );
 
     rMultiplesBase_ = rMultiplesBase;
     nMinBasePower_  = nMinBasePower;

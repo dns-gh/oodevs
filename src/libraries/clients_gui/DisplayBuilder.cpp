@@ -42,7 +42,7 @@ GroupDisplayer& DisplayBuilder::AddGroup( const QString& name )
 {
     GroupDisplayer*& group = groups_[ name ];
     if( group )
-        throw std::runtime_error( "Group '" + std::string( name.toStdString() ) + "' already exists" );
+        throw MASA_EXCEPTION( "Group '" + name.toStdString() + "' already exists" );
     group = new GroupDisplayer( parent_, name, factory_ );
     parent_->layout()->addWidget( group );
     return *group;

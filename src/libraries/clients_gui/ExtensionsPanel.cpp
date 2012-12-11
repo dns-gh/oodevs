@@ -310,7 +310,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
                 if( !selected.empty() )
                     combo->setCurrentText( selected.c_str() );
             }
-            catch( boost::bad_lexical_cast& )
+            catch( const boost::bad_lexical_cast& )
             {
                 // NOTHING
             }

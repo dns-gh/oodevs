@@ -77,7 +77,7 @@ const ObjectAttributePrototypeContainer::T_AttributeContainer* ObjectAttributePr
     CIT_AttributesPrototypes it = attributes_.find( type.GetType() );
     Hide();
     if( it != attributes_.end() )
-        current_ = it->second; // throw std::runtime_error( "Unable to select " + type.GetType() + " object type." );
+        current_ = it->second; // throw MASA_EXCEPTION( "Unable to select " + type.GetType() + " object type." );
     SetLoader( 0 );
     Show();
     return current_.get();

@@ -151,7 +151,7 @@ void PreferencesDialog::reject()
 GraphicPreferences& PreferencesDialog::GetPreferences() const
 {
     if( !pGraphicPrefPanel_ )
-        throw std::runtime_error( "Graphic preference panel not initialized" );
+        throw MASA_EXCEPTION( "Graphic preference panel not initialized" );
     return pGraphicPrefPanel_->GetPreferences();
 }
 

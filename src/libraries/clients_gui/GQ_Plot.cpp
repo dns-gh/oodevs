@@ -333,11 +333,11 @@ GQ_Plot::T_DataIndex GQ_Plot::GetNextDataIndex( T_DataIndex dataIndex ) const
 GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
 {
     if( dataIndex.second == -1 )
-        throw std::runtime_error( "GQ_Plot : invalid iterator" );
+        throw MASA_EXCEPTION( "GQ_Plot : invalid iterator" );
 
     CIT_LayerMap it = layerMap_.find( dataIndex.first );
     if( it == layerMap_.end() || dataIndex.second >= ( int )it->second.size() )
-        throw std::runtime_error( "GQ_Plot : invalid iterator" );
+        throw MASA_EXCEPTION( "GQ_Plot : invalid iterator" );
 
     const T_PlotLayer& layer = it->second;
     GQ_PlotData* pData = layer[ dataIndex.second ];

@@ -360,13 +360,14 @@ void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
                 {
                     loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
                     loadFromFilePathLabel_->setText( filename );
-                } catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
+                }
+                catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
                 {
                     //NOTHING
                 }
                 catch( const std::exception& e )
                 {
-                    QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), e.what(), QMessageBox::Ok, QMessageBox::NoButton );
+                    QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), tools::GetExceptionMsg( e ).c_str(), QMessageBox::Ok, QMessageBox::NoButton );
                 }
             }
         }

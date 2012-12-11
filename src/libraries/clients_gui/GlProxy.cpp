@@ -463,7 +463,7 @@ std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
 {
     if( tooltipLayer_ )
         return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "ToolTipLayer not defined." );
 }
 
 // -----------------------------------------------------------------------------

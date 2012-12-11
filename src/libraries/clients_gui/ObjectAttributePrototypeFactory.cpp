@@ -37,7 +37,7 @@ ObjectAttributePrototypeFactory::~ObjectAttributePrototypeFactory()
 void ObjectAttributePrototypeFactory::Register( const std::string& capacity, const T_CallBack& callback )
 {
     if( ! callbacks_.insert( std::make_pair( capacity, callback ) ).second )
-        throw std::invalid_argument( "capacity '" + capacity + "' already registered." );
+        throw MASA_EXCEPTION( "Capacity '" + capacity + "' already registered." );
 }
 
 // -----------------------------------------------------------------------------

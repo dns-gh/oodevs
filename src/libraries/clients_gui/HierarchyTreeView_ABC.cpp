@@ -172,7 +172,7 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
                 }
             }
             else
-                throw std::exception( __FUNCTION__ "Error, superior not found." );
+                throw MASA_EXCEPTION( "Error, superior not found." );
         }
     }
     else

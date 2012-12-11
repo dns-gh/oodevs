@@ -85,7 +85,7 @@ void Application_ABC::CheckLicense( const std::string& licenseName )
         license_gui::LicenseDialog::CheckLicense( licenseName, false, 0, &strExpiration );
         expiration_ = QString::fromStdString( strExpiration );
     }
-    catch( std::exception& /*e*/ )
+    catch( const std::exception& /*e*/ )
     {
         invalidLicense_ = true;
     }

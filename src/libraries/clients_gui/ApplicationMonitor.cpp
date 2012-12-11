@@ -43,9 +43,9 @@ bool ApplicationMonitor::notify( QObject* receiver, QEvent* event )
     {
         return QApplication::notify( receiver, event );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        emit Error( QString( e.what() ) );
+        emit Error( QString::fromStdString( tools::GetExceptionMsg( e ) ) );
     }
     catch( ... )
     {

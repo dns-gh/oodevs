@@ -53,7 +53,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
-        throw std::runtime_error( "Unable to create context" );
+        throw MASA_EXCEPTION( "Unable to create context" );
 }
 
 // -----------------------------------------------------------------------------

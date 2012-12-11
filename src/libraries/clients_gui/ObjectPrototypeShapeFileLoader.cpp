@@ -37,7 +37,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     OGRRegisterAll();
     dataSource_.reset( OGRSFDriverRegistrar::Open( filename.toStdString().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
     if( dataSource_ == NULL )
-        throw std::runtime_error( parent->tr( "Cannot load shapefile %1" ).arg( filename ).toStdString() );
+        throw MASA_EXCEPTION( parent->tr( "Cannot load shapefile %1" ).arg( filename ).toStdString() );
 
     QStringList loadableLayerNames;
     QString unloadableLayerExplanations;
@@ -52,7 +52,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     }
 
     if( loadableLayerNames.empty() )
-        throw std::runtime_error(  tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).toStdString() );
+        throw MASA_EXCEPTION(  tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).toStdString() );
 
     QString layerName;
     if( loadableLayerNames.size() == 1 )
@@ -67,7 +67,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
 
     currentLayer_ = dataSource_->GetLayerByName( layerName.toStdString().c_str() );
     if( !currentLayer_ )
-        throw std::runtime_error( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot read layer %1" ).arg( layerName ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot read layer %1" ).arg( layerName ).toStdString() );
 
     for( int i=0, count=currentLayer_->GetLayerDefn()->GetFieldCount(); i<count; ++i )
         fields_.push_back( currentLayer_->GetLayerDefn()->GetFieldDefn( i )->GetNameRef() );

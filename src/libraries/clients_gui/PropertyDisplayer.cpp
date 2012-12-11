@@ -94,7 +94,7 @@ void PropertyDisplayer::DisplayFormatted( const QString& formatted )
 void PropertyDisplayer::EndDisplay()
 {
     if( !item_ )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid current item." );
 
     item_->setData( message_, Qt::DisplayRole );
     if( color_.isValid() )

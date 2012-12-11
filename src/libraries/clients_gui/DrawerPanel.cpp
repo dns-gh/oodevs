@@ -242,7 +242,7 @@ void DrawerPanel::StartDrawing()
         else if( selectedStyle_->GetType() == "circle" )
             layer_.StartCircle( *shape );
         else
-            throw std::runtime_error( __FUNCTION__ " Unhandled shape geometry." );
+            throw MASA_EXCEPTION( "Unhandled shape geometry." );
     }
 }
 
@@ -261,7 +261,7 @@ void DrawerPanel::Open()
     {
         model_.Load( filename.toStdString() );
     }
-    catch( xml::exception& )
+    catch( const xml::exception& )
     {
         QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawings file." ).arg( filename ) );
     }
@@ -285,7 +285,7 @@ void DrawerPanel::Save()
         tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
         model_.Save( filename.toStdString(), schemaWriter );
     }
-    catch( xml::exception& )
+    catch( const xml::exception& )
     {
         QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save drawings to file '%1'. \nPlease check access permissions or write protection." ).arg( filename ) );
     }

@@ -237,5 +237,5 @@ void GlToolsBase::OptionChanged( const std::string& name, const kernel::OptionVa
 // -----------------------------------------------------------------------------
 std::auto_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

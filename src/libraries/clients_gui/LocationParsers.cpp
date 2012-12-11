@@ -58,7 +58,7 @@ LocationParsers::~LocationParsers()
 bool LocationParsers::Parse( int parserId, QString content, geometry::Point2f& result, QStringList& hint )
 {
     if( parsers_.find( parserId ) == parsers_.end() || parsers_[ parserId ]->GetNumberOfParameters() != 1 )
-         throw std::runtime_error( __FUNCTION__ );
+         throw MASA_EXCEPTION( "Invalid parser id or wrong number of parser parameter for this id." );
     try
     {
         return parsers_[ parserId ]->Parse( content, result, hint );
@@ -76,7 +76,7 @@ bool LocationParsers::Parse( int parserId, QString content, geometry::Point2f& r
 bool LocationParsers::Parse( int parserId, QString contentX, QString contentY, geometry::Point2f& result, QStringList& hint )
 {
     if( parsers_.find( parserId ) == parsers_.end() || parsers_[ parserId ]->GetNumberOfParameters() != 2 )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid parser id or wrong number of parser parameter for this id." );
     try
     {
         return parsers_[ parserId ]->Parse( contentX + ":" + contentY, result, hint );
@@ -94,7 +94,7 @@ bool LocationParsers::Parse( int parserId, QString contentX, QString contentY, g
 LocationParser_ABC& LocationParsers::GetParser( int parserId )
 {
     if( parsers_.find( parserId ) == parsers_.end() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid parser id." );
     return **parsers_.find( parserId )->second;
 }
 

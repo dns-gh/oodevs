@@ -158,7 +158,7 @@ kernel::Location_ABC* DrawingTemplate::CreateLocation() const
         return new kernel::Polygon();
     if( type_ == "circle" )
         return new kernel::Circle();
-    throw std::runtime_error( __FUNCTION__ " Invalid drawing geometry type." );
+    throw MASA_EXCEPTION( "Invalid drawing geometry type." );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ DrawingTemplate::Unit DrawingTemplate::ReadUnit( xml::xistream& input )
         return ePixel;
     if( unit == "%" )
         return ePercent;
-    throw std::runtime_error( "Unknown unit " + unit );
+    throw MASA_EXCEPTION( "Unknown unit " + unit );
 }
 
 // -----------------------------------------------------------------------------
