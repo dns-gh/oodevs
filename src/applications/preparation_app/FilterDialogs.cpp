@@ -72,9 +72,9 @@ void FilterDialogs::Load( xml::xistream& xis )
                 >> xml::list( "section", *this, &FilterDialogs::ReadSection )
             >> xml::end;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( parent_, tools::translate( "FilterDialogs", "Error loading filters" ), e.what() );
+        QMessageBox::critical( parent_, tools::translate( "FilterDialogs", "Error loading filters" ), tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -98,7 +98,7 @@ void FilterDialogs::ReadSection( xml::xistream& xis )
     std::string name = xis.attribute< std::string >( "id" );
     std::transform( name.begin(), name.end(), name.begin(), std::tolower );
     if( name != "export" && name != "import" )
-        throw std::runtime_error( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).toStdString() );
     Register( name, *new FilterDialog( parent_, xis, config_ ) );
 }
 

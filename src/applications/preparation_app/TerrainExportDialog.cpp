@@ -142,10 +142,10 @@ void TerrainExportDialog::accept()
         }
         QMessageBox::information( this, tr( "Terrain export" ), tr( "Export successful." ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         SetProgression( progressDialog, 100, "" );
-        QMessageBox::critical( this, tr( "Error during export process" ), e.what() );
+        QMessageBox::critical( this, tr( "Error during export process" ), tools::GetExceptionMsg( e ).c_str() );
     }
 }
 

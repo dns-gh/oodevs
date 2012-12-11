@@ -123,11 +123,11 @@ void FilterDialog::OnAccept()
         if( filter.NeedToReloadExercise() )
             emit reloadExercise();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         setEnabled( true );
         reject();
-        QMessageBox::critical( this, tools::translate( "FilterDialog", "Error on filter execution" ), e.what() );
+        QMessageBox::critical( this, tools::translate( "FilterDialog", "Error on filter execution" ), tools::GetExceptionMsg( e ).c_str() );
     }
     catch( ... )
     {

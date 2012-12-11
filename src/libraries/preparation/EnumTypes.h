@@ -30,7 +30,7 @@ struct Enum_##name : public Enum_ABC< E_##name > {                              
     Enum_##name( int value ) : Enum_ABC< E_##name >( (E_##name)value ) {}                               \
     Enum_##name( const E_##name& value ) : Enum_ABC< E_##name >( value ) {}                             \
     Enum_##name( const std::string& xml ) : Enum_ABC< E_##name >( ENT_Tr::ConvertTo##name( xml ) )      \
-    { if( value_ == -1 ) throw std::runtime_error( "Invalid " #name " value '" + xml + "'" ); }         \
+    { if( value_ == -1 ) throw MASA_EXCEPTION( "Invalid " #name " value '" + xml + "'" ); }         \
     virtual QString ToString() const { return ENT_Tr::ConvertFrom##name( value_, ENT_Tr::eToTr ).c_str(); }     \
     virtual std::string ToXml() const { return ENT_Tr::ConvertFrom##name( value_, ENT_Tr::eToSim ); }   \
     static int max() { return int( eNbr##name ); }                                                      \

@@ -90,9 +90,9 @@ bool ScoresModel::CheckValidity( const tools::SchemaWriter_ABC& schemaWriter ) c
         xml::xostringstream xos;
         Serialize( xos, schemaWriter );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), tools::translate( "ScoresModel", "Score definitions contain errors:\nReason: %1." ).arg( e.what() ) );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), tools::translate( "ScoresModel", "Score definitions contain errors:\nReason: %1." ).arg( tools::GetExceptionMsg( e ).c_str() ) );
         return false;
     }
     return true;

@@ -47,7 +47,7 @@ void UrbanExportManager::Run() const
 {
     bfs::path exportPath( directory_ );
     if( !bfs::exists( exportPath ) )
-        throw std::exception( "export directory doesn't exist" );
+        throw MASA_EXCEPTION( "export directory doesn't exist" );
 
     RemoveOldFile( name_ );
     UrbanFileExporter( exportPath.string(), name_, projector_, model_ );

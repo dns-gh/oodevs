@@ -53,7 +53,7 @@ geometry::Point2f MoveableProxy::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 float MoveableProxy::GetHeight( bool ) const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ float MoveableProxy::GetHeight( bool ) const
 // -----------------------------------------------------------------------------
 bool MoveableProxy::IsAt( const geometry::Point2f& /*pos*/, float /*precision = 100.f*/,  float /*adaptiveFactor = 1.f*/) const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ bool MoveableProxy::IsAt( const geometry::Point2f& /*pos*/, float /*precision = 
 // -----------------------------------------------------------------------------
 bool MoveableProxy::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ bool MoveableProxy::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f MoveableProxy::GetBoundingBox() const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ geometry::Rectangle2f MoveableProxy::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void MoveableProxy::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void MoveableProxy::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 // -----------------------------------------------------------------------------
 bool MoveableProxy::CanAggregate() const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,5 +107,5 @@ bool MoveableProxy::CanAggregate() const
 // -----------------------------------------------------------------------------
 bool MoveableProxy::IsAggregated() const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    throw MASA_EXCEPTION( "not implemented" );
 }

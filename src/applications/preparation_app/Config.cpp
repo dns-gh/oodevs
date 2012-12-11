@@ -34,9 +34,9 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
     {
         std::string exercise = GetExerciseName();
         if( exercise.empty() )
-            throw std::runtime_error( "Specify an exercise to generate scores." );
+            throw MASA_EXCEPTION( "Specify an exercise to generate scores." );
         if( !bfs::exists( bfs::path( GetExerciseFile() ) ) )
-            throw std::runtime_error( "The specified exercise does not exist." );
+            throw MASA_EXCEPTION( "The specified exercise does not exist." );
         generateScores_ = true;
     }
 }

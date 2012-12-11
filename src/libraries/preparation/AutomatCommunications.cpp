@@ -61,6 +61,6 @@ kernel::KnowledgeGroup_ABC* AutomatCommunications::ReadKnowledgeGroup( xml::xist
 void AutomatCommunications::SerializeAttributes( xml::xostream& xos ) const
 {
     if( ! GetSuperior() ) // $$$$ SBO 2006-10-09: check that superior is a gtia
-        throw std::runtime_error( QString( "Knowledge group not defined for automat '%1'." ).arg( GetEntity().GetId() ).toStdString() );
+        throw MASA_EXCEPTION( QString( "Knowledge group not defined for automat '%1'." ).arg( GetEntity().GetId() ).toStdString() );
     xos << xml::attribute( "knowledge-group", long( GetSuperior()->GetId() ) );
 }

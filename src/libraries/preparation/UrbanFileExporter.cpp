@@ -59,19 +59,19 @@ void UrbanFileExporter::Initialize()
     const char* pszDriverName = "ESRI Shapefile";
     OGRSFDriver* poDriver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName( pszDriverName );
     if( poDriver == NULL )
-        throw std::runtime_error(("%s driver not available.\n", pszDriverName ));
+        throw MASA_EXCEPTION(("%s driver not available.\n", pszDriverName ));
 
     std::string filename = name_ + ".shp";
     std::string filepath =  directory_ + "/" + filename;
     source_ = poDriver->CreateDataSource( filepath.c_str(), NULL );
     if( source_ == NULL )
-        throw std::runtime_error( ( "gdal_ogr : write shape failed %s",directory_.c_str() ) );
+        throw MASA_EXCEPTION( ( "gdal_ogr : write shape failed %s",directory_.c_str() ) );
 
     OGRSpatialReference newSpatialRef;
     newSpatialRef.SetWellKnownGeogCS( "EPSG:4326" );
     layer_ = source_->CreateLayer( filepath.c_str(), &newSpatialRef, wkbPolygon, NULL );
     if( layer_ == NULL )
-        throw std::runtime_error( "Layer creation failed.\n" );
+        throw MASA_EXCEPTION( "Layer creation failed.\n" );
 
     CreateStructure();
     Write();
@@ -180,7 +180,7 @@ void UrbanFileExporter::CreateStructure()
 void UrbanFileExporter::CreateField( OGRFieldDefn* field )
 {
     if( layer_->CreateField( field ) != OGRERR_NONE )
-        throw std::runtime_error( "Creating Name field failed.\n" );
+        throw MASA_EXCEPTION( "Creating Name field failed.\n" );
 }
 
 // -----------------------------------------------------------------------------

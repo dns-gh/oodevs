@@ -36,7 +36,7 @@ FilterInputArgument::FilterInputArgument( const tools::ExerciseConfig& config, c
     else if( argumentValue == "$input_team_list$" )
         type_ = eTeamList;
     else
-        throw std::runtime_error( __FUNCTION__ "Error, invalide parameter given to FilterInputArgument constructor. Must be $input$, $input_file$, $input_dir$ or $input_team_list$.");
+        throw MASA_EXCEPTION( "Error, invalide parameter. Must be $input$, $input_file$, $input_dir$ or $input_team_list$.");
 }
 
 // -----------------------------------------------------------------------------

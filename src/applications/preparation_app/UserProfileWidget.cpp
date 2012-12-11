@@ -160,15 +160,15 @@ void UserProfileWidget::OnLoginChanged()
         {
             QString login = login_->text();
             if( profile_->GetLogin() != login && checker_.Exists( profile_->GetLogin(), login ) )
-                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
+                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
             if( profile_->GetLogin() != login && model_.profiles_.Exists( login ) && !checker_.Exists( login ) )
-                throw std::exception( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
+                throw MASA_EXCEPTION( tools::translate( "UserProfileWidget", "Duplicate login: '%1'." ).arg( login ).toStdString().c_str() );
             profile_->SetLogin( login );
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::warning( this, tr( "Invalid profile information" ), e.what(), QMessageBox::Ok, Qt::NoButton );
+        QMessageBox::warning( this, tr( "Invalid profile information" ), tools::GetExceptionMsg( e ).c_str(), QMessageBox::Ok, Qt::NoButton );
         login_->setText( profile_->GetLogin() );
     }
 }

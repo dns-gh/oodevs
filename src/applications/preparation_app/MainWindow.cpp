@@ -417,7 +417,7 @@ void MainWindow::MigrateExercises()
 {
     const bfs::path root = bfs::path( config_.GetFolderToMigrate() );
     if( ! bfs::exists( root ) )
-        throw std::exception( ( "The folder " + config_.GetFolderToMigrate() + " does not exist" ).c_str() );
+        throw MASA_EXCEPTION( ( "The folder " + config_.GetFolderToMigrate() + " does not exist" ).c_str() );
 
     bfs::recursive_directory_iterator end;
     for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
@@ -482,12 +482,12 @@ bool MainWindow::Load()
         SetProgression( 60, tr( "Loading options ..." ) );
         SetWindowTitle( false );
     }
-    catch( xml::exception& e )
+    catch( const xml::exception& e )
     {
         SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tr( "Error reading xml file: " ) + e.what() ) );
+                                   , tr( "Error reading xml file: " ) + tools::GetExceptionMsg( e ).c_str() );
         return false;
     }
     ReadOptions();
@@ -552,12 +552,12 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
             emit CheckConsistency();
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         SetNeedsSaving( false );
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tr( "Error loading exercise: " ) + e.what() ) );
+                                   , tr( "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -864,12 +864,12 @@ void MainWindow::OnAddRaster()
             process_->start( bfs::path( workingDirectory / "raster_app.exe" ).string().c_str(), parameters );
         }
     }
-    catch( geodata::ProjectionException& )
+    catch( const geodata::ProjectionException& )
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
         // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
     }
-    catch( geodata::ExtentException& )
+    catch( const geodata::ExtentException& )
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing extent information.") ) ;
     }

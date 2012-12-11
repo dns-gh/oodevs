@@ -241,7 +241,7 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
         }
         break;
     default:
-        throw std::runtime_error( __FUNCTION__ " invalid call to FillEntitiesCopy." );
+        throw MASA_EXCEPTION( "Invalid type." );
         break;
     }
 }
@@ -591,9 +591,9 @@ void ModelConsistencyChecker::CheckScores()
         xml::xostringstream xos;
         model_.scores_.Serialize( xos, schemaWriter );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        AddError( eScoreError, 0, std::string( e.what() ) );
+        AddError( eScoreError, 0, tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -612,9 +612,9 @@ void ModelConsistencyChecker::CheckSuccessFactors()
         xml::xistringstream xis( xos.str() );
         xst << xis;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        AddError( eSuccessFactorError, 0, std::string( e.what() ) );
+        AddError( eSuccessFactorError, 0, tools::GetExceptionMsg( e ) );
     }
 }
 

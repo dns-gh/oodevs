@@ -121,7 +121,7 @@ QString Score::GetFormula() const
 const indicators::Gauge& Score::GetGauge() const
 {
     if( !gauge_.get() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid gauge." );
     return *gauge_;
 }
 
@@ -132,7 +132,7 @@ const indicators::Gauge& Score::GetGauge() const
 const indicators::Variables& Score::GetVariables() const
 {
     if( !variables_.get() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid variables." );
     return *variables_;
 }
 
@@ -143,7 +143,7 @@ const indicators::Variables& Score::GetVariables() const
 const ProfileSelection& Score::GetProfiles() const
 {
     if( !profiles_.get() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid profiles." );
     return *profiles_;
 }
 

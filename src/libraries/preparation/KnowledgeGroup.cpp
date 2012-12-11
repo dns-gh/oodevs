@@ -68,7 +68,7 @@ KnowledgeGroupType* KnowledgeGroup::ResolveType( const std::string& typeName, to
     {
         tools::Iterator< const KnowledgeGroupType& > it = types.CreateIterator();
         if( !it.HasMoreElements() )
-            throw std::exception( "No Knowledge group types defined in physical database." );
+            throw MASA_EXCEPTION( "No Knowledge group types defined in physical database." );
         ret = const_cast< KnowledgeGroupType* >( &it.NextElement() );
     }
     return ret;

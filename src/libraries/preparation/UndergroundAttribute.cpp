@@ -62,7 +62,7 @@ const std::string& UndergroundAttribute::GetNetwork() const
 // -----------------------------------------------------------------------------
 bool UndergroundAttribute::IsActivated() const
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------

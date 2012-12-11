@@ -104,9 +104,9 @@ void ExerciseCreationDialog::OnAccept()
         frontend::CreateExercise( config_, exerciseName_->text().toStdString(), terrain, model.front().toStdString(), model.back().toStdString() );
         accept();
     }
-    catch( const QString& message )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( this, tr( "Error" ), message );
+        QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ) );
     }
 }
 

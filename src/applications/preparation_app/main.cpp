@@ -23,7 +23,7 @@ int main( int argc, char** argv )
     }
     catch( const std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::GetExceptionMsg( e ).c_str() );
     }
     catch( ... )
     {

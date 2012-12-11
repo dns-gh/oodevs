@@ -71,9 +71,9 @@ void KnowledgeGroupsModel::Create( xml::xistream& xis, kernel::Team_ABC& parent,
             xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model );
         }
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -102,9 +102,9 @@ void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::
             xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model );
         }
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 // LTO end

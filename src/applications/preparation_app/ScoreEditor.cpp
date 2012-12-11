@@ -334,16 +334,16 @@ void ScoreEditor::CheckFormula()
     try
     {
         if( formula_->text().isEmpty() )
-            throw std::exception( tr( "Formula is empty." ) );
+            throw MASA_EXCEPTION( tr( "Formula is empty." ).toStdString() );
         Score score( static_cast< Score& >( *current_ ) ); // $$$$ SBO 2009-05-07:
         CommitTo( score );
         score.CheckValidity();
         checkResult_->setText( "" );
         AllowCommit( true );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        checkResult_->setText( QString( "<font color='#ff0000'><b>%1</b></font>" ).arg( e.what() ) );
+        checkResult_->setText( QString( "<font color='#ff0000'><b>%1</b></font>" ).arg( tools::GetExceptionMsg( e ).c_str() ) );
         AllowCommit( false );
     }
 }

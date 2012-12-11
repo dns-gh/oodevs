@@ -228,7 +228,7 @@ void FilterCommand::ComputePath()
                     }
             }
         }
-        catch ( std::exception& )
+        catch( const std::exception& )
         {
             // NOTHING, here to prevent bfs::exists to throw an exception when tested path is on an unknown hard drive
         }

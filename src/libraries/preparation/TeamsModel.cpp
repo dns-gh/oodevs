@@ -257,8 +257,8 @@ void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Ent
                 hierarchies->Load( xis, &superior );
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }

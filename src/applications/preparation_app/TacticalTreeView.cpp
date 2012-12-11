@@ -75,7 +75,7 @@ namespace
         tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::CommunicationHierarchies >().CreateSubordinateIterator();
         if( it.HasMoreElements() )
             return const_cast< kernel::Entity_ABC& >( it.NextElement() );
-        throw std::runtime_error( "No communication child found" );
+        throw MASA_EXCEPTION( "No communication child found" );
     }
 
     void UpdateCommunicationHierarchies( kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior )

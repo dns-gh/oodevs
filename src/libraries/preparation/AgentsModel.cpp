@@ -237,9 +237,9 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, Model& 
         else
             model.ghosts_.Create( xis, parent, eGhostType_Automat );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -307,9 +307,9 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
         else
             model.ghosts_.Create( xis, parent, eGhostType_Agent );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -374,9 +374,9 @@ void AgentsModel::CreatePopulation( xml::xistream& xis, Team_ABC& parent, Model&
         else
             model.AppendLoadingError( eUnknownCrowdTypes, typeName );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -427,9 +427,9 @@ void AgentsModel::CreateInhabitant( xml::xistream& xis, Team_ABC& parent, Model&
         else
             model.AppendLoadingError( eUnknownPopulationTypes, typeName );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eDeletedPopulationUrbanBlocks, std::string( e.what() ) );
+        model.AppendLoadingError( eDeletedPopulationUrbanBlocks, tools::GetExceptionMsg( e ) );
     }
 }
 

@@ -50,7 +50,7 @@ bool FileLoaderObserver::NotifySignatureError( const std::string& file, const to
 // -----------------------------------------------------------------------------
 bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::exception& e )
 {
-    malformedFiles_.push_back( bfs::path( file ).filename().string() + " :\t" + e.what() );
+    malformedFiles_.push_back( bfs::path( file ).filename().string() + " :\t" + tools::GetExceptionMsg( e ) );
     return true;
 }
 

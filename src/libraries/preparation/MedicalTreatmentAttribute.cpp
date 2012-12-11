@@ -114,7 +114,7 @@ void MedicalTreatmentAttribute::UpdateTreatmentCapacity( const std::string& type
         if( treatment )
             capacities_[ type ] = beds;
     }
-    catch ( std::exception& /*e*/ )
+    catch( const std::exception& /*e*/ )
     {
         // LOG_ Unknown treatment type
     }

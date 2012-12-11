@@ -198,9 +198,9 @@ void TerrainToolBar::OnBlockCreationAuto()
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( 0, tr( "Error during automatic process creation of urban blocks" ), e.what() );
+        QMessageBox::critical( 0, tr( "Error during automatic process creation of urban blocks" ), tools::GetExceptionMsg( e ).c_str() );
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }

@@ -89,9 +89,9 @@ void ObjectsModel::CreateObject( xml::xistream& xis, const kernel::Team_ABC& tea
         else
             model.AppendLoadingError( eUnknownObjectTypes, typeName );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 

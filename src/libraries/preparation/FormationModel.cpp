@@ -75,9 +75,9 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
             >> xml::list( "lima"     , model.limits_, &LimitsModel::CreateLima   , *formation )
             >> xml::list( "limit"    , model.limits_, &LimitsModel::CreateLimit  , *formation );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eOthers, tools::GetExceptionMsg( e ) );
     }
 }
 
