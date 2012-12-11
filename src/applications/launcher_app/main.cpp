@@ -11,6 +11,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "LauncherService.h"
+#include <tools/Exception.h>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -53,7 +54,7 @@ namespace
         QueryInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ), 0 );
         extendedJobInfo.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE | JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION;
         if( !SetInformationJobObject( launcherJob, JobObjectExtendedLimitInformation, &extendedJobInfo, sizeof( extendedJobInfo ) ) )
-            throw std::runtime_error( "Launcher Service not initialized" );
+            throw MASA_EXCEPTION( "Launcher Service not initialized" );
         LauncherService::Initialize( path );
         LauncherService& service = LauncherService::Instance();
         if( vm.count( "install" ) )

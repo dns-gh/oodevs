@@ -59,9 +59,9 @@ void LauncherFacade::Initialize( int argc, char** argv )
         config_->Parse( argc, argv );
         launcher_.reset( new launcher::Launcher( *config_ ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        lastError_ = e.what();
+        lastError_ = tools::GetExceptionMsg( e );
     }
 }
 
@@ -79,9 +79,9 @@ bool LauncherFacade::Update()
         }
         return true;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        lastError_ = e.what();
+        lastError_ = tools::GetExceptionMsg( e );
         return false;
     }
 }

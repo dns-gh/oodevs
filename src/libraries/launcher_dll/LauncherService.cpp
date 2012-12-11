@@ -71,7 +71,7 @@ LauncherPublisher& LauncherService::ResolveClient( const std::string& endpoint )
     std::map< std::string, boost::shared_ptr< LauncherPublisher > >::const_iterator it = clients_.find( endpoint );
     if( it != clients_.end() )
         return *it->second;
-    throw std::runtime_error( __FUNCTION__ ": client " + endpoint + " does not exist." );
+    throw MASA_EXCEPTION( "client " + endpoint + " does not exist." );
 }
 
 // -----------------------------------------------------------------------------

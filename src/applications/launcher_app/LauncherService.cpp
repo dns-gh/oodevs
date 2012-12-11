@@ -11,6 +11,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "launcher_dll/LauncherFacade.h"
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
 #pragma warning( push, 0 )
@@ -45,7 +46,7 @@ void LauncherService::Terminate()
 LauncherService& LauncherService::Instance()
 {
     if( !pInstance_ )
-        throw std::runtime_error( "Launcher Service not initialized" );
+        throw MASA_EXCEPTION( "Launcher Service not initialized" );
     return *pInstance_;
 }
 

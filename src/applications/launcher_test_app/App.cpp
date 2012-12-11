@@ -51,7 +51,7 @@ void UpdateClient(frontend::LauncherClient& client)
     }
     catch( const std::exception& e )
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << tools::GetExceptionMsg( e ) << std::endl;
     }
     catch( ... )
     {
@@ -162,7 +162,7 @@ void App::Wait(int messages)
         {
             updateThread_->interrupt();
             updateThread_->join();
-            throw std::runtime_error( "not connected : " + error );
+            throw MASA_EXCEPTION( "not connected : " + error );
         }
         --messages;
     }
