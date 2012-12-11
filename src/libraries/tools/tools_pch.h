@@ -20,6 +20,7 @@
 #undef min
 
 #include <tools/Exception.h>
+#include <tools/EncodingConverter.h>
 
 #include <geometry/Types.h>
 

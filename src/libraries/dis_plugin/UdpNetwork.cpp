@@ -10,6 +10,7 @@
 #include "dis_plugin_pch.h"
 #include "UdpNetwork.h"
 #include "dispatcher/Logger_ABC.h"
+#include "tools/EncodingConverter.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 #pragma warning( disable : 4503 4355 )
@@ -92,5 +93,5 @@ void UdpNetwork::Stop()
 void UdpNetwork::Sent( boost::shared_ptr< std::string > message, const boost::system::error_code& error )
 {
     if( error )
-        logger_.LogError( "DIS - " + error.message() );
+        logger_.LogError( "DIS - " + tools::FromLocalCharsetToUtf8( error.message() ) );
 }

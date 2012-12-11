@@ -92,7 +92,7 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
     if( error && error != boost::asio::error::operation_aborted && error != previous_)
     {
         previous_ = error;
-        message_->OnError( endpoint_, error.message() );
+        message_->OnError( endpoint_, tools::FromLocalCharsetToUtf8( error.message() ) );
     }
     {
         boost::mutex::scoped_lock locker( mutex_ );
@@ -155,7 +155,7 @@ void Socket::HeaderRead( Message& header, const boost::system::error_code& error
         }
     }
     else
-        message_->OnError( endpoint_, error.message() );
+        message_->OnError( endpoint_, tools::FromLocalCharsetToUtf8( error.message() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +170,7 @@ void Socket::Read( Message& message, const boost::system::error_code& error )
         message_->OnMessage( endpoint_, message );
     }
     else
-        message_->OnError( endpoint_, error.message() );
+        message_->OnError( endpoint_, tools::FromLocalCharsetToUtf8( error.message() ) );
 }
 
 // -----------------------------------------------------------------------------

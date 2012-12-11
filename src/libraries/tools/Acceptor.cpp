@@ -62,7 +62,7 @@ void Acceptor::AllowConnections()
     boost::system::error_code error;
     acceptor_.bind( endpoint, error );
     if( error )
-        throw MASA_EXCEPTION( error.message() + " (port : " + boost::lexical_cast< std::string >( port_ ) + ")" );
+        throw MASA_EXCEPTION( tools::FromLocalCharsetToUtf8( error.message() ) + " (port : " + boost::lexical_cast< std::string >( port_ ) + ")" );
     acceptor_.listen( 0 );
     Listen();
 }

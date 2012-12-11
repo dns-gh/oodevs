@@ -85,7 +85,7 @@ void Connector::OnResolve( const std::string& endpoint, const boost::system::err
     if( ! error )
         DoConnect( *it );
     else
-        callback_.ConnectionFailed( endpoint, error.message() );
+        callback_.ConnectionFailed( endpoint, tools::FromLocalCharsetToUtf8( error.message() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,5 +111,5 @@ void Connector::OnConnect( const boost::shared_ptr< boost::asio::ip::tcp::socket
     if( ! error )
         manager_.Add( socket );
     else
-        callback_.ConnectionFailed( ToString( endpoint ), error.message() );
+        callback_.ConnectionFailed( ToString( endpoint ), tools::FromLocalCharsetToUtf8( error.message() ) );
 }
