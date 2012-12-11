@@ -42,10 +42,6 @@ namespace existences
     };
 
 typedef Existence< extractors::MaintenanceHandlingUnitId >    MaintenanceHandlingUnitId;
-typedef Existence< extractors::DirectFireTargetsId >          DirectFireTargetsId;
-typedef Existence< extractors::IndirectFireTargetsPositions > IndirectFireTargetsPositions;
-typedef Existence< extractors::DirectFireUnitsId >            DirectFireUnitsId;
-typedef Existence< extractors::IndirectFireUnitsId >          IndirectFireUnitsId;
 typedef Existence< extractors::Carriers >                     Carriers;
 }
 

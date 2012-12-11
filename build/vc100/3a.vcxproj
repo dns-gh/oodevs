@@ -99,6 +99,7 @@
     <ClInclude Include="..\..\src\libraries\3a\DPRESatisfaction.h" />
     <ClInclude Include="..\..\src\libraries\3a\FilterHelper.h" />
     <ClInclude Include="..\..\src\libraries\3a\FirerIdentifierValue.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Fires.h" />
     <ClInclude Include="..\..\src\libraries\3a\Indicator.h" />
     <ClInclude Include="..\..\src\libraries\3a\Plotter.h" />
     <ClInclude Include="..\..\src\libraries\3a\Result_ABC.h" />

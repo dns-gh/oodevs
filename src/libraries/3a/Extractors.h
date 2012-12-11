@@ -88,7 +88,7 @@ namespace extractors
 
     struct DirectFireTargetsId : public Extractor< NumericValue >
     {
-        bool IsCreation( const sword::SimToClient& wrapper ) const
+        bool HasValue( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
                 wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct &&
@@ -96,17 +96,13 @@ namespace extractors
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
         {
-            return NumericValue( wrapper.message().start_unit_fire().target().unit().id() );
-        }
-        bool IsDestruction( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_stop_unit_fire();
+            return wrapper.message().start_unit_fire().target().unit().id();
         }
     };
 
     struct IndirectFireTargetsPositions : public Extractor< ::Position >
     {
-        bool IsCreation( const sword::SimToClient& wrapper ) const
+        bool HasValue( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
                    wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect &&
@@ -115,10 +111,6 @@ namespace extractors
         ::Position Extract( const sword::SimToClient& wrapper ) const
         {
             return ::Position( wrapper.message().start_unit_fire().target().position() );
-        }
-        bool IsDestruction( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_stop_unit_fire();
         }
     };
 
@@ -137,35 +129,27 @@ namespace extractors
 
     struct DirectFireUnitsId : public Extractor< NumericValue >
     {
-        bool IsCreation( const sword::SimToClient& wrapper ) const
+        bool HasValue( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
                 wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
         {
-            return NumericValue( wrapper.message().start_unit_fire().firing_unit().id() );
-        }
-        bool IsDestruction( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_stop_unit_fire();
+            return wrapper.message().start_unit_fire().firing_unit().id();
         }
     };
 
     struct IndirectFireUnitsId : public Extractor< NumericValue >
     {
-        bool IsCreation( const sword::SimToClient& wrapper ) const
+        bool HasValue( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
                 wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
         {
-            return NumericValue( wrapper.message().start_unit_fire().firing_unit().id() );
-        }
-        bool IsDestruction( const sword::SimToClient& wrapper ) const
-        {
-            return wrapper.message().has_stop_unit_fire();
+            return wrapper.message().start_unit_fire().firing_unit().id();
         }
     };
 

@@ -283,6 +283,9 @@
     <ClInclude Include="..\..\src\libraries\3a\Damages.h">
       <Filter>Source Files\model\values</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\3a\Fires.h">
+      <Filter>Source Files\model\values</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\3a\ModelFunctionComposite.cpp">
