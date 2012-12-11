@@ -13,6 +13,7 @@
 #include "ReadDirections.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace weather;
@@ -241,45 +242,45 @@ void Meteo::Update( const sword::MissionParameters& msg )
     // Temperature
     const sword::MissionParameter& temperature = msg.elem( 0 );
     if( temperature.null_value() || !temperature.value().Get(0).has_areal() )
-        throw std::exception( "Meteo : bad attribute for temperature" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for temperature" );
     temperature_ = static_cast< int >( temperature.value().Get(0).areal() );
 
     // Vitesse du vent
     const sword::MissionParameter& windSpeed = msg.elem( 1 );
     if( windSpeed.null_value() || !windSpeed.value().Get(0).has_areal() )
-        throw std::exception( "Meteo : bad attribute for windSpeed" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for windSpeed" );
     wind_.rSpeed_ = conversionFactor_ * windSpeed.value().Get(0).areal();
 
     // Direction du vent
     const sword::MissionParameter& windDirection = msg.elem( 2 );
     if( windDirection.null_value() || !windDirection.value().Get(0).has_heading() )
-        throw std::exception( "Meteo : bad attribute for windDirection" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for windDirection" );
     wind_.eAngle_ = windDirection.value().Get(0).heading().heading();
     wind_.vDirection_ = weather::ReadDirection( wind_.eAngle_ );
 
     // Plancher de couverture nuageuse
     const sword::MissionParameter& cloudFloor = msg.elem( 3 );
     if( cloudFloor.null_value() || !cloudFloor.value().Get(0).has_areal() )
-        throw std::exception( "Meteo : bad attribute for cloudFloor" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for cloudFloor" );
     cloud_.nFloor_ = (int) cloudFloor.value().Get(0).areal();
 
     // Plafond de couverture nuageuse
     const sword::MissionParameter& cloudCeiling = msg.elem( 4 );
     if( cloudCeiling.null_value() || !cloudCeiling.value().Get(0).has_areal() )
-        throw std::exception( "Meteo : bad attribute for cloudCeiling" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for cloudCeiling" );
     cloud_.nCeiling_ = (int) cloudCeiling.value().Get(0).areal();
 
     // Densite moyenne de couverture nuageuse
     const sword::MissionParameter& cloudDensity = msg.elem( 5 );
     if( cloudDensity.null_value() || !cloudDensity.value().Get(0).has_areal() )
-        throw std::exception( "Meteo : bad attribute for cloudDensity" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for cloudDensity" );
     cloud_.nDensityPercentage_ = std::min( std::max( (int) cloudDensity.value().Get(0).areal(), 0 ), 100 );
     cloud_.rDensity_ = cloud_.nDensityPercentage_ / 100.;
 
     // Précipitation
     const sword::MissionParameter& precipitation = msg.elem( 6 );
     if( precipitation.null_value() || !precipitation.value().Get(0).has_enumeration() )
-        throw std::exception( "Meteo : bad attribute for precipitation" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for precipitation" );
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;

@@ -13,6 +13,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
+#include <tools/Exception.h>
 #include "tools/WinArguments.h"
 
 #ifdef _MSC_VER
@@ -62,9 +63,9 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
         App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, !HasFlag( argv, "--no-log" ) );
         app.Execute();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         nResult = EXIT_FAILURE;
     }
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );

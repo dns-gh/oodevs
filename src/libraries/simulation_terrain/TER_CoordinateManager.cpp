@@ -57,9 +57,9 @@ void TER_CoordinateManager::MosToSimMgrsCoord( const std::string& strMgrs, MT_Ve
         pos.rY_ = planar_.GetY();
         pos += translation_;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting " << strMgrs << " to sim position : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting " << strMgrs << " to sim position : " << tools::GetExceptionMsg( e ) );
         pos = MT_Vector2D( 0, 0 );
     }
 }
@@ -79,9 +79,9 @@ void TER_CoordinateManager::MosToSimMgrsCoord( double latitude, double longitude
         pos.rY_ = planar_.GetY();
         pos += translation_;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting " << latitude << ", " << longitude << " to sim position : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting " << latitude << ", " << longitude << " to sim position : " << tools::GetExceptionMsg( e ) );
         pos = MT_Vector2D( 0, 0 );
     }
 }
@@ -99,9 +99,9 @@ void TER_CoordinateManager::SimToMosMgrsCoord( const MT_Vector2D& pos, std::stri
         mgrs_.SetCoordinates( planar_ );
         strMgrs = mgrs_.GetString();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << pos.rX_ << ", " << pos.rY_ << ") to mgrs : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << pos.rX_ << ", " << pos.rY_ << ") to mgrs : " << tools::GetExceptionMsg( e ) );
         strMgrs = strDefaultMGRS_;
     }
 }
@@ -121,9 +121,9 @@ void TER_CoordinateManager::SimToMosMgrsCoord( const MT_Vector2D& pos, double& l
         latitude  = geodetic_.GetLatitude()  * iPiOver180;
         longitude = geodetic_.GetLongitude() * iPiOver180;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << pos.rX_ << ", " << pos.rY_ << ") to mgrs : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception caught in " __FUNCTION__ " converting (" << pos.rX_ << ", " << pos.rY_ << ") to mgrs : " << tools::GetExceptionMsg( e ) );
         latitude = longitude = 0;
     }
 }

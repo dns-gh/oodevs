@@ -11,6 +11,7 @@
 #include "dispatcher/Replayer.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FileLogger.h"
+#include <tools/Exception.h>
 #include "tools/WinArguments.h"
 #include "resource.h"
 #include "dispatcher/Config.h"
@@ -90,9 +91,9 @@ void App::Execute()
                 break;
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Replayer error : " << e.what() );
+        MT_LOG_ERROR_MSG( "Replayer error : " << tools::GetExceptionMsg( e ) );
     }
     StopIconAnimation();
 }

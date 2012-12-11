@@ -10,6 +10,7 @@
 #include "ResourceLink.h"
 #include "protocol/Protocol.h"
 #include "ResourceTools_ABC.h"
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;
@@ -97,7 +98,7 @@ ResourceLink::ETargetKind ResourceLink::FindTargetKind( const std::string& kind 
         return eTargetKindUrban;
     if( kind == "terrain-object" )
         return eTargetKindObject;
-    throw std::exception( "Resource link target not valid" );
+    throw MASA_EXCEPTION( "Resource link target not valid" );
 }
 
 // -----------------------------------------------------------------------------

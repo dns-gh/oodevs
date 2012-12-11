@@ -77,7 +77,7 @@ void LicenseDialog::CheckLicense( const std::string& licenseFeature, bool silent
                 {
                     *pMaxConnections = license->GetAuthorisedUsers();
                 }
-                catch( FlexLmLicense::LicenseError& )
+                catch( const FlexLmLicense::LicenseError& )
                 {
                     *pMaxConnections = 1;
                 }
@@ -86,11 +86,11 @@ void LicenseDialog::CheckLicense( const std::string& licenseFeature, bool silent
                 *pExpiration = license->GetExpirationDate();
             break;
         }
-        catch( FlexLmLicense::LicenseError& error )
+        catch( const FlexLmLicense::LicenseError& e )
         {
             if( silentMode )
                 throw;
-            if( !license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ ) )
+            if( !license_gui::LicenseDialog::Run( licenseFeature, e.hostid_ ) )
                 throw;
         }
     }

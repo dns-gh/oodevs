@@ -65,10 +65,10 @@ int LoggerApplication::Run()
             boost::this_thread::sleep( boost::posix_time::milliseconds( 50 ) ) ;
         }
     }
-    catch( std::runtime_error& err )
+    catch( const std::exception& e )
     {
         if( file_.good() )
-            file_ << "Error: " << err.what() << std::endl;
+            file_ << "Error: " << tools::GetExceptionMsg( e ) << std::endl;
         return 2;
     }
     catch(...)

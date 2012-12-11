@@ -109,9 +109,9 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
             MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( pRequest );
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception caught in pathfinder thread : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception caught in pathfinder thread : " << tools::GetExceptionMsg( e ) );
         assert( false );
     }
     catch( ... )

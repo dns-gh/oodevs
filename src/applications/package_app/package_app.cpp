@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include <tools/Exception.h>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #pragma warning( push, 0 )
@@ -38,7 +39,7 @@ namespace
         PROCESS_INFORMATION pid;
         ZeroMemory( &pid, sizeof( pid ) );
         if( !CreateProcessA( 0, command, 0, 0, TRUE, CREATE_NEW_CONSOLE, 0, ".", &startupInfo, &pid ) )
-            throw std::runtime_error( "Could not start process" );
+            throw MASA_EXCEPTION( "Could not start process" );
     }
 }
 
@@ -59,9 +60,9 @@ int main( int argc, char* argv[] )
             Execute( command );
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        ::MessageBox( NULL, e.what(), NULL, MB_OK );
+        ::MessageBox( NULL, tools::GetExceptionMsg( e ).c_str(), NULL, MB_OK );
     }
     return 0;
 }

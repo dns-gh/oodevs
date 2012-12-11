@@ -20,6 +20,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
@@ -140,7 +141,7 @@ std::string ReportFactory::FormatReport( const sword::Report& message ) const
 Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const sword::Trace& message ) const
 {
     if( !time_ )
-        throw std::runtime_error( "No time, can't generate trace" );
+        throw MASA_EXCEPTION( "No time, can't generate trace" );
     return new Trace( agent, *time_, message );
 }
 
@@ -172,5 +173,5 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return QString::number( value.indirectfire().id() );
     if( value.has_acharstr() )
         return QString( value.acharstr().c_str() );
-    throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
+    throw MASA_EXCEPTION( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
 }

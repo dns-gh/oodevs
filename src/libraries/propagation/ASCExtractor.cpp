@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <fstream>
+#include <tools/Exception.h>
 
 namespace bfs = boost::filesystem;
 
@@ -50,15 +51,15 @@ ASCExtractor::ASCExtractor( const std::string& file )
     GDALAllRegister();
     pDataset_ = ( GDALDataset* ) GDALOpen( file.c_str(), GA_ReadOnly );
     if( pDataset_ == NULL )
-        throw std::runtime_error( "Unable to open file : " + file );
+        throw MASA_EXCEPTION( "Unable to open file : " + file );
 
     if( pDataset_->GetRasterCount() != 1 )
-        throw std::runtime_error( "Format not supported : " + file );
+        throw MASA_EXCEPTION( "Format not supported : " + file );
 
     pTransformation_ = CreateCoordinateTransformation( pDataset_->GetProjectionRef() );
 
     if( !pTransformation_ )
-        throw std::runtime_error( "Invalid projection" );
+        throw MASA_EXCEPTION( "Invalid projection" );
 
     ExtractData();
 }
@@ -79,15 +80,15 @@ ASCExtractor::ASCExtractor( const std::string& file, const std::string& projecti
     GDALAllRegister();
     pDataset_ = ( GDALDataset* ) GDALOpen( file.c_str(), GA_ReadOnly );
     if( pDataset_ == NULL )
-        throw std::runtime_error( "Unable to open file : " + file );
+        throw MASA_EXCEPTION( "Unable to open file : " + file );
 
     if( pDataset_->GetRasterCount() != 1 )
-        throw std::runtime_error( "Format not supported : " + file );
+        throw MASA_EXCEPTION( "Format not supported : " + file );
 
     pTransformation_ = CreateCoordinateTransformation( ReadProjectionfile( bfs::path( projection ) ) );
 
     if( !pTransformation_ )
-        throw std::runtime_error( "Invalid projection" );
+        throw MASA_EXCEPTION( "Invalid projection" );
 
     ExtractData();
 }
