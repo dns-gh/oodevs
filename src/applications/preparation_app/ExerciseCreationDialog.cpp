@@ -106,7 +106,7 @@ void ExerciseCreationDialog::OnAccept()
     }
     catch( const std::exception& e )
     {
-        QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ) );
+        QMessageBox::critical( this, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
