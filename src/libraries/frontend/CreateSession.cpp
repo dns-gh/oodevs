@@ -83,28 +83,24 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/meta/comment", "" );
     }
     {
-        setter_->SetValue( "session/config/simulation/checkpoint/@frequency"       , "100000h" );
-        setter_->SetValue( "session/config/simulation/checkpoint/@keep"            , 1 );
-        setter_->SetValue( "session/config/simulation/checkpoint/@usecrc"          , true );
-        setter_->SetValue( "session/config/simulation/debug/@decisional"           , false );
-        setter_->SetValue( "session/config/simulation/debug/@pathfind"             , false );
-        setter_->SetValue( "session/config/simulation/debug/@diadebugger"          , false );
-        setter_->SetValue( "session/config/simulation/debug/@diadebuggerport"      , 15000 );
-        setter_->SetValue( "session/config/simulation/debug/@networklogger"        , false );
-        setter_->SetValue( "session/config/simulation/debug/@networkloggerport"    , 20000 );
-        setter_->SetValue( "session/config/simulation/decisional/@useonlybinaries" , false );
-        setter_->SetValue( "session/config/simulation/dispatcher/@embedded"        , true );
-        setter_->SetValue( "session/config/simulation/network/@port"               , SimulationPort( 1 ) );
-        setter_->SetValue( "session/config/simulation/orbat/@checkcomposition"     , false );
-        setter_->SetValue( "session/config/simulation/profiling/@enabled"          , false );
-        setter_->SetValue( "session/config/simulation/time/@step"                  , 10 );
-        setter_->SetValue( "session/config/simulation/time/@factor"                , 10 );
+        setter_->SetValue( "session/config/simulation/checkpoint/@frequency"   , "100000h" );
+        setter_->SetValue( "session/config/simulation/checkpoint/@keep"        , 1 );
+        setter_->SetValue( "session/config/simulation/checkpoint/@usecrc"      , true );
+        setter_->SetValue( "session/config/simulation/debug/@decisional"       , false );
+        setter_->SetValue( "session/config/simulation/debug/@pathfind"         , false );
+        setter_->SetValue( "session/config/simulation/debug/@networklogger"    , false );
+        setter_->SetValue( "session/config/simulation/debug/@networkloggerport", 20000 );
+        setter_->SetValue( "session/config/simulation/dispatcher/@embedded"    , true );
+        setter_->SetValue( "session/config/simulation/network/@port"           , SimulationPort( 1 ) );
+        setter_->SetValue( "session/config/simulation/orbat/@checkcomposition" , false );
+        setter_->SetValue( "session/config/simulation/profiling/@enabled"      , false );
+        setter_->SetValue( "session/config/simulation/time/@step"              , 10 );
+        setter_->SetValue( "session/config/simulation/time/@factor"            , 10 );
 
         //Réglage des paramètres du GC
         setter_->SetValue( "session/config/simulation/GarbageCollector/@setpause"  , 100 );
-        setter_->SetValue( "session/config/simulation/GarbageCollector/@setstepmul"  , 200 );
+        setter_->SetValue( "session/config/simulation/GarbageCollector/@setstepmul", 200 );
         //
-
         setter_->SetValue( "session/config/simulation/pathfinder/@threads"         , 4 );
     }
     {
