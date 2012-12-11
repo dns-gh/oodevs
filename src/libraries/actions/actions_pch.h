@@ -22,6 +22,8 @@
 #include <map>
 #include <set>
 
+#include <tools/Exception.h>
+
 #include <geometry/types.h>
 #include <xeumeuleu/xml.hpp>
 

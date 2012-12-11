@@ -29,6 +29,8 @@
 #include <string>
 #include <vector>
 
+#include <tools/Exception.h>
+
 // these headers are required in order to support SQLite/SpatiaLite
 #include <spatialite/spatialite/sqlite3.h>
 #include <spatialite/spatialite/gaiageo.h>

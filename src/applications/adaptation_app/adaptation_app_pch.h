@@ -56,6 +56,8 @@
 #undef min
 #undef max
 
+#include <tools/Exception.h>
+
 #include "MT_Tools/MT_Assert.h"
 #include "MT_Tools/MT_Logger.h"
 #include "ADN_Type_ABC.h"

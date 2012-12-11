@@ -24,4 +24,6 @@
 #include <vector>
 #include <cassert>
 
+#include <tools/Exception.h>
+
 #endif // __TER_pch_h_

@@ -15,4 +15,6 @@
 #include <memory>
 #include <map>
 
+#include <tools/Exception.h>
+
 #endif // __tic_pch_h_

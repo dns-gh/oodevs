@@ -62,4 +62,6 @@ namespace mock
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#include "tools/MASA_Exception.h"
+
 #endif // msdl_test_pch_h

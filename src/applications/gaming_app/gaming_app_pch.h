@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable : 4231 )
-
 #ifndef __gaming_app_pch_h_
 #define __gaming_app_pch_h_
+
+#pragma warning( disable : 4231 )
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -59,6 +59,8 @@
 #include <map>
 #include <vector>
 #include <set>
+
+#include <tools/Exception.h>
 
 #include <geometry/Types.h>
 typedef std::vector< geometry::Point2f > T_PointVector;

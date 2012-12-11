@@ -32,8 +32,9 @@
 #undef max
 #undef min
 
-#include "Types.h"
+#include <tools/Exception.h>
 
+#include "Types.h"
 #include <xeumeuleu/xml.hpp>
 
 inline std::ostream& operator<<( std::ostream& os, const QString& s )

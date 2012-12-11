@@ -81,4 +81,6 @@
 #undef min
 #undef max
 
+#include <tools/Exception.h>
+
 #endif // __selftraining_app_pch_h_

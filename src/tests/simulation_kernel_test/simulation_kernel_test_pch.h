@@ -31,6 +31,8 @@ std::string BOOST_RESOLVE( const std::string& filename );
 #undef max
 #undef min
 
+#include <tools/Exception.h>
+
 #include <geometry/Types.h>
 
 #endif // __simulation_kernel_test_pch_h_

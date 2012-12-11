@@ -15,4 +15,6 @@
 #include <map>
 #include <vector>
 
+#include <tools/Exception.h>
+
 #endif // __dis_plugin_pch_h_

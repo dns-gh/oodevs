@@ -15,4 +15,6 @@
 #include <map>
 #include <vector>
 
+#include "tools/MASA_Exception.h"
+
 #endif // __msdl_pch_h_

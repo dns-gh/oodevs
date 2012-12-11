@@ -21,6 +21,8 @@
 #pragma warning( disable: 4505 4244 )
 #include <turtle/mock.hpp>
 
+#include <tools/Exception.h>
+
 namespace mock
 {
     namespace detail

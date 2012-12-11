@@ -25,4 +25,6 @@ std::string BOOST_RESOLVE( const std::string& filename );
 
 extern unsigned short PORT;
 
+#include <tools/Exception.h>
+
 #endif // __selftraining_test_pch_h_

@@ -28,4 +28,6 @@ void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actu
 
 #undef max
 
+#include <tools/Exception.h>
+
 #endif // module_tester_test_pch_h

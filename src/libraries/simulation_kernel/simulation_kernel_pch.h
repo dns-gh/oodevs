@@ -31,6 +31,8 @@
 #include <map>
 #include <set>
 
+#include <tools/Exception.h>
+
 //$$$ DEGUEU
 #include "MT_Tools/MT_Assert.h"
 

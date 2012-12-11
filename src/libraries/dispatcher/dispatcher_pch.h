@@ -21,6 +21,8 @@
 #include <fstream>
 #include <sstream>
 
+#include <tools/Exception.h>
+
 #pragma warning ( pop )
 
 #pragma warning ( disable : 4355 )

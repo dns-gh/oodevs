@@ -26,4 +26,6 @@ std::string GetTestTempDirectory();
 
 #undef max
 
+#include <tools/Exception.h>
+
 #endif // __plugins_test_pch_h_

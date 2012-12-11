@@ -16,4 +16,6 @@
 #include <map>
 #include <set>
 
+#include <tools/Exception.h>
+
 #endif // __script_plugin_pch_h_

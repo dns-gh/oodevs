@@ -12,6 +12,7 @@
 #ifndef __TIC_Pch_h_
 #define __TIC_Pch_h_
 
+#include "tools/MASA_Exception.h"
 
 #include "MT/MT_Tools/MT_Tools_lib.h"
 #include "MT/MT_IO/MT_IO_lib.h"

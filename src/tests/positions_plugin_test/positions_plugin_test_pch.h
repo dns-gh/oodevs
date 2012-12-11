@@ -25,4 +25,6 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#include <tools/Exception.h>
+
 #endif // positions_plugin_test_pch_h

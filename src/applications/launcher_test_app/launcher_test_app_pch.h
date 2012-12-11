@@ -1,9 +1,14 @@
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
+// *****************************************************************************
 //
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
-#pragma once
+#ifndef __launcher_test_app_pch_h_
+#define __launcher_test_app_pch_h_
 
 #ifndef _WIN32_WINNT        // Allow use of features specific to Windows XP or later.
 #define _WIN32_WINNT 0x0501 // Change this to the appropriate value to target other versions of Windows.
@@ -12,4 +17,6 @@
 #include <stdio.h>
 #include <tchar.h>
 
-// TODO: reference additional headers your program requires here
+#include <tools/Exception.h>
+
+#endif // __launcher_test_app_pch_h_

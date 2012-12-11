@@ -30,4 +30,6 @@ extern std::string temp_directory;
 
 void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 
+#include <tools/Exception.h>
+
 #endif // __tools_test_pch_h_

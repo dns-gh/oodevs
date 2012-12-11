@@ -18,4 +18,6 @@
 #include <QtCore/qstring.h>
 #pragma warning( pop )
 
+#include <tools/Exception.h>
+
 #endif // __launcher_dll_pch_h_

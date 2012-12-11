@@ -19,6 +19,8 @@
 #undef max
 #undef min
 
+#include <tools/Exception.h>
+
 #include <geometry/Types.h>
 
 #endif // __tools_pch_h_

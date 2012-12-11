@@ -20,4 +20,6 @@ void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actu
 #pragma warning( disable : 4505 ) // unreferenced local function has been removed
 #pragma warning( disable : 4355 ) // used in base member initializer list
 
+#include "tools/MASA_Exception.h"
+
 #endif // orbat_generator_test_pch_h

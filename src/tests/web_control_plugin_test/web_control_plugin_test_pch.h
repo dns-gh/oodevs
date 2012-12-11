@@ -34,4 +34,6 @@ std::string BOOST_RESOLVE( const std::string& filename );
 #pragma warning( disable : 4244 )
 #include <google/protobuf/message.h>
 
+#include <tools/Exception.h>
+
 #endif // web_control_plugin_test_pch_h

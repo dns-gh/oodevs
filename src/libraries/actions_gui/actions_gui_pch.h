@@ -46,6 +46,8 @@
 #undef min
 #undef max
 
+#include <tools/Exception.h>
+
 #include <geometry/types.h>
 
 #endif // __actions_gui_pch_h_

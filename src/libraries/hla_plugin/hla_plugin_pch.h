@@ -18,6 +18,8 @@
 #include <map>
 #include <vector>
 
+#include <tools/Exception.h>
+
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 #pragma warning( disable : 4503 ) // decorated name length exceeded, name was truncated
 #pragma warning( disable : 4996 ) // 'sprintf': This function or variable may be unsafe.

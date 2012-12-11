@@ -19,10 +19,13 @@
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
 #include <turtle/mock.hpp>
+
 #pragma warning( disable : 4505 )
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
 extern unsigned short PORT;
+
+#include <tools/Exception.h>
 
 #endif // __client_proxy_test_pch_h_

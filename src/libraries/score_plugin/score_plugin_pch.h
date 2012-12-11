@@ -14,4 +14,6 @@
 #include <string>
 #include <stdexcept>
 
+#include <tools/Exception.h>
+
 #endif // __score_plugin_pch_h_

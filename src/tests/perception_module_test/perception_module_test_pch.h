@@ -24,6 +24,8 @@ std::string BOOST_RESOLVE( const std::string& filename );
 
 #undef max
 
+#include <tools/Exception.h>
+
 #include "ModuleFixture.h"
 
 #endif // perception_module_test_pch_h

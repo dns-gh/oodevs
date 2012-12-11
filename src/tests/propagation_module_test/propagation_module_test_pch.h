@@ -22,6 +22,8 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#include <tools/Exception.h>
+
 #include "ModuleFixture.h"
 
 #endif // propagation_module_test_pch_h

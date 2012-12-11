@@ -21,6 +21,8 @@
 #include <ostream>
 #include <xeumeuleu/xml.hpp>
 
+#include <tools/Exception.h>
+
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
     return os << s.toStdString();

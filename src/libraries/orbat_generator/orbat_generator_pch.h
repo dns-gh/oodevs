@@ -12,4 +12,6 @@
 
 #include <string>
 
+#include "tools/MASA_Exception.h"
+
 #endif // orbat_generator_pch_h

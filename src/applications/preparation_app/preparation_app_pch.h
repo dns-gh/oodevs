@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
+#ifndef __preparation_app_pch_h_
+#define __preparation_app_pch_h_
+
 #pragma warning( disable : 4231 )
 #pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 #pragma warning( disable : 4996 ) // Function call with parameters that may be unsafe
-
-#ifndef __preparation_app_pch_h_
-#define __preparation_app_pch_h_
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -55,6 +55,8 @@
 #include <map>
 #include <vector>
 #include <set>
+
+#include <tools/Exception.h>
 
 #include <geometry/Types.h>
 typedef std::vector< geometry::Point2f > T_PointVector;

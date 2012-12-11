@@ -25,4 +25,6 @@
 #pragma warning( pop )
 #include <string>
 
+#include <tools/Exception.h>
+
 #endif // __frontend_pch_h_

@@ -23,4 +23,6 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#include <tools/Exception.h>
+
 #endif // __3a_test_pch_h_

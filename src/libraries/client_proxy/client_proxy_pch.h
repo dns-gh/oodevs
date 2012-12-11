@@ -15,4 +15,6 @@
 #include <map>
 #include <vector>
 
+#include <tools/Exception.h>
+
 #endif // __client_proxy_pch_h_
