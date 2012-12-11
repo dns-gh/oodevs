@@ -98,7 +98,7 @@ void FolkModel::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void FolkModel::SendDestruction( ClientPublisher_ABC& ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

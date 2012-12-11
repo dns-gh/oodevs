@@ -122,7 +122,7 @@ void Object::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void Object::Display( kernel::Displayer_ABC& ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

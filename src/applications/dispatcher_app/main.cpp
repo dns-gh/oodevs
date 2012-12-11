@@ -13,6 +13,7 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
+#include <tools/Exception.h>
 #include "tools/WinArguments.h"
 #include <windows.h>
 #pragma warning( push, 0 )
@@ -57,9 +58,9 @@ int Run( LPSTR lpCmdLine )
         Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
         nResult = app.Execute( HasOption( argv, "--test" ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );

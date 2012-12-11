@@ -10,6 +10,7 @@
 #ifndef DispatcherLoader_h
 #define DispatcherLoader_h
 
+#include <tools/Exception.h>
 #include <windows.h>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/noncopyable.hpp>
@@ -55,7 +56,7 @@ public:
         , dispatcher_      ( facadeCreator_( argc, argv, maxConnections ) )
     {
         if( !dispatcher_ )
-            throw std::runtime_error( "failed to create dispatcher" );
+            throw MASA_EXCEPTION( "failed to create dispatcher" );
     }
     virtual ~DispatcherLoader()
     {
@@ -79,10 +80,10 @@ private:
     Function LoadFunction( const std::string& name ) const
     {
         if( !module_ )
-            throw std::runtime_error( "failed to load dispatcher" EXTENSION );
+            throw MASA_EXCEPTION( "failed to load dispatcher" EXTENSION );
         Function fun = reinterpret_cast< Function >( GetProcAddress( module_, name.c_str() ) );
         if( !fun )
-            throw std::runtime_error( "failed to load function '" + name + "' in dispatcher" EXTENSION );
+            throw MASA_EXCEPTION( "failed to load function '" + name + "' in dispatcher" EXTENSION );
         return fun;
     }
     //@}

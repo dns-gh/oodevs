@@ -165,7 +165,7 @@ unsigned int PopulationFlow::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 float PopulationFlow::GetDensity() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ float PopulationFlow::GetDensity() const
 // -----------------------------------------------------------------------------
 QString PopulationFlow::GetAttitude() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

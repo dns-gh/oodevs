@@ -12,6 +12,7 @@
 #include "dispatcher/Dispatcher.h"
 #include "positions_plugin/PositionsPluginFactory.h"
 #include "tools/Codec.h"
+#include <tools/Exception.h>
 #include "tools/NullFileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -48,9 +49,9 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
         dispatcher_->RegisterPluginFactory( *new positions::PositionsPluginFactory() );
         dispatcher_->CreatePlugins();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Initializing: " << e.what() );
+        MT_LOG_ERROR_MSG( "Initializing: " << tools::GetExceptionMsg( e ) );
         throw;
     }
 }
@@ -86,7 +87,7 @@ extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** 
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Initializing: " << e.what() );
+        MT_LOG_ERROR_MSG( "Initializing: " << tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {
@@ -118,7 +119,7 @@ extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFaca
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Updating: " << e.what() );
+        MT_LOG_ERROR_MSG( "Updating: " << tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

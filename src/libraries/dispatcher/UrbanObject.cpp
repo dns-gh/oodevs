@@ -134,7 +134,7 @@ void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +208,7 @@ void UrbanObject::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ void UrbanObject::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 // -----------------------------------------------------------------------------
 void UrbanObject::ApplyTemplate( const UrbanTemplateTypePtr& /*urbanTemplate*/ )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ void UrbanObject::ApplyTemplate( const UrbanTemplateTypePtr& /*urbanTemplate*/ )
 // -----------------------------------------------------------------------------
 void UrbanObject::UpdateTemplate( const kernel::ObjectTypes& /*objectTypes*/ )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -235,5 +235,5 @@ void UrbanObject::UpdateTemplate( const kernel::ObjectTypes& /*objectTypes*/ )
 // -----------------------------------------------------------------------------
 bool UrbanObject::IsUpdatingTemplate() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

@@ -96,5 +96,5 @@ const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( unsigned long
 // -----------------------------------------------------------------------------
 const kernel::ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::ObjectKnowledge_ABC& /*base*/, const kernel::Team_ABC& /*owner*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

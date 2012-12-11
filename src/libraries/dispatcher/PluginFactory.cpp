@@ -137,7 +137,7 @@ namespace
     {
         T function = (T)GetProcAddress( module, name.c_str() );
         if( !function )
-            throw std::runtime_error( "unable to find function '" + name + "'" );
+            throw MASA_EXCEPTION( "unable to find function '" + name + "'" );
         return function;
     }
 
@@ -149,10 +149,10 @@ namespace
         {
             memset( path_, 0, environment_buffer_size );
             if( GetEnvironmentVariable( "Path", path_, environment_buffer_size ) == 0 )
-                throw std::runtime_error( "Failed to retrieve 'PATH' environment variable." );
+                throw MASA_EXCEPTION( "Failed to retrieve 'PATH' environment variable." );
             const std::string newPath( directory + ";" + std::string( path_ ) );
             if( !SetEnvironmentVariable( "Path", newPath.c_str() ) )
-                throw std::runtime_error( "Failed to set 'PATH' environment variable." );
+                throw MASA_EXCEPTION( "Failed to set 'PATH' environment variable." );
         }
         ~EnvironmentGuard()
         {
@@ -175,19 +175,19 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
         const std::string library = SetLibraryConfiguration( xis.attribute< std::string >( "library" ) );
         HMODULE module = LoadLibrary( library.c_str() );
         if( !module )
-            throw std::runtime_error( "failed to load library: '" + library + "'" );
+            throw MASA_EXCEPTION( "failed to load library: '" + library + "'" );
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         boost::shared_ptr< Logger_ABC > logger( new FileLogger( config_.BuildSessionChildFile( name + "_plugin.log" ) ) );
         boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, staticModel_, simulation_, clients_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
         if( !plugin.get() )
-            throw std::runtime_error( "CreateFunctor returned an error (see details in plugin log file)" );
+            throw MASA_EXCEPTION( "CreateFunctor returned an error (see details in plugin log file)" );
         handler_.Add( plugin, logger );
         MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library << ")" );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Failed to load plugin '" << name << "' reason: " << e.what() );
+        MT_LOG_ERROR_MSG( "Failed to load plugin '" << name << "' reason: " << tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

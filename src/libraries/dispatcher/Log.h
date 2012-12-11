@@ -32,7 +32,7 @@ public:
         : s_( filename.c_str() )
     {
         if( ! s_ )
-            throw std::runtime_error( "Failed to open log file '" + filename + "' for writing" );
+            throw MASA_EXCEPTION( "Failed to open log file '" + filename + "' for writing" );
     }
 
     virtual ~Log()

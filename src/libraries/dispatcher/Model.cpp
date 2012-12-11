@@ -180,9 +180,9 @@ void Model::Receive( const sword::SimToClient& wrapper )
     {
         Update( wrapper );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -534,7 +534,7 @@ void Model::UpdateAnyAgent( unsigned id, const T& message )
         popu->Update( message );
     else if( kernel::Inhabitant_ABC* inhab = inhabitants_.Find( id ) )
         inhab->Update( message );
-    else throw std::runtime_error( __FUNCTION__ " : Unknown entity" );
+    else throw MASA_EXCEPTION( "Unknown entity." );
 }
 
 // -----------------------------------------------------------------------------
@@ -646,7 +646,7 @@ void Model::SetToTasker( sword::Tasker& tasker, unsigned int id ) const
     else if( agents_.Find( id ) )
         tasker.mutable_unit()->set_id( id );
     else
-        throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );
+        throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
 }
 
 // -----------------------------------------------------------------------------
@@ -663,7 +663,7 @@ unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
         return tasker.crowd().id();
     if( tasker.has_formation() )
         return tasker.formation().id();
-    throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );
+    throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
 }
 
 // -----------------------------------------------------------------------------

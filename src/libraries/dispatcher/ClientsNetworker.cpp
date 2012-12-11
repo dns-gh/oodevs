@@ -214,9 +214,9 @@ void ClientsNetworker::Send( const sword::SimToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it ) // $$$$ MCO : doesn't this bypass authentication ?
             it->second->Send( msg );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -231,9 +231,9 @@ void ClientsNetworker::Send( const sword::AuthenticationToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -248,9 +248,9 @@ void ClientsNetworker::Send( const sword::ReplayToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -266,9 +266,9 @@ void ClientsNetworker::Send( const sword::AarToClient& msg )
             it->second->Send( msg );
         plugin_.Receive( msg );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -284,9 +284,9 @@ void ClientsNetworker::Send( const sword::MessengerToClient& msg )
             it->second->Send( msg );
         plugin_.Receive( msg );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -301,9 +301,9 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
         for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -313,7 +313,7 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 // -----------------------------------------------------------------------------
 Profile_ABC& ClientsNetworker::GetProfile( const std::string& )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
 {
     CIT_Clients it = clients_.find( link );
     if( it == clients_.end() || !it->second )
-        throw std::runtime_error( link + " is not a valid client" );
+        throw MASA_EXCEPTION( link + " is not a valid client" );
     return *it->second;
 }
 

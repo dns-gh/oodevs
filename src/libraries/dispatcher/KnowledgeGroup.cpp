@@ -37,7 +37,7 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCre
     if( parent_ )
     {
         if( parent_ == this )
-           throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
+           throw MASA_EXCEPTION( "recursive hierarchy." );
         parent_->Register( *this );
     }
     else
@@ -90,7 +90,7 @@ void KnowledgeGroup::ChangeSuperior( dispatcher::KnowledgeGroup_ABC* superior )
 {
     // LTO begin
     if( superior == this )
-        throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
+        throw MASA_EXCEPTION( "recursive hierarchy." );
     if( parent_ )
         parent_->Remove( *this );
     else

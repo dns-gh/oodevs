@@ -122,7 +122,7 @@ void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Side::SendDestruction( ClientPublisher_ABC& ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 namespace

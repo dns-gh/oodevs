@@ -51,9 +51,9 @@ int Application::Execute( bool test )
                 break;
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Initialization error : " << e.what() );
+        MT_LOG_ERROR_MSG( "Initialization error : " << tools::GetExceptionMsg( e ) );
     }
     return 0;
 }

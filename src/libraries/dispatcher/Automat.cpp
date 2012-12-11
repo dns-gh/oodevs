@@ -52,7 +52,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const too
     , decisionalModel_  ( type_.GetDecisionalModel().GetName() )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
-        throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
+        throw MASA_EXCEPTION( "invalid parent for automat " + msg.name() );
     knowledgeGroup_->Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
@@ -469,7 +469,7 @@ dispatcher::Team_ABC& Automat::GetTeam() const
 kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
 {
     if( !knowledgeGroup_ )
-        throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
+        throw MASA_EXCEPTION( "automat without a knowledge group." );
     return *knowledgeGroup_;
 }
 

@@ -154,7 +154,7 @@ unsigned int PopulationConcentration::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 float PopulationConcentration::GetDensity() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ float PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 QString PopulationConcentration::GetAttitude() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

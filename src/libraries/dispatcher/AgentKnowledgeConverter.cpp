@@ -96,7 +96,7 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( 
 // -----------------------------------------------------------------------------
 const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::A
 // -----------------------------------------------------------------------------
 const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -118,5 +118,5 @@ const kernel::Entity_ABC& AgentKnowledgeConverter::FindGroup( const kernel::Enti
         return automat->GetKnowledgeGroup();
     else if( const dispatcher::Agent_ABC* agent = dynamic_cast< const dispatcher::Agent_ABC* >( &owner ) )
         return agent->GetSuperior().GetKnowledgeGroup();
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "Entity " + owner.GetName().toStdString() + " is neither an agent nor an automat." );
 }

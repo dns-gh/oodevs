@@ -212,7 +212,7 @@ const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -221,5 +221,5 @@ void ObjectKnowledge::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DisplayInList( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

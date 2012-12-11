@@ -116,9 +116,9 @@ void SimulationNetworker::Send( const sword::ClientToSim& asnMsg )
         else
             MT_LOG_ERROR_MSG( "Message received from client while simulation is disconnected." );
     }
-    catch( std::runtime_error& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -133,8 +133,8 @@ void SimulationNetworker::Send( const sword::DispatcherToSim& asnMsg )
         if( simulation_.get() )
             simulation_->Send( asnMsg );
     }
-    catch( std::runtime_error& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << exception.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }

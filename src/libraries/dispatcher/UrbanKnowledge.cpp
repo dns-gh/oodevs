@@ -187,7 +187,7 @@ const kernel::Team_ABC& UrbanKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,5 +196,5 @@ void UrbanKnowledge::Display( kernel::Displayer_ABC& /*displayer*/ ) const
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DisplayInList( kernel::Displayer_ABC& /*displayer*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

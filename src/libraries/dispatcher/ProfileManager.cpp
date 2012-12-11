@@ -79,9 +79,9 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
                 bfs::create_directories( p );
             Save( strPath );
         }
-        catch( std::exception& exception )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", exception.what() ) );
+            MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", tools::GetExceptionMsg( e ) ) );
         }
         catch( ... )
         {
@@ -136,7 +136,7 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
             MT_LOG_INFO_MSG( "New profile loaded : '" << strName << "'" );
             pProfile = new Profile( model_, clients_, strName, xis );
         }
-        catch( xml::exception& )
+        catch( const xml::exception& )
         {
             profiles_.erase( strName );
             MT_LOG_INFO_MSG( "Invalid profile ignored : '" << strName << "'" );
@@ -172,9 +172,9 @@ void ProfileManager::Reset()
         else
             config_.GetLoader().LoadFile( config_.GetProfilesFile(), boost::bind( &ProfileManager::ReadProfiles, this, _1 ) );
     }
-    catch( xml::exception& exception )
+    catch( const xml::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error while loading profiles : " << exception.what() );
+        MT_LOG_ERROR_MSG( "Error while loading profiles : " << tools::GetExceptionMsg( e ) );
     }
 }
 
