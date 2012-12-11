@@ -33,6 +33,11 @@
 
 #include <xeumeuleu/xml.hpp>
 
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning( disable : 4724 )
+#endif
+
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
@@ -41,6 +46,10 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/string_generator.hpp>
+
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 #include <limits>
 
