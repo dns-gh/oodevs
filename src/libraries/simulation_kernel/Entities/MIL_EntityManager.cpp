@@ -594,7 +594,7 @@ void MIL_EntityManager::Synchronize()
 {
     sink_->Finalize();
     sink_->UpdateUrbanModel( MIL_AgentServer::GetWorkspace().GetUrbanCache() );
-    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
+    sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->NotifyEffects();
 }
 
@@ -819,7 +819,7 @@ void MIL_EntityManager::UpdateKnowledges()
         int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         {
             Profiler profiler( profilers_[ "update model" ] );
-            sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
+            sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
         }
         {
             Profiler profiler( profilers_[ "execute perceptions" ] );
@@ -894,7 +894,7 @@ void MIL_EntityManager::UpdateDecisions()
 void MIL_EntityManager::UpdateActions()
 {
     Profiler profiler( rActionsTime_ );
-    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
+    sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->ExecuteCommands();
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateActions, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
@@ -940,7 +940,7 @@ void MIL_EntityManager::UpdateStates()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::PreprocessRandomBreakdowns()
 {
-    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
     if( nRandomBreakdownsNextTimeStep_ > nCurrentTimeStep )
         return;
     while( nRandomBreakdownsNextTimeStep_ <= nCurrentTimeStep )

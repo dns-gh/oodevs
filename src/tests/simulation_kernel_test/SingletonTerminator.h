@@ -10,8 +10,6 @@
 #ifndef SIMULATION_KERNEL_TEST_SINGLETONTERMINATOR_H
 #define SIMULATION_KERNEL_TEST_SINGLETONTERMINATOR_H
 
-class StubMIL_Time_ABC;
-
 class SingletonTerminator
 {
 public:

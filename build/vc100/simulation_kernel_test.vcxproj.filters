@@ -205,9 +205,6 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_PopulationType.h">
       <Filter>Source Files\stub</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Time_ABC.h">
-      <Filter>Source Files\stub</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubPHY_RoleInterface_Dotation.h">
       <Filter>Source Files\stub</Filter>
     </ClInclude>

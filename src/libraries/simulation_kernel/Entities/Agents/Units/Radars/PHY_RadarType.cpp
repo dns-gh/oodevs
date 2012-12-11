@@ -326,7 +326,7 @@ bool PHY_RadarType::CanAcquire( const MIL_Agent_ABC& perceiver, const MIL_Agent_
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Agent_ABC& target, unsigned int nFirstAcquisitionTimeStep ) const
 {
-    const unsigned int nTimePerceived = time_.GetCurrentTick() - nFirstAcquisitionTimeStep;
+    const unsigned int nTimePerceived = time_.GetCurrentTimeStep() - nFirstAcquisitionTimeStep;
     if( target.IsPC() )
     {
         if( nTimePerceived >= rPcIdentificationTime_ )

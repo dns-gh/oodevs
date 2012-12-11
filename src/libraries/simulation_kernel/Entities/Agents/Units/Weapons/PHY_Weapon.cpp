@@ -37,7 +37,7 @@ PHY_Weapon::PHY_Weapon( const MIL_Time_ABC& time, const PHY_WeaponType& type, bo
     , type_                   ( type )
     , bMajor_                 ( bMajor )
     , nNbrAmmoFiredFromLoader_( 0 )
-    , rNextTimeStepToFire_    ( time_.GetCurrentTick() )
+    , rNextTimeStepToFire_    ( time_.GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -131,7 +131,7 @@ double PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_A
 // -----------------------------------------------------------------------------
 bool PHY_Weapon::IsReady() const
 {
-    return (unsigned int)rNextTimeStepToFire_ <= time_.GetCurrentTick();
+    return (unsigned int)rNextTimeStepToFire_ <= time_.GetCurrentTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
     assert( type_.CanDirectFire() && IsReady() );
 
           bool bHasFired        = false;
-    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
     const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
@@ -227,7 +227,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
 {
     assert( type_.CanDirectFire() && IsReady() );
 
-    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
     const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
@@ -257,7 +257,7 @@ bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& ef
     assert( type_.GetDotationCategory() == effect.GetIndirectDotationCategory().GetDotationCategory() );
 
     bool bHasFired = false;
-    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
     const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;

@@ -16,7 +16,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_NbcAgentType.h"
 #include "simulation_kernel/Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "MockHumansComposante.h"
-#include "StubMIL_Time_ABC.h"
+#include "MockMIL_Time_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -28,8 +28,9 @@ namespace
         {
             MOCK_EXPECT( composante.NotifyHumanAdded ).once();
             MOCK_EXPECT( composante.NotifyHumanRemoved ).once();
+            MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
         }
-        StubMIL_Time_ABC time;
+        MockMIL_Time_ABC time;
         MockHumansComposante composante;
     };
     class Fixture : public Configuration
@@ -168,7 +169,7 @@ BOOST_FIXTURE_TEST_CASE( HumanSetRank, Fixture )
 BOOST_AUTO_TEST_CASE( HumanCancelLogisticRequest )
 {
   /* $$$$ TODO MGD
-  StubMIL_Time_ABC time;
+  MockMIL_Time_ABC time;
   PHY_HumansComposante composante;
   PHY_Human human = PHY_Human( time, composante);
   PHY_MedicalHumanState medicalState;

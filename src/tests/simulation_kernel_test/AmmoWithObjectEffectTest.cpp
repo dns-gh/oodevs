@@ -79,7 +79,6 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 
         MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
         MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 10u );
-        MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
         TestIndirectFireModifier* testRole = new TestIndirectFireModifier( time, effectManager, pion, dotations );
         pion.RegisterRole< TestIndirectFireModifier >( *testRole );
         MockRoleLocation* locationRole = new MockRoleLocation();

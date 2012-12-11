@@ -632,12 +632,12 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
     if( pType_->GetProtection().CanRandomlyBreaksDownEva() )
     {
         pRandomBreakdownState_ = &PHY_ComposanteState::repairableWithEvacuation_;
-        nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
+        nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTimeStep(), nEndDayTimeStep );
     }
     else if( pType_->GetProtection().CanRandomlyBreaksDownNeva() )
     {
         pRandomBreakdownState_ = &PHY_ComposanteState::repairableWithoutEvacuation_;
-        nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
+        nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTimeStep(), nEndDayTimeStep );
     }
 }
 
@@ -668,7 +668,7 @@ void PHY_ComposantePion::ManageEndMaintenance()
         if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ )
         {
             assert( pType_ );
-            nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, time_.GetCurrentTick() + pType_->GetProtection().GetNeutralizationTime() );
+            nAutoRepairTimeStep_ = std::max( nAutoRepairTimeStep_, time_.GetCurrentTimeStep() + pType_->GetProtection().GetNeutralizationTime() );
         }
     }
 }
@@ -794,7 +794,7 @@ void PHY_ComposantePion::Repair()
 void PHY_ComposantePion::Update()
 {
     // Réparation automatique
-    if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && time_.GetCurrentTick() >= nAutoRepairTimeStep_ )
+    if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && time_.GetCurrentTimeStep() >= nAutoRepairTimeStep_ )
     {
         assert( pType_ );
         MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_MaterielRepareSurPlace, *pType_ );
@@ -802,7 +802,7 @@ void PHY_ComposantePion::Update()
         ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
     // Panne aléatoire
-    if( pRandomBreakdownState_ && nRandomBreakdownNextTimeStep_ == time_.GetCurrentTick()  )
+    if( pRandomBreakdownState_ && nRandomBreakdownNextTimeStep_ == time_.GetCurrentTimeStep()  )
     {
         if( *pState_ == PHY_ComposanteState::undamaged_ )
             ReinitializeState( *pRandomBreakdownState_ );

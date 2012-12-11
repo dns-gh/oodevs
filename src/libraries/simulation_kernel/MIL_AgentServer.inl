@@ -103,16 +103,6 @@ unsigned int MIL_AgentServer::GetRealTime() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetCurrentTick
-// Created: AGE 2007-08-10
-// -----------------------------------------------------------------------------
-inline
-unsigned int MIL_AgentServer::GetCurrentTick() const
-{
-    return nCurrentTimeStep_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetCurrentTimeStep
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------

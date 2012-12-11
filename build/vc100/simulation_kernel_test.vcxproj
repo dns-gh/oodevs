@@ -219,7 +219,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Object_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Population.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_PopulationType.h" />
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Time_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubPHY_RoleInterface_Dotation.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubTER_World.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestIndirectFireModifier.h" />

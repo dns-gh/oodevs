@@ -88,7 +88,6 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 
 
         MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
-        MOCK_EXPECT( time.GetCurrentTick ).returns( 10u );
         MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 10u );
 
         const std::string dotations( "<resources><resource name='ammo' category='munition' id='1' logistic-supply-class='whatever' nature='Solide' id-nature='1' package-size='1' package-mass='1' package-volume='1'>"

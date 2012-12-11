@@ -107,7 +107,7 @@ void NET_AgentServer::ConnectionWarning( const std::string& address , const std:
 // -----------------------------------------------------------------------------
 void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
 {
-    nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTick();
+    nUnitVisionConesChangeTimeStep_ = time_.GetCurrentTimeStep();
     bSendUnitVisionCones_           = bEnable;
 }
 
@@ -117,7 +117,7 @@ void NET_AgentServer::SetMustSendUnitVisionCones( bool bEnable )
 // -----------------------------------------------------------------------------
 bool NET_AgentServer::MustInitUnitVisionCones() const
 {
-    return bSendUnitVisionCones_ && time_.GetCurrentTick() == nUnitVisionConesChangeTimeStep_ + 1;
+    return bSendUnitVisionCones_ && time_.GetCurrentTimeStep() == nUnitVisionConesChangeTimeStep_ + 1;
 }
 
 // -----------------------------------------------------------------------------

@@ -373,7 +373,7 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
     else if( *pWound_ == PHY_HumanWound::notWounded_ )
         nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     else
-        nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTick() + pWound_->GetLifeExpectancy() );
+        nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTimeStep() + pWound_->GetLifeExpectancy() );
     NotifyHumanChanged( oldHumanState );
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
     if( !NeedMedical() )
@@ -473,7 +473,7 @@ void PHY_Human::NotifyBackFromFuneral()
 void PHY_Human::Update()
 {
     assert( pComposante_ );
-    if( time_.GetCurrentTick() >= nDeathTimeStep_ )
+    if( time_.GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
         MIL_Report::E_DecisionalReport nReportID;
         if( !pMedicalState_ )
@@ -670,7 +670,7 @@ void PHY_Human::SetState( const PHY_HumanWound& newWound, bool mentalDisease, bo
     else if( *pWound_ == PHY_HumanWound::notWounded_ )
         nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     else
-        nDeathTimeStep_ = time_.GetCurrentTick() + pWound_->GetLifeExpectancy();
+        nDeathTimeStep_ = time_.GetCurrentTimeStep() + pWound_->GetLifeExpectancy();
 
     NotifyHumanChanged( oldHumanState );
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too

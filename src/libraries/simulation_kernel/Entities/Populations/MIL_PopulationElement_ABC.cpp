@@ -30,7 +30,7 @@
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
@@ -552,11 +552,11 @@ void MIL_PopulationElement_ABC::ApplyContamination( const MIL_NbcAgentType& type
     IT_ContaminationEffects it = contaminationEffects_.find( type.GetID() );
     if( it == contaminationEffects_.end() )
     {
-        boost::shared_ptr< MIL_ContaminationEffect > pEffect( new MIL_ContaminationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetCurrentTick() ) );
+        boost::shared_ptr< MIL_ContaminationEffect > pEffect( new MIL_ContaminationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) );
         contaminationEffects_[ type.GetID() ] = pEffect;
     }
     else
-        it->second->Update( MIL_AgentServer::GetWorkspace().GetCurrentTick() );
+        it->second->Update( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     bHumansUpdated_ = true;
 }
 
@@ -570,12 +570,12 @@ void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type 
     IT_IntoxicationEffects it = intoxicationEffects_.find( type.GetID() );
     if( it == intoxicationEffects_.end() )
     {
-        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetCurrentTick() ) );
+        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) );
         type.InitializePopulationEffect( *pEffect );
         intoxicationEffects_[ type.GetID() ] = pEffect;
     }
     else
-        it->second->Update( MIL_AgentServer::GetWorkspace().GetCurrentTick() );
+        it->second->Update( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     bHumansUpdated_ = true;
 }
 
@@ -585,7 +585,7 @@ void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type 
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::ApplyDecontamination( double rRatioWorkers )
 {
-    if( pDecontaminationEffect_->Apply( rRatioWorkers, MIL_AgentServer::GetWorkspace().GetCurrentTick() ) )
+    if( pDecontaminationEffect_->Apply( rRatioWorkers, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
         bHumansUpdated_ = true;
 }
 

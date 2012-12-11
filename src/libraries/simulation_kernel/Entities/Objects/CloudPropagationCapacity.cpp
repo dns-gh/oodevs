@@ -80,7 +80,7 @@ void CloudPropagationCapacity::Register( MIL_Object_ABC& object )
 void CloudPropagationCapacity::Finalize( MIL_Object_ABC& object )
 {
     origin_ = object.GetLocalisation().ComputeBarycenter();
-    time_ = MIL_AgentServer::GetWorkspace().GetCurrentTick();
+    time_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     rCurrentCircleRadius_ = object.GetLocalisation().GetCircleRadius();
 }
 
