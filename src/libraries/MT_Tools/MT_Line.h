@@ -22,14 +22,14 @@ typedef enum E_CollisionState
 class MT_Line
 {
 public:
-    explicit MT_Line();
-    MT_Line( const MT_Vector2D&, const MT_Vector2D& );
+             MT_Line();
+             MT_Line( const MT_Vector2D&, const MT_Vector2D& );
     virtual ~MT_Line();
 
     const MT_Vector2D&  GetPosStart() const;
     const MT_Vector2D&  GetPosEnd  () const;
     MT_Vector2D         GetCenter  () const;
-    double            Magnitude  () const;
+    double              Magnitude  () const;
 
     bool                IsClipped  ( const MT_Line& ) const;
     E_CollisionState    Intersect2D( const MT_Line& , MT_Vector2D& ) const;
@@ -38,8 +38,8 @@ public:
     bool                Intersect2D( const T_PointVector& polyline, double rPrecision ) const;
 
     MT_Vector2D         ProjectPointOnLine( const MT_Vector2D& vPoint ) const;
-    double            ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const;
-    MT_Vector2D            ClosestPointOnLine( const MT_Vector2D& ) const;
+    double              ProjectPointOnLine( const MT_Vector2D& vPoint, MT_Vector2D& vResult ) const;
+    MT_Vector2D         ClosestPointOnLine( const MT_Vector2D& ) const;
     bool                IsInside( const MT_Vector2D&, double ) const;
     bool                IsInside( const MT_Vector2D&, double, MT_Vector2D&  ) const;
     MT_Line&            operator = ( const MT_Line& rhs );
