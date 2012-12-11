@@ -31,9 +31,9 @@ bool operator==( const google::protobuf::Message& lhs, const google::protobuf::M
     const google::protobuf::Message::Reflection* lhsRef = lhs.GetReflection();
     const google::protobuf::Message::Reflection* rhsRef = rhs.GetReflection();
     if( !lhsRef )
-        throw std::runtime_error( __FUNCTION__ " : reflection not available for lhs message." );
+        throw MASA_EXCEPTION( "Reflection not available for lhs message." );
     if( !rhsRef )
-        throw std::runtime_error( __FUNCTION__ " : reflection not available for rhs message." );
+        throw MASA_EXCEPTION( "Reflection not available for rhs message." );
     typedef std::vector< const google::protobuf::FieldDescriptor* > T_Fields;
     T_Fields lFields; lhsRef->ListFields( lhs, &lFields );
     T_Fields rFields; rhsRef->ListFields( rhs, &rFields );

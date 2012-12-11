@@ -10,6 +10,7 @@
 #ifndef __StubMIL_MissionParameter_ABC_h_
 #define __StubMIL_MissionParameter_ABC_h_
 
+#include <tools/Exception.h>
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 
 // =============================================================================
@@ -33,164 +34,164 @@ public:
     //! @name Type checking
     //@{
     virtual bool IsOfType( MIL_ParameterType_ABC::E_Type )const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     //@}
 
     //! @name Conversions
     //@{
     virtual bool ToBool( bool& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToId( int& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPoint( sword::Point& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPointList( sword::PointList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPolygon( sword::Polygon& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPolygonList( sword::PolygonList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgent( sword::UnitId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentKnowledge( sword::UnitKnowledgeId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentKnowledgeList( sword::UnitKnowledgeIdList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentList( sword::UnitIdList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAutomat( sword::AutomatId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAutomatList( sword::AutomatIdList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDirection( sword::Heading& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDotationType( sword::ResourceType& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToEquipmentType( sword::EquipmentType& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGDH( sword::DateTime& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGenObject( sword::PlannedWork& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGenObjectList( sword::PlannedWorkList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToIndirectFire( sword::FireId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLocation( sword::Location& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLocationList( sword::LocationList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToMaintenancePriorities( sword::LogMaintenancePriorities& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToMedicalPriorities( sword::LogMedicalPriorities& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToNatureAtlas( sword::Nature& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToNumeric( float& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToNumericList( std::vector< float >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectiveList( sword::MissionObjectiveList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectKnowledge( sword::ObjectKnowledgeId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectKnowledgeList( sword::ObjectKnowledgeIdList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPath( sword::Path& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPathList( sword::PathList& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPopulationKnowledge( sword::CrowdKnowledgeId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToString( std::string& result ) const
     {
         result = param_;
         return true;
     }
     virtual bool ToLima( sword::PhaseLinesOrder& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLimaList( sword::PhaseLinesOrder& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLocation( boost::shared_ptr< TER_Localisation >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLocationList( std::vector< boost::shared_ptr<TER_Localisation > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToNatureAtlas( int& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAutomat( DEC_Decision_ABC*& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgent( const DEC_Decision_ABC*& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentList( std::vector< const DEC_Decision_ABC* >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToDotationTypeList( std::vector< const PHY_DotationCategory* >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGDH( float& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGenObject( boost::shared_ptr<DEC_Gen_Object >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToUrbanBlock( sword::UrbanObjectId& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToUrbanBlock( MIL_UrbanObject_ABC*& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToElement( sword::MissionParameter_Value& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToResourceNetworkNode( boost::shared_ptr< DEC_ResourceNetwork >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& ) const
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param )
-    { throw; }
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     //@}
 
 private:

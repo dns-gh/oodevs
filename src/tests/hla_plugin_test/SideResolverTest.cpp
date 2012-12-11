@@ -43,8 +43,8 @@ BOOST_FIXTURE_TEST_CASE( side_resolver_read_teams, Fixture )
     SideResolver sideResolver( model_, logger_ );
 
     dispatcher::MockTeam t1( 42 );
-    BOOST_CHECK_THROW( sideResolver.ResolveForce( t1.GetId() ),  std::runtime_error );
-    BOOST_CHECK_THROW( sideResolver.ResolveTeam( rpr::Friendly ),  std::runtime_error );
+    BOOST_CHECK_THROW( sideResolver.ResolveForce( t1.GetId() ),  std::exception );
+    BOOST_CHECK_THROW( sideResolver.ResolveTeam( rpr::Friendly ),  std::exception );
 }
 
 namespace 
@@ -112,7 +112,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping, T, test
     BOOST_CHECK_EQUAL( sideResolver.ResolveTeam( rpr::Neutral ), fr1->GetId() );
     BOOST_CHECK_EQUAL( sideResolver.ResolveTeam( rpr::Friendly ), fr1->GetId() );
 
-    BOOST_CHECK_THROW( sideResolver.ResolveForce( t2.GetId() ), std::runtime_error );
+    BOOST_CHECK_THROW( sideResolver.ResolveForce( t2.GetId() ), std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping_overflow, T, test_types, Fixture )

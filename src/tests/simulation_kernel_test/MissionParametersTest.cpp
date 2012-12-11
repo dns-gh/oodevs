@@ -512,7 +512,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
     Path in;
     in.mutable_location()->mutable_coordinates()->add_elem();
     FillRlyehLocation( *in.mutable_location() );
-    BOOST_CHECK_THROW( MIL_PathParameter param( in ), std::runtime_error );
+    BOOST_CHECK_THROW( MIL_PathParameter param( in ), std::exception );
     TER_World::DestroyWorld();
 }
 

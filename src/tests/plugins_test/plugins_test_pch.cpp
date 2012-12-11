@@ -41,7 +41,7 @@ namespace
     if( value.empty() )
     {
         const char message[] = "test --temp_directory option was not supplied";
-        throw std::invalid_argument( message );
+        throw MASA_EXCEPTION( message );
     }
     temp_directory = value;
 

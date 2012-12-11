@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE( wrong_day_in_xml_throws )
                              "</root>" );
     MockMIL_LivingArea livingArea;
     MIL_Schedule schedule( livingArea );
-    BOOST_CHECK_THROW( schedule.Configure( xis >> xml::start( "root" ) ), std::runtime_error );
+    BOOST_CHECK_THROW( schedule.Configure( xis >> xml::start( "root" ) ), std::exception );
 }
 
 namespace

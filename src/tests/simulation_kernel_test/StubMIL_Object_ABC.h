@@ -10,6 +10,7 @@
 #ifndef __StubMIL_Object_ABC_h_
 #define __StubMIL_Object_ABC_h_
 
+#include <tools/Exception.h>
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 // =============================================================================
@@ -48,25 +49,25 @@ public:
     virtual void ApplyIndirectFire( const TER_Localisation& /*attritionSurface*/, const PHY_DotationCategory& /*dotation*/, MIL_Army_ABC* /*army*/ ) {};
     virtual void ApplyDirectFire() const {};
     virtual void ApplyDestruction( const TER_Localisation& /*attritionSurface*/, const PHY_UrbanAttritionData& /*attrition*/ ) {};
-    virtual bool IsUniversal() const { throw; };
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/ ) { throw; }
-    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& /*group*/ ) { throw; }
-    virtual const MIL_ObjectManipulator_ABC& operator()() const { throw; }
-    virtual MIL_ObjectManipulator_ABC& operator()() { throw; }
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw; }
+    virtual bool IsUniversal() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; };
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& /*team*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& /*group*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual const MIL_ObjectManipulator_ABC& operator()() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual MIL_ObjectManipulator_ABC& operator()() { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void SendCreation() const {}
     virtual void SendDestruction() const {}
     virtual void SendFullState() const {}
     virtual void Update( unsigned int /*time*/ ) {}
-    virtual void Register( ObjectCapacity_ABC* ) { throw; }
-    virtual void Register( ObjectAttribute_ABC* ) { throw; }
+    virtual void Register( ObjectCapacity_ABC* ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual void Register( ObjectAttribute_ABC* ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void Register( MIL_StructuralStateNotifier_ABC& ) {}
     virtual void Register( MIL_InteractiveContainer_ABC* ) {}
     virtual void ApplyStructuralState( float /*structuralState*/ ) const {}
     virtual void Instanciate( MIL_Object_ABC& /*object*/ ) const {}
     virtual void Finalize() {}
     virtual bool CanBeSeen() const { return true; }
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ ) { throw; }
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual const std::string& GetName() const { return name_; };
     //@}
 

@@ -39,7 +39,7 @@ namespace
 {
     parse_options( argc, argv );
     if( temp_directory.empty() )
-        throw std::invalid_argument( "test --temp_directory option was not supplied" );
+        throw MASA_EXCEPTION( "Test --temp_directory option was not supplied" );
 
     return 0;
 }

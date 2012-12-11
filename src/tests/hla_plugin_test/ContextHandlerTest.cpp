@@ -70,7 +70,7 @@ BOOST_FIXTURE_TEST_CASE( context_handler_throws_if_error_in_unit_magic_action_ac
     BOOST_REQUIRE( unitMagicActionAckHandler );
     sword::SimToClient_Content message;
     message.mutable_unit_magic_action_ack()->set_error_code( sword::UnitActionAck::error_invalid_unit );
-    BOOST_CHECK_THROW( unitMagicActionAckHandler->Notify( message, context ), std::runtime_error );
+    BOOST_CHECK_THROW( unitMagicActionAckHandler->Notify( message, context ), std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( context_handler_listens_only_to_good_context_with_unit_magic_action_ack, SentFixture )

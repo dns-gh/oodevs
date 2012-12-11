@@ -60,7 +60,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( agent_cannot_be_deserialized, RegisteredFixture )
 {
     hla::Deserializer deserializer( 0 );
-    BOOST_CHECK_NO_THROW( entity.Deserialize( "identifier", deserializer ) ); //, std::runtime_error );
+    BOOST_CHECK_NO_THROW( entity.Deserialize( "identifier", deserializer ) ); //, std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( unmodified_agent_serializes_nothing, RegisteredFixture )
@@ -126,7 +126,7 @@ namespace
         T actual;
         deserializer >> actual;
         BOOST_CHECK_EQUAL( expected, actual );
-        BOOST_CHECK_THROW( deserializer >> actual, std::runtime_error );
+        BOOST_CHECK_THROW( deserializer >> actual, std::exception );
         return true;
     }
     bool CheckSize( ::hla::T_SerializerPtr serializer, unsigned int size )

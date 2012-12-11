@@ -47,5 +47,5 @@ BOOST_FIXTURE_TEST_CASE( split_localisation_wants_a_polygon, Fixture )
     T_PointVector points;
     points.push_back( MT_Vector2D( 0, 0 ));
     const TER_Localisation point( TER_Localisation::ePoint, points );
-    BOOST_CHECK_THROW( DEC_GeometryFunctions::SplitLocalisation( point, MT_Vector2D( 0, 0 ), MT_Vector2D( 0, 0 ), 1 ), std::runtime_error );
+    BOOST_CHECK_THROW( DEC_GeometryFunctions::SplitLocalisation( point, MT_Vector2D( 0, 0 ), MT_Vector2D( 0, 0 ), 1 ), std::exception );
 }

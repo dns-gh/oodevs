@@ -10,6 +10,7 @@
 #ifndef __StubPHY_RoleInterface_Dotation_h_
 #define __StubPHY_RoleInterface_Dotation_h_
 
+#include <tools/Exception.h>
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -24,7 +25,7 @@ class Stub_PHY_RoleInterface_Dotation : public dotation::PHY_RoleInterface_Dotat
 public:
              Stub_PHY_RoleInterface_Dotation() {}
     virtual ~Stub_PHY_RoleInterface_Dotation() {}
-    virtual const PHY_ConsumptionType& GetConsumptionMode() const { throw; }
+    virtual const PHY_ConsumptionType& GetConsumptionMode() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual void ReadOverloading( xml::xistream& /*xis*/ ) {}
     virtual void Update( bool /*bIsDead*/ ) {}
     virtual void Clean() {}

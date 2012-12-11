@@ -549,7 +549,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAllResources, Fixture )
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestInstantaneousResourceConsumptionsWithResourceFilter
-// $$$$ SBO 2010-06-14: triggers a runtime_error if "Compare" is created with < K, T > instead of < K, NumericValue >
+// $$$$ SBO 2010-06-14: triggers an exception untime_error if "Compare" is created with < K, T > instead of < K, NumericValue >
 //                      (see TranformationFactory), for now, compare can only be used to compare numeric values (not positions for instance)
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------

@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creater_checks_remote_automat_type_id_existence
 {
     mock::reset( formationCreation );
     MOCK_EXPECT( automatResolver.ResolveName ).once().returns( 0 );
-    BOOST_CHECK_THROW( AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver ), std::runtime_error );
+    BOOST_CHECK_THROW( AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver ), std::exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_receiving_formation_creation, Fixture )

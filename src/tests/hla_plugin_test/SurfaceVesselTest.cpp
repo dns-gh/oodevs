@@ -116,7 +116,7 @@ namespace
         T actual;
         deserializer >> actual;
         BOOST_CHECK_EQUAL( expected, actual );
-        BOOST_CHECK_THROW( deserializer >> actual, std::runtime_error );
+        BOOST_CHECK_THROW( deserializer >> actual, std::exception );
         return true;
     }
     bool CheckSize( ::hla::T_SerializerPtr serializer, unsigned int size )

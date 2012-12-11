@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
     MIL_ObjectFactory factory( false );
     xml::xistringstream xis( "<objects/>" );
     factory.Initialize( xis );
-    BOOST_CHECK_THROW( factory.FindType( "fake" ), std::runtime_error );
+    BOOST_CHECK_THROW( factory.FindType( "fake" ), std::exception );
 }
 
 BOOST_AUTO_TEST_CASE( VerifyDangerousObjects )

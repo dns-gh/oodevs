@@ -60,7 +60,7 @@ MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
         else if( Agents().Find( id ) )
             tasker.mutable_unit()->set_id( id );
         else
-            throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );
+            throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
     }
 };
 

@@ -23,7 +23,7 @@ namespace
     {
         std::ifstream ifs( filename );
         if( ! ifs )
-            throw std::runtime_error( std::string( "File " ) + filename + " not found" );
+            throw MASA_EXCEPTION( std::string( "File " ) + filename + " not found" );
         return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
     }
 

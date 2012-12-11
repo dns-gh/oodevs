@@ -1,6 +1,7 @@
 #ifndef __StubDEC_Decision_h_
 #define __StubDEC_Decision_h_
 
+#include <tools/Exception.h>
 #include "simulation_kernel/Decision/DEC_Decision.h"
 #include "simulation_kernel/Decision/DEC_Model.h"
 
@@ -24,7 +25,7 @@ public:
         InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate", false, false, model.GetIntegrationDir() );
     }
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
-    virtual std::string GetName() const { throw; }
+    virtual std::string GetName() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual std::string GetGroupName() { return std::string(); }
     virtual void EndCleanStateAfterCrash() {}
     virtual void RegisterUserFunctions( sword::Brain& ) {}
