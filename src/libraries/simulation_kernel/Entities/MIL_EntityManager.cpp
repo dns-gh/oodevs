@@ -871,7 +871,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateDecisions()
 {
-    float duration = static_cast< float >( MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
+    float duration = static_cast< float >( MIL_AgentServer::GetWorkspace().GetTickDuration() );
     MT_Profiler decisionUpdateProfiler;
     {
         Profiler profiler( rAutomatesDecisionTime_ );

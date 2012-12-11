@@ -103,7 +103,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
     pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
@@ -126,7 +126,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    AddMeteo( *new PHY_LocalMeteo( localCounter_++, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
+    AddMeteo( *new PHY_LocalMeteo( localCounter_++, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTickDuration() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
             id = idParameter.value().Get( 0 ).identifier();
         }
         if( id == 0 )
-            AddMeteo( *new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
+            AddMeteo( *new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTickDuration() ) );
         else
         {
             weather::Meteo* meteo = Find( id );

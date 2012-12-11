@@ -149,7 +149,7 @@ double PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
         return 1.;
     if( rTimeTmp == std::numeric_limits< double >::max() )
         return std::numeric_limits< double >::max();
-    return MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / rTimeTmp;
+    return MIL_AgentServer::GetWorkspace().GetTickDuration() / rTimeTmp;
 }
 
 // -----------------------------------------------------------------------------

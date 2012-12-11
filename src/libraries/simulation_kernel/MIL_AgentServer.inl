@@ -122,16 +122,6 @@ unsigned int MIL_AgentServer::GetTickDuration() const
     return nTimeStepDuration_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetTimeStepDuration
-// Created: NLD 2002-09-10
-//-----------------------------------------------------------------------------
-inline
-unsigned int MIL_AgentServer::GetTimeStepDuration() const
-{
-    return nTimeStepDuration_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetEntityManager
 // Created: NLD 2004-08-11

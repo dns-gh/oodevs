@@ -58,7 +58,7 @@ void PHY_Tiredness::Initialize( xml::xistream& xis )
                 >> xml::end
             >> xml::end
         >> xml::end;
-    double timeFactor = MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 3600.;
+    double timeFactor = MIL_AgentServer::GetWorkspace().GetTickDuration() / 3600.;
     evolution_.engineRunning_ *= timeFactor;
     evolution_.engineStopped_ *= timeFactor;
     evolution_.moving_ *= timeFactor;

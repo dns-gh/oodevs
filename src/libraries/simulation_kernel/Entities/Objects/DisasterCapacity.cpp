@@ -135,7 +135,7 @@ void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC
     float dose = GetDose( object, agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     if( dose > 0.f )
     {
-        int step = MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
+        int step = MIL_AgentServer::GetWorkspace().GetTickDuration();
         const float protection = disasterType_->GetProtectionCoefficient(
             agent.GetType().GetUnitType().GetNbcSuit() );
         dose = std::pow( dose * protection, disasterType_->GetToxicityExponent() ) * step;

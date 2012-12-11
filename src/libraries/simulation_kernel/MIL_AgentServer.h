@@ -142,7 +142,6 @@ public:
     virtual unsigned int GetTickDuration() const;
     virtual unsigned int GetCurrentTimeStep() const;
     virtual unsigned int GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
-    unsigned int GetTimeStepDuration() const;  // $$$$ AGE 2007-08-13: degager
     //@}
 
 private:

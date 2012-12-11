@@ -392,7 +392,7 @@ void MIL_AgentServer::SendControlInformation() const
     message().set_current_tick( GetCurrentTimeStep() );
     NET_ASN_Tools::WriteGDH( nInitialRealTime_, *message().mutable_initial_date_time() );
     NET_ASN_Tools::WriteGDH( nRealTime_, *message().mutable_date_time() );
-    message().set_tick_duration( GetTimeStepDuration() );
+    message().set_tick_duration( GetTickDuration() );
     message().set_time_factor( nTimeFactor_ );
     message().set_status( sword::EnumSimulationState( nSimState_ == eSimWait ? eSimRunning : nSimState_ ) );
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
