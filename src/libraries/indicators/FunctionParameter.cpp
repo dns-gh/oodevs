@@ -41,7 +41,7 @@ FunctionParameter::~FunctionParameter()
 // -----------------------------------------------------------------------------
 std::string FunctionParameter::GetValue() const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ const DataType_ABC& FunctionParameter::GetType() const
 // -----------------------------------------------------------------------------
 void FunctionParameter::AddParameter( boost::shared_ptr< Element_ABC > element )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,5 +68,5 @@ void FunctionParameter::AddParameter( boost::shared_ptr< Element_ABC > element )
 // -----------------------------------------------------------------------------
 void FunctionParameter::Serialize( xml::xostream& /*xos*/, ElementDeclarator_ABC& /*declarator*/ ) const
 {
-    throw std::exception( tools::translate( "Indicators", "Missing parameter: %1." ).arg( name_ ).toStdString().c_str() );
+    throw MASA_EXCEPTION( tools::translate( "Indicators", "Missing parameter: %1." ).arg( name_ ).toStdString().c_str() );
 }

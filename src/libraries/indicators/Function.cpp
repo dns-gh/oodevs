@@ -60,14 +60,14 @@ void Function::AddParameter( boost::shared_ptr< Element_ABC > element )
     try
     {
         if( parameterSet_ >= parameters_.size() )
-            throw std::exception( tools::translate( "Indicators", "too many parameters." ).toStdString().c_str() );
+            throw MASA_EXCEPTION( tools::translate( "Indicators", "too many parameters." ).toStdString().c_str() );
         boost::shared_ptr< Element_ABC > definition = parameters_[ parameterSet_ ].second;
         type_->AddParameter( definition->GetType(), element->GetType() );
         parameters_[ parameterSet_++ ].second = element;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': %2" ).arg( name_ ).arg( e.what() ).toStdString().c_str() );
+        throw MASA_EXCEPTION( tools::translate( "Indicators", "Parameter type mismatch in function '%1': %2" ).arg( name_ ).arg( tools::GetExceptionMsg( e ).c_str() ).toStdString() );
     }
 }
 
@@ -96,7 +96,7 @@ std::string Function::GetValue() const
 void Function::Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const
 {
     if( parameters_.size() > parameterSet_ )
-        throw std::exception( tools::translate( "Indicators", "Parameter type mismatch in function '%1': too few parameters." ).arg( name_ ).toStdString().c_str() );
+        throw MASA_EXCEPTION( tools::translate( "Indicators", "Parameter type mismatch in function '%1': too few parameters." ).arg( name_ ).toStdString().c_str() );
     SerializeDeclarations( declarator );
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
         parameter.second->Serialize( xos, declarator );

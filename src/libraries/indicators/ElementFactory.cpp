@@ -73,7 +73,7 @@ boost::shared_ptr< Element_ABC > ElementFactory::CreateVariable( const std::stri
 {
     boost::shared_ptr< Element_ABC > element( variables_.Find( name ) );
     if( element == 0 )
-        throw std::runtime_error( tools::translate( "Indicators", "Undefined variable: %1." ).arg( name.c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Indicators", "Undefined variable: %1." ).arg( name.c_str() ).toStdString() );
     return element;
 }
 
@@ -85,7 +85,7 @@ boost::shared_ptr< Element_ABC > ElementFactory::CreateFunction( const std::stri
 {
     if( const Primitive* primitive = primitives_.Find( boost::algorithm::to_lower_copy( name ).c_str() ) )
         return primitive->Instanciate( NextId() );
-    throw std::runtime_error( tools::translate( "Indicators", "Undefined function: %1." ).arg( name.c_str() ).toStdString() );
+    throw MASA_EXCEPTION( tools::translate( "Indicators", "Undefined function: %1." ).arg( name.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

@@ -83,7 +83,7 @@ void TransformationsFactory::Transform( const std::string& name, xml::xistream& 
     else if( function == "compose" )
         Compose< T >( name, xis, result ); // T ( T )
     else
-         throw std::runtime_error( "Unknown transformation '" + function + "'" );
+         throw MASA_EXCEPTION( "Unknown transformation '" + function + "'" );
 }
 
 // -----------------------------------------------------------------------------

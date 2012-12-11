@@ -172,7 +172,7 @@ void FormulaParser::Impl::Parse( const std::string& text )
 {
     bs::tree_parse_info<> info = bs::ast_parse( text.c_str(), *this, bs::space_p );
     if( !info.full )
-        throw std::exception( tools::translate( "Indicators", "Syntax error: %1." ).arg( info.stop ).toStdString().c_str() );
+        throw MASA_EXCEPTION( tools::translate( "Indicators", "Syntax error: %1." ).arg( info.stop ).toStdString().c_str() );
     Evaluate( info.trees.begin() );
 }
 
@@ -214,7 +214,7 @@ void FormulaParser::Impl::Evaluate( const bs::tree_match< const char* >::const_t
             break;
         }
     default:
-        throw std::runtime_error( __FUNCTION__ " unknown rule" );
+        throw MASA_EXCEPTION( "Unknown rule." );
     }
 }
 

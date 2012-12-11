@@ -87,7 +87,7 @@ std::string Constant< T >::GetValue() const
 template< typename T >
 void Constant< T >::AddParameter( boost::shared_ptr< Element_ABC > element )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented." );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

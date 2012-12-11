@@ -13,6 +13,7 @@
 #include "Position.h"
 #include "Zone.h"
 #include "Types.h"
+#include <tools/Exception.h>
 #include <boost/noncopyable.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -93,7 +94,7 @@ private:
     //@{
     void TypeError( const std::string& type )
     {
-        throw std::runtime_error( "Unknown type '" + type + "'" );
+        throw MASA_EXCEPTION( "Unknown type '" + type + "'" );
     }
     //@}
 

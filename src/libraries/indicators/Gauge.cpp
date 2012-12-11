@@ -74,7 +74,7 @@ const GaugeType& Gauge::GetType() const
 const GaugeNormalizer& Gauge::GetNormalizer() const
 {
     if( !normalizer_.get() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid gauge normalizer." );
     return *normalizer_;
 }
 

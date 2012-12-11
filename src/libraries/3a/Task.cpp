@@ -11,6 +11,7 @@
 #include "Task.h"
 #include "Connectors.h"
 #include "Result_ABC.h"
+#include <tools/Exception.h>
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include "dispatcher/MessageLoader_ABC.h"
@@ -60,7 +61,7 @@ void Task::AddFunction( const std::string& name, boost::shared_ptr< Slot_ABC > f
 {
     boost::shared_ptr< Slot_ABC >& s = slots_[ name ];
     if( s )
-        throw std::runtime_error( "A function '" + name + "' already exists" );
+        throw MASA_EXCEPTION( "A function '" + name + "' already exists" );
     s = function;
 }
 
@@ -81,7 +82,7 @@ void Task::AddConnector( const std::string& name, boost::shared_ptr< Connector_A
 {
     boost::shared_ptr< Connector_ABC >& c = connectors_[ name ];
     if( c )
-        throw std::runtime_error( "A function '" + name + "' already exists" );
+        throw MASA_EXCEPTION( "A function '" + name + "' already exists" );
     c = connector;
 }
 
@@ -127,9 +128,9 @@ void Task::Connect( const std::string& name, const std::string& input, unsigned 
     CIT_Connectors itC = connectors_.find( input );
     CIT_Slots itS = slots_.find( name );
     if( itC == connectors_.end() )
-        throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "' : could not find '" + input + "'" );
+        throw MASA_EXCEPTION( "Could not connect '" + input + "' to '" + name + "' : could not find '" + input + "'" );
     else if( itS == slots_.end() )
-        throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "' : could not find '" + name + "'" );
+        throw MASA_EXCEPTION( "Could not connect '" + input + "' to '" + name + "' : could not find '" + name + "'" );
     else
         itC->second->Connect( *( itS->second ), i );
 }
@@ -185,7 +186,7 @@ void Task::Receive( const sword::SimToClient& wrapper )
             composite_.Receive( wrapper );
         }
     }
-    catch( std::exception& )
+    catch( const std::exception& )
     {
         // $$$$ AGE 2007-09-25:  ?
     }

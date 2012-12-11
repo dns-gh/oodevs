@@ -48,7 +48,7 @@ void ResultsFactory::Result( const std::string& /*name*/, xml::xistream& xis, Ta
     else if( function == "indicator" )
         f.reset( new Indicator< NumericValue, T >( publisher_, xis.attribute< std::string >( "name" ) ) );
     else
-        throw std::runtime_error( "Unknown result '" + function + "'" );
+        throw MASA_EXCEPTION( "Unknown result '" + function + "'" );
     result.SetResult( f );
 }
 

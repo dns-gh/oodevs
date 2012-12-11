@@ -15,6 +15,7 @@
 #include "DispatchedFunctionHelper.h"
 #include "Connectors.h"
 #include "Task.h"
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <map>
 #include <boost/assign.hpp>
@@ -145,6 +146,6 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         >> xml::attribute( "id", name );
     T_Extractors::const_iterator extractor = extractors_.find( value );
     if( extractor == extractors_.end() )
-        throw std::runtime_error( "Unknown value to extract '" + value + "'" );
+        throw MASA_EXCEPTION( "Unknown value to extract '" + value + "'" );
     extractor->second( name, xis, result );
 }

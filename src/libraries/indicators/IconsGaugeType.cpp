@@ -57,7 +57,7 @@ void IconsGaugeType::LoadIcon( xml::xistream& xis, const std::string& path )
     const std::string filename( tools::GeneralConfig::BuildResourceChildFile( path + "/" + xis.attribute< std::string >( "file" ) ) );
     icons_[ xis.attribute< double >( "key" ) ] = QPixmap( filename.c_str() );
     if( icons_[ xis.attribute< double >( "key" ) ].isNull() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid icon." );
 }
 
 // -----------------------------------------------------------------------------

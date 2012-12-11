@@ -85,7 +85,7 @@ Gauge* GaugeTypes::Create() const
 {
     tools::Iterator< const GaugeType& > it( CreateIterator() );
     if( !it.HasMoreElements() )
-        throw std::runtime_error( __FUNCTION__ " no indicator gauge template." );
+        throw MASA_EXCEPTION( "No indicator gauge template." );
     Gauge* gauge = new Gauge( it.NextElement() );
     return gauge;
 }

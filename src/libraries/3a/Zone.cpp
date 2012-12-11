@@ -12,6 +12,7 @@
 #include "Position.h"
 #include "Circle.h"
 #include "Polygon.h"
+#include <tools/Exception.h>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
@@ -71,7 +72,7 @@ namespace
             return new Circle( positions );
         if( type == "polygon" )
             return new Polygon( positions );
-        throw std::runtime_error( "Unknown zone type " + type );
+        throw MASA_EXCEPTION( "Unknown zone type " + type );
     }
 }
 
@@ -86,7 +87,7 @@ void Zone::Read( const std::string& content )
         std::string::size_type first = content.find_first_of( "(" );
         std::string::size_type last  = content.find_last_of ( ")" );
         if( first == std::string::npos || last == std::string::npos || last <= first )
-            throw std::runtime_error( "Invalid zone : " + content );
+            throw MASA_EXCEPTION( "Invalid zone : " + content );
         const std::string type        = content.substr( 0, first );
         const std::string coordinates = content.substr( first+1, last - first - 1 );
         zone_.reset( CreateZone( type, coordinates ) );

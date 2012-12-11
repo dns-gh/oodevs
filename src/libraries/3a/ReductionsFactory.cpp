@@ -64,7 +64,7 @@ void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Tas
     else if( functionName == "product" )
         ReduceFunction2< Product< K, NumericValue > >( name, xis, result ); // Numeric( Numeric, Numeric )
     else
-        throw std::runtime_error( "Unknown reduction '" + functionName + "'" );
+        throw MASA_EXCEPTION( "Unknown reduction '" + functionName + "'" );
 }
 
 // -----------------------------------------------------------------------------

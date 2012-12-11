@@ -10,6 +10,8 @@
 #ifndef __Slots_h_
 #define __Slots_h_
 
+#include <tools/Exception.h>
+
 // =============================================================================
 /** @class  Slot_ABC
     @brief  Slot_ABC
@@ -37,7 +39,7 @@ public:
     {
         Target* target = dynamic_cast< Target* >( GetSubSlot( slot ) );
         if( ! target )
-            throw std::runtime_error( GetName() + " is not of expected type '" + typeid( Target ).name() );
+            throw MASA_EXCEPTION( GetName() + " is not of expected type '" + typeid( Target ).name() );
         return *target;
     }
     //@}
