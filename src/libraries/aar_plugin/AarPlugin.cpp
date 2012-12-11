@@ -114,12 +114,12 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
         xis >> xml::end;
         task->Process( *messages_ ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         ::aar::PlotResult message;
         message().mutable_values();
         message().set_identifier ( request.identifier() );
-        message().set_error( e.what() );
+        message().set_error( tools::GetExceptionMsg( e ) );
         message.Send( resolver_.GetPublisher( client ) );
     }
 }

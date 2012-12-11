@@ -61,7 +61,7 @@ void NetnGroundVehicle::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updat
 // -----------------------------------------------------------------------------
 void NetnGroundVehicle::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

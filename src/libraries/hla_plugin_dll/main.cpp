@@ -12,6 +12,7 @@
 #include "hla_plugin/HlaPlugin.h"
 #include <hla/HLAException.h>
 #include "tools/Codec.h"
+#include <tools/Exception.h>
 #include <windows.h>
 
 namespace dispatcher
@@ -36,13 +37,13 @@ HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
         logger.LogInfo( "Initialized!" );
         return result;
     }
-    catch( hla::HLAException& e )
+    catch( const hla::HLAException& e )
     {
-        logger.LogError( std::string( "Initialization failed cause hla exception: " ) + e.what() );
+        logger.LogError( std::string( "Initialization failed cause hla exception: " ) + tools::GetExceptionMsg( e ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Initialization failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Initialization failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {
@@ -63,13 +64,13 @@ HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
         delete plugin;
         logger.LogInfo( "Destructed!" );
     }
-    catch( hla::HLAException& e )
+    catch( const hla::HLAException& e )
     {
-        logger.LogError( std::string( "Destruction failed cause hla exception: " ) + e.what() );
+        logger.LogError( std::string( "Destruction failed cause hla exception: " ) + tools::GetExceptionMsg( e ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Destruction failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Destruction failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

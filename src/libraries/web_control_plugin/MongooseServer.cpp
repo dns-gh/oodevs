@@ -9,6 +9,7 @@
 
 #include "MongooseServer.h"
 #include "WebObserver_ABC.h"
+#include <tools/Exception.h>
 
 #include <boost/assign/list_of.hpp>
 #include <boost/lexical_cast.hpp>
@@ -42,7 +43,7 @@ namespace
             ( "listening_ports" )( port.c_str() )( 0 );
         mg_context* ptr = mg_start( &WebCallback, &server, &options[0] );
         if( !ptr )
-            throw std::runtime_error( "unable to start mongoose server" );
+            throw MASA_EXCEPTION( "unable to start mongoose server" );
         return boost::shared_ptr< mg_context >( ptr, &mg_stop );
     }
 }

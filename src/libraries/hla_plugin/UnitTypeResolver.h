@@ -66,7 +66,7 @@ unsigned long GetDefault( const rpr::EntityTypeResolver_ABC& entityTypeResolver,
     entityTypeResolver.Resolve( rpr::EntityType(), defaultType );
     const T* agentType = agentTypeResolver.Find( defaultType );
     if( agentType == 0 )
-        throw std::runtime_error( "Agent type identifier '" + defaultType + "' not found, please check your physical model." );
+        throw MASA_EXCEPTION( "Agent type identifier '" + defaultType + "' not found, please check your physical model." );
     return agentType->GetId();
 }
 }

@@ -46,7 +46,7 @@ const kernel::ComponentType& PlatformAdapter::GetType() const
     tools::Iterator< const kernel::AgentComposition& > it = agent_.GetType().CreateIterator();
     if( it.HasMoreElements() )
         return it.NextElement().GetType();
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "Invalid agent type." );
 }
 
 // -----------------------------------------------------------------------------

@@ -61,7 +61,7 @@ void BaseCondition::Trigger()
         if( active_ && function_.get() )
            (*function_)();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         LogError( e );
     }
@@ -73,5 +73,5 @@ void BaseCondition::Trigger()
 // -----------------------------------------------------------------------------
 void BaseCondition::LogError( const std::exception& e )
 {
-    MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
+    MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) )
 }

@@ -138,7 +138,7 @@ private:
             }
             break;
         default:
-            throw std::runtime_error( "NETN version not recognized" );
+            throw MASA_EXCEPTION( "NETN version not recognized" );
         }
     }
 

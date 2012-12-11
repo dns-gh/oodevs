@@ -221,9 +221,9 @@ void ScriptPlugin::LoadScript( const std::string& file )
     {
         scripts_.push_back( new Script( file, registrables_ ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error reading script '" << file << "': " << e.what() );
+        MT_LOG_ERROR_MSG( "Error reading script '" << file << "': " << tools::GetExceptionMsg( e ) );
     }
 }
 

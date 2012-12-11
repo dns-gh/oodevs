@@ -51,7 +51,7 @@ public:
             if( active_ && function_.get() )
                 (*function_)( p );
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
             LogError( e );
         }
@@ -63,7 +63,7 @@ public:
             if( active_ && function_.get() )
                 (*function_)( p1, p2 );
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
             LogError( e );
         }

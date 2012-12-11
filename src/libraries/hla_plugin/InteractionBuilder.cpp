@@ -63,9 +63,9 @@ bool InteractionBuilder::DoRegister( const std::string& name, ::hla::Interaction
     {
         federate_.Register( ::hla::InteractionIdentifier( name ), interactionClass, publish, subscribe );
     }
-    catch (const ::hla::HLAException& ex)
+    catch( const ::hla::HLAException& e )
     {
-        logger_.LogError("Failed to register interaction "+name+ " : " + ex.what() );
+        logger_.LogError("Failed to register interaction "+name+ " : " + tools::GetExceptionMsg( e ) );
         return false;
     }
     return true;

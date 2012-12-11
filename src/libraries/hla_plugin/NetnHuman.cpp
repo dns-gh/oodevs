@@ -59,7 +59,7 @@ void NetnHuman::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) c
 // -----------------------------------------------------------------------------
 void NetnHuman::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

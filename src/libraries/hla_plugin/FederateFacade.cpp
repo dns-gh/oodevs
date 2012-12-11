@@ -49,7 +49,7 @@ public:
         try
         {
             if( !federate_.Destroy( federation_ ) )
-                throw std::runtime_error( "Could not destroy the federation '" + federation_ + "'" );
+                throw MASA_EXCEPTION( "Could not destroy the federation '" + federation_ + "'" );
         }
         catch( ... )
         {

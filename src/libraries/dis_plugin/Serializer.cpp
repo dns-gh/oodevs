@@ -30,7 +30,7 @@ template< typename T >
 void Serializer::Write( const T& data, unsigned size )
 {
     if( offset_ + size > size_ )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid size." );
     ::memcpy( data_ + offset_, &data, size );
     offset_ += size;
 }

@@ -87,7 +87,7 @@ void DrawingsModel::Load( const dispatcher::Config& config )
                 MT_LOG_WARNING_MSG( "The file " << bfs::path( filename ).filename() << " is not signed." )
         }
     }
-    catch( std::exception& )
+    catch( const std::exception& )
     {
         // $$$$ SBO 2008-06-10: log error
     }
@@ -306,7 +306,7 @@ boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::strin
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name );
     if( !p.get() )
-        throw std::runtime_error( "Could not find drawing '" + name + "'" );
+        throw MASA_EXCEPTION( "Could not find drawing '" + name + "'" );
     return boost::shared_ptr< DrawingProxy >( new DrawingProxy( *this, p ) );
 }
 

@@ -320,9 +320,9 @@ void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >
         if( !fields[ 4 ].empty() )
             notes.push_back( CreateNote( fields, parent ? notes[ parent - ::headerLines ] : 0 ) );
     }
-    catch( boost::bad_lexical_cast& e )
+    catch( const boost::bad_lexical_cast& e )
     {
-        MT_LOG_ERROR_MSG( "Note file contains invalid data: " << e.what() << " line: " << notes.size() );
+        MT_LOG_ERROR_MSG( "Note file contains invalid data: " << tools::GetExceptionMsg( e ) << " line: " << notes.size() );
     }
 }
 

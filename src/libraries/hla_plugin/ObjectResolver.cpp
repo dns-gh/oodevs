@@ -56,6 +56,6 @@ std::string ObjectResolver::Resolve( const std::string& identifier ) const
 {
     T_Objects::const_iterator it = objects_.find( identifier );
     if( it == objects_.end() )
-        throw std::runtime_error( "Unknown hla object: '" + identifier + "'" );
+        throw MASA_EXCEPTION( "Unknown hla object: '" + identifier + "'" );
     return it->second;
 }

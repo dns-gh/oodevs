@@ -65,7 +65,7 @@ void IndicatorBuilder::Start()
 void IndicatorBuilder::AddVariable( const std::string& name, const std::string& type, const std::string& value )
 {
     if( ! variables_.get() )
-        throw std::runtime_error( __FUNCTION__ ": indicator builder not initialized" );
+        throw MASA_EXCEPTION( "indicator builder not initialized" );
     variables_->Register( name, boost::shared_ptr< indicators::Element_ABC >( new indicators::Variable( name, typeFactory_->Instanciate( type ), value ) ) );
 }
 
@@ -76,7 +76,7 @@ void IndicatorBuilder::AddVariable( const std::string& name, const std::string& 
 void IndicatorBuilder::Build( const std::string& name, const std::string& formula, xml::xostream& xos )
 {
     if( ! factory_.get() )
-        throw std::runtime_error( __FUNCTION__ ": indicator builder not initialized" );
+        throw MASA_EXCEPTION( "indicator builder not initialized" );
     indicators::Serializer handler( *factory_ );
     indicators::FormulaParser parser( handler );
     const std::string indicatorFormula = "indicator( '" + name + "', " + formula + ")";

@@ -10,11 +10,12 @@
 #include "Saver.h"
 #include "Savable_ABC.h"
 #include "dispatcher/Config.h"
-#include "tools/OutputBinaryWrapper.h"
-#include "tools/InputBinaryWrapper.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
+#include "tools/InputBinaryWrapper.h"
+#include <tools/Exception.h>
+#include "tools/OutputBinaryWrapper.h"
 #include <boost/algorithm/string.hpp>
 #pragma warning( push, 1 )
 #include <boost/filesystem/convenience.hpp>
@@ -129,7 +130,7 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
     {
         exists = bfs::exists( currentDirectory );
     }
-    catch( std::exception& )
+    catch( const std::exception& )
     {
         exists = false;
     }
@@ -202,9 +203,9 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
             wrapper << frame.size_;
         }
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "key") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "key") );
     }
 }
 
@@ -226,9 +227,9 @@ void Saver::Flush()
         keyIndex_.flush();
         index_.flush();
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
     }
     GenerateInfoFile();
 }
@@ -255,9 +256,9 @@ void Saver::CopyFromCurrentToFolder()
             bfs::remove( itr->path() );
         }
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
     }
 }
 
@@ -299,9 +300,9 @@ void Saver::GenerateInfoFile() const
         wrapper << localTime;
         info.close();
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << (currentDirectory / "info") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << (currentDirectory / "info") );
     }
 }
 

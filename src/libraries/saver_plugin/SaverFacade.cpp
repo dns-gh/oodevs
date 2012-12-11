@@ -15,6 +15,7 @@
 #include "dispatcher/Visitors.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
+#include <tools/Exception.h>
 #include "tools/OutputBinaryWrapper.h"
 
 using namespace plugins::saver;
@@ -63,7 +64,7 @@ namespace
         {
             std::stringstream ss;
             ss << "Error serializing message of type \"" << message.GetTypeName() << "\"" << std::endl;
-            throw std::runtime_error( ss.str() );
+            throw MASA_EXCEPTION( ss.str() );
         }
         return buffer;
     }

@@ -173,7 +173,7 @@ void FOM_Serializer::ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const 
         } 
         break;
     default:
-        throw std::runtime_error("wrong NETN version") ;
+        throw MASA_EXCEPTION("wrong NETN version") ;
     }
 }
 

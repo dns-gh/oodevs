@@ -126,12 +126,12 @@ namespace
             {
                 xyPoint = converter_.ConvertFromGeo( geoPoint );
             }
-            catch( std::exception& e )
+            catch( const std::exception& e )
             {
                 logger_.LogError( "Failed to convert point "
                                   "Latitude '"  + boost::lexical_cast< std::string >( geoPoint.X() ) + "' "
                                   "Longitude '" + boost::lexical_cast< std::string >( geoPoint.Y() ) + "' "
-                                  ": " + e.what() );
+                                  ": " + tools::GetExceptionMsg( e ) );
                 return false;
             }
             return converter_.IsInBoundaries( xyPoint );
@@ -154,9 +154,9 @@ namespace
             {
                 transferResult = new RprTransferSender( federateID, ctxtFactory, builder, strategy, controller, logger );
             }
-            catch (const ::hla::HLAException& ex)
+            catch( const ::hla::HLAException& e )
             {
-                logger.LogError( "Unable to create RPR transfer sender with error: " + std::string(ex.what()) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );    
+                logger.LogError( "Unable to create RPR transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );    
             }
         }
         else if( value == "netn" )
@@ -165,9 +165,9 @@ namespace
             {
                 transferResult = new Netn2TransferSender( federateName, ctxtFactory, builder, strategy, controller, logger, agentResolver, callsignResolver );
             }
-            catch (const ::hla::HLAException& ex)
+            catch( const ::hla::HLAException& e )
             {
-                logger.LogError( "Unable to create RPR transfer sender with error: " + std::string(ex.what()) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
+                logger.LogError( "Unable to create RPR transfer sender with error: " + tools::GetExceptionMsg( e ) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
             }
         }
 
@@ -294,11 +294,11 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
     }
     catch( ::hla::HLAException& e )
     {
-        logger_.LogError( "Step failed cause hla exception: " + std::string( e.what() ) );
+        logger_.LogError( "Step failed cause hla exception: " + tools::GetExceptionMsg( e ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger_.LogError( "Step failed cause: " + std::string( e.what() ) );
+        logger_.LogError( "Step failed cause: " + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

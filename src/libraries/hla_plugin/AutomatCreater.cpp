@@ -29,7 +29,7 @@ namespace
                 >> xml::content( "automat", name );
         unsigned long type = automatTypeResolver.Resolve( name );
         if( type == 0 )
-            throw std::runtime_error( "Automat type name '" + name + "' not found, please check your physical model." );
+            throw MASA_EXCEPTION( "Automat type name '" + name + "' not found, please check your physical model." );
         return type;
     }
 }

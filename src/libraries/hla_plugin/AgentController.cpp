@@ -89,7 +89,7 @@ namespace
             }
             catch( const std::exception& e )
             {
-                logger.LogError( std::string( "Invalid UUID from orbat " + tmp + " " + e.what() ) );
+                logger.LogError( std::string( "Invalid UUID from orbat " + tmp + " " + tools::GetExceptionMsg( e ) ) );
             }
         }
         GenerateUniqueId( uniqueId, netnVersion );

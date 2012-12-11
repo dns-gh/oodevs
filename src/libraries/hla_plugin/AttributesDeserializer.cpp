@@ -54,10 +54,10 @@ void AttributesDeserializer::Deserialize( const std::string& identifier, ::hla::
         {
             notification->second( deserializer, identifier_, listener_ );
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            throw std::runtime_error( "Error while deserializing attribute '" + identifier
-                                    + "' on object '" + identifier_ + "' : " + e.what() );
+            throw MASA_EXCEPTION( "Error while deserializing attribute '" + identifier
+                                    + "' on object '" + identifier_ + "' : " + tools::GetExceptionMsg( e ) );
         }
     }
 }

@@ -92,7 +92,7 @@ private:
     virtual void Notify( const sword::UnitMagicActionAck& message, int context )
     {
         if( message.error_code() != sword::UnitActionAck::no_error && contexts_.find( context ) != contexts_.end() )
-            throw std::runtime_error( "Error while creating distant " + errorMessage_ + " '" + contexts_[ context ] + "'" );
+            throw MASA_EXCEPTION( "Error while creating distant " + errorMessage_ + " '" + contexts_[ context ] + "'" );
     }
     //@}
 

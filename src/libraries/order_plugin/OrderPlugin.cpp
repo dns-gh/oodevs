@@ -100,9 +100,9 @@ void OrderPlugin::Resolve( const sword::ClientToSim& message )
                     >> xml::list( "action", *this, &OrderPlugin::ReadAction )
                 >> xml::end;
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( "Error in OrderStream message: " << e.what() )
+            MT_LOG_ERROR_MSG( "Error in OrderStream message: " << tools::GetExceptionMsg( e ) )
         }
     }
 }

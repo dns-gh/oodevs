@@ -52,9 +52,9 @@ unsigned int MissionResolver::ResolveAutomat( const std::string& name ) const
 {
     T_Missions::const_iterator mission = missions_.find( name );
     if( mission == missions_.end() )
-        throw std::runtime_error( "Unknown mission name '" + name + "'" );
+        throw MASA_EXCEPTION( "Unknown mission name '" + name + "'" );
     if( !mission->second.first )
-        throw std::runtime_error( "Mission '" + name + "' not available for Automat level" );
+        throw MASA_EXCEPTION( "Mission '" + name + "' not available for Automat level" );
     return mission->second.first;
 }
 
@@ -66,8 +66,8 @@ unsigned int MissionResolver::ResolveUnit( const std::string& name ) const
 {
     T_Missions::const_iterator mission = missions_.find( name );
     if( mission == missions_.end() )
-        throw std::runtime_error( "Unknown mission name '" + name + "'" );
+        throw MASA_EXCEPTION( "Unknown mission name '" + name + "'" );
     if( !mission->second.second )
-        throw std::runtime_error( "Mission '" + name + "' not available for unit level" );
+        throw MASA_EXCEPTION( "Mission '" + name + "' not available for unit level" );
     return mission->second.second;
 }

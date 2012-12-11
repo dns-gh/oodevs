@@ -49,7 +49,7 @@ std::string CallsignResolver::ResolveCallsign( unsigned long simulationIdentifie
 {
     T_Identifiers::const_iterator identifier = identifiers_.find( simulationIdentifier );
     if( identifier == identifiers_.end() )
-        throw std::runtime_error( "Unknown simulation identifier '" + boost::lexical_cast< std::string >( simulationIdentifier ) + "'" );
+        throw MASA_EXCEPTION( "Unknown simulation identifier '" + boost::lexical_cast< std::string >( simulationIdentifier ) + "'" );
     return identifier->second.first;
 }
 
@@ -61,7 +61,7 @@ std::vector< char > CallsignResolver::ResolveUniqueId( unsigned long simulationI
 {
     T_Identifiers::const_iterator identifier = identifiers_.find( simulationIdentifier );
     if( identifier == identifiers_.end() )
-        throw std::runtime_error( "Unknown simulation identifier '" + boost::lexical_cast< std::string >( simulationIdentifier ) + "'" );
+        throw MASA_EXCEPTION( "Unknown simulation identifier '" + boost::lexical_cast< std::string >( simulationIdentifier ) + "'" );
     return identifier->second.second;
 }
 
@@ -73,6 +73,6 @@ unsigned long CallsignResolver::ResolveSimulationIdentifier( const std::vector< 
 {
     T_SimulationIdentifiers::const_iterator identifier = simulationIdentifiers_.find( uniqueId );
     if( identifier == simulationIdentifiers_.end() )
-        throw std::runtime_error( "Unknown unique identifier '" + std::string( uniqueId.begin(), uniqueId.end() ) + "'" );
+        throw MASA_EXCEPTION( "Unknown unique identifier '" + std::string( uniqueId.begin(), uniqueId.end() ) + "'" );
     return identifier->second;
 }

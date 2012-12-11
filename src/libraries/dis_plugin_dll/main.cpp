@@ -11,6 +11,7 @@
 #include "dis_plugin/Plugin.h"
 #include "dispatcher/Logger_ABC.h"
 #include "tools/Codec.h"
+#include <tools/Exception.h>
 #include <windows.h>
 
 namespace dispatcher
@@ -31,9 +32,9 @@ DIS_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
         logger.LogInfo( "Initialization..." );
         return new plugins::dis::Plugin( model, config, logger, xis );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Initialization failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Initialization failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {
@@ -53,9 +54,9 @@ DIS_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
         logger.LogInfo( "Destruction..." );
         delete plugin;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Destruction failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Destruction failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

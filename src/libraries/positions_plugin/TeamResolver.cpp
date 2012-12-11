@@ -10,6 +10,7 @@
 #include "TeamResolver.h"
 #include "Team.h"
 #include "protocol/Protocol.h"
+#include <tools/Exception.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::positions;
@@ -50,7 +51,7 @@ void TeamResolver::AddAutomat( unsigned int teamId, unsigned int automatId )
 {
     Team* team = Find( teamId );
     if( !team )
-        throw std::runtime_error( __FUNCTION__ " : unknown team" );
+        throw MASA_EXCEPTION( "Unknown team." );
     automats_[ automatId ] = team;
 }
 
@@ -62,7 +63,7 @@ void TeamResolver::AddUnit( unsigned int automatId, unsigned int unitId, const s
 {
     CIT_Automats it = automats_.find( automatId );
     if( it == automats_.end() )
-        throw std::runtime_error( __FUNCTION__ " : unknown automat" );
+        throw MASA_EXCEPTION( "Unknown automat." );
     it->second->AddUnit( unitId, name, timePreviouslyExported );
 }
 

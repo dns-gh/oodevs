@@ -144,7 +144,7 @@ void UnitTeleporter::Notify( const sword::UnitCreation& message, const std::stri
             {
                 transportedId = callsignResolver_.ResolveSimulationIdentifier( transportedUniqueId );
             }
-            catch( const std::runtime_error&  )
+            catch( const std::exception& )
             {
                 continue;
             }
@@ -270,7 +270,7 @@ void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, con
         {
             transportedId = callsignResolver_.ResolveSimulationIdentifier( transportedUniqueId );
         }
-        catch( const std::runtime_error&  )
+        catch( const std::exception&  )
         {
             continue;
         }

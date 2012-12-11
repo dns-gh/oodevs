@@ -57,13 +57,13 @@ RtiAmbassadorFactory::RtiAmbassadorFactory( xml::xisubstream configuration, xml:
                       >> xml::content( LIBRARY, library );
     HMODULE module = LoadLibrary( library.c_str() );
     if( !module )
-        throw std::runtime_error( "failed to load protocol library: '" + library + "', reason '" + GetLastErrorMessage() + "'" );
+        throw MASA_EXCEPTION( "failed to load protocol library: '" + library + "', reason '" + GetLastErrorMessage() + "'" );
     createAmbassador = (T_CreateAmbassador)GetProcAddress( module, "CreateAmbassador" );
     if( !createAmbassador )
-        throw std::runtime_error( "unable to find function CreateAmbassador function" );
+        throw MASA_EXCEPTION( "unable to find function CreateAmbassador function" );
     deleteAmbassador = (T_DeleteAmbassador)GetProcAddress( module, "DeleteAmbassador" );
     if( !deleteAmbassador )
-        throw std::runtime_error( "unable to find function DeleteAmbassador function" );
+        throw MASA_EXCEPTION( "unable to find function DeleteAmbassador function" );
 }
 
 // -----------------------------------------------------------------------------

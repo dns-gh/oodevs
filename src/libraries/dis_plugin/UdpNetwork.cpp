@@ -37,9 +37,9 @@ UdpNetwork::UdpNetwork( const std::string& target, unsigned short port, dispatch
         i::multicast::enable_loopback option( true );
         socket_.set_option( option );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger_.LogError( "DIS - " + std::string( e.what() ) );
+        logger_.LogError( "DIS - " + tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -55,9 +55,9 @@ UdpNetwork::~UdpNetwork()
         service_.post( boost::bind( &UdpNetwork::Stop, this ) );
         thread_.join();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger_.LogError( std::string( "Error destroying udp network: " ) + e.what() );
+        logger_.LogError( std::string( "Error destroying udp network: " ) + tools::GetExceptionMsg( e ) );
     }
 }
 

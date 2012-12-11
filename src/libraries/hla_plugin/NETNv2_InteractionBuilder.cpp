@@ -297,9 +297,9 @@ bool NETNv2_InteractionBuilder::DoRegister( const std::string& name, ::hla::Inte
     {
         federate_.Register( ::hla::InteractionIdentifier( name ), interactionClass, publish, subscribe );
     }
-    catch (const ::hla::HLAException& ex)
+    catch( const ::hla::HLAException& e )
     {
-        logger_.LogError("Failed to register interaction "+name+ " : " + ex.what() );
+        logger_.LogError("Failed to register interaction "+name+ " : " + tools::GetExceptionMsg( e ) );
         return false;
     }
     return true;

@@ -27,7 +27,7 @@ std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream 
 {
     std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
     if( !federate->Connect() )
-        throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "lrcSettings", "" ) + "'" );
+        throw MASA_EXCEPTION( "Could not connect to '" + xis.attribute< std::string >( "lrcSettings", "" ) + "'" );
     const std::string name = xis.attribute< std::string >( "federation", "Federation" );
     const bool joined = federate->Join( name, xis.attribute< bool >( "time-constrained", true ), xis.attribute< bool >( "time-regulating", true ) );
     if( !joined )
@@ -42,22 +42,22 @@ std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream 
             if (fomFiles.size() > 1)
             {
                 if( !federate->Create( name, fomFiles ) )
-                    throw std::runtime_error( "Could not create the federation '" + name + "'" );
+                    throw MASA_EXCEPTION( "Could not create the federation '" + name + "'" );
             }
             else
             {
                 if( !boost::filesystem::path(fom).is_complete() )
                     fom = pluginDirectory + "/" + fom ;
                 if( !federate->Create( name, fom ) )
-                    throw std::runtime_error( "Could not create the federation '" + name + "'" );
+                    throw MASA_EXCEPTION( "Could not create the federation '" + name + "'" );
             }
 
 
             if( !federate->Join( name, xis.attribute< bool >( "time-constrained", true ), xis.attribute< bool >( "time-regulating", true ) ) )
-                throw std::runtime_error( "Could not join the federation '" + name + "'" );
+                throw MASA_EXCEPTION( "Could not join the federation '" + name + "'" );
         }
         else
-            throw std::runtime_error( "Could not join the federation '" + name + "'" );
+            throw MASA_EXCEPTION( "Could not join the federation '" + name + "'" );
     }
     return federate;
 }

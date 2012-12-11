@@ -127,7 +127,7 @@ unsigned long SideResolver::ResolveTeam( rpr::ForceIdentifier f ) const
     if( teams_.right.end() == it )
     {
         if( teams_.empty() )
-           throw std::runtime_error( "Cannot find team for force " );
+           throw MASA_EXCEPTION( "Cannot find team for force " );
         it = teams_.right.begin();
         std::stringstream ss;
         ss << "SideResolver: Using default team for force " << f;
@@ -144,6 +144,6 @@ rpr::ForceIdentifier SideResolver::ResolveForce( unsigned long t ) const
 {
     CIT_Teams it( teams_.left.find( t ) );
     if( it == teams_.left.end() )
-        throw std::runtime_error( "Cannot find force for team " );
+        throw MASA_EXCEPTION( "Cannot find force for team " );
     return it->second;
 }

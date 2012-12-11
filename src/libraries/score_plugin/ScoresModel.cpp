@@ -107,9 +107,9 @@ void ScoresModel::ReadIndicator( xml::xistream& xis )
         AarFacade facade( clients_, static_cast< int >( tasks_.size() ), *model_ );
         tasks_.push_back( facade.CreateTask( xis ) );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error loading score indicator: " << e.what() );
+        MT_LOG_ERROR_MSG( "Error loading score indicator: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -198,9 +198,9 @@ void ScoresModel::ComputeIndicator( const std::string& name, const std::string& 
         xos >> xml::start( "indicator" );
         ReadIndicator( xos );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error in indicator '" << name << "' definition: " << e.what() );
+        MT_LOG_ERROR_MSG( "Error in indicator '" << name << "' definition: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -220,9 +220,9 @@ void ScoresModel::Export() const
                 AddLine( file, index );
             file.close();
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
+            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + tools::GetExceptionMsg( e ) );
         }
 }
 
@@ -245,9 +245,9 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
             }
             file.close();
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
+            MT_LOG_ERROR_MSG( __FUNCTION__ ": Can not save scores.csv file : Error message" + tools::GetExceptionMsg( e ) );
         }
 }
 
@@ -282,7 +282,7 @@ void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
         {
             file << separator_ << score->second->GetValue( index );
         }
-        catch ( std::exception& /*e*/ )
+        catch( const std::exception& /*e*/ )
         {
             file << separator_ << "Invalid score";
         }

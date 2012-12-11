@@ -49,7 +49,7 @@ public:
         }
         catch( const std::exception& e )
         {
-            logger_.LogError( "Interaction '" + interaction_ + "' parameter '" + parameter_ + "' : " + e.what() );
+            logger_.LogError( "Interaction '" + interaction_ + "' parameter '" + parameter_ + "' : " + tools::GetExceptionMsg( e ) );
         }
     }
 private:

@@ -13,6 +13,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/Config.h"
+#include <tools/Exception.h>
 #include "web_control_plugin/WebPlugin.h"
 #include <xeumeuleu/xml.hpp>
 #define WIN32_LEAN_AND_MEAN
@@ -31,9 +32,9 @@ WEB_CONTROL_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::M
         logger.LogInfo( "Initialization..." );
         return new plugins::web_control::WebPlugin( publisher, xis );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Initialization failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Initialization failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {
@@ -53,9 +54,9 @@ WEB_CONTROL_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin,
         logger.LogInfo( "Destruction..." );
         delete plugin;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Destruction failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Destruction failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

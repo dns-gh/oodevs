@@ -13,6 +13,7 @@
 #include "dispatcher/StaticModel.h"
 #include "logistic_plugin/LogisticPlugin.h"
 #include "logistic_plugin/NameResolver.h"
+#include <tools/Exception.h>
 #include <windows.h>
 
 namespace dispatcher
@@ -38,9 +39,9 @@ LOGISTIC_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Mode
         logger.LogInfo( "Initialized!" );
         return result;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Initialization failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Initialization failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {
@@ -61,9 +62,9 @@ LOGISTIC_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, di
         delete plugin;
         logger.LogInfo( "Destructed!" );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        logger.LogError( std::string( "Destruction failed cause: " ) + e.what() );
+        logger.LogError( std::string( "Destruction failed cause: " ) + tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {
