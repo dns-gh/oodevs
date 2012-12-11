@@ -107,7 +107,7 @@ void Message::Read( char* data, std::size_t size )
     if( ! size )
         return;
     if( ! data_ || readOffset_ + size > data_->size() )
-        throw std::overflow_error( "Message read overflow" );
+        throw MASA_EXCEPTION( "Message read overflow." );
     memcpy( data, &(*data_)[readOffset_], size );
     readOffset_ += size;
 }

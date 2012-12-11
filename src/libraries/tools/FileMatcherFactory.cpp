@@ -49,5 +49,5 @@ boost::shared_ptr< FileMatcher_ABC > FileMatcherFactory::CreateFileMatcher( xml:
         return boost::make_shared< FileMatcherFileName >( boost::ref( xis ) );
     else if( xis.has_attribute( "non-versioned-schema" ) )
         return boost::make_shared< FileMatcherNonVersionedSchema >( boost::ref( xis ) );
-    throw std::runtime_error( "Invalid file matcher" );
+    throw MASA_EXCEPTION( "Invalid file matcher" );
 }

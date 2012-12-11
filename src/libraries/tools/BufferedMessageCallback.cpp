@@ -115,8 +115,8 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::
     {
         callback.OnMessage( endpoint, message );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        callback.OnWarning( endpoint, e.what() );
+        callback.OnWarning( endpoint, tools::GetExceptionMsg( e ) );
     }
 }

@@ -49,7 +49,7 @@ bool NullFileLoaderObserver::NotifySignatureError( const std::string& fileName, 
 // -----------------------------------------------------------------------------
 bool NullFileLoaderObserver::NotifyInvalidXml( const std::string& fileName, const xml::exception& e )
 {
-    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName % e.what() << std::endl;
+    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName % tools::GetExceptionMsg( e ) << std::endl;
     return true;
 }
 

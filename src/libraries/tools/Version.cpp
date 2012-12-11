@@ -84,7 +84,7 @@ const std::vector< int > tools::SplitVersion( const std::string& version )
         {
             result.push_back( boost::lexical_cast< int >( *it ) );
         }
-        catch( boost::bad_lexical_cast& )
+        catch( const boost::bad_lexical_cast& )
         {
             return std::vector< int >();
         }

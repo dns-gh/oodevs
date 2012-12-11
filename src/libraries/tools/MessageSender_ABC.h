@@ -12,6 +12,7 @@
 
 #include "MessageIdentifierFactory.h"
 #include "Message.h"
+#include <tools/Exception.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
@@ -52,13 +53,13 @@ public:
     void Serialize( const google::protobuf::Message& m, Message& message ) const
     {
         if( !m.IsInitialized() )
-            throw std::runtime_error(  "Message \"" + m.ShortDebugString()
+            throw MASA_EXCEPTION(  "Message \"" + m.ShortDebugString()
                 + "\" of type \"" + m.GetDescriptor()->full_name()
                 + "\" is missing required fields: " + m.InitializationErrorString() );
 
         boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ m.ByteSize() ] );
         if( !m.SerializeWithCachedSizesToArray( buffer.get() ) )
-            throw std::runtime_error( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
+            throw MASA_EXCEPTION( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
         message.Write( (const char*)buffer.get(), m.GetCachedSize() );
     }
 

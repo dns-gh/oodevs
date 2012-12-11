@@ -90,7 +90,7 @@ void RealFileLoader::ReadMigration( xml::xistream& xis )
 {
     boost::shared_ptr< FileMigration_ABC > newMigration = boost::make_shared< FileMigration >( boost::ref( xis ) );
     if( !migrations_.empty() && migrations_.back()->GetToVersion() != newMigration->GetFromVersion() )
-        throw std::runtime_error( "Invalid migration chain: no migration between version " + migrations_.back()->GetToVersion() + " and version " + newMigration->GetFromVersion() );
+        throw MASA_EXCEPTION( "Invalid migration chain: no migration between version " + migrations_.back()->GetToVersion() + " and version " + newMigration->GetFromVersion() );
 
     migrations_.push_back( newMigration );
 }
@@ -179,7 +179,7 @@ namespace
     {
         tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( inputFile );
         if( error && !observer.NotifySignatureError( inputFile, error ) )
-            throw std::runtime_error( boost::str( boost::format( "Check before upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
+            throw MASA_EXCEPTION( boost::str( boost::format( "Check before upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
     }
 }
 
@@ -216,7 +216,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
         {
             xml::xifstream( inputFileName, xml::external_grammar( GeneralConfig::BuildResourceChildFile( schema ) ) );
         }
-        catch( xml::exception& e )
+        catch( const xml::exception& e )
         {
             if( !observer.NotifyInvalidXml( inputFileName, e ) )
                 throw;

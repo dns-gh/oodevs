@@ -77,7 +77,7 @@ std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const std::string& fileN
 // -----------------------------------------------------------------------------
 std::string DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) const
 {
-    throw std::runtime_error( "Invalid call DefaultFileLoader::LoadPhysicalFile" );
+    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::LoadPhysicalFile" );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ std::string DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) cons
 // -----------------------------------------------------------------------------
 std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string&, T_Loader ) const
 {
-    throw std::runtime_error( "Invalid call DefaultFileLoader::LoadOptionalPhysicalFile" );
+    throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::LoadOptionalPhysicalFile" );
 }
 
 // -----------------------------------------------------------------------------

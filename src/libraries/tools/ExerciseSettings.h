@@ -103,7 +103,7 @@ const T& ExerciseSettings::GetValue( const std::string& name ) const
 {
     CIT_Settings setting = settings_.find( name );
     if( setting == settings_.end() || setting->second == 0 )
-        throw std::runtime_error( __FUNCTION__ " Unknown setting " + name + "." );
+        throw MASA_EXCEPTION( "Unknown setting " + name + "." );
     return boost::get< T >( setting->second->value_ );
 }
 
@@ -117,7 +117,7 @@ void ExerciseSettings::SetValue( const std::string& name, T value )
 {
     CIT_Settings setting = settings_.find( name );
     if( setting == settings_.end() || setting->second == 0 )
-        throw std::runtime_error( __FUNCTION__ " Unknown setting " + name + "." );
+        throw MASA_EXCEPTION( "Unknown setting " + name + "." );
     setting->second->value_ = value;
 }
 

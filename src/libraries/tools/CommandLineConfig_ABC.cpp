@@ -54,10 +54,10 @@ void CommandLineConfig_ABC::Parse( int argc, char* argv[] )
     {
         std::stringstream ss;
         ss << *options_;
-        throw std::runtime_error( ss.str() );
+        throw MASA_EXCEPTION( ss.str() );
     }
     if( values_->count( "version" ) )
-        throw std::runtime_error( tools::AppProjectVersion() );
+        throw MASA_EXCEPTION( tools::AppProjectVersion() );
 }
 
 // -----------------------------------------------------------------------------

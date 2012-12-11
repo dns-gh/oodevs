@@ -98,13 +98,13 @@ void ExerciseConfig::LoadExercise( const std::string& file )
             SetExerciseName( file );
         pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
     }
-    catch( xml::exception& )
+    catch( const xml::exception& )
     {
         throw;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         throw;
     }
 }

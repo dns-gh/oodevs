@@ -104,6 +104,6 @@ void ObjectMessageService::OnMessage( const std::string& endpoint, Message& mess
     message >> tag;
     CIT_Callbacks it = callbacks_.find( tag );
     if( it == callbacks_.end() )
-        throw std::runtime_error( "Unknown message tag " + boost::lexical_cast< std::string >( tag ) );
+        throw MASA_EXCEPTION( "Unknown message tag " + boost::lexical_cast< std::string >( tag ) );
     it->second->OnMessage( endpoint, message, *this );
 }

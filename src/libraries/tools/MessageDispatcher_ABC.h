@@ -65,7 +65,7 @@ public:
         tools::ObjectMessageCallback< T >* composite =
             static_cast< tools::ObjectMessageCallback< T >* >( Retrieve( id ) );
         if( ! composite )
-            throw std::runtime_error( "Unknown message" );
+            throw MASA_EXCEPTION( "Unknown message" );
         composite->OnMessage( link, object );
     }
     template< typename T >
@@ -73,7 +73,7 @@ public:
     {
         tools::ObjectMessageCallback_ABC* composite = Retrieve( id );
         if( ! composite )
-            throw std::runtime_error( "Unknown message" );
+            throw MASA_EXCEPTION( "Unknown message" );
         composite->OnMessage( link, object );
     }
     //@}
