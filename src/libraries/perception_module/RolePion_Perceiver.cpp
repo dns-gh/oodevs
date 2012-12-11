@@ -32,6 +32,7 @@
 #include "PerceptionRadar.h"
 #include "PerceptionFlyingShell.h"
 #include "ListInCircleVisitor.h"
+#include <tools/Exception.h>
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Event.h"
@@ -111,7 +112,7 @@ namespace
                 const wrapper::View& sensor = component[ "sensors" ].GetElement( j );
                 const SensorType* type = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
                 if( !type )
-                    throw std::runtime_error( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
+                    throw MASA_EXCEPTION( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
                 const SensorTypeAgent* pSensorTypeAgent = type->GetTypeAgent();
                 const double height = sensor[ "height" ];
                 if( pSensorTypeAgent )
@@ -157,7 +158,7 @@ namespace
             const wrapper::View& sensor = sensors.GetElement( i );
             const SensorType* type = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
             if( !type )
-                throw std::runtime_error( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
+                throw MASA_EXCEPTION( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
             const SensorTypeAgent* pSensorTypeAgent = type->GetTypeAgent();
             const double height = sensor[ "height" ];
             if( pSensorTypeAgent )

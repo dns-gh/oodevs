@@ -13,6 +13,7 @@
 #include "PathPoint.h"
 #include "PathResult.h"
 #include "PathSection_ABC.h"
+#include <tools/Exception.h>
 #include "wrapper/Hook.h"
 #include <sstream>
 #include <limits>
@@ -115,7 +116,7 @@ void Path_ABC::DoExecute( TerrainPathfinder& pathfind )
         nComputationEndTime = static_cast< unsigned int >( time( 0 ) ) + nMaxComputationDuration;
 
     if( pathSections_.empty() )
-        throw std::runtime_error( "List of path sections is empty" );
+        throw MASA_EXCEPTION( "List of path sections is empty" );
     const PathResult::T_PathPointList& pathPoints = dynamic_cast< const PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
 
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
@@ -173,7 +174,7 @@ void Path_ABC::Execute( TerrainPathfinder& pathfind )
     {
         DoExecute( pathfind );
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         bJobCanceled_ = true;
         nState_ = eCanceled;

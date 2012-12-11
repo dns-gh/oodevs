@@ -9,6 +9,7 @@
 
 #include "ToggleLocalizedRadarCommand.h"
 #include "RadarClass.h"
+#include <tools/Exception.h>
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Remove.h"
@@ -23,7 +24,7 @@ namespace
     {
         const RadarClass* found = RadarClass::Find( radarClass );
         if( !found )
-            throw std::runtime_error( "could not find radar class '" + boost::lexical_cast< std::string >( radarClass )
+            throw MASA_EXCEPTION( "could not find radar class '" + boost::lexical_cast< std::string >( radarClass )
             + "' for entity '" + boost::lexical_cast< std::string >( entity ) + "'" );
         return found->GetName();
     }

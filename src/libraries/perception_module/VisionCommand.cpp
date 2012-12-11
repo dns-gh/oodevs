@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "VisionCommand.h"
+#include <tools/Exception.h>
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
 
@@ -39,7 +40,7 @@ namespace
         const std::string result = mode;
         if( result == "normal" || result == "direction" || result == "location" )
             return result;
-        throw std::runtime_error( "unknown vision mode '" + result + "'" );
+        throw MASA_EXCEPTION( "unknown vision mode '" + result + "'" );
     }
 }
 

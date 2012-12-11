@@ -195,9 +195,9 @@ void Agent_PathClass::ReadObject( xml::xistream& xis )
         assert( objectCosts_.size() > id );
         xis >> xml::attribute( "value", objectCosts_[ id ] );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, tools::GetExceptionMsg( e ).c_str() );
     }
 }
 

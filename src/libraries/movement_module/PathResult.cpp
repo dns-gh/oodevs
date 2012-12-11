@@ -11,6 +11,7 @@
 #include "PathPoint.h"
 #include "PathType.h"
 #include "MT_Tools/MT_Line.h"
+#include <tools/Exception.h>
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
 #include <module_api/Log.h>
@@ -77,7 +78,7 @@ PathResult::CIT_PathPointList PathResult::GetCurrentKeyOnPath() const
 MT_Vector2D PathResult::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const
 {
     if( itCurrentPos == resultList_.end() )
-        throw std::runtime_error( "Current position is invalid" );
+        throw MASA_EXCEPTION( "Current position is invalid" );
 
     // recherche du prochain point sur le path
     // on passe tous les points spéciaux, car il n'y a des changement de direction que sur les PathPoint_Point

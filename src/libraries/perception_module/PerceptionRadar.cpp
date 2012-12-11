@@ -11,6 +11,7 @@
 #include "PerceptionLevel.h"
 #include "RadarClass.h"
 #include "RadarType.h"
+#include <tools/Exception.h>
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
@@ -70,7 +71,7 @@ void PerceptionRadar::EnableLocalizedRadar( const wrapper::View& radar, const Ra
     assert( radarZones_.size() > radarClass.GetID() );
     const wrapper::View& zone = radar[ "localization" ];
     if( !radarZones_[ radarClass.GetID() ].insert( zone ).second )
-        throw std::runtime_error( "Insertion failed in perception radar" );
+        throw MASA_EXCEPTION( "Insertion failed in perception radar" );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +90,7 @@ void PerceptionRadar::PrepareRadarData( const wrapper::View& entity, T_RadarType
             const wrapper::View& radar = component[ "radars" ].GetElement( j );
             const RadarType* radarType = RadarType::Find( radar[ "type" ] );
             if( !radarType )
-                throw std::runtime_error( "unknown radar type " + radar[ "type" ] );
+                throw MASA_EXCEPTION( "unknown radar type " + radar[ "type" ] );
             types[ radarType->GetClass().GetID() ].insert( radarType );
         }
     }
@@ -150,7 +151,7 @@ bool PerceptionRadar::HasRadar( const wrapper::View& entity, std::size_t radarTy
 {
     const RadarClass* radar = RadarClass::Find( radarType );
     if( !radar )
-        throw std::runtime_error( "Invalid radar in AgentHasTappingRadar" );
+        throw MASA_EXCEPTION( "Invalid radar in AgentHasTappingRadar" );
     T_RadarTypesMap radarTypes;
     PrepareRadarData( entity, radarTypes );
     T_RadarTypesMap::const_iterator it = radarTypes.find( radar->GetID() );

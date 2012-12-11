@@ -14,6 +14,7 @@
 #include "WeaponDataType_IndirectFire.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "tools/Codec.h"
+#include <tools/Exception.h>
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
 #include <module_api/Log.h>
@@ -212,7 +213,7 @@ namespace
     {
         boost::shared_ptr< WeaponType > type = WeaponType::FindWeaponType( weapon );
         if( !type )
-            throw std::runtime_error( "Unknown weapon type : " + weapon );
+            throw MASA_EXCEPTION( "Unknown weapon type : " + weapon );
         return type;
     }
     template< typename Accumulator, typename Filter, typename Operation >

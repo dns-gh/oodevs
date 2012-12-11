@@ -10,6 +10,7 @@
 #include "Weapon.h"
 #include "WeaponType.h"
 #include "ModuleFacade.h"
+#include <tools/Exception.h>
 #include <wrapper/Effect.h>
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
@@ -31,7 +32,7 @@ Weapon::Weapon( ModuleFacade& module, const wrapper::View& model, const wrapper:
     , type_  ( WeaponType::FindWeaponType( weapon[ "type" ] ) )
 {
      if( ! type_ )
-         throw std::invalid_argument( "Unknown weapon type : " + weapon[ "type" ] );
+         throw MASA_EXCEPTION( "Unknown weapon type : " + weapon[ "type" ] );
 }
 
 // -----------------------------------------------------------------------------

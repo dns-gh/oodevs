@@ -12,6 +12,7 @@
 #include "DirectFireCommandPopulation.h"
 #include "Knowledge_RapForLocal.h"
 #include "RoleAction_IndirectFiring.h"
+#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -37,7 +38,7 @@ DEFINE_HOOK( GetDangerousEnemies, 4, void, ( const SWORD_Model* model, const SWO
 DEFINE_HOOK( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 {
     if( !type )
-        throw std::runtime_error( "Invalid null type" );
+        throw MASA_EXCEPTION( "Invalid null type" );
     assert( module );
     return RoleAction_IndirectFiring().GetAmmunitionForIndirectFire( *module, model, firer, type, target );
 }

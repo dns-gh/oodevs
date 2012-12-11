@@ -10,6 +10,7 @@
 #include "MoveCommand.h"
 #include "Agent_Path.h"
 #include "PathPoint.h"
+#include <tools/Exception.h>
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
 #include "wrapper/Hook.h"
@@ -49,7 +50,7 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
     , pathWalker_        ( new PathWalker( module, identifier_ ) )
 {
     if( ! pMainPath_ )
-        throw std::invalid_argument( "Path pointer is of wrong type" );
+        throw MASA_EXCEPTION( "Path pointer is of wrong type." );
     pMainPath_->AddRef();
 }
 

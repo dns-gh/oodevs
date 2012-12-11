@@ -10,6 +10,7 @@
 #ifndef WRAPPER_VIEW_H
 #define WRAPPER_VIEW_H
 
+#include <tools/Exception.h>
 #include <module_api/Model.h>
 #include <string>
 
@@ -62,13 +63,13 @@ public:
     void VisitNamedChildren( T visitor ) const
     {
         if( ! SWORD_VisitNamedChildren( model_, &Apply< T, const char* >, AddressOf( visitor ) ) )
-            throw std::runtime_error( "could not visit named children" );
+            throw MASA_EXCEPTION( "could not visit named children" );
     }
     template< typename T >
     void VisitIdentifiedChildren( T visitor ) const
     {
         if( ! SWORD_VisitIdentifiedChildren( model_, &Apply< T, std::size_t >, AddressOf( visitor ) ) )
-            throw std::runtime_error( "could not visit identified children" );
+            throw MASA_EXCEPTION( "could not visit identified children" );
     }
     //@}
 

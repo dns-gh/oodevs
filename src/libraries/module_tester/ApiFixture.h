@@ -33,9 +33,9 @@
 
 #define TRY try {
 #define CATCH } \
-    catch( std::exception& e ) \
+    catch( const std::exception& e ) \
     { \
-        BOOST_ERROR( e.what() ); \
+        BOOST_ERROR( tools::GetExceptionMsg( e ) ); \
     } catch( ... ) \
     { \
         BOOST_ERROR( "unknown exception" ); \

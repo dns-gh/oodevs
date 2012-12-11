@@ -110,7 +110,7 @@ public:
     void SetData( boost::shared_ptr< core::UserData_ABC > data )
     {
         if( ! data )
-            throw std::invalid_argument( "empty user data are not allowed in a model" );
+            throw MASA_EXCEPTION( "Empty user data are not allowed in a model" );
         constraint_.reset( new UserDataConstraint() );
         data_ = data;
     }

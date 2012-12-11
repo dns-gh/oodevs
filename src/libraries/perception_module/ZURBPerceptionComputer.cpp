@@ -12,6 +12,7 @@
 #include "SensorType.h"
 #include "SensorTypeAgent.h"
 #include "MT_Tools/MT_Vector2D.h"
+#include <tools/Exception.h>
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
 #include <boost/foreach.hpp>
@@ -98,7 +99,7 @@ namespace
                 const wrapper::View& sensor = component[ "sensors" ].GetElement( j );
                 const SensorType* sensorType = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
                 if( !sensorType )
-                    throw std::invalid_argument( "Invalid sensor type : " + sensor[ "type" ] );
+                    throw MASA_EXCEPTION( "Invalid sensor type : " + sensor[ "type" ] );
                 const SensorTypeAgent* sensorTypeAgent = sensorType->GetTypeAgent();
                 if( sensorTypeAgent )
                     sensors.insert( sensorTypeAgent );

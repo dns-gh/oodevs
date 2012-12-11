@@ -49,9 +49,9 @@ void SensorTypeObject::ReadObject( xml::xistream& xis )
         objectData_[ objectTypeIdentifier ] = pObjectData;
         rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, tools::GetExceptionMsg( e ).c_str() );
     }
 }
 

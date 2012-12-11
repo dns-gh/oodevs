@@ -10,6 +10,7 @@
 #include "View.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
+#include <tools/Exception.h>
 
 using namespace sword::wrapper;
 
@@ -31,7 +32,7 @@ View::View( const SWORD_Model* model )
     : model_( model )
 {
     if( ! model )
-        throw std::invalid_argument( "cannot create a view from a null model" );
+        throw MASA_EXCEPTION( "Cannot create a view from a null model" );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ View::operator bool() const
 {
     int result;
     if( ! ::SWORD_GetBool( model_, &result ) )
-        throw std::runtime_error( "unable to get bool" );
+        throw MASA_EXCEPTION( "Unable to get bool" );
     return !!result;
 }
 
@@ -55,7 +56,7 @@ View::operator TYPE() const \
 { \
     TYPE result; \
     if( ! ::SWORD_Get##TYPE_NAME ( model_, &result ) ) \
-        throw std::runtime_error( "unable to get " #TYPE ); \
+        throw MASA_EXCEPTION( "Unable to get " #TYPE ); \
     return result; \
 }
 DECLARE_GET( Int8,   int8_t );
@@ -79,7 +80,7 @@ View::operator std::string() const
     const char* result;
     size_t size;
     if( ! ::SWORD_GetText( model_, &result, &size ) )
-        throw std::runtime_error( "unable to get text" );
+        throw MASA_EXCEPTION( "Unable to get text" );
     return std::string( result, size );
 }
 
@@ -91,7 +92,7 @@ void* View::GetUserData() const
 {
     void* result = 0;
     if( ! ::SWORD_GetUserData( model_, &result ) )
-        throw std::runtime_error( "could not retrieve user data" );
+        throw MASA_EXCEPTION( "Could not retrieve user data" );
     return result;
 }
 
@@ -105,7 +106,7 @@ View View::operator[]( const std::string& key ) const
         return model_;
     const SWORD_Model* child = ::SWORD_GetNamedChild( model_, key.c_str() );
     if( !child )
-        throw std::runtime_error( "could not retrieve child '" + key + "'" );
+        throw MASA_EXCEPTION( "Could not retrieve child '" + key + "'" );
     return child;
 }
 
@@ -119,7 +120,7 @@ View View::operator[]( const char* key ) const
         return model_;
     const SWORD_Model* child = ::SWORD_GetNamedChild( model_, key );
     if( !child )
-        throw std::runtime_error( "could not retrieve child '" + std::string( key ) + "'" );
+        throw MASA_EXCEPTION( "Could not retrieve child '" + std::string( key ) + "'" );
     return child;
 }
 
@@ -131,7 +132,7 @@ View View::operator[]( std::size_t key ) const
 {
     const SWORD_Model* child = ::SWORD_GetIdentifiedChild( model_, boost::numeric_cast< unsigned int >( key ) );
     if( !child )
-        throw std::runtime_error( "could not retrieve child '" + boost::lexical_cast< std::string >( key ) + "'" );
+        throw MASA_EXCEPTION( "Could not retrieve child '" + boost::lexical_cast< std::string >( key ) + "'" );
     return child;
 }
 
@@ -143,7 +144,7 @@ std::size_t View::GetSize() const
 {
     size_t size;
     if( ! ::SWORD_GetSize( model_, &size ) )
-        throw std::runtime_error( "could not retrieve size" );
+        throw MASA_EXCEPTION( "Could not retrieve size" );
     return size;
 }
 
@@ -155,7 +156,7 @@ View View::GetElement( std::size_t index ) const
 {
     const SWORD_Model* element = ::SWORD_GetElement( model_, index );
     if( !element )
-        throw std::runtime_error( "could not retrieve element '" + boost::lexical_cast< std::string >( index ) + "'" );
+        throw MASA_EXCEPTION( "Could not retrieve element '" + boost::lexical_cast< std::string >( index ) + "'" );
     return element;
 }
 

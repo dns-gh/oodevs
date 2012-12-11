@@ -19,9 +19,9 @@ int SWORD_InitializeModule( void** userData, const SWORD_Model* model )
         *userData = new sword::movement::ModuleFacade( model );
         return 0;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        SWORD_Log( SWORD_LOG_LEVEL_FATAL, ( "cannot create movement module : " + std::string( e.what() ) ).c_str() );
+        SWORD_Log( SWORD_LOG_LEVEL_FATAL, ( "cannot create movement module : " + tools::GetExceptionMsg( e ) ).c_str() );
     }
     catch(...)
     {

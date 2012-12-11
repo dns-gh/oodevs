@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "PathPoint.h"
+#include <tools/Exception.h>
 
 using namespace sword;
 using namespace sword::movement;
@@ -73,7 +74,7 @@ bool PathPoint::WillBeInObject( const TerrainData& data ) const
 //-----------------------------------------------------------------------------
 void PathPoint::SendToDIA( unsigned int /*entity*/, boost::shared_ptr< PathPoint > /*point*/ ) const
 {
-    throw std::runtime_error( "SendToDIA cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "SendToDIA cannot be called for this Point class" );
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +83,7 @@ void PathPoint::SendToDIA( unsigned int /*entity*/, boost::shared_ptr< PathPoint
 //-----------------------------------------------------------------------------
 void PathPoint::RemoveFromDIA( boost::shared_ptr< PathPoint > self )
 {
-    throw std::runtime_error( "RemoveFromDIA cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "RemoveFromDIA cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +110,7 @@ PathPoint::E_TypePoint PathPoint::GetTypePoint() const
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< PathPoint >& PathPoint::GetDestPoint() const
 {
-    throw std::runtime_error( "GetDestPoint cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetDestPoint cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +119,7 @@ const boost::shared_ptr< PathPoint >& PathPoint::GetDestPoint() const
 // -----------------------------------------------------------------------------
 int PathPoint::GetTypeLima()
 {
-    throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +128,7 @@ int PathPoint::GetTypeLima()
 // -----------------------------------------------------------------------------
 unsigned int PathPoint::GetLimaID()
 {
-    throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +137,7 @@ unsigned int PathPoint::GetLimaID()
 // -----------------------------------------------------------------------------
 const TerrainData& PathPoint::GetTypeTerrain() const
 {
-    throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }
 
 //-----------------------------------------------------------------------------

@@ -221,9 +221,9 @@ namespace detail
             { \
                 return Implement( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
             } \
-            catch( std::exception& e ) \
+            catch( const std::exception& e ) \
             { \
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ( "Exception in " #Hook " hook: " + std::string( e.what() ) ).c_str() ); \
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ( "Exception in " #Hook " hook: " + tools::GetExceptionMsg( e ) ).c_str() ); \
             } \
             catch( ... ) \
             { \

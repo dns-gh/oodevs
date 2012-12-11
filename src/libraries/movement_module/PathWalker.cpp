@@ -115,9 +115,9 @@ MT_Vector2D PathWalker::ExtrapolatePosition( const wrapper::View& entity, const 
     {
         return path_->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, tools::GetExceptionMsg( e ).c_str() );
         return position;
     }
 }

@@ -17,6 +17,7 @@
 #include "Rep_PathPoint_Lima.h"
 #include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
 #include "MT_Tools/MT_Line.h"
+#include <tools/Exception.h>
 #include "wrapper/Event.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
@@ -169,7 +170,7 @@ bool Agent_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const Terr
 Agent_Path::IT_PathPointList Agent_Path::GetPreviousWaypointOnDifferentLocation( IT_PathPointList itCurrent )
 {
     if( itCurrent == resultList_.end() )
-        throw std::runtime_error( "Current path point is invalid" );
+        throw MASA_EXCEPTION( "Current path point is invalid" );
     const MT_Vector2D& vPosition = ( *itCurrent )->GetPos();
     while ( itCurrent != resultList_.begin() && ( *itCurrent )->GetPos() == vPosition )
         --itCurrent;
@@ -205,7 +206,7 @@ void Agent_Path::InsertPointAvant( const boost::shared_ptr< PathPoint > spottedW
             itCurrent = itPrev;
             ++itCurrent;
             if( ( *itCurrent )->GetPos() != vCurrentPos )
-                throw std::runtime_error( "Current position is invalid" );
+                throw MASA_EXCEPTION( "Current position is invalid" );
 
             // calcul de la distance "mangée" par le parcours de ce segment
             const MT_Vector2D& vPreviousPos = ( *itPrev )->GetPos();
@@ -234,9 +235,9 @@ void Agent_Path::InsertPointAvant( const boost::shared_ptr< PathPoint > spottedW
             itCurrent = itPrev;
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -486,11 +487,11 @@ void Agent_Path::Execute( TerrainPathfinder& pathfind )
         PathPoint& point = **itPoint;
 
 //        if( itPoint != resultList_.begin() && !unitSpeeds_.IsPassable( point.GetObjectTypes() ) )
-//            throw std::runtime_error( "Unit max speed is not positive for a given object" );
+//            throw MASA_EXCEPTION( "Unit max speed is not positive for a given object" );
 
         ++itPoint;
         if( itPoint != resultList_.end() && unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) <= 0 )
-            throw std::runtime_error( "Unit max speed is not positive for a given object" );
+            throw MASA_EXCEPTION( "Unit max speed is not positive for a given object" );
     }
 #endif
 

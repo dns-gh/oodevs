@@ -9,6 +9,7 @@
 
 #include "Node.h"
 #include "View.h"
+#include <tools/Exception.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <stdexcept>
@@ -33,7 +34,7 @@ Node::Node( SWORD_Model* node )
 Node& Node::operator=( TYPE value ) \
 { \
     if( ! ::SWORD_Set##TYPE_NAME( node_, value ) ) \
-        throw std::runtime_error( "unable to set " #TYPE ); \
+        throw MASA_EXCEPTION( "unable to set " #TYPE ); \
     return *this; \
 }
 DECLARE_SET( Int8,   int8_t )
@@ -55,7 +56,7 @@ DECLARE_SET( Double, double )
 Node& Node::operator=( const std::string& value )
 {
     if( ! ::SWORD_SetText( node_, value.c_str(), value.size() ) )
-        throw std::runtime_error( "unable to set text" );
+        throw MASA_EXCEPTION( "unable to set text" );
     return *this;
 }
 
@@ -66,7 +67,7 @@ Node& Node::operator=( const std::string& value )
 Node& Node::operator=( const View& view )
 {
     if( ! ::SWORD_CopyModel( view, node_ ) )
-        throw std::runtime_error( "unable to copy node model" );
+        throw MASA_EXCEPTION( "unable to copy node model" );
     return *this;
 }
 
@@ -80,7 +81,7 @@ Node Node::operator[]( const std::string& key )
         return Node( node_ );
     SWORD_Model* child = ::SWORD_SetNamedChild( node_, key.c_str() );
     if( !child )
-        throw std::runtime_error( "could not create named child '" + key + "'" );
+        throw MASA_EXCEPTION( "could not create named child '" + key + "'" );
     return Node( child );
 }
 
@@ -94,7 +95,7 @@ Node Node::operator[]( const char* key )
         return Node( node_ );
     SWORD_Model* child = ::SWORD_SetNamedChild( node_, key );
     if( !child )
-        throw std::runtime_error( "could not create named child '" + std::string( key ) + "'" );
+        throw MASA_EXCEPTION( "could not create named child '" + std::string( key ) + "'" );
     return Node( child );
 }
 
@@ -106,7 +107,7 @@ Node Node::operator[]( size_t key )
 {
     SWORD_Model* child = ::SWORD_SetIdentifiedChild( node_, boost::numeric_cast< unsigned int >( key ) );
     if( !child )
-        throw std::runtime_error( "could not create identified child '" + boost::lexical_cast< std::string >( key ) + "'" );
+        throw MASA_EXCEPTION( "could not create identified child '" + boost::lexical_cast< std::string >( key ) + "'" );
     return Node( child );
 }
 
@@ -118,6 +119,6 @@ Node Node::AddElement()
 {
     SWORD_Model* element = ::SWORD_AddElement( node_ );
     if( !element )
-        throw std::runtime_error( "could not add element to node" );
+        throw MASA_EXCEPTION( "could not add element to node" );
     return Node( element );
 }
