@@ -58,11 +58,8 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Position::StopAction()
 {
-    for( auto it = effects_.begin(); it != effects_.end(); ++it  )
-    {
-        (*it)->ForceFlying();
+    for( auto it = effects_.begin(); it != effects_.end(); ++it )
         (*it)->DecRef();
-    }
     PHY_ActionIndirectFire_ABC::StopAction();
 }
 

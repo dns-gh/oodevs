@@ -76,11 +76,8 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Knowledge::StopAction()
 {
-    for( auto it = effects_.begin(); it != effects_.end(); ++it  )
-    {
-        (*it)->ForceFlying();
+    for( auto it = effects_.begin(); it != effects_.end(); ++it )
         (*it)->DecRef();
-    }
     PHY_ActionIndirectFire_ABC::StopAction();
 }
 

@@ -51,7 +51,7 @@ public:
     //@{
     virtual bool Execute();
 
-    void ForceFlying();
+    void StartFlying();
     void NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved );
     bool IsFlyingThroughLocalisation( const TER_Localisation& localisation ) const;
     bool CanWeaponBeUsed( const PHY_Weapon& weapon ) const;
@@ -61,7 +61,6 @@ private:
     //! @name Tools
     //@{
     void UpdateTargetPositionFromKnowledge();
-    void StartFlying();
     void StopFlying();
     //@}
 
@@ -74,6 +73,7 @@ private:
     MT_Vector2D vTargetPosition_;
     unsigned int nTargetKnowledgeID_;
     unsigned int nNbrAmmoFired_;
+    unsigned int fireResultId_;
     bool bIsFlying_;
     bool bFired_;
     bool bArrived_;
