@@ -15,20 +15,11 @@
 class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_Automate;
-class MIL_EffectManager;
-class MIL_EntityManager;
 class MIL_KnowledgeGroup; // LTO
 class MIL_Object_ABC;
 class MIL_Population;
 class MIL_ObjectBuilder_ABC;
-class MIL_ObjectType_ABC;
 class TER_Localisation;
-class MIL_Object_ABC;
-
-namespace sword
-{
-    class MissionParameter_Value;
-}
 
 // =============================================================================
 /** @class  MIL_EntityManager_ABC
