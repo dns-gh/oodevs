@@ -11,6 +11,7 @@
 #include "Converter.h"
 #include "Utf8Converter.h"
 #include "Model_ABC.h"
+#include <tools/Exception.h>
 #include "tools/MessageSender_ABC.h"
 #pragma warning( push, 0 )
 #include "proto/SimToClient.pb.h"
@@ -88,7 +89,7 @@ void Cache::Send( MsgsSimToClient::MsgSimToClient& message )
 #define NO_CACHE( MESSAGE ) \
     void Cache::Send( MESSAGE& ) \
     { \
-        throw std::runtime_error( "unable to cache message of type " BOOST_PP_STRINGIZE( MESSAGE ) ); \
+        throw MASA_EXCEPTION( "unable to cache message of type " BOOST_PP_STRINGIZE( MESSAGE ) ); \
     } \
 
 NO_CACHE( const sword::AuthenticationToClient )

@@ -13,6 +13,7 @@
 #include "ClientListener_ABC.h"
 #include "Utf8Converter.h"
 #include "DebugInfo.h"
+#include <tools/Exception.h>
 #pragma warning( push, 0 )
 #include "proto/SimToClient.pb.h"
 #pragma warning( pop )
@@ -171,7 +172,7 @@ void Clients::Broadcast( const sword::SimToClient& message )
 #define NO_BROADCAST( MESSAGE ) \
     void Clients::Send( MESSAGE& ) \
     { \
-        throw std::runtime_error( "unable to broadcast message of type " BOOST_PP_STRINGIZE( MESSAGE ) ); \
+        throw MASA_EXCEPTION( "unable to broadcast message of type " BOOST_PP_STRINGIZE( MESSAGE ) ); \
     } \
 
 NO_BROADCAST( sword::ClientToSim )

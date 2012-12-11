@@ -10,6 +10,7 @@
 #ifndef shield_Tools_h
 #define shield_Tools_h
 
+#include <tools/Exception.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
@@ -23,7 +24,7 @@ namespace shield
         const std::map< E1, E2 > map( list );
         std::map< E1, E2 >::const_iterator it = map.find( e );
         if( it == map.end() )
-            throw std::runtime_error( "invalid enum value while converting to shield protocol" );
+            throw MASA_EXCEPTION( "invalid enum value while converting to shield protocol" );
         return it->second;
     }
     template< typename E1, typename E2 >
@@ -33,7 +34,7 @@ namespace shield
         for( std::map< E1, E2 >::const_iterator it = map.begin(); it != map.end(); ++it )
             if( it->second == e )
                 return it->first;
-        throw std::runtime_error( "invalid enum value while converting to sword protocol" );
+        throw MASA_EXCEPTION( "invalid enum value while converting to sword protocol" );
     }
 }
 
@@ -54,12 +55,12 @@ inline void ConvertSimple(const T& from, T* to)
         const ::google::protobuf::FieldDescriptor* fromField = from.descriptor()->FindFieldByName( BOOST_PP_STRINGIZE( from_field ) ); \
         const ::google::protobuf::FieldDescriptor* toField = to->descriptor()->FindFieldByName( BOOST_PP_STRINGIZE( to_field ) ); \
         if( ! fromField || ! fromField->enum_type() ) \
-            throw std::runtime_error( "enumeration field '" BOOST_PP_STRINGIZE( from_field ) "' not found in '" + from.descriptor()->full_name() + "'" ); \
+            throw MASA_EXCEPTION( "enumeration field '" BOOST_PP_STRINGIZE( from_field ) "' not found in '" + from.descriptor()->full_name() + "'" ); \
         if( ! toField || ! toField->enum_type() ) \
-            throw std::runtime_error( "enumeration field '" BOOST_PP_STRINGIZE( to_field ) "' not found in '" + to->descriptor()->full_name() + "'" ); \
+            throw MASA_EXCEPTION( "enumeration field '" BOOST_PP_STRINGIZE( to_field ) "' not found in '" + to->descriptor()->full_name() + "'" ); \
         bool dummy = injective; \
         if( dummy && fromField->enum_type()->value_count() > toField->enum_type()->value_count() ) \
-               throw std::runtime_error( "source values cannot all be mapped to destination values of field '" BOOST_PP_STRINGIZE( to_field ) "'" ); \
+               throw MASA_EXCEPTION( "source values cannot all be mapped to destination values of field '" BOOST_PP_STRINGIZE( to_field ) "'" ); \
         if( from.has_##from_field() ) \
             to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) ); \
     }

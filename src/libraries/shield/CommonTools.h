@@ -10,6 +10,8 @@
 #ifndef shield_Common_h
 #define shield_Common_h
 
+#include <tools/Exception.h>
+
 #if !defined( SHIELD_CLIENT ) && !defined( SHIELD_SIMULATION )
 #error do not include CommonTools.h directly but ClientTools.h or SimulationTools.h // $$$$ MAT : yep, totally crappy !
 #endif

@@ -158,9 +158,9 @@ int main( int argc, char* argv[] )
         while( true )
             client.Update();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << tools::GetExceptionMsg( e ) << std::endl;
         return EXIT_FAILURE;
     }
     catch( ... )

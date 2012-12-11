@@ -9,6 +9,7 @@
 
 #include "AdminToLauncher.h"
 #include "ClientTools.h"
+#include <tools/Exception.h>
 
 using namespace shield;
 

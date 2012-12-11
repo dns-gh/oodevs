@@ -9,6 +9,7 @@
 
 #include "SimulationToClient.h"
 #include "SimulationTools.h"
+#include <tools/Exception.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace bpt = boost::posix_time;

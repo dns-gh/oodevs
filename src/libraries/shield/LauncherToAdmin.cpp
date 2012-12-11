@@ -9,6 +9,7 @@
 
 #include "LauncherToAdmin.h"
 #include "SimulationTools.h"
+#include <tools/Exception.h>
 
 using namespace shield;
 

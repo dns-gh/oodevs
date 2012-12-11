@@ -11,6 +11,7 @@
 #include "ClientListener_ABC.h"
 #include "Utf8Converter.h"
 #include "DebugInfo.h"
+#include <tools/Exception.h>
 #include "tools/MessageSender_ABC.h"
 #include "tools/MessageDispatcher_ABC.h"
 #pragma warning( push, 0 )
@@ -144,7 +145,7 @@ void Client::Send( const std::string& link, unsigned long tag, const google::pro
 // -----------------------------------------------------------------------------
 void Client::Send( const std::string&, unsigned long, tools::Message& )
 {
-    throw std::runtime_error( __FUNCTION__ ); // $$$$ MCO : pretty crappy but can actually never happen...
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED; // $$$$ MCO : pretty crappy but can actually never happen...
 }
 
 // -----------------------------------------------------------------------------

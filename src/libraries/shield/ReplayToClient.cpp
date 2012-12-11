@@ -10,6 +10,7 @@
 #include "ReplayToClient.h"
 #include "SimulationTools.h"
 #include "Tools.h"
+#include <tools/Exception.h>
 
 using namespace shield;
 
