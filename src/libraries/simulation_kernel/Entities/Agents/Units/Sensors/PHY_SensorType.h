@@ -77,12 +77,16 @@ private:
     //@}
 
 private:
+    //! @name Member Data
+    //@{
     const unsigned int            nID_;
     const std::string             strName_;
     const PHY_SensorTypeObject*   pTypeObject_;
     const PHY_SensorTypeAgent*    pTypeAgent_;
     const PHY_SensorTypeDisaster* pTypeDisaster_;
     unsigned int                  delay_;
+    bool                          activationOnRequest_;
+    //@}
 
 private:
     static T_SensorTypeMap sensorTypes_;

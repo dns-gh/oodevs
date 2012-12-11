@@ -75,17 +75,20 @@ void PHY_SensorType::Terminate()
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
-    : nID_          ( nNextID_++ )
-    , strName_      ( strName )
-    , pTypeObject_  ( 0 )
-    , pTypeAgent_   ( 0 )
-    , pTypeDisaster_( 0 )
+    : nID_                ( nNextID_++ )
+    , strName_            ( strName )
+    , pTypeObject_        ( 0 )
+    , pTypeAgent_         ( 0 )
+    , pTypeDisaster_      ( 0 )
+    , activationOnRequest_( false )
 {
     std::string time;
     xis >> xml::list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
         >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject, resolver )
         >> xml::list( "disaster-detection", *this, &PHY_SensorType::newSensorTypeDisaster )
-        >> xml::attribute( "detection-delay", time );
+        >> xml::attribute( "detection-delay", time )
+        >> xml::optional
+        >> xml::attribute( "activation-on-request", activationOnRequest_ );
     tools::DecodeTime( time, delay_ );
     delay_ = static_cast< unsigned int>( MIL_Tools::ConvertSecondsToSim( delay_ ) );
 }
