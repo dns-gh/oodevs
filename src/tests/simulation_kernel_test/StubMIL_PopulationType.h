@@ -6,7 +6,7 @@
 class StubMIL_PopulationType : public MIL_PopulationType
 {
 public:
-    StubMIL_PopulationType( const DEC_Model_ABC& model ) : MIL_PopulationType( model ) {}
+    StubMIL_PopulationType( const DEC_Model_ABC& model ) : MIL_PopulationType( model, 1. ) {}
     virtual ~StubMIL_PopulationType() {}
 };
 
