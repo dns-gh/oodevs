@@ -234,6 +234,7 @@ add_target( propagation_test tests "tests/propagation_test" OPTIONS test )
 target_link_libraries( propagation_test
     propagation
     ${XERCES_LIBRARIES}
+    ${TOOLS_LIBRARIES}
 )
 
 # protocol_test
@@ -275,11 +276,12 @@ target_link_libraries( web_control_plugin
     ws2_32
     ${MONGOOSE_LIBRARIES}
     ${XERCES_LIBRARIES}
+    ${TOOLS_LIBRARIES}
 )
 
 # positions_plugin_test
 add_target( positions_plugin_test tests "tests/positions_plugin_test" OPTIONS protocol test )
-target_link_libraries( positions_plugin_test positions_plugin )
+target_link_libraries( positions_plugin_test positions_plugin ${TOOLS_LIBRARIES} )
 
 # plugins_test
 add_target( plugins_test tests "tests/plugins_test" OPTIONS protocol test )
@@ -466,7 +468,10 @@ target_link_libraries( propagation_module mt_tools )
 
 # module_tester_test
 add_target( module_tester_test modules "tests/module_tester_test" OPTIONS test )
-target_link_libraries( module_tester_test ${CORE_LIBRARIES} )
+target_link_libraries( module_tester_test
+    ${CORE_LIBRARIES}
+    ${TOOLS_LIBRARIES}
+)
 
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS win32 executable )
@@ -610,6 +615,7 @@ target_link_libraries( loadtester_app sword_tools )
 
 # package_app
 add_target( package_app clients "applications/package_app" OPTIONS executable )
+target_link_libraries( package_app ${TOOLS_LIBRARIES} )
 
 # clients_test
 add_target( clients_test tests "tests/clients_test" OPTIONS qt3 test )
@@ -618,4 +624,4 @@ target_link_libraries( clients_test preparation )
 # client_sample_app
 add_target( client_sample_app samples "samples/client_sample_app" OPTIONS protocol executable )
 masa_add_target_include( client_sample_app "${CMAKE_CURRENT_BINARY_DIR}/protocol.out/protocol" )
-target_link_libraries( client_sample_app ws2_32 )
+target_link_libraries( client_sample_app ws2_32 ${TOOLS_LIBRARIES} )
