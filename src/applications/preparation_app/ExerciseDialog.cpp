@@ -57,9 +57,12 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         hLayout->addWidget( new QLabel( tr( "Language" ) ) );
         lang_ = new gui::ValuedComboBox< QString >();
         hLayout->addWidget( lang_ );
+
         lang_->AddItem( tr( "English" ), "en" );
         lang_->AddItem( tr( "French" ), "fr" );
         lang_->AddItem( tr( "Spanish" ), "es" );
+        lang_->AddItem( tr( "Arabic" ), "ar" );
+
         connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang() ) );
         QPushButton* textFormat = new QPushButton( tr( "source" ) );
         hLayout->addWidget( textFormat );

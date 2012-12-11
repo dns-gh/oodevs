@@ -403,18 +403,6 @@
         <translation type="unfinished">اللغة</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation type="unfinished">الإنكليزية</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation type="unfinished">الفرنسية</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="unfinished">الإسبانية</translation>
-    </message>
-    <message>
         <source>source</source>
         <translation type="unfinished">المصدر</translation>
     </message>
@@ -470,6 +458,22 @@
     <message>
         <source>Order files (*.ord)</source>
         <translation type="unfinished">ملفات النظام (*.ord)</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Español</translation>
+    </message>
+    <message>
+        <source>Arabic</source>
+        <translation>العربية</translation>
     </message>
 </context>
 <context>

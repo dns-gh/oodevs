@@ -403,10 +403,6 @@
         <translation>Idioma</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation>Inglés</translation>
-    </message>
-    <message>
         <source>source</source>
         <translation>fuente</translation>
     </message>
@@ -439,16 +435,8 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>French</source>
-        <translation>Español</translation>
-    </message>
-    <message>
         <source>Parameters</source>
         <translation>Parámetros</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Infinite resources</source>
@@ -470,6 +458,22 @@
         <source>The following files will be copied to the exercise scripts/resources subfolder:
 </source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Español</translation>
+    </message>
+    <message>
+        <source>Arabic</source>
+        <translation>العربية</translation>
     </message>
 </context>
 <context>

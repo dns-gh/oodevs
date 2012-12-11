@@ -405,18 +405,6 @@
         <translation>Language</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>French</source>
-        <translation>French</translation>
-    </message>
-    <message>
-        <source>Spanish</source>
-        <translation>Spanish</translation>
-    </message>
-    <message>
         <source>source</source>
         <translation>source</translation>
     </message>
@@ -473,6 +461,22 @@
     <message>
         <source>Order files (*.ord)</source>
         <translation>Order files (*.ord)</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Español</translation>
+    </message>
+    <message>
+        <source>Arabic</source>
+        <translation>العربية</translation>
     </message>
 </context>
 <context>
