@@ -119,6 +119,6 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Contaminations::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( ! contaminatingNbcAgents_.empty() && viewport.IsHotpointVisible() )
+    if( nContamination_ != 0 && viewport.IsHotpointVisible() )
         tools.DrawIcon( xpm_nbc, where, 150.f );
 }
