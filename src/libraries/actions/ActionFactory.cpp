@@ -90,20 +90,20 @@ ActionFactory::~ActionFactory()
 
 namespace
 {
-    std::exception MissingParameter( const actions::Action_ABC& action, const kernel::OrderParameter& param )
+    tools::Exception MissingParameter( const actions::Action_ABC& action, const kernel::OrderParameter& param )
     {
-        return std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): missing parameter '%3'." )
-                                .arg( action.GetName() ).arg( action.GetId() ).arg( param.GetName().c_str() ) );
+        return MASA_EXCEPTION( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): missing parameter '%3'." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( param.GetName().c_str() ).toStdString() );
     }
-    std::exception TargetNotFound( unsigned long id = 0 )
+    tools::Exception TargetNotFound( unsigned long id = 0 )
     {
         if( id )
-            return std::exception( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ) );
-        return std::exception( tools::translate( "ActionFactory", "Executing target not set" ) );
+            return MASA_EXCEPTION( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ).toStdString() );
+        return MASA_EXCEPTION( tools::translate( "ActionFactory", "Executing target not set" ).toStdString() );
     }
-    std::exception MagicIdNotFound( const std::string& id )
+    tools::Exception MagicIdNotFound( const std::string& id )
     {
-        return std::exception( tools::translate( "ActionFactory", "Magic action type '%1' unknown." ).arg( id.c_str() ) );
+        return MASA_EXCEPTION( tools::translate( "ActionFactory", "Magic action type '%1' unknown." ).arg( id.c_str() ).toStdString() );
     }
 }
 
@@ -121,7 +121,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
     else if( target.GetTypeName() == kernel::Population_ABC::typeName_ )
         action.reset( new actions::PopulationMission( target, mission, controller_, true ) );
     else
-        throw std::runtime_error( __FUNCTION__ " Cannot resolve executing entity" );
+        throw MASA_EXCEPTION( "Cannot resolve executing entity" );
 
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &target, false ) );
@@ -627,7 +627,7 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::Or
     while( it.HasMoreElements() )
     {
         if( i >= message.elem_size() )
-            throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
+            throw MASA_EXCEPTION( "Mission parameter count does not match mission definition" );
         if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
             if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
             if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), *entity ) )
@@ -644,7 +644,7 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
     try
     {
         if( !it.HasMoreElements() )
-            throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
+            throw MASA_EXCEPTION( tools::translate( "ActionFactory", "too many parameters provided" ).toStdString() );
         // $$$$ LDC AddParameter can throw after having taken ownership of the parameter thus do not use auto_ptr here
         const kernel::OrderParameter& parameter = it.NextElement();
         actions::Parameter_ABC* param = factory_.CreateParameter( parameter, xis, entity );
@@ -652,14 +652,14 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
         {
             std::string errorMessage( "Impossible to create parameter " );
             errorMessage = errorMessage + parameter.GetName();
-            throw std::exception( errorMessage.c_str() );
+            throw MASA_EXCEPTION( errorMessage.c_str() );
         }
         action.AddParameter( *param );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
-                                .arg( action.GetName() ).arg( action.GetId() ).arg( e.what() ) );
+        throw MASA_EXCEPTION( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( tools::GetExceptionMsg( e ).c_str() ).toStdString() );
     }
 }
 
@@ -673,7 +673,7 @@ void ActionFactory::ReadStubParameter( xml::xistream& xis, actions::Action_ABC& 
     {
         ReadParameter( xis, action, it, entity );
     }
-    catch( std::exception& /*e*/ ) {}
+    catch( const std::exception& /*e*/ ) {}
 }
 
 // -----------------------------------------------------------------------------
@@ -685,15 +685,15 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
     try
     {
         if( !it.HasMoreElements() )
-            throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
+            throw MASA_EXCEPTION( tools::translate( "ActionFactory", "too many parameters provided" ).toStdString() );
         std::auto_ptr< actions::Parameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis ) );
         action.AddParameter( *param );
         param.release();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
-                                .arg( action.GetName() ).arg( action.GetId() ).arg( e.what() ) );
+        throw MASA_EXCEPTION( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( tools::GetExceptionMsg( e ).c_str() ).toStdString() );
     }
 }
 

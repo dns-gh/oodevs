@@ -105,7 +105,7 @@ void ExtensionList::CommitTo( sword::Extension& message ) const
             else if( param.GetName() == "value" )
                 entry.set_value( param.GetValue() );
             else
-                throw std::runtime_error( __FUNCTION__ ": bad parameter for extension order parameter" );
+                throw MASA_EXCEPTION( "bad parameter for extension order parameter" );
         }
         assert( entry.has_name() );
         assert( entry.has_value() );

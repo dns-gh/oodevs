@@ -92,11 +92,11 @@ void ParamAgent::AddHierarchy( const kernel::Entity_ABC& superior )
     {
         Param_ABC* param = parentList_->CreateElement();
         if( param == 0 )
-            throw std::exception( __FUNCTION__ "ListParameter doesn't create a ParamAgent." );
+            throw MASA_EXCEPTION( "ListParameter doesn't create a ParamAgent." );
         if( ParamAgent* paramAgent = dynamic_cast< ParamAgent* >( param ) )
             paramAgent->SetPotential( *agent );
         else
-            throw std::exception( __FUNCTION__ "ListParameter doesn't create a ParamAgent." );
+            throw MASA_EXCEPTION( "ListParameter doesn't create a ParamAgent." );
         param->OnMenuClick();
         parentList_->AddElement( *param );
     }

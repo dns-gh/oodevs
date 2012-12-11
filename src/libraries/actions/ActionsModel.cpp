@@ -243,7 +243,7 @@ void ActionsModel::ReadActions( xml::xistream& xis, bool readonly )
             >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
         >> xml::end;
 //    if( !errors.empty() )
-//        throw std::exception( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
+//        throw MASA_EXCEPTION( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,9 +258,9 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
         Register( action->GetId(), *action );
         action.release();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        errors += std::string( e.what() ) + "\n";
+        errors += tools::GetExceptionMsg( e ) + "\n";
         try
         {
             std::auto_ptr< Action_ABC > action( factory_.CreateStubAction( xis ) );
@@ -270,7 +270,7 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
                 action.release();
             }
         }
-        catch( std::exception& )
+        catch( const std::exception& )
         {
             // NOTHING
         }

@@ -33,7 +33,7 @@ ObjectKnowledgeOrder::ObjectKnowledgeOrder( const OrderParameter& parameter, xml
     {
         pObject_ = resolver.FindObject( xis.attribute< unsigned long >( "value", 0u ) );
         if( !pObject_ )
-            throw std::runtime_error( "Unknown parameter : 'Invalid object id' " );
+            throw MASA_EXCEPTION( "Unknown parameter : 'Invalid object id' " );
     }
 }
 

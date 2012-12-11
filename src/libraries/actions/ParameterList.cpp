@@ -50,7 +50,7 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::g
         if( param )
             AddParameter( *param );
         else
-            throw std::runtime_error( "Invalid mission parameter" );
+            throw MASA_EXCEPTION( "Invalid mission parameter" );
     }
 }
 

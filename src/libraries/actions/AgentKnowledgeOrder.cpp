@@ -32,7 +32,7 @@ AgentKnowledgeOrder::AgentKnowledgeOrder( const OrderParameter& parameter, xml::
     {
         pAgent_ = resolver.FindAgent( xis.attribute< unsigned long >( "value" ) );
         if( !pAgent_ )
-            throw std::runtime_error( "Unknown parameter : 'Invalid agent id' " );
+            throw MASA_EXCEPTION( "Unknown parameter : 'Invalid agent id' " );
     }
 }
 

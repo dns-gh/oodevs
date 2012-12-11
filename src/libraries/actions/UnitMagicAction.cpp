@@ -100,7 +100,7 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
     else if( dynamic_cast< const kernel::Inhabitant_ABC* >( &entity ) )
         message().mutable_tasker()->mutable_population()->set_id( entity.GetId() );
     else
-        throw std::runtime_error( "Unknown tasker" );
+        throw MASA_EXCEPTION( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher, context );

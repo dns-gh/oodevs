@@ -28,8 +28,8 @@ namespace
         const std::string name = xis.attribute< std::string >( "name", "" );
         const OrderType* type = missions.Find( id );
         if( !type )
-            throw std::exception( tools::translate( "FragOrder", "Entity '%1' (id: %2) cannot execute fragmentary order '%3' (id: %4)" )
-                                    .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ) );
+            throw MASA_EXCEPTION( tools::translate( "FragOrder", "Entity '%1' (id: %2) cannot execute fragmentary order '%3' (id: %4)" )
+                                  .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ).toStdString() );
         return *type;
     }
 }

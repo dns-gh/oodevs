@@ -33,19 +33,19 @@ namespace
             type = missions.Find( id );
             if( !type )
             {
-                throw std::exception( tools::translate( "Mission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
-                                    .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ) );
+                throw MASA_EXCEPTION( tools::translate( "Mission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
+                                      .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ).toStdString() );
             }
         }
-        catch( std::exception& )
+        catch( const std::exception& )
         {
             if( stub )
             {
                 static const OrderType stubType;
                 return stubType;
             }
-            throw std::exception( tools::translate( "Mission", "Entity '%1' (id: %2) received unknown mission" )
-                                    .arg( entity.GetName() ).arg( entity.GetId() ).arg( "?" ).arg( "?" ) );
+            throw MASA_EXCEPTION( tools::translate( "Mission", "Entity '%1' (id: %2) received unknown mission" )
+                                  .arg( entity.GetName() ).arg( entity.GetId() ).arg( "?" ).arg( "?" ).toStdString() );
         }
         return *type;
     }

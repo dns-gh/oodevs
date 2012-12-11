@@ -77,7 +77,7 @@ void EntityParameter< ConcreteEntity >::CommitTo( int& message ) const
     {
         if( IsOptional() )
             return;
-        throw std::runtime_error( "Entity not set!" );
+        throw MASA_EXCEPTION( "Entity not set!" );
     }
     message = selected_->GetId();
 }

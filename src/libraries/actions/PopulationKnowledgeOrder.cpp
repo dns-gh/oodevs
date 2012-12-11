@@ -31,7 +31,7 @@ PopulationKnowledgeOrder::PopulationKnowledgeOrder( const kernel::OrderParameter
     {
         pPopulation_ = resolver.FindPopulation( xis.attribute< unsigned long >( "value" ) );
         if( !pPopulation_ )
-            throw std::runtime_error( "Unknown parameter : 'Invalid population id' " );
+            throw MASA_EXCEPTION( "Unknown parameter : 'Invalid population id' " );
     }
 }
 

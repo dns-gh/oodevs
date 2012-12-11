@@ -195,7 +195,7 @@ namespace
     void ThrowUnexpected( const kernel::OrderParameter& expected, xml::xistream& xis )
     {
         const std::string found = xis.attribute< std::string >( "name" );
-        throw std::exception( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetName().c_str() ).arg( found.c_str() ) );
+        throw MASA_EXCEPTION( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetName().c_str() ).arg( found.c_str() ).toStdString() );
     }
 }
 
@@ -214,7 +214,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( found == false || !param.get() )
         found = DoCreateParameter( parameter, xis, type, param );
     if( found == false )
-        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
+        throw MASA_EXCEPTION( "Unknown parameter type '" + type + "'" );
     return param.release();
 }
 
@@ -230,7 +230,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< Parameter_ABC > param;
     if( DoCreateParameter( parameter, xis, type, param ) == false )
-        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
+        throw MASA_EXCEPTION( "Unknown parameter type '" + type + "'" );
     return param.release();
 }
 
