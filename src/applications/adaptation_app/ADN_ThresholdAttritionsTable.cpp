@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ThresholdAttritionsTable.h"
 #include "ADN_Disasters_Data.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ThresholdAttritionsTable constructor
@@ -22,14 +23,14 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
     dataModel_.setColumnCount( 8 );
     setShowGrid( false );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Name" )
-                      << tr( "Threshold" )
-                      << tr( "U1 (%)" )
-                      << tr( "U2 (%)" )
-                      << tr( "U3 (%)" )
-                      << tr( "UE (%)" )
-                      << tr( "Dead (%)" )
-                      << tr( "Contamination" );
+    horizontalHeaders << tools::translate( "ADN_ThresholdAttritionsTable", "Name" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "Threshold" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "U1 (%)" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "U2 (%)" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "U3 (%)" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "UE (%)" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "Dead (%)" )
+                      << tools::translate( "ADN_ThresholdAttritionsTable", "Contamination" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

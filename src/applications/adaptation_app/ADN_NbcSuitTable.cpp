@@ -23,8 +23,8 @@ ADN_NbcSuitTable::ADN_NbcSuitTable( const QString& objectName, ADN_Connector_ABC
     dataModel_.setColumnCount( 2 );
     setShowGrid( false );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Suit" )
-                      << tr( "Ratio" );
+    horizontalHeaders << tools::translate( "ADN_NbcSuitTable", "Suit" )
+                      << tools::translate( "ADN_NbcSuitTable", "Ratio" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

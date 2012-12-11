@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ThresholdConcentrationsTable.h"
 #include "ADN_Disasters_Data.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ThresholdConcentrationsTable constructor
@@ -22,9 +23,9 @@ ADN_ThresholdConcentrationsTable::ADN_ThresholdConcentrationsTable( const QStrin
     dataModel_.setColumnCount( 3 );
     setShowGrid( false );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Name" )
-                      << tr( "Color" )
-                      << tr( "Threshold" );
+    horizontalHeaders << tools::translate( "ADN_ThresholdConcentrationsTable", "Name" )
+                      << tools::translate( "ADN_ThresholdConcentrationsTable", "Color" )
+                      << tools::translate( "ADN_ThresholdConcentrationsTable", "Threshold" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

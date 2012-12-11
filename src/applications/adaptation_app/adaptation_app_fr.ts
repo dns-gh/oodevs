@@ -4313,12 +4313,12 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
 <context>
     <name>ADN_ThresholdAttritionsTable</name>
     <message>
-        <source>Threshold</source>
-        <translation>Seuil</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Threshold</source>
+        <translation>Seuil</translation>
     </message>
     <message>
         <source>U1 (%)</source>
@@ -4333,8 +4333,16 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <translation>U3 (%)</translation>
     </message>
     <message>
+        <source>UE (%)</source>
+        <translation>UE (%)</translation>
+    </message>
+    <message>
         <source>Dead (%)</source>
         <translation>Mort (%)</translation>
+    </message>
+    <message>
+        <source>Contamination</source>
+        <translation>Contamination</translation>
     </message>
     <message>
         <source>Add</source>
@@ -4343,14 +4351,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Remove</source>
         <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Contamination</source>
-        <translation>Contamination</translation>
-    </message>
-    <message>
-        <source>UE (%)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
