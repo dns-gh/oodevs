@@ -47,7 +47,7 @@ Database::Database( const bfs::path& path )
     {
         sqlite3_close( db_ );
         db_ = 0;
-        throw DatabaseException( err, "Could not open Sqlite DB: " + file.string() );
+        throw MASA_EXCEPTION_SQLITE( err, "Could not open Sqlite DB: " + file.string() );
     }
 }
 

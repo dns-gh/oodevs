@@ -9,7 +9,6 @@
 
 #include "geostore_pch.h"
 #include "ProjectionTable.h"
-#include "DatabaseException.h"
 
 using namespace geostore;
 

@@ -183,7 +183,7 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint
         else
         {
             // Unsupported geometry...
-            throw std::runtime_error( __FUNCTION__ );
+            throw MASA_EXCEPTION( "Unsupported geometry." );
         }
     }
 }

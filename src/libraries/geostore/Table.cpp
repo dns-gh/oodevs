@@ -62,7 +62,7 @@ void Table::ExecuteQuery( const std::string& query )
     int err = sqlite3_exec( db_, query.c_str(), nullptr, nullptr, nullptr );
     if( SQLITE_OK != err )
     {
-        throw DatabaseException( err, sqlite3_errmsg( db_ ) );
+        throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
     }
 }
 
@@ -71,7 +71,7 @@ void Table::ExecuteQuery( const std::string& query, T_ResultSet& result )
     int err = sqlite3_exec( db_, query.c_str(), &ResultCallback, &result, nullptr );
     if( SQLITE_OK != err )
     {
-        throw DatabaseException( err, sqlite3_errmsg( db_ ) );
+        throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
     }
 }
 
@@ -83,7 +83,7 @@ sqlite3_stmt* Table::CreateStatement( const std::string& query ) const
     if( SQLITE_OK != err )
     {
         sqlite3_finalize( result );
-        throw DatabaseException( err, sqlite3_errmsg( db_ ) );
+        throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
     }
 
     return result;
@@ -103,7 +103,7 @@ int Table::StepStatement( sqlite3_stmt* stmt ) const
     default:
         // Well, something unexpected happened...
         sqlite3_finalize( stmt );
-        throw DatabaseException( err, sqlite3_errmsg( db_ ) );
+        throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
         break;
     }
 

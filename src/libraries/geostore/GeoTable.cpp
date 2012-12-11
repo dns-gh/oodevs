@@ -9,7 +9,6 @@
 
 #include "geostore_pch.h"
 #include "GeoTable.h"
-#include "DatabaseException.h"
 #include "terrain/TerrainObject.h"
 #include "terrain/TerrainFileReader.h"
 
@@ -48,7 +47,7 @@ GeoTable::GeometryType GeoTable::GetGeometryType() const
     case LineString:
         return std::string( "LINESTRING" );
     default:
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid geometry type." );
     }
 }*/
 
@@ -64,7 +63,7 @@ void GeoTable::SetGeometry( const std::string& name )
     }
     else
     {
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid geometry name." );
     }
 }
 
@@ -87,7 +86,7 @@ void GeoTable::LoadTable()
 
     if( results.empty() )
     {
-        throw std::runtime_error( std::string( __FUNCTION__ ) + ": Could not load table " + GetName() );
+        throw MASA_EXCEPTION( "Could not load table " + GetName() );
     }
 
     SetGeometry( results.back().back() );
@@ -123,7 +122,7 @@ void GeoTable::AddGeometryColumn( int geom_type )
         geometryType_ = LineString;
         break;
     default:
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid geometry type." );
     }
 
     query << "', 2 )";
@@ -286,7 +285,7 @@ gaiaGeomCollPtr GeoTable::CreateGeometry( const TerrainObject& shape )
         break;
     default:
         gaiaFreeGeomColl( geo );
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid geometry type." );
     }
 
     return geo;

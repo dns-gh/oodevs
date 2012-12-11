@@ -87,8 +87,5 @@
     <ClCompile Include="..\..\src\libraries\geostore\Table.cpp">
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\DatabaseException.cpp">
-      <Filter>Source Files\Structure</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

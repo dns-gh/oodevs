@@ -43,7 +43,7 @@ void GeoStoreManager::Initialize( const bfs::path& path )
     {
         InitProjector( path_ / "terrain.xml" );
     }
-    catch ( ... )
+    catch( ... )
     {
         InitProjectorOld( path_ / "World.xml" );
     }

@@ -10,7 +10,9 @@
 #ifndef __geostore_Table_h_
 #define __geostore_Table_h_
 
-#include "geostore_pch.h"
+#include <boost/noncopyable.hpp>
+
+struct sqlite3;
 
 namespace geostore
 {
