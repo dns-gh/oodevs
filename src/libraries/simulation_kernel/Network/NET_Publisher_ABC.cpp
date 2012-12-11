@@ -22,7 +22,7 @@ namespace
         if( pPublisher_ == 0 )
             pPublisher_ = &publisher;
         else
-            throw std::runtime_error( "Publisher already registered" );
+            throw MASA_EXCEPTION( "Publisher already registered" );
     }
 
     // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ namespace
         if( pPublisher_ == &publisher )
             pPublisher_ = 0;
         else
-            throw std::runtime_error( "Unregistering incorrect publisher" );
+            throw MASA_EXCEPTION( "Unregistering incorrect publisher" );
     }
 }
 
@@ -65,7 +65,7 @@ void NET_Publisher_ABC::SendAsnMessage( sword::SimToClient& msg )
     if( pPublisher_ )
         pPublisher_->Send( msg );
     else
-        throw std::runtime_error( "No publisher registered" );
+        throw MASA_EXCEPTION( "No publisher registered" );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +75,6 @@ void NET_Publisher_ABC::SendAsnMessage( sword::SimToClient& msg )
 NET_Publisher_ABC& NET_Publisher_ABC::Publisher()
 {
     if( !pPublisher_ )
-        throw std::runtime_error( "No publisher registered" );
+        throw MASA_EXCEPTION( "No publisher registered" );
     return *pPublisher_;
 }

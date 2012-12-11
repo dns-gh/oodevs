@@ -115,9 +115,9 @@ void SpawnCapacity::Finalize( MIL_Object_ABC& object )
         else
             CreateObject( object );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

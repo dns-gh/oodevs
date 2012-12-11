@@ -99,7 +99,7 @@ protected:
     {
         std::stringstream str;
         str << "MIL_KnowledgeGroup '" << identifier << "' " << message;
-        throw std::runtime_error( str.str() );
+        throw MASA_EXCEPTION( str.str() );
     }
     //@}
 

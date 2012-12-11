@@ -34,11 +34,11 @@ MIL_PointParameter::MIL_PointParameter( const sword::Point& asn )
     : pPoint_( new MT_Vector2D() )
 {
     if( asn.location().type() != sword::Location_Geometry_point )
-        throw std::runtime_error( "Unexpected type passed for point" );
+        throw MASA_EXCEPTION( "Unexpected type passed for point" );
     if( asn.location().coordinates().elem_size() > 1 )
-        throw std::runtime_error( "Too many points" );
+        throw MASA_EXCEPTION( "Too many points" );
     if( asn.location().coordinates().elem_size() == 0 )
-        throw std::runtime_error( "No point" );
+        throw MASA_EXCEPTION( "No point" );
     MIL_Tools::ConvertCoordMosToSim( asn.location().coordinates().elem(0), *pPoint_ );
 }
 

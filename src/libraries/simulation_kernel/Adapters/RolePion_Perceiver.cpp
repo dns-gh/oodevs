@@ -137,7 +137,7 @@ void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableSensors()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void RolePion_Perceiver::EnableSensors()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableSensors()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ void RolePion_Perceiver::DisableSensors()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableCoupDeSonde()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void RolePion_Perceiver::EnableCoupDeSonde()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableCoupDeSonde()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ void RolePion_Perceiver::DisableCoupDeSonde()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& /*localisation*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +184,7 @@ void RolePion_Perceiver::EnableRecoAlat( const TER_Localisation& /*localisation*
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoAlat()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ void RolePion_Perceiver::DisableRecoAlat()
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& /*localisation*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +202,7 @@ int RolePion_Perceiver::EnableSurveillanceLocalisation( const TER_Localisation& 
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableSurveillanceLocalisation( int /*id*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void RolePion_Perceiver::DisableSurveillanceLocalisation( int /*id*/ )
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& /*center*/, double /*rSize*/, double /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ int RolePion_Perceiver::EnableRecoPoint( const MT_Vector2D& /*center*/, double /
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoPoint( int /*id*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void RolePion_Perceiver::DisableRecoPoint( int /*id*/ )
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& /*localisation*/, const MT_Vector2D& /*vCenter*/, double /*rSpeed*/, DEC_Decision_ABC& /*callerAgent*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ int RolePion_Perceiver::EnableRecoObjects( const TER_Localisation& /*localisatio
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoObjects( int /*id*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ void RolePion_Perceiver::DisableRecoObjects( int /*id*/ )
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& /*localisation*/, DEC_Decision_ABC& /*callerAgent*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,7 +272,7 @@ int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisa
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* /*pUrbanBlock*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void RolePion_Perceiver::DisableRecoLocalisation( int id ) // $$$$ _RC_ SLI 2012
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoUrbanBlock( int /*id*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ bool RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) 
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& /*radarClass*/, const TER_Localisation& /*localisation*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +345,7 @@ int RolePion_Perceiver::EnableRadarOnLocalisation( const PHY_RadarClass& /*radar
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& /*radarClass*/, int /*id*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -354,7 +354,7 @@ void RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& /*rad
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableRadar( const PHY_RadarClass& /*radarClass*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +363,7 @@ void RolePion_Perceiver::EnableRadar( const PHY_RadarClass& /*radarClass*/ )
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRadar( const PHY_RadarClass& /*radarClass*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -372,7 +372,7 @@ void RolePion_Perceiver::DisableRadar( const PHY_RadarClass& /*radarClass*/ )
 // -----------------------------------------------------------------------------
 int RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& /*localisation*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -381,7 +381,7 @@ int RolePion_Perceiver::EnableFlyingShellDetection( const TER_Localisation& /*lo
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableFlyingShellDetection( int /*id*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -507,7 +507,7 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Know
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const MT_Vector2D& /*vPoint*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -590,7 +590,7 @@ bool RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& /*flyingShell*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -599,7 +599,7 @@ void RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& /*flyi
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& /*agent*/, const PHY_PerceptionLevel& /*level*/, bool /*bPerceptionRecorded*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -608,7 +608,7 @@ void RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& /*agent*/, const PHY_P
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& /*agent*/, const PHY_PerceptionLevel& /*level*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -617,7 +617,7 @@ bool RolePion_Perceiver::NotifyPerception( MIL_Agent_ABC& /*agent*/, const PHY_P
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& /*object*/, const PHY_PerceptionLevel& /*level*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -626,7 +626,7 @@ void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& /*object*/, const PHY
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& /*concentration*/, const PHY_PerceptionLevel& /*level*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -635,7 +635,7 @@ bool RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& /*concen
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& /*flow*/, const PHY_PerceptionLevel& /*level*/, const T_PointVector& /*shape*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ bool RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& /*flow*/, const P
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*object*/, const PHY_PerceptionLevel& /*level*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -653,7 +653,7 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*obj
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& /*object*/, const MT_Vector2D& /*vPosition*/, const MT_Vector2D& /*vDirection*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -673,7 +673,7 @@ void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& target, const 
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableRecordMode()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -682,7 +682,7 @@ void RolePion_Perceiver::EnableRecordMode()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecordMode()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -691,7 +691,7 @@ void RolePion_Perceiver::DisableRecordMode()
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::HasDelayedPerceptions() const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -766,7 +766,7 @@ MIL_Agent_ABC& RolePion_Perceiver::GetPion() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModeNormal()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -775,7 +775,7 @@ void RolePion_Perceiver::SetVisionModeNormal()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& /*vDirection*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -784,7 +784,7 @@ void RolePion_Perceiver::SetVisionModeDirection( const MT_Vector2D& /*vDirection
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& /*vPoint*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -812,7 +812,7 @@ void RolePion_Perceiver::Clean()
 // -----------------------------------------------------------------------------
 const RolePion_Perceiver::T_SurfaceAgentMap& RolePion_Perceiver::GetSurfacesAgent() const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -821,7 +821,7 @@ const RolePion_Perceiver::T_SurfaceAgentMap& RolePion_Perceiver::GetSurfacesAgen
 // -----------------------------------------------------------------------------
 const RolePion_Perceiver::T_SurfaceObjectMap& RolePion_Perceiver::GetSurfacesObject() const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -830,7 +830,7 @@ const RolePion_Perceiver::T_SurfaceObjectMap& RolePion_Perceiver::GetSurfacesObj
 // -----------------------------------------------------------------------------
 const RolePion_Perceiver::T_DisasterDetectors& RolePion_Perceiver::GetDisasterDetectors() const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -839,7 +839,7 @@ const RolePion_Perceiver::T_DisasterDetectors& RolePion_Perceiver::GetDisasterDe
 // -----------------------------------------------------------------------------
 const RolePion_Perceiver::T_RadarSet& RolePion_Perceiver::GetRadars( const PHY_RadarClass& /*radarClass*/ )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -858,7 +858,7 @@ void RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) 
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableFireObserver()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -867,7 +867,7 @@ void RolePion_Perceiver::EnableFireObserver()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableFireObserver()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -885,7 +885,7 @@ bool RolePion_Perceiver::IsFireObserver() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::EnableDisasterPerception()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 
 }
 
@@ -895,6 +895,6 @@ void RolePion_Perceiver::EnableDisasterPerception()
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableDisasterPerception()
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 

@@ -271,7 +271,7 @@ void RoleAction_Moving::SetSpeedModificator( double rFactor )
 void RoleAction_Moving::SetMaxSpeedModificator( double rFactor )
 {
     if( rFactor <= 0. )
-        throw std::runtime_error( "Cannot set max speed to 0 or less: Would prevent pathfind from working. Please inhibit move actions in decisional instead." );
+        throw MASA_EXCEPTION( "Cannot set max speed to 0 or less: Would prevent pathfind from working. Please inhibit move actions in decisional instead." );
     rMaxSpeedModificator_ = rFactor;
 }
 

@@ -49,7 +49,7 @@ MIL_AutomatParameter::MIL_AutomatParameter( const sword::AutomatId& asn, const M
     if( pAutomate )
         pDecision_ = &pAutomate->GetDecision();
     if( !pDecision_ )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

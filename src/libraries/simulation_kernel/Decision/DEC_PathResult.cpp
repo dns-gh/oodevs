@@ -90,7 +90,7 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath() const
 MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const
 {
     if( itCurrentPos == resultList_.end() )
-        throw std::runtime_error( "Current position is invalid" );
+        throw MASA_EXCEPTION( "Current position is invalid" );
 
     // recherche du prochain point sur le path
     // on passe tous les points spéciaux, car il n'y a des changement de direction que sur les PathPoint_Point

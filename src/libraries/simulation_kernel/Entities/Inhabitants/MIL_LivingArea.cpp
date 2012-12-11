@@ -62,7 +62,7 @@ void MIL_LivingArea::Finalize()
         {
             MIL_UrbanObject_ABC* object = dynamic_cast< MIL_UrbanObject_ABC* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
             if( !object )
-                throw std::runtime_error( "Error in loading living urban block of population" );
+                throw MASA_EXCEPTION( "Error in loading living urban block of population" );
             blocks_.push_back( new MIL_LivingAreaBlock( *object ) );
             object->MIL_Object::Register( *pInhabitant_ );
             object->AddLivingArea( *this );

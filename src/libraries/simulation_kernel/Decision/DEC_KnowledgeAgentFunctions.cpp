@@ -76,7 +76,7 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
     if( !direction )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const double rDist = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
     return MT_Sector( vOrigin, *direction, angle * MT_PI / 180. ).IsInCone( pKnowledge->GetPosition(), rDist );
@@ -314,7 +314,7 @@ float DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge( boost::shared_ptr<
 float DEC_KnowledgeAgentFunctions::GetDangerosityOnPion( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget )
 {
     if( !pTarget )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
         return static_cast< float >( pKnowledge->GetDangerosity( pTarget->GetPion(), false ) + 1. );
@@ -350,7 +350,7 @@ int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion&
 bool  DEC_KnowledgeAgentFunctions::IsIlluminated( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated();
 }
 
@@ -361,7 +361,7 @@ bool  DEC_KnowledgeAgentFunctions::IsIlluminated( boost::shared_ptr< DEC_Knowled
 bool  DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsDefinitevelyIlluminated();
 }
 
@@ -372,7 +372,7 @@ bool  DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated( boost::shared_ptr<
 bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
     const float range = static_cast< float >( pKnowledge->GetPosition().Distance( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
     return roleDotations.GetIlluminationDotations( range, true ) || roleDotations.GetIlluminationDotations( range, false );
@@ -396,7 +396,7 @@ double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel( boost
 {
     if( pUrbanBlock && pTarget )
         return 1.f - pTarget->GetMaterialComposantesAttritionLevel( pUrbanBlock );
-    throw std::exception( "urbanBlock or target not valid" );
+    throw MASA_EXCEPTION( "urbanBlock or target not valid" );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,7 +406,7 @@ double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel( boost
 const std::string DEC_KnowledgeAgentFunctions::GetCriticalIntelligence( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pKnowledge->SetCriticalIntelligenceFromAgentKnown();
     return pKnowledge->GetCriticalIntelligence();
 }
@@ -435,7 +435,7 @@ void DEC_KnowledgeAgentFunctions::UnitDecisionalState( const DEC_Knowledge_Agent
 void DEC_KnowledgeAgentFunctions::DisableCrowdEffect( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool disable )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Population >().DisableCrowdEffect( disable );
 }
 
@@ -446,7 +446,7 @@ void DEC_KnowledgeAgentFunctions::DisableCrowdEffect( boost::shared_ptr< DEC_Kno
 unsigned int DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetAgentKnown().GetID();
 }
 
@@ -457,7 +457,7 @@ unsigned int DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge( boost::shared
 bool DEC_KnowledgeAgentFunctions::IsRefugee( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetAgentKnown().GetType().IsRefugee();
 }
 
@@ -468,7 +468,7 @@ bool DEC_KnowledgeAgentFunctions::IsRefugee( boost::shared_ptr< DEC_Knowledge_Ag
 bool DEC_KnowledgeAgentFunctions::IsTransported( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->IsTransported();
 }
 
@@ -479,7 +479,7 @@ bool DEC_KnowledgeAgentFunctions::IsTransported( const MIL_AgentPion& /*callerAg
 std::string DEC_KnowledgeAgentFunctions::GetMilPionType( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetAgentKnown().GetType().GetMilPionType();
 }
 
@@ -490,7 +490,7 @@ std::string DEC_KnowledgeAgentFunctions::GetMilPionType( boost::shared_ptr< DEC_
 boost::shared_ptr< MIL_Mission_ABC > DEC_KnowledgeAgentFunctions::GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetAgentKnown().GetDecision().GetMission();
 }
 
@@ -512,7 +512,7 @@ void DEC_KnowledgeAgentFunctions::NeutralizeAgent( boost::shared_ptr< DEC_Knowle
 void DEC_KnowledgeAgentFunctions::ForceRadioSilence( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool silence )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     PHY_RoleInterface_Communications& role = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Communications >();
     if( silence )
         role.ActivateBlackout  ();

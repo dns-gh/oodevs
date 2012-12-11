@@ -143,7 +143,7 @@ void DEC_Decision< T >::UpdateDecision( float duration )
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         HandleUpdateDecisionError( &e );
     }
@@ -232,7 +232,7 @@ void DEC_Decision< T >::LogError( const std::exception* e ) const
 {
     MT_LOG_ERROR_MSG( "Entity " << pEntity_->GetID() << "('" << pEntity_->GetName() << "') : Mission '" << pEntity_->GetOrderManager().GetMissionName() << "' impossible" );
     if( e )
-        MT_LOG_ERROR_MSG( e->what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( *e ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +246,7 @@ void DEC_Decision< T >::StartDefaultBehavior()
     {
         pRefs_->startEvent_( std::string( "BEH_Defaut" ) );
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         // Ignore error if BEH_Defaut doesn't exist
     }
@@ -264,7 +264,7 @@ void DEC_Decision< T >::StopDefaultBehavior()
         if( pRefs_.get() )
             pRefs_->stopEvents_( std::string( "BEH_Defaut" ) );
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         // Ignore error if BEH_Defaut doesn't exist
     }
@@ -297,7 +297,7 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
         pRefs_->stopEvents_( strBehavior );
         pMission_.reset();
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         CleanStateAfterCrash();
     }
@@ -350,7 +350,7 @@ void DEC_Decision< T >::CallbackPerception( int id )
 template< class T >
 MIL_AgentPion& DEC_Decision< T >::GetPion() const
 {
-    throw std::runtime_error( "GetPion cannot be called for this Decision class" );
+    throw MASA_EXCEPTION( "GetPion cannot be called for this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,7 +360,7 @@ MIL_AgentPion& DEC_Decision< T >::GetPion() const
 template< class T >
 MIL_Automate& DEC_Decision< T >::GetAutomate() const
 {
-    throw std::runtime_error( "GetAutomate cannot be called for this Decision class" );
+    throw MASA_EXCEPTION( "GetAutomate cannot be called for this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -380,7 +380,7 @@ unsigned int DEC_Decision< T >::GetID() const
 template< class T >
 boost::shared_ptr< MIL_KnowledgeGroup > DEC_Decision<T>::GetKnowledgeGroup() const
 {
-    throw std::runtime_error( "GetKnowledgeGroup cannot be called for this Decision class" );
+    throw MASA_EXCEPTION( "GetKnowledgeGroup cannot be called for this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +390,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > DEC_Decision<T>::GetKnowledgeGroup() con
 template< class T >
 void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
 {
-    throw std::runtime_error( "StartMissionBehavior cannot be called for this Decision class" );
+    throw MASA_EXCEPTION( "StartMissionBehavior cannot be called for this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,7 +400,7 @@ void DEC_Decision< T >::StartMissionBehavior( const boost::shared_ptr< MIL_Missi
 template< class T >
 void DEC_Decision< T >::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
 {
-    throw std::runtime_error( "StopMissionBehavior cannot be called for this Decision class" );
+    throw MASA_EXCEPTION( "StopMissionBehavior cannot be called for this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -430,7 +430,7 @@ bool DEC_Decision< T >::IsFragOrderAvailable( const MIL_FragOrderType& fragOrder
 template< class T >
 int DEC_Decision< T >::GeteEtatPhaseMission() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -440,7 +440,7 @@ int DEC_Decision< T >::GeteEtatPhaseMission() const
 template< class T >
 void DEC_Decision< T >::SeteEtatPhaseMission( int /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -450,7 +450,7 @@ void DEC_Decision< T >::SeteEtatPhaseMission( int /*value*/ )
 template< class T >
 int DEC_Decision< T >::GeteEtatLima() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -460,7 +460,7 @@ int DEC_Decision< T >::GeteEtatLima() const
 template< class T >
 void DEC_Decision< T >::SeteEtatLima( int /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -470,7 +470,7 @@ void DEC_Decision< T >::SeteEtatLima( int /*value*/ )
 template< class T >
 int DEC_Decision< T >::GeteEtatDec() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -480,7 +480,7 @@ int DEC_Decision< T >::GeteEtatDec() const
 template< class T >
 void DEC_Decision< T >::SeteEtatDec( int /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -490,7 +490,7 @@ void DEC_Decision< T >::SeteEtatDec( int /*value*/ )
 template< class T >
 int DEC_Decision< T >::GeteEtatEchelon() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ int DEC_Decision< T >::GeteEtatEchelon() const
 template< class T >
 void DEC_Decision< T >::SeteEtatEchelon( int /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -510,7 +510,7 @@ void DEC_Decision< T >::SeteEtatEchelon( int /*value*/ )
 template< class T >
 bool DEC_Decision< T >::GetbOrdreDecrocher() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -520,7 +520,7 @@ bool DEC_Decision< T >::GetbOrdreDecrocher() const
 template< class T >
 void DEC_Decision< T >::SetbOrdreDecrocher( bool /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -530,7 +530,7 @@ void DEC_Decision< T >::SetbOrdreDecrocher( bool /*value*/ )
 template< class T >
 bool DEC_Decision< T >::GetbOrdreTenirSurLR() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -540,7 +540,7 @@ bool DEC_Decision< T >::GetbOrdreTenirSurLR() const
 template< class T >
 void DEC_Decision< T >::SetbOrdreTenirSurLR( bool /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -550,7 +550,7 @@ void DEC_Decision< T >::SetbOrdreTenirSurLR( bool /*value*/ )
 template< class T >
 bool DEC_Decision< T >::GetbOrdreTenir() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -560,7 +560,7 @@ bool DEC_Decision< T >::GetbOrdreTenir() const
 template< class T >
 void DEC_Decision< T >::SetbOrdreTenir( bool /*value*/ )
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,7 +570,7 @@ void DEC_Decision< T >::SetbOrdreTenir( bool /*value*/ )
 template< class T >
 std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetPionsWithPC()
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -580,7 +580,7 @@ std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetPionsWithPC()
 template< class T >
 std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetCommunicationPionsWithPC()
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -590,7 +590,7 @@ std::vector< DEC_Decision_ABC* > DEC_Decision< T >::GetCommunicationPionsWithPC(
 template< class T >
 bool DEC_Decision< T >::IsNeutralized() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -600,7 +600,7 @@ bool DEC_Decision< T >::IsNeutralized() const
 template< class T >
 bool DEC_Decision< T >::IsMoving() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -610,7 +610,7 @@ bool DEC_Decision< T >::IsMoving() const
 template< class T >
 bool DEC_Decision< T >::IsContaminated() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -620,7 +620,7 @@ bool DEC_Decision< T >::IsContaminated() const
 template< class T >
 bool DEC_Decision< T >::IsJammed() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -630,7 +630,7 @@ bool DEC_Decision< T >::IsJammed() const
 template< class T >
 bool DEC_Decision< T >::IsInReceptionBlackout() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -640,7 +640,7 @@ bool DEC_Decision< T >::IsInReceptionBlackout() const
 template< class T >
 bool DEC_Decision< T >::IsInEmissionBlackout() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -650,7 +650,7 @@ bool DEC_Decision< T >::IsInEmissionBlackout() const
 template< class T >
 const MT_Vector2D* DEC_Decision< T >::GetPosition() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1034,7 +1034,7 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision< T >::ExtrapolatePosition( const d
 template< class T >
 bool DEC_Decision< T >::IsPC() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1044,7 +1044,7 @@ bool DEC_Decision< T >::IsPC() const
 template< class T >
 bool DEC_Decision< T >::IsTransported() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1054,7 +1054,7 @@ bool DEC_Decision< T >::IsTransported() const
 template< class T >
 bool DEC_Decision< T >::IsFlying() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1064,7 +1064,7 @@ bool DEC_Decision< T >::IsFlying() const
 template< class T >
 double DEC_Decision< T >::GetMajorOperationalState() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1074,7 +1074,7 @@ double DEC_Decision< T >::GetMajorOperationalState() const
 template< class T >
 bool DEC_Decision< T >::IsAutomateEngaged() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1084,7 +1084,7 @@ bool DEC_Decision< T >::IsAutomateEngaged() const
 template< class T >
 bool DEC_Decision< T >::IsDead() const
 {
-    throw std::runtime_error( "Invalid call of this Decision class" );
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
 }
 
 // -----------------------------------------------------------------------------

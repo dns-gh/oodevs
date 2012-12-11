@@ -63,7 +63,7 @@ const MIL_ObjectType_ABC& MIL_ObjectFactory::FindType( const std::string& type )
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
-        throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
+        throw MASA_EXCEPTION( "Unknown object type: " + type );
     return *it->second;
 }
 
@@ -88,7 +88,7 @@ void MIL_ObjectFactory::ReadObjectPrototype( xml::xistream& xis )
     const std::string name( xis.attribute< std::string >( "name", "" ) );
     boost::shared_ptr< ObjectPrototype >& prototype = prototypes_[ type ];
     if( prototype.get() )
-        throw std::runtime_error( __FUNCTION__ " - Object type redefinition: " + type );
+        throw MASA_EXCEPTION( "Object type redefinition: " + type );
     double pointSize = 250.;
     xis >> xml::optional >> xml::attribute( "point-size", pointSize );
     prototype.reset( new ObjectPrototype( name, type, static_cast< unsigned int >( prototypes_.size() ), pointSize ) );
@@ -114,7 +114,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const st
 {
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
-        throw std::runtime_error( __FUNCTION__ " - Unknown object type: " + type );
+        throw MASA_EXCEPTION( "Unknown object type: " + type );
     const MIL_ObjectBuilder_ABC& builder = *it->second;
     Object* object = new Object( builder.GetType(), army, &location, externalIdentifier, name, forcedId );
     builder.Build( *object, sink );
@@ -144,7 +144,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, xml::xis
 
     CIT_Prototypes it = prototypes_.find( type );
     if( it == prototypes_.end() )
-        throw std::runtime_error( __FUNCTION__ " - Unknown object prototype: " + type );
+        throw MASA_EXCEPTION( "Unknown object prototype: " + type );
     TER_Localisation location;
     location.Read( xis );
     const MIL_ObjectBuilder_ABC& builder = *it->second;
@@ -185,7 +185,7 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, const sw
         else
             attributes_->Create( *pObject, message.elem( 4 ) );
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         value = sword::ObjectMagicActionAck::error_invalid_object;
         return 0;

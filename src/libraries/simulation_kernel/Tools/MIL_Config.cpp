@@ -252,9 +252,9 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
                 << xml::end;
         xos << xml::end;
     }
-    catch( xml::exception& e )
+    catch( const xml::exception& e )
     {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot create file '%s'", strFileName.c_str() ), e.what() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot create file '%s'", strFileName.c_str() ), tools::GetExceptionMsg( e ) );
     }
     return MIL_Tools::ComputeCRC( strFileName );
 }

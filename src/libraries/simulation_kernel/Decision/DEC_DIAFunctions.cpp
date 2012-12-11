@@ -26,7 +26,7 @@
 std::string DEC_DIAFunctions::PointToString( MT_Vector2D* p1 )
 {    
     if( !p1 )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     std::stringstream strTmp;
     strTmp << *p1;
     return strTmp.str();
@@ -39,7 +39,7 @@ std::string DEC_DIAFunctions::PointToString( MT_Vector2D* p1 )
 std::string DEC_DIAFunctions::DirectionToString( MT_Vector2D* p1 )
 {
     if( !p1 )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     std::stringstream strTmp;
     strTmp << *p1;
     return strTmp.str();
@@ -52,7 +52,7 @@ std::string DEC_DIAFunctions::DirectionToString( MT_Vector2D* p1 )
 std::string DEC_DIAFunctions::PathToString( DEC_Path_ABC* pPath )
 {
     if( !pPath )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     std::stringstream strTmp;
     strTmp << "0x" << pPath;
     return strTmp.str();
@@ -65,7 +65,7 @@ std::string DEC_DIAFunctions::PathToString( DEC_Path_ABC* pPath )
 void DEC_DIAFunctions::CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     if( !pLocSource.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AppendToParameter( parameter, pLocSource );
 }
 
@@ -88,7 +88,7 @@ void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::sh
 void DEC_DIAFunctions::CopyPathMission( std::vector< boost::shared_ptr< MT_Vector2D > >pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     if( !pMission.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePathConst( pointList ) );
 }
 
@@ -100,11 +100,11 @@ void DEC_DIAFunctions::CopyPathMission( std::vector< boost::shared_ptr< MT_Vecto
 void DEC_DIAFunctions::CopyPoint( MT_Vector2D* pPosSource, boost::shared_ptr< MT_Vector2D > pPosDest )
 {
     if( !pPosSource )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     if( pPosDest )
         (*pPosDest) = (*pPosSource);
     else
-        throw std::runtime_error( "Can't assign a point into a nil variable of lua" );
+        throw MASA_EXCEPTION( "Can't assign a point into a nil variable of lua" );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ void DEC_DIAFunctions::CopyPoint( MT_Vector2D* pPosSource, boost::shared_ptr< MT
 void DEC_DIAFunctions::CopyPointMission( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     if( !pPosSource ||!pMission.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePoint( *pPosSource ) );
 }
 
@@ -125,7 +125,7 @@ void DEC_DIAFunctions::CopyPointMission( MT_Vector2D* pPosSource, boost::shared_
 void DEC_DIAFunctions::CopyPointToListPointMission( boost::shared_ptr< MT_Vector2D > pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     if( !pPosSource || !pMission.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::CreatePath( pPosSource );
     // $$$$ LDC: The list is cleared before adding the point inside...
     pMission->SetParameter( parameter, pParameter );
@@ -139,7 +139,7 @@ void DEC_DIAFunctions::CopyPointToListPointMission( boost::shared_ptr< MT_Vector
 void DEC_DIAFunctions::CopyLocalisation( const TER_Localisation* pLocSource, TER_Localisation* pLocDest )
 {
     if( !pLocSource || !pLocDest )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pLocDest->Reset( *pLocSource );
 }
 
@@ -150,7 +150,7 @@ void DEC_DIAFunctions::CopyLocalisation( const TER_Localisation* pLocSource, TER
 void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisation > pLocation, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     if( !pLocation || !pMission.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::CreateLocation( pLocation );
     pMission->SetParameter( parameter, pParameter );
 }
@@ -162,7 +162,7 @@ void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisat
 void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource )
 {
     if( !pKnowledgeObjectSource || !pMission.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AppendToParameter( parameter, pKnowledgeObjectSource );
 }
 
@@ -173,7 +173,7 @@ void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( boost::s
 void DEC_DIAFunctions::CopyGenObjectToGenObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Gen_Object > pGenObjectSource )
 {
     if( !pGenObjectSource || !pMission.get() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AppendToParameter( parameter, pGenObjectSource );
 }
 

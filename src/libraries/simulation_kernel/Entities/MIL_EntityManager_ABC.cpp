@@ -22,7 +22,7 @@ namespace
 MIL_EntityManager_ABC::MIL_EntityManager_ABC()
 {
     if( singleton_ )
-        throw std::runtime_error( "EntityManager already defined" );
+        throw MASA_EXCEPTION( "EntityManager already defined" );
     singleton_ = this;
 }
 
@@ -42,6 +42,6 @@ MIL_EntityManager_ABC::~MIL_EntityManager_ABC()
 MIL_EntityManager_ABC& MIL_EntityManager_ABC::GetSingleton()
 {
     if( !singleton_ )
-        throw std::runtime_error( "EntityManager not defined" );
+        throw MASA_EXCEPTION( "EntityManager not defined" );
     return *singleton_;
 }

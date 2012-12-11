@@ -85,7 +85,7 @@ void BurnSurfaceAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int
 void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int version ) const
 {
     if( !pObject_ )
-        throw std::runtime_error( __FUNCTION__ ": cannot save unitialized attribute" );
+        throw MASA_EXCEPTION( "cannot save unitialized attribute" );
 
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     unsigned int objectId = pObject_->GetID();

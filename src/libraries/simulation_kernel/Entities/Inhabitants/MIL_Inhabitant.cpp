@@ -280,9 +280,9 @@ void MIL_Inhabitant::UpdateState()
             BOOST_FOREACH( MIL_LivingAreaBlock* block, angryBlocks )
                 block->ManageAngryCrowd( type_, *pArmy_ );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating inhabitant " << GetID() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating inhabitant " << GetID() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -312,9 +312,9 @@ void MIL_Inhabitant::UpdateNetwork()
             msg.Send( NET_Publisher_ABC::Publisher() );
         healthStateChanged_ = false;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating network for inhabitant " << GetID() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating network for inhabitant " << GetID() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -353,7 +353,7 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     const sword::MissionParameter& healthy = msg.parameters().elem( 0 );
     const sword::MissionParameter& wounded = msg.parameters().elem( 1 );
@@ -365,7 +365,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
         healthy.value().Get( 0 ).quantity() < 0 ||
         wounded.value().Get( 0 ).quantity() < 0 ||
         dead.value().Get( 0 ).quantity() < 0 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     nNbrHealthyHumans_ = healthy.value().Get( 0 ).quantity();
     nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
@@ -387,7 +387,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     pLivingArea_->SetAlerted( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }
@@ -399,7 +399,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicActio
 void MIL_Inhabitant::OnReceiveMsgChangeConfinedState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     pLivingArea_->SetConfined( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }

@@ -73,7 +73,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *itChanLocation ) );
     InitializePathKnowledges( points );
     if( points.empty() )
-        throw std::runtime_error( "List of points is empty" );
+        throw MASA_EXCEPTION( "List of points is empty" );
     const MT_Vector2D* pLastPoint = 0;
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
@@ -105,7 +105,7 @@ void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& /*pathP
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
-                    throw std::runtime_error( "Size of path knowledge objects list is invalid" );
+                    throw MASA_EXCEPTION( "Size of path knowledge objects list is invalid" );
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
@@ -155,7 +155,7 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
         profiler_.Start();
     }
     if( !resultList_.empty() )
-        throw std::runtime_error( "List of path points is not empty before running pathfind" );
+        throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
     DEC_Path::Execute( pathfind );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {

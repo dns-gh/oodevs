@@ -75,7 +75,7 @@ void PHY_UrbanAttritionData::ReadModifier( xml::xistream& xis )
         xis.error( "urbanBlock-modifier: value not in [0..1]" );
     const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( materialType );
     if( !material || static_cast< int >( attritionFactors_.size() ) < material->GetId() )
-        throw std::runtime_error( "Error when loading material type: " + materialType );
+        throw MASA_EXCEPTION( "Error when loading material type: " + materialType );
     attritionFactors_[ material->GetId() ] = rFactor;
 }
 
@@ -97,7 +97,7 @@ void PHY_UrbanAttritionData::UpdateGlobalScore()
 double PHY_UrbanAttritionData::GetScore( const PHY_MaterialCompositionType& material ) const
 {
     if( static_cast< int >( attritionFactors_.size() ) < material.GetId() )
-        throw std::runtime_error( "Unregistered material type: " + material.GetName() );
+        throw MASA_EXCEPTION( "Unregistered material type: " + material.GetName() );
     return attritionFactors_[ material.GetId() ];
 }
 
@@ -108,6 +108,6 @@ double PHY_UrbanAttritionData::GetScore( const PHY_MaterialCompositionType& mate
 double PHY_UrbanAttritionData::GetGlobalScore( const PHY_MaterialCompositionType& material )
 {
     if( static_cast< int >( globalAttritionFactors_.size() ) < material.GetId() )
-        throw std::runtime_error( "Unregistered material type: " + material.GetName() );
+        throw MASA_EXCEPTION( "Unregistered material type: " + material.GetName() );
     return globalAttritionFactors_[ material.GetId() ];
 }

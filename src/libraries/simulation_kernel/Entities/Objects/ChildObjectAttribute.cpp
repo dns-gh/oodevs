@@ -69,7 +69,7 @@ void ChildObjectAttribute::Register( MIL_Object_ABC& object ) const
 void ChildObjectAttribute::AddChildObject( MIL_Object_ABC& object )
 {
     if( childObject_ )
-        throw( std::exception( " Detector already registered" ) );
+        throw MASA_EXCEPTION( "Detector already registered." );
     childObject_ = &object;
 }
 

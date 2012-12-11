@@ -45,9 +45,9 @@ void PHY_Actor::UpdateActions()
             (*it).second->Update();
 
         }
-        catch( std::runtime_error& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( "Action failure : " << e.what() );
+            MT_LOG_ERROR_MSG( "Action failure : " << tools::GetExceptionMsg( e ) );
         }
     }
 }

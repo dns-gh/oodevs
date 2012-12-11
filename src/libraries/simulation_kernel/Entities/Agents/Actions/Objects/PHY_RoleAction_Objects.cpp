@@ -804,7 +804,7 @@ double PHY_RoleAction_Objects::GetAgentDotationNumber( MIL_Agent_ABC& pion, cons
 std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObject( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const
 {
     if( !object )
-        throw std::runtime_error( "Invalid DEC_Gen_Object" );
+        throw MASA_EXCEPTION( "Invalid DEC_Gen_Object" );
 
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( object->GetTypeName() );
     const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
@@ -831,7 +831,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
 std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingExistingObject( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const
 {
     if( !pKnowledge )
-        throw std::runtime_error( "Invalid DEC_Knowledge_Object" );
+        throw MASA_EXCEPTION( "Invalid DEC_Knowledge_Object" );
 
     const MIL_ObjectType_ABC& type = pKnowledge->GetType();
     const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();

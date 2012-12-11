@@ -106,7 +106,7 @@ void OccupantAttribute::AddOccupant( const MIL_Agent_ABC& agent )
     if( ! pOccupant_ || pOccupant_ == &agent )
         pOccupant_ = &agent;
     else
-        throw std::exception( "try to use an object already occupied" );
+        throw MASA_EXCEPTION( "try to use an object already occupied" );
 }
 
 // -----------------------------------------------------------------------------

@@ -36,7 +36,7 @@ void MIL_FireClass::ReadFireClasses( xml::xistream& xis )
     xis >> xml::attribute( "name", strName );
     const MIL_FireClass*& pClass = classes_[ strName ];
     if( pClass )
-        throw std::runtime_error( "Fire Class " + strName + " already exists" );
+        throw MASA_EXCEPTION( "Fire Class " + strName + " already exists" );
     pClass = new MIL_FireClass( strName, xis );
 }
 
@@ -124,7 +124,7 @@ void MIL_FireClass::ReadWeatherEffect( xml::xistream& xis )
 
     const weather::PHY_Precipitation* pWeather = weather::PHY_Precipitation::FindPrecipitation( weather );
     if( !pWeather )
-        throw std::runtime_error( "Unknown weather " + weather );
+        throw MASA_EXCEPTION( "Unknown weather " + weather );
 
     weatherEffects_.insert( std::make_pair( pWeather, effect ) );
 }
@@ -277,7 +277,7 @@ const MIL_FireClass* MIL_FireClass::GetDefaultFireClass()
     if( !classes_.empty() )
         return classes_.begin()->second;
     else
-        throw std::runtime_error( "No default MIL_FireClass available" );
+        throw MASA_EXCEPTION( "No default MIL_FireClass available" );
 }
 
 // -----------------------------------------------------------------------------

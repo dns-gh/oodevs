@@ -10,7 +10,7 @@
 #ifndef __NET_AsnException_h_
 #define __NET_AsnException_h_
 
-#include <exception>
+#include <tools/Exception.h>
 
 // =============================================================================
 /** @class  NET_AsnException
@@ -19,25 +19,30 @@
 // Created: NLD 2006-11-13
 // =============================================================================
 template< typename T >
-class NET_AsnException : public std::exception
+class NET_AsnException : public tools::Exception
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NET_AsnException( T nErrorID );
-    virtual ~NET_AsnException();
+             NET_AsnException( T nErrorID, const std::string& file, const std::string& function, const unsigned int line, const std::string& what ) throw()
+                 : tools::Exception( file, function, line, what )
+                 , nErrorID_( nErrorID )
+             {}
+    virtual ~NET_AsnException() throw() {}
     //@}
 
     //! @name Operations
     //@{
-            T           GetErrorID() const;
-    virtual const char* what      () const;
+    T GetErrorID() const throw() { return nErrorID_; }
     //@}
 
 private:
+    //! @name Member data
+    //@{
     T nErrorID_;
+    //@}
 };
 
-#include "NET_AsnException.inl"
+#define MASA_EXCEPTION_ASN( ErrorIdType, ErrorId ) NET_AsnException< ErrorIdType >( ErrorId, __FILE__, __FUNCTION__, __LINE__, "Invalid parameter in ASN message" )
 
 #endif // __NET_AsnException_h_

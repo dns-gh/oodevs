@@ -107,7 +107,7 @@ const std::string& MIL_AutomateMissionType::GetDIABehavior( Phase phase ) const
     {
         case ePhaseMRT : return strDIAMrtBehavior_;
         case ePhaseCDT : return strDIACdtBehavior_;
-        default: throw std::runtime_error( __FUNCTION__ " invalid behavior phase" );
+        default: throw MASA_EXCEPTION( "Invalid behavior phase." );
     }
 }
 

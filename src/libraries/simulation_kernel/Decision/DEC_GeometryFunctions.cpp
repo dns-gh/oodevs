@@ -71,9 +71,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter(
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     if( std::find( callerAutomate.GetPions().begin(), callerAutomate.GetPions().end(), &pPion->GetPion() ) == callerAutomate.GetPions().end() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return ComputeDestPoint( pPion->GetPion() );
 }
 
@@ -124,7 +124,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePoint()
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared_ptr< MT_Vector2D > point )
 {
     if( !point )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
     boost::shared_ptr< MT_Vector2D > pVect = boost::make_shared< MT_Vector2D >( *point );
     return pVect;
 }
@@ -136,7 +136,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateDirection( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest )
 {
     if( !pPosSource || !pPosDest )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     if( *pPosSource == *pPosDest )
@@ -160,7 +160,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateDirection( MT_Vect
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateVector( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest )
 {
     if( !pPosSource || !pPosDest )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D* pVect = new MT_Vector2D( (*pPosDest) - (*pPosSource) );
@@ -175,7 +175,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateVector( MT_Vector2
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise )
 {
     if( !pDir || !( MT_IsZero( pDir->SquareMagnitude() - 1. ) ) )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( *pDir );
 
@@ -194,7 +194,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
 float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 )
 {
     if( !pos1 || !pos2 )
-        throw std::runtime_error( "Null ptr in compute distance" );
+        throw MASA_EXCEPTION( "Null ptr in compute distance" );
     return (float)pos1->Distance( *pos2 );
 }
 
@@ -205,7 +205,7 @@ float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > p
 void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > pDir )
 {
     if( !pDir )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
     *pDir *= -1.;
 }
 
@@ -216,7 +216,7 @@ void DEC_GeometryFunctions::ReverseDirection( boost::shared_ptr< MT_Vector2D > p
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection( const MT_Vector2D* pDir )
 {
     if( !pDir )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pNewDir = boost::make_shared< MT_Vector2D >( *pDir );
     *pNewDir *= -1.;
@@ -230,7 +230,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection(
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndRotateDirection( const MT_Vector2D* pDir, const double angle )
 {
     if( !pDir )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
 
     boost::shared_ptr< MT_Vector2D > pNewDir = boost::make_shared< MT_Vector2D >( *pDir );
     const double rAngle = - ( angle * MT_PI / 180. );
@@ -260,7 +260,7 @@ bool DEC_GeometryFunctions::CompareLocalisations( TER_Localisation* pLocalisatio
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, double rDistMaxBtwPoints )
 {
     if( pions.empty() || !pLocalisation || !pDirDanger || !(*pions.begin()) )
-        throw std::runtime_error( "Invalid arguments to ComputeLocalisationPointsForPionsInFuseau" );
+        throw MASA_EXCEPTION( "Invalid arguments to ComputeLocalisationPointsForPionsInFuseau" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
 
@@ -270,7 +270,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     for( ++itPion; itPion != pions.end(); ++itPion )
     {
         if( !(*itPion) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         if( ( **itPion ).GetPion().GetOrderManager().GetFuseau() != fuseau ) //$$$ beark
             return result;
     }
@@ -369,7 +369,7 @@ bool DEC_GeometryFunctions::IsPointInsideLocalisation( MT_Vector2D* pPoint, TER_
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertPointToLocalisation( const MT_Vector2D* pPos )
 {
     if( !pPos )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
     boost::shared_ptr< TER_Localisation > pLoc = boost::make_shared< TER_Localisation >();
     pLoc->Reset( *pPos );
     return pLoc;
@@ -382,7 +382,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertPointToLocal
 double DEC_GeometryFunctions::Distance( const MT_Vector2D* p1, const MT_Vector2D* p2 )
 {
     if( !p1 || !p2 )
-        throw std::runtime_error( "Computing distance with null point" );
+        throw MASA_EXCEPTION( "Computing distance with null point" );
     return MIL_Tools::ConvertSimToMeter( p1->Distance( *p2 ) );
 }
 
@@ -393,7 +393,7 @@ double DEC_GeometryFunctions::Distance( const MT_Vector2D* p1, const MT_Vector2D
 double DEC_GeometryFunctions::Distance3D( const MT_Vector2D* p1, float altitude1, const MT_Vector2D* p2, float altitude2 )
 {
     if( !p1 || !p2 )
-        throw std::runtime_error( "Computing distance with null point" );
+        throw MASA_EXCEPTION( "Computing distance with null point" );
 
     MT_Vector3D p3d1( p1->rX_, p1->rY_, altitude1 );
     MT_Vector3D p3d2( p2->rX_, p2->rY_, altitude2 );
@@ -407,7 +407,7 @@ double DEC_GeometryFunctions::Distance3D( const MT_Vector2D* p1, float altitude1
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Vector2D* p1, MT_Vector2D* p2, double d )
 {
     if( !p1 || !p2 )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
 
     boost::shared_ptr< MT_Vector2D > res = boost::make_shared< MT_Vector2D >();
     if( (*p1) == (*p2) )
@@ -424,9 +424,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Ve
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirection( MT_Vector2D* p1, MT_Vector2D* p2, double d )
 {
     if( !p1 || !p2 )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
     if( !( MT_IsZero( p2->SquareMagnitude() - 1. ) ) )
-        throw std::runtime_error( "Invalid magnitude" );
+        throw MASA_EXCEPTION( "Invalid magnitude" );
 
     boost::shared_ptr< MT_Vector2D > res = boost::make_shared< MT_Vector2D >();
     *res = *p1 + d * (*p2);
@@ -440,7 +440,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVector( MT_Vector2D* position, MT_Vector2D* offset )
 {
     if( !position || !offset )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
     boost::shared_ptr< MT_Vector2D > res = boost::make_shared< MT_Vector2D >();
     *res = *position + *offset;
     return res;
@@ -453,7 +453,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVecto
 bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 {
     if( !p1 || !p2 )
-        throw std::runtime_error( "Bad pointer given to DEC_Geometrie_PositionsEgales" );
+        throw MASA_EXCEPTION( "Bad pointer given to DEC_Geometrie_PositionsEgales" );
 
     // $$$ JVT : Débile : si il y a besoin d'une "weldvalue" elle doit être prise en compte
     //           directement dans l'objet vecteur et dans ses operateurs ( en l'occurence == )
@@ -469,7 +469,7 @@ bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, double rDist )
 {
     if( pAgentToSupport == 0 )
-        throw std::runtime_error( "Invalid agent" );
+        throw MASA_EXCEPTION( "Invalid agent" );
 
     const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition ();
     const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
@@ -521,7 +521,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, double rDist )
 {
     if( !pAmbushPosition || !pRetreatPosition )
-        throw std::runtime_error( "Invalid position" );;
+        throw MASA_EXCEPTION( "Invalid position" );;
 
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
 
@@ -592,7 +592,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     if( pKnowledgeEnnemy.get() && pKnowledgeEnnemy->IsValid() )
     {
         if( !pObjective )
-            throw std::runtime_error( "Invalid position" );
+            throw MASA_EXCEPTION( "Invalid position" );
 
         double     rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
 
@@ -637,7 +637,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntr
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASAOmni( const MIL_Automate& automat, int positionCount, const MT_Vector2D* center, float radius )
 {
     if( !center )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount > 0 )
     {
@@ -660,7 +660,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASANasse( int positionCount, const MT_Vector2D* center, float angle, float initialDistance, float spacing, const MT_Vector2D* direction )
 {
     if( !direction || !center || !( MT_IsZero( direction->SquareMagnitude() - 1. ) ) )
-        throw std::runtime_error( "direction or center in ComputePosDeploiementASANasse" );
+        throw MASA_EXCEPTION( "direction or center in ComputePosDeploiementASANasse" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount <= 0 )
@@ -698,7 +698,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( int positionCount, const MT_Vector2D* center, float initialDistance, float lineSpacing, float pointSpacing, const MT_Vector2D* direction )
 {
     if( !direction || !center || !( MT_IsZero( direction->SquareMagnitude() - 1. ) ) )
-        throw std::runtime_error( "direction or center in ComputePosDeploiementASADoubleRideau" );
+        throw MASA_EXCEPTION( "direction or center in ComputePosDeploiementASADoubleRideau" );
 
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( positionCount <= 0 )
@@ -767,7 +767,7 @@ float DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( const std::vector< D
     if( selPions.empty() )
         return 0.f;
     if( !pReferencePion )
-        throw std::runtime_error( "Invalid reference unit" );
+        throw MASA_EXCEPTION( "Invalid reference unit" );
 
     // Barycenter of the pions given
     MT_Vector2D vBarycenter;
@@ -802,7 +802,7 @@ DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingFrontAndBack
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionDecisionList.begin(); it != pionDecisionList.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         pions.push_back( &static_cast< DEC_Decision_ABC& >( **it ).GetPion() );
     }
     DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, pions );
@@ -820,7 +820,7 @@ DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingFrontAndBack
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionDecisionList.begin(); it != pionDecisionList.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         pions.push_back( &static_cast< DEC_Decision_ABC& >( **it ).GetPion() );
     }
     DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( pAutomate->GetAutomate(), pions );
@@ -838,7 +838,7 @@ DEC_FrontAndBackLinesComputer* DEC_GeometryFunctions::StartComputingAutomatFront
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automatDecisionList.begin(); it != automatDecisionList.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         automats.push_back( &static_cast< DEC_Decision_ABC& >( **it ).GetAutomate() );
     }
     DEC_FrontAndBackLinesComputer* pComputer = new DEC_FrontAndBackLinesComputer( callerAutomate, automats );
@@ -861,7 +861,7 @@ void DEC_GeometryFunctions::StopComputingFrontAndBackLines( DEC_FrontAndBackLine
 float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion )
 {
     if( !pComputer || !pPion )
-        throw std::runtime_error( "Invalid argument to ComputeDistanceFromFrontLine" );
+        throw MASA_EXCEPTION( "Invalid argument to ComputeDistanceFromFrontLine" );
 
     double rDist = 0;
     rDist = pComputer->ComputeDistanceFromFrontLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -876,7 +876,7 @@ float DEC_GeometryFunctions::ComputeDistanceFromFrontLine( DEC_FrontAndBackLines
 float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate )
 {
     if( !pComputer || !pAutomate )
-        throw std::runtime_error( "Invalid argument to ComputeDistanceAutomatFromFrontLine" );
+        throw MASA_EXCEPTION( "Invalid argument to ComputeDistanceAutomatFromFrontLine" );
 
     double rDist = 0;
     MT_Vector2D barycenter;
@@ -892,7 +892,7 @@ float DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine( DEC_FrontAndBa
 float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pPion )
 {
     if( !pComputer || !pPion )
-        throw std::runtime_error( "Invalid argument to ComputeDistanceFromBackLine" );
+        throw MASA_EXCEPTION( "Invalid argument to ComputeDistanceFromBackLine" );
 
     double rDist = 0;
     rDist = pComputer->ComputeDistanceFromBackLine( pPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -907,7 +907,7 @@ float DEC_GeometryFunctions::ComputeDistanceFromBackLine( DEC_FrontAndBackLinesC
 float DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine( const MIL_Automate& /*callerAutomate*/, DEC_FrontAndBackLinesComputer* pComputer, DEC_Decision_ABC* pAutomate )
 {
     if( !pComputer || !pAutomate )
-        throw std::runtime_error( "Invalid argument to ComputeDistanceAutomatFromBackLine" );
+        throw MASA_EXCEPTION( "Invalid argument to ComputeDistanceAutomatFromBackLine" );
     double rDist = 0;
     MT_Vector2D barycenter;
     if( pAutomate->GetAutomate().GetAlivePionsBarycenter( barycenter ) )
@@ -957,9 +957,7 @@ unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& l
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, double rSectionLength )
 {
     if( localisation.GetType() != TER_Localisation::ePolygon )
-        throw std::runtime_error(
-            "SplitLocalisation expects an input polygon not a " +
-                localisation.GetTypeString() );
+        throw MASA_EXCEPTION( "SplitLocalisation expects an input polygon not a " + localisation.GetTypeString() );
 
     T_LocalisationPtrVector splitLocVector;
     if( rSectionLength == 0 || vDirection.SquareMagnitude() == 0. )
@@ -995,7 +993,7 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBarycenter( TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > pBarycenter = boost::make_shared< MT_Vector2D >( MT_ComputeBarycenter( pLocalisation->GetPoints() ) );
     assert( TER_World::GetWorld().IsValidPosition( *pBarycenter ) );
     return pBarycenter;
@@ -1028,7 +1026,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUr
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "Compute barycenter of null position" );
+        throw MASA_EXCEPTION( "Compute barycenter of null position" );
     boost::shared_ptr< MT_Vector2D > pBarycenter = boost::make_shared< MT_Vector2D >( MT_ComputeBarycenter( pLocalisation->GetPoints() ) );
     if( pBarycenter.get() )
     {
@@ -1154,7 +1152,7 @@ bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 double DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetArea() );
 }
 
@@ -1165,7 +1163,7 @@ double DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( const MT_Vector2D* position, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
@@ -1182,7 +1180,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( co
 double DEC_GeometryFunctions::ComputeAreaDiameter( TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     return MIL_Tools::ConvertSimToMeterSquare( pLocalisation->GetLength() );
 }
 
@@ -1205,7 +1203,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
         for( std::vector< MT_Vector2D* >::const_iterator it = selection.begin(); it != selection.end(); ++it )
         {
             if( !(*it) )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             *pResult += *(*it);
         }
 
@@ -1252,7 +1250,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBar
 DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection )
 {
     if( !pDirection )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
     const MT_Line     support( MT_Vector2D( 0., 0. ), *pDirection );
     DEC_Decision_ABC* pResult = 0;
     double          rSquareDistResult = -1.;
@@ -1261,7 +1259,7 @@ DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC
     {
         DEC_Decision_ABC* pKnow = *it;
         if( !pKnow )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
 
         MT_Vector2D vProjectedPoint;
         double    rSquareDist;
@@ -1286,7 +1284,7 @@ DEC_Decision_ABC* DEC_GeometryFunctions::GetFrontestPion( const std::vector< DEC
 DEC_Decision_ABC* DEC_GeometryFunctions::ComputeBackestAgent( const std::vector< DEC_Decision_ABC* >& pions, const MT_Vector2D* pDirection )
 {
     if( !pDirection )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
     MT_Vector2D vNewDirection = *pDirection;
     vNewDirection *= -1.;
     return GetFrontestPion( pions, &vNewDirection );
@@ -1306,12 +1304,12 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
         return result;
     }
     if( !pDirection )
-        throw std::runtime_error( "Invalid direction" );
+        throw MASA_EXCEPTION( "Invalid direction" );
 
     // calcul de la première ligne de support ( perpendiculaire à la direction passant par le pion le plus avancé )
     const DEC_Decision_ABC* pFrontestPion = GetFrontestPion( pions, pDirection );
     if( !pFrontestPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const MT_Vector2D& vFrontestPionPosition = pFrontestPion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Droite support1( vFrontestPionPosition, vFrontestPionPosition + pDirection->Rotated90() );
 
@@ -1320,7 +1318,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pions.begin(); it != pions.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         vOrigin += ( *it )->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     }
     vOrigin /= (double)pions.size();
@@ -1342,7 +1340,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeCoverPosition( co
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius )
 {    
     if( !pCenter )
-        throw std::runtime_error( "Invalid center" );
+        throw MASA_EXCEPTION( "Invalid center" );
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 1. );
     pResult->Rotate( MIL_Random::rand_io( 0., 2. * MT_PI ) );
     *pResult *= ( MIL_Tools::ConvertMeterToSim( radius ) );
@@ -1359,7 +1357,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
 {
     const double rRadius_ = MIL_Tools::ConvertMeterToSim( radius );
     if( !pCenter )
-        throw std::runtime_error( "Invalid center" );
+        throw MASA_EXCEPTION( "Invalid center" );
 
     // retrieve a random position in the circle (vCenter_,rRadius_)
     const double rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
@@ -1380,7 +1378,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone( const TER_Localisation* location )
 {
     if( !location )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     const MT_Rect& rect = location->GetBoundingBox();
     double xMin = rect.GetLeft();
     double xMax = rect.GetRight();
@@ -1442,7 +1440,7 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& /*caller*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, double rSpeed )
 {
     if( !pInterceptingPosition )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MT_Vector2D > point;
     if( pKnowledge && pKnowledge->IsValid() )
     {
@@ -1461,7 +1459,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition(
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateCircleLocalisation( const MT_Vector2D* pCenter, const double rRadius )
 {
     if( !pCenter )
-        throw std::runtime_error( "Invalid center" );
+        throw MASA_EXCEPTION( "Invalid center" );
     boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( *pCenter, rRadius );
     return pResult;
 }
@@ -1473,7 +1471,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateCircleLocalis
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLineLocalisation( const MT_Vector2D* pPoint1, const MT_Vector2D* pPoint2 )
 {
     if( !pPoint1 || !pPoint2 )
-        throw std::runtime_error( "Invalid position" );
+        throw MASA_EXCEPTION( "Invalid position" );
     T_PointVector pointVector;
     pointVector.push_back( *pPoint1 );
     pointVector.push_back( *pPoint2 );
@@ -1491,7 +1489,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolylineLocal
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         pointsVector.push_back( **it );
     }
     boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( TER_Localisation::eLine, pointsVector );
@@ -1508,7 +1506,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocali
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         pointsVector.push_back( **it );
     }
     boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, pointsVector );
@@ -1522,7 +1520,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocali
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalisation( TER_Localisation* location, double length )
 {    
     if( !location )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( *location );
     pResult->Scale( length );
     return pResult;
@@ -1535,7 +1533,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalis
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocalisationPoints( TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     const std::vector< MT_Vector2D >& points = pLocalisation->GetPoints();
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
@@ -1554,7 +1552,7 @@ namespace
         for( std::vector< DEC_Decision_ABC* >::const_iterator itC = coordinatedPions.begin(); itC != coordinatedPions.end(); ++itC )
         {
             if( !(*itC) )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             const MT_Vector2D& vPosTmp = (**itC).GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
             if( vPosToTest.Distance( vPosTmp ) <= rMinDist )
                 return true;
@@ -1566,7 +1564,7 @@ namespace
 std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( DEC_Decision_ABC* pion, const std::vector< DEC_Decision_ABC* >& unCoordinatedPions, float minDist )
 {
     if( !pion )
-        throw std::runtime_error( "Invalid unit" );
+        throw MASA_EXCEPTION( "Invalid unit" );
     const double rMinDist = MIL_Tools::ConvertMeterToSim( minDist );
     std::vector< DEC_Decision_ABC* > notCoordinatedPions( unCoordinatedPions );
     std::vector< DEC_Decision_ABC* > coordinatedPions;
@@ -1579,7 +1577,7 @@ std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( 
         for( std::vector< DEC_Decision_ABC* >::iterator itNC = notCoordinatedPions.begin(); itNC != notCoordinatedPions.end(); )
         {
             if( !(*itNC) )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             const MT_Vector2D& vPosToTest = (**itNC).GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
             if( ::IsPionCoordinated( vPosToTest, coordinatedPions, rMinDist ) )
             {
@@ -1635,7 +1633,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
         for( std::vector< MT_Vector2D* >::const_iterator it = listPoints.begin(); it != listPoints.end(); ++it )
         {
             if( !(*it) )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             points.push_back( **it );
         }
         MT_Polyline polyLine( points );
@@ -1753,7 +1751,7 @@ std::vector< MIL_Fuseau* > DEC_GeometryFunctions::SortFuseauxAccordingToTerrainO
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertFuseauToLocalisation( const MIL_Fuseau* pFuseau )
 {
     if( !pFuseau )
-        throw std::runtime_error( "Invalid fuseau" );
+        throw MASA_EXCEPTION( "Invalid fuseau" );
 
     boost::shared_ptr< TER_Localisation > pLocalisation = boost::make_shared< TER_Localisation >( *pFuseau );
     return pLocalisation;
@@ -1771,7 +1769,7 @@ MT_Vector2D DEC_GeometryFunctions::_ComputeAutomatesBarycenter( const std::vecto
     {
         MT_Vector2D tmp;
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         if( ( **it ).GetAutomate().GetAlivePionsBarycenter( tmp ) )
         {
             barycenter += tmp;
@@ -1794,14 +1792,14 @@ DEC_Objective* DEC_GeometryFunctions::GetNextObjectiveInFuseau( const MIL_Fuseau
     if( pFuseau )
     {
         if( !pRefPoint )
-            throw std::runtime_error( "Invalid position" );
+            throw MASA_EXCEPTION( "Invalid position" );
         double rDist = std::numeric_limits< double >::max();
 
         for( std::vector< DEC_Objective* >::const_iterator it = objectives.begin(); it != objectives.end(); ++it )
         {
             DEC_Objective* pObjective = *it;
             if( !pObjective )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             if( !pObjective->IsFlagged() && pFuseau->IsInside( pObjective->ComputerBarycenter() ) )
             {
                 const double rTmp = pFuseau->ComputeAverageDistanceFromObjective( *pObjective, *pRefPoint );
@@ -1855,7 +1853,7 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
 double DEC_GeometryFunctions::ComputeAdvanceAlongFuseau( MIL_Automate& callerAutomate, DEC_Decision_ABC* pion )
 {
     if( !pion )
-        throw std::runtime_error( "Invalid unit" );
+        throw MASA_EXCEPTION( "Invalid unit" );
     MT_Vector2D position = pion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( position );
 }
@@ -1889,7 +1887,7 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat( MIL_Auto
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetPointAlongFuseau( const MIL_Fuseau* pFuseau, double advance )
 {
     if( !pFuseau )
-        throw std::runtime_error( "Invalid fuseau" );
+        throw MASA_EXCEPTION( "Invalid fuseau" );
     return boost::make_shared< MT_Vector2D >( pFuseau->GetPositionAtAdvance( advance ) );
 }
 
@@ -1920,7 +1918,7 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
             for( MIL_LimaOrder::CIT_LimaFunctions fit = functions.begin(); fit != functions.end(); ++fit )
             {
                 if( !(*fit) )
-                    throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                    throw MASA_EXCEPTION( "invalid parameter." );
                 if( static_cast< int >( ( *fit )->GetID() ) == limaType )
                 {
                     std::vector< MT_Vector2D > nextPoints;
@@ -1950,14 +1948,14 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
 float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau, const std::vector< DEC_Decision_ABC* >& automates, float rDistanceFromScheduled, int nSchedule )
 {
     if( !pFuseau )
-        throw std::runtime_error( "Invalid fuseau" );
+        throw MASA_EXCEPTION( "Invalid fuseau" );
 
     // Calcul vitesse moyenne de l'automate
     double rSpeed = std::numeric_limits< double >::max();
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automates.begin(); it != automates.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         const MIL_Automate& automate = ( **it ).GetAutomate();
         rSpeed = std::min( rSpeed, automate.GetAlivePionsMaxSpeed() );
     }
@@ -1987,7 +1985,7 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const TER_Localisation* localisation )
 {    
     if( !localisation )
-        throw std::runtime_error( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location" );
     boost::shared_ptr< MT_Vector2D > result;
     result.reset( new MT_Vector2D( localisation->ComputeBarycenter() ) );
     return result;
@@ -2001,7 +1999,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeBarycenter( const
 double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 {
     if( !pFuseau )
-        throw std::runtime_error( "Invalid fuseau" );
+        throw MASA_EXCEPTION( "Invalid fuseau" );
     return pFuseau->GetWidth();
 }
 
@@ -2012,6 +2010,6 @@ double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 bool DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint )
 {
     if( !pFuseau )
-        throw std::runtime_error( "Invalid fuseau" );
+        throw MASA_EXCEPTION( "Invalid fuseau" );
     return pFuseau->IsInside( *pPoint );
 }

@@ -28,7 +28,7 @@
 std::string DEC_ObjectFunctions::GetGenObjectType( const DEC_Gen_Object* object)
 {
     if( !object )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return object->GetTypeName();
 }
 
@@ -50,7 +50,7 @@ unsigned int DEC_ObjectFunctions::GetGenObjectExternalIdentifier( const DEC_Gen_
 bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* object )
 {
     if( !object )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return object->GetObstacleType() == sword::ObstacleType_DemolitionTargetType_reserved;
 }
 
@@ -61,7 +61,7 @@ bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* ob
 DEC_Decision_ABC* DEC_ObjectFunctions::GetGenObjectTC2( const DEC_Gen_Object* object )
 {
     if( !object )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     DEC_Decision_ABC* dec = object->GetTC2() ? const_cast< DEC_Decision_ABC* >( &object->GetTC2()->GetDecision() ) : (DEC_Decision_ABC*)0;
     return dec;
 }
@@ -106,7 +106,7 @@ std::string DEC_ObjectFunctions::ConvertTypeObjectToString( int id )
 const TER_Localisation& DEC_ObjectFunctions::GetGenObjectLocalisation( boost::shared_ptr< DEC_Gen_Object > knowledgeId )
 {
     if( !knowledgeId )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return knowledgeId->GetLocalisation();
 }
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ const TER_Localisation& DEC_ObjectFunctions::GetGenObjectLocalisation( boost::sh
 const TER_Localisation& DEC_ObjectFunctions::GetObjectKnowledgeLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pKnowledge->GetLocalisation();
 }
 

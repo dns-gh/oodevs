@@ -29,10 +29,10 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis, const M
 
     const MIL_MedicalTreatmentType*& pType = types_[ name ];
     if( pType )
-        throw std::runtime_error( "Medical Treatment of Type " + name + " already exists" );
+        throw MASA_EXCEPTION( "Medical Treatment of Type " + name + " already exists" );
     pType = new MIL_MedicalTreatmentType( name, xis, time );
     if( ! ids.insert( pType->GetID() ).second )
-        throw std::runtime_error( "Medical treatment type id of " + pType->GetName() + " already exists" );
+        throw MASA_EXCEPTION( "Medical treatment type id of " + pType->GetName() + " already exists" );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ namespace
             return MIL_MedicalTreatmentType::eNone;
         if( category == "Dead" )
             return MIL_MedicalTreatmentType::eDead;
-        throw std::runtime_error( "Unknown patient category: " + category );
+        throw MASA_EXCEPTION( "Unknown patient category: " + category );
     }
 }
 
@@ -219,7 +219,7 @@ float MIL_MedicalTreatmentType::GetTreatmentTime( int injuryCategory ) const
     if( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].treatmentTime_;
     else
-        throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
+        throw MASA_EXCEPTION( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ float MIL_MedicalTreatmentType::GetHospitalisationTime( int injuryCategory ) con
     if( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].hospitalisationTime_;
     else
-        throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
+        throw MASA_EXCEPTION( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +245,7 @@ float MIL_MedicalTreatmentType::GetLifeExpectancy( E_InjuryCategories injuryCate
     if( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].lifeExpectancy_;
     else
-        throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
+        throw MASA_EXCEPTION( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
 }
 
 // -----------------------------------------------------------------------------
@@ -258,5 +258,5 @@ unsigned int MIL_MedicalTreatmentType::GetInjuryThreshold( E_InjuryCategories in
     if( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].injuryThreshold_;
     else
-        throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
+        throw MASA_EXCEPTION( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
 }

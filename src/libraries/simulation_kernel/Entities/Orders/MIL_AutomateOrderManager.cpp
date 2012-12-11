@@ -54,13 +54,13 @@ void MIL_AutomateOrderManager::OnReceiveMission( const sword::AutomatOrder& asnM
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( !automate_.IsEngaged() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
     if( automate_.IsSurrendered() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_surrendered );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_surrendered );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( *pMissionType, automate_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
@@ -82,14 +82,14 @@ void MIL_AutomateOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type
 void MIL_AutomateOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
     if( automate_.IsSurrendered() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_surrendered );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_surrendered );
     if( !automate_.IsEngaged() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_frag_order );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_frag_order );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
     DEC_Representations& representation = automate_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, automate_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );

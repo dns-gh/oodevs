@@ -475,7 +475,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding( T_KnowledgePopu
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulation( **it );
         if( !pKnowledge )
-            throw std::runtime_error( __FUNCTION__ " population knowledge not found." );
+            throw MASA_EXCEPTION( "Population knowledge not found." );
         else
             container.push_back( pKnowledge->GetID() );
     }

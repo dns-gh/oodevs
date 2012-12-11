@@ -52,7 +52,7 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
     propagationAngle_ *= static_cast< unsigned int >( MT_PI / 180. );
     for( auto it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
-            throw std::runtime_error( "NBC agent id of " + it->second->GetName() + " already exists" );
+            throw MASA_EXCEPTION( "NBC agent id of " + it->second->GetName() + " already exists" );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void MIL_NBCType::ReadAgent( xml::xistream& xis )
     xis >> xml::attribute( "name", strName );
     const MIL_NBCType*& pAgent = nbcAgentTypes_[ strName ];
     if( pAgent )
-        throw std::runtime_error( "NBC agent " + strName + " already exists" );
+        throw MASA_EXCEPTION( "NBC agent " + strName + " already exists" );
     pAgent = new MIL_NBCType( strName, xis );
 }
 

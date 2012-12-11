@@ -436,7 +436,7 @@ void MIL_BurningCells::finalizeLoad( MIL_EntityManager& entityManager )
     {
         MIL_Object_ABC* pObject = entityManager.FindObject( it->first );
         if( !pObject )
-            throw std::runtime_error( __FUNCTION__ ": cannot find object with id " + boost::lexical_cast< std::string >( it->first ) );
+            throw MASA_EXCEPTION( "cannot find object with id " + boost::lexical_cast< std::string >( it->first ) );
 
         BurningCellsVector& cells = it->second;
         for( BurningCellsVector::iterator itCell = cells.begin(); itCell != cells.end(); ++itCell )

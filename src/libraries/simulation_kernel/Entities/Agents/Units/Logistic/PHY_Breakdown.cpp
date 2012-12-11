@@ -23,7 +23,7 @@ PHY_Breakdown::PHY_Breakdown( const PHY_BreakdownType* type )
     , nRepairTime_( type ? type->ChooseARepairTime() : 0 )
 {
     if( !pType_ )
-        throw std::runtime_error( "No breakdown type" );
+        throw MASA_EXCEPTION( "No breakdown type" );
 }
 
 // -----------------------------------------------------------------------------

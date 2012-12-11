@@ -72,15 +72,15 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , mining_            ( msg.has_mining() ? msg.mining() : false )
 {
     if( type_.empty() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     SetLocationSize( resolver, type_, localisation_ );
     if( msg.combat_train().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
         if( !pTC2_ )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     }
 }
 
@@ -104,15 +104,15 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
     , mining_            ( msg.has_mining() ? msg.mining() : false )
 {
     if( type_.empty() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     SetLocationSize( resolver, type_, localisation_ );
     if( msg.combat_train().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
         if( !pTC2_ )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     }
 }
 
@@ -135,7 +135,7 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, TER_Localisation* location, bo
     , mining_            ( false )
 {
     if( type_.empty() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

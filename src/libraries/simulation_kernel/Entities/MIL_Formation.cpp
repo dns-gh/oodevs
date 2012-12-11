@@ -87,12 +87,12 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
-        throw std::runtime_error( "Unknown level" );
+        throw MASA_EXCEPTION( "Unknown level" );
     if( logLevelStr.empty() )
         logLevelStr = PHY_LogisticLevel::none_.GetName();
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !logLevel )
-        throw std::runtime_error( "Invalid logistic level" );
+        throw MASA_EXCEPTION( "Invalid logistic level" );
     if( *logLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
@@ -158,9 +158,9 @@ void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC&
     {
         automateFactory.Create( xis, *this );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

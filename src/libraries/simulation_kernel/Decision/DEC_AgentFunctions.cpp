@@ -252,7 +252,7 @@ bool DEC_AgentFunctions::IsPC( const MIL_Agent_ABC& callerAgent )
 bool DEC_AgentFunctions::CanPerformHealthEvacuation( const DEC_Decision_ABC* agent )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in DEC_AgentFunctions::CanPerformHealthEvacuation" );
+        throw MASA_EXCEPTION( "Invalid pion in DEC_AgentFunctions::CanPerformHealthEvacuation" );
 
     const PHY_RolePion_Composantes& pComposantes = agent->GetPion().GetRole< PHY_RolePion_Composantes >();
     return pComposantes.CanEvacuateCasualties();
@@ -310,7 +310,7 @@ int DEC_AgentFunctions::GetNbcSuitLevel( const MIL_Agent_ABC& callerAgent )
 boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetAgentPositionPtr( DEC_Decision_ABC* brain )
 {
     if( !brain )
-        throw std::runtime_error( "Invalid parameter passed to DEC_AgentFunctions::GetAgentPositionPtr" );
+        throw MASA_EXCEPTION( "Invalid parameter passed to DEC_AgentFunctions::GetAgentPositionPtr" );
     return brain->GetPion().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
 }
 
@@ -331,7 +331,7 @@ float DEC_AgentFunctions::GetIdentificationDistance( MIL_Agent_ABC& callerAgent 
 {
     const PHY_Composante_ABC* majorComposante = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante();
     if( !majorComposante )
-        throw std::runtime_error( "Unit has no major component" );
+        throw MASA_EXCEPTION( "Unit has no major component" );
     return majorComposante->GetIdentificationMaxRange();
 }
 
@@ -343,7 +343,7 @@ float DEC_AgentFunctions::GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent 
 {
     const PHY_Composante_ABC* majorComposante = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante();
     if( !majorComposante )
-        throw std::runtime_error( "Unit has no major component" );
+        throw MASA_EXCEPTION( "Unit has no major component" );
     return majorComposante->GetReconnoissanceMaxRange();
 }
 
@@ -737,7 +737,7 @@ bool DEC_AgentFunctions::RelievePion( MIL_Agent_ABC& callerAgent, const DEC_Deci
 bool DEC_AgentFunctions::CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pAgentToRelieve )
 {
     if( !pAgentToRelieve )
-        throw std::runtime_error( "Invalid pion in DEC_AgentFunctions::CanRelievePion" );
+        throw MASA_EXCEPTION( "Invalid pion in DEC_AgentFunctions::CanRelievePion" );
     return callerAgent.GetOrderManager().CanRelievePion( pAgentToRelieve->GetPion() );
 }
 
@@ -793,7 +793,7 @@ DEC_Decision_ABC* DEC_AgentFunctions::GetPionPC( const MIL_Agent_ABC& callerAgen
 DEC_Decision_ABC* DEC_AgentFunctions::GetPionPCOfAutomate( const DEC_Decision_ABC* automat )
 {
     if( !automat )
-        throw std::runtime_error( "Invalid automat in DEC_AgentFunctions::GetPionPCOfAutomate" );
+        throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::GetPionPCOfAutomate" );
     return DEC_AutomateFunctions::GetPionPC( automat->GetAutomate() );
 }
 
@@ -804,7 +804,7 @@ DEC_Decision_ABC* DEC_AgentFunctions::GetPionPCOfAutomate( const DEC_Decision_AB
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPCOfAutomate( const DEC_Decision_ABC* automat )
 {
     if( !automat )
-        throw std::runtime_error( "Invalid automat in DEC_AgentFunctions::GetPionsWithoutPCOfAutomate" );
+        throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::GetPionsWithoutPCOfAutomate" );
     return DEC_AutomateFunctions::GetPionsWithoutPC( automat->GetAutomate() );
 }
 
@@ -815,7 +815,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPCOfAutomate
 bool DEC_AgentFunctions::ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
 {
     if( !automat )
-        throw std::runtime_error( "Invalid automat in DEC_AgentFunctions::" );
+        throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::" );
     if( automat->GetAutomate().GetArmy() == callerAgent.GetArmy() )
     {
         callerAgent.ChangeSuperior( automat->GetAutomate() );
@@ -1111,7 +1111,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( const b
 boost::shared_ptr< MIL_Mission_ABC > DEC_AgentFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid pion for GetMission" );
+        throw MASA_EXCEPTION( "Invalid pion for GetMission" );
     return pAgent->GetMission();
 }
 
@@ -1131,7 +1131,7 @@ bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent )
 void DEC_AgentFunctions::SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid pion for SetMission" );
+        throw MASA_EXCEPTION( "Invalid pion for SetMission" );
     pAgent->SetMission( pMission );
 }
 
@@ -1206,7 +1206,7 @@ bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_D
 double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& /*callerAgent*/, const DEC_Decision_ABC* pPion  )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid pion in GetFuelDotationNumber" );
+        throw MASA_EXCEPTION( "Invalid pion in GetFuelDotationNumber" );
     return pPion->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetFuelDotationNumber();
 }
 
@@ -1313,7 +1313,7 @@ void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, co
 std::string DEC_AgentFunctions::GetMilPionType( DEC_Decision_ABC* pion )
 {
     if( !pion )
-        throw std::runtime_error( "Invalid pion in GetMilPionType" );
+        throw MASA_EXCEPTION( "Invalid pion in GetMilPionType" );
     return pion->GetPion().GetType().GetMilPionType();
 }
 
@@ -1324,7 +1324,7 @@ std::string DEC_AgentFunctions::GetMilPionType( DEC_Decision_ABC* pion )
 std::string DEC_AgentFunctions::GetMilPionName( DEC_Decision_ABC* pion )
 {
     if( !pion )
-        throw std::runtime_error( "Invalid pion in GetMilPionName" );
+        throw MASA_EXCEPTION( "Invalid pion in GetMilPionName" );
     return pion->GetPion().GetType().GetName();
 }
 
@@ -1345,7 +1345,7 @@ double DEC_AgentFunctions::GetRapForLocalAgent( const DEC_Decision_ABC* agent )
 double DEC_AgentFunctions::GetCurrentSpeed( const DEC_Decision_ABC* agent )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in GetCurrentSpeed" );
+        throw MASA_EXCEPTION( "Invalid pion in GetCurrentSpeed" );
     const PHY_RoleInterface_Location& roleLocation = agent->GetPion().GetRole< PHY_RoleInterface_Location >();
     return roleLocation.GetCurrentSpeed();
 }
@@ -1366,7 +1366,7 @@ bool DEC_AgentFunctions::AgentCanConstructObjectWithLoaded( const DEC_Decision_A
 bool DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithLoaded" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanConstructObjectWithLoaded" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, true );
 }
 
@@ -1478,7 +1478,7 @@ bool DEC_AgentFunctions::AgentCanExtinguish( const MIL_Agent_ABC& callerAgent, b
 bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* agent, const std::string& type )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentHasDotationForBuilding" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentHasDotationForBuilding" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent->GetPion(), true );
 }
 
@@ -1489,7 +1489,7 @@ bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* ag
 double DEC_AgentFunctions::GetAgentDotationNumber( const DEC_Decision_ABC* agent, const PHY_DotationCategory* dotationCategory )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in GetAgentDotationForBuilding" );
+        throw MASA_EXCEPTION( "Invalid pion in GetAgentDotationForBuilding" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentDotationNumber( agent->GetPion(), dotationCategory );
 }
 
@@ -1500,7 +1500,7 @@ double DEC_AgentFunctions::GetAgentDotationNumber( const DEC_Decision_ABC* agent
 std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForBuildingObject( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuildingObject" );
+        throw MASA_EXCEPTION( "Invalid pion in GetAgentMissingDotationForBuildingObject" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingObject( object, agent->GetPion() );
 }
 
@@ -1511,7 +1511,7 @@ std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMis
 std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForBuildingExistingObject( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuildingExistingObject" );
+        throw MASA_EXCEPTION( "Invalid pion in GetAgentMissingDotationForBuildingExistingObject" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingExistingObject( pKnowledge, agent->GetPion() );
 }
 
@@ -1522,7 +1522,7 @@ std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMis
 std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForMining( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForMining" );
+        throw MASA_EXCEPTION( "Invalid pion in GetAgentMissingDotationForMining" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForMiningObstacle( pKnowledge, agent->GetPion() );
 }
 
@@ -1533,7 +1533,7 @@ std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMis
 bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithOutLoadedWithLocalisation" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanConstructObjectWithOutLoadedWithLocalisation" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, false );
 }
 
@@ -1544,7 +1544,7 @@ bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation( c
 bool DEC_AgentFunctions::AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanMineObject" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanMineObject" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineTypeWithReinforcement( type, localisation );
 }
 
@@ -1555,7 +1555,7 @@ bool DEC_AgentFunctions::AgentCanMineObject( const DEC_Decision_ABC* agent, cons
 bool DEC_AgentFunctions::AgentCanByPassObjectWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanUnmineObject" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanUnmineObject" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassTypeWithReinforcement( type, localisation );
 }
 
@@ -1566,7 +1566,7 @@ bool DEC_AgentFunctions::AgentCanByPassObjectWithLocalisation( const DEC_Decisio
 bool DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentHasDotationForBuildingWithOutLoaded" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentHasDotationForBuildingWithOutLoaded" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent->GetPion(), false );
 }
 
@@ -1577,7 +1577,7 @@ bool DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded( const DEC_Dec
 bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanDestroyObject" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanDestroyObject" );
     return objectKnowledge && objectKnowledge->IsValid() && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
@@ -1597,7 +1597,7 @@ bool DEC_AgentFunctions::AgentCanDestroyObjectType( const DEC_Decision_ABC* agen
 bool DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanDestroyObjectType" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanDestroyObjectType" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyTypeWithReinforcement( type, localisation );
 }
 
@@ -1608,7 +1608,7 @@ bool DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation( const DEC_De
 bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanBypassObject" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentCanBypassObject" );
     return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
@@ -1619,11 +1619,11 @@ bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, bo
 bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeRadar )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentHasTappingRadar" );
+        throw MASA_EXCEPTION( "Invalid pion in AgentHasTappingRadar" );
     PHY_RoleInterface_Perceiver& agentPerceiver = agent->GetPion().GetRole< PHY_RoleInterface_Perceiver >();
     const PHY_RadarClass* radar = PHY_RadarClass::Find( typeRadar );
     if( !radar )
-        throw std::runtime_error( "Invalid radar in AgentHasTappingRadar" );
+        throw MASA_EXCEPTION( "Invalid radar in AgentHasTappingRadar" );
     return !agentPerceiver.GetRadars( *radar ).empty();
 }
 
@@ -1643,9 +1643,9 @@ bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::CreateInstantaneously( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Gen_Object > pGenObject )
 {
     if( !callerAgent || !pGenObject )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &callerAgent->GetPion().GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
     if( !object )
-        throw std::runtime_error( __FUNCTION__ ": unable to create object." );
+        throw MASA_EXCEPTION( "unable to create object." );
     object->Initialize( *pGenObject.get() );
 }

@@ -63,7 +63,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
 {
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
-        throw std::runtime_error( "Unknown population type" );
+        throw MASA_EXCEPTION( "Unknown population type" );
     MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, context );
     Register( population.GetID(), population );
     if( pUrbanObject )

@@ -99,7 +99,7 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
             pAttribute->Build( 1. );
         pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         MT_LOG_ERROR_MSG( "Création de l'objet de type" << objectType_ << "impossible" );
     }

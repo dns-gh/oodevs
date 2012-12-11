@@ -52,7 +52,7 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, doub
 double DEC_MiscFunctions::GetMaxSpeedModificator( const DEC_Decision_ABC* agent )
 {
     if( !agent )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return agent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedModificator();
 }
 
@@ -67,7 +67,7 @@ double DEC_MiscFunctions::GetMaxSpeedModificator( const DEC_Decision_ABC* agent 
 std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetAgentReinforcements( const DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
    return DEC_MiscFunctions::GetReinforcements( pAgent->GetPion() );
 }
 
@@ -93,7 +93,7 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_A
 int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_AgentPion& pion = pAgent->GetPion();
     const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     return (int) reinforcements.size();
@@ -107,7 +107,7 @@ int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAg
 bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget )
 {
     if ( !pTarget )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().Reinforce( pTarget->GetPion() );
 }
 
@@ -193,7 +193,7 @@ void DEC_MiscFunctions::FillMissionParameters( sword::Brain& brain, directia::to
 std::string DEC_MiscFunctions::GetName( DEC_Decision_ABC* pEntity )
 {
     if( !pEntity )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pEntity->GetName();
 }
 
@@ -204,7 +204,7 @@ std::string DEC_MiscFunctions::GetName( DEC_Decision_ABC* pEntity )
 DEC_Decision_ABC* DEC_MiscFunctions::GetAutomate( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pAgent->GetDecAutomate();
 }
 
@@ -215,7 +215,7 @@ DEC_Decision_ABC* DEC_MiscFunctions::GetAutomate( DEC_Decision_ABC* pAgent )
 boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( !pMission )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
     return result;
 }
@@ -227,7 +227,7 @@ boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( boost::s
 void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( !pPosSource || pPosSource->IsZero() || !( MT_IsZero( pPosSource->SquareMagnitude() - 1. ) ) )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AffectDirection( *pPosSource );
 }
 
@@ -238,7 +238,7 @@ void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, boost::sha
 std::string DEC_MiscFunctions::GetPointXY( boost::shared_ptr< MT_Vector2D > point )
 {
     if( !point )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     std::stringstream stream;
     stream << "x = " << point->rX_ << ", y = " << point->rY_;
     return stream.str();
@@ -278,13 +278,13 @@ void DEC_MiscFunctions::RemoveEnemyRepresentation( const boost::shared_ptr< DEC_
 std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller )
 {
     if( !caller )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > result;
     MIL_Army_ABC& army = caller->GetPion().GetArmy();
     for ( std::set<  boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = enemyRepresentations_.begin(); it != enemyRepresentations_.end(); ++it )
     {
         if( !(*it) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         if( (*it)->IsValid() && (*it)->IsAnEnemy( army ) )
             result.push_back( *it );
     }

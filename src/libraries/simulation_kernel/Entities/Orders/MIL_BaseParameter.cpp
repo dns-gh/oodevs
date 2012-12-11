@@ -388,7 +388,7 @@ bool MIL_BaseParameter::ToResourceNetworkNodeList( std::vector< boost::shared_pt
 // -----------------------------------------------------------------------------
 void MIL_BaseParameter::Append( boost::shared_ptr< MIL_MissionParameter_ABC > param )
 {
-    throw std::runtime_error( "Trying to append a location. Incompatible types." );
+    throw MASA_EXCEPTION( "Trying to append a location. Incompatible types." );
 }
 
 // -----------------------------------------------------------------------------

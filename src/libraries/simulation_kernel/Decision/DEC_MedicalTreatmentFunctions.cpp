@@ -24,7 +24,7 @@ namespace
     {
         const PHY_ComposantePion* majorComposante = wounded.GetPion().GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
         if( !majorComposante )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         PHY_InjuredHuman* injuredHuman = majorComposante->GetInjury();
         return injuredHuman;
     }
@@ -37,10 +37,10 @@ namespace
 void DEC_MedicalTreatmentFunctions::TakeCareOfThePatient( const MIL_Agent_ABC& /*callerAgent*/, const DEC_Decision_ABC* patient, boost::shared_ptr< DEC_Knowledge_Object > knowledge )
 {
     if( !knowledge )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     MIL_Object_ABC* pHospital = knowledge->GetObjectKnown();
     if( !pHospital )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     PHY_InjuredHuman* injuredHuman = GetWound( *patient );
     if( injuredHuman )
         pHospital->Get< MedicalCapacity >().ReceivePatient( *injuredHuman );
@@ -63,7 +63,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_MedicalTreatmentFunctions::Determi
         for( const_iterator it = hospitals.begin(); it != hospitals.end(); ++it )
         {
             if( !(*it) )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             MIL_Object_ABC* pHospital = (*it)->GetObjectKnown();
             if( pHospital && pHospital->Get< MedicalCapacity >().CanTreat( *pHospital, *injuredHuman ) )
             {

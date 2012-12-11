@@ -149,7 +149,7 @@ AttributeFactory::~AttributeFactory()
 void AttributeFactory::Register( const std::string& attribute, const T_CallBack& callback )
 {
     if( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
-        throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
+        throw MASA_EXCEPTION( "Capacity '" + attribute + "' already registered." );
 }
 
 // -----------------------------------------------------------------------------

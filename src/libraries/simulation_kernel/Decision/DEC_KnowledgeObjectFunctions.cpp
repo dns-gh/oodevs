@@ -134,7 +134,7 @@ float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Kn
 void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
     if( !location )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter;
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );

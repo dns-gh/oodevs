@@ -111,7 +111,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     {
         ptr = new MIL_PolygonParameter( message.area() );
         if( !static_cast< MIL_PolygonParameter* > ( ptr )->IsValid() )
-            throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
     }
     else if( message.has_location() )
         ptr = new MIL_LocationParameter( message.location() );
@@ -384,7 +384,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 void MIL_MissionParameterFactory::AssignPathConst( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PathParameter >( pointList );
     pMission->SetParameter( parameter, result );
 }
@@ -426,7 +426,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateG
 void MIL_MissionParameterFactory::SetPawnParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* pion )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreatePion (pion ) );
 }
 
@@ -447,7 +447,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateA
 void MIL_MissionParameterFactory::SetAutomatParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* automat )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateAutomat( automat ) );
 }
 
@@ -458,7 +458,7 @@ void MIL_MissionParameterFactory::SetAutomatParameter( boost::shared_ptr< MIL_Mi
 void  MIL_MissionParameterFactory::SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateDotationType( type ) );
 }
 
@@ -469,7 +469,7 @@ void  MIL_MissionParameterFactory::SetDotationTypeParameter( boost::shared_ptr< 
 void  MIL_MissionParameterFactory::SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, Create( value ) );
 }
 
@@ -480,7 +480,7 @@ void  MIL_MissionParameterFactory::SetNumericTypeParameter( boost::shared_ptr< M
 void MIL_MissionParameterFactory::SetBoolParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, bool value )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     boost::shared_ptr< MIL_BoolParameter > boolParam = boost::make_shared< MIL_BoolParameter >( value );
     pMission->SetParameter( parameter, boolParam );
 }
@@ -492,7 +492,7 @@ void MIL_MissionParameterFactory::SetBoolParameter( boost::shared_ptr< MIL_Missi
 void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateObjectKnowledge( pKnowledge ) );
 }
 
@@ -503,7 +503,7 @@ void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( boost::shared_ptr
 void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int natureAtlas )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     boost::shared_ptr< MIL_AtlasNatureParameter > natureParam = boost::make_shared< MIL_AtlasNatureParameter >( natureAtlas );
     pMission->SetParameter( parameter, natureParam );
 }
@@ -515,7 +515,7 @@ void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( boost::shared_ptr
 void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateAgentKnowledge( agentKnowledge ) );
 }
 
@@ -526,7 +526,7 @@ void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( boost::shared_ptr<
 void MIL_MissionParameterFactory::SetEnumereParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int value )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, Create( value ) );
 }
 
@@ -537,7 +537,7 @@ void MIL_MissionParameterFactory::SetEnumereParameter( boost::shared_ptr< MIL_Mi
 void MIL_MissionParameterFactory::SetLocationParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< TER_Localisation > location )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateLocation( location ) );
 }
 
@@ -548,7 +548,7 @@ void MIL_MissionParameterFactory::SetLocationParameter( boost::shared_ptr< MIL_M
 void MIL_MissionParameterFactory::SetPointParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, MT_Vector2D& point )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreatePoint( point ) );
 }
 
@@ -559,7 +559,7 @@ void MIL_MissionParameterFactory::SetPointParameter( boost::shared_ptr< MIL_Miss
 void MIL_MissionParameterFactory::SetGenObjectParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Gen_Object > object )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateGenObject( object ) );
 }
 
@@ -570,7 +570,7 @@ void MIL_MissionParameterFactory::SetGenObjectParameter( boost::shared_ptr< MIL_
 void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, MIL_UrbanObject_ABC* pUrbanblock )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateUrbanBlock( pUrbanblock ) );
 }
 
@@ -581,7 +581,7 @@ void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL
 void MIL_MissionParameterFactory::SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateDirection( direction ) );
 }
 
@@ -592,7 +592,7 @@ void MIL_MissionParameterFactory::SetDirectionParameter( boost::shared_ptr< MIL_
 void MIL_MissionParameterFactory::SetResourceNetworkNodeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateResourceNetworkNode( resourceNetwork ) );
 }
 
@@ -603,7 +603,7 @@ void MIL_MissionParameterFactory::SetResourceNetworkNodeParameter( boost::shared
 void MIL_MissionParameterFactory::SetResourceNetworkTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_ResourceNetworkType* resourceNetworkType )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreateResourceNetworkType( resourceNetworkType ) );
 }
 
@@ -614,7 +614,7 @@ void MIL_MissionParameterFactory::SetResourceNetworkTypeParameter( boost::shared
 void MIL_MissionParameterFactory::SetCrowdKnowledgeParameter( DEC_Decision_ABC* caller, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int knowledgeId )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     pMission->SetParameter( parameter, CreatePopulationKnowledge( caller, knowledgeId ) );
 }
 
@@ -625,7 +625,7 @@ void MIL_MissionParameterFactory::SetCrowdKnowledgeParameter( DEC_Decision_ABC* 
 void MIL_MissionParameterFactory::AssignMissionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params )
 {
     if( !pMission.get() )
-        throw std::runtime_error( "Invalid mission" );
+        throw MASA_EXCEPTION( "Invalid mission" );
     boost::shared_ptr< MIL_ListParameter > listParam = boost::make_shared< MIL_ListParameter >( params );
     pMission->SetParameter( parameter, listParam );
 }

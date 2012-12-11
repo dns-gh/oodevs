@@ -193,7 +193,7 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned in
     {
         dotation_ = PHY_DotationType::FindDotationCategory( dotation );
         if( !dotation_ )
-            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
+            throw MASA_EXCEPTION( "Unknown dotation category - " + dotation + " - " );
     }
 }
 

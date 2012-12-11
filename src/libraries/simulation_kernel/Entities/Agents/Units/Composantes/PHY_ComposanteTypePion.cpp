@@ -521,9 +521,9 @@ void PHY_ComposanteTypePion::ReadObject( xml::xistream& xis, const ObjectTypeRes
             xis.error( "Object type '" + strType + "' already instanciated" );
         pObject = new PHY_ComposanteTypeObjectData( xis );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

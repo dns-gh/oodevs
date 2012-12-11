@@ -150,7 +150,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         {
             const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
             if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-                throw std::exception( "Local meteo: bad ID parameter." );
+                throw MASA_EXCEPTION( "Local meteo: bad ID parameter." );
 
             id = idParameter.value().Get( 0 ).identifier();
         }
@@ -160,7 +160,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         {
             weather::Meteo* meteo = Find( id );
             if( !meteo )
-                throw std::exception( "Local meteo: unknown id." );
+                throw MASA_EXCEPTION( "Local meteo: unknown id." );
             static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
         }
         client::ControlLocalWeatherAck replyMsg;
@@ -169,12 +169,12 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
     else if( msg.type() == sword::MagicAction::local_weather_destruction )
     {
         if( msg.parameters().elem_size() != 1 || msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-            throw std::exception( "Local meteo destruction: bad ID parameter." );
+            throw MASA_EXCEPTION( "Local meteo destruction: bad ID parameter." );
         unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
 
         weather::Meteo* meteo = Find( id );
         if( !meteo )
-            throw std::exception( "Local meteo: unknown id." );
+            throw MASA_EXCEPTION( "Local meteo: unknown id." );
         {
             client::ControlLocalWeatherAck replyMsg;
             replyMsg.Send( NET_Publisher_ABC::Publisher(), context );

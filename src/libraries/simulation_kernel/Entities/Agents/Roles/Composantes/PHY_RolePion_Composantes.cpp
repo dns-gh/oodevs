@@ -1960,7 +1960,7 @@ void PHY_RolePion_Composantes::CreateWounds( unsigned int quantity, bool randomW
     else
         pHumanWound = PHY_HumanWound::Find( wound );
     if( !pHumanWound )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     if( pHumanWound == &PHY_HumanWound::notWounded_ )
     {
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && quantity > 0; ++it )
@@ -2010,11 +2010,11 @@ void PHY_RolePion_Composantes::ChangeEquipmentState( const PHY_ComposanteTypePio
             if( stateIt->first == &PHY_ComposanteState::repairableWithEvacuation_ )
             {
                 if( !message.list( 7 ).list( stateIt->second - 1 ).has_identifier() )
-                    throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                    throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
                 unsigned int breakdownId = message.list( 7 ).list( stateIt->second - 1 ).identifier();
                 const PHY_BreakdownType* breakdownType = ( breakdownId == 0 ) ? composanteType.GetRandomBreakdownType() : PHY_BreakdownType::Find( static_cast< unsigned int >( breakdownId ) );
                 if( !breakdownType )
-                    throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                    throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
                 composante.ReinitializeState( *stateIt->first, breakdownType );
             }
             else

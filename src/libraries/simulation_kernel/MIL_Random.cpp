@@ -20,7 +20,7 @@ std::vector< MT_GaussianRandom* > MIL_Random::gaussianRandom_;
 void MIL_Random::Initialize( int nSeed, const bool* bGaussian, const double* rDeviation, const double* rMean )
 {
     if( pInstance_ )
-        throw std::runtime_error( "Random Generator already initialized" );
+        throw MASA_EXCEPTION( "Random Generator already initialized" );
     pInstance_ = new MIL_Random( nSeed, bGaussian, rDeviation, rMean );
 }
 

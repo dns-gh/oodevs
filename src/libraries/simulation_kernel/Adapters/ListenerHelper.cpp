@@ -56,7 +56,7 @@ ListenerHelper::~ListenerHelper()
 const core::Model& ListenerHelper::operator*() const
 {
     if( !model_)
-        throw std::runtime_error( "model has been removed" );
+        throw MASA_EXCEPTION( "model has been removed" );
     return *model_;
 }
 

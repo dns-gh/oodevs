@@ -115,9 +115,9 @@ void MIL_ObjectManager::ProcessEvents()
         {
             it->second->ProcessEvents();
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( "Object event error : " << it->second->GetID() << " : " << e.what() );
+            MT_LOG_ERROR_MSG( "Object event error : " << it->second->GetID() << " : " << tools::GetExceptionMsg( e ) );
         }
     }
 }
@@ -146,9 +146,9 @@ void MIL_ObjectManager::UpdateStates( const propagation::FloodModel_ABC& floodMo
                 }
                 object.SendDestruction();
             }
-            catch( std::exception& e )
+            catch( const std::exception& e )
             {
-                MT_LOG_ERROR_MSG( "Error updating object " << object.GetID() << " before destruction : " << e.what() );
+                MT_LOG_ERROR_MSG( "Error updating object " << object.GetID() << " before destruction : " << tools::GetExceptionMsg( e ) );
             }
             if( dynamic_cast< MIL_UrbanObject_ABC* >( &object ) == 0 )
                 --nbObjects_;
@@ -365,7 +365,7 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
         if( urbanObject )
             xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *urbanObject );
     }
-    catch( std::exception& )
+    catch( const std::exception& )
     {
         // Avoid crash if id in urban state is not coherent with urban.xml
     }

@@ -416,9 +416,9 @@ void MIL_Army::ReadObject( xml::xistream& xis, MIL_ObjectManager& objectFactory 
     {
         objectFactory.CreateObject( xis, this );
     }
-    catch( std::exception& e)
+    catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -432,7 +432,7 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
     {
         populationFactory.Create( xis, *this );
     }
-    catch( MT_ScipioException& e)
+    catch( const MT_ScipioException& e)
     {
         MT_LOG_ERROR_MSG( e.GetMsg() );
     }
@@ -448,7 +448,7 @@ void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabi
     {
         inhabitantFactory.Create( xis, *this );
     }
-    catch( MT_ScipioException& e)
+    catch( const MT_ScipioException& e)
     {
         MT_LOG_ERROR_MSG( e.GetMsg() );
     }
@@ -733,7 +733,7 @@ void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& paramet
 
     MIL_Army_ABC* pArmy2 = armyFactory_.Find( party2 );
     if( !pArmy2 || *pArmy2 == *this )
-        throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
+        throw MASA_EXCEPTION_ASN( sword::ChangeDiplomacyAck_ErrorCode, sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
     switch( parameters.elem( 2 ).value().Get( 0 ).enumeration() )
     {

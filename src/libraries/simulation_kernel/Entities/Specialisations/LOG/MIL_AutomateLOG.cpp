@@ -646,9 +646,9 @@ void MIL_AutomateLOG::SendChangedState() const
         BOOST_FOREACH( const T_SupplyRequests::value_type& data, supplyRequests_ )
             data->SendChangedState();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error sending states of log automat " << GetID() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error sending states of log automat " << GetID() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 

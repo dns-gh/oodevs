@@ -46,7 +46,7 @@ public:
     const core::Model& operator[]( const T& t ) const
     {
         if( !model_ )
-            throw std::runtime_error( "model has been removed" );
+            throw MASA_EXCEPTION( "model has been removed" );
         return (*model_)[ t ];
     }
     //@}

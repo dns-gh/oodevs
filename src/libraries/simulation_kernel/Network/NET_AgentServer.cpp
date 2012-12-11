@@ -52,9 +52,9 @@ void NET_AgentServer::Update()
     {
         ServerNetworker::Update();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Receiving message : " << e.what() );
+        MT_LOG_ERROR_MSG( "Receiving message : " << tools::GetExceptionMsg( e ) );
     }
 }
 

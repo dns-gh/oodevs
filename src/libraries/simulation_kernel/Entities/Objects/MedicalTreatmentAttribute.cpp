@@ -82,7 +82,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MissionParame
         const sword::MissionParameter_Value& value = capacities.list( i );
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( value.list( eTypeId ).identifier() );
         if( !pType )
-            throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
+            throw MASA_EXCEPTION( "Unknown Medical treatment type for medical treatment attribute" );
         MedicalCapacity& capacity = capacities_[ pType->GetID() ];
         capacity.type_ = pType;
         capacity.baseline_ = value.list( eBaseLineCount ).quantity();
@@ -359,9 +359,9 @@ void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
 void MedicalTreatmentAttribute::RegisterPatients( unsigned int injuryID, unsigned int category, int n )
 {
     if( capacities_.find( injuryID ) == capacities_.end() )
-        throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( injuryID ) );
+        throw MASA_EXCEPTION( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( injuryID ) );
     if( capacities_[ injuryID ].occupied_.size() < category )
-        throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown category id: " + boost::lexical_cast< std::string >( category ) );
+        throw MASA_EXCEPTION( std::string( __FUNCTION__ ) + " Unknown category id: " + boost::lexical_cast< std::string >( category ) );
     capacities_[ injuryID ].occupied_[ category ] += n;
     NotifyAttributeUpdated( eOnUpdate );
 }

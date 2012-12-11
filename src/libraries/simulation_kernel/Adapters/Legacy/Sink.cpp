@@ -193,7 +193,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     {
         pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_ ) );
     }
-    catch( MT_ScipioException& e )
+    catch( const MT_ScipioException& e )
     {
         e.SendToLogger();
     }

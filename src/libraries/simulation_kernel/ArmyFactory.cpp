@@ -130,9 +130,9 @@ void ArmyFactory::ReadNoSideObject( xml::xistream& xis )
     {
         objectFactory_.CreateObject( xis, 0 );
     }
-    catch( std::exception& e)
+    catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

@@ -49,7 +49,7 @@ public:
             firstCall_ = false;
             return item_;
         }
-        throw std::runtime_error( "No more element" );
+        throw MASA_EXCEPTION( "No more element" );
     }
 
     virtual void Rewind()

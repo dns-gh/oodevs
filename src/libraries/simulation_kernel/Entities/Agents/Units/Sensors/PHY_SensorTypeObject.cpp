@@ -49,9 +49,9 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis, const ObjectTypeResol
         objectData_[ objectType.GetID() ] = pObjectData;
         rMaxDistance_ = std::max( rMaxDistance_, pObjectData->GetMaxDistance() );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

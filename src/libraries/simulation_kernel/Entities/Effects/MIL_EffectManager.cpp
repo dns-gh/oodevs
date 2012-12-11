@@ -26,7 +26,7 @@ namespace
 MIL_EffectManager& MIL_EffectManager::GetEffectManager()
 {
     if( !pEffectManager_ )
-        throw std::runtime_error( "Effect manager unset" );
+        throw MASA_EXCEPTION( "Effect manager unset" );
     return *pEffectManager_;
 }
 
@@ -37,7 +37,7 @@ MIL_EffectManager& MIL_EffectManager::GetEffectManager()
 MIL_EffectManager::MIL_EffectManager()
 {
     if( pEffectManager_ )
-        throw std::runtime_error( "Effect manager already created" );
+        throw MASA_EXCEPTION( "Effect manager already created" );
     pEffectManager_ = this;
 }
 
@@ -74,9 +74,9 @@ void MIL_EffectManager::Update()
         {
             executed = effect.Execute();
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( "Effect error : " << e.what() );
+            MT_LOG_ERROR_MSG( "Effect error : " << tools::GetExceptionMsg( e ) );
         }
         if( executed )
             ++it;

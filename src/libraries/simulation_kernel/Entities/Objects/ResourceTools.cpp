@@ -41,7 +41,7 @@ const std::string& ResourceTools::GetResourceName( unsigned long id ) const
 {
     const PHY_ResourceNetworkType* resourceNetwork = PHY_ResourceNetworkType::Find( id );
     if( !resourceNetwork )
-        throw std::runtime_error( "Bad resource network Id :" + boost::lexical_cast< std::string >( id ) );
+        throw MASA_EXCEPTION( "Bad resource network Id :" + boost::lexical_cast< std::string >( id ) );
     return resourceNetwork->GetName();
 }
 
@@ -53,7 +53,7 @@ unsigned long ResourceTools::GetResourceId( const std::string& name ) const
 {
     const PHY_ResourceNetworkType* resourceNetwork = PHY_ResourceNetworkType::Find( name );
     if( !resourceNetwork )
-        throw std::runtime_error( "Bad resource name :" + name );
+        throw MASA_EXCEPTION( "Bad resource name :" + name );
     return resourceNetwork->GetId();
 }
 

@@ -51,7 +51,7 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const sword::ObjectK
     else
         pKnowledgeObject_ = resolver.ResolveKnowledgeObjectByObjectID( asn.id() );
     if( !pKnowledgeObject_ )
-       throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+       throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

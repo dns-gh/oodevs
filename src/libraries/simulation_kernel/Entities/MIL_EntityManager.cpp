@@ -205,7 +205,7 @@ namespace
             return tasker.party().id();
         if( tasker.has_population() )
             return tasker.population().id();
-        throw std::exception( "Misformed tasker in protocol message" );
+        throw MASA_EXCEPTION( "Misformed tasker in protocol message" );
     }
 }
 MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tasker )
@@ -442,9 +442,9 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
             NotifyPionsInsideUrbanObject();
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -712,7 +712,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 {
     MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition );
     if( !pPion )
-        throw std::runtime_error( "Pion couldn't be created." );
+        throw MASA_EXCEPTION( "Pion couldn't be created." );
     pPion->SendCreation ( nCtx );
     pPion->SendFullState( nCtx );
     pPion->SendKnowledge( nCtx );
@@ -728,7 +728,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 {
     MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name );
     if( !pPion )
-        throw std::runtime_error( "Pion couldn't be created." );
+        throw MASA_EXCEPTION( "Pion couldn't be created." );
     pPion->SetExtensions( extensions );
     pPion->SendCreation ( nCtx );
     pPion->SendFullState( nCtx );
@@ -839,9 +839,9 @@ void MIL_EntityManager::UpdateKnowledges()
             sink_->UpdateKnowledges();
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating knowledges: " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating knowledges: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -964,9 +964,9 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
         for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = groups.begin(); it != groups.end(); ++it )
             (it->second)->UpdateKnowledgeGroup();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating knowledge groups: " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating knowledge groups: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -1024,10 +1024,10 @@ void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned i
     {
         MIL_AgentPion* pPion = FindAgentPion( message.tasker().id() );
         if( !pPion )
-            throw NET_AsnException< OrderAck_ErrorCode >( OrderAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
         pPion->OnReceiveOrder( message );
     }
-    catch( NET_AsnException< OrderAck_ErrorCode >& e )
+    catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1047,10 +1047,10 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
     {
         MIL_Automate* pAutomate = FindAutomate( message.tasker().id() );
         if( !pAutomate )
-            throw NET_AsnException< OrderAck_ErrorCode >( OrderAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
         pAutomate->OnReceiveOrder( message );
     }
-    catch( NET_AsnException< OrderAck_ErrorCode >& e )
+    catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1070,7 +1070,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         const Tasker& tasker = message.tasker();
         id = TaskerToId( tasker );
     }
-    catch( std::exception& )
+    catch( const std::exception& )
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
@@ -1090,7 +1090,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
             else
-                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::create_fire_order:
             ProcessMagicActionCreateFireOrder( message, nCtx );
@@ -1123,7 +1123,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessAutomatCreationRequest( message, *pFormation, nCtx );
             else
-                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::formation_creation :
             if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
@@ -1131,7 +1131,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessFormationCreationRequest( message, 0, pFormation, nCtx );
             else
-                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -1139,13 +1139,13 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
                 ProcessCrowdCreationRequest( message, *pArmy, nCtx );
             else
-                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::transfer_equipment:
             if( MIL_AgentPion* pPion = FindAgentPion( id ) )
                 ProcessTransferEquipmentRequest( message, *pPion );
             else
-                throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_unit );
+                throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         default:
             if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -1159,11 +1159,11 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Inhabitant* pInhabitant = FindInhabitant( id ) )
                 pInhabitant->OnReceiveUnitMagicAction( message );
             else
-                throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_unit );
+                throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         }
     }
-    catch( NET_AsnException< UnitActionAck::ErrorCode >& e )
+    catch( const NET_AsnException< UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1179,34 +1179,34 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
     try
     {
         if( msg.type() != UnitMagicAction::automat_creation )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
         if( !msg.has_parameters() || msg.parameters().elem_size() < 2 )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
         const MissionParameter& id = msg.parameters().elem( 0 );
         if( id.value_size() != 1 || !id.value().Get( 0 ).has_identifier() )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
         const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get( 0 ).identifier() );
         if( !pType )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
 
         const MissionParameter& groupId = msg.parameters().elem( 1 );
         if( groupId.value_size() != 1 || ! ( groupId.value().Get( 0 ).has_identifier() || groupId.value().Get( 0 ).has_knowledgegroup() ) )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
         unsigned int theGroupId = groupId.value().Get( 0 ).has_identifier() ? groupId.value().Get( 0 ).identifier() : groupId.value().Get( 0 ).knowledgegroup().id();
         boost::shared_ptr< MIL_KnowledgeGroup > group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
         if( !group || group->IsJammed() )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
         std::string name;
         if( msg.parameters().elem_size() > 2 )
         {
             const MissionParameter& nameParam = msg.parameters().elem( 2 );
             if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
-                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
             name = nameParam.value().Get( 0 ).acharstr();
         }
 
@@ -1217,10 +1217,10 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         }
         MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, theGroupId, name, entity, nCtx, extensions ); // auto-registration
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
-        throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
     }
 }
 
@@ -1331,11 +1331,11 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
             ProcessKnowledgeGroupUpdate( message, nCtx );
             break;
         default:
-            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );
+            throw MASA_EXCEPTION_ASN( KnowledgeGroupAck::ErrorCode, KnowledgeGroupAck::error_invalid_type );
             break;
         }
     }
-    catch( NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
+    catch( const NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1355,10 +1355,10 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
     {
         MIL_Population* pPopulation = populationFactory_->Find( message.tasker().id() );
         if( !pPopulation )
-            throw NET_AsnException< OrderAck_ErrorCode >( OrderAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( OrderAck_ErrorCode, OrderAck::error_invalid_unit );
         pPopulation->OnReceiveOrder( message );
     }
-    catch( NET_AsnException< OrderAck_ErrorCode >& e )
+    catch( const NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1394,10 +1394,10 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
         else
         {
             ack().mutable_tasker()->mutable_unit()->set_id( 0 );
-            throw NET_AsnException< OrderAck::ErrorCode >( OrderAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( OrderAck::ErrorCode, OrderAck::error_invalid_unit );
         }
     }
-    catch( NET_AsnException< OrderAck::ErrorCode >& e )
+    catch( const NET_AsnException< OrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1417,10 +1417,10 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
     {
         MIL_Automate* pAutomate = FindAutomate( message.automate().id() );
         if( !pAutomate )
-            throw NET_AsnException< SetAutomatModeAck::ErrorCode >( SetAutomatModeAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( SetAutomatModeAck::ErrorCode, SetAutomatModeAck::error_invalid_unit );
         pAutomate->OnReceiveSetAutomateMode( message );
     }
-    catch( NET_AsnException< SetAutomatModeAck::ErrorCode >& e )
+    catch( const NET_AsnException< SetAutomatModeAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1439,10 +1439,10 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
     {
         MIL_Automate* pAutomate = FindAutomate( message.superior().id() );
         if( !pAutomate )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
         pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
     }
-    catch( NET_AsnException< UnitActionAck_ErrorCode >& e )
+    catch( const NET_AsnException< UnitActionAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1484,10 +1484,10 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
     {
         MIL_Army_ABC* pArmy1 = armyFactory_->Find( party1 );
         if( !pArmy1 )
-            throw NET_AsnException< ChangeDiplomacyAck_ErrorCode >( ChangeDiplomacyAck::error_invalid_party_diplomacy );
+            throw MASA_EXCEPTION_ASN( ChangeDiplomacyAck_ErrorCode, ChangeDiplomacyAck::error_invalid_party_diplomacy );
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
     }
-    catch( NET_AsnException< ChangeDiplomacyAck_ErrorCode >& e )
+    catch( const NET_AsnException< ChangeDiplomacyAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1513,18 +1513,18 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
     if( !message.has_parameters() || message.parameters().elem_size() != 2 ||
         message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() ||
         message.parameters().elem( 1 ).value_size() == 0 )
-        throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
     const ::MissionParameters& parameters = message.parameters();
     unsigned int otherId = parameters.elem( 0 ).value().Get( 0 ).identifier();
     MIL_AgentPion* borrower = FindAgentPion( otherId );
     if( !borrower )
-        throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
     std::map< unsigned int, int > composantesMap;
     for( int i = 0; i < message.parameters().elem( 1 ).value_size(); ++i )
     {
         const ::sword::MissionParameter_Value& value = message.parameters().elem( 1 ).value().Get( i );
         if( !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
-            throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
         composantesMap[ value.list( 0 ).identifier() ] = value.list( 1 ).quantity();
     }
     // Transfer composante
@@ -1547,10 +1547,10 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
     {
         pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( !pAutomate )
-            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
+            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_automate );
         pAutomate->OnReceiveChangeKnowledgeGroup( message, *armyFactory_ );
     }
-    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1579,7 +1579,7 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
         // Subordinate
         logistic::LogisticHierarchy_ABC* pSubordinate = TaskerToLogisticHierarchy( *this, message.tasker() );
         if( !pSubordinate )
-            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
+            throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck_ErrorCode, sword::HierarchyModificationAck::error_invalid_automate );
 
         std::vector< MIL_AutomateLOG* > superiors;
         for( int i = 0; i < message.parameters().elem_size(); ++i )
@@ -1589,13 +1589,13 @@ void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& messa
             {
                 MIL_AutomateLOG* pSuperior = FindBrainLogistic( parameterSuperior.value( 0 ) );
                 if( !pSuperior )
-                    throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_supply_automat  ); //$$ Msg d'erreur incohérent
+                    throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck_ErrorCode, sword::HierarchyModificationAck::error_invalid_supply_automat  ); //$$ Msg d'erreur incohérent
                 superiors.push_back( pSuperior );
             }
         }
         pSubordinate->ChangeLinks( superiors );
     }
-    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1614,10 +1614,10 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& me
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( !pAutomate )
-            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
+            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_automate );
         pAutomate->OnReceiveChangeSuperior( message, *formationFactory_ );
     }
-    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1647,10 +1647,10 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
     {
         MIL_AgentPion* pPion = ( message.tasker().has_unit() && message.tasker().unit().has_id() ) ? FindAgentPion( message.tasker().unit().id() ) : 0;
         if( !pPion )
-            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_agent );
+            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_agent );
         pPion->OnReceiveChangeSuperior( *this, message );
     }
-    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1675,17 +1675,17 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     try
     {
         if( message.parameters().elem_size() != 2 )
-            throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_receiver );
+            throw MASA_EXCEPTION_ASN( LogSupplyChangeQuotasAck::ErrorCode, LogSupplyChangeQuotasAck::error_invalid_receiver );
 
         // Supplied
         logistic::LogisticHierarchy_ABC* pSupplied = TaskerToLogisticHierarchy( *this, message.tasker() );
         if( !pSupplied )
-            throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_receiver );
+            throw MASA_EXCEPTION_ASN( LogSupplyChangeQuotasAck::ErrorCode, LogSupplyChangeQuotasAck::error_invalid_receiver );
 
         // Param 0: supplier
         MIL_AutomateLOG* pSupplier = FindBrainLogistic( message.parameters().elem( 0 ).value( 0 ) );
         if( !pSupplier )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_supplier );
+            throw MASA_EXCEPTION_ASN( sword::LogSupplyChangeQuotasAck::ErrorCode, sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_supplier );
 
         // Param 1: quotas
         const sword::MissionParameter& quotas = message.parameters().elem( 1 );
@@ -1694,7 +1694,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
             superiorLink->OnReceiveChangeQuotas( quotas );
         //$$ throw sinon ??
     }
-    catch( NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
+    catch( const NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1713,14 +1713,14 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     {
         MIL_AutomateLOG* pBrainLog = FindBrainLogistic( TaskerToId( message.tasker() ) );
         if( !pBrainLog )
-            throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_supplier );
+            throw MASA_EXCEPTION_ASN( LogSupplyPushFlowAck::ErrorCode, LogSupplyPushFlowAck::error_invalid_supplier );
 
         if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_push_flow_parameters() )
-            throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_receiver );
+            throw MASA_EXCEPTION_ASN( LogSupplyPushFlowAck::ErrorCode, LogSupplyPushFlowAck::error_invalid_receiver );
 
         pBrainLog->OnReceiveLogSupplyPushFlow( message.parameters().elem( 0 ).value().Get( 0 ).push_flow_parameters(), *automateFactory_ );
     }
-    catch( NET_AsnException< LogSupplyPushFlowAck::ErrorCode >& e )
+    catch( const NET_AsnException< LogSupplyPushFlowAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1739,19 +1739,19 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( !pAutomate )
-            throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_receiver );
+            throw MASA_EXCEPTION_ASN( LogSupplyPullFlowAck::ErrorCode, LogSupplyPullFlowAck::error_invalid_receiver );
 
         if( message.parameters().elem_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_pull_flow_parameters() )
-            throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_receiver );
+            throw MASA_EXCEPTION_ASN( LogSupplyPullFlowAck::ErrorCode, LogSupplyPullFlowAck::error_invalid_receiver );
 
         const sword::PullFlowParameters& parameters = message.parameters().elem( 0 ).value().Get( 0 ).pull_flow_parameters();
         MIL_AutomateLOG* supplier = FindBrainLogistic( parameters.supplier() );
         if( !supplier )
-            throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_supplier );
+            throw MASA_EXCEPTION_ASN( LogSupplyPullFlowAck::ErrorCode, LogSupplyPullFlowAck::error_invalid_supplier );
 
         pAutomate->OnReceiveLogSupplyPullFlow( parameters, *supplier );
     }
-    catch( NET_AsnException< LogSupplyPullFlowAck::ErrorCode >& e )
+    catch( const NET_AsnException< LogSupplyPullFlowAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1779,7 +1779,7 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message
         if( MIL_Population* pPopulation = populationFactory_->Find( message.tasker().crowd().id() ) )
             return pPopulation->OnReceiveCrowdMagicActionMoveTo( message );
     }
-    throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
+    throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -1812,9 +1812,9 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
                             || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
             pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
         else
-            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );
+            throw MASA_EXCEPTION_ASN( KnowledgeGroupAck::ErrorCode, KnowledgeGroupAck::error_invalid_type );
     }
-    catch( NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
+    catch( const NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1833,38 +1833,38 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
     try
     {
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
 
         // Reporter
         MIL_Agent_ABC* reporter = ( msg.tasker().has_unit() && msg.tasker().unit().has_id() ) ? FindAgentPion( msg.tasker().unit().id() ) : 0;
         if( !reporter )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_reporter );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_reporter );
 
         // Target
         const MissionParameter& target = msg.parameters().elem( 0 );
         if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
 
         boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
         if( !targetKn )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
         const MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
 
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_target_not_illuminated );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_target_not_illuminated );
 
         // Iterations
         const MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_iteration );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration );
 
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
         unsigned int ammos = (unsigned int) pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
@@ -1873,7 +1873,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 
         pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
     }
-    catch( NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
+    catch( const NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1891,26 +1891,26 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     try
     {
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
 
         // Location
         const MissionParameter& location = msg.parameters().elem( 0 );
         if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location() || location.value().Get( 0 ).has_point() ) )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
         const MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
 
         // Iterations
         const MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_iteration );
+            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration );
 
         unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() ) );
 
@@ -1922,12 +1922,12 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
         {
             const sword::Point& point = location.value().Get( 0 ).point();
             if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
-                throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
+                throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
             MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
         }
         pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
     }
-    catch( NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
+    catch( const NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1952,7 +1952,7 @@ void MIL_EntityManager::OnReceiveBurningCellRequest( const BurningCellRequest& m
                 burnSurfaceAttribute->OnReceiveBurningCellRequest( message );
         }
     }
-    catch( NET_AsnException< BurningCellRequestAck::ErrorCode >& e )
+    catch( const NET_AsnException< BurningCellRequestAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -2513,7 +2513,7 @@ void MIL_EntityManager::SetToTasker( Tasker& tasker, unsigned int id ) const
         tasker.mutable_unit()->set_id( id );
     /*else if( FindInhabitant( id ) )
         tasker.mutable_population()->set_id( id );*/
-    else throw( std::exception( "Misformed tasker in protocol message" ) );
+    else throw MASA_EXCEPTION( "Misformed tasker in protocol message." );
 }
 
 // -----------------------------------------------5------------------------------

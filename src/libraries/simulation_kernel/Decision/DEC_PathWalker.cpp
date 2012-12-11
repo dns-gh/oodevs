@@ -87,9 +87,9 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
     {
         return pCurrentPath_->GetFuturePosition( position, rTime * rSpeed, bBoundOnPath );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         return movingEntity_.GetPosition();    
     }
 }

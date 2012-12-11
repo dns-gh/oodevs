@@ -66,7 +66,7 @@ NBCTypeAttribute::NBCTypeAttribute( const sword::ObjectAttributes& /*asn*/ )
 {
     // pAgent_ = MIL_NBCType::Find( asn.nbc_agent.agent_id );
     if( !pAgent_ )
-        throw std::runtime_error( "Unknown 'NBC agent' for nbc object attribute" );
+        throw MASA_EXCEPTION( "Unknown 'NBC agent' for nbc object attribute" );
 
     // width_            = MIL_NBCType::GetWidth();
     // length_           = MIL_NBCType::GetLength();
@@ -127,7 +127,7 @@ void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 
     pAgent_ = MIL_NBCType::Find( agentName );
     if( !pAgent_ )
-        throw std::runtime_error( "Unknown 'nbc agent' '" + agentName + "' for nbc object attribute" );
+        throw MASA_EXCEPTION( "Unknown 'nbc agent' '" + agentName + "' for nbc object attribute" );
 }
 
 // -----------------------------------------------------------------------------

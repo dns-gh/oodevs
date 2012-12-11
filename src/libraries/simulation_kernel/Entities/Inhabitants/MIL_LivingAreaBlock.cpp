@@ -450,7 +450,7 @@ void MIL_LivingAreaBlock::ManageAngryCrowd( const MIL_InhabitantType& type, MIL_
 
             const  MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( type.GetAngryCrowdMissionType() );
             if( !pMissionType )
-                throw std::runtime_error( "Unknow angry crowd mission type " + type.GetAngryCrowdMissionType() );
+                throw MASA_EXCEPTION( "Unknow angry crowd mission type " + type.GetAngryCrowdMissionType() );
 
             // $$$$ BCI 2011-03-18: comment faire plus simple pour démarrer une tâche?
             sword::CrowdOrder msg;

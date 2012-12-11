@@ -196,7 +196,7 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
             msg().mutable_party()->set_id( army_->GetID() );
             msg.Send( NET_Publisher_ABC::Publisher() );
         }
-        catch( std::exception& )
+        catch( const std::exception& )
         {} // Never mind if no publisher registered, just don't throw.
     }
 }
@@ -846,13 +846,13 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
 {
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().Get( 0 ).party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
-        throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_party );
+        throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_party );
     boost::shared_ptr< MIL_KnowledgeGroup > pNewParent;
     if( hasParent )
     {
         pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().Get( 0 ).knowledgegroup().id() );
         if( !pNewParent || pNewParent->IsJammed() )
-            throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_superior );
+            throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_superior );
     }
     if( pNewParent.get() )
     {
@@ -934,7 +934,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
     else if( message.elem( 1 ).value().Get( 0 ).has_enumeration() )
         perception = PHY_PerceptionLevel::ConvertFromMsgIdToSimId( static_cast< sword::UnitIdentification_Level >( message.elem( 1 ).value().Get( 0 ).enumeration() ) );
     if( perception < 1 || 3 < perception )
-        throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_perception );
+        throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_perception );
 
     if( pAgent )
     {
@@ -949,7 +949,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledgeObject = GetObjectKnowledgeToUpdate( *pObject );
         if( !knowledgeObject.get() )
-            throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_unit );
+            throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
         HackPerceptionLevelFromParentKnowledgeGroup( *pObject, perception );
     }
@@ -960,7 +960,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
         HackPerceptionLevelFromParentKnowledgeGroup( *pPopulation, perception );
     }
     else
-        throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_unit );
+        throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_unit );
 
     return true;
 }

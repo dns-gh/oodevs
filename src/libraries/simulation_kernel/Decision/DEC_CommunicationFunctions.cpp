@@ -137,7 +137,7 @@ void DEC_CommunicationFunctions::Register( sword::Brain& brain )
 int DEC_CommunicationFunctions::F_GeteEtatDec( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GeteEtatDec" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GeteEtatDec" );
     return pAgent->GeteEtatDec();
 }
 
@@ -148,7 +148,7 @@ int DEC_CommunicationFunctions::F_GeteEtatDec( DEC_Decision_ABC* pAgent )
 void DEC_CommunicationFunctions::F_SeteEtatDec( DEC_Decision_ABC* pAgent, int value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SeteEtatDec" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SeteEtatDec" );
     pAgent->SeteEtatDec( value );
 }
 
@@ -160,7 +160,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatDecPrudence( DEC_Decision_ABC* pP
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatDecPrudence not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatDecPrudence not called on DEC_RolePion_Decision" );
     return pion->GeteEtatDecPrudence();
 }
 
@@ -172,7 +172,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatDecPrudence( DEC_Decision_ABC* p
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatDecPrudence not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatDecPrudence not called on DEC_RolePion_Decision" );
     pion->SeteEtatDecPrudence( value );
 }
 
@@ -183,7 +183,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatDecPrudence( DEC_Decision_ABC* p
 int DEC_CommunicationFunctions::F_GeteEtatLima( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GeteEtatLima" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GeteEtatLima" );
     return pAgent->GeteEtatLima();
 }
 
@@ -194,7 +194,7 @@ int DEC_CommunicationFunctions::F_GeteEtatLima( DEC_Decision_ABC* pAgent )
 void DEC_CommunicationFunctions::F_SeteEtatLima( DEC_Decision_ABC* pAgent, int value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SeteEtatLima" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SeteEtatLima" );
     pAgent->SeteEtatLima( value );
 }
 
@@ -206,7 +206,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatNbc( DEC_Decision_ABC* pPion )
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatNbc not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatNbc not called on DEC_RolePion_Decision" );
     return pion->GeteEtatNbc();
 }
 
@@ -218,7 +218,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatNbc( DEC_Decision_ABC* pPion, in
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatNbc not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatNbc not called on DEC_RolePion_Decision" );
     pion->SeteEtatNbc( value );
 }
 
@@ -230,7 +230,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatDestruction( DEC_Decision_ABC* pP
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatDestruction not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatDestruction not called on DEC_RolePion_Decision" );
     return pion->GeteEtatDestruction();
 }
 
@@ -242,7 +242,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatDestruction( DEC_Decision_ABC* p
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatDestruction not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatDestruction not called on DEC_RolePion_Decision" );
     pion->SeteEtatDestruction( value );
 }
 
@@ -254,7 +254,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatFeu( DEC_Decision_ABC* pPion )
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatFeu not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatFeu not called on DEC_RolePion_Decision" );
     return pion->GeteEtatFeu();
 }
 
@@ -266,7 +266,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatFeu( DEC_Decision_ABC* pPion, in
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatFeu not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatFeu not called on DEC_RolePion_Decision" );
     pion->SeteEtatFeu( value );
 }
 
@@ -278,7 +278,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatAmbiance( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatAmbiance not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatAmbiance not called on DEC_RolePion_Decision" );
     return pion->GeteEtatAmbiance();
 }
 
@@ -290,7 +290,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatAmbiance( DEC_Decision_ABC* pPio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatAmbiance not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatAmbiance not called on DEC_RolePion_Decision" );
     pion->SeteEtatAmbiance( value );
 }
 
@@ -302,7 +302,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatRadio( DEC_Decision_ABC* pPion )
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatRadio not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatRadio not called on DEC_RolePion_Decision" );
     return pion->GeteEtatRadio();
 }
 
@@ -314,7 +314,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatRadio( DEC_Decision_ABC* pPion, 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatRadio not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatRadio not called on DEC_RolePion_Decision" );
     pion->SeteEtatRadio( value );
 }
 
@@ -326,7 +326,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatRadar( DEC_Decision_ABC* pPion )
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatRadar not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatRadar not called on DEC_RolePion_Decision" );
     return pion->GeteEtatRadar();
 }
 
@@ -338,7 +338,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatRadar( DEC_Decision_ABC* pPion, 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatRadar not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatRadar not called on DEC_RolePion_Decision" );
     pion->SeteEtatRadar( value );
 }
 
@@ -350,7 +350,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatDeplacement( DEC_Decision_ABC* pP
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatDeplacement not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatDeplacement not called on DEC_RolePion_Decision" );
     return pion->GeteEtatDeplacement();
 }
 
@@ -362,7 +362,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatDeplacement( DEC_Decision_ABC* p
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatDeplacement not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatDeplacement not called on DEC_RolePion_Decision" );
     pion->SeteEtatDeplacement( value );
 }
 
@@ -374,7 +374,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatOrdreCoordination( DEC_Decision_A
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatOrdreCoordination not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatOrdreCoordination not called on DEC_RolePion_Decision" );
     return pion->GeteEtatOrdreCoordination();
 }
 
@@ -386,7 +386,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatOrdreCoordination( DEC_Decision_
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatOrdreCoordination not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatOrdreCoordination not called on DEC_RolePion_Decision" );
     pion->SeteEtatOrdreCoordination( value );
 }
 
@@ -398,7 +398,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteConsigneTir( DEC_Decision_ABC* pPion 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteConsigneTir not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteConsigneTir not called on DEC_RolePion_Decision" );
     return pion->GeteConsigneTir();
 }
 
@@ -410,7 +410,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteConsigneTir( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteConsigneTir not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteConsigneTir not called on DEC_RolePion_Decision" );
     pion->SeteConsigneTir( value );
 }
 
@@ -422,7 +422,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteConsigneTirPopulation( DEC_Decision_A
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteConsigneTirPopulation not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteConsigneTirPopulation not called on DEC_RolePion_Decision" );
     return pion->GeteConsigneTirPopulation();
 }
 
@@ -434,7 +434,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteConsigneTirPopulation( DEC_Decision_
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteConsigneTirPopulation not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteConsigneTirPopulation not called on DEC_RolePion_Decision" );
     pion->SeteConsigneTirPopulation( value );
 }
 
@@ -445,7 +445,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteConsigneTirPopulation( DEC_Decision_
 int DEC_CommunicationFunctions::F_GeteEtatEchelon( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GeteEtatEchelon" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GeteEtatEchelon" );
     return pAgent->GeteEtatEchelon();
 }
 
@@ -456,7 +456,7 @@ int DEC_CommunicationFunctions::F_GeteEtatEchelon( DEC_Decision_ABC* pAgent )
 void DEC_CommunicationFunctions::F_SeteEtatEchelon( DEC_Decision_ABC* pAgent, int value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SeteEtatEchelon" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SeteEtatEchelon" );
     pAgent->SeteEtatEchelon( value );
 }
 
@@ -468,7 +468,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatSoutien( DEC_Decision_ABC* pPion 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatSoutien not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatSoutien not called on DEC_RolePion_Decision" );
     return pion->GeteEtatSoutien();
 }
 
@@ -480,7 +480,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatSoutien( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatSoutien not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatSoutien not called on DEC_RolePion_Decision" );
     pion->SeteEtatSoutien( value );
 }
 
@@ -492,7 +492,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteEtatSituationEnnemi( DEC_Decision_ABC
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteEtatSituationEnnemi not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteEtatSituationEnnemi not called on DEC_RolePion_Decision" );
     return pion->GeteEtatSituationEnnemi();
 }
 
@@ -504,7 +504,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatSituationEnnemi( DEC_Decision_AB
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteEtatSituationEnnemi not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteEtatSituationEnnemi not called on DEC_RolePion_Decision" );
     pion->SeteEtatSituationEnnemi( value );
 }
 
@@ -515,7 +515,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteEtatSituationEnnemi( DEC_Decision_AB
 int DEC_CommunicationFunctions::F_GeteEtatPhaseMission( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GeteEtatPhaseMission" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GeteEtatPhaseMission" );
     return pAgent->GeteEtatPhaseMission();
 }
 
@@ -526,7 +526,7 @@ int DEC_CommunicationFunctions::F_GeteEtatPhaseMission( DEC_Decision_ABC* pAgent
 void DEC_CommunicationFunctions::F_SeteEtatPhaseMission( DEC_Decision_ABC* pAgent, int value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SeteEtatPhaseMission" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SeteEtatPhaseMission" );
     pAgent->SeteEtatPhaseMission( value );
 }
 
@@ -538,7 +538,7 @@ bool DEC_CommunicationFunctions::F_Pion_GetbOrdreInterrompreMission( DEC_Decisio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetbOrdreInterrompreMission not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetbOrdreInterrompreMission not called on DEC_RolePion_Decision" );
     return pion->GetbOrdreInterrompreMission();
 }
 
@@ -550,7 +550,7 @@ void DEC_CommunicationFunctions::F_Pion_SetbOrdreInterrompreMission( DEC_Decisio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SetbOrdreInterrompreMission not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SetbOrdreInterrompreMission not called on DEC_RolePion_Decision" );
     pion->SetbOrdreInterrompreMission( value );
 }
 
@@ -561,7 +561,7 @@ void DEC_CommunicationFunctions::F_Pion_SetbOrdreInterrompreMission( DEC_Decisio
 bool DEC_CommunicationFunctions::F_GetbOrdreDecrocher( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GetbOrdreDecrocher" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GetbOrdreDecrocher" );
     return pAgent->GetbOrdreDecrocher();
 }
 
@@ -572,7 +572,7 @@ bool DEC_CommunicationFunctions::F_GetbOrdreDecrocher( DEC_Decision_ABC* pAgent 
 void DEC_CommunicationFunctions::F_SetbOrdreDecrocher( DEC_Decision_ABC* pAgent, bool value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SetbOrdreDecrocher" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SetbOrdreDecrocher" );
     pAgent->SetbOrdreDecrocher( value );
 }
 
@@ -583,7 +583,7 @@ void DEC_CommunicationFunctions::F_SetbOrdreDecrocher( DEC_Decision_ABC* pAgent,
 bool DEC_CommunicationFunctions::F_GetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GetbOrdreTenirSurLR" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GetbOrdreTenirSurLR" );
     return pAgent->GetbOrdreTenirSurLR();
 }
 
@@ -594,7 +594,7 @@ bool DEC_CommunicationFunctions::F_GetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent
 void DEC_CommunicationFunctions::F_SetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent, bool value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SetbOrdreTenirSurLR" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SetbOrdreTenirSurLR" );
     pAgent->SetbOrdreTenirSurLR( value );
 }
 
@@ -605,7 +605,7 @@ void DEC_CommunicationFunctions::F_SetbOrdreTenirSurLR( DEC_Decision_ABC* pAgent
 bool DEC_CommunicationFunctions::F_GetbOrdreTenir( DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_GetbOrdreTenir" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_GetbOrdreTenir" );
     return pAgent->GetbOrdreTenir();
 }
 
@@ -616,7 +616,7 @@ bool DEC_CommunicationFunctions::F_GetbOrdreTenir( DEC_Decision_ABC* pAgent )
 void DEC_CommunicationFunctions::F_SetbOrdreTenir( DEC_Decision_ABC* pAgent, bool value )
 {
     if( !pAgent )
-        throw std::runtime_error( "Invalid parameter in F_SetbOrdreTenir" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_SetbOrdreTenir" );
     pAgent->SetbOrdreTenir( value );
 }
 
@@ -628,7 +628,7 @@ bool DEC_CommunicationFunctions::F_Pion_GetbPasserSurLC( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetbPasserSurLC not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetbPasserSurLC not called on DEC_RolePion_Decision" );
     return pion->GetbPasserSurLC();
 }
 
@@ -640,7 +640,7 @@ void DEC_CommunicationFunctions::F_Pion_SetbPasserSurLC( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SetbPasserSurLC not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SetbPasserSurLC not called on DEC_RolePion_Decision" );
     pion->SetbPasserSurLC( value );
 }
 
@@ -651,7 +651,7 @@ void DEC_CommunicationFunctions::F_Pion_SetbPasserSurLC( DEC_Decision_ABC* pPion
 bool DEC_CommunicationFunctions::F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid parameter in F_Pion_GetNewEscorted" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Pion_GetNewEscorted" );
     return pPion->GetVariable< bool >( "g_bNewEscorted" );
 }
 
@@ -662,7 +662,7 @@ bool DEC_CommunicationFunctions::F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion 
 void DEC_CommunicationFunctions::F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion, bool value )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid parameter in F_Pion_SetNewEscorted" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Pion_SetNewEscorted" );
     pPion->SetVariable( "g_bNewEscorted" ,value );
 }
 
@@ -673,7 +673,7 @@ void DEC_CommunicationFunctions::F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion,
 bool DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement( DEC_Decision_ABC* pPion )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid parameter in F_Pion_GetNeedReinforcement" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Pion_GetNeedReinforcement" );
     return pPion->GetVariable< bool >( "g_needReinforcement" );
 }
 
@@ -684,7 +684,7 @@ bool DEC_CommunicationFunctions::F_Pion_GetNeedReinforcement( DEC_Decision_ABC* 
 void DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement( DEC_Decision_ABC* pPion, bool value )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid parameter in F_Pion_SetNeedReinforcement" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Pion_SetNeedReinforcement" );
     pPion->SetVariable( "g_needReinforcement" ,value );
 }
 
@@ -695,7 +695,7 @@ void DEC_CommunicationFunctions::F_Pion_SetNeedReinforcement( DEC_Decision_ABC* 
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_CommunicationFunctions::F_Pion_GetEnemyAttackedBy( DEC_Decision_ABC* pPion )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid parameter in F_Pion_GetEnemyAttackedBy" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Pion_GetEnemyAttackedBy" );
     return pPion->GetVariable< boost::shared_ptr< DEC_Knowledge_Agent > >( "g_myEnemy");
 }
 
@@ -707,7 +707,7 @@ DEC_Decision_ABC* DEC_CommunicationFunctions::F_Pion_GetpionEnEscorte( DEC_Decis
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetpionEnEscorte not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetpionEnEscorte not called on DEC_RolePion_Decision" );
     return pion->GetpionEnEscorte();
 }
 
@@ -719,7 +719,7 @@ void DEC_CommunicationFunctions::F_Pion_SetpionEnEscorte( DEC_Decision_ABC* pPio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SetpionEnEscorte not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SetpionEnEscorte not called on DEC_RolePion_Decision" );
     pion->SetpionEnEscorte( value );
 }
 
@@ -731,7 +731,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_CommunicationFunctions::F_Pion_GetitMvt( D
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetitMvt not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetitMvt not called on DEC_RolePion_Decision" );
     return pion->GetitMvt();
 }
 
@@ -743,7 +743,7 @@ void DEC_CommunicationFunctions::F_Pion_SetitMvt( DEC_Decision_ABC* pPion, const
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "shared_ptr not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "shared_ptr not called on DEC_RolePion_Decision" );
     pion->SetitMvt( value );
 }
 
@@ -755,7 +755,7 @@ boost::shared_ptr< MT_Vector2D > DEC_CommunicationFunctions::F_Pion_GetobjectifE
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetobjectifEsquive not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetobjectifEsquive not called on DEC_RolePion_Decision" );
     return pion->GetobjectifEsquive();
 }
 
@@ -767,7 +767,7 @@ void DEC_CommunicationFunctions::F_Pion_SetobjectifEsquive( DEC_Decision_ABC* pP
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SetobjectifEsquive not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SetobjectifEsquive not called on DEC_RolePion_Decision" );
     pion->SetobjectifEsquive( value );
 }
 
@@ -779,7 +779,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_CommunicationFunctions::F_Pion_Gete
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteniEnCours not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteniEnCours not called on DEC_RolePion_Decision" );
     return pion->GeteniEnCours();
 }
 
@@ -791,7 +791,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteniEnCours( DEC_Decision_ABC* pPion, 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "shared_ptr not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "shared_ptr not called on DEC_RolePion_Decision" );
     pion->SeteniEnCours( value );
 }
 
@@ -803,7 +803,7 @@ std::string DEC_CommunicationFunctions::F_Pion_GetmissionPrecedente( DEC_Decisio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetmissionPrecedente not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetmissionPrecedente not called on DEC_RolePion_Decision" );
     return pion->GetmissionPrecedente();
 }
 
@@ -815,7 +815,7 @@ void DEC_CommunicationFunctions::F_Pion_SetmissionPrecedente( DEC_Decision_ABC* 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "string not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "string not called on DEC_RolePion_Decision" );
     pion->SetmissionPrecedente( value );
 }
 
@@ -827,7 +827,7 @@ float DEC_CommunicationFunctions::F_Pion_GetrTenir( DEC_Decision_ABC* pPion )
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetrTenir not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetrTenir not called on DEC_RolePion_Decision" );
     return pion->GetrTenir();
 }
 
@@ -839,7 +839,7 @@ void DEC_CommunicationFunctions::F_Pion_SetrTenir( DEC_Decision_ABC* pPion, floa
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SetrTenir not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SetrTenir not called on DEC_RolePion_Decision" );
     pion->SetrTenir( value );
 }
 
@@ -851,7 +851,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteTypeContact( DEC_Decision_ABC* pPion 
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteTypeContact not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteTypeContact not called on DEC_RolePion_Decision" );
     return pion->GeteTypeContact();
 }
 
@@ -863,7 +863,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteTypeContact( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteTypeContact not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteTypeContact not called on DEC_RolePion_Decision" );
     pion->SeteTypeContact( value );
 }
 
@@ -875,7 +875,7 @@ int DEC_CommunicationFunctions::F_Pion_GeteNiveauAction( DEC_Decision_ABC* pPion
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GeteNiveauAction not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GeteNiveauAction not called on DEC_RolePion_Decision" );
     return pion->GeteNiveauAction();
 }
 
@@ -887,7 +887,7 @@ void DEC_CommunicationFunctions::F_Pion_SeteNiveauAction( DEC_Decision_ABC* pPio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SeteNiveauAction not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SeteNiveauAction not called on DEC_RolePion_Decision" );
     pion->SeteNiveauAction( value );
 }
 
@@ -899,7 +899,7 @@ bool DEC_CommunicationFunctions::F_Pion_GetbDefenseStatique_Mobile( DEC_Decision
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetbDefenseStatique_Mobile not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetbDefenseStatique_Mobile not called on DEC_RolePion_Decision" );
     return pion->GetbDefenseStatique_Mobile();
 }
 
@@ -911,7 +911,7 @@ void DEC_CommunicationFunctions::F_Pion_SetbDefenseStatique_Mobile( DEC_Decision
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_SetbDefenseStatique_Mobile not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_SetbDefenseStatique_Mobile not called on DEC_RolePion_Decision" );
     pion->SetbDefenseStatique_Mobile( value );
 }
 
@@ -923,7 +923,7 @@ const std::vector< DEC_Decision_ABC* >* DEC_CommunicationFunctions::F_Pion_Getse
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_Pion_GetselUnitesEnAppui not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_Pion_GetselUnitesEnAppui not called on DEC_RolePion_Decision" );
     return pion->GetselUnitesEnAppui();
 }
 
@@ -935,7 +935,7 @@ void DEC_CommunicationFunctions::F_AddToselUnitesEnAppui( DEC_Decision_ABC* pPio
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_AddToselUnitesEnAppui not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_AddToselUnitesEnAppui not called on DEC_RolePion_Decision" );
     pion->AddToselUnitesEnAppui( pPion );
 }
 
@@ -947,7 +947,7 @@ void DEC_CommunicationFunctions::F_RemoveFromselUnitesEnAppui( DEC_Decision_ABC*
 {
     DEC_RolePion_Decision* pion = dynamic_cast< DEC_RolePion_Decision* >( pPion );
     if( !pion )
-        throw std::runtime_error( "F_RemoveFromselUnitesEnAppui not called on DEC_RolePion_Decision" );
+        throw MASA_EXCEPTION( "F_RemoveFromselUnitesEnAppui not called on DEC_RolePion_Decision" );
     pion->RemoveFromselUnitesEnAppui( pPion );
 }
 
@@ -958,7 +958,7 @@ void DEC_CommunicationFunctions::F_RemoveFromselUnitesEnAppui( DEC_Decision_ABC*
 void DEC_CommunicationFunctions::F_Mot_EtatDesactiveSauvegarde( DEC_Decision_ABC* pPion, bool value )
 {
     if( !pPion )
-        throw std::runtime_error( "Invalid parameter in F_Mot_EtatDesactiveSauvegarde" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Mot_EtatDesactiveSauvegarde" );
     pPion->SetVariable( "g_bDesactiveSauvegarde" ,value );
 }
 
@@ -970,7 +970,7 @@ float DEC_CommunicationFunctions::F_Automat_GetrDestruction( DEC_Decision_ABC* p
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( "Invalid parameter in F_Automat_GetrDestruction" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Automat_GetrDestruction" );
     return automat->GetrDestruction();
 }
 
@@ -982,7 +982,7 @@ void DEC_CommunicationFunctions::F_Automat_SetrDestruction( DEC_Decision_ABC* pA
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( "Invalid parameter in F_Automat_SetrDestruction" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Automat_SetrDestruction" );
     automat->SetrDestruction( value );
 }
 
@@ -994,7 +994,7 @@ const MIL_Fuseau* DEC_CommunicationFunctions::F_Automat_Getfuseau( DEC_Decision_
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( "Invalid parameter in F_Automat_Getfuseau" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Automat_Getfuseau" );
     return automat->Getfuseau();
 }
 
@@ -1006,7 +1006,7 @@ void DEC_CommunicationFunctions::F_Automat_Setfuseau( DEC_Decision_ABC* pAutomat
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( "Invalid parameter in F_Automat_Setfuseau" );
+        throw MASA_EXCEPTION( "Invalid parameter in F_Automat_Setfuseau" );
     automat->Setfuseau( value );
 }
 
@@ -1018,7 +1018,7 @@ TER_Localisation* DEC_CommunicationFunctions::F_Automat_Getzone( DEC_Decision_AB
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return automat->Getzone();
 }
 
@@ -1030,7 +1030,7 @@ void DEC_CommunicationFunctions::F_Automat_Setzone( DEC_Decision_ABC* pAutomat, 
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     automat->Setzone( value );
 }
 
@@ -1042,7 +1042,7 @@ bool DEC_CommunicationFunctions::F_Automat_GetbOrdreAttendre( DEC_Decision_ABC* 
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return automat->GetbOrdreAttendre();
 }
 
@@ -1054,7 +1054,7 @@ void DEC_CommunicationFunctions::F_Automat_SetbOrdreAttendre( DEC_Decision_ABC* 
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     automat->SetbOrdreAttendre( value );
 }
 
@@ -1066,7 +1066,7 @@ bool DEC_CommunicationFunctions::F_Automat_GetbOrdrePoursuivre( DEC_Decision_ABC
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return automat->GetbOrdrePoursuivre();
 }
 
@@ -1078,7 +1078,7 @@ void DEC_CommunicationFunctions::F_Automat_SetbOrdrePoursuivre( DEC_Decision_ABC
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     automat->SetbOrdrePoursuivre( value );
 }
 
@@ -1090,7 +1090,7 @@ bool DEC_CommunicationFunctions::F_Automat_GetbOrdreRalentir( DEC_Decision_ABC* 
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return automat->GetbOrdreRalentir();
 }
 
@@ -1102,6 +1102,6 @@ void DEC_CommunicationFunctions::F_Automat_SetbOrdreRalentir( DEC_Decision_ABC* 
 {
     DEC_AutomateDecision* automat = dynamic_cast< DEC_AutomateDecision* >( pAutomat );
     if( !automat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     automat->SetbOrdreRalentir( value );
 }

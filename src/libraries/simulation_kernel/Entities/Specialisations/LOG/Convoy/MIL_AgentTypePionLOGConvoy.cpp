@@ -40,7 +40,7 @@ MIL_AgentTypePionLOGConvoy::~MIL_AgentTypePionLOGConvoy()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_AgentTypePionLOGConvoy::InstanciatePion( MIL_Automate& /*automate*/, const AlgorithmsFactories& /*algorithmFactories*/, xml::xistream& xis ) const
 {
-    throw xml::exception( xis.context() + "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
+    throw MASA_EXCEPTION( xis.context() + "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
 }
 
 // -----------------------------------------------------------------------------

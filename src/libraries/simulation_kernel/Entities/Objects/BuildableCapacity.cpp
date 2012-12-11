@@ -86,7 +86,7 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
         std::string dotation( xis.attribute< std::string >( "name" ) );
         dotation_ = PHY_DotationType::FindDotationCategory( dotation );
         if( !dotation_ )
-            throw std::runtime_error( "Unknown dotation category - " + dotation + " - " );
+            throw MASA_EXCEPTION( "Unknown dotation category - " + dotation + " - " );
         nFullNbrDotation_ = xis.attribute< int >( "count" );
     }
 }
@@ -106,10 +106,10 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> finalised_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
     if( !default_ )
-        throw std::runtime_error( __FUNCTION__ " Unknown consumption category" );
+        throw MASA_EXCEPTION( "Unknown consumption category." );
     dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
     if( !dotation_ && dotationId )
-        throw std::runtime_error( __FUNCTION__ " Unknown dotation category" );
+        throw MASA_EXCEPTION( "Unknown dotation category." );
 }
 
 // -----------------------------------------------------------------------------

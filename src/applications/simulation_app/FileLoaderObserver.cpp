@@ -50,7 +50,7 @@ bool FileLoaderObserver::NotifySignatureError( const std::string& fileName, cons
 // -----------------------------------------------------------------------------
 bool FileLoaderObserver::NotifyInvalidXml( const std::string& fileName, const xml::exception& e )
 {
-    MT_LOG_WARNING_MSG( "Invalid XML file " << fileName << " " << e.what() );
+    MT_LOG_WARNING_MSG( "Invalid XML file " << fileName << " " << tools::GetExceptionMsg( e ) );
     return true;
 }
 

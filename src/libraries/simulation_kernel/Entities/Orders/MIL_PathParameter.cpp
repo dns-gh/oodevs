@@ -42,7 +42,7 @@ MIL_PathParameter::MIL_PathParameter( boost::shared_ptr< MT_Vector2D > point )
 MIL_PathParameter::MIL_PathParameter( const sword::Path& asn )
 {
     if( asn.location().type() != sword::Location_Geometry_line )
-        throw std::runtime_error( "Unexpected type passed for path" );
+        throw MASA_EXCEPTION( "Unexpected type passed for path" );
     path_.reserve( asn.location().coordinates().elem_size());
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
     {

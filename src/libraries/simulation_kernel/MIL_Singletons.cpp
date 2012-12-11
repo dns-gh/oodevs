@@ -35,7 +35,7 @@ const MIL_Time_ABC& MIL_Singletons::GetTime()
 void MIL_Singletons::RegisterTime( const MIL_Time_ABC& time )
 {
     if( pTime_ )
-        throw std::runtime_error( "Time already registered" );
+        throw MASA_EXCEPTION( "Time already registered" );
     pTime_ = &time;
 }
 
@@ -46,7 +46,7 @@ void MIL_Singletons::RegisterTime( const MIL_Time_ABC& time )
 void MIL_Singletons::UnregisterTime( const MIL_Time_ABC& time )
 {
     if( &time != pTime_ )
-        throw std::runtime_error( "Unregistering wrong time" );
+        throw MASA_EXCEPTION( "Unregistering wrong time" );
     pTime_ = 0;
 }
 

@@ -68,9 +68,9 @@ void DirectFirePionEventListener::Notify( const core::Model& event )
         else
             Remove( event );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception in " << __FUNCTION__ << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception in " << __FUNCTION__ << " : " << tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

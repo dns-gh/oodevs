@@ -86,9 +86,9 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCm
             pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(), MT_Logger_ABC::eLogLevel_All ) );
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
-        catch( MT_ScipioException& exception )
+        catch( const MT_ScipioException& e )
         {
-            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", exception.GetMsg().c_str() ) );
+            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", e.GetMsg().c_str() ) );
             pNetworkLogger_.reset();
         }
     }
@@ -130,9 +130,9 @@ int SIM_App::Initialize()
     {
         MIL_AgentServer::CreateWorkspace( *startupConfig_ );
     }
-    catch( MT_ScipioException& exception )
+    catch( const MT_ScipioException& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", exception.GetMsg().c_str() ) );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", e.GetMsg().c_str() ) );
         throw;
         //return EXIT_FAILURE;
     }
@@ -196,10 +196,10 @@ void SIM_App::RunDispatcher()
         pDispatcher_ = new SIM_Dispatcher( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ), maxConnections_ );
         pDispatcher_->Run();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         dispatcherOk_ = false;
-        MT_LOG_ERROR_MSG( "The dispatcher has crashed: " << e.what() << "." );
+        MT_LOG_ERROR_MSG( "The dispatcher has crashed: " << tools::GetExceptionMsg( e ) << "." );
     }
     Stop();
 }
@@ -299,7 +299,7 @@ void SIM_App::Cleanup()
         while( ! pDispatcher_ && dispatcherOk_ )
             ::Sleep( 0 );
         if( ! pDispatcher_ )
-            throw std::exception( "Dispatcher crash" );
+            throw MASA_EXCEPTION( "Dispatcher crash" );
         pDispatcher_->Stop();
         dispatcherThread_->join();
     }
@@ -401,22 +401,22 @@ int SIM_App::Test()
         Cleanup();
         return EXIT_SUCCESS;
     }
-    catch( MT_ScipioException& exception )
+    catch( const MT_ScipioException& e )
     {
-        std::cerr << Wrap( exception.GetMsg(), prefix ) << std::endl
-                  << Wrap( exception.GetDescription(), prefix ) << std::endl;
+        std::cerr << Wrap( e.GetMsg(), prefix ) << std::endl
+                  << Wrap( e.GetDescription(), prefix ) << std::endl;
     }
-    catch( xml::exception& exception )
+    catch( const xml::exception& e )
     {
-        std::cerr << Wrap( exception.what(), prefix ) << std::endl;
+        std::cerr << Wrap( tools::GetExceptionMsg( e ), prefix ) << std::endl;
     }
-    catch( std::bad_alloc& /*exception*/ )
+    catch( const std::bad_alloc& /*exception*/ )
     {
         std::cerr << Wrap( "Allocation error : not enough memory", prefix )  << std::endl;
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        std::cerr << Wrap( exception.what(), prefix ) << std::endl;
+        std::cerr << Wrap( tools::GetExceptionMsg( e ), prefix ) << std::endl;
     }
     return EXIT_FAILURE;
 }

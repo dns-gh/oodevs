@@ -45,7 +45,7 @@ public:
         R* role;
         archive >> role;
         if( !role )
-            throw std::runtime_error( __FUNCTION__ ": Failed to load role " + std::string( typeid( role ).name() ) );
+            throw MASA_EXCEPTION( "Failed to load role " + std::string( typeid( role ).name() ) );
         container.RegisterRole( *role );
         return *role;
     }

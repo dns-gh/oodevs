@@ -153,9 +153,9 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     {
         pType = (*itPionAllocator->second)( strName, strType, xis );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         pType = 0;
     }
 
@@ -249,7 +249,7 @@ namespace
             case eKeyPointUrban:
                 return TerrainData::Urban();
             default:
-                throw std::runtime_error( __FUNCTION__ " unknown keypoint value" );
+                throw MASA_EXCEPTION( "Unknown keypoint value." );
         }
     }
 }

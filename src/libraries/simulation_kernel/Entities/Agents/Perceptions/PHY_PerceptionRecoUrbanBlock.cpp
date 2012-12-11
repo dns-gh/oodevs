@@ -33,7 +33,7 @@ PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const MIL_Ur
     , pKnowledgeUrbanBlock_( pKnowledgeUrbanBlock )
 {
     if( pUrbanBlock == 0 )
-        throw std::runtime_error( "urban block invalid" );
+        throw MASA_EXCEPTION( "urban block invalid" );
     localisation_.Reset( pUrbanBlock->GetLocalisation() );
 }
 

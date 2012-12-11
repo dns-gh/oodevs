@@ -28,10 +28,10 @@
 boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::MRT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     if( !pMissionType )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
@@ -61,14 +61,14 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         if( !(*itPion) )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         MIL_Fuseau::IT_FuseauPtrList itFuseau;
         for( itFuseau = subFuseaux.begin(); itFuseau != subFuseaux.end(); ++itFuseau )
         {
             MIL_Fuseau* fuseau = *itFuseau;
             if( !fuseau )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             if( fuseau->IsInside( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
             {
                 callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, *fuseau );
@@ -80,7 +80,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
         {
             MIL_Fuseau* fuseau = subFuseaux.front();
             if( !fuseau )
-                throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+                throw MASA_EXCEPTION( "invalid parameter." );
             callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, *fuseau );
             subFuseaux.erase( subFuseaux.begin() );
         }
@@ -97,13 +97,13 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
 boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     if( !pMissionType )
     {
         MT_LOG_ERROR( "Mission '" << mission << "' does not exist", 4, "DEC_OrdersFunctions::CDT_CreatePionMission" );
-        throw std::runtime_error( mission + " does not exist" );
+        throw MASA_EXCEPTION( mission + " does not exist" );
     }
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
@@ -117,11 +117,11 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission(
 boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( DEC_Decision_ABC* pPion, const std::string& mission )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     if( !pMissionType )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = pPion->GetPion().GetAutomate().GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
@@ -134,11 +134,11 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( D
 boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionVersPionBM( DEC_Decision_ABC* pPion, const std::string& mission )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     if( !pMissionType )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pPionMission = pPion->GetPion().GetAutomate().GetOrderManager().CreatePionMissionVersPionBM( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
@@ -186,10 +186,10 @@ void DEC_OrdersFunctions::CDT_GiveMissionVersPion( MIL_AgentPion& callerPion, bo
 boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
 {
     if( !pAutomate )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( mission );
     if( !pMissionType )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_Mission_ABC > pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
     return pMission;
 }
@@ -241,7 +241,7 @@ std::list<MIL_Fuseau*> DEC_OrdersFunctions::SplitFuseau( MIL_Automate& callerAut
 void DEC_OrdersFunctions::AssignFuseauToPionMission( MIL_Fuseau* pFuseau,  boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( !pMission || !pFuseau )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AffectFuseau( *pFuseau );
 }
 
@@ -252,7 +252,7 @@ void DEC_OrdersFunctions::AssignFuseauToPionMission( MIL_Fuseau* pFuseau,  boost
 void DEC_OrdersFunctions::AssignFuseauToAutomateMission( MIL_Fuseau* pFuseau,  boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( !pMission || !pFuseau )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AffectFuseau( *pFuseau );
 }
 
@@ -263,7 +263,7 @@ void DEC_OrdersFunctions::AssignFuseauToAutomateMission( MIL_Fuseau* pFuseau,  b
 void DEC_OrdersFunctions::AssignDirectionToAutomateMission( MT_Vector2D* pDirection,  boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( !pMission ||!pDirection )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pMission->AffectDirection( *pDirection );
 }
 
@@ -403,7 +403,7 @@ bool DEC_OrdersFunctions::IsFragOrderAvailable( DEC_Decision_ABC* agent, const s
 bool DEC_OrdersFunctions::DEC_Mission_IsPath( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     if( !pMission )
-        throw std::runtime_error( "Bad mission passed to DEC_Mission_IsPath" );
+        throw MASA_EXCEPTION( "Bad mission passed to DEC_Mission_IsPath" );
     const MIL_MissionType_ABC& missionType = pMission->GetType();
     const MIL_OrderTypeParameter& orderParameterType = missionType.GetParameterType( missionType.GetParameterIndex( parameter ) );
     const MIL_ParameterType_ABC& parameterType = orderParameterType.GetType();

@@ -336,7 +336,7 @@ inline
 DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
 {
     if( itCurrent == resultList_.end() )
-        throw std::runtime_error( "Current path point is invalid" );
+        throw MASA_EXCEPTION( "Current path point is invalid" );
     const MT_Vector2D& vPosition = ( *itCurrent )->GetPos();
     while ( itCurrent != resultList_.begin() && ( *itCurrent )->GetPos() == vPosition )
         --itCurrent;
@@ -372,7 +372,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             itCurrent = itPrev;
             ++itCurrent;
             if( ( *itCurrent )->GetPos() != vCurrentPos )
-                throw std::runtime_error( "Current position is invalid" );
+                throw MASA_EXCEPTION( "Current position is invalid" );
 
             // calcul de la distance "mangée" par le parcours de ce segment
             const MT_Vector2D& vPreviousPos = ( *itPrev )->GetPos();
@@ -401,9 +401,9 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             itCurrent = itPrev;
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -618,11 +618,11 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         DEC_PathPoint& point = **itPoint;
 
 //        if( itPoint != resultList_.begin() && !unitSpeeds_.IsPassable( point.GetObjectTypes() ) )
-//            throw std::runtime_error( "Unit max speed is not positive for a given object" );
+//            throw MASA_EXCEPTION( "Unit max speed is not positive for a given object" );
 
         ++itPoint;
         if( itPoint != resultList_.end() && unitSpeeds_.GetMaxSpeed( point.GetObjectTypesToNextPoint() ) <= 0 )
-            throw std::runtime_error( "Unit max speed is not positive for a given object" );
+            throw MASA_EXCEPTION( "Unit max speed is not positive for a given object" );
     }
 #endif
 

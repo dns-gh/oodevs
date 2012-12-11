@@ -35,7 +35,7 @@ AttritionCapacity::AttritionCapacity( xml::xistream& xis )
     , dotation_ ( PHY_DotationType::FindDotationCategory( category_ ) )
 {
     if( !dotation_ )
-        throw std::runtime_error( "Unknown dotation category - " + category_ + " - " );
+        throw MASA_EXCEPTION( "Unknown dotation category - " + category_ + " - " );
     xis >> xml::attribute( "attrition-surface", population_.surface_ )
         >> xml::attribute( "ph", population_.ph_ );
 }
@@ -83,7 +83,7 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> population_.ph_;
     dotation_ = PHY_DotationType::FindDotationCategory( category_ );
     if( !dotation_ )
-        throw std::runtime_error( "Unknown dotation category - " + category_ + " - " );
+        throw MASA_EXCEPTION( "Unknown dotation category - " + category_ + " - " );
 }
 
 // -----------------------------------------------------------------------------

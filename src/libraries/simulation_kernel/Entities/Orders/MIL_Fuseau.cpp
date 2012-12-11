@@ -318,7 +318,7 @@ bool MIL_Fuseau::IsPointInsidePolygon( T_PointVector& leftPoints, T_PointVector&
 void MIL_Fuseau::TruncateAndReorientLimits( const MT_Vector2D* vOrientationRefPos, T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
 {
     if( leftLimit.empty() || rightLimit.empty() )
-        throw std::runtime_error( "Null MIL_Fuseau" );
+        throw MASA_EXCEPTION( "Null MIL_Fuseau" );
     // The two limits must have the same orientation
     MT_Vector2D u = *leftLimit.rbegin() - *leftLimit.begin();
     MT_Vector2D v = *rightLimit.rbegin() - *rightLimit.begin();
@@ -346,7 +346,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( const MT_Vector2D* vOrientationRefPo
     SplitLimit( pBeginMissionLima, pEndMissionLima, rightLimit, rightParts );
 
     if( leftParts.size() != rightParts.size() || leftParts.empty() || leftParts.size() > 2 )
-        throw std::runtime_error( "Invalid parts number when splitting fuseau" );
+        throw MASA_EXCEPTION( "Invalid parts number when splitting fuseau" );
 
     std::size_t nNbParts = leftParts.size();
     if( nNbParts == 1 )
@@ -383,7 +383,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( const MT_Vector2D* vOrientationRefPo
 void MIL_Fuseau::InitializePolygon()
 {
     if( IsNull() )
-        throw std::runtime_error( "Null fuseau" );
+        throw MASA_EXCEPTION( "Null fuseau" );
     const T_PointVector& leftLimitTmp  = pLeftLimit_ ->GetPoints();
     const T_PointVector& rightLimitTmp = pRightLimit_->GetPoints();
 
@@ -407,7 +407,7 @@ void MIL_Fuseau::InitializePolygon()
 void MIL_Fuseau::InitializeMiddleLimit()
 {
     if( IsNull() )
-        throw std::runtime_error( "Null fuseau" );
+        throw MASA_EXCEPTION( "Null fuseau" );
 
     T_PointVector leftPointVectorTmp  = pLeftLimit_ ->GetPoints();
     T_PointVector rightPointVectorTmp = pRightLimit_->GetPoints();
@@ -415,7 +415,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
     InsertPointProjection( pLeftLimit_ ->GetPoints(), rightPointVectorTmp );
     InsertPointProjection( pRightLimit_->GetPoints(), leftPointVectorTmp  );
     if( leftPointVectorTmp.size() != rightPointVectorTmp.size() )
-        throw std::runtime_error( "Error InitializeMiddleLimit" );
+        throw MASA_EXCEPTION( "Error InitializeMiddleLimit" );
     assert( !leftPointVectorTmp.empty() );
     ///
     T_PointVector middle;
@@ -435,7 +435,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
 void MIL_Fuseau::Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
 {
     if( leftLimit .empty() || rightLimit.empty() )
-        throw std::runtime_error( "Error MILFuseau::Reset" );
+        throw MASA_EXCEPTION( "Error MILFuseau::Reset" );
 
     MIL_Fuseau::Reset();
 
@@ -538,7 +538,7 @@ void GetNextPoint( MT_Vector2D& vCur, Iterator itEnd, Iterator& itNext, double r
 MT_Vector2D GetPointOnLimitAfterIntersection( const T_PointVector& points, const MT_Vector2D& vIntersect, double rDistBefore ) // const
 {
     if( points.empty() )
-        throw std::runtime_error( "Error in GetPointOnLimitAfterIntersection" );
+        throw MASA_EXCEPTION( "Error in GetPointOnLimitAfterIntersection" );
     CIT_PointVector itBegin = points.begin();
     CIT_PointVector itPoint = itBegin;
 
@@ -787,7 +787,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
 
     assert( pLeftLimit_ && pRightLimit_ );
     if( !pLeftLimit_ || !pRightLimit_ )
-        throw std::runtime_error( "Null fuseau in ComputeEntryPoint" );
+        throw MASA_EXCEPTION( "Null fuseau in ComputeEntryPoint" );
 
     const T_PointVector* pOwnLimit   = 0;
     const T_PointVector* pOtherLimit = 0;
@@ -852,7 +852,7 @@ void MIL_Fuseau::ComputeEntryPoint(const MT_Vector2D& vPos, MT_Vector2D& vResult
 
     // general case - nearest point is on a limit
     if( !pOwnLimit || !pOtherLimit )
-        throw std::runtime_error( "Invalid own or other limit" );
+        throw MASA_EXCEPTION( "Invalid own or other limit" );
     CIT_PointVector itOwnPointNext   = pOwnLimit->begin();
     CIT_PointVector itOtherPointNext = pOtherLimit->begin();
     MT_Vector2D     vCurOwnPoint     = *itOwnPointNext;
@@ -971,7 +971,7 @@ namespace
 double MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, const MT_Vector2D& refPoint ) const
 {
     if( !pMiddleLimit_ )
-        throw std::runtime_error( "No middle limit in ComputeAverageDistanceFromLima" );
+        throw MASA_EXCEPTION( "No middle limit in ComputeAverageDistanceFromLima" );
 
     // projection de refPoint sur middle limit
     MT_Vector2D    refPointProjection;
@@ -1001,7 +1001,7 @@ double MIL_Fuseau::ComputeAverageDistanceFromLima( const MIL_LimaOrder& lima, co
 double MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& objective, const MT_Vector2D& refPoint ) const
 {
     if( !pMiddleLimit_ )
-        throw std::runtime_error( "No middle limit in ComputeAverageDistanceFromObjective" );
+        throw MASA_EXCEPTION( "No middle limit in ComputeAverageDistanceFromObjective" );
 
     // projection de refPoint sur middle limit
     MT_Vector2D    refPointProjection;
@@ -1081,7 +1081,7 @@ MT_Vector2D MIL_Fuseau::GetPositionAtAdvance( double advance ) const
 {
     MT_Vector2D result;
     if( !pMiddleLimit_ )
-        throw std::runtime_error( "Unable to compute point on middle fuseau" );
+        throw MASA_EXCEPTION( "Unable to compute point on middle fuseau" );
     const T_PointVector& points = pMiddleLimit_->GetPoints();
     MT_Vector2D firstPoint = points.front();
     result = firstPoint;
@@ -1252,7 +1252,7 @@ const MT_Line& MIL_Fuseau::GetGlobalDirection() const
 double MIL_Fuseau::GetWidth() const
 {
     if( IsNull() )
-        throw std::runtime_error( "Null fuseau in GetWidth" );
+        throw MASA_EXCEPTION( "Null fuseau in GetWidth" );
      const T_PointVector& leftLimitTmp  = pLeftLimit_ ->GetPoints();
      const T_PointVector& rightLimitTmp = pRightLimit_->GetPoints();
      return MT_Line( leftLimitTmp[0], rightLimitTmp[0] ).Magnitude();

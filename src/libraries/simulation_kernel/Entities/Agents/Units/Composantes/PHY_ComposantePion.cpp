@@ -230,7 +230,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
     if( breakdownType )
     {
         if( !pType_->CanHaveBreakdown( breakdownType ) )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         if( pBreakdown_ )
             delete pBreakdown_;
         pBreakdown_ = new PHY_Breakdown( breakdownType );

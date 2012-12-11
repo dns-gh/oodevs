@@ -461,7 +461,7 @@ unsigned int PHY_UnitType::GetPionEfficiency( E_PionEfficiency pionEfficiency ) 
     case ePionEfficiencyUrbanArea:
         return nUrbanAreaEfficiency_;
     default:
-        throw std::exception( "GetPionEfficiency : bad value" );
+        throw MASA_EXCEPTION( "GetPionEfficiency : bad value" );
     }
 }
 

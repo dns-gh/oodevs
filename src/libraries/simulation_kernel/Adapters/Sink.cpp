@@ -603,7 +603,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     {
         pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
     }
-    catch( MT_ScipioException& e )
+    catch( const MT_ScipioException& e )
     {
         e.SendToLogger();
     }

@@ -78,7 +78,7 @@ void CrowdCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> densityFactor_;
     type_ = MIL_PopulationType::Find( popuName );
     if( !type_ )
-        throw std::runtime_error( "Unknown dotation category - " + popuName + " - " );
+        throw MASA_EXCEPTION( "Unknown dotation category - " + popuName + " - " );
 }
 
 // -----------------------------------------------------------------------------

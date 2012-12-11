@@ -45,7 +45,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path )
 {
     if( !path )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const double length = path->GetLength();
     const double maxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( false );
     if( maxSpeedUnloaded == 0 )
@@ -108,7 +108,7 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
 int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, DEC_Path_ABC* pPath )
 {
     if( !pPath )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPath->GetState();
 }
 
@@ -139,7 +139,7 @@ namespace
             return result;
         }
         if( !pObjectColliding || !pObjectColliding->IsValid() )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         result.first = true;
         result.second.first = pObjectColliding;
         result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
@@ -245,7 +245,7 @@ bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const 
 MT_Vector2D* DEC_PathFunctions::GetRepPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return (MT_Vector2D*)&pPoint->GetPos();
 }
 
@@ -256,7 +256,7 @@ MT_Vector2D* DEC_PathFunctions::GetRepPoint( boost::shared_ptr< DEC_PathPoint > 
 bool DEC_PathFunctions::IsAvantPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPoint->GetType() == DEC_PathPoint::eTypePointFront;
 }
 
@@ -267,7 +267,7 @@ bool DEC_PathFunctions::IsAvantPoint( boost::shared_ptr< DEC_PathPoint > pPoint 
 bool DEC_PathFunctions::IsPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPoint->GetType() == DEC_PathPoint::eTypePointSpecial;
 }
 
@@ -278,7 +278,7 @@ bool DEC_PathFunctions::IsPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return static_cast< int >( pPoint->GetTypePoint() );
 }
 
@@ -289,7 +289,7 @@ int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPoint->GetDestPoint();
 }
 
@@ -300,7 +300,7 @@ boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::share
 int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPoint->GetTypeLima();
 }
 
@@ -311,7 +311,7 @@ int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoi
 unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPoint->GetLimaID();
 }
 
@@ -322,6 +322,6 @@ unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint >
 double DEC_PathFunctions::GetDistancePath( const boost::shared_ptr< DEC_Path_ABC > pPath )
 {
     if( !pPath )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
    return pPath->GetLength();
 }

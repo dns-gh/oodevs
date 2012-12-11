@@ -270,9 +270,9 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
             message().set_name( oldName );
             message.Send( NET_Publisher_ABC::Publisher() );
         }
-        catch( std::exception& exception )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", exception.what() ) );
+            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", tools::GetExceptionMsg( e ) ) );
         }
         currentCheckPoints_.pop();
     }
@@ -316,10 +316,10 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
         }
         tools::WriteXmlCrc32Signature( filename );
     }
-    catch( xml::exception& e )
+    catch( const xml::exception& e )
     {
         _clearfp();
-        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save backup checkpoint ( %s )", e.what() ) );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save backup checkpoint ( %s )", tools::GetExceptionMsg( e ) ) );
         return false;
     }
     catch( ... )
@@ -344,14 +344,14 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
         const boost::crc_32_type::value_type nCRCFileCRC  = config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) );
         CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName, nDataFileCRC, nCRCFileCRC );
     }
-    catch( MT_ScipioException& exception )
+    catch( const MT_ScipioException& e )
     {
-        exception.SendToLogger();
+        e.SendToLogger();
         return false;
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", exception.what() ) );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", tools::GetExceptionMsg( e ) ) );
         return false;
     }
     catch( ... )

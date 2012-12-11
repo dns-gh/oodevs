@@ -58,7 +58,7 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowled
     unsigned int callerTeamID = caller.GetArmy().GetID();
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeCrowdId );
     if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ " Unknown crowd knowledge" );
+        throw MASA_EXCEPTION( "Unknown crowd knowledge." );
     MIL_Population& crowd = pKnowledge->GetPopulationKnown();
     ComputeTimeToWait( crowd.GetAffinity( callerTeamID ) );
     Callback( static_cast< int >( eRunning ) );

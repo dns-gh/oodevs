@@ -135,16 +135,16 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
     {
         const sword::MissionParameter& startTime = msg.elem( 7 );
         if( startTime.value_size() != 1 || !startTime.value().Get(0).has_datetime() )
-            throw std::exception( "Meteo : bad attribute for StartTime" );
+            throw MASA_EXCEPTION( "Meteo : bad attribute for StartTime" );
         startTime_ = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
         const sword::MissionParameter& endTime = msg.elem( 8 );
         if( endTime.value_size() != 1 || !endTime.value().Get(0).has_datetime() )
-            throw std::exception( "Meteo : bad attribute for EndTime" );
+            throw MASA_EXCEPTION( "Meteo : bad attribute for EndTime" );
         endTime_ = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
     }
     const sword::MissionParameter& location = msg.elem( 9 );
     if( location.value_size() != 1 || !location.value().Get(0).has_location() )
-        throw std::exception( "Meteo : bad attribute for Location" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for Location" );
     if( location.value().Get(0).location().coordinates().elem_size() == 2 ) // $$$$ ABR 2011-09-29: Sword protocol
     {
         NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
@@ -156,7 +156,7 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
         NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 2 ), downRight_ );
     }
     else
-        throw std::exception( "Meteo : bad attribute for Location" );
+        throw MASA_EXCEPTION( "Meteo : bad attribute for Location" );
 }
 
 // -----------------------------------------------------------------------------

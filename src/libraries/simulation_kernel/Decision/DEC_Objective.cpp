@@ -23,7 +23,7 @@ DEC_Objective::DEC_Objective( const sword::MissionObjective& asn )
 {
     NET_ASN_Tools::ReadTick( asn.time(), nSchedule_);
     if( !NET_ASN_Tools::ReadLocation( asn.location(), localisation_ ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

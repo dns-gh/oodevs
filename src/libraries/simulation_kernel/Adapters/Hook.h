@@ -139,9 +139,9 @@ namespace detail
             { \
                 return Implement( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
             } \
-            catch( std::exception& e ) \
+            catch( const std::exception& e ) \
             { \
-                MT_LOG_ERROR_MSG( "Exception in hook " #Hook << e.what() ); \
+                MT_LOG_ERROR_MSG( "Exception in hook " #Hook << tools::GetExceptionMsg( e ) ); \
             } \
             catch( ... ) \
             { \

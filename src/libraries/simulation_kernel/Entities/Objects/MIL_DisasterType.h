@@ -41,7 +41,7 @@ public:
     {
         CIT_DisasterTypes it = disasterTypes_.find( strName );
         if( it == disasterTypes_.end() )
-            throw std::runtime_error( "unknown disaster type '" + strName + "'" );
+            throw MASA_EXCEPTION( "unknown disaster type '" + strName + "'" );
         return it->second;
     }
     //@}

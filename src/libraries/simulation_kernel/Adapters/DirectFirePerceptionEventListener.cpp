@@ -131,9 +131,9 @@ void DirectFirePerceptionEventListener::Notify( const core::Model& event )
             NotifyFirerPerception( pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception in " << __FUNCTION__ << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Exception in " << __FUNCTION__ << " : " << tools::GetExceptionMsg( e ) );
     }
     catch( ... )
     {

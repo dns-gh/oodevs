@@ -31,7 +31,7 @@ void DEC_TelepathyFunctions::Register( sword::Brain& brain )
 void DEC_TelepathyFunctions::CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& value )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pPion->SetVariable( "myself.plotsRavitaillement_", value );
 }
 
@@ -42,7 +42,7 @@ void DEC_TelepathyFunctions::CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, c
 std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_TelepathyFunctions::GetListeEnisTirAutorise( DEC_Decision_ABC* pPion )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pPion->GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
 }
 
@@ -53,7 +53,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_TelepathyFunctions::
 void DEC_TelepathyFunctions::RemoveAgentFromListeEnisTirAutorise( DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Agent > eni )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > listEnis = pPion->GetVariable< std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > >( "myself.listeEnisTirAutorise_" );
     for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::iterator it = listEnis.begin(); it != listEnis.end(); ++it )
     {

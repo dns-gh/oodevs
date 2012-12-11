@@ -5122,9 +5122,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">
-      <Filter>Source Files\Network\ASN</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.inl">
       <Filter>Source Files\Entities\Agents\Units\Composantes</Filter>
     </None>

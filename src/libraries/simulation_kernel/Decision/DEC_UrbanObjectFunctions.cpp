@@ -213,7 +213,7 @@ float DEC_UrbanObjectFunctions::GetStateUrbanBlock( MIL_UrbanObject_ABC* pUrbanO
 boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock( const MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( !pUrbanObject )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< TER_Localisation > location( new TER_Localisation( pUrbanObject->GetLocalisation() ) );
     return location;
 }
@@ -225,7 +225,7 @@ boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUr
 void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject, const PHY_DotationCategory* category )
 {
     if( !pUrbanObject )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     StructuralCapacity* capacity = const_cast< StructuralCapacity* >( pUrbanObject->Retrieve< StructuralCapacity >() );
     if( capacity )
     {
@@ -248,6 +248,6 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, M
 std::string DEC_UrbanObjectFunctions::GetType( const MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( !pUrbanObject )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pUrbanObject->GetType().GetName();
 }

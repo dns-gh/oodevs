@@ -51,13 +51,13 @@ MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
     T_PointVector points;
     localisation_ = boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::eLine, points ) );
     if( !NET_ASN_Tools::ReadLine( asn.line(), *localisation_ ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_lima );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima );
 
     for( int i = 0; i < asn.fonctions_size(); ++i )
     {
         const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( asn.fonctions(i) );
         if( !pFunction )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_lima_function );
+            throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima_function );
         functions_.insert( pFunction );
     }
 }

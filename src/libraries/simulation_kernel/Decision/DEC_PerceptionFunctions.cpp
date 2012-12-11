@@ -92,7 +92,7 @@ void DEC_PerceptionFunctions::DisableDisasterPerception( MIL_Agent_ABC& callerAg
 bool DEC_PerceptionFunctions::IsPointVisible( const MIL_Agent_ABC& callerAgent, MT_Vector2D* pPt )
 {
     if( !pPt )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const PHY_PerceptionLevel& level = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( *pPt );
     return( level != PHY_PerceptionLevel::notSeen_ );
 }
@@ -104,7 +104,7 @@ bool DEC_PerceptionFunctions::IsPointVisible( const MIL_Agent_ABC& callerAgent, 
 void DEC_PerceptionFunctions::SetVisionModeDirection( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > pDir )
 {
     if( !pDir )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModeDirection( *pDir );
 }
 
@@ -115,7 +115,7 @@ void DEC_PerceptionFunctions::SetVisionModeDirection( MIL_Agent_ABC& callerAgent
 void DEC_PerceptionFunctions::SetVisionModePoint( MIL_Agent_ABC& callerAgent, const MT_Vector2D* pPoint )
 {
     if( !pPoint )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( *pPoint );
 }
 
@@ -146,7 +146,7 @@ void DEC_PerceptionFunctions::SetVisionModeNormal( MIL_Agent_ABC& callerAgent )
 int DEC_PerceptionFunctions::EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, double rSize, double rGrowthSpeed )
 {
     if( !pCenter )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const double rSimSize = MIL_Tools::ConvertMeterToSim( rSize );
     const double rSimGrowthSpeed = MIL_Tools::ConvertSpeedMosToSim( rGrowthSpeed );
     return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoPoint( *pCenter, rSimSize, rSimGrowthSpeed, callerAgent );
@@ -168,7 +168,7 @@ void DEC_PerceptionFunctions::DisableRecognitionPoint( MIL_Agent_ABC& callerAgen
 int DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, double rGrowthSpeed )
 {
     if( !pLocalisation || !pCenter )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetPion().GetRole< PHY_RoleInterface_Perceiver >().EnableRecoObjects( *pLocalisation, *pCenter, rGrowthSpeed, callerAgent );
 }
 
@@ -188,7 +188,7 @@ void DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation( MIL_Agent_AB
 int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation, callerAgent.GetRole< DEC_Decision_ABC >() );
 }
 
@@ -200,7 +200,7 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& calle
 int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed )
 {
     if( !pLocalisation )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoLocalisation( *pLocalisation, rGrowthSpeed, callerAgent.GetRole< DEC_Decision_ABC >() );
 }
 
@@ -239,7 +239,7 @@ int DEC_PerceptionFunctions::EnableRadarOnLocalisation( MIL_Agent_ABC& callerAge
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     if( !pRadarClass || !pLocalisation )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRadarOnLocalisation( *pRadarClass, *pLocalisation );
 }
 
@@ -251,7 +251,7 @@ void DEC_PerceptionFunctions::DisableRadarOnLocalisation( MIL_Agent_ABC& callerA
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     if( !pRadarClass )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRadarOnLocalisation( *pRadarClass, id );
 }
 
@@ -263,7 +263,7 @@ void DEC_PerceptionFunctions::EnableRadar( MIL_Agent_ABC& callerAgent, int nRada
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     if( !pRadarClass )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRadar( *pRadarClass );
 }
 
@@ -275,7 +275,7 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_Agent_ABC& callerAgent, int nRad
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     if( !pRadarClass )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRadar( *pRadarClass );
 }
 
@@ -286,7 +286,7 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_Agent_ABC& callerAgent, int nRad
 int DEC_PerceptionFunctions::EnableRadarOnPointPtr( MIL_Agent_ABC& callerAgent, int nRadarClass, boost::shared_ptr< MT_Vector2D > point )
 {
     if( !point )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     T_PointVector vector;
     vector.push_back( *point );
     TER_Localisation localisation ( TER_Localisation::ePoint, vector );
@@ -318,7 +318,7 @@ void DEC_PerceptionFunctions::DisableRecordMode( MIL_Agent_ABC& callerAgent )
 void DEC_PerceptionFunctions::EnableRecoAlat( MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
     if( !location )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoAlat( *location );
 }
 
@@ -347,7 +347,7 @@ bool DEC_PerceptionFunctions::HasNoDelayedPeceptions( const MIL_Agent_ABC& calle
 int DEC_PerceptionFunctions::EnableSurveillanceLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSurveillanceLocalisation( *pLocalisation );
 }
 
@@ -367,7 +367,7 @@ void DEC_PerceptionFunctions::DisableSurveillanceLocalisation( MIL_Agent_ABC& ca
 int DEC_PerceptionFunctions::EnableFlyingShellDetection( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableFlyingShellDetection( *pLocalisation );
 }
 
@@ -482,10 +482,10 @@ double DEC_PerceptionFunctions::GetPerception( const MIL_AgentPion& callerAgent,
 void DEC_PerceptionFunctions::AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, MT_Vector2D& point )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     DEC_AutomateDecision* pAutomat = pPion->GetDecAutomate();
     if( !pAutomat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     pAutomat->AddReconnoiteredPointBy( pPion, point );
 }
 
@@ -496,10 +496,10 @@ void DEC_PerceptionFunctions::AddReconnoiteredPointBy( DEC_Decision_ABC* pPion, 
 bool DEC_PerceptionFunctions::PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pPion, MT_Vector2D& point )
 {
     if( !pPion )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     DEC_AutomateDecision* pAutomat = pPion->GetDecAutomate();
     if( !pAutomat )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     return pAutomat->PointIsReconnoiteredByMeOrNoOne( pPion, point );
 }
 // -----------------------------------------------------------------------------

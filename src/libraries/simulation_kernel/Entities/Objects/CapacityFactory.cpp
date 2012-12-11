@@ -212,7 +212,7 @@ CapacityFactory::~CapacityFactory()
 void CapacityFactory::Register( const std::string& capacity, const Prototype_CallBack& callback )
 {
     if( ! prototypeCallbacks_.insert( std::make_pair( capacity, callback ) ).second )
-        throw std::invalid_argument( "prototype capacity '" + capacity + "' already registered." );
+        throw MASA_EXCEPTION( "Prototype capacity '" + capacity + "' already registered." );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +222,7 @@ void CapacityFactory::Register( const std::string& capacity, const Prototype_Cal
 void CapacityFactory::Register( const std::string& capacity, const Object_CallBack& callback )
 {
     if( ! objectCallbacks_.insert( std::make_pair( capacity, callback ) ).second )
-        throw std::invalid_argument( "object capacity '" + capacity + "' already registered." );
+        throw MASA_EXCEPTION( "Object capacity '" + capacity + "' already registered." );
 }
 
 // -----------------------------------------------------------------------------

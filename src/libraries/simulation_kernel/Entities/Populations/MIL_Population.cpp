@@ -425,7 +425,7 @@ void MIL_Population::UpdateDecision( float duration )
         orderManager_.Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
         if( role )
@@ -473,9 +473,9 @@ void MIL_Population::UpdateState()
                 ++itConcentration;
         }
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating population " << GetName().c_str() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating population " << GetName().c_str() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -1128,16 +1128,16 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
     if( asn.type() != sword::UnitMagicAction::move_to )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const sword::Point& point = parametre.value().Get(0).point();
     if( point.location().type() != sword::Location::point
         || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
    // merge all concentrations into new
@@ -1177,13 +1177,13 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_enumeration() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
     if( !pAttitude )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
@@ -1220,7 +1220,7 @@ namespace
 void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 4 )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     const sword::MissionParameter& healthyParam = msg.parameters().elem( 0 );
     const sword::MissionParameter& woundedParam = msg.parameters().elem( 1 );
     const sword::MissionParameter& contaminatedParam = msg.parameters().elem( 2 );
@@ -1229,7 +1229,7 @@ void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
         woundedParam.value_size() != 1 || !woundedParam.value().Get( 0 ).has_quantity() ||
         contaminatedParam.value_size() != 1 || !contaminatedParam.value().Get( 0 ).has_quantity() ||
         deadParam.value_size() != 1 || !deadParam.value().Get( 0 ).has_quantity() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     unsigned int healthy = healthyParam.value().Get( 0 ).quantity();
     unsigned int wounded = woundedParam.value().Get( 0 ).quantity();
     unsigned int contaminated = contaminatedParam.value().Get( 0 ).quantity();
@@ -1316,10 +1316,10 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
 void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get( 0 ).has_quantity() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
     rArmedIndividuals_ = 0.01 * parametre.value().Get( 0 ).quantity();
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
@@ -1420,9 +1420,9 @@ void MIL_Population::UpdateNetwork()
         for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
             ( **it ).SendChangedState();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating network for population " << GetID() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating network for population " << GetID() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -1521,7 +1521,7 @@ MIL_Army_ABC& MIL_Population::GetArmy() const
 void MIL_Population::SetPionMaxSpeed( double rSpeed )
 {
     if( rSpeed < 0. )
-        throw std::runtime_error( "Setting max speed to less than 0" );
+        throw MASA_EXCEPTION( "Setting max speed to less than 0" );
     bPionMaxSpeedOverloaded_ = true;
     rOverloadedPionMaxSpeed_ = rSpeed;
 }
@@ -1687,7 +1687,7 @@ bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destina
 MT_Vector2D MIL_Population::GetFlowHeadPosition()
 {
     if( !HasFlow() )
-        throw std::runtime_error( "Asking head position of a crowd without flow." );
+        throw MASA_EXCEPTION( "Asking head position of a crowd without flow." );
     MIL_PopulationFlow* firstFlow = *flows_.begin();
     return firstFlow->GetPosition();
 }
@@ -1699,7 +1699,7 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
 void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
     criticalIntelligenceChanged_ = true;
 }
@@ -1716,7 +1716,7 @@ void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
         const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
         const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
         if( !pModel )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         GetRole< DEC_PopulationDecision >().SetModel( *pModel );
     }
     GetDecision().Reload();

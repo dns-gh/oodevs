@@ -9,6 +9,7 @@
 
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
+#include <tools/Exception.h>
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSpeedMosToSim
@@ -151,7 +152,7 @@ E_KeyPoint MIL_Tools::ConvertLandType( const std::string& sName )
         return eKeyPointBridge;
     if( sName == "lima" )
         return eKeyPointLima;
-    throw std::runtime_error( __FUNCTION__ " : unknown landtype" );
+    throw MASA_EXCEPTION( "Unknown landtype." );
 }
 
 //-----------------------------------------------------------------------------

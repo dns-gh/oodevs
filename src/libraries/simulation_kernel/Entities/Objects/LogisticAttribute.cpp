@@ -48,7 +48,7 @@ LogisticAttribute::LogisticAttribute( const sword::MissionParameter_Value& attri
 {
     MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( attributes.list( 1 ).identifier() );
     if( !pLogSuperior )
-        throw std::runtime_error( "Invalid logistic base" );
+        throw MASA_EXCEPTION( "Invalid logistic base" );
     pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( *pLogSuperior ) );
 }
 
@@ -192,7 +192,7 @@ void LogisticAttribute::Finalize()
     {
         MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( idFromXML_ );
         if( !pLogSuperior )
-            throw xml::exception( "Invalid logistic base for logistic attribute : id = " + boost::lexical_cast< std::string >( idFromXML_ ) );
+            throw MASA_EXCEPTION( "Invalid logistic base for logistic attribute : id = " + boost::lexical_cast< std::string >( idFromXML_ ) );
         pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( *pLogSuperior ) );
     }
 }

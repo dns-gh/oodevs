@@ -151,5 +151,5 @@ unsigned int MIL_OrderType_ABC::GetParameterIndex( const std::string& name ) con
         if( parameters_[i]->GetDIAName() == name )
             return static_cast< unsigned >( i );
     }
-    throw std::runtime_error( "Incorrect parameter name" );
+    throw MASA_EXCEPTION( "Incorrect parameter name" );
 }

@@ -49,7 +49,7 @@ StockAttribute::StockAttribute( const sword::MissionParameter_Value& attributes 
         const sword::MissionParameter_Value& parameterDotation = parameterDotations.list( i );
         const PHY_DotationCategory* dotationType = PHY_DotationType::FindDotationCategory( parameterDotation.list( 0 ).identifier() );
         if( !dotationType )
-            throw std::runtime_error( "Unknow dotation type id " + boost::lexical_cast< std::string >( parameterDotation.list( 0 ).identifier() ) );
+            throw MASA_EXCEPTION( "Unknow dotation type id " + boost::lexical_cast< std::string >( parameterDotation.list( 0 ).identifier() ) );
         StockDotation& dotation = stockDotations_[ dotationType ];
         dotation.stock_ = parameterDotation.list( 1 ).quantity();
         dotation.maxStock_ = parameterDotation.list( 2 ).quantity();
@@ -124,7 +124,7 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
         ar >> type;
         const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( type );
         if( !dotation )
-           throw std::runtime_error( "Unknown dotation category - " + type + " - " );
+           throw MASA_EXCEPTION( "Unknown dotation category - " + type + " - " );
         StockDotation& stockDotation = stockDotations_[ dotation ];
         ar >> stockDotation.stock_ >> stockDotation.maxStock_;
     }

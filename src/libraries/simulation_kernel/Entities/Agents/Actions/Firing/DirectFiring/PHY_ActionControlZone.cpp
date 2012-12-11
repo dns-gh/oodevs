@@ -93,9 +93,9 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
         {
             pZoneControlled_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), builder );
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( e.what() );
+            MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         }
         //@}
     }

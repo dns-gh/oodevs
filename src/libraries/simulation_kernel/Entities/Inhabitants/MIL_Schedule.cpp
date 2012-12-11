@@ -74,7 +74,7 @@ namespace
         else if( day == "saturday" )
             return 6u;
         else
-            throw std::runtime_error( "Invalid day : " + day );
+            throw MASA_EXCEPTION( "Invalid day : " + day );
     }
 }
 

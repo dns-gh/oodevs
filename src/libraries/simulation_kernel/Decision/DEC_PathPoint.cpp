@@ -71,7 +71,7 @@ bool DEC_PathPoint::WillBeInObject( const TerrainData& data ) const
 //-----------------------------------------------------------------------------
 void DEC_PathPoint::SendToDIA( DEC_Representations& /*agent*/, boost::shared_ptr< DEC_PathPoint > /*point*/ ) const
 {
-    throw std::runtime_error( "SendToDIA cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "SendToDIA cannot be called for this Point class" );
 }
 
 //-----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void DEC_PathPoint::SendToDIA( DEC_Representations& /*agent*/, boost::shared_ptr
 //-----------------------------------------------------------------------------
 void DEC_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
 {
-    throw std::runtime_error( "RemoveFromDIA cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "RemoveFromDIA cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ DEC_PathPoint::E_TypePoint DEC_PathPoint::GetTypePoint() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_PathPoint > DEC_PathPoint::GetDestPoint() const
 {
-    throw std::runtime_error( "GetDestPoint cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetDestPoint cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ boost::shared_ptr< DEC_PathPoint > DEC_PathPoint::GetDestPoint() const
 // -----------------------------------------------------------------------------
 int DEC_PathPoint::GetTypeLima()
 {
-    throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ int DEC_PathPoint::GetTypeLima()
 // -----------------------------------------------------------------------------
 unsigned int DEC_PathPoint::GetLimaID()
 {
-    throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,5 +146,5 @@ unsigned int DEC_PathPoint::GetLimaID()
 // -----------------------------------------------------------------------------
 const TerrainData& DEC_PathPoint::GetTypeTerrain() const
 {
-    throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }

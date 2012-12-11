@@ -60,7 +60,7 @@ FireAttribute::FireAttribute( const sword::MissionParameter_Value& attributes )
     if( !pClass_ )
     {
         MT_LOG_ERROR_MSG( "Unknown 'Fire class' '" << attributes.list( 1 ).acharstr() << "' for fire object attribute" );
-        throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );
+        throw MASA_EXCEPTION( "Unknown 'Fire class' for fire object attribute" );
     }
     maxCombustionEnergy_ = attributes.list( 2 ).quantity();
 }
@@ -86,7 +86,7 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
        >> maxCombustionEnergy_;
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
-        throw std::runtime_error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
+        throw MASA_EXCEPTION( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
 }
 
 // -----------------------------------------------------------------------------

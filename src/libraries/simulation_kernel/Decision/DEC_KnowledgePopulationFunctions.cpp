@@ -266,7 +266,7 @@ int DEC_KnowledgePopulationFunctions::GetClosestConcentration( const DEC_Decisio
 bool DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentPion& callerAgent, unsigned int knowledgeId, const MT_Vector2D* position )
 {
     if( !position )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         return false;

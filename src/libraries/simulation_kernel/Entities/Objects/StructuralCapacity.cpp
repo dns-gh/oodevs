@@ -204,7 +204,7 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
     const PHY_MaterialCompositionType& material = materialAttribute->GetMaterial();
     const PHY_MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
     if( !attrition )
-        throw std::exception( "Error in searching protection" );
+        throw MASA_EXCEPTION( "Error in searching protection" );
     // Tirage de l'état opérationnel
     const double rRand = ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) );
     const double destruction = attrition->destruction_;

@@ -30,7 +30,7 @@ ConstructionCapacity::ConstructionCapacity( ObjectPrototype& prototype, xml::xis
     else if( unit_type == "density" )
         unit_type_ = eDensity;
     else
-        throw std::runtime_error( "unknown unit-type : " + unit_type + ". Must be 'raw' or 'density'" );
+        throw MASA_EXCEPTION( "unknown unit-type : " + unit_type + ". Must be 'raw' or 'density'" );
 }
 
 // -----------------------------------------------------------------------------

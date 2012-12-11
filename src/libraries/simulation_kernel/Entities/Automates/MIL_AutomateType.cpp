@@ -115,9 +115,9 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     {
         pType = (*itAutomateAllocator->second)( strName, xis );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        xis.error( e.what() );
+        xis.error( tools::GetExceptionMsg( e ) );
         pType = 0;
     }
 

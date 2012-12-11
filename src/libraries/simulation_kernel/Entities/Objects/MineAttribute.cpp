@@ -63,7 +63,7 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     {
         dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
         if( !dotation_ )
-            throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
+            throw MASA_EXCEPTION( "Unknown 'Dotation Type' for mine attribute" );
         nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
         nFullNbrDotation_ = static_cast< unsigned int >( attributes.list( 3 ).areal() );
         miningPercentage_.Set( attributes.list( 4 ).quantity() );

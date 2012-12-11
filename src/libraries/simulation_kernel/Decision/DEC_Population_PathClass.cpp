@@ -148,9 +148,9 @@ void DEC_Population_PathClass::ReadObject( xml::xistream& xis )
         assert( objectCosts_.size() > id );
         xis >> xml::attribute( "value", objectCosts_[ id ] );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

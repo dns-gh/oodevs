@@ -187,9 +187,9 @@ void PHY_DotationStockContainer::ReadValues( xml::xistream& xis )
                                  >> xml::list( "resource", *this, &PHY_DotationStockContainer::ReadStock )
                              >> xml::end;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

@@ -86,7 +86,7 @@ void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
         nComputationEndTime = static_cast< unsigned int >( time( 0 ) ) + nMaxComputationDuration;
 
     if( pathSections_.empty() )
-        throw std::runtime_error( "List of path sections is empty" );
+        throw MASA_EXCEPTION( "List of path sections is empty" );
     const DEC_PathResult::T_PathPointList& pathPoints = dynamic_cast< const DEC_PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
 
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
@@ -144,7 +144,7 @@ void DEC_Path::Execute( TerrainPathfinder& pathfind )
     {
         DoExecute( pathfind );
     }
-    catch( std::runtime_error& )
+    catch( const std::exception& )
     {
         bJobCanceled_ = true;
         nState_ = eCanceled;

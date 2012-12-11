@@ -61,7 +61,7 @@ MT_Vector2D InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& target, U
     TER_DistanceLess cmp ( targetResult.position_ );
     T_PointSet collisions( cmp );
     if( !urbanObject_.GetLocalisation().Intersect2D( MT_Line( targetResult.position_, firerResult.position_ ), collisions, 0 ) )
-        return firerResult.position_; //// $$$$ _RC_ SBO 2010-07-07: devrait etre throw std::exception( "error in urbanBlock intersection for firer" );
+        return firerResult.position_; //// $$$$ _RC_ SBO 2010-07-07: devrait etre throw MASA_EXCEPTION( "error in urbanBlock intersection for firer" );
     return *collisions.begin(); // Nearest point from targetResult
 }
 
@@ -78,7 +78,7 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, Ur
     T_PointSet collisions( cmp );
     urbanObject_.GetLocalisation().Intersect2D( MT_Line( targetResult.position_, firerResult.position_ ), collisions, 0 );
     if( collisions.size() < 2 )
-        return targetResult.position_;  // $$$$ _RC_ SBO 2010-07-07: devrait etre throw std::exception( " error in urbanBlock intersection for target" );
+        return targetResult.position_;  // $$$$ _RC_ SBO 2010-07-07: devrait etre throw MASA_EXCEPTION( " error in urbanBlock intersection for target" );
     MT_Vector2D vector( *collisions.rbegin() - *collisions.begin() );
     vector *= ( 1 - targetResult.urbanDeployment_ );
     MT_Vector2D pM = *collisions.begin() + vector;

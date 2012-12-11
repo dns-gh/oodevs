@@ -253,7 +253,7 @@ void LogisticLink::OnReceiveChangeQuotas( const sword::MissionParameter& message
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
         if( !pDotationCategory )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_ErrorCode >( sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_dotation );
+            throw MASA_EXCEPTION_ASN( sword::LogSupplyChangeQuotasAck_ErrorCode, sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_dotation );
 
         sDotationQuota& quota = quotas_[ pDotationCategory ];
         quota.quota_          = number;

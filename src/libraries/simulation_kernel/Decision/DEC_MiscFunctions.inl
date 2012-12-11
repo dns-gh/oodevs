@@ -32,7 +32,7 @@ void DEC_MiscFunctions::Trace( const T& caller, const std::string& message )
         *msg().mutable_message() = message.c_str();
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
-    catch( std::exception& ) {}
+    catch( const std::exception& ) {}
 }
 
 //-----------------------------------------------------------------------------

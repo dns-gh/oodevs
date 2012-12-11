@@ -360,7 +360,7 @@ sword::MagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const goo
     {
         capacity->Update( list );
     }
-    catch( std::exception& )
+    catch( const std::exception& )
     {
         return sword::MagicActionAck::error_invalid_parameter;
     }

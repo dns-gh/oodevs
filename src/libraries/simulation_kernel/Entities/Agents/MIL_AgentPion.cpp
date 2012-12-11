@@ -173,7 +173,7 @@ namespace
         R* role;
         archive >> role;
         if( !role )
-            throw std::runtime_error( __FUNCTION__ ": Failed to load role " + std::string( typeid( role ).name() ) );
+            throw MASA_EXCEPTION( "Failed to load role " + std::string( typeid( role ).name() ) );
         container.RegisterRole( *role );
         return *role;
     }
@@ -474,7 +474,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
         pOrderManager_->Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
         if( role )
@@ -527,9 +527,9 @@ void MIL_AgentPion::UpdatePhysicalState()
         if( role3 )
             role3->Update( bIsDead );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error updating unit " << GetID() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating unit " << GetID() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -564,9 +564,9 @@ void MIL_AgentPion::UpdateNetwork()
             bHasChanged_ = false;
         }
     }
-    catch( std::exception & e )
+    catch( const std::exception & e )
     {
-        MT_LOG_ERROR_MSG( "Error updating network for unit " << GetID() << " : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error updating network for unit " << GetID() << " : " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -812,17 +812,17 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition )
 void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
     if( asn.type() != sword::UnitMagicAction::move_to )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     if( pAutomate_->IsEngaged() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_automat_engaged );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_automat_engaged );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const sword::Point& point = parametre.value().Get(0).point();
     if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
     MagicMove( vPosTmp );
@@ -840,7 +840,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::UnitAttributes::EnumUnitTiredness tiredness = static_cast< sword::UnitAttributes::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness, true );
     }
     if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
@@ -848,7 +848,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
         const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
     if( msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value().Get(0).has_enumeration() )
@@ -856,7 +856,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
         const PHY_Experience* pExperience = PHY_Experience::Find( experience );
         if( !pExperience )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
     if( msg.elem( 3 ).value_size() == 1 && msg.elem( 3 ).value().Get(0).has_enumeration() )
@@ -864,7 +864,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( msg.elem( 3 ).value().Get(0).enumeration() );
         const PHY_Stress* pStress = PHY_Stress::Find( stress );
         if( !pStress )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress, true );
     }
 }
@@ -921,7 +921,7 @@ void MIL_AgentPion::OnReceiveResupplyAll()
 void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
 {
     if( msg.elem_size() < 5 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     if( msg.elem( 0 ).value_size() > 0 ) // Equipments
     {
@@ -929,11 +929,11 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
         {
             if ( msg.elem( 0 ).value().Get( i ).list_size() < 2 )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 0 ).value().Get( i ).list( 0 ).has_identifier() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 0 ).value().Get( i ).list( 1 ).has_quantity() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             
             sword::EquipmentType type;
             type.set_id( msg.elem( 0 ).value().Get( i ).list( 0 ).identifier() );
@@ -949,11 +949,11 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         for( int i = 0 ; i < msg.elem( 1 ).value_size(); ++i )
         {
             if ( msg.elem( 1 ).value().Get( i ).list_size() < 2 )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 1 ).value().Get( i ).list( 0 ).has_identifier() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 1 ).value().Get( i ).list( 1 ).has_quantity() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
             unsigned int rank = msg.elem( 1 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 1 ).value().Get( i ).list( 1 ).quantity();
@@ -968,11 +968,11 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         for( int i = 0; i < msg.elem( 2 ).value_size(); ++i )
         {
             if ( msg.elem( 2 ).value().Get( i ).list_size() < 2 )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 2 ).value().Get( i ).list( 0 ).has_identifier() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 2 ).value().Get( i ).list( 1 ).has_quantity() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
             unsigned int dotation = msg.elem( 2 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 2 ).value().Get( i ).list( 1 ).quantity();
@@ -987,11 +987,11 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         for( int i = 0; i < msg.elem( 3 ).value_size(); ++i )
         {
             if ( msg.elem( 3 ).value().Get( i ).list_size() < 2 )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 3 ).value().Get( i ).list( 0 ).has_identifier() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 3 ).value().Get( i ).list( 1 ).has_quantity() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
             unsigned int munition = msg.elem( 3 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 3 ).value().Get( i ).list( 1 ).quantity();
@@ -1005,11 +1005,11 @@ void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
         for( int i = 0; i < msg.elem( 4 ).value_size(); ++i )
         {
             if ( msg.elem( 4 ).value().Get( i ).list_size() < 2 )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 4 ).value().Get( i ).list( 0 ).has_identifier() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             if ( !msg.elem( 4 ).value().Get( i ).list( 1 ).has_quantity() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
             unsigned int stock = msg.elem( 4 ).value().Get( i ).list( 0 ).identifier();
             int number = msg.elem( 4 ).value().Get( i ).list( 1 ).quantity();
@@ -1045,7 +1045,7 @@ void  MIL_AgentPion::OnReceiveRecoverHumansTransporters()
 void MIL_AgentPion::OnReceiveCreateWound( const sword::MissionParameters& msg )
 {
     if( msg.elem_size() > 2 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     if( msg.elem( 0 ).value_size() == 1 )
     {
@@ -1177,9 +1177,9 @@ void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, c
 {
     MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parameters().elem( 0 ).value().Get(0).automat().id() );
     if( !pNewAutomate )
-        throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
+        throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_invalid_automate );
     if( pNewAutomate->GetArmy() != GetArmy() )
-        throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_parties_mismatched );
+        throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_parties_mismatched );
     if( pAutomate_ == pNewAutomate )
         return;
     ChangeSuperiorSilently( *pNewAutomate );
@@ -1449,7 +1449,7 @@ bool MIL_AgentPion::IsImmobilized() const
 void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
     client::UnitAttributes message;
     message().mutable_unit()->set_id( GetID() );
@@ -1506,14 +1506,14 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visito
 void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() < 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
         if( elem.list_size() < 2 || elem.list_size() > 3 || !elem.list( 0 ).has_identifier() || !elem.list( 1 ).has_quantity() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
         sword::EquipmentType type;
         type.set_id( elem.list( 0 ).identifier() );
@@ -1522,12 +1522,12 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
         if( elem.list_size() == 3 )
         {
             if( !elem.list( 2 ).has_identifier() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             breakdownId = elem.list( 2 ).identifier();
         }
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
         if( !pComposanteType || !pComposanteType->CanHaveBreakdown() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         roleComposantes.CreateBreakdowns( *pComposanteType, static_cast< unsigned int >( number ), breakdownId );
     }
 }
@@ -1539,14 +1539,14 @@ void MIL_AgentPion::OnReceiveCreateBreakdowns( const sword::MissionParameters& m
 void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() < 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
         if( elem.list_size() < 1 || elem.list_size() > 2 || !elem.list( 0 ).has_quantity() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
         int number = elem.list( 0 ).quantity();
         sword::EnumHumanWound wound = sword::unwounded;
@@ -1554,7 +1554,7 @@ void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
         if( !randomWound )
         {
             if( !elem.list( 1 ).has_enumeration() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
             wound = static_cast< sword::EnumHumanWound >( elem.list( 1 ).enumeration() );
         }
         roleComposantes.CreateWounds( static_cast< unsigned int >( number ), randomWound, wound );
@@ -1568,7 +1568,7 @@ void MIL_AgentPion::OnReceiveCreateWounds( const sword::MissionParameters& msg )
 void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() < 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
@@ -1578,13 +1578,13 @@ void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameter
             !elem.list( 1 ).has_quantity() || !elem.list( 2 ).has_quantity() || !elem.list( 3 ).has_quantity() ||
             !elem.list( 4 ).has_quantity() || !elem.list( 5 ).has_quantity() || !elem.list( 6 ).has_quantity() ||
             elem.list( 7 ).list_size() != elem.list( 3 ).quantity() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
 
         sword::EquipmentType type;
         type.set_id( elem.list( 0 ).identifier() );
         const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
         if( !pComposanteType )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         roleComposantes.ChangeEquipmentState( *pComposanteType, elem );
     }
 }
@@ -1596,23 +1596,23 @@ void MIL_AgentPion::OnReceiveChangeEquipmentState( const sword::MissionParameter
 void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() < 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
     for( int i = 0 ; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
         if( elem.list_size() != 6 || !elem.list( 0 ).has_quantity() || !elem.list( 1 ).has_enumeration() || !elem.list( 2 ).has_enumeration() ||
             !elem.list( 4 ).has_booleanvalue() || !elem.list( 5 ).has_booleanvalue() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         // rank
         if( elem.list( 1 ).enumeration() < sword::EnumHumanRank_MIN || elem.list( 1 ).enumeration() > sword::EnumHumanRank_MAX )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( static_cast< unsigned int >( elem.list( 1 ).enumeration() ) );
         if( !pHumanRank )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         // state
         if( elem.list( 2 ).enumeration() < sword::EnumHumanState_MIN || elem.list( 2 ).enumeration() > sword::EnumHumanState_MAX )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         sword::EnumHumanState state = static_cast< sword::EnumHumanState >( elem.list( 2 ).enumeration() );
         if( state == sword::injured )
         {
@@ -1621,7 +1621,7 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
                 !elem.list( 3 ).list( 0 ).list( 1 ).has_enumeration() ||
                 elem.list( 3 ).list( 0 ).list( 1 ).enumeration() < sword::EnumInjuriesSeriousness_MIN ||
                 elem.list( 3 ).list( 0 ).list( 1 ).enumeration() > sword::EnumInjuriesSeriousness_MAX )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         }
     }
     roleComposantes.ChangeHumanState( msg );
@@ -1634,20 +1634,20 @@ void MIL_AgentPion::OnReceiveChangeHumanState( const sword::MissionParameters& m
 void MIL_AgentPion::OnReceiveChangeDotation( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() < 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
     for( int i = 0; i < msg.elem( 0 ).value_size(); ++i )
     {
         const sword::MissionParameter_Value& elem = msg.elem( 0 ).value().Get( i );
         if( elem.list_size() != 3 || !elem.list( 0 ).has_identifier() || !elem.list( 1 ).has_quantity() || !elem.list( 2 ).has_areal() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         unsigned int dotationId = elem.list( 0 ).identifier();
         int number = elem.list( 1 ).quantity();
         float thresholdPercentage = elem.list( 2 ).areal();
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( dotationId );
         if( !pDotationCategory || number < 0 || thresholdPercentage < 0.f || thresholdPercentage > 100.f )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         roleDotations.ChangeDotation( *pDotationCategory, static_cast< unsigned int >( number ), thresholdPercentage );
     }
 }
@@ -1660,10 +1660,10 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
 {
     // target
     if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
     if( target == 0 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup = GetKnowledgeGroup();
     boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = target->CreateKnowledge( knowledgeGroup );
     // firing mode
@@ -1698,13 +1698,13 @@ void MIL_AgentPion::OnReceiveCreateDirectFireOrder( const sword::MissionParamete
 void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg )
 {
     if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
     if( target == 0 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     transport::PHY_RoleAction_Transport* role = RetrieveRole< transport::PHY_RoleAction_Transport >();
     if( !role )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     role->MagicLoadPion( *target, false );
 }
 
@@ -1715,13 +1715,13 @@ void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg )
 void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
 {
     if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
     if( target == 0 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     transport::PHY_RoleAction_Transport* role = RetrieveRole< transport::PHY_RoleAction_Transport >();
     if( !role )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     role->MagicUnloadPion( *target );
 }
 
@@ -1746,7 +1746,7 @@ void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
         const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
         const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( model );
         if( !pModel )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
         GetRole< DEC_RolePion_Decision >().SetModel( *pModel );
     }
     GetDecision().Reload();

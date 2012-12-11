@@ -62,7 +62,7 @@ NBCAttribute::NBCAttribute( const sword::MissionParameter_Value& attributes )
     {
         const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( agentsList.list( i ).identifier() );
         if( !pType )
-            throw std::runtime_error( "Unknown agent type for NBC attribute" );
+            throw MASA_EXCEPTION( "Unknown agent type for NBC attribute" );
         agents_.push_back( pType );
     }
     if( attributes.list_size() == 4 )
@@ -119,7 +119,7 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
         unsigned int nID;
         file >> nID;
         if( !Insert( nID ) )
-            throw std::runtime_error( "Unknown 'AgentNBC' '" + boost::lexical_cast<std::string>( nID ) + "' for NBC object" );
+            throw MASA_EXCEPTION( "Unknown 'AgentNBC' '" + boost::lexical_cast<std::string>( nID ) + "' for NBC object" );
     }
 }
 

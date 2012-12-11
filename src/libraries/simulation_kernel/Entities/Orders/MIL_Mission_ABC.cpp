@@ -116,19 +116,19 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
     {
         const MIL_OrderTypeParameter& parameterType = **it;
         if( parameters.elem_size() <= i )
-            throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
         try
         {
             boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
             if( !pParameter->IsOfType( parameterType.GetType().GetType() ) )
-                throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
             if( !parameterType.IsOptional() && dynamic_cast< const MIL_NullParameter* >( pParameter.get() ) )
-                throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+                throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
             parameters_.push_back( pParameter );
         }
-        catch( std::exception& )
+        catch( const std::exception& )
         {
-            throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
         }
     }
 }
@@ -144,7 +144,7 @@ void MIL_Mission_ABC::Serialize( sword::MissionParameters& asn ) const
     else
     {
         MT_LOG_ERROR_MSG( std::string( "Mission " ) + GetName() + " impossible to serialize parameters" );
-        throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
     }
 }
 
@@ -357,7 +357,7 @@ const std::string& MIL_Mission_ABC::GetDIAType() const
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_Mission_ABC::GetPion() const
 {
-    throw std::runtime_error( "Invalid call of this Mission class" );
+    throw MASA_EXCEPTION( "Invalid call of this Mission class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -366,7 +366,7 @@ MIL_AgentPion& MIL_Mission_ABC::GetPion() const
 // -----------------------------------------------------------------------------
 MIL_Automate& MIL_Mission_ABC::GetAutomate() const
 {
-    throw std::runtime_error( "Invalid call of this Mission class" );
+    throw MASA_EXCEPTION( "Invalid call of this Mission class" );
 }
 
 // -----------------------------------------------------------------------------

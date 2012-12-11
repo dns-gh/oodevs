@@ -47,10 +47,10 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::UnitKnowl
 {
     MIL_AgentPion* pAgent = entityManager.FindAgentPion( asn.id() );
     if( !pAgent )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
     pKnowledgeAgent_ = resolver.ResolveKnowledgeAgent( *pAgent );
     if( !pKnowledgeAgent_ )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

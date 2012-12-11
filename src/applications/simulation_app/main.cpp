@@ -100,7 +100,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
             FlexLmLicense license_dispatch( "sword-dispatcher", 1.0f );
             maxConnections = license_dispatch.GetAuthorisedUsers();
         }
-        catch( FlexLmLicense::LicenseError& )
+        catch( const FlexLmLicense::LicenseError& )
         {
             maxConnections = 10;
         }
@@ -123,39 +123,39 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app->Execute();
     }
-    catch( MT_ScipioException& exception )
+    catch( const MT_ScipioException& e )
     {
         std::stringstream strMsg;
-        strMsg << "Context : "     << exception.GetContext()     << std::endl
-               << "File : "        << exception.GetFile()        << std::endl
-               << "Line : "        << exception.GetLine()        << std::endl
-               << "Message : "     << exception.GetMsg()         << std::endl
-               << "Description : " << exception.GetDescription() << std::endl;
+        strMsg << "Context : "     << e.GetContext()     << std::endl
+               << "File : "        << e.GetFile()        << std::endl
+               << "Line : "        << e.GetLine()        << std::endl
+               << "Message : "     << e.GetMsg()         << std::endl
+               << "Description : " << e.GetDescription() << std::endl;
         MT_LOG_ERROR_MSG( strMsg.str().c_str() );
         if( verbose )
             MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
-    catch( xml::exception& exception )
+    catch( const xml::exception& e )
     {
-        MT_LOG_ERROR_MSG( exception.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         if( verbose )
-            MessageBox( 0, exception.what(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+            MessageBox( 0, tools::GetExceptionMsg( e ).c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
     }
-    catch( std::bad_alloc& /*exception*/ )
+    catch( const std::bad_alloc& /*e*/ )
     {
         MT_LOG_ERROR_MSG( "Bad alloc" );
         if( verbose )
             MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
-    catch( FlexLmLicense::LicenseError& error )
+    catch( const FlexLmLicense::LicenseError& e )
     {
-        MT_LOG_ERROR_MSG( error.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
-    catch( std::exception& exception )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( exception.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         if( verbose )
-            MessageBox( 0, exception.what(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
+            MessageBox( 0, tools::GetExceptionMsg( e ).c_str(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
 
     google::protobuf::ShutdownProtobufLibrary();

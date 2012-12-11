@@ -29,7 +29,7 @@ template< typename T >
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( const T& caller, const DEC_Decision_ABC* perceiver )
 {
     if( !perceiver )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_AgentPion& source = perceiver->GetPion();
     T_ConstKnowledgeAgentVector sourceKnowledge;
     source.GetKnowledge().GetLivingEnemiesPerceived( sourceKnowledge );
@@ -47,7 +47,7 @@ template< typename T >
 void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_ABC* receiver, float minutes )
 {
     if( !receiver )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     const unsigned int sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
     boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
     receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, sharingTimeStep );
@@ -61,7 +61,7 @@ template< typename T >
 void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius )
 {
     if( !receiver )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
     receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
@@ -74,7 +74,7 @@ template< typename T >
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters, bool nonActivatedObstacles )
 {
     if( !pCenter )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( filters );
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
@@ -89,7 +89,7 @@ template< typename T >
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
 {
     if( !pLoc )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
@@ -119,7 +119,7 @@ template< typename T >
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetFriendsInZone( const T& caller, const TER_Localisation* location )
 {
     if( !location )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     T_ConstKnowledgeAgentVector results;
     caller.GetKnowledgeGroup()->GetKnowledge().GetFriendsInZone( results, *location );
     return results;

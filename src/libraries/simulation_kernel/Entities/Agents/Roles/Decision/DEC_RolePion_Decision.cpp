@@ -75,9 +75,9 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int 
     {
         SetModel( model );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, tools::GetExceptionMsg( e ) );
     }
     // Parameters list for calling default behavior
     StartDefaultBehavior();

@@ -311,7 +311,7 @@ void RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void RolePion_Location::Move( const MT_Vector2D& /*vNewPosition*/, const MT_Vector2D& /*vNewDirection*/, double /*rNewSpeed*/ )
 {
-    throw std::runtime_error( __FUNCTION__ " is deprecated" );
+    throw MASA_EXCEPTION( "Deprecated call." );
 }
 
 // -----------------------------------------------------------------------------

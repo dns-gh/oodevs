@@ -37,7 +37,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowle
     if( pObject )
         pUrbanBlock_ = dynamic_cast< MIL_UrbanObject_ABC* >( pObject );
     if( !pUrbanBlock_ )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

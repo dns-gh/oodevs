@@ -63,9 +63,9 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int
     {
         SetModel( model );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, tools::GetExceptionMsg( e ) );
     }
     StartDefaultBehavior();
 }
@@ -458,7 +458,7 @@ void DEC_AutomateDecision::SendChangedState( client::AutomatAttributes& msg ) co
 DEC_AutomateDecision* DEC_AutomateDecision::GetDecAutomate() const
 {
     assert( false );
-    throw std::runtime_error( "Unexpected call to DEC_GetAutomate on automate" );
+    throw MASA_EXCEPTION( "Unexpected call to DEC_GetAutomate on automate" );
 }
 
 // -----------------------------------------------------------------------------
@@ -649,7 +649,7 @@ void DEC_AutomateDecision::Setfuseau( MIL_Fuseau* value )
 // -----------------------------------------------------------------------------
 TER_Localisation* DEC_AutomateDecision::Getzone() const
 {
-    throw;
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -658,7 +658,7 @@ TER_Localisation* DEC_AutomateDecision::Getzone() const
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::Setzone( TER_Localisation* /*value*/ )
 {
-    throw;
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

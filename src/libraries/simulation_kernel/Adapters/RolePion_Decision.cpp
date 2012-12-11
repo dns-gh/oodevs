@@ -300,7 +300,7 @@ namespace
             return result;
         }
         if( !pObjectColliding || !pObjectColliding->IsValid() )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         result.first = true;
         result.second.first = pObjectColliding;
         result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
@@ -385,7 +385,7 @@ namespace
     bool ShouldEmbark( MIL_AgentPion& agent, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         if( !path )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         const double length = path->GetLength();
         const double maxSpeedUnloaded = agent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeed( false );
         if( maxSpeedUnloaded == 0 )
@@ -400,7 +400,7 @@ namespace
     int GetPathState( DEC_Path_ABC* pPath )
     {
         if( !pPath )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         return pPath->GetState();
     }
     boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const DEC_Path_ABC* pPath )
@@ -599,7 +599,7 @@ namespace
     int EnableRadar( Sink& sink, MIL_AgentPion& pion, int radar, boost::shared_ptr< TER_Localisation > localisation ) // $$$$ _RC_ SLI 2012-03-28: DRY with ToggleRadar
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling radar." );
         const int perceptionId = GET_HOOK( GetPerceptionId )();
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -613,13 +613,13 @@ namespace
     int EnableLocalizedRadarOnPoint( Sink& sink, MIL_AgentPion& pion, int radar, boost::shared_ptr< MT_Vector2D > point )
     {
         if( !point )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling radar." );
         return EnableRadar( sink, pion, radar, boost::make_shared< TER_Localisation >( TER_Localisation::ePoint, boost::assign::list_of( *point ) ) );
     }
     int EnableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, const TER_Localisation* localisation )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling radar." );
         return EnableRadar( sink, pion, radar, boost::make_shared< TER_Localisation >( *localisation ) );
     }
     void DisableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, int perceptionId )
@@ -645,7 +645,7 @@ namespace
     int EnableSharedLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, boost::shared_ptr< TER_Localisation > localisation )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling localized detection." );
         core::Model parameter;
         parameter[ "data" ].SetUserData( localisation );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
@@ -653,7 +653,7 @@ namespace
     int EnableUrbanLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const MIL_UrbanObject_ABC* block )
     {
         if( !block )
-            throw std::runtime_error( __FUNCTION__ ": invalid urban block parameter while enabling localized detection." );
+            throw MASA_EXCEPTION( "invalid urban block parameter while enabling localized detection." );
         core::Model parameter;
         parameter[ "data" ].SetUserData( boost::make_shared< TER_Localisation >( block->GetLocalisation() ) );
         parameter[ "block/data" ].SetUserData( block );
@@ -662,7 +662,7 @@ namespace
     int EnableAlatLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling localized detection." );
         core::Model parameter;
         parameter[ "data" ].SetUserData( boost::make_shared< TER_Localisation >( *localisation ) );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, 0 );
@@ -670,7 +670,7 @@ namespace
     int EnableAlatMonitoring( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling ALAT monitoring detection." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling ALAT monitoring detection." );
         const unsigned int perceptionId = GET_HOOK( GetPerceptionId )();
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -692,7 +692,7 @@ namespace
     int EnableRecoOnLocation( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation, boost::optional< float > growthSpeed )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling reco on location detection." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling reco on location detection." );
         const int perceptionId = GET_HOOK( GetPerceptionId )();
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -715,7 +715,7 @@ namespace
     int EnableObjectDetection( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< TER_Localisation > localisation, const MT_Vector2D* center, double speed )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling object detection on location." );
+            throw MASA_EXCEPTION( "invalid localization parameter while enabling object detection on location." );
         const int perceptionId = GET_HOOK( GetPerceptionId )();
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -731,7 +731,7 @@ namespace
     int EnableRecognitionPoint( Sink& sink, MIL_AgentPion& pion, MT_Vector2D* center, double size, double growthSpeed )
     {
         if( !center )
-            throw std::runtime_error( __FUNCTION__ ": invalid center parameter while enabling recognition on point." );
+            throw MASA_EXCEPTION( "invalid center parameter while enabling recognition on point." );
         const int perceptionId = GET_HOOK( GetPerceptionId )();
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -762,7 +762,7 @@ namespace
     void IdentifyAllAgentsInZone( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation )
     {
         if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while identifying all agents in zone." );
+            throw MASA_EXCEPTION( "invalid localization parameter while identifying all agents in zone." );
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "localization/data" ].SetUserData( boost::make_shared< TER_Localisation >( *localisation ) );
@@ -771,7 +771,7 @@ namespace
     bool AgentHasRadar( const core::Model& model, const DEC_Decision_ABC* agent, int typeRadar )
     {
         if( !agent )
-            throw std::runtime_error( "Invalid pion in AgentHasRadar" );
+            throw MASA_EXCEPTION( "Invalid pion in AgentHasRadar" );
         const core::Model& entity = model[ "entities" ][ agent->GetPion().GetID() ];
         return GET_HOOK( AgentHasRadar )( core::Convert( &entity ), typeRadar );
     }
@@ -1108,7 +1108,7 @@ namespace
     double GetDangerosityOnPion( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const core::Model& model, const DEC_Decision_ABC* pTarget )
     {
         if( ! pTarget )
-            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+            throw MASA_EXCEPTION( "invalid parameter." );
         return GetDangerosity( pTarget->GetPion(), model, pKnowledge );
     }
     double GetDangerosityOnKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > pSource, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pTarget )
