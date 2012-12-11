@@ -42,7 +42,7 @@ SymbolCase::~SymbolCase()
 void SymbolCase::ReadRule( xml::xistream& xis )
 {
     if( rule_.get() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid rule." );
     rule_.reset( new SymbolRule( xis ) );
 }
 

@@ -68,7 +68,7 @@ tools::Iterator< const Entity_ABC& > SimpleHierarchies< I >::CreateSubordinateIt
 template< typename I >
 void SimpleHierarchies< I >::RegisterSubordinate( Entity_ABC& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ void SimpleHierarchies< I >::RegisterSubordinate( Entity_ABC& )
 template< typename I >
 void SimpleHierarchies< I >::AddSubordinate( Entity_ABC& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void SimpleHierarchies< I >::AddSubordinate( Entity_ABC& )
 template< typename I >
 void SimpleHierarchies< I >::RemoveSubordinate( const Entity_ABC& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void SimpleHierarchies< I >::RemoveSubordinate( const Entity_ABC& )
 template< typename I >
 void SimpleHierarchies< I >::UnregisterSubordinate( const Entity_ABC& )
 {
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

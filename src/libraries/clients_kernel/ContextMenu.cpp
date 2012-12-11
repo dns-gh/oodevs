@@ -120,7 +120,7 @@ void ContextMenu::InternalFillMenu( const ContextMenu::CIT_Menus& currentMenu )
         else if( ContextMenu* const* newMenu = boost::get< ContextMenu* >( &subMenu->second ) )
             this->addMenu( ( *newMenu )->FillMenu() );
         else
-            throw std::exception( __FUNCTION__ "Invalid boost variant value" );
+            throw MASA_EXCEPTION( "Invalid boost variant value" );
     }
 }
 
@@ -170,7 +170,7 @@ ContextMenu::T_MenuVariant ContextMenu::InsertVariant( const std::string& catego
     else if( ContextMenu* const* newMenu = boost::get< ContextMenu* >( &variant ) )
         result = SubMenu( category, *newMenu, separatorText, index );
     else
-        throw std::exception( __FUNCTION__ "Invalid boost variant value" );
+        throw MASA_EXCEPTION( "Invalid boost variant value" );
     return result;
 }
 

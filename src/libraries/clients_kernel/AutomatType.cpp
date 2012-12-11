@@ -32,7 +32,7 @@ AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentTy
         >> xml::list( "unit", *this, &AutomatType::ReadAgent, agentResolver );
     model_ = & modelResolver.Get( modelName );
     if( ! pcType_ )
-        throw std::runtime_error( "Automat '" + name_ + "' has no command-post" );
+        throw MASA_EXCEPTION( "Automat '" + name_ + "' has no command-post" );
     UpdateSymbol();
 }
 

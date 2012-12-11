@@ -175,7 +175,7 @@ inline
 const ElevationMap& DetectionMap::GetMap() const// $$$$ AGE 2006-04-28: prolly tmp
 {
     if( ! map_ )
-    throw std::runtime_error( "Map not initialized" );
+    throw MASA_EXCEPTION( "Map not initialized" );
     return *map_;
 }
 

@@ -46,7 +46,7 @@ bool Color::IsOverriden() const
 const Color_ABC::T_Color& Color::GetColor() const
 {
     if( !color_ )
-        throw std::runtime_error( "Accessing invalid color" );
+        throw MASA_EXCEPTION( "Accessing invalid color" );
     return *color_;
 }
 

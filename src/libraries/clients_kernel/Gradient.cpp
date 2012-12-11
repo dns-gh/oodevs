@@ -252,7 +252,7 @@ void Gradient::LoadValue( xml::xistream& xis )
     if( color.isValid() )
         colors_.push_back( T_Color( ratio, color ) );
     else
-        throw std::runtime_error( "Invalid color '" + colorName + "'" );
+        throw MASA_EXCEPTION( "Invalid color '" + colorName + "'" );
 }
 
 // -----------------------------------------------------------------------------

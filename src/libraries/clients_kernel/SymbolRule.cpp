@@ -45,7 +45,7 @@ void SymbolRule::ReadCase( xml::xistream& xis )
     xis >> xml::attribute( "name", name );
     SymbolCase*& sCase = cases_[ name ];
     if( sCase )
-        throw std::runtime_error( "Case '" + name + "' already regsitered" );
+        throw MASA_EXCEPTION( "Case '" + name + "' already regsitered" );
     sCase = new SymbolCase( xis );
 }
 

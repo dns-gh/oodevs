@@ -93,7 +93,7 @@ Location_ABC& LocationProxy::Clone() const
 {
     if( location_ )
         return location_->Clone();
-    throw std::runtime_error( __FUNCTION__ " Location proxy was not initialized." );
+    throw MASA_EXCEPTION( " Location proxy was not initialized." );
 }
 
 // -----------------------------------------------------------------------------

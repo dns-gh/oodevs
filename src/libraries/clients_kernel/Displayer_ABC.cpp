@@ -39,5 +39,5 @@ Displayer_ABC::~Displayer_ABC()
 // -----------------------------------------------------------------------------
 Displayer_ABC& Displayer_ABC::NotToBeCalled( const char* function ) const
 {
-    throw std::runtime_error( std::string() + "Function '" + function + "' of '" + typeid(*this).name() + "' should not be called" );
+    throw MASA_EXCEPTION( std::string() + "Function '" + function + "' of '" + typeid(*this).name() + "' should not be called" );
 }

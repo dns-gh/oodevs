@@ -269,9 +269,9 @@ void AgentTypes::ReadAgentType( xml::xistream& xis )
         tools::Resolver< AgentType >         ::Register( type->GetId(), *type );
         tools::Resolver< AgentType, std::string >::Register( type->GetName(), *type );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "exception caught: " << e.what() );
+        MT_LOG_ERROR_MSG( "exception caught: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -297,9 +297,9 @@ void AgentTypes::ReadAutomatType( xml::xistream& xis )
         tools::Resolver< AutomatType >         ::Register( type->GetId(), *type );
         tools::Resolver< AutomatType, std::string >::Register( type->GetName(), *type );
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( e.what() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

@@ -21,7 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 void FormatterNotImplemented::Error( Displayer_ABC& displayer, const type_info& type ) const
 {
-    throw std::runtime_error( std::string( typeid( displayer ).name() ) + " can't display " + type.name() );
+    throw MASA_EXCEPTION( std::string( typeid( displayer ).name() ) + " can't display " + type.name() );
 }
 
 // -----------------------------------------------------------------------------

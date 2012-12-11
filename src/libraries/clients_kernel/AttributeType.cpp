@@ -43,7 +43,7 @@ AttributeType::AttributeType( xml::xistream& xis )
         if( op == "or" )
             operator_ = EOperatorOR;
         else if( op != "and" )
-            throw std::runtime_error( __FUNCTION__ "unknown logical operator, use 'and' or 'or'." );
+            throw MASA_EXCEPTION( "unknown logical operator, use 'and' or 'or'." );
     }
 }
 
@@ -64,7 +64,7 @@ AttributeType::~AttributeType()
 bool AttributeType::Extends( const std::string& type ) const
 {
     if( !extends_.IsSet() )
-        throw std::exception( "Needed \"extends\"not defined in Extensions.xml" );
+        throw MASA_EXCEPTION( "Needed \"extends\"not defined in Extensions.xml" );
     const std::string& extends = extends_;
     return extends.find( type ) != std::string::npos;
 }
@@ -126,7 +126,7 @@ void AttributeType::SetType( const std::string& type )
     else if( type == "diffusion-list" )
         type_ = ETypeDiffusionList;
     else
-        throw std::exception( "Bad attribute type" );
+        throw MASA_EXCEPTION( "Bad attribute type" );
 }
 
 // -----------------------------------------------------------------------------

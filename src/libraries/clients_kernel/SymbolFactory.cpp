@@ -173,7 +173,7 @@ SymbolRule* SymbolFactory::ReadRule( xml::xistream& xis, const std::string& rule
 void SymbolFactory::ReadRule( xml::xistream& xis, SymbolRule*& rule ) const
 {
     if( rule )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid rule." );
     rule = new SymbolRule( xis );
 }
 

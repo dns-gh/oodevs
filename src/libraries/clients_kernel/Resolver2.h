@@ -10,8 +10,9 @@
 #ifndef __Resolver2_h_
 #define __Resolver2_h_
 
-#include "tools/Resolver_ABC.h"
 #include "tools/Iterator.h"
+#include <tools/Exception.h>
+#include "tools/Resolver_ABC.h"
 #include <stdexcept>
 #include <sstream>
 
@@ -155,13 +156,13 @@ protected:
     {
         std::stringstream str;
         str << "Element type '" << typeid( T ).name() << "' '" << identifier << "' " << message;
-        throw std::runtime_error( str.str() );
+        throw MASA_EXCEPTION( str.str() );
     }
     void Error( const Identifier2& identifier, const std::string& message ) const
     {
         std::stringstream str;
         str << "Element type '" << typeid( T ).name() << "' '" << identifier << "' " << message;
-        throw std::runtime_error( str.str() );
+        throw MASA_EXCEPTION( str.str() );
     }
     //@}
 

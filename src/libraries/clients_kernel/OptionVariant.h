@@ -120,7 +120,7 @@ template< typename T >
 T OptionVariant::To() const
 {
     if( ! dynamic_cast< detail::ValueHolder< T >* >( holder_ ) )
-        throw std::runtime_error( std::string( "OptionVariant : Could not cast from " ) + holder_->Typename() + " to " + typeid( T ).name() );
+        throw MASA_EXCEPTION( std::string( "OptionVariant : Could not cast from " ) + holder_->Typename() + " to " + typeid( T ).name() );
     return static_cast< detail::ValueHolder< T >* >( holder_ )->value_;
 }
 

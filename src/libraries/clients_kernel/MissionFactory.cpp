@@ -47,7 +47,7 @@ Mission* MissionFactory::CreateAgentMission( const std::string& name )
 {
     MissionType* type = unitMissions_.Find( name );
     if( !type )
-        throw std::runtime_error( "unknown agent mission '" + name + "'" );
+        throw MASA_EXCEPTION( "unknown agent mission '" + name + "'" );
     return new Mission( *type );
 }
 
@@ -59,7 +59,7 @@ Mission* MissionFactory::CreateAutomatMission( const std::string& name )
 {
     MissionType* type = automatMissions_.Find( name );
     if( !type )
-        throw std::runtime_error( "unknown automat mission '" + name + "'" );
+        throw MASA_EXCEPTION( "unknown automat mission '" + name + "'" );
     return new Mission( *type );
 }
 
@@ -71,7 +71,7 @@ Mission* MissionFactory::CreatePopulationMission( const std::string& name )
 {
     MissionType* type = populationMissions_.Find( name );
     if( !type )
-        throw std::runtime_error( "unknown population mission '" + name + "'" );
+        throw MASA_EXCEPTION( "unknown population mission '" + name + "'" );
     return new Mission( *type );
 }
 
@@ -83,6 +83,6 @@ FragOrder* MissionFactory::CreateFragOrder( const std::string& name )
 {
     FragOrderType* type = fragOrders_.Find( name );
     if( !type )
-        throw std::runtime_error( "unknown frag order '" + name + "'" );
+        throw MASA_EXCEPTION( "unknown frag order '" + name + "'" );
     return new FragOrder( *type );
 }

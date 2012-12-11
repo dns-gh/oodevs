@@ -79,7 +79,7 @@ const Entity_ABC& Hierarchies::GetUp( unsigned int nLevel /* = 1*/ ) const
         if( const Hierarchies* superiorHierarchies = RetrieveHierarchies( *superior ) )
             return superiorHierarchies->GetUp( nLevel - 1 );
     }
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "Invalid or null superior." );
 }
 
 // -----------------------------------------------------------------------------
