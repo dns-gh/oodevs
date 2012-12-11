@@ -19,9 +19,6 @@
     <Filter Include="Source Files\Network\facade">
       <UniqueIdentifier>{0ddfe996-5fd6-4313-99e6-af345f4dd934}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Network\encoding">
-      <UniqueIdentifier>{95e11492-3eb9-414c-8221-7c83c4ea031f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\File loaders">
       <UniqueIdentifier>{3af31ca3-90da-4f44-b5fc-7fe098782826}</UniqueIdentifier>
     </Filter>
@@ -241,12 +238,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\ServerNetworker.h">
       <Filter>Source Files\Network\facade</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\MessageDecoder.h">
-      <Filter>Source Files\Network\encoding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\MessageEncoder.h">
-      <Filter>Source Files\Network\encoding</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\DefaultLoader.h">
       <Filter>Source Files\File loaders</Filter>

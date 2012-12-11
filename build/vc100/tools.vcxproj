@@ -179,8 +179,6 @@
     <ClInclude Include="..\..\src\libraries\tools\MessageController.h" />
     <ClInclude Include="..\..\src\libraries\tools\MessageObserver.h" />
     <ClInclude Include="..\..\src\libraries\tools\ServerNetworker.h" />
-    <ClInclude Include="..\..\src\libraries\tools\MessageDecoder.h" />
-    <ClInclude Include="..\..\src\libraries\tools\MessageEncoder.h" />
     <ClInclude Include="..\..\src\libraries\tools\DefaultLoader.h" />
     <ClInclude Include="..\..\src\libraries\tools\FileMigration.h" />
     <ClInclude Include="..\..\src\libraries\tools\FileMigration_ABC.h" />
