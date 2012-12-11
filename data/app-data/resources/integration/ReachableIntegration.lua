@@ -15,7 +15,7 @@ integration.getKnowledgeAgentPosition = function( agent )
 end
 
 integration.getTeammatePosition = function( platoon )
-	  return DEC_Agent_PositionPtr( platoon.source )
+    return DEC_Agent_PositionPtr( platoon.source )
 end
 
 integration.getBodyPosition = function()

@@ -150,3 +150,9 @@ integration.isThreateningOrHostilePredicate = {
 integration.getName = function( agent )
     return DEC_GetSzName( agent.source )
 end
+
+integration.getWoundedOrDeadUnitsInCircle = function( position, radius )
+    local woundedUnitsInCircle = {}
+    woundedUnitsInCircle = DEC_Connaissances_UnitesBlesseesOuTueesDansCercle( position, radius )
+    return woundedUnitsInCircle
+end

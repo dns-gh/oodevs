@@ -135,3 +135,7 @@ end
 integration.isAgentPerceivesAgent = function ( agent )
     return DEC_ConnaissanceAgent_PercoitUnite( agent )
 end
+
+integration.getIdentificationDistance = function()
+    return DEC_Identification_DistanceMaxCompMajeure()
+end
