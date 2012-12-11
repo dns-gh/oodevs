@@ -79,7 +79,6 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
-    const QString language_;
     QWidget* parent_;
     QLabel* parametersLabel_;
     QLabel* briefingImage_;

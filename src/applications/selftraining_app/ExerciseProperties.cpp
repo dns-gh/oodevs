@@ -28,7 +28,6 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, co
     , parent_         ( granParent )
     , config_         ( config )
     , fileLoader_     ( fileLoader )
-    , language_       ( tools::readLang().c_str() )
     , parametersLabel_( 0 )
     , briefingText_   ( 0 )
     , terrainList_    ( 0 )
@@ -184,7 +183,7 @@ void ExerciseProperties::ReadBriefingText( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    if( lang == language_.toStdString() )
+    if( lang == tools::readLang().c_str() )
     {
         briefingText_->setText( text.c_str() );
         briefingText_->show();
