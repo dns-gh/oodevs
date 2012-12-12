@@ -196,6 +196,13 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_ASN_ATTRIBUTE( installation          , nInstallationState_ );
     UPDATE_ASN_ATTRIBUTE( protective_suits      , bNbcProtectionSuitEnabled_ );
 
+    if( message.has_contamination_agents() )
+    {
+        nbcAgentTypesContaminating_.clear();
+        for( int i = 0; i < message.contamination_agents().elem_size(); ++i )
+            nbcAgentTypesContaminating_.push_back( message.contamination_agents().elem( i ).id() );
+    }
+
     if( message.has_contamination_state() )
     {
         sword::ContaminationState state = message.contamination_state();
@@ -206,12 +213,10 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         if( state.has_dose() )
             dose_ = state.dose();
     }
-    if( message.has_contamination_agents() )
-    {
+
+    if( contaminationPercentage_ == 0 )
         nbcAgentTypesContaminating_.clear();
-        for( int i = 0; i < message.contamination_agents().elem_size(); ++i )
-            nbcAgentTypesContaminating_.push_back( message.contamination_agents().elem( i ).id() );
-    }
+
     if( message.has_communications() )
     {
         if( message.communications().has_jammed() )
@@ -543,6 +548,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_installation( nInstallationState_ );
         asn().set_protective_suits( bNbcProtectionSuitEnabled_ );
         {
+            asn().mutable_contamination_agents();
             for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
             {
                 sword::NBCAgentType& data = *asn().mutable_contamination_agents()->add_elem();
