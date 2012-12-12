@@ -1038,12 +1038,12 @@
     <target name="checkpoint_test" description="save and load a checkpoint">
         <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
-            <arg value="--legacy"/>
+            <arg value="--legacy=true"/>
         </run-one-simulation>
         <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
-            <arg value="--legacy"/>
+            <arg value="--legacy=true"/>
         </run-one-simulation>
         <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
@@ -1051,6 +1051,7 @@
         <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
+            <arg value="--legacy=false"/>
         </run-one-simulation>
         <run-one-simulation exercise="tests/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
@@ -1058,6 +1059,7 @@
         <run-one-simulation exercise="tests/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
+            <arg value="--legacy=false"/>
         </run-one-simulation>
     </target>
 
