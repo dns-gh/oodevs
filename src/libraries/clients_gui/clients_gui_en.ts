@@ -1598,6 +1598,10 @@ Do you want to remove it?</translation>
         <source>Lat:%L1 Lon:%L2</source>
         <translation>Lat:%L1 Lon:%L2</translation>
     </message>
+    <message>
+        <source>°</source>
+        <translation>°</translation>
+    </message>
 </context>
 <context>
     <name>gui::StockPrototype_ABC</name>

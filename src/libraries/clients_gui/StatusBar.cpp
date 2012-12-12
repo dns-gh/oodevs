@@ -20,6 +20,7 @@
 #include "clients_kernel/Tools.h"
 #include "ENT/Ent_Tr.h"
 #include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -126,6 +127,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         coordinateFields_[ CoordinateSystems::E_Wgs84Dd ]->setText( latlongpos );
 
         std::string pos( converter_.ConvertToGeoDms( position ) );
+        boost::replace_all( pos, "°", tools::translate( "gui::StatusBar", "°" ).toStdString() );
         std::string::size_type loc = pos.find( ":", 0 );
         if( loc != std::string::npos )
         {
