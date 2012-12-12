@@ -1381,8 +1381,12 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& o
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_CapacityInfos_Spawn* >( ( *it )->capacities_[ ADN_CapacityInfos_Spawn::TAG ].get() );
-         if( spawn->bPresent_.GetData() && spawn->object_.GetData()->strName_.GetData() == object.strName_.GetData() )
-            result << ( *it )->strName_.GetData().c_str();
+        if( spawn )
+        {
+            ADN_Objects_Data_ObjectInfos* pObject = spawn->object_.GetData();
+            if( spawn->bPresent_.GetData() && pObject && pObject->strName_.GetData() == object.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+        }
     }
     return result;
 }
