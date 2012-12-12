@@ -845,14 +845,14 @@ end
 -- activate special sensors on toxic CBRN plume
 -- --------------------------------------------------------------------------------  
 integration.activateSpecialSensorForCBRN = function ()
-    DEC_Perception_ActiverDesastre()
+    DEC_Perception_ActiverSenseursSurDecision()
 end
 
 -- -------------------------------------------------------------------------------- 
 -- deactivate special sensors on toxic CBRN plume
 -- -------------------------------------------------------------------------------- 
 integration.deactivateSpecialSensorForCBRN = function ()
-    DEC_Perception_DesactiverDesastre()
+    DEC_Perception_DesactiverSenseursSurDecision()
 end
 
 -- -------------------------------------------------------------------------------- 
