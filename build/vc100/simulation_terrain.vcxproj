@@ -130,6 +130,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Pathfinder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.h" />

@@ -197,6 +197,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h">
       <Filter>Source Files\SpatialContainer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Pathfinder_ABC.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_terrain\TER_World.inl">
