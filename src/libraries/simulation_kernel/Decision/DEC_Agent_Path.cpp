@@ -602,6 +602,7 @@ void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
     }
     assert( resultList_.empty() );
 
+    pathfind.SetId( queryMaker_.GetID() );
     DEC_Path::Execute( pathfind );
     DEC_PathResult::E_State nPathState = GetState();
     if( nPathState == DEC_Path_ABC::eImpossible )

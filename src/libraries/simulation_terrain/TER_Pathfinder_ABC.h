@@ -30,7 +30,7 @@ class TerrainPathPoint;
 
 // =============================================================================
 /** @class  TER_PathFinder_ABC
-    @brief  Pathfinder interface
+    @brief  TER_Pathfinder_ABC interface
 */
 // Created: BAX 2012-12-11
 // =============================================================================
@@ -47,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void SetId( size_t id ) = 0;
     virtual void SetCallback( pathfind::AStarManagementCallback_ABC* pCallback ) = 0;
     virtual void SetChoiceRatio( float ratio ) = 0;
     virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions ) = 0;

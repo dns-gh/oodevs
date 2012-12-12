@@ -71,6 +71,8 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
         ( "deletecheckpoint"                                              , "delete checkpoint folder"                  )
         ( "legacy", po::value< bool >( &bLegacy_ )->default_value( false ), "activate legacy mode"                      )
         ( "integration-dir", po::value( &integrationDir_ )                , "set integration directory"                 )
+        ( "dump-pathfinds",  po::value( &pathfindDir_ )                   , "set pathfind dump directory" )
+        ( "filter-pathfinds",po::value( &pathfindFilter_ )                , "set pathfind id filter, separate multiple values with commas" )
         ( "simulation-port", po::value( &networkPort_ )                   , "specify the simulation server port number" );
     AddOptions( desc );
 }
@@ -297,3 +299,20 @@ boost::optional< unsigned int > MIL_Config::GetPathFinderMaxComputationTime() co
     return pathFinderMaxComputationTime_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPathfindDir
+// Created: BAX 2012-12-11
+// -----------------------------------------------------------------------------
+const std::string& MIL_Config::GetPathfindDir() const
+{
+    return pathfindDir_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPathfindFilter
+// Created: BAX 2012-12-11
+// -----------------------------------------------------------------------------
+const std::string& MIL_Config::GetPathfindFilter() const
+{
+    return pathfindFilter_;
+}

@@ -31,6 +31,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "MIL_AgentServer.h"
+#include "simulation_terrain/TER_Pathfinder_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Population_Path constructor
@@ -38,6 +39,7 @@
 //-----------------------------------------------------------------------------
 DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination )
     : DEC_PathResult( DEC_PathType::movement_ )
+    , id_        ( population.GetID() )
     , pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
     , population_( population )
     , rCostOutsideOfAllObjects_( 0. )
@@ -156,6 +158,7 @@ void DEC_Population_Path::Execute( TER_Pathfinder_ABC& pathfind )
     }
     if( !resultList_.empty() )
         throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
+    pathfind.SetId( id_ );
     DEC_Path::Execute( pathfind );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {

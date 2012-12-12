@@ -41,11 +41,11 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
     config.AddFileToCRC( fileLoaded );
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
-    if( bUseInSameThread_ ) // juste one "thread" that will never start
-        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, maxAvoidanceDistance, true ) );
-    else
-        for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
-            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, maxAvoidanceDistance ) );
+    const unsigned len = bUseInSameThread_ ? 1 : config.GetPathFinderThreads();
+    for( unsigned i = 0; i < len; ++i )
+        pathFindThreads_.push_back( &TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread(
+                                    *this, nMaxEndConnections_, maxAvoidanceDistance, bUseInSameThread_,
+                                    config.GetPathfindDir(), config.GetPathfindFilter() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,8 @@
 #pragma warning( disable : 4244 4275 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
+#include <boost/filesystem/path.hpp>
+#include <set>
 
 class TerrainPathfinder;
 class TerrainRetractationHandle;
@@ -33,7 +35,11 @@ class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread );
+             TER_PathFinderThread( const TER_StaticData& staticData,
+                                   tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
+                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
+                                   const boost::filesystem::path& dump,
+                                   const std::string& filter );
     virtual ~TER_PathFinderThread();
     //@}
 
@@ -73,11 +79,13 @@ private:
 private:
     //! @name Member data
     //@{
-    TerrainPathfinder*  pPathfinder_;
-    T_DynamicDataVector dynamicDataToRegister_;
-    T_DynamicDataVector dynamicDataToUnregister_;
-    boost::mutex        dynamicDataMutex_;
-    bool                bUseSameThread_;
+    const boost::filesystem::path      dump_; // empty if dump is disabled
+    const std::set< size_t >           filter_; // empty if no id filters
+    std::auto_ptr< TerrainPathfinder > pPathfinder_;
+    T_DynamicDataVector                dynamicDataToRegister_;
+    T_DynamicDataVector                dynamicDataToUnregister_;
+    boost::mutex                       dynamicDataMutex_;
+    bool                               bUseSameThread_;
     //@}
 };
 

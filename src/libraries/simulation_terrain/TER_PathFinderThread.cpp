@@ -21,20 +21,43 @@
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRetractationHandle.h>
 #include <boost/filesystem/convenience.hpp>
+#include <boost/interprocess/detail/atomic.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 
 using namespace spatialcontainer;
 using namespace pathfind;
+namespace bfs = boost::filesystem;
+namespace bii = boost::interprocess::ipcdetail;
+
+namespace
+{
+    std::set< size_t > ParseFilter( const std::string& filter )
+    {
+        std::set< size_t > reply;
+        boost::tokenizer< boost::escaped_list_separator< char > > tokens( filter );
+        for( auto it = tokens.begin(); it != tokens.end(); ++it )
+            reply.insert( boost::lexical_cast< size_t >( *it ) );
+        return reply;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread constructor
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread )
+TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
+                                            tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
+                                            unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
+                                            const boost::filesystem::path& dump,
+                                            const std::string& filter )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
     , pPathfinder_   ( 0 )
     , bUseSameThread_( bUseSameThread )
+    , dump_          ( dump )
+    , filter_        ( ParseFilter( filter ) )
 {
-    pPathfinder_ = new TerrainPathfinder( staticData );
+    pPathfinder_.reset( new TerrainPathfinder( staticData ) );
     pPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
     pPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
     if( !bUseSameThread )
@@ -48,7 +71,6 @@ TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData, to
 TER_PathFinderThread::~TER_PathFinderThread()
 {
     Terminate();
-    delete pPathfinder_;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,10 +121,18 @@ namespace
     struct PathfinderProxy : public TER_Pathfinder_ABC
                            , public boost::noncopyable
     {
-        PathfinderProxy( TerrainPathfinder& root )
-            : root_( root )
+        PathfinderProxy( const bfs::path& dump, const std::set< size_t >& filter,
+                         TerrainPathfinder& root )
+            : dump_  ( dump )
+            , filter_( filter )
+            , root_  ( root )
+            , id_    ( 0 )
         {
             // NOTHING
+        }
+        virtual void SetId( size_t id )
+        {
+            id_ = id;
         }
         virtual void SetCallback( pathfind::AStarManagementCallback_ABC* pCallback )
         {
@@ -120,11 +150,30 @@ namespace
                                   TerrainRule_ABC& rule,
                                   tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
+            const bool dump = !dump_.empty() && ( filter_.empty() || filter_.count( id_ ) );
+            if( dump )
+                return root_.ComputePath( from, to, rule, handler, GetFilename() );
             return root_.ComputePath( from, to, rule, handler );
         }
     private:
-        TerrainPathfinder& root_;
+        bfs::path GetFilename() const
+        {
+            std::stringstream name;
+            name << "pathfind_"
+                 << id_
+                 << "_"
+                 << bii::atomic_inc32( &s_idx_ );
+            return dump_ / name.str();
+        }
+    private:
+        static boost::uint32_t    s_idx_;
+        const bfs::path&          dump_;
+        const std::set< size_t >& filter_;
+        TerrainPathfinder&        root_;
+        size_t                    id_;
     };
+
+    boost::uint32_t PathfinderProxy::s_idx_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +187,7 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
         ProcessDynamicData();
         if( pRequest.get() )
         {
-            PathfinderProxy proxy( *pPathfinder_ );
+            PathfinderProxy proxy( dump_, filter_, *pPathfinder_ );
             pRequest->Execute( proxy );
             MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( pRequest );
         }

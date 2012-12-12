@@ -75,6 +75,8 @@ public:
     boost::optional< unsigned int > GetPathFinderMaxComputationTime() const;
     const std::string& GetCheckpointNameTestMode   () const;
     const std::string& GetIntegrationDir           () const;
+    const std::string& GetPathfindDir              () const;
+    const std::string& GetPathfindFilter           () const;
 
     int                GetRandomSeed               () const;
     const bool*        GetRandomGaussian           () const;
@@ -160,6 +162,8 @@ private:
     unsigned int   setpause_;
     unsigned int   setstepmul_;
     std::string    integrationDir_;
+    std::string    pathfindDir_;
+    std::string    pathfindFilter_;
     //@}
 };
 

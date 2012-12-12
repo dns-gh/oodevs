@@ -77,6 +77,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const size_t id_;
     const DEC_Population_PathClass& pathClass_;
     const MIL_Population& population_;
     T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;

@@ -114,6 +114,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const size_t id_;
     boost::shared_ptr< movement::Path_ABC > path_;
     const PHY_RawVisionData& data_;
     MIL_Fuseau fuseau_;

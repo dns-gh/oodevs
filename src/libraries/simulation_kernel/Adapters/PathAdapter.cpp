@@ -37,6 +37,7 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <core/Convert.h>
 
 using namespace sword;
@@ -145,6 +146,7 @@ namespace
 // -----------------------------------------------------------------------------
 PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
     : path_       ( path )
+    , id_         ( entity[ "identifier" ] )
     , data_       ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , weight_     ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
     , squareSlope_( Square( entity[ "movement/max-slope" ] ) )
@@ -183,6 +185,7 @@ const boost::shared_ptr< movement::Path_ABC >& PathAdapter::Get() const
 // -----------------------------------------------------------------------------
 void PathAdapter::Execute( TER_Pathfinder_ABC& pathfind )
 {
+    pathfind.SetId( id_ );
     GET_HOOK( ExecutePathfind )( path_, pathfind );
 }
 
