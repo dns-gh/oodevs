@@ -16,6 +16,16 @@
 
 using namespace plugins::logistic;
 
+namespace
+{
+    std::string FormatRecipientId( int id )
+    {
+        if( id )
+            return boost::lexical_cast< std::string >( id );
+        return tools::translate( "logistic", "recipient id" ).toAscii().constData();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SupplyConsignData::Write
 // Created: MMC 2012-08-06
@@ -26,11 +36,15 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
     {
         output << requestId_         << separator_
             << tick_                 << separator_
-            << simTime_              << separator_   // << creationTick_         << separator_    << recipientId_       << separator_
-            << recipientAutomat_     << separator_   // << providerId_           << separator_
-            << provider_             << separator_   // << transportProviderId_  << separator_
-            << transportProvider_    << separator_   // << conveyorId_           << separator_
+            << simTime_              << separator_   // << creationTick_         << separator_    
+            << std::string()         << separator_
+            << std::string()         << separator_
+            << provider_             << separator_
+            << providerId_           << separator_
+            << transportProvider_    << separator_
+            << transportProviderId_  << separator_
             << conveyor_             << separator_   // << stateId_              << separator_
+            << conveyorId_           << separator_
             << state_                << separator_
             << stateEndTick_;
         output  << std::endl;
@@ -41,11 +55,15 @@ void SupplyConsignData::operator>>( std::stringstream& output ) const
             int recipientAutomatId = it->first;
             output << requestId_         << separator_
                 << tick_                 << separator_
-                << simTime_              << separator_   // << creationTick_         <<  separator_   << recipientId_    <<  separator_
-                << it->second            << separator_   // << providerId_           <<  separator_
-                << provider_             << separator_   // << transportProviderId_  <<  separator_
-                << transportProvider_    << separator_   // << conveyorId_           <<  separator_
+                << simTime_              << separator_   // << creationTick_         <<  separator_   
+                << it->second            << separator_
+                << FormatRecipientId( it->first ) << separator_
+                << provider_             << separator_
+                << providerId_           << separator_
+                << transportProvider_    << separator_ 
+                << transportProviderId_  << separator_
                 << conveyor_             << separator_   // << stateId_              <<  separator_
+                << conveyorId_           << separator_
                 << state_                << separator_
                 << stateEndTick_;
 
@@ -192,9 +210,9 @@ SupplyResolver::~SupplyResolver()
 // -----------------------------------------------------------------------------
 bool SupplyResolver::IsManageable( const sword::SimToClient& message )
 {
-    return  message.message().has_log_supply_handling_creation()
-        ||  message.message().has_log_supply_handling_update()
-        ||  message.message().has_log_supply_handling_destruction();
+    return message.message().has_log_supply_handling_creation()
+        || message.message().has_log_supply_handling_update()
+        || message.message().has_log_supply_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,34 +244,30 @@ void SupplyResolver::ManageMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void SupplyResolver::InitHeader()
 {
-    SupplyConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
-    consign.tick_               = tools::translate( "logistic", "tick" ).toStdString();
-    consign.creationTick_       = tools::translate( "logistic", "creation tick" ).toStdString();
-    consign.stateEndTick_       = tools::translate( "logistic", "state end tick" ).toStdString();
-    consign.simTime_            = tools::translate( "logistic", "GDH" ).toStdString();
-    consign.recipientAutomatId_ = tools::translate( "logistic", "recipient id" ).toStdString();
-    consign.providerId_         = tools::translate( "logistic", "provider id" ).toStdString();
-    consign.transportProviderId_= tools::translate( "logistic", "transport provider id" ).toStdString();
-    consign.conveyorId_         = tools::translate( "logistic", "conveyor id" ).toStdString();
-    consign.stateId_            = tools::translate( "logistic", "state id" ).toStdString();
-    consign.recipientAutomat_   = tools::translate( "logistic", "recipient" ).toStdString();
-    consign.provider_           = tools::translate( "logistic", "provider" ).toStdString();
-    consign.transportProvider_  = tools::translate( "logistic", "transport provider" ).toStdString();
-    consign.conveyor_           = tools::translate( "logistic", "conveyor" ).toStdString();
-    consign.state_              = tools::translate( "logistic", "state" ).toStdString();
-    consign.recipientAutomats_[ 0 ] = consign.recipientAutomat_;
+    SupplyConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
+    consign.tick_               = tools::translate( "logistic", "tick" ).toAscii().constData();
+    consign.creationTick_       = tools::translate( "logistic", "creation tick" ).toAscii().constData();
+    consign.stateEndTick_       = tools::translate( "logistic", "state end tick" ).toAscii().constData();
+    consign.simTime_            = tools::translate( "logistic", "GDH" ).toAscii().constData();
+    consign.providerId_         = tools::translate( "logistic", "provider id" ).toAscii().constData();
+    consign.transportProviderId_= tools::translate( "logistic", "transport provider id" ).toAscii().constData();
+    consign.conveyorId_         = tools::translate( "logistic", "conveyor id" ).toAscii().constData();
+    consign.stateId_            = tools::translate( "logistic", "state id" ).toAscii().constData();
+    consign.provider_           = tools::translate( "logistic", "provider" ).toAscii().constData();
+    consign.transportProvider_  = tools::translate( "logistic", "transport provider" ).toAscii().constData();
+    consign.conveyor_           = tools::translate( "logistic", "conveyor" ).toAscii().constData();
+    consign.state_              = tools::translate( "logistic", "state" ).toAscii().constData();
+    consign.recipientAutomats_[ 0 ] = tools::translate( "logistic", "recipient" ).toAscii().constData();
+    SupplyConsignData::Resource resource;
+    resource.recipientAutomatId_ = 0;
+    resource.recipientId_ = tools::translate( "logistic", "recipient id" ).toAscii().constData();
+    resource.id_        = tools::translate( "logistic", "resource type id" ).toStdString();
+    resource.type_      = tools::translate( "logistic", "resource type" ).toStdString();
+    resource.requested_ = tools::translate( "logistic", "requested" ).toStdString();
+    resource.granted_   = tools::translate( "logistic", "granted" ).toStdString();
+    resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toStdString();
     for( int i = 0; i < 15; ++i )
-    {
-        SupplyConsignData::Resource resource;
-        resource.recipientAutomatId_ = 0;
-        resource.recipientId_ = consign.recipientAutomatId_;
-        resource.id_        = tools::translate( "logistic", "resource type id" ).toStdString();
-        resource.type_      = tools::translate( "logistic", "resource type" ).toStdString();
-        resource.requested_ = tools::translate( "logistic", "requested" ).toStdString();
-        resource.granted_   = tools::translate( "logistic", "granted" ).toStdString();
-        resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toStdString();
         consign.resources_[ i ] = resource;
-    }
     SetHeader( consign );
 }
 

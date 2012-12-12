@@ -20,14 +20,16 @@ using namespace plugins::logistic;
 void MaintenanceConsignData::operator>>( std::stringstream& output ) const
 {
     output  << requestId_    << separator_
-        << tick_         << separator_
-        << simTime_      << separator_   // << creationTick_     << separator_    << unitId_  << separator_
-        << unit_         << separator_   // << providerId_       << separator_
-        << provider_     << separator_   // << equipmentId_      << separator_
-        << equipment_    << separator_   // << breakdownId_      << separator_
-        << breakdown_    << separator_   // << stateId_          << separator_
-        << state_        << separator_
-        << stateEndTick_ << std::endl;
+            << tick_         << separator_
+            << simTime_      << separator_   // << creationTick_     << separator_
+            << unit_         << separator_
+            << unitId_       << separator_
+            << provider_     << separator_   // << equipmentId_      << separator_
+            << providerId_   << separator_
+            << equipment_    << separator_   // << breakdownId_      << separator_
+            << breakdown_    << separator_   // << stateId_          << separator_
+            << state_        << separator_
+            << stateEndTick_ << std::endl;
 }
 
 // -----------------------------------------------------------------------------

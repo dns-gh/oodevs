@@ -20,15 +20,18 @@ using namespace plugins::logistic;
 void FuneralConsignData::operator>>( std::stringstream& output ) const
 {
     output  << requestId_            << separator_
-        << tick_                 << separator_
-        << simTime_              << separator_   // << creationTick_         << separator_    << unitId_  << separator_
-        << unit_                 << separator_   // << handlingUnitId_       << separator_
-        << handlingUnit_         << separator_   // << conveyingUnitId_      << separator_
-        << conveyingUnit_        << separator_   
-        << rank_                 << separator_   // << packagingResourceId_  << separator_
-        << packagingResource_    << separator_   // << stateId_              << separator_
-        << state_                << separator_
-        << stateEndTick_         << std::endl;
+            << tick_                 << separator_
+            << simTime_              << separator_   // << creationTick_         << separator_    
+            << unit_                 << separator_   
+            << unitId_               << separator_
+            << handlingUnit_         << separator_   
+            << handlingUnitId_       << separator_
+            << conveyingUnit_        << separator_   
+            << conveyingUnitId_      << separator_
+            << rank_                 << separator_   // << packagingResourceId_  << separator_
+            << packagingResource_    << separator_   // << stateId_              << separator_
+            << state_                << separator_
+            << stateEndTick_         << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,9 +132,9 @@ FuneralResolver::~FuneralResolver()
 // -----------------------------------------------------------------------------
 bool FuneralResolver::IsManageable( const sword::SimToClient& message )
 {
-    return message.message().has_log_funeral_handling_creation()
-        || message.message().has_log_funeral_handling_update()
-        || message.message().has_log_funeral_handling_destruction();
+    return     message.message().has_log_funeral_handling_creation()
+            || message.message().has_log_funeral_handling_update()
+            || message.message().has_log_funeral_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------

@@ -23,16 +23,19 @@ using namespace plugins::logistic;
 void MedicalConsignData::operator>>( std::stringstream& output ) const
 {
     output  << requestId_    << separator_
-        << tick_         << separator_
-        << simTime_      << separator_   // << creationTick_ << separator_ << unitId_ << separator_
-        << unit_         << separator_   // << providerId_   << separator_
-        << provider_     << separator_
-        << rank_         << separator_
-        << wound_        << separator_
-        << nbc_          << separator_
-        << mental_       << separator_   // << stateId_      << separator_
-        << state_        << separator_
-        << stateEndTick_ << std::endl;
+            << tick_         << separator_
+            << simTime_      << separator_   // << creationTick_ << separator_ 
+            << unit_         << separator_
+            << unitId_       << separator_
+            << provider_     << separator_
+            << providerId_   << separator_
+            << rank_         << separator_
+            << wound_        << separator_
+            << nbc_          << separator_
+            << mental_       << separator_   // << stateId_      << separator_
+            << state_        << separator_
+            << stateEndTick_ << std::endl;
+
 }
 
 // -----------------------------------------------------------------------------

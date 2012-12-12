@@ -67,12 +67,10 @@ public:
     std::string creationTick_;
     std::string stateEndTick_;
     std::map< int, std::string > recipientAutomats_;
-    std::string recipientAutomatId_;
     std::string providerId_;
     std::string transportProviderId_;
     std::string conveyorId_;
     std::string stateId_;
-    std::string recipientAutomat_;
     std::string provider_;
     std::string transportProvider_;
     std::string conveyor_;
