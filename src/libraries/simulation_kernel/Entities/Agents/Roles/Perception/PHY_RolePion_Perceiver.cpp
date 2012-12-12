@@ -35,7 +35,6 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionDisaster.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -122,7 +121,6 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , pPerceptionSurveillance_       ( 0 )
     , pPerceptionRecoObjects_        ( 0 )
     , pPerceptionFlyingShell_        ( 0 )
-    , pPerceptionDisaster_           ( 0 )
 {
     static unsigned int nNbr = 0;
     nNextPeriphericalVisionStep_ = ++nNbr % nNbrStepsBetweenPeriphericalVision_;
@@ -274,31 +272,6 @@ void PHY_RolePion_Perceiver::DisableCoupDeSonde()
     activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionCoupDeSonde_ ) );
     delete pPerceptionCoupDeSonde_;
     pPerceptionCoupDeSonde_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::EnableDisasterPerception
-// Created: LGY 2012-12-06
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::EnableDisasterPerception()
-{
-    if( pPerceptionDisaster_ )
-        return;
-    pPerceptionDisaster_ = new PHY_PerceptionDisaster( *this );
-    activePerceptions_.push_back( pPerceptionDisaster_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::DisableDisasterPerception
-// Created: LGY 2012-12-06
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::DisableDisasterPerception()
-{
-    if( !pPerceptionDisaster_ )
-        return;
-    activePerceptions_.erase( std::find( activePerceptions_.begin(), activePerceptions_.end(), pPerceptionDisaster_ ) );
-    delete pPerceptionDisaster_;
-    pPerceptionDisaster_ = 0;
 }
 
 // -----------------------------------------------------------------------------

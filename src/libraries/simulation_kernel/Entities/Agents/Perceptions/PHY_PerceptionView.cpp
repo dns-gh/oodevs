@@ -12,8 +12,10 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeDisaster.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/DisasterCapacity.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -21,6 +23,7 @@
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_Random.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor
@@ -136,20 +139,82 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
     }
 }
 
+namespace
+{
+    template< typename Sensors, typename Functor >
+     const PHY_PerceptionLevel& ComputeKnowledge( PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Object& knowledge,
+                                                  const MT_Vector2D& position, const Sensors& sensors, Functor perceptionComputer )
+     {
+        const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
+        for( auto it = sensors.begin(); it != sensors.end(); ++it )
+        {
+             const PHY_PerceptionLevel& currentLevel = perceptionComputer( it, position, knowledge, perceiver );
+             if( currentLevel > *pBestLevel )
+             {
+                pBestLevel = &currentLevel;
+                if( pBestLevel->IsBestLevel() )
+                    return *pBestLevel;
+            }
+        }
+        return *pBestLevel;
+     }
+
+     const PHY_PerceptionLevel& ComputeKnowledgeObject( PHY_RoleInterface_Perceiver::T_SurfaceObjectMap::const_iterator it,
+                                                        const DEC_Knowledge_Object& knowledge, PHY_RoleInterface_Perceiver& perceiver )
+     {
+         return it->second.ComputePerception( perceiver, knowledge );
+     }
+     const PHY_PerceptionLevel& ComputeKnowledgeDisaster( PHY_RoleInterface_Perceiver::T_DisasterDetectors::const_iterator it,
+                                                          const MT_Vector2D& position, const DEC_Knowledge_Object& knowledge )
+     {
+         return (*it)->ComputePerception( position, knowledge );
+     }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Object& knowledge ) const
 {
-    const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-
     if( bIsEnabled_ )
     {
-        const PHY_RoleInterface_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
-        for( PHY_RoleInterface_Perceiver::CIT_SurfaceObjectMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D& position = location.GetPosition();
+
+        const PHY_PerceptionLevel& objectLevel = ::ComputeKnowledge( perceiver_, knowledge, position, perceiver_.GetSurfacesObject(),
+                                                                     boost::bind( &ComputeKnowledgeObject, _1, _3, _4 ) );
+        if( objectLevel.IsBestLevel() )
+            return objectLevel;
+
+        const PHY_PerceptionLevel& disasterLevel = ::ComputeKnowledge( perceiver_, knowledge, position, perceiver_.GetDisasterDetectors(),
+                                                                       boost::bind( &ComputeKnowledgeDisaster, _1, _2, _3 ) );
+
+        return disasterLevel > objectLevel ? disasterLevel : objectLevel;
+    }
+
+    return PHY_PerceptionLevel::notSeen_;
+}
+
+namespace
+{
+    template< typename Sensors, typename Functor >
+    const PHY_PerceptionLevel& Compute( PHY_RoleInterface_Perceiver& perceiver, const MIL_Object_ABC& object,
+                                        const Sensors& sensors, const MT_Vector2D& position, bool bIsEnabled, Functor perceptionComputer )
+    {
+        if( !bIsEnabled || !object().CanBePerceived() )
+            return PHY_PerceptionLevel::notSeen_;
+
+        if( object.IsUniversal() )
+            return PHY_PerceptionLevel::identified_;
+
+        if( perceiver.IsIdentified( object ) )
+            return PHY_PerceptionLevel::identified_;
+
+        const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
+        for( auto it = sensors.begin(); it != sensors.end(); ++it )
         {
-            const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, knowledge );
+            const PHY_PerceptionLevel& currentLevel = perceptionComputer( it, object, position, perceiver );
             if( currentLevel > *pBestLevel )
             {
                 pBestLevel = &currentLevel;
@@ -157,39 +222,19 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Obje
                     return *pBestLevel;
             }
         }
+        return *pBestLevel;
     }
 
-    return *pBestLevel;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionView::Compute
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Object_ABC& target ) const
-{
-    if( !bIsEnabled_ || !target().CanBePerceived() )
-        return PHY_PerceptionLevel::notSeen_;
-
-    if( target.IsUniversal() )
-        return PHY_PerceptionLevel::identified_;
-
-    if( perceiver_.IsIdentified( target ) )
-        return PHY_PerceptionLevel::identified_;
-
-    const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-    const PHY_RoleInterface_Perceiver::T_SurfaceObjectMap& surfaces = perceiver_.GetSurfacesObject();
-    for( PHY_RoleInterface_Perceiver::CIT_SurfaceObjectMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    const PHY_PerceptionLevel& ComputeDisaster( PHY_RoleInterface_Perceiver::T_DisasterDetectors::const_iterator it,
+                                                const MIL_Object_ABC& object, const MT_Vector2D& position )
     {
-        const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, target );
-        if( currentLevel > *pBestLevel )
-        {
-            pBestLevel = &currentLevel;
-            if( pBestLevel->IsBestLevel() )
-                return *pBestLevel;
-        }
+        return (*it)->ComputePerception( position, object );
     }
-    return *pBestLevel;
+    const PHY_PerceptionLevel& ComputeObject( PHY_RoleInterface_Perceiver::T_SurfaceObjectMap::const_iterator it,
+                                              const MIL_Object_ABC& object, PHY_RoleInterface_Perceiver& perceiver )
+    {
+        return it->second.ComputePerception( perceiver, object );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -204,10 +249,24 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
 
-            if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
+            if( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
                 perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
             else
-                perceiver_.NotifyPerception( object, Compute( object ) );
+            {
+                const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
+                const MT_Vector2D& position = location.GetPosition();
+                // object detection
+                perceiver_.NotifyPerception( object, ::Compute( perceiver_, object, perceiver_.GetSurfacesObject(),
+                                                                position, bIsEnabled_, boost::bind( &ComputeObject, _1, _2, _4 ) ) );
+                // disaster detection
+                if( object.Retrieve< DisasterCapacity >() && object.IsInside( position ) )
+                {
+                    const PHY_PerceptionLevel& level = ::Compute( perceiver_, object, perceiver_.GetDisasterDetectors(),
+                                                                  position, bIsEnabled_, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
+                    if( level > PHY_PerceptionLevel::notSeen_ )
+                        perceiver_.NotifyPerception( object, position, location.GetDirection() );
+                }
+            }
         }
     }
 }
@@ -355,7 +414,6 @@ void PHY_PerceptionView::FinalizePerception()
         perceptionsUnderway_ = perceptionsBuffer_;
         perceptionsBuffer_.clear();
     }
-
 }
 
 // -----------------------------------------------------------------------------

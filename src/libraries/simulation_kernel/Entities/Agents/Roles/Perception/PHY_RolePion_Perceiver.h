@@ -31,7 +31,6 @@ class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionAlat;
 class PHY_PerceptionFlyingShell;
-class PHY_PerceptionDisaster;
 class PHY_SensorTypeDisaster;
 class TER_Agent_ABC;
 class TER_Object_ABC;
@@ -143,8 +142,6 @@ public:
     virtual void  DisableRecoAlat                ();
     virtual void  EnableCoupDeSonde              ();
     virtual void  DisableCoupDeSonde             ();
-    virtual void  EnableDisasterPerception       ();
-    virtual void  DisableDisasterPerception      ();
     virtual int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
     virtual void  DisableRecoPoint               ( int );
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
@@ -268,7 +265,6 @@ private:
     PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionAlat*             pPerceptionAlat_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
-    PHY_PerceptionDisaster*         pPerceptionDisaster_;
     T_PerceptionVector              activePerceptions_;
 
     E_SensorMode nSensorMode_;

@@ -48,7 +48,6 @@ private:
     //@{
     void FinalizeSurfaceAgents();
     void TransfertPerception();
-    const PHY_PerceptionLevel& Compute( const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name Types

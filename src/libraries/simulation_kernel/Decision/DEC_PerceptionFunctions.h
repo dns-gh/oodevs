@@ -39,8 +39,6 @@ public:
     static bool HasNoDelayedPeceptions( const MIL_Agent_ABC& callerAgent );
     static void EnableCoupDeSonde( MIL_Agent_ABC& callerAgent );
     static void DisableCoupDeSonde( MIL_Agent_ABC& callerAgent );
-    static void EnableDisasterPerception( MIL_Agent_ABC& callerAgent );
-    static void DisableDisasterPerception( MIL_Agent_ABC& callerAgent );
     static int EnableObjectRecognitionLocalisation( DEC_Decision_ABC& callerAgent, const TER_Localisation* pLocalisation, const MT_Vector2D* pCenter, double rGrowthSpeed );
     static void DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );

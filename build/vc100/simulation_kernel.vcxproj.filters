@@ -541,9 +541,6 @@
     <Filter Include="Source Files\Adapters\Hooks">
       <UniqueIdentifier>{99448d1a-7e0f-4e76-9636-d37ede59dae3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Perceptions\Disaster">
-      <UniqueIdentifier>{c58bb56a-d621-4f7f-a1c9-737f9ad4092a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2664,9 +2661,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.cpp">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionDisaster.cpp">
-      <Filter>Source Files\Entities\Agents\Perceptions\Disaster</Filter>
-    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5452,9 +5447,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.h">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionDisaster.h">
-      <Filter>Source Files\Entities\Agents\Perceptions\Disaster</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

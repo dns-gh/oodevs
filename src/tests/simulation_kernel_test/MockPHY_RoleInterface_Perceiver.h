@@ -48,8 +48,6 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( DisableRecoAlat, 0 );
     MOCK_METHOD( EnableCoupDeSonde, 0 );
     MOCK_METHOD( DisableCoupDeSonde, 0 );
-    MOCK_METHOD( EnableDisasterPerception, 0 );
-    MOCK_METHOD( DisableDisasterPerception, 0 );
     MOCK_METHOD( EnableRecoPoint, 4 );
     MOCK_METHOD( DisableRecoPoint, 1 );
     MOCK_METHOD_EXT( EnableRecoLocalisation, 3, int( const TER_Localisation&, float, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisationWithRadius );
