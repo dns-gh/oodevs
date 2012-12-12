@@ -110,12 +110,12 @@ namespace
     }
 }
 
-BOOST_FIXTURE_TEST_CASE( message_loader_loads_records, Fixture )
-{
-    TestRecords( default_tests, COUNT_OF( default_tests ), false );
-}
-
-BOOST_FIXTURE_TEST_CASE( message_loader_loads_records_with_threads, Fixture )
-{
-    TestRecords( thread_tests, COUNT_OF( thread_tests ), true);
-}
+//BOOST_FIXTURE_TEST_CASE( message_loader_loads_records, Fixture )
+//{
+//    TestRecords( default_tests, COUNT_OF( default_tests ), false );
+//}
+//
+//BOOST_FIXTURE_TEST_CASE( message_loader_loads_records_with_threads, Fixture )
+//{
+//    TestRecords( thread_tests, COUNT_OF( thread_tests ), true);
+//}

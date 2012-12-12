@@ -48,6 +48,7 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated )
         message.set_level( sword::oo );
         message.set_name( "test" );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         message.set_logistic_level( sword::none );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
@@ -94,6 +95,7 @@ BOOST_AUTO_TEST_CASE( Formation_CanBeCreated_WithExtensions )
         message.set_level( sword::oo );
         message.set_name( "test" );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         message.set_logistic_level( sword::none );
         sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
         entry->set_name( "extension" );

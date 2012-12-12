@@ -96,6 +96,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CanBeUnderAFormation, Fixture )
     message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
     message.set_logistic_level( sword::none );
     message.set_app6symbol( "sfgpu----------" );
+    message.set_symbol( "sfgpu----------" );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
     // creation
@@ -131,6 +132,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CanBeUnderAnAutomat, Fixture )
     message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
     message.set_logistic_level( sword::none );
     message.set_app6symbol( "sfgpu----------" );
+    message.set_symbol( "sfgpu----------" );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
     // creation
@@ -167,6 +169,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_SuperiorCanBeChanged, Fixture )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         MOCK_EXPECT( automat.RegisterAutomat ).once();
@@ -215,6 +218,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_KnowledgeGroupCanBeChanged, Fixture )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         MOCK_EXPECT( automat.RegisterAutomat ).once();
@@ -260,6 +264,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_DecisionalStateCanBeChanged, Fixture )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         MOCK_EXPECT( automat.RegisterAutomat ).once();
@@ -310,6 +315,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         MOCK_EXPECT( automat.RegisterAutomat ).once();
@@ -378,6 +384,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged, Fixture )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
+        message.set_symbol( "sfgpu----------" );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         MOCK_EXPECT( automat.RegisterAutomat ).once();
@@ -448,6 +455,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_CreationWithExtensions, Fixture )
     message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
     message.set_logistic_level( sword::none );
     message.set_app6symbol( "sfgpu----------" );
+    message.set_symbol( "sfgpu----------" );
     sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
     entry->set_name( "extension" );
     entry->set_value( "value" );
