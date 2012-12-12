@@ -1026,10 +1026,11 @@
         <sequential>
             <run-one-simulation exercise="@{exercise}" session="@{session}">
                 <args/>
-                <arg value="--legacy"/>
+                <arg value="--legacy=true"/>
             </run-one-simulation>
             <run-one-simulation exercise="@{exercise}" session="@{session}">
                 <args/>
+                <arg value="--legacy=false"/>
             </run-one-simulation>
         </sequential>
     </macrodef>
