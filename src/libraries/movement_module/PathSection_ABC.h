@@ -16,8 +16,7 @@
 #include <boost/noncopyable.hpp>
 
 class TerrainRule_ABC;
-class TerrainPathfinder;
-class TerrainPathPoint;
+class TER_Pathfinder_ABC;
 class TerrainData;
 
 namespace sword
@@ -30,16 +29,14 @@ namespace movement
 // @class  DEC_Tools
 // Created: NLD 2005-02-22
 // =============================================================================
-class PathSection_ABC : /*private tools::thread::Handler_ABC< TerrainPathPoint >
-                          , private pathfind::AStarManagementCallback_ABC
-                          ,*/ private boost::noncopyable
+class PathSection_ABC : private boost::noncopyable
 {
 public:
     virtual ~PathSection_ABC();
 
     //! @name Operations
     //@{
-    bool   Execute  ( TerrainPathfinder& pathfind, unsigned int nComputationEndTime );
+    bool   Execute  ( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime );
     double GetLength() const;
     void   Cancel   ();
     //@}

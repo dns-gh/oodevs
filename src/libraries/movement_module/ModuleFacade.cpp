@@ -67,7 +67,7 @@ namespace
             return boost::shared_ptr< MT_Vector2D >();
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( path->GetResult().back()->GetPos() ) );
     }
-    DEFINE_HOOK( ExecutePathfind, 2, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) )
+    DEFINE_HOOK( ExecutePathfind, 2, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TER_Pathfinder_ABC& pathfind ) )
     {
         path->Execute( pathfind );
     }

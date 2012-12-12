@@ -16,7 +16,6 @@
 #include "tools/thread/Handler_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
-#include <pathfind/TerrainPathfinder.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
 
 class TerrainRule_ABC;
@@ -34,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    bool   Execute  ( TerrainPathfinder& pathfind, unsigned int nComputationEndTime );
+    bool   Execute  ( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime );
     double GetLength() const;
     void   Cancel   ();
     //@}

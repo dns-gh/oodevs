@@ -43,7 +43,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( path_too_long_to_compute_sends_timeout_log, PathfindFixture )
 {
-    TerrainPathfinder pathfind;
+    TER_Pathfinder_ABC pathfind;
     MOCK_EXPECT( UsePathDebug ).returns( false );
     MOCK_EXPECT( IsDestinationTrafficable ).once().returns( true );
     MOCK_EXPECT( GetMaxPathFindComputationDuration ).once().returns( 0 );

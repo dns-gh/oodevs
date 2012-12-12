@@ -19,7 +19,7 @@
 #ifndef __TER_PathFindRequest_ABC_h_
 #define __TER_PathFindRequest_ABC_h_
 
-class TerrainPathfinder;
+class TER_Pathfinder_ABC;
 
 // =============================================================================
 /** @class  TER_PathFindRequest_ABC
@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind ) = 0;
+    virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
     virtual void CleanAfterComputation() = 0;
     //@}
 };

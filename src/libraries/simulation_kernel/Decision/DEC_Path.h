@@ -30,7 +30,7 @@ class DEC_Path : public DEC_Path_ABC
 public:
     //! @name Operations
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
+    virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();
     void Cancel();
 
@@ -64,7 +64,7 @@ protected:
 
     virtual void NotifySectionEnded() = 0;
 
-    void DoExecute( TerrainPathfinder& pathfind );
+    void DoExecute( TER_Pathfinder_ABC& pathfind );
     void RemoveComputedWaypoint();
     //@}
 

@@ -49,19 +49,22 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_PopulationConcentrationManager.h"
 #include "simulation_terrain/TER_PopulationFlowManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "tools/Loader_ABC.h"
-#include <pathfind/TerrainPathfinder.h>
 #undef ERROR
+#include <pathfind/AStarManagementCallback_ABC.h>
 #include <pathfind/TerrainRule_ABC.h>
+#include <pathfind/TerrainPathPoint.h>
 #include <core/Facade.h>
 #include <core/UserData.h>
 #include <core/Convert.h>
 #include <module_api/Hook.h>
 #include <module_api/Model.h>
+#include <tools/thread/Handler_ABC.h>
 #include <boost/foreach.hpp>
 
 using namespace sword;
@@ -366,7 +369,7 @@ namespace
         PathfindHandlePathPoint handler_;
         void* handlerData_;
     };
-    DEFINE_HOOK( ComputePathfind, 13, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest,
+    DEFINE_HOOK( ComputePathfind, 13, bool, ( TER_Pathfinder_ABC& pathfind, bool needRefine, bool strictClosest,
                                               const geometry::Point2f& from, const geometry::Point2f& to,
                                               PathfindEvaluateCost evaluate, void* evaluateData,
                                               PathfindGetCost get, void* getData,

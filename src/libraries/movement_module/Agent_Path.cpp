@@ -458,7 +458,7 @@ namespace
 // Name: Agent_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-void Agent_Path::Execute( TerrainPathfinder& pathfind )
+void Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
 {
     if( GET_HOOK( UsePathDebug )() ) // $$$$ MCO : this is a "static data" configuration value
     {

@@ -40,7 +40,7 @@ public:
 
     //! @name Path calculation
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
+    virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;
     virtual void ComputePath( const boost::shared_ptr< Path_ABC >& pPath );

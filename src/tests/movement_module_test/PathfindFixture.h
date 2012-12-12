@@ -21,7 +21,7 @@
 
 namespace bp = boost::phoenix;
 
-class TerrainPathfinder
+class TER_Pathfinder_ABC
 {};
 
 namespace sword
@@ -116,7 +116,7 @@ namespace movement
             UpdatePosition( points.front().first );
             return CreatePathParameter( points.back().first );
         }
-        TerrainPathfinder pathfind;
+        TER_Pathfinder_ABC pathfind;
         const unsigned int identifier;
         core::Model& entity;
     };

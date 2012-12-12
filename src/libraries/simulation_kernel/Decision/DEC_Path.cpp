@@ -76,7 +76,7 @@ double DEC_Path::GetLength() const
 // Name: DEC_Path::DoExecute
 // Created: AGE 2006-03-07
 // -----------------------------------------------------------------------------
-void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
+void DEC_Path::DoExecute( TER_Pathfinder_ABC& pathfind )
 {
     unsigned int nComputationEndTime = 0;
     const unsigned int nMaxComputationDuration = MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
@@ -138,7 +138,7 @@ void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
 // Name: DEC_Path::Execute
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void DEC_Path::Execute( TerrainPathfinder& pathfind )
+void DEC_Path::Execute( TER_Pathfinder_ABC& pathfind )
 {
     try
     {

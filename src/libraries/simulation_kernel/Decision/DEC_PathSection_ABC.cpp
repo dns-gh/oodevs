@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathSection_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <ctime>
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ DEC_PathSection_ABC::~DEC_PathSection_ABC()
 // Name: DEC_PathSection_ABC::Execute
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
-bool DEC_PathSection_ABC::Execute( TerrainPathfinder& pathfind, unsigned int nComputationEndTime )
+bool DEC_PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime )
 {
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
     geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );

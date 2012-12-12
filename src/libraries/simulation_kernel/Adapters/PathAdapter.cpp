@@ -42,7 +42,7 @@
 using namespace sword;
 
 DECLARE_HOOK( CleanPathAfterComputation, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) )
+DECLARE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TER_Pathfinder_ABC& pathfind ) )
 DECLARE_HOOK( PathGetLength, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 
@@ -181,7 +181,7 @@ const boost::shared_ptr< movement::Path_ABC >& PathAdapter::Get() const
 // Name: PathAdapter::Execute
 // Created: MCO 2012-01-26
 // -----------------------------------------------------------------------------
-void PathAdapter::Execute( TerrainPathfinder& pathfind )
+void PathAdapter::Execute( TER_Pathfinder_ABC& pathfind )
 {
     GET_HOOK( ExecutePathfind )( path_, pathfind );
 }

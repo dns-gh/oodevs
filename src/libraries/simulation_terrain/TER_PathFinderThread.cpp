@@ -15,6 +15,7 @@
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
+#include "TER_Pathfinder_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
@@ -93,6 +94,39 @@ void TER_PathFinderThread::ProcessDynamicData()
     }
 }
 
+namespace
+{
+    struct PathfinderProxy : public TER_Pathfinder_ABC
+                           , public boost::noncopyable
+    {
+        PathfinderProxy( TerrainPathfinder& root )
+            : root_( root )
+        {
+            // NOTHING
+        }
+        virtual void SetCallback( pathfind::AStarManagementCallback_ABC* pCallback )
+        {
+            root_.SetCallback( pCallback );
+        }
+        virtual void SetChoiceRatio( float ratio )
+        {
+            root_.SetChoiceRatio( ratio );
+        }
+        virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions )
+        {
+            root_.SetConfiguration( nRefining, nSubdivisions );
+        }
+        virtual bool ComputePath( const geometry::Point2f& from, const geometry::Point2f& to,
+                                  TerrainRule_ABC& rule,
+                                  tools::thread::Handler_ABC< TerrainPathPoint >& handler )
+        {
+            return root_.ComputePath( from, to, rule, handler );
+        }
+    private:
+        TerrainPathfinder& root_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::Process
 // Created: AGE 2005-02-23
@@ -104,7 +138,8 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
         ProcessDynamicData();
         if( pRequest.get() )
         {
-            pRequest->Execute( *pPathfinder_ );
+            PathfinderProxy proxy( *pPathfinder_ );
+            pRequest->Execute( proxy );
             MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( pRequest );
         }
     }

@@ -20,8 +20,8 @@
 #include <vector>
 
 class TerrainData;
-class TerrainPathfinder;
 class MT_Vector2D;
+class TER_Pathfinder_ABC;
 
 namespace sword
 {
@@ -53,7 +53,7 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
+    virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void ComputePath( const boost::shared_ptr< Path_ABC >& pPath ) = 0;
     void Cancel();
     virtual void CleanAfterComputation();
@@ -97,7 +97,7 @@ protected:
     std::string GetPathAsString() const;
     const T_PointVector& GetComputedWaypoints() const;
     virtual void NotifySectionEnded() = 0;
-    void DoExecute( TerrainPathfinder& pathfind );
+    void DoExecute( TER_Pathfinder_ABC& pathfind );
     void RemoveComputedWaypoint();
     //@}
 

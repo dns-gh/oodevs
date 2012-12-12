@@ -144,7 +144,7 @@ void DEC_Population_Path::CleanAfterComputation()
 // Name: DEC_Population_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
+void DEC_Population_Path::Execute( TER_Pathfinder_ABC& pathfind )
 {
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {

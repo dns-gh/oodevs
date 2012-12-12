@@ -106,7 +106,7 @@ double Path_ABC::GetLength() const
 // Name: Path_ABC::DoExecute
 // Created: AGE 2006-03-07
 // -----------------------------------------------------------------------------
-void Path_ABC::DoExecute( TerrainPathfinder& pathfind )
+void Path_ABC::DoExecute( TER_Pathfinder_ABC& pathfind )
 {
     unsigned int nComputationEndTime = 0;
     const unsigned int nMaxComputationDuration = GET_HOOK( GetMaxPathFindComputationDuration )();
@@ -168,7 +168,7 @@ void Path_ABC::DoExecute( TerrainPathfinder& pathfind )
 // Name: Path_ABC::Execute
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void Path_ABC::Execute( TerrainPathfinder& pathfind )
+void Path_ABC::Execute( TER_Pathfinder_ABC& pathfind )
 {
     try
     {
@@ -235,7 +235,7 @@ void Path_ABC::RemoveComputedWaypoint()
 // Created: JDY 03-02-12
 //-----------------------------------------------------------------------------
 Path_ABC::E_State Path_ABC::GetState() const
-{   
+{
     return nState_;
 }
 

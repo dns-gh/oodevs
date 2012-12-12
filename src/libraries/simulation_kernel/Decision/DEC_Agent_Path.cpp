@@ -44,6 +44,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -588,7 +589,7 @@ void DEC_Agent_Path::CleanAfterComputation()
 // Name: DEC_Agent_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
+void DEC_Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
 {
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {

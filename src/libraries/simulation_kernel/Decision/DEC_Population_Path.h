@@ -46,7 +46,7 @@ public:
 
     //! @name Path calculation
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
+    virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;

@@ -24,7 +24,7 @@ typedef float (*PathfindEvaluateCost)( const geometry::Point2f& from, const geom
 typedef float (*PathfindGetCost)( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, void* userData );
 typedef void (*PathfindHandlePathPoint)( const geometry::Point2f& point, const TerrainData& dataAtPoint, const TerrainData& dataToNextPoint, void* userData ); // $$$$ MCO 2012-05-23: be careful this is called in pathfind threads
 
-DECLARE_HOOK( ComputePathfind, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest,
+DECLARE_HOOK( ComputePathfind, bool, ( TER_Pathfinder_ABC& pathfind, bool needRefine, bool strictClosest,
                                        const geometry::Point2f& from, const geometry::Point2f& to,
                                        PathfindEvaluateCost evaluate, void* evaluateData,
                                        PathfindGetCost get, void* getData,
@@ -79,7 +79,7 @@ namespace
 // Name: PathSection_ABC::Execute
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
-bool PathSection_ABC::Execute( TerrainPathfinder& pathfind, unsigned int nComputationEndTime )
+bool PathSection_ABC::Execute( TER_Pathfinder_ABC& pathfind, unsigned int nComputationEndTime )
 {
     nComputationEndTime_ = nComputationEndTime;
     const geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
