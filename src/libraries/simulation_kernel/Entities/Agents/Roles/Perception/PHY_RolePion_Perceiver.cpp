@@ -112,6 +112,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
     , bExternalMustUpdateVisionCones_( false )
     , bRadarStateHasChanged_         ( true )
     , bFireObserver_                 ( false )
+    , bPerceptionUponRequest_        ( false )
     , pPerceptionCoupDeSonde_        ( 0 )
     , pPerceptionRecoPoint_          ( 0 )
     , pPerceptionRecoLocalisation_   ( 0 )
@@ -221,7 +222,8 @@ void PHY_RolePion_Perceiver::serialize( Archive& file, const unsigned int )
          & surfacesAgent_
          & surfacesObject_
          & rMaxAgentPerceptionDistance_
-         & bFireObserver_;
+         & bFireObserver_
+         & bPerceptionUponRequest_;
 }
 
 // =============================================================================
@@ -667,39 +669,44 @@ struct sPerceptionDataSensors : private boost::noncopyable
 public:
     sPerceptionDataSensors( PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
                             PHY_RolePion_Perceiver::T_DisasterDetectors& disasterDetectors, const MT_Vector2D& vOrigin, const MT_Vector2D& vDirection,
-                            double& rMaxAgentPerceptionDistance )
+                            double& rMaxAgentPerceptionDistance, bool bPerceptionUponRequest )
         : surfacesAgent_               ( surfacesAgent )
         , surfacesObject_              ( surfacesObject )
         , disasterDetectors_           ( disasterDetectors )
         , vOrigin_                     ( vOrigin )
         , vDirection_                  ( vDirection )
         , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
+        , bPerceptionUponRequest_      ( bPerceptionUponRequest )
     {
         // NOTHING
     }
 
     void operator()( const PHY_Sensor& sensor )
     {
-        const PHY_SensorTypeAgent* pSensorTypeAgent = sensor.GetType().GetTypeAgent();
-        if( pSensorTypeAgent )
+        bool isActivatedOnRequest = sensor.GetType().IsActivatedOnRequest();
+        if( !isActivatedOnRequest || ( isActivatedOnRequest && bPerceptionUponRequest_ ) )
         {
-            rMaxAgentPerceptionDistance_ = std::max( rMaxAgentPerceptionDistance_, pSensorTypeAgent->GetMaxDistance() );
-            PHY_PerceptionSurfaceAgent& surface = surfacesAgent_[ std::make_pair( pSensorTypeAgent, sensor.GetHeight() ) ];
-            if( !surface.IsInitialized() )
-                surface = PHY_PerceptionSurfaceAgent( *pSensorTypeAgent, vOrigin_, sensor.GetHeight() );
-            surface.AddDirection( vDirection_ );
+            const PHY_SensorTypeAgent* pSensorTypeAgent = sensor.GetType().GetTypeAgent();
+            if( pSensorTypeAgent )
+            {
+                rMaxAgentPerceptionDistance_ = std::max( rMaxAgentPerceptionDistance_, pSensorTypeAgent->GetMaxDistance() );
+                PHY_PerceptionSurfaceAgent& surface = surfacesAgent_[ std::make_pair( pSensorTypeAgent, sensor.GetHeight() ) ];
+                if( !surface.IsInitialized() )
+                    surface = PHY_PerceptionSurfaceAgent( *pSensorTypeAgent, vOrigin_, sensor.GetHeight() );
+                surface.AddDirection( vDirection_ );
+            }
+            const PHY_SensorTypeObject* pSensorTypeObject = sensor.GetType().GetTypeObject();
+            if( pSensorTypeObject )
+            {
+                PHY_PerceptionSurfaceObject& surface = surfacesObject_[ std::make_pair( pSensorTypeObject, sensor.GetHeight() ) ];
+                if( !surface.IsInitialized() )
+                    surface = PHY_PerceptionSurfaceObject( *pSensorTypeObject, vOrigin_, sensor.GetHeight() );
+            }
+            const PHY_SensorTypeDisaster* pSensorTypeDisaster = sensor.GetType().GetTypeDisaster();
+            if( pSensorTypeDisaster )
+                if( std::find( disasterDetectors_.begin(), disasterDetectors_.end(), pSensorTypeDisaster ) == disasterDetectors_.end() )
+                    disasterDetectors_.push_back( pSensorTypeDisaster );
         }
-        const PHY_SensorTypeObject* pSensorTypeObject = sensor.GetType().GetTypeObject();
-        if( pSensorTypeObject )
-        {
-            PHY_PerceptionSurfaceObject& surface = surfacesObject_[ std::make_pair( pSensorTypeObject, sensor.GetHeight() ) ];
-            if( !surface.IsInitialized() )
-                surface = PHY_PerceptionSurfaceObject( *pSensorTypeObject, vOrigin_, sensor.GetHeight() );
-        }
-        const PHY_SensorTypeDisaster* pSensorTypeDisaster = sensor.GetType().GetTypeDisaster();
-        if( pSensorTypeDisaster )
-            if( std::find( disasterDetectors_.begin(), disasterDetectors_.end(), pSensorTypeDisaster ) == disasterDetectors_.end() )
-                disasterDetectors_.push_back( pSensorTypeDisaster );
     }
 
 private:
@@ -709,6 +716,7 @@ private:
     const MT_Vector2D&                           vOrigin_;
     const MT_Vector2D&                           vDirection_;
     double&                                      rMaxAgentPerceptionDistance_;
+    bool                                         bPerceptionUponRequest_;
 };
 
 // -----------------------------------------------------------------------------
@@ -717,7 +725,7 @@ class sPerceptionDataComposantes : public OnComponentFunctor_ABC
 public:
     sPerceptionDataComposantes( MIL_Agent_ABC& pion, PHY_RolePion_Perceiver::T_SurfaceAgentMap& surfacesAgent, PHY_RolePion_Perceiver::T_SurfaceObjectMap& surfacesObject,
                                 PHY_RolePion_Perceiver::T_DisasterDetectors& disasterDetectors, const MT_Vector2D& vMainPerceptionDirection, double rDirectionRotation,
-                                double& rMaxAgentPerceptionDistance )
+                                double& rMaxAgentPerceptionDistance, bool bPerceptionUponRequest )
         : surfacesAgent_               ( surfacesAgent )
         , surfacesObject_              ( surfacesObject )
         , disasterDetectors_           ( disasterDetectors )
@@ -728,6 +736,7 @@ public:
         , rRotationAngle_              ( rDirectionRotation )
         , rMaxAgentPerceptionDistance_ ( rMaxAgentPerceptionDistance )
         , transport_                   ( pion.RetrieveRole< transport::PHY_RoleAction_Loading >() )
+        , bPerceptionUponRequest_      ( bPerceptionUponRequest )
     {
         // NOTHING
     }
@@ -742,7 +751,7 @@ public:
         else if( nRotationIdx_ > 0 )
             vComposantePerceptionDirection.Rotate( ( ( 2 * ( nRotationIdx_ & 0x1 ) - 1 ) * ( ( nRotationIdx_ + 1 ) >> 1 ) ) * rRotationAngle_ );
         ++nRotationIdx_;
-        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, disasterDetectors_, position_, vComposantePerceptionDirection, rMaxAgentPerceptionDistance_ );
+        sPerceptionDataSensors dataFunctor( surfacesAgent_, surfacesObject_, disasterDetectors_, position_, vComposantePerceptionDirection, rMaxAgentPerceptionDistance_, bPerceptionUponRequest_ );
         composante.ApplyOnSensors( dataFunctor );
     }
 
@@ -757,6 +766,7 @@ private:
     int                                          nRotationIdx_;
     const double                                 rRotationAngle_;
     const transport::PHY_RoleAction_Loading*     transport_;
+    bool                                         bPerceptionUponRequest_;
 };
 
 // -----------------------------------------------------------------------------
@@ -828,7 +838,8 @@ void PHY_RolePion_Perceiver::PreparePerceptionData()
     sPerceptionRotation rotation;
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( rotation ) );
     owner_.Execute( *componentComputer );
-    sPerceptionDataComposantes dataFunctor( owner_, surfacesAgent_, surfacesObject_, disasterDetectors_, vMainPerceptionDirection, rotation.GetAngle() , rMaxAgentPerceptionDistance_ );
+    sPerceptionDataComposantes dataFunctor( owner_, surfacesAgent_, surfacesObject_, disasterDetectors_, vMainPerceptionDirection,
+                                            rotation.GetAngle() , rMaxAgentPerceptionDistance_, bPerceptionUponRequest_ );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     owner_.Execute( *dataComputer );
 }
@@ -1505,4 +1516,24 @@ void PHY_RolePion_Perceiver::DisableFireObserver()
 bool PHY_RolePion_Perceiver::IsFireObserver() const
 {
     return bFireObserver_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::EnablePerceptionUponRequest
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::EnablePerceptionUponRequest()
+{
+    bPerceptionUponRequest_ = true;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::DisablePerceptionUponRequest
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::DisablePerceptionUponRequest()
+{
+    bPerceptionUponRequest_ = false;
+    bHasChanged_ = true;
 }

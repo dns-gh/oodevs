@@ -54,6 +54,7 @@ public:
     const std::string&            GetName() const;
           unsigned int            GetID() const;
     const unsigned int            GetDelay() const;
+          bool                    IsActivatedOnRequest() const;
     //@}
 
 private:

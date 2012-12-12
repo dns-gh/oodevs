@@ -110,6 +110,8 @@ public:
     virtual void DisableRecoAlat() = 0;
     virtual void EnableCoupDeSonde() = 0;
     virtual void DisableCoupDeSonde() = 0;
+    virtual void EnablePerceptionUponRequest() = 0;
+    virtual void DisablePerceptionUponRequest() = 0;
     virtual int EnableRecoPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoPoint( int ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent ) = 0;

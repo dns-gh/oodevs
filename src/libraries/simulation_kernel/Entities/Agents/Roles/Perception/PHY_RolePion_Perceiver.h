@@ -142,6 +142,8 @@ public:
     virtual void  DisableRecoAlat                ();
     virtual void  EnableCoupDeSonde              ();
     virtual void  DisableCoupDeSonde             ();
+    virtual void  EnablePerceptionUponRequest    ();
+    virtual void  DisablePerceptionUponRequest   ();
     virtual int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
     virtual void  DisableRecoPoint               ( int );
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
@@ -279,6 +281,7 @@ private:
     bool bExternalMustUpdateVisionCones_;
     bool bRadarStateHasChanged_;
     bool bFireObserver_;
+    bool bPerceptionUponRequest_;
     //@}
 
     //! @name Static member data

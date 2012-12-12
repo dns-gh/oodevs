@@ -218,3 +218,12 @@ const PHY_SensorTypeDisaster* PHY_SensorType::GetTypeDisaster() const
 {
     return pTypeDisaster_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::IsActivatedOnRequest
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+bool PHY_SensorType::IsActivatedOnRequest() const
+{
+    return activationOnRequest_;
+}

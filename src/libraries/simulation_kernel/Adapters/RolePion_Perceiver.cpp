@@ -880,21 +880,19 @@ bool RolePion_Perceiver::IsFireObserver() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::EnableDisasterPerception
-// Created: LGY 2012-12-06
+// Name: RolePion_Perceiver::EnablePerceptionUponRequest
+// Created: LGY 2012-12-12
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::EnableDisasterPerception()
-{
-    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::DisableDisasterPerception
-// Created: LGY 2012-12-06
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::DisableDisasterPerception()
+void RolePion_Perceiver::EnablePerceptionUponRequest()
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::DisablePerceptionUponRequest
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::DisablePerceptionUponRequest()
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}

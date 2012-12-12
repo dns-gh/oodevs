@@ -191,6 +191,8 @@ void RolePion_Decision::RegisterPerception()
 {
     RegisterFunction( "DEC_Perception_ActiverCoupsDeSonde", boost::bind( &DEC_PerceptionFunctions::EnableCoupDeSonde, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_DesactiverCoupsDeSonde", boost::bind( &DEC_PerceptionFunctions::DisableCoupDeSonde, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_ActiverSenseursSurDecision", boost::bind( &DEC_PerceptionFunctions::EnablePerceptionUponRequest, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Perception_DesactiverSenseursSurDecision", boost::bind( &DEC_PerceptionFunctions::DisablePerceptionUponRequest, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_ActiverSenseurs", boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_DesactiverSenseurs", boost::bind( &DEC_PerceptionFunctions::DisableSensors, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_ActiverRadar", boost::function< void( int ) >( boost::bind( &DEC_PerceptionFunctions::EnableRadar, boost::ref( GetPion() ), _1 ) ) );

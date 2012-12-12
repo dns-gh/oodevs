@@ -501,3 +501,21 @@ void DEC_PerceptionFunctions::DisableFireObserver( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableFireObserver();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::EnablePerceptionUponRequest
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::EnablePerceptionUponRequest( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnablePerceptionUponRequest();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::DisablePerceptionUponRequest
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::DisablePerceptionUponRequest( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisablePerceptionUponRequest();
+}
