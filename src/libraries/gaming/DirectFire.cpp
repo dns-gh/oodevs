@@ -33,8 +33,8 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolv
 
     if( message.target().has_unit() )
         target = agentResolver.Find( message.target().unit().id() );
-    else if( message.target().has_crowd() )
-        target = populationResolver.Find( message.target().crowd().id() );
+    else if( message.target().has_crowd_element() )
+        target = populationResolver.Find( message.target().crowd_element().id() );
     if( !target )
         throw MASA_EXCEPTION( "DirectFire on position..." );
 

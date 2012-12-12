@@ -729,8 +729,10 @@ message FormationCreation {
     required EnumLogisticLevel logistic_level        = 8;
     //! The formation color @see RgbColor
     optional RgbColor          color                 = 9;
+    //! The automat APP-6 symbol @deprecated Use app6symbol instead
+    required string            symbol                = 10;
     //! The extension fields
-    optional Extension         extension             = 10;
+    optional Extension         extension             = 11;
 }
 
 /** @struct FormationUpdate
@@ -772,8 +774,10 @@ message AutomatCreation {
     required EnumLogisticLevel logistic_level  = 8;
     //! The automat color @see RgbColor
     optional RgbColor          color           = 9;
+    //! The automat APP-6 symbol @deprecated Use app6symbol instead
+    required string            symbol          = 10;
     //! The extension fields
-    optional Extension         extension       = 10;
+    optional Extension         extension       = 11;
 }
 
 /** @struct RulesOfEngagement
@@ -1462,11 +1466,13 @@ message StartUnitFire {
     */
     message UnitFireTarget {
         //! The target unit
-        optional UnitId       unit     = 1;
+        optional UnitId       unit            = 1;
         //! The target crowd
-        optional CrowdElementId      crowd    = 2;
+        optional CrowdId      crowd           = 2;
         //! The target position
-        optional CoordLatLong position = 3;
+        optional CoordLatLong position        = 3;
+        //! The target crowd
+        optional CrowdElementId crowd_element = 4;
     }
     /** @enum UnitFireType
         @brief Defines the fire type

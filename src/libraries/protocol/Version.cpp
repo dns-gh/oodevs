@@ -35,8 +35,8 @@ bool sword::CheckCompatibility( const std::string& version1, const std::string& 
 {
     const std::vector< std::string > actual = Split( version1 );
     const std::vector< std::string > expected = Split( version2 );
-    return actual.size() > 1 && expected.size() > 1 &&
-        actual[ 0 ] == expected[ 0 ] && actual[ 1 ] == expected[ 1 ];
+    return actual.size() > 0 && expected.size() > 0 &&
+        actual[ 0 ] == expected[ 0 ];
 }
 
 // -----------------------------------------------------------------------------

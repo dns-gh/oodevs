@@ -31,7 +31,7 @@ message ProtocolVersion {
         @li Y is the major product version
         @li Z is the minor product version
     */
-    required string value = 1 [default = "5.0"];
+    required string value = 1 [default = "5.1"];
 }
 
 /** @}*/

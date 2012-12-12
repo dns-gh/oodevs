@@ -54,7 +54,8 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     asnMsg().mutable_fire()->set_id( nID_ );
     asnMsg().mutable_firing_unit()->set_id( firer.GetID() );
     asnMsg().set_type( sword::StartUnitFire::direct );
-    asnMsg().mutable_target()->mutable_crowd()->set_id( target.GetID() );
+    asnMsg().mutable_target()->mutable_crowd()->set_id( target.GetPopulation().GetID() );
+    asnMsg().mutable_target()->mutable_crowd_element()->set_id( target.GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

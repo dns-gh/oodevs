@@ -129,6 +129,7 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_level( sword::EnumNatureLevel( level_ ) );
     message().set_name( name_ );
     message().set_app6symbol( app6symbol_ );
+    message().set_symbol( app6symbol_ );
     if( logisticEntity_.get() )
         logisticEntity_->Send( message() );
     else

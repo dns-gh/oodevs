@@ -284,6 +284,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( team_.GetId() );
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     asn().set_app6symbol( app6symbol_ );
+    asn().set_symbol( app6symbol_ );
     if( parentFormation_ )
         asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
     if( parentAutomat_ )

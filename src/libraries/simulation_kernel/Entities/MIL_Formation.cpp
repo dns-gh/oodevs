@@ -280,6 +280,7 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().mutable_party()->set_id( pArmy_->GetID() );
     message().set_name( GetName() );
     message().set_level( pLevel_->GetAsnID() );
+    message().set_symbol( symbol_ );
     message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
     pExtensions_->SendFullState( message );
