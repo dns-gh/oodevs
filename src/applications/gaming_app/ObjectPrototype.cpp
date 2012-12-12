@@ -28,6 +28,7 @@
 #include "SupplyRoutePrototype.h"
 #include "UndergroundPrototype.h"
 #include "TrafficabilityPrototype.h"
+#include "DisasterPrototype.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -91,6 +92,11 @@ namespace
     void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver, ParameterList*& attributesList )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
+    }
+
+    void DisasterAttribute( T_AttributeContainer& container, QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, ParameterList*& attributesList )
+    {
+        container.push_back( new DisasterPrototype( parent, config, controllers, attributesList ) );
     }
 
     void TrafficabilityAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
@@ -178,7 +184,8 @@ namespace
         NBCPrototype* prototype_;
     };
 
-    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+    std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver,
+                                                                        ParameterList*& attributesList, const tools::GeneralConfig& config )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
@@ -198,6 +205,7 @@ namespace
         factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "bypassable"                , boost::bind( &BypassableAttribute, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "disaster"                  , boost::bind( &::DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( attributesList ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilders = boost::make_shared< NBCBuilder >();
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
@@ -217,9 +225,10 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer )
+ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam,
+                                  gui::ParametersLayer& layer, const tools::GeneralConfig& config )
     : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
-                           CreateFactory( controllers, model.objectTypes_, attributesList_ ) )
+                           CreateFactory( controllers, model.objectTypes_, attributesList_, config ) )
     , attributesList_( 0 )
     , static_               ( model )
     , currentActionsModel_  ( 0 )

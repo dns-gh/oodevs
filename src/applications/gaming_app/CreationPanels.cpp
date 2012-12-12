@@ -19,6 +19,7 @@
 #include "clients_gui/DrawerPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
+#include "tools/ExerciseConfig.h"
 #include "protocol/SimulationSenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
@@ -41,7 +42,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, icons, colorStrategy ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_ ) );
-    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools ) );
+    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools, config ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
     AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );

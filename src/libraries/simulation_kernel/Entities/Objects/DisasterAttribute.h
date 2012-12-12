@@ -48,6 +48,7 @@ public:
     //@{
              DisasterAttribute();
     explicit DisasterAttribute( xml::xistream& xis );
+    explicit DisasterAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~DisasterAttribute();
     //@}
 

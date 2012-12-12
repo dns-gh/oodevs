@@ -57,6 +57,19 @@ DisasterAttribute::DisasterAttribute( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DisasterAttribute constructor
+// Created: LGY 2012-12-12
+// -----------------------------------------------------------------------------
+DisasterAttribute::DisasterAttribute( const sword::MissionParameter_Value& attributes )
+    : model_   ( BuildPropagationFile( attributes.list( 1 ).acharstr() ) )
+    , pManager_( new PropagationManager() )
+{
+    if( attributes.list_size() > 2 )
+        date_ = attributes.list( 2 ).acharstr();
+    pManager_->Initialize( model_, date_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DisasterAttribute::operator=
 // Created: LGY 2012-11-08
 // -----------------------------------------------------------------------------

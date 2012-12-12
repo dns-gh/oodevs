@@ -28,6 +28,11 @@ namespace actions
     }
 }
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -41,7 +46,8 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam,
+                              gui::ParametersLayer& layer, const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
 

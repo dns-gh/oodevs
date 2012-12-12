@@ -20,7 +20,9 @@
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
+                                          const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
+                                          gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config )
     : gui::InfoPanel_ABC( parent, panel, tools::translate( "ObjectCreationPanel", "Objects" ), "ObjectCreationPanel" )
     , controllers_ ( controllers )
     , actionsModel_( actionsModel )
@@ -33,7 +35,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     layout->setMargin( 5 );
     layout->setAlignment( Qt::AlignTop );
 
-    created_ = new ObjectPrototype( this, controllers, staticModel, noSideTeam, layer );
+    created_ = new ObjectPrototype( this, controllers, staticModel, noSideTeam, layer,config );
     layout->addWidget( created_ );
     QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), this );
     layout->addWidget( ok );

@@ -251,6 +251,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::trafficability:
                 object.GetAttribute< TrafficabilityAttribute >() = TrafficabilityAttribute( attributes );
                 break;
+            case ObjectMagicAction::disaster:
+                object.GetAttribute< DisasterAttribute >() = DisasterAttribute( attributes );
+                break;
             default:
                 break;
             }

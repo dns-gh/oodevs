@@ -34,6 +34,11 @@ namespace gui
     class PanelStack_ABC;
 }
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 class ObjectPrototype;
 class StaticModel;
 
@@ -52,7 +57,10 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
+                                  actions::ActionsModel& actionsModel, const StaticModel& staticModel,
+                                  const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
+                                  gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 
