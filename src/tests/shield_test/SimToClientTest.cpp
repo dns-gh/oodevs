@@ -238,6 +238,7 @@ BOOST_FIXTURE_TEST_CASE( formation_creation_to_client_is_converted, ContextFixtu
     content.mutable_formation_creation()->set_level( sword::ooo );
     content.mutable_formation_creation()->set_name( "name" );
     content.mutable_formation_creation()->set_app6symbol( "app6" );
+    content.mutable_formation_creation()->set_symbol( "app6" );
     content.mutable_formation_creation()->set_logistic_level( sword::logistic_base );
     FillRgbColor( content.mutable_formation_creation()->mutable_color() );
     MOCK_EXPECT( client.SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" app6symbol: \"app6\" logistic_level: logistic_base color { red: 12 green: 42 blue: 77 } } }" ) );
@@ -275,6 +276,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
     content.mutable_automat_creation()->mutable_party()->set_id( 11 );
     content.mutable_automat_creation()->mutable_knowledge_group()->set_id( 12 );
     content.mutable_automat_creation()->set_app6symbol( "app6" );
+    content.mutable_automat_creation()->set_symbol( "app6" );
     content.mutable_automat_creation()->set_logistic_level( sword::logistic_base );
     FillRgbColor( content.mutable_automat_creation()->mutable_color() );
     MOCK_EXPECT( client.SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_creation { automat { id: 7 } type { id: 8 } nom: \"name\" parent { automat { id: 9 } formation { id: 10 } } party { id: 11 } knowledge_group { id: 12 } app6symbol: \"app6\" logistic_level: logistic_base color { red: 12 green: 42 blue: 77 } } }" ) );
