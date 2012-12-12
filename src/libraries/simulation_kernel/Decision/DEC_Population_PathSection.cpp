@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 DEC_Population_PathSection::DEC_Population_PathSection( DEC_Population_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint )
     : DEC_PathSection_ABC( path, vStartPoint, vEndPoint )
-    , rule_              ( *new DEC_Population_PathfinderRule( path ) )
+    , rule_              ( new DEC_Population_PathfinderRule( path ) )
 {
 }
 
@@ -30,7 +30,7 @@ DEC_Population_PathSection::DEC_Population_PathSection( DEC_Population_Path& pat
 // -----------------------------------------------------------------------------
 DEC_Population_PathSection::~DEC_Population_PathSection()
 {
-    delete &rule_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,5 +39,5 @@ DEC_Population_PathSection::~DEC_Population_PathSection()
 // -----------------------------------------------------------------------------
 TerrainRule_ABC& DEC_Population_PathSection::GetRule() const
 {
-    return rule_;
+    return *rule_;
 }

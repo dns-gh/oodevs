@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
     : DEC_PathSection_ABC( path, startPoint, endPoint )
-    , rule_              ( *new DEC_Agent_PathfinderRule( path, startPoint, endPoint ) )
+    , rule_              ( new DEC_Agent_PathfinderRule( path, startPoint, endPoint ) )
 {
     // NOTHING
 }
@@ -31,7 +31,7 @@ DEC_Agent_PathSection::DEC_Agent_PathSection( DEC_Agent_Path& path, const MT_Vec
 // -----------------------------------------------------------------------------
 DEC_Agent_PathSection::~DEC_Agent_PathSection()
 {
-    delete &rule_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +40,6 @@ DEC_Agent_PathSection::~DEC_Agent_PathSection()
 // -----------------------------------------------------------------------------
 TerrainRule_ABC& DEC_Agent_PathSection::GetRule() const
 {
-    return rule_;
+    return *rule_;
 }
 

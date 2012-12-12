@@ -34,7 +34,7 @@ private:
     //@}
 
 private:
-    TerrainRule_ABC& rule_;
+    std::auto_ptr< TerrainRule_ABC > rule_;
 };
 
 #endif // __DEC_Agent_PathSection_h_

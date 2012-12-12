@@ -35,7 +35,7 @@ private:
     //@}
 
 private:
-    DEC_Population_PathfinderRule& rule_;
+    std::auto_ptr< DEC_Population_PathfinderRule > rule_;
 };
 
 #endif // __DEC_Population_PathSection_h_
