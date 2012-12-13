@@ -71,7 +71,6 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
                                 const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile,
                                 int maxHistoricFiles, int maxFileLines )
     : nameResolver_( nameResolver )
-    , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
     QString lang = ReadLang();
     InitTranslator( "ENT", lang );

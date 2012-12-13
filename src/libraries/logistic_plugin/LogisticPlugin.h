@@ -17,7 +17,6 @@
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <vector>
 
-class QApplication;
 namespace tools
 {
     class SessionConfig;
@@ -93,7 +92,6 @@ private:
     //! @name Member data
     //@{    
     std::vector< ConsignResolver_ABC* >         resolvers_;
-    boost::scoped_ptr< QApplication >           localAppli_;
     boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     //@}
 };
