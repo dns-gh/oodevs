@@ -106,6 +106,7 @@ DO_UPDATE( sword::LogMedicalHandlingCreation );
 DO_UPDATE( sword::LogSupplyHandlingCreation );
 DO_UPDATE( sword::ObjectCreation );
 DO_UPDATE( sword::ObjectKnowledgeCreation );
+DO_UPDATE( sword::ControlGlobalWeather );
 DO_UPDATE( sword::PartyCreation )
 DO_UPDATE( sword::PhaseLineCreation );
 DO_UPDATE( sword::PopulationCreation );

@@ -66,6 +66,7 @@ namespace
         virtual void MultipleSelect( kernel::ActionController&, const std::vector< const kernel::Selectable_ABC* >& ) const {}
         virtual void ContextMenu( kernel::ActionController&, const QPoint& ) const {}
         virtual void Activate( kernel::ActionController& ) const {}
+        virtual void SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const { SendCreation( publisher ); }
         //@}
     };
 
@@ -113,8 +114,11 @@ void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
-    if( globalMeteo_.get() )
+    if( MeteoGlobal* global = static_cast< MeteoGlobal* >( globalMeteo_.get() ) )
+    {
         globalMeteo_->Update( msg.attributes() );
+        static_cast< kernel::Entity_ABC* >( global )->Update( msg );
+    }
     else
     {
         MeteoGlobal* meteo = new MeteoGlobal( msg.weather().id(), msg.attributes(), config_.GetTickDuration() );
