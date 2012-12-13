@@ -859,7 +859,15 @@ end
 -- colliding with a toxic plume
 -- -------------------------------------------------------------------------------- 
 integration.isToxicPlumeDetected = function( agent )
+    local objects = integration.getToxicPlumeDetected( agent )
+    return #objects > 0
+end
+
+-- -------------------------------------------------------------------------------- 
+-- returning the toxic plume
+-- -------------------------------------------------------------------------------- 
+integration.getToxicPlumeDetected = function( agent )
     local objects = {}
     objects = DEC_Connaissances_CollisionsDesastres()
-    return #objects > 0
+    return objects
 end
