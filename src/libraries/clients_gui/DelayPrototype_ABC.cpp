@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DelayPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "DelayPrototype_ABC.h"
 #include "Tools.h"

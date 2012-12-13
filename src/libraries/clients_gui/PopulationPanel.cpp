@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::PopulationPanel */
-
 #include "clients_gui_pch.h"
 #include "PopulationPanel.h"
 #include "clients_kernel/Population_ABC.h"

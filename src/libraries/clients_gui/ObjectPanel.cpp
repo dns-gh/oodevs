@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ObjectPanel */
-
 #include "clients_gui_pch.h"
 #include "ObjectPanel.h"
 #include "clients_kernel/Object_ABC.h"

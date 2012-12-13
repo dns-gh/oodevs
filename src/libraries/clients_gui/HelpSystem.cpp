@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::HelpSystem */
-
 #include "clients_gui_pch.h"
 #include "HelpSystem.h"
 #include "moc_HelpSystem.cpp"

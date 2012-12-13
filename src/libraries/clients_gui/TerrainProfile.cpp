@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::TerrainProfile */
-
 #include "clients_gui_pch.h"
 #include "TerrainProfile.h"
 #include "Tools.h"

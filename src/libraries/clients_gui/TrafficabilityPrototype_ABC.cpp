@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::TrafficabilityPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "TrafficabilityPrototype_ABC.h"
 #include "Tools.h"

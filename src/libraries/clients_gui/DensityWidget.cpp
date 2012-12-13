@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DensityWidget */
-
 #include "clients_gui_pch.h"
 #include "DensityWidget.h"
 #include "moc_DensityWidget.cpp"

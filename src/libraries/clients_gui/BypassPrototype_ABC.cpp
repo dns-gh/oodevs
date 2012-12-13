@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::BypassPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "BypassPrototype_ABC.h"
 #include "LoadableSpinBox.h"

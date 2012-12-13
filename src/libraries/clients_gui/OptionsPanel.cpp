@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::OptionsPanel */
-
 #include "clients_gui_pch.h"
 #include "OptionsPanel.h"
 #include "moc_OptionsPanel.cpp"

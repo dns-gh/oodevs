@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::AggregateToolbar */
-
 #include "clients_gui_pch.h"
 #include "AggregateToolbar.h"
 #include "moc_AggregateToolbar.cpp"

@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::WeatherWidget */
-
 #include "clients_gui_pch.h"
 #include "WeatherWidget.h"
 #include "RichSpinBox.h"

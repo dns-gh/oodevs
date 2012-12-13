@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::SupplyRoutePrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "SupplyRoutePrototype_ABC.h"
 #include "clients_kernel/Units.h"

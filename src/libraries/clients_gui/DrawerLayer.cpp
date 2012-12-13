@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DrawerLayer */
-
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
 #include "moc_DrawerLayer.cpp"

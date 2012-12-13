@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::GisToolbar */
-
 #include "clients_gui_pch.h"
 #include "GisToolbar.h"
 #include "moc_GisToolbar.cpp"

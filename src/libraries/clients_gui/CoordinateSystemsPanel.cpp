@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::CoordinateSystemsPanel */
-
 #include "clients_gui_pch.h"
 #include "CoordinateSystemsPanel.h"
 #include "moc_CoordinateSystemsPanel.cpp"

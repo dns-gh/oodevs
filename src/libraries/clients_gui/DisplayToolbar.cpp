@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DisplayToolbar */
-
 #include "clients_gui_pch.h"
 #include "DisplayToolbar.h"
 #include "BooleanOptionButton.h"

@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::FloodPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "FloodPrototype_ABC.h"
 #include "Tools.h"

@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ElevationPanel */
-
 #include "clients_gui_pch.h"
 #include "ElevationPanel.h"
 #include "moc_ElevationPanel.cpp"

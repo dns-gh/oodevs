@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::InhabitantPanel */
-
 #include "clients_gui_pch.h"
 #include "InhabitantPanel.h"
 #include "moc_InhabitantPanel.cpp"

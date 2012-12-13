@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::EditorFactory */
-
 #include "clients_gui_pch.h"
 #include "EditorFactory.h"
 #include "clients_kernel/ValueEditor.h"

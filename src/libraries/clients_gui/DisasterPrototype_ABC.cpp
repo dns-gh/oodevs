@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DisasterPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "DisasterPrototype_ABC.h"
 #include "moc_DisasterPrototype_ABC.cpp"

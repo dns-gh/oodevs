@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DrawerPanel */
-
 #include "clients_gui_pch.h"
 #include "DrawerPanel.h"
 #include "moc_DrawerPanel.cpp"

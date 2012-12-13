@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::FixedLightWidget */
-
 #include "clients_gui_pch.h"
 #include "FixedLightWidget.h"
 #include "moc_FixedLightWidget.cpp"

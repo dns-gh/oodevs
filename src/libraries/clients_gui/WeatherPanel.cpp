@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::WeatherPanel */
-
 #include "clients_gui_pch.h"
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"

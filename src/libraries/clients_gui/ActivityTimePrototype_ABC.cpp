@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ActivityTimePrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "ActivityTimePrototype_ABC.h"
 #include "Tools.h"

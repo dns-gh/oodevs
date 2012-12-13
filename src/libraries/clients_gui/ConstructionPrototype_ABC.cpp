@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ConstructionPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "ConstructionPrototype_ABC.h"
 #include "Tools.h"

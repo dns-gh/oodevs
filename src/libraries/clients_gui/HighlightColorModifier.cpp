@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::HighlightColorModifier */
-
 #include "clients_gui_pch.h"
 #include "HighlightColorModifier.h"
 #include "moc_HighlightColorModifier.cpp"

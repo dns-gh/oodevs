@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::MedicalTreatmentPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "MedicalTreatmentPrototype_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"

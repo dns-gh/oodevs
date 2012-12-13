@@ -17,8 +17,6 @@
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 
-/* TRANSLATOR gui::VisualisationScalesPanel */
-
 using namespace gui;
 
 const std::string VisualisationScalesPanel::strMinScale( "VisuScaleMin" );

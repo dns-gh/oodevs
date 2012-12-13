@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::StockPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "StockPrototype_ABC.h"
 #include "moc_StockPrototype_ABC.cpp"

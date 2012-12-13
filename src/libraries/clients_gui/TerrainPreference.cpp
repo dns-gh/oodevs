@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::TerrainPreference */
-
 #include "clients_gui_pch.h"
 #include "TerrainPreference.h"
 #include "ColorButton.h"

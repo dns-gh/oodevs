@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DiffusionListDialog */
-
 #include "clients_gui_pch.h"
 #include "DiffusionListDialog.h"
 #include "moc_DiffusionListDialog.cpp"

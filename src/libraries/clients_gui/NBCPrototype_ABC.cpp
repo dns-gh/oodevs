@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::NBCPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"

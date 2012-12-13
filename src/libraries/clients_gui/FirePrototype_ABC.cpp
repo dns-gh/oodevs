@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::FirePrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "FirePrototype_ABC.h"
 #include "clients_kernel/FireClass.h"

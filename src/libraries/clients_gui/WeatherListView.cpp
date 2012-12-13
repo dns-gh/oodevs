@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::WeatherListView */
-
 #include "clients_gui_pch.h"
 #include "WeatherListView.h"
 #include "moc_WeatherListView.cpp"

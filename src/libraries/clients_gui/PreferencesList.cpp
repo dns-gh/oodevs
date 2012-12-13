@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::PreferencesList */
-
 #include "clients_gui_pch.h"
 #include "PreferencesList.h"
 #include "moc_PreferencesList.cpp"

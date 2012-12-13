@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::GradientWidget */
-
 #include "clients_gui_pch.h"
 #include "GradientWidget.h"
 #include "moc_GradientWidget.cpp"

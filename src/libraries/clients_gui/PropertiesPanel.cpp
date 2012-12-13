@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::PropertiesPanel */
-
 #include "clients_gui_pch.h"
 #include "PropertiesPanel.h"
 #include "moc_PropertiesPanel.cpp"

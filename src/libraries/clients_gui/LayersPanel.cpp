@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::LayersPanel */
-
 #include "clients_gui_pch.h"
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"

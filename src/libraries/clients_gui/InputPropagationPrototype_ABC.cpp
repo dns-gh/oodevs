@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::InputPropagationPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "InputPropagationPrototype_ABC.h"
 #include "Tools.h"

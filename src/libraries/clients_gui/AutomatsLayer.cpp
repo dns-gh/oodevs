@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::AutomatsLayer */
-
 #include "clients_gui_pch.h"
 #include "AutomatsLayer.h"
 #include "moc_AutomatsLayer.cpp"

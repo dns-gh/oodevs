@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::FirePropagationModifierPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "FirePropagationModifierPrototype_ABC.h"
 #include "Tools.h"

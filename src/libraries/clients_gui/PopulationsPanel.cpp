@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::PopulationsPanel */
-
 #include "clients_gui_pch.h"
 #include "PopulationsPanel.h"
 #include "PopulationTypesListView.h"

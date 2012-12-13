@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::UnitStateDialog */
-
 #include "clients_gui_pch.h"
 #include "UnitStateDialog.h"
 #include "moc_UnitStateDialog.cpp"

@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::DiplomacyDialog_ABC */
-
 #include "clients_gui_pch.h"
 #include "DiplomacyDialog_ABC.h"
 #include "moc_DiplomacyDialog_ABC.cpp"

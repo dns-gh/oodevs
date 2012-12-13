@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ColorButton */
-
 #include "clients_gui_pch.h"
 #include "ColorButton.h"
 #include "moc_ColorButton.cpp"

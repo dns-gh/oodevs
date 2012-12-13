@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::LightingPanel */
-
 #include "clients_gui_pch.h"
 #include "LightingPanel.h"
 #include "moc_LightingPanel.cpp"

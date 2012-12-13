@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::CrossingSitePrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "CrossingSitePrototype_ABC.h"
 #include "clients_kernel/Units.h"

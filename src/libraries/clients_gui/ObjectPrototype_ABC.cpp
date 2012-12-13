@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ObjectPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"

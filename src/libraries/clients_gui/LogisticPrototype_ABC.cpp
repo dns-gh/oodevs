@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::LogisticPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "LogisticPrototype_ABC.h"
 #include "LongNameHelper.h"

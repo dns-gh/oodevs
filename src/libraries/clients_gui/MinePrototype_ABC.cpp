@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::MinePrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "MinePrototype_ABC.h"
 #include "clients_kernel/Units.h"

@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ResourceNetworkPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "ResourceNetworkPrototype_ABC.h"
 #include "Tools.h"

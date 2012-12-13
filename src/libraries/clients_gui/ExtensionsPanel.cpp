@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::ExtensionsPanel */
-
 #include "clients_gui_pch.h"
 #include "ExtensionsPanel.h"
 #include "moc_ExtensionsPanel.cpp"

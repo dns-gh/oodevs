@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::LocationCreator */
-
 #include "clients_gui_pch.h"
 #include "LocationCreator.h"
 #include "moc_LocationCreator.cpp"

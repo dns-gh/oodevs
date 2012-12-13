@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::UnitStateTableEquipment */
-
 #include "clients_gui_pch.h"
 #include "UnitStateTableEquipment.h"
 #include "moc_UnitStateTableEquipment.cpp"

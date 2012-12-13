@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::SearchLineEdit */
-
 #include "clients_gui_pch.h"
 #include "SearchLineEdit.h"
 #include "SearchButton.h"

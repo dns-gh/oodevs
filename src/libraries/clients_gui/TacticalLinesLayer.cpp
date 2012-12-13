@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::TacticalLinesLayer */
-
 #include "clients_gui_pch.h"
 #include "TacticalLinesLayer.h"
 #include "moc_TacticalLinesLayer.cpp"

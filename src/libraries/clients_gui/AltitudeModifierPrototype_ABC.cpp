@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::AltitudeModifierPrototype_ABC */
-
 #include "clients_gui_pch.h"
 #include "AltitudeModifierPrototype_ABC.h"
 #include "Tools.h"
