@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <algorithm>
 #include <vector>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
@@ -98,12 +99,8 @@ const std::vector< int > tools::SplitVersion( const std::string& version )
 bool tools::CheckVersion( const std::string& expectedVersion, const std::string& actualVersion )
 {
     const std::vector< int > expected = SplitVersion( expectedVersion );
-    if( expected.empty() )
-        return true;
     const std::vector< int > actual = SplitVersion( actualVersion );
-    for( std::vector< int >::const_iterator it1 = expected.begin(), it2 = actual.begin();
-        it1 != expected.end() && it2 != actual.end(); ++it1,  ++it2 )
-        if( *it1 > *it2 )
-            return false;
-    return expected.size() <= actual.size();
+    return expected.empty() || actual.empty() ||
+        !std::lexicographical_compare( actual.begin(), actual.end(),
+                                       expected.begin(), expected.end() );
 }

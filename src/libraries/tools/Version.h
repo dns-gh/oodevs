@@ -17,6 +17,13 @@ namespace tools
     const char* AppMajorVersion();
     const char* AppModelVersion(); //$$$ Crap for thales, à gicler à terme
     const std::vector< int > SplitVersion( const std::string& version );
+
+    // Return true if:
+    // - expectedVersion represents an undefined version (not an X.Y.Z string)
+    // - actualVersion represents an undefined version
+    // - expectedVersion is a smaller or equal version than actualVersion.
+    // Basically, we want ascending compatibility with tolerance for
+    // non-version strings.
     bool CheckVersion( const std::string& expectedVersion, const std::string& actualVersion );
 }
 
