@@ -76,11 +76,11 @@ BOOST_FIXTURE_TEST_CASE( versions_are_incompatible_if_majors_dont_match, Fixture
 }
 
 // -----------------------------------------------------------------------------
-// Name: versions_are_incompatible_if_minors_dont_match
+// Name: versions_are_compatible_if_minors_dont_match
 // Created: MCO 2010-12-14
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( versions_are_incompatible_if_minors_dont_match, Fixture )
+BOOST_FIXTURE_TEST_CASE( versions_are_compatible_if_minors_dont_match, Fixture )
 {
     ++values[1];
-    BOOST_CHECK( ! IsCompatible() );
+    BOOST_CHECK( IsCompatible() );
 }
