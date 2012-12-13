@@ -12,12 +12,14 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
     class AutomatCreation;
     class ChangeDiplomacy;
     class ChangeDiplomacyAck;
+    class ControlGlobalWeather;
     class CrowdConcentrationCreation;
     class CrowdConcentrationKnowledgeCreation;
     class CrowdCreation;
@@ -69,6 +71,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::AutomatCreation >
                              , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
                              , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
+                             , public kernel::Updatable_ABC< sword::ControlGlobalWeather >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::CrowdCreation >
@@ -94,6 +97,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::UnitKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::UrbanCreation >
                              , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
+                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -110,6 +114,7 @@ public:
     virtual void DoUpdate( const sword::AutomatCreation& msg );
     virtual void DoUpdate( const sword::ChangeDiplomacy& msg );
     virtual void DoUpdate( const sword::ChangeDiplomacyAck& msg );
+    virtual void DoUpdate( const sword::ControlGlobalWeather& msg );
     virtual void DoUpdate( const sword::CrowdCreation& msg );
     virtual void DoUpdate( const sword::CrowdConcentrationCreation& msg );
     virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeCreation& msg );
@@ -139,12 +144,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ReplaySynchronisations( const ReplaySynchronisations& );            //!< Copy constructor
-    ReplaySynchronisations& operator=( const ReplaySynchronisations& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void DoUpdate();
