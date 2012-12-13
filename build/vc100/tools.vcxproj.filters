@@ -311,5 +311,8 @@
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\WaitEvent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

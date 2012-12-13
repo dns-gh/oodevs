@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MessageLoader.h"
 #include "MessageHandler_ABC.h"
-#include "WaitEvent.h"
+#include "tools/WaitEvent.h"
 #include "tools/InputBinaryStream.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
@@ -45,8 +45,8 @@ MessageLoader::MessageLoader( const bfs::path& records, bool threaded,
     , clients_  ( clients )
     , firstTick_( std::numeric_limits< unsigned int >::max() )
     , tickCount_( 0 )
-    , init_     ( new WaitEvent() )
-    , quit_     ( new WaitEvent() )
+    , init_     ( new tools::WaitEvent() )
+    , quit_     ( new tools::WaitEvent() )
 {
     if( threaded )
     {

@@ -14,7 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/thread/condition_variable.hpp>
 
-namespace dispatcher
+namespace tools
 {
 // =============================================================================
 /** @class  WaitEvent

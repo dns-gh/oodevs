@@ -31,6 +31,7 @@ namespace sword
 namespace tools
 {
     class ThreadPool;
+    struct WaitEvent;
 }
 
 namespace dispatcher
@@ -38,7 +39,6 @@ namespace dispatcher
     class ClientPublisher_ABC;
     class MessageHandler_ABC;
     struct Buffer;
-    struct WaitEvent;
 
 // =============================================================================
 /** @class  MessageLoader
@@ -104,8 +104,8 @@ private:
     unsigned int firstTick_;
     unsigned int tickCount_;
     mutable boost::mutex access_;
-    std::auto_ptr< WaitEvent > init_;
-    std::auto_ptr< WaitEvent > quit_;
+    std::auto_ptr< tools::WaitEvent > init_;
+    std::auto_ptr< tools::WaitEvent > quit_;
     std::auto_ptr< boost::thread > folderObserver_;
     std::auto_ptr< tools::ThreadPool > disk_;
     std::auto_ptr< tools::ThreadPool > cpu_;
