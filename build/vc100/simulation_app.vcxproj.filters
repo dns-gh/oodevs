@@ -11,9 +11,6 @@
     <Filter Include="Source Files\Network logger">
       <UniqueIdentifier>{d1241d95-5a97-4ab5-99b7-93b5f3a79163}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Dispatcher">
-      <UniqueIdentifier>{fe7af360-483e-40b6-aeb5-2d09abfba32c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\simulation_app\FileLoaderObserver.cpp">
@@ -30,9 +27,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\simulation_app\SIM_NetworkLogger.cpp">
       <Filter>Source Files\Network logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\simulation_app\SIM_Dispatcher.cpp">
-      <Filter>Source Files\Dispatcher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,14 +45,8 @@
     <ClInclude Include="..\..\src\applications\simulation_app\SIM_NetworkLogger.h">
       <Filter>Source Files\Network logger</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\simulation_app\SIM_Dispatcher.h">
-      <Filter>Source Files\Dispatcher</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\applications\simulation_app\SIM_App.inl">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="..\..\src\applications\simulation_app\res\sword-ot-blink.ico">
       <Filter>Source Files\resource</Filter>
     </None>

@@ -197,7 +197,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\simulation_app\SIM_NetworkLogger.cpp" />
-    <ClCompile Include="..\..\src\applications\simulation_app\SIM_Dispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\simulation_app\FileLoaderObserver.h" />
@@ -205,10 +204,8 @@
     <ClInclude Include="..\..\src\applications\simulation_app\simulation_app_pch.h" />
     <ClInclude Include="..\..\src\applications\simulation_app\resource.h" />
     <ClInclude Include="..\..\src\applications\simulation_app\SIM_NetworkLogger.h" />
-    <ClInclude Include="..\..\src\applications\simulation_app\SIM_Dispatcher.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\applications\simulation_app\SIM_App.inl" />
     <None Include="..\..\src\applications\simulation_app\res\sword-ot-blink.ico" />
     <None Include="..\..\src\applications\simulation_app\res\sword-ot.ico" />
   </ItemGroup>
