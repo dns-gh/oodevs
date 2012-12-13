@@ -11,6 +11,7 @@
 #define __ADN_Equipments_BreakdownsTable_h_
 
 #include "ADN_CommonGfx.h"
+#include "ADN_Breakdowns_Data.h"
 
 // =============================================================================
 /** @class  ADN_Equipments_BreakdownsTable
@@ -29,6 +30,7 @@ public:
 private:
     virtual void OnContextMenu( const QPoint& pt );
     virtual void AddRow( int row, void* data );
+    bool Contains( const ADN_Breakdowns_Data::BreakdownInfo* pInfo );
 
 protected:
     virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );

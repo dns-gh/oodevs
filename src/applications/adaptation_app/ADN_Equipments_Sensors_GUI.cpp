@@ -60,10 +60,13 @@ void ADN_Equipments_Sensors_GUI::OnContextMenu( const QPoint& pt )
     bool bDisplayAdd = false;
     bool bDisplayRem = GetSelectedData() != 0;
     ADN_Sensors_Data::T_SensorsInfos_Vector& vAllSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
-    for( ADN_Sensors_Data::T_SensorsInfos_Vector::iterator it = vAllSensors.begin(); it != vAllSensors.end(); ++it )
+    for( auto it = vAllSensors.begin(); it != vAllSensors.end(); ++it )
     {
+        ADN_Sensors_Data::SensorInfos* pSensorInfos = *it;
+        if( Contains( pSensorInfos ) )
+            continue;
         bDisplayAdd = true;
-        pTargetMenu->insertItem( ( *it )->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vAllSensors.begin(), it ) ) );
+        pTargetMenu->insertItem( pSensorInfos->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vAllSensors.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( *pTargetMenu );
     if( ! bDisplayAdd && !bDisplayRem )
@@ -81,6 +84,22 @@ void ADN_Equipments_Sensors_GUI::OnContextMenu( const QPoint& pt )
         assert( nMenu - 2 < static_cast< int >( vAllSensors.size() ) );
         CreateNewSensor( nMenu - 2 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Sensors_GUI::Contains
+// Created: JSR 2012-12-13
+// -----------------------------------------------------------------------------
+bool ADN_Equipments_Sensors_GUI::Contains( const ADN_Sensors_Data::SensorInfos* pInfo )
+{
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
+    {
+        SensorInfos* infos = static_cast< SensorInfos* >( GetData( row, 0 ) );
+        if( infos->ptrSensor_.GetData() == pInfo )
+            return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

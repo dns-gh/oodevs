@@ -58,9 +58,14 @@ void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
 
-    ADN_Breakdowns_Data& breakdownsData = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData();
-    for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.vBreakdowns_.begin(); it != breakdownsData.vBreakdowns_.end(); ++it )
-        addMenu.insertItem( (*it)->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( breakdownsData.vBreakdowns_.begin(), it ) ) );
+    ADN_Breakdowns_Data::T_BreakdownInfoVector& breakdowns = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_;
+    for( auto it = breakdowns.begin(); it != breakdowns.end(); ++it )
+    {
+        ADN_Breakdowns_Data::BreakdownInfo* pBreakdownInfos = *it;
+        if( Contains( pBreakdownInfos ) )
+            continue;
+        addMenu.insertItem( pBreakdownInfos->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( breakdowns.begin(), it ) ) );
+    }
 
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
@@ -80,15 +85,31 @@ void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
     else
     {
         // Create a new element
-        ADN_Breakdowns_Data::BreakdownInfo* pCast = breakdownsData.vBreakdowns_[ nMenuResult - 2 ];
+        ADN_Breakdowns_Data::BreakdownInfo* pCast = breakdowns[ nMenuResult - 2 ];
         BreakdownInfos* pNewInfo = new BreakdownInfos();
         pNewInfo->ptrBreakdown_ = pCast;
-        pNewInfo->ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );
+        pNewInfo->ptrBreakdown_.SetVector( breakdowns );
         //pNewInfo->ptrBreakdown_.SetVector( pCast->nti_.vBreakdowns_ );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_BreakdownsTable::Contains
+// Created: JSR 2012-12-13
+// -----------------------------------------------------------------------------
+bool ADN_Equipments_BreakdownsTable::Contains( const ADN_Breakdowns_Data::BreakdownInfo* pInfo )
+{
+    const int rowCount = dataModel_.rowCount();
+    for( int row = 0; row < rowCount; ++row )
+    {
+        BreakdownInfos* infos = static_cast< BreakdownInfos* >( GetData( row, 0 ) );
+        if( infos->ptrBreakdown_.GetData() == pInfo )
+            return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

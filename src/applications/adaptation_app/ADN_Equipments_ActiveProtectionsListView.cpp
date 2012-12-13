@@ -64,7 +64,7 @@ void ADN_Equipments_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 
     // Add the available ActiveProtections to the 'add ActiveProtections' submenu.
     ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& vActiveProtections = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos();
-    for( ADN_ActiveProtections_Data::IT_ActiveProtectionsInfosVector it = vActiveProtections.begin(); it != vActiveProtections.end(); ++it )
+    for( auto it = vActiveProtections.begin(); it != vActiveProtections.end(); ++it )
     {
         ADN_ActiveProtections_Data::ActiveProtectionsInfos* pActiveProtections = *it;
         // Don't add a ActiveProtections to the menu if it already is present in the list.
