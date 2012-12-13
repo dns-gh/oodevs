@@ -27,6 +27,7 @@
 
 #include <QCoreApplication>
 #include <QSettings>
+#include <QSslSocket>
 #include <QStringList>
 #include <QtConcurrentRun>
 
@@ -65,7 +66,10 @@ Context::Context( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC
     , install_  ()
     , downloads_()
 {
+    if( !QSslSocket::supportsSsl() )
+        throw std::runtime_error( "Missing Qt SSL support" );
     connect( this, SIGNAL( NetworkRequest( HttpCommand, const QNetworkRequest& ) ), this, SLOT( OnNetworkRequest( HttpCommand, const QNetworkRequest& ) ) );
+    connect( &net_, SIGNAL( sslErrors( QNetworkReply*, const QList< QSslError >& ) ), this, SLOT( OnSslErrors( QNetworkReply*, const QList< QSslError >& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -569,4 +573,36 @@ void Context::StartClient()
     {
         emit StatusMessage( QString( "Unable to start client (%1)" ).arg( err.what() ) );
     }
+}
+
+namespace
+{
+    const QSslError::SslError ssl_ignores[] =
+    {
+        QSslError::HostNameMismatch,
+        QSslError::SelfSignedCertificate,
+        QSslError::SelfSignedCertificateInChain,
+    };
+
+    bool IsIgnored( const QSslError::SslError& err )
+    {
+        for( size_t i = 0; i < COUNT_OF( ssl_ignores ); ++i )
+            if( err == ssl_ignores[i] )
+                return true;
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::OnSslErrors
+// Created: BAX 2012-12-13
+// -----------------------------------------------------------------------------
+void Context::OnSslErrors( QNetworkReply* reply, const QList< QSslError >& errors )
+{
+    QList< QSslError > ignored;
+    for( auto it = errors.begin(); it != errors.end(); ++it )
+        if( IsIgnored( it->error() ) )
+            ignored << *it;
+    if( !ignored.empty() )
+        reply->ignoreSslErrors( ignored );
 }

@@ -22,6 +22,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QSharedMemory>
+#include <QSslError>
 #include <QUrl>
 
 namespace host
@@ -96,6 +97,7 @@ public slots:
     void OnCloseDownload( size_t id );
     void OnDownloadProgress( size_t id, size_t current, int progress );
     void ParsePackages();
+    void OnSslErrors( QNetworkReply*, const QList< QSslError >& errors );
 
 private:
     typedef boost::shared_ptr< Download_ABC >           T_Download;
