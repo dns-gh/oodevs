@@ -22,7 +22,7 @@ namespace tools
 {
     class RealFileLoaderObserver_ABC;
     class WinArguments;
-    struct WaitEvent;
+    class WaitEvent;
 }
 
 class MIL_Config;

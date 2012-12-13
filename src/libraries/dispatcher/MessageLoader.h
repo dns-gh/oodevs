@@ -31,7 +31,7 @@ namespace sword
 namespace tools
 {
     class ThreadPool;
-    struct WaitEvent;
+    class WaitEvent;
 }
 
 namespace dispatcher

@@ -22,8 +22,9 @@ namespace tools
 */
 // Created: BAX 2012-06-14
 // =============================================================================
-struct WaitEvent : public boost::noncopyable
+class WaitEvent : public boost::noncopyable
 {
+public:
     WaitEvent() : signaled_( false )
     {
         // NOTHING
