@@ -51,8 +51,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
         AddArgument( "--checkpoint=" + checkpoint );
-    if( legacy )
-        AddArgument( "--legacy" );
+    AddArgument( ( "--legacy=" + boost::lexical_cast< std::string >( legacy ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

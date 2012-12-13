@@ -10,6 +10,7 @@
 #ifndef __XmlNode_h_
 #define __XmlNode_h_
 
+#include <tools/Exception.h>
 #include <map>
 #include <boost/lexical_cast.hpp>
 #include <QtCore/qstring.h>
