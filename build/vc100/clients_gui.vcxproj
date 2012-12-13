@@ -421,11 +421,11 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\Application_ABC.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -640,15 +640,15 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
@@ -749,15 +749,15 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyItem.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyModel.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
@@ -1063,15 +1063,15 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EditorFactory.h">
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -1598,11 +1598,11 @@
       </Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">
       </Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Outputs>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LodgingPrototype_ABC.h" />
@@ -1669,11 +1669,11 @@
       </Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">
       </Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Outputs>
     </ClInclude>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObstaclePrototype_ABC.h">
@@ -2047,15 +2047,15 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\PreferencesList.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

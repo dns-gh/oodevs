@@ -89,7 +89,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hla_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">hla_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='release|win32'">hla_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">hla_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='release|x64'">hla_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>

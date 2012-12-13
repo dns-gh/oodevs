@@ -87,7 +87,7 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|x64'">logistic_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='release|x64'">logistic_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">logistic_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='debug|win32'">logistic_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='release|win32'">logistic_plugin-$(CurrentPlatform)-mt$(Suffix)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">

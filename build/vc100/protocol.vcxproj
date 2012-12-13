@@ -178,7 +178,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\admin_launcher.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -193,7 +193,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\authentication_client.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -208,7 +208,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\client_aar.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -223,7 +223,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\client_authentication.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -238,7 +238,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\client_messenger.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -253,7 +253,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\client_replay.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -268,7 +268,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\client_simulation.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -283,7 +283,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\common.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -298,7 +298,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_client.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -313,7 +313,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\dispatcher_simulation.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -328,7 +328,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\launcher_admin.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -343,7 +343,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\messenger_client.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -358,7 +358,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\replay_client.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -373,7 +373,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\simulation_client.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -388,7 +388,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\version.proto">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">protoc%27ing %(Filename).proto</Message>
@@ -403,7 +403,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)proto/%(Filename).pb.cc;$(IntDir)proto/%(Filename).pb.h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">python $(ProjectDir)../cppproto.py %(FullPath) $(IntDir) $(IntDir)proto</Command>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
