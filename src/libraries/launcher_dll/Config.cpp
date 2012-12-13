@@ -9,7 +9,7 @@
 
 #include "launcher_dll_pch.h"
 #include "Config.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "frontend/CommandLineTools.h"
 #include <shlobj.h>
 #pragma warning( push, 0 )
