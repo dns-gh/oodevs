@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 
 namespace kernel
 {
@@ -54,7 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QString source_;
+    kernel::DisasterDirectory source_;
     QDateTime date_;
     //@}
 };

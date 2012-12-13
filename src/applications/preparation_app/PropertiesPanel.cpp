@@ -17,8 +17,9 @@
 // Name: PropertiesPanelBase::PropertiesPanelBase
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-PropertiesPanelBase::PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
-    : editorFactory_      ( new EditorFactory( controllers, model, staticModel ) )
+PropertiesPanelBase::PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                          const tools::GeneralConfig& config )
+    : editorFactory_      ( new EditorFactory( controllers, model, staticModel, config ) )
     , propertiesDisplayer_( new PropertyDisplayer( staticModel.coordinateConverter_ ) )
 {
     // NOTHING
@@ -37,8 +38,9 @@ PropertiesPanelBase::~PropertiesPanelBase()
 // Name: PropertiesPanel constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const gui::GlProxy& glProxy )
-    : PropertiesPanelBase( controllers, model, staticModel )
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                  const gui::GlProxy& glProxy, const tools::GeneralConfig& config )
+    : PropertiesPanelBase( controllers, model, staticModel, config )
     , gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertiesDisplayer_, glProxy )
 {
     // NOTHING

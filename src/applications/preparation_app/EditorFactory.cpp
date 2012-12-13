@@ -22,6 +22,7 @@
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/CriticalIntelligenceDialog.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Karma.h"
@@ -36,6 +37,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanTemplateType.h"
+#include "tools/GeneralConfig.h"
 #include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
 #include "UrbanColorEditor.h"
@@ -44,10 +46,12 @@
 // Name: EditorFactory constructor
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
-EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
+EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                              const tools::GeneralConfig& config )
     : controllers_( controllers )
     , model_      ( model )
     , staticModel_( staticModel )
+    , config_     ( config )
     , selected_   ( controllers )
 {
     controllers_.Register( *this );
@@ -361,4 +365,39 @@ void EditorFactory::Call( kernel::CriticalIntelligenceType* const& value )
     gui::CriticalIntelligenceDialog* intelligenceDialog = new gui::CriticalIntelligenceDialog( parent_, controllers_ );
     intelligenceDialog->SetValue( *value );
     result_ = intelligenceDialog;
+}
+
+namespace
+{
+    class DisasterEditor : public gui::ValuedComboBox< std::string >
+                         , public kernel::ValueEditor< kernel::DisasterDirectory >
+    {
+    public:
+                DisasterEditor( QWidget* parent, const tools::GeneralConfig& config )
+            : gui::ValuedComboBox< std::string >( parent )
+        {
+            QStringList result( ListDirectories( BuildPropagationDir( config.GetRootDir(), "data/propagations" ),
+                                                 &IsPropagationDir ) );
+
+            for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
+                AddItem( *it, (*it).toStdString() );
+        }
+        virtual ~DisasterEditor() {}
+
+        virtual kernel::DisasterDirectory GetValue()
+        {
+            return kernel::DisasterDirectory( gui::ValuedComboBox< std::string >::GetValue().c_str() );
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::DisasterDirectory* const& value )
+{
+    DisasterEditor* editor= new DisasterEditor( parent_, config_ );
+    editor->SetCurrentItem( (*value)().toStdString() );
+    result_ = editor;
 }

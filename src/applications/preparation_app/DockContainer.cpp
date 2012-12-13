@@ -27,6 +27,7 @@
 #include "clients_gui/SearchTreeView.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Tools.h"
+#include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: DockContainer constructor
@@ -52,7 +53,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         gui::RichDockWidget* pPropertiesDockWnd = new gui::RichDockWidget( controllers, parent, "properties", tools::translate( "DockContainer", "Properties" ) );
         pPropertiesDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
-        PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel, glProxy );
+        PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel, glProxy, config );
         pPropertiesDockWnd->setWidget( propertiesPanel );
         parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
     }

@@ -57,7 +57,7 @@ DisasterAttribute::~DisasterAttribute()
 // -----------------------------------------------------------------------------
 void DisasterAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_, true );
+    dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_ );
     if( !date_.isNull() )
         dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Start date" ), date_ );
 }

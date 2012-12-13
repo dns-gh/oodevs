@@ -28,6 +28,7 @@ namespace kernel
     DECLARE_SUBTYPE( TeamKarma, const Karma* );
     DECLARE_SUBTYPE( EntityLogisticLevel, const LogisticLevel* );
     DECLARE_SUBTYPE( CriticalIntelligenceType, QString );
+    DECLARE_SUBTYPE( DisasterDirectory, QString );
 
 }
 

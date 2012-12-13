@@ -156,3 +156,12 @@ void PropertyDisplayer::Call( const kernel::CriticalIntelligenceType& value )
     QString text = value();
     AddToDisplay( text.isEmpty() ? "-" : text );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertyDisplayer::Call
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void PropertyDisplayer::Call( const kernel::DisasterDirectory& value )
+{
+    AddToDisplay( value() );
+}

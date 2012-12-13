@@ -42,6 +42,7 @@ class PropertyDisplayer : public gui::PropertyDisplayer
                         , public tools::Caller< kernel::UrbanTemplateType >
                         , public tools::Caller< kernel::UrbanBlockColor >
                         , public tools::Caller< kernel::CriticalIntelligenceType >
+                        , public tools::Caller< kernel::DisasterDirectory >
 {
 public:
     //! @name Constructors/Destructor
@@ -63,6 +64,7 @@ public:
     virtual void Call( const kernel::UrbanTemplateType& value );
     virtual void Call( const kernel::UrbanBlockColor& value );
     virtual void Call( const kernel::CriticalIntelligenceType& value );
+    virtual void Call( const kernel::DisasterDirectory& value );
     //@}
 
 private:

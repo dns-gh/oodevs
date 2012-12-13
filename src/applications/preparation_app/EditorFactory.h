@@ -32,6 +32,11 @@ namespace kernel
     struct UrbanBlockColor;
 }
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 class Model;
 class StaticModel;
 class DotationsItem;
@@ -65,11 +70,13 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::RoofShapeType** >
                     , public tools::Caller< kernel::UrbanBlockColor* >
                     , public tools::Caller< kernel::CriticalIntelligenceType* >
+                    , public tools::Caller< kernel::DisasterDirectory* >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                            const tools::GeneralConfig& config );
     virtual ~EditorFactory();
     //@}
 
@@ -94,6 +101,7 @@ public:
     virtual void Call( kernel::RoofShapeType** const& value );
     virtual void Call( kernel::UrbanBlockColor* const& value );
     virtual void Call( kernel::CriticalIntelligenceType* const& value );
+    virtual void Call( kernel::DisasterDirectory* const& value );
     //@}
 
 private:
@@ -108,6 +116,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& staticModel_;
+    const tools::GeneralConfig& config_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };

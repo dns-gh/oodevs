@@ -24,6 +24,10 @@ namespace gui
     class PropertyDisplayer;
 }
 
+namespace tools
+{
+    class GeneralConfig;
+}
 class Model;
 class StaticModel;
 
@@ -38,7 +42,8 @@ class PropertiesPanelBase
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                  const tools::GeneralConfig& config );
     virtual ~PropertiesPanelBase();
     //@}
 
@@ -62,7 +67,8 @@ class PropertiesPanel : private PropertiesPanelBase
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const gui::GlProxy& glProxy );
+             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                             const gui::GlProxy& glProxy, const tools::GeneralConfig& config );
     virtual ~PropertiesPanel();
     //@}
 };
