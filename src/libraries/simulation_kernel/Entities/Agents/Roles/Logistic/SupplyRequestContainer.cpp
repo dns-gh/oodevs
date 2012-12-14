@@ -14,6 +14,7 @@
 #include "SupplyRequestDispatcher_ABC.h"
 #include "SupplyRequestBuilder_ABC.h"
 #include "SupplyConsign.h"
+#include "SupplyConvoyVirtualFactory.h"
 #include <boost/foreach.hpp>
 
 using namespace logistic;
