@@ -465,4 +465,5 @@ eRC_SupplierUnavailable = 450
 eRC_LogQuotaExceeded = 451
 eRC_LogQuotaExceededForAgent = 452
 eRC_TransportedUnitCannotReceiveOrder = 453
-eNbr = 454
+eRC_LogNoSuperior = 454
+eNbr = 455
