@@ -13,7 +13,6 @@
 #define __PHY_RolePion_Composantes_h_
 
 #include "PHY_RoleInterface_Composantes.h"
-#include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "SurrenderNotificationHandler_ABC.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
@@ -22,6 +21,7 @@
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
+#include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
 
 class MIL_Injury_ABC;
 
@@ -74,13 +74,13 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public tools::AlgorithmModifier_ABC< transport::HumanLoadingTimeComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< transport::LoadedStateConsistencyComputer_ABC>
                                , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
-                               , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public transport::LoadingChangeNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
                                , public human::HumansChangedNotificationHandler_ABC
                                , public network::NetworkUnitAttributesMessageSender_ABC
                                , public network::NetworkMessageSender_ABC
+                               , public WoundEffectsHandler_ABC
 {
 public:
     explicit PHY_RolePion_Composantes();
@@ -187,12 +187,9 @@ public:
     virtual void ApplyIndirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, double ratio );
     virtual void ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
     virtual void ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
-    virtual void ApplyPoisonous                   ( const MIL_ToxicEffectManipulator& contamination );
-    virtual void ApplyDisasterEffect              ( const MIL_DisasterEffectManipulator& effect );
     virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
-    virtual void ApplyBurn                        ( const MIL_BurnEffectManipulator& burn );
-    virtual void ApplyFlood                       ( const MIL_FloodEffectManipulator& flood );
     virtual void ApplyInjury                      ( MIL_Injury_ABC& injury );
+    virtual void ApplyEffect                      ( const WoundEffects_ABC& effect );
 
     virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const;
     virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;

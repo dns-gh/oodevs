@@ -264,24 +264,6 @@ bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyPoisonous
-// Created: NLD 2006-10-27
-// -----------------------------------------------------------------------------
-void PHY_Human::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
-{
-    contamination.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyDisasterEffect
-// Created: LGY 2012-11-29
-// -----------------------------------------------------------------------------
-void PHY_Human::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
-{
-    effect.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Human::ApplyContamination
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
@@ -295,24 +277,6 @@ void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& /*contamin
         bContamined_ = true;
         NotifyHumanChanged( oldHumanState );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyBurn
-// Created: BCI 2010-12-14
-// -----------------------------------------------------------------------------
-void PHY_Human::ApplyBurn( const MIL_BurnEffectManipulator& burn )
-{
-    burn.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyFlood
-// Created: JSR 2011-01-11
-// -----------------------------------------------------------------------------
-void PHY_Human::ApplyFlood( const MIL_FloodEffectManipulator& flood )
-{
-    flood.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

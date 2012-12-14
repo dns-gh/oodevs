@@ -10,6 +10,8 @@
 #ifndef __MIL_ToxicEffectManipulator_h_
 #define __MIL_ToxicEffectManipulator_h_
 
+#include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
+
 class MIL_NbcAgentType;
 class PHY_HumanWound;
 
@@ -19,7 +21,7 @@ class PHY_HumanWound;
 */
 // Created: JCR 2008-06-06
 // =============================================================================
-class MIL_ToxicEffectManipulator
+class MIL_ToxicEffectManipulator : public WoundEffects_ABC
 {
 public:
     //! @name Types
@@ -36,19 +38,19 @@ public:
     virtual ~MIL_ToxicEffectManipulator();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     const MIL_NbcAgentType& GetType() const;
     double                  GetQuantity() const;
     //@}
 
-    //! @name
+    //! @name Operations
     //@{
-    template< typename WoundFunctor > bool ApplyRandomWound( WoundFunctor functor ) const;
+    virtual void ApplyWound( Human_ABC& human ) const;
     //@}
 
 private:
-    //! @name Helper
+    //! @name Helpers
     //@{
     const PHY_HumanWound& GetRandomWound( const MIL_NbcAgentType& type ) const;
     //@}
@@ -60,18 +62,5 @@ private:
     double quantity_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ToxicEffectManipulator::ApplyRandomWound
-// Created: JCR 2008-08-28
-// -----------------------------------------------------------------------------
-template< typename WoundFunctor >
-bool MIL_ToxicEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
-{
-    bool result = false;
-    for( auto it = types_.begin(); it != types_.end(); ++it )
-        result |= functor( GetRandomWound( **it ) );
-    return result;
-}
 
 #endif // __MIL_ToxicEffect_ABC_h_

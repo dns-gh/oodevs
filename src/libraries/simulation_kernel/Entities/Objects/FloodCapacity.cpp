@@ -14,6 +14,7 @@
 #include "MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
+#include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -169,7 +170,10 @@ void FloodCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& a
                 }
         }
         if( isHurt )
-            agent.GetRole< PHY_RoleInterface_Composantes >().ApplyFlood( MIL_FloodEffectManipulator( injuries_ ) );
+        {
+            MIL_FloodEffectManipulator manipulator( injuries_ );
+            agent.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
+        }
     }
 }
 

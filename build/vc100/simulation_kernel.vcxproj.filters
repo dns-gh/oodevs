@@ -5379,9 +5379,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\NBC\ToxicEffectHandler_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\NBC</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplySupplier_ABC.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
     </ClInclude>
@@ -5447,6 +5444,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.h">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\WoundEffects_ABC.h">
+      <Filter>Source Files\Entities\Agents\Units\Humans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\WoundEffectsHandler_ABC.h">
+      <Filter>Source Files\Entities\Agents\Units</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

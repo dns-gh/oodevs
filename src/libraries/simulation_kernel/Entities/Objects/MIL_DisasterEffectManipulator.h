@@ -10,10 +10,9 @@
 #ifndef __MIL_DisasterEffectManipulator_h_
 #define __MIL_DisasterEffectManipulator_h_
 
-#include <boost/noncopyable.hpp>
-#include "Entities/Objects/MIL_DisasterType.h"
+#include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
 
-class PHY_HumanWound;
+class MIL_DisasterType;
 
 // =============================================================================
 /** @class  MIL_DisasterEffectManipulator
@@ -21,7 +20,7 @@ class PHY_HumanWound;
 */
 // Created: LGY 2012-11-29
 // =============================================================================
-class MIL_DisasterEffectManipulator : private boost::noncopyable
+class MIL_DisasterEffectManipulator : public WoundEffects_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -33,10 +32,7 @@ public:
 public:
     //! @name Operations
     //@{
-    //! @name
-    //@{
-    template< typename WoundFunctor >
-    void ApplyRandomWound( WoundFunctor functor ) const;
+    virtual void ApplyWound( Human_ABC& human ) const;
     //@}
 
     //@}
@@ -47,15 +43,5 @@ private:
     const MIL_DisasterType& type_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: MIL_DisasterEffectManipulator::ApplyRandomWound
-// Created: LGY 2012-11-29
-// -----------------------------------------------------------------------------
-template< typename WoundFunctor >
-void MIL_DisasterEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
-{
-    functor( type_.GetRandomWound( thresholdId_ ) );
-}
 
 #endif // __MIL_DisasterEffect_ABC_h_

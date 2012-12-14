@@ -263,11 +263,12 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
         }
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::ApplyContamination
 // Created: AHC 2009-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipulator& contamination )
+void PHY_RoleAction_Transport::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
 {
     double rWeightDamaged = rWeightTransported_;
     for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
@@ -275,27 +276,9 @@ void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipu
         if( it->second.rTransportedWeight_ )
         {
             rWeightDamaged -= it->second.rTransportedWeight_;
-            (*it->first).Apply(& nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination);
+            (*it->first).GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Transport::ApplyPoisonous
-// Created: AHC 2009-09-22
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::ApplyPoisonous( const MIL_ToxicEffectManipulator& /*contamination*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Transport::ApplyDisasterEffect
-// Created: LGY 2012-11-29
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& /*effect*/ )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

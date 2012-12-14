@@ -26,6 +26,7 @@ class PHY_InjuredHuman;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
 class MIL_Injury_ABC;
+class WoundEffects_ABC;
 
 namespace sword
 {
@@ -56,10 +57,7 @@ public:
     bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
     virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
-    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
-    virtual void ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect );
-    void ApplyBurn( const MIL_BurnEffectManipulator& burn );
-    void ApplyFlood( const MIL_FloodEffectManipulator& flood );
+    virtual void ApplyEffect( const WoundEffects_ABC& effect );
     void ApplyInjury( MIL_Injury_ABC& injury );
     PHY_InjuredHuman* GetInjury();
     void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );

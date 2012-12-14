@@ -10,7 +10,7 @@
 #ifndef __HumansComposante_ABC_h_
 #define __HumansComposante_ABC_h_
 
-#include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
+#include <boost/noncopyable.hpp>
 
 class Human_ABC;
 class PHY_HumanRank;
@@ -19,10 +19,10 @@ class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
-class MIL_BurnEffectManipulator;
-class MIL_FloodEffectManipulator;
+class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Injury_ABC;
+class WoundEffects_ABC;
 class PHY_InjuredHuman;
 
 namespace sword
@@ -34,7 +34,7 @@ namespace sword
 // @class  HumansComposante_ABC
 // Created: MGD 2010-03-18
 // =============================================================================
-class HumansComposante_ABC : public nbc::ToxicEffectHandler_ABC
+class HumansComposante_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -54,8 +54,8 @@ public:
 
     virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
     virtual void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
-    virtual void ApplyBurn( const MIL_BurnEffectManipulator& burn ) = 0;
-    virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
+    virtual void ApplyEffect( const WoundEffects_ABC& effects ) = 0;
+    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void HealAllHumans() = 0;
     virtual void KillAllHumans() = 0;
     virtual unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;

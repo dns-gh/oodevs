@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 #include "TransportNotificationHandler_ABC.h"
-#include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 
@@ -36,7 +35,6 @@ namespace transport
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Transport : public tools::Role_ABC
-                               , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
                                , public network::NetworkUnitAttributesMessageSender_ABC
 {
@@ -122,8 +120,6 @@ public:
     //! @name Notifications on transporter
     //@{
     virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
-    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
-    virtual void ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect );
     //@}
 
     //! @name Network

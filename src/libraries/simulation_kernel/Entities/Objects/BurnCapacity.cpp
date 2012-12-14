@@ -15,6 +15,7 @@
 #include "MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
@@ -97,7 +98,8 @@ void BurnCapacity::Finalize( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BurnCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    MIL_BurnEffectManipulator manipulator( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    agent.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +108,8 @@ void BurnCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_A
 // -----------------------------------------------------------------------------
 void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    MIL_BurnEffectManipulator manipulator( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    agent.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
 }
 
 // -----------------------------------------------------------------------------

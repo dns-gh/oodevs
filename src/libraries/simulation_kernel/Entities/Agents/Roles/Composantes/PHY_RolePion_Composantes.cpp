@@ -815,6 +815,20 @@ double PHY_RolePion_Composantes::GetCrowdTransporterUnloadedPerTimeStep() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyEffect
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyEffect( const WoundEffects_ABC& effect )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ApplyEffect( effect );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
@@ -825,34 +839,6 @@ void PHY_RolePion_Composantes::ApplyContamination( const MIL_ToxicEffectManipula
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
             composante.ApplyContamination( contamination );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyPoisonous
-// Created: NLD 2006-10-27
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.GetState().IsUsable() )
-            composante.ApplyPoisonous( contamination );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyDisasterEffect
-// Created: LGY 2012-11-29
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.GetState().IsUsable() )
-            composante.ApplyDisasterEffect( effect );
     }
 }
 
@@ -902,34 +888,6 @@ void PHY_RolePion_Composantes::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& 
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
             composante.ApplyUrbanObjectCrumbling( object );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyBurn
-// Created: BCI 2010-12-14
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyBurn( const MIL_BurnEffectManipulator& burn )
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.GetState().IsUsable() )
-            composante.ApplyBurn( burn );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ApplyFlood
-// Created: JSR 2011-01-11
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyFlood( const MIL_FloodEffectManipulator& flood )
-{
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        PHY_ComposantePion& composante = **it;
-        if( composante.GetState().IsUsable() )
-            composante.ApplyFlood( flood );
     }
 }
 

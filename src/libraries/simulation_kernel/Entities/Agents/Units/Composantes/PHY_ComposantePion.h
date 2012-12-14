@@ -161,12 +161,9 @@ public:
     void ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, double ratio );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages );
     void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect );
+    void ApplyEffect( const WoundEffects_ABC& effects );
     void ApplyInjury( MIL_Injury_ABC& injury );
     void ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object );
-    void ApplyBurn( const MIL_BurnEffectManipulator& burn );
-    void ApplyFlood( const MIL_FloodEffectManipulator& flood );
 
     unsigned int GetNeutralizationTime() const;
     void ApplyHumansWounds( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );

@@ -981,11 +981,12 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplySupplier_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\NBC\ToxicEffectHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\WoundEffects_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeAgent_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\WoundEffectsHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.h" />

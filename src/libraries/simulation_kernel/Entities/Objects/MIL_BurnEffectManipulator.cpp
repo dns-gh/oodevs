@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_BurnEffectManipulator.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "MIL_FireClass.h"
 
 // -----------------------------------------------------------------------------
@@ -19,6 +20,17 @@ MIL_BurnEffectManipulator::MIL_BurnEffectManipulator( const MIL_FireClass& fireC
 : pFireClass_( &fireClass )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurnEffectManipulator::ApplyWound
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void MIL_BurnEffectManipulator::ApplyWound( Human_ABC& human ) const
+{
+    const PHY_HumanWound* pWound = ChooseRandomWound();
+    if( pWound )
+        human.ApplyWound( *pWound  );
 }
 
 // -----------------------------------------------------------------------------

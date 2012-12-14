@@ -9,10 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_NBC.h"
-#include "ToxicEffectHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Objects/MIL_DisasterEffectManipulator.h"
@@ -135,7 +137,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( ! intoxicated_ && ! poisoned_ )
         MIL_Report::PostEvent( owner_, MIL_Report::eRC_Empoisonne );
     poisoned_ = true;
-    owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination );
+    owner_.Apply( &WoundEffectsHandler_ABC::ApplyEffect, contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +149,10 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
     if( contamination.GetQuantity() < 1e-15 ) // TODO
         return;
     if( ! bNbcProtectionSuitWorn_ )
-        owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination );
+    {
+        owner_.GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
+        owner_.GetRole< transport::PHY_RoleAction_Transport >().ApplyContamination( contamination );
+    }
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     if( rContaminationQuantity_ == 0 )
         MIL_Report::PostEvent( owner_, MIL_Report::eRC_Contamine );
@@ -436,7 +441,7 @@ void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
     if( currentAttritionThreshold != currentAttritionThreshold_ )
     {
         MIL_DisasterEffectManipulator manipulator( currentAttritionThreshold, type );
-        owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyDisasterEffect, manipulator );
+        owner_.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
         currentAttritionThreshold_ = currentAttritionThreshold;
         if( type.IsContaminated( dose_ ) )
             rContaminationState_ = 1.;

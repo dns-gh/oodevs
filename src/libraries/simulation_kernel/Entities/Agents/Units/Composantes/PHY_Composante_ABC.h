@@ -15,6 +15,7 @@
 #include <vector>
 
 class PHY_ComposanteType_ABC;
+class WoundEffects_ABC;
 
 // =============================================================================
 // @class  PHY_Composante_ABC

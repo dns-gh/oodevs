@@ -411,43 +411,13 @@ void PHY_ComposantePion::ApplyContamination( const MIL_ToxicEffectManipulator& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyPoisonous
-// Created: NLD 2004-10-13
+// Name: PHY_ComposantePion::ApplyEffect
+// Created: LGY 2012-12-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
+void PHY_ComposantePion::ApplyEffect( const WoundEffects_ABC& effects )
 {
     assert( pHumans_ );
-    pHumans_->ApplyPoisonous( contamination );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyDisasterEffect
-// Created: LGY 2012-11-29
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
-{
-    assert( pHumans_ );
-    pHumans_->ApplyDisasterEffect( effect );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyBurn
-// Created: BCI 2010-12-13
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyBurn( const MIL_BurnEffectManipulator& burn )
-{
-    assert( pHumans_ );
-    pHumans_->ApplyBurn( burn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_ComposantePion::ApplyFlood
-// Created: JSR 2011-01-11
-// -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFlood( const MIL_FloodEffectManipulator& flood )
-{
-    assert( pHumans_ );
-    pHumans_->ApplyFlood( flood );
+    pHumans_->ApplyEffect( effects );
 }
 
 // -----------------------------------------------------------------------------

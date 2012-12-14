@@ -11,6 +11,7 @@
 #include "MIL_FloodEffectManipulator.h"
 #include "MIL_Random.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FloodEffectManipulator constructor
@@ -29,6 +30,15 @@ MIL_FloodEffectManipulator::MIL_FloodEffectManipulator( const std::map< const PH
 MIL_FloodEffectManipulator::~MIL_FloodEffectManipulator()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FloodEffectManipulator::ApplyWound
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void MIL_FloodEffectManipulator::ApplyWound( Human_ABC& human ) const
+{
+    human.ApplyWound( GetRandomWound() );
 }
 
 // -----------------------------------------------------------------------------

@@ -29,6 +29,7 @@ class PHY_DotationCategory;
 class PHY_FireDamages_Agent;
 class PHY_FireResults_ABC;
 class PHY_MaintenanceComposanteState;
+class MIL_ToxicEffectManipulator;
 class PHY_SensorTypeAgent_ABC;
 class PHY_Volume;
 
@@ -127,8 +128,6 @@ public:
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& object ) = 0;
-    virtual void ApplyBurn                  ( const MIL_BurnEffectManipulator& burn ) = 0;
-    virtual void ApplyFlood                 ( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget, bool bUseAmmo ) const = 0;
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation = 0 ) const = 0;
@@ -141,6 +140,7 @@ public:
     virtual double GetMaxRangeToFire                ( const MIL_Agent_ABC&  target, double rWantedPH ) const = 0;
 
     virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
+    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) = 0;
     //@}
 
     //! @name Notifications (internal)

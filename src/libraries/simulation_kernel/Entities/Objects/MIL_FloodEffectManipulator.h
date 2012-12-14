@@ -10,6 +10,8 @@
 #ifndef __MIL_FloodEffectManipulator_h_
 #define __MIL_FloodEffectManipulator_h_
 
+#include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
+
 class PHY_HumanWound;
 
 // =============================================================================
@@ -18,7 +20,7 @@ class PHY_HumanWound;
 */
 // Created: JSR 2011-01-11
 // =============================================================================
-class MIL_FloodEffectManipulator : private boost::noncopyable
+class MIL_FloodEffectManipulator : public WoundEffects_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -27,13 +29,9 @@ public:
     virtual ~MIL_FloodEffectManipulator();
     //@}
 
-    //! @name
+    //! @name Operations
     //@{
-    template< typename WoundFunctor >
-    void ApplyRandomWound( WoundFunctor functor ) const
-    {
-        functor( GetRandomWound() );
-    }
+    virtual void ApplyWound( Human_ABC& human ) const;
     //@}
 
 private:

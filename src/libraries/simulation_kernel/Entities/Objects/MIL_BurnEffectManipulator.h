@@ -10,6 +10,8 @@
 #ifndef __MIL_BurnEffectManipulator_h_
 #define __MIL_BurnEffectManipulator_h_
 
+#include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
+
 class MIL_FireClass;
 class PHY_HumanWound;
 
@@ -19,7 +21,7 @@ class PHY_HumanWound;
 */
 // Created: BCI 2010-12-14
 // =============================================================================
-class MIL_BurnEffectManipulator
+class MIL_BurnEffectManipulator : public WoundEffects_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -29,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    template< typename WoundFunctor > bool ApplyRandomWound( WoundFunctor functor ) const;
+    virtual void ApplyWound( Human_ABC& human ) const;
     //@}
 
 private:
@@ -38,24 +40,11 @@ private:
     const PHY_HumanWound* ChooseRandomWound() const;
     //@}
 
+private:
     //! @name Data Members
     //@{
     const MIL_FireClass* pFireClass_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: MIL_BurnEffectManipulator::ApplyRandomWound
-// Created: JCR 2008-08-28
-// -----------------------------------------------------------------------------
-template< typename WoundFunctor >
-bool MIL_BurnEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
-{
-    const PHY_HumanWound* pWound = ChooseRandomWound();
-    if( pWound )
-        return functor( *pWound );
-    else
-        return false;
-}
 
 #endif // __MIL_ToxicEffect_ABC_h_

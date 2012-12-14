@@ -23,6 +23,7 @@
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
+#include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
 #include "HumansActionsNotificationHandler_ABC.h"
 #include <boost/serialization/vector.hpp>
 
@@ -251,43 +252,13 @@ void PHY_HumansComposante::ApplyContamination( const MIL_ToxicEffectManipulator&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ApplyPoisonous
-// Created: NLD 2006-10-27
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
-{
-    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        ( **it ).ApplyPoisonous( contamination );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ApplyDisasterEffect
+// Name: PHY_HumansComposante::ApplyEffect
 // Created: LGY 2012-11-29
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
+void PHY_HumansComposante::ApplyEffect( const WoundEffects_ABC& effect )
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        ( **it ).ApplyDisasterEffect( effect );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ApplyBurn
-// Created: BCI 2010-12-14
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyBurn( const MIL_BurnEffectManipulator& burn )
-{
-    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        ( **it ).ApplyBurn( burn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ApplyFlood
-// Created: JSR 2011-01-11
-// -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyFlood( const MIL_FloodEffectManipulator& flood )
-{
-    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        ( **it ).ApplyFlood( flood);
+        effect.ApplyWound( **it );
 }
 
 // -----------------------------------------------------------------------------

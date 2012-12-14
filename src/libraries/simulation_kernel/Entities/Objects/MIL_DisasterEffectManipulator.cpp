@@ -9,7 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DisasterEffectManipulator.h"
+#include "Entities/Objects/MIL_DisasterType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DisasterEffectManipulator constructor
@@ -29,4 +31,13 @@ MIL_DisasterEffectManipulator::MIL_DisasterEffectManipulator( int thresholdId, c
 MIL_DisasterEffectManipulator::~MIL_DisasterEffectManipulator()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterEffectManipulator::ApplyWound
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void MIL_DisasterEffectManipulator::ApplyWound( Human_ABC& human ) const
+{
+    human.ApplyWound( type_.GetRandomWound( thresholdId_ ) );
 }

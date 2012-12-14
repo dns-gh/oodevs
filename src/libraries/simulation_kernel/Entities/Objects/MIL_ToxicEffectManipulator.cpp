@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "MIL_NbcAgentType.h"
 
 // -----------------------------------------------------------------------------
@@ -70,4 +71,14 @@ const PHY_HumanWound& MIL_ToxicEffectManipulator::GetRandomWound( const MIL_NbcA
     return ( type.IsLiquidContaminating() ) ?
              type.GetLiquidRandomWound() :
              type.GetGasRandomWound(); // GetGasRandomWound
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ToxicEffectManipulator::ApplyWound
+// Created: LGY 2012-12-13
+// -----------------------------------------------------------------------------
+void MIL_ToxicEffectManipulator::ApplyWound( Human_ABC& human ) const
+{
+    for( auto it = types_.begin(); it != types_.end(); ++it )
+        human.ApplyWound( GetRandomWound( **it ) );
 }
