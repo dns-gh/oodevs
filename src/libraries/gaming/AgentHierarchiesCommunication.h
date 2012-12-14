@@ -41,7 +41,7 @@ class AgentHierarchiesCommunication : public AgentHierarchies< kernel::Communica
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchiesCommunication( kernel::Controller& controller, kernel::Agent_ABC& holder,
+             AgentHierarchiesCommunication( kernel::Controllers& controllers, kernel::Agent_ABC& holder,
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                                const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver );
     virtual ~AgentHierarchiesCommunication();
@@ -59,6 +59,7 @@ private:
     bool        radioEmitterDisabled_;
     kernel::Automat_ABC* superior_;
     const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_;
+    kernel::Controllers& controllers_;
 };
 
 #endif // __AgentHierarchiesCommunication_h_

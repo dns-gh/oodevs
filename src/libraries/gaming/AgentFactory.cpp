@@ -180,7 +180,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
-    result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_, *result, model_.agents_, model_.knowledgeGroups_ ) );
     result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dictionary ) );

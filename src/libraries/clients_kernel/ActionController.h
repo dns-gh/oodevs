@@ -80,6 +80,7 @@ public:
     //@{
     template< typename T >
     void AllowMultipleSelection( int mode );
+    bool IsSelected( Selectable_ABC* selectable ) const;
     bool IsSingleSelection( const Selectable_ABC* selectable ) const;
     bool HasMultipleSelection() const;
     const Selectionner_ABC* GetSelectionner( const Selectable_ABC* selectable ) const; // private ?

@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentHierarchiesCommunication.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
@@ -23,15 +24,16 @@
 // Name: AgentHierarchiesCommunication
 // Created: FDS 2010-03-29
 // -----------------------------------------------------------------------------
-AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controller& controller, kernel::Agent_ABC& holder,
+AgentHierarchiesCommunication::AgentHierarchiesCommunication( kernel::Controllers& controllers, kernel::Agent_ABC& holder,
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                                const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver )
-:AgentHierarchies< kernel::CommunicationHierarchies >::AgentHierarchies(controller, holder, automatResolver)
+:AgentHierarchies< kernel::CommunicationHierarchies >::AgentHierarchies( controllers.controller_, holder, automatResolver)
     ,jammed_ ( false )
     ,radioEmitterDisabled_ ( false )
     ,radioReceiverDisabled_ ( false )
     , superior_ ( 0 )
     ,groupResolver_ ( groupResolver )
+    ,controllers_ ( controllers )
 {
     // NOTHING
 }
@@ -66,10 +68,13 @@ void AgentHierarchiesCommunication::DoUpdate( const sword::UnitAttributes& messa
         jammed_ = message.communications().jammed() ;
         radioEmitterDisabled_ = message.has_radio_emitter_disabled() && message.radio_emitter_disabled();
         radioReceiverDisabled_ = message.has_radio_receiver_disabled() && message.radio_receiver_disabled();
+        bool wasSelected = controllers_.actions_.IsSelected( &entity_ );
         if( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
             UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group().id() )  );
         else
             UpdateSuperior( *superior_ );
+        if( wasSelected )
+          entity_.Select( controllers_.actions_ );
     }
 }
 

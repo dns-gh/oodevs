@@ -258,6 +258,23 @@ void ActionController::SetMultipleSelection( const T_Selectables& selectables )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionController::IsSelected
+// Created: NPT 2012-11-30
+// -----------------------------------------------------------------------------
+bool ActionController::IsSelected( Selectable_ABC* selectable ) const
+{
+    const Selectionner_ABC* selectionner = GetSelectionner( selectable );
+    for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+    {
+        if( it->first == selectionner )
+            for( CIT_Selectables it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+                if( *it2 == selectable )
+                    return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionController::IsSingleSelection
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
