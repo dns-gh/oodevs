@@ -13,6 +13,7 @@
 #define __PHY_DotationType_h_
 
 #include "MT_Tools/MT_String.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace xml
 {
@@ -32,8 +33,8 @@ public:
     //@{
     static PHY_DotationType* munition_;
     static PHY_DotationType* carburant_;
-    static PHY_DotationType* mine_;
     static PHY_DotationType* explosif_;
+    static PHY_DotationType* mine_;
     static PHY_DotationType* barbele_;
     static PHY_DotationType* piece_;
     static PHY_DotationType* ration_;
@@ -59,7 +60,7 @@ public:
     const std::string& GetName() const;
           unsigned int GetID  () const;
     //@}
-
+    
     //! @name Operators
     //@{
     bool operator==( const PHY_DotationType& rhs ) const;
@@ -68,20 +69,6 @@ public:
 private:
     //! @name Types
     //@{
-    enum E_DotationType
-    {
-        eMunition        = 0,
-        eCarburant       = 1,
-        eExplosif        = 2,
-        eMine            = 3,
-        eBarbele         = 4,
-        ePiece           = 5,
-        eRation          = 6,
-        eAgentExtincteur = 7,
-        eEnergie         = 8,
-        eFuneraire       = 9
-    };
-
     typedef std::map< std::string, const PHY_DotationType* > T_DotationTypeMap;
     typedef T_DotationTypeMap::const_iterator              CIT_DotationTypeMap;
 
@@ -93,7 +80,7 @@ private:
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType );
+     PHY_DotationType( const std::string& strName, E_DotationFamily nType );
     ~PHY_DotationType();
 
     //! @name Initialisation
@@ -111,7 +98,7 @@ private:
 
 private:
     const std::string               strName_;
-    const E_DotationType            nType_;
+    const E_DotationFamily          nType_;
           T_DotationCategoryMap     dotationCategories_;
 
 private:
