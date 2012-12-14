@@ -125,13 +125,18 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
     if( !extent_.IsInBoundaries( geometry::Point2d( longitude, latitude ) ) ) // $$$$ _RC_ SLI 2011-11-30: geocoord invert latitude/longitude???
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-    sword::Location* location = 0;
+    sword::CoordLatLong* coordLatLong = 0;
     if( message().mutable_parameters()->mutable_elem( 1 )->value_size() != 0 )
-        location = message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_point()->mutable_location();
+    {
+        sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_point()->mutable_location();
+        coordLatLong = location->mutable_coordinates()->mutable_elem( 0 );
+    }
     else
-        location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
-    location->set_type( sword::Location::point );
-    sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
+    {
+        sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
+        location->set_type( sword::Location::point );
+        coordLatLong = location->mutable_coordinates()->add_elem();
+    }
     coordLatLong->set_latitude( latitude );
     coordLatLong->set_longitude( longitude );
     Send( message, identifier );

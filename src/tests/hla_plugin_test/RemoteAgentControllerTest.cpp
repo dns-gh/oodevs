@@ -177,6 +177,8 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_correctly_fill_magic_action, Au
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 5 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value_size(), 1 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value_size(), 1 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).point().location().type(), sword::Location::point );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).point().location().coordinates().elem_size(), 1 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value_size(), 1 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value_size(), 1 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 4 ).value_size(), 1 );
