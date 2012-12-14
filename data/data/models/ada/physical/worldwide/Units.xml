@@ -53,11 +53,11 @@
       <category name="carburant">
         <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
         <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
@@ -253,11 +253,11 @@
       <category name="carburant">
         <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -667,11 +667,11 @@
         <resource capacity="500" logistic-threshold="10" name="7.62-mm Bullet" normalized-consumption="0"/>
         <resource capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="30" logistic-threshold="5" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="60" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="30" logistic-threshold="5" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1967,11 +1967,11 @@
       <category name="carburant">
         <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2147,11 +2147,11 @@
       <category name="carburant">
         <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
         <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
@@ -2191,11 +2191,11 @@
       <category name="carburant">
         <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
         <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
@@ -3870,11 +3870,11 @@
       <category name="carburant">
         <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
         <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
@@ -4003,11 +4003,11 @@
         <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
-      <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
-      </category>
       <category name="explosif">
         <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -4028,4 +4028,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1753340625" -->
+<!-- signature="1931990440" -->

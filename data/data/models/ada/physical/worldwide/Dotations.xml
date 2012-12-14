@@ -1134,27 +1134,6 @@
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="63" id-nature="2" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="64" id-nature="2" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="65" id-nature="1" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
-    <attritions>
-      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-    </attritions>
-    <urban-modifiers>
-      <urban-modifier material-type="Wood" value="0.2"/>
-      <urban-modifier material-type="Concrete" value="0.3"/>
-      <urban-modifier material-type="Brick" value="0.4"/>
-      <urban-modifier material-type="Metal" value="0.5"/>
-      <urban-modifier material-type="Cob" value="0.6"/>
-      <urban-modifier material-type="Prefab" value="0.7"/>
-      <urban-modifier material-type="Vegetation" value="0.8"/>
-    </urban-modifiers>
-  </resource>
   <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" name="Standard Explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
@@ -1176,7 +1155,38 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
+  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="UnarmouredVehicle" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Individual" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
   <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" name="Standard Barbed Wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="80" id-nature="3" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="3" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="82" id-nature="3" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="3" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="3" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="85" id-nature="3" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="86" id-nature="3" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="3" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="3" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="3" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="3" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="3" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="3" name="Bottle of Distilled Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
@@ -1188,18 +1198,8 @@
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="77" id-nature="9" name="Extinguisher Agent - Sand" nature="Sand" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" id-nature="7" name="Extinguisher Agent - Powder" nature="Powder" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="10" name="Extinguisher Agent - Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="80" id-nature="3" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="3" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="82" id-nature="3" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="3" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="3" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="85" id-nature="3" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="86" id-nature="3" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="3" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="3" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="3" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="90" id-nature="11" name="Electricity" nature="Electricity" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="91" id-nature="12" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="92" id-nature="13" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1921925103" -->
+<!-- signature="2444514735" -->
