@@ -317,11 +317,13 @@ void ListParameter< ConcreteElement >::Select( const Param_ABC& param )
 {
     for( int row = 0; row< model_.rowCount(); ++row )
     {
-        QStandardItem* item = model_.item( 0 );
+        QStandardItem* item = model_.item( row );
         if( item )
-            Param_ABC* paramItem = selected_->data( ParamRole ).value< Param_ABC* >()
+        {
+            Param_ABC* paramItem = selected_->data( ParamRole ).value< Param_ABC* >();
             if( param == paramItem )
                 list_->selectionModel()->select( item->index(), QItemSelectionModel::Select | QItemSelectionModel::Clear );
+        }
     }
 }
 
@@ -359,7 +361,7 @@ void ListParameter< ConcreteElement >::SetName( const QString& name )
     if( list_ )
     {
         assert( model_.columnCount() == 1 );
-        model_.item( 0 )->setText( name );
+       // model_.item( 0 )->setText( name );
     }
     ListParameterBase::SetName( name );
 }

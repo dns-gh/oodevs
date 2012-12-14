@@ -42,7 +42,7 @@ ParamStringEnumeration::~ParamStringEnumeration()
 // Name: ParamStringEnumeration::BuildInterface
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-QWidget* ParamStringEnumeration::BuildInterface( QWidget* parent, kernel::Entity_ABC& /*entity*/ )
+QWidget* ParamStringEnumeration::BuildInterface( QWidget* parent )
 {
     StringQVButtonGroup* group = new StringQVButtonGroup( title_, parent );
     std::for_each( values_.begin(), values_.end(), boost::bind( &ParamStringEnumeration::AddItem, this, boost::ref( group ), _1 ) );
