@@ -117,7 +117,7 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( 250.f, 150.f ), 150.f );
+            tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( tools.GetAdaptiveZoomFactor() * 250.f, tools.GetAdaptiveZoomFactor() * 150.f ), 150.f );
         glPopAttrib();
     }
 }
