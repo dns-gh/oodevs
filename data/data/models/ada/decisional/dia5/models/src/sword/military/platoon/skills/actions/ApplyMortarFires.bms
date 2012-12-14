@@ -9,7 +9,6 @@ rootnode
 
     done = function( self, params, additionnalParams )
         if additionnalParams.state == "hasFire" then
-            self.hasFire = true
             self.order = nil
         elseif additionnalParams.state == "no ammo" or
                additionnalParams.state == "forbidden ammo" or

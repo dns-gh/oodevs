@@ -84,15 +84,13 @@ node "SupportElement"
         
         --If the old bestPosition is still good
         if self.bestPosition then
-         --   if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 then
-              Activate( skill.links.moveAndTakePosition,
-                               1, { entity = self.bestPosition } )
-                if not self.bestPosition:isReached() then
-                    return
-                end
-   --         end
+            Activate( skill.links.moveAndTakePosition,
+                            1, { entity = self.bestPosition } )
+            if not self.bestPosition:isReached() then
+                return
+            end
         end
-        -- If the bestPosition is not enought good for supporting the entity
+        -- If the bestPosition is not enough good for supporting the entity
         self.efficiencies = {}
         self.maxEfficiency = 0
         self.positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]( { retrogradeContext = self.params.retrogradeContext,elementsToSupport = { self.params.entity }, dynamic = true})
@@ -100,7 +98,6 @@ node "SupportElement"
             local position = self.positions[i]
             local efficiency = position:supportEfficiency( self.params.entity )
             self.efficiencies[position] = efficiency
-            --DEC_Trace( "Efficiencies pour le point " .. tostring(i) .. " = " .. tostring( self.efficiencies[position] ))
             if( efficiency > self.maxEfficiency ) then
                 self.maxEfficiency = efficiency
                 self.bestPosition = position
