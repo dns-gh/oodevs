@@ -19,11 +19,6 @@
 #   pragma warning( pop )
 #endif
 
-#ifdef _MSC_VER
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0501
-#endif
-#endif
 #include <boost/asio.hpp>
 #include <boost/make_shared.hpp>
 
