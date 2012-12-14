@@ -27,6 +27,26 @@ namespace hla
 class IsPartOfStruct
 {
 public:
+    enum ConstituentPartNatureEnum16
+    {
+        constituentPartNatureEnum16_Other 	= 0,
+        constituentPartNatureEnum16_HostFireableMunition 	= 1,
+        constituentPartNatureEnum16_MunitionCarriedAsCargo 	= 2,
+        constituentPartNatureEnum16_FuelCarriedAsCargo 	= 3,
+        constituentPartNatureEnum16_GunmountAttachedToHost 	= 4,
+        constituentPartNatureEnum16_ComputerGeneratedForcesCarriedAsCargo 	= 5,
+        constituentPartNatureEnum16_VehicleCarriedAsCargo 	= 6,
+        constituentPartNatureEnum16_EmitterMountedOnHost 	= 7,
+        constituentPartNatureEnum16_MobileCommandAndControlEntityCarriedAboardHost 	= 8,
+        constituentPartNatureEnum16_EntityStationedWithRespectToHost 	= 9,
+        constituentPartNatureEnum16_TeamMemberInFormationWith 	= 10
+    };
+    enum ConstituentPartPositionEnum16
+    {
+        constituentPartPosition_Other 	= 0,
+        constituentPartPosition_OnTopOf 	= 1,
+        constituentPartPosition_Inside 	= 2
+    };
     enum ConstituentPartStationNameEnum16
     {
         Other   = 0,
@@ -59,52 +79,58 @@ public:
     //@{
     template< typename Archive >
     void Serialize( Archive& archive ) const
-    {    
-        unsigned short constituentPartNature = 0;
-        unsigned short constituentPartPosition = 0;
-        short stationNumber = 0;
+    {
+        const uint8 padding = 0;
         unsigned short stationName = static_cast< unsigned short >( constituentPartStationName );
         disId_.Serialize( archive );
         rtiId_.Serialize( archive );
-        archive << constituentPartNature
-                << constituentPartPosition
-                << stationNumber
+        if( rtiId_.str().size() % 2 == 0)            
+            archive << padding;
+        archive << constituentPartNature_
+                << constituentPartPosition_
+                << stationNumber_
+                << padding << padding
                 << stationName;
         if( constituentPartStationName == OnStationXYZ )
         {
-            archive << x
+            archive << padding << padding
+                    << x
                     << y
                     << z;
         }
         else if( constituentPartStationName == OnStationRangeBearing )
         {
-            archive << range
+            archive << padding << padding
+                    << range
                     << bearing;
         }
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        unsigned short constituentPartNature = 0;
-        unsigned short constituentPartPosition = 0;
-        short stationNumber = 0;
+        uint8 padding = 0;
         unsigned short stationName = 0;
         disId_.Deserialize( archive );
         rtiId_.Deserialize( archive );
-        archive >> constituentPartNature
-                >> constituentPartPosition
-                >> stationNumber
+        if( rtiId_.str().size() % 2 == 0)            
+            archive >> padding;
+        archive >> constituentPartNature_
+                >> constituentPartPosition_
+                >> stationNumber_
+                >> padding >> padding
                 >> stationName;
         constituentPartStationName = static_cast< ConstituentPartStationNameEnum16 >( stationName );
         if( constituentPartStationName == OnStationXYZ )
         {
-            archive >> x
+            archive >> padding >> padding
+                    >> x
                     >> y
                     >> z;
         }
         else if( constituentPartStationName == OnStationRangeBearing )
         {
-            archive >> range
+            archive >> padding >> padding
+                    >> range
                     >> bearing;
         }
     }
@@ -115,6 +141,9 @@ public:
     //@{
     rpr::EntityIdentifier disId_;
     Omt13String rtiId_;
+    unsigned short constituentPartNature_;
+    unsigned short constituentPartPosition_;
+    short stationNumber_;
     ConstituentPartStationNameEnum16 constituentPartStationName;
     float x, y, z;
     float range, bearing;
