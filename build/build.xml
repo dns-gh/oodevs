@@ -545,7 +545,10 @@
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}"
             failonwarning="${failonwarning}">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,advapi32"/>
-            <defineset define="QT3_SUPPORT"/>
+            <defineset>
+                <define name="QT3_SUPPORT"/>
+                <define name="PLATFORM" value="${platform}"/>
+            </defineset>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
