@@ -25,7 +25,7 @@
 // Created: LDC 2011-03-23
 // -----------------------------------------------------------------------------
 PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::Controllers& controllers, StaticModel& staticModel )
-    : QDialog( parent, "population-display-option", false, Qt::FramelessWindowHint | Qt::ToolTip )
+    : QDialog( parent, "population-display-option", false, Qt::FramelessWindowHint )
     , controllers_( controllers )
     , accomodations_( staticModel.accommodationTypes_ )
 {
@@ -189,4 +189,3 @@ bool PopulationOptionChooser::eventFilter( QObject*, QEvent* e )
     }
     return false;
 }
-

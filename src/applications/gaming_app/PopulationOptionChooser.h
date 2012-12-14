@@ -53,7 +53,7 @@ public:
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void NotifyCreated( const kernel::Inhabitant_ABC& inhabitant );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual bool eventFilter( QObject * watched, QEvent * event ) ;
+    virtual bool eventFilter( QObject* watched, QEvent* event ) ;
     //@}
 
 public slots:
