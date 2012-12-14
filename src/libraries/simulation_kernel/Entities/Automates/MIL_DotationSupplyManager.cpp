@@ -23,7 +23,6 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
-#include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
@@ -247,7 +246,7 @@ void MIL_DotationSupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCa
     const T_Requesters& previous = previousNotifications_[ &dotationCategory ];
     BOOST_FOREACH( T_Requesters::value_type pion, requesters )
     {
-        if( boost::find( previous, pion ) == previous.end() )
+        if( std::find( previous.begin(), previous.end(), pion ) == previous.end() )
             MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogNoSuperior, dotationCategory );
         currentNotifications_[ &dotationCategory ].push_back( pion );
     }
