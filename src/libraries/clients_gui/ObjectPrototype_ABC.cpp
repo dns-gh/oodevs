@@ -138,7 +138,6 @@ void ObjectPrototype_ABC::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::showEvent( QShowEvent* e )
 {
-    FillObjectTypes();
     OnTypeChanged();
     controllers_.Register( *locationCreator_ );
     QWidget::showEvent( e );
