@@ -6,18 +6,17 @@ include( ${MASA_MACROS} )
 
 get_filename_component( root_dir "${CMAKE_SOURCE_DIR}/.." REALPATH )
 include_directories( ${root_dir}/src/libraries )
-add_definitions( -DBOOST_SPIRIT_THREADSAFE )
+add_definitions(
+    -DBOOST_SPIRIT_THREADSAFE
+    -DPLATFORM=${platform}
+    -D_WIN32_WINNT=0x501
+    -DWINVER=0x501
+)
 
 find_package( Protobuf REQUIRED )
 find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL )
-
-function( masa_set_standard_library dst target )
-    masa_get_library_full_name( ${target} debug release )
-    masa_set_external_library( dst_ ${debug} ${release} )
-    set( ${dst} ${dst_} PARENT_SCOPE )
-endfunction()
 
 set( FLEX_LIBRARIES
     lm_new_md
@@ -48,12 +47,12 @@ masa_set_external_library( SPATIALCONTAINER_LIBRARIES spatialcontainer_d spatial
 masa_set_external_library( SPATIALITE_LIBRARIES       spatialite_d spatialite )
 masa_set_external_library( SVGL_LIBRARIES             svgl_d svgl )
 masa_set_external_library( TERRAIN_LIBRARIES          terrain_d terrain )
-masa_set_standard_library( TERRAINEXTRACTOR_LIBRARIES terrainextractor )
 masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
-masa_set_standard_library( GLEW_LIBRARIES             glew )
+masa_set_internal_library( GLEW_LIBRARIES             glew )
+masa_set_internal_library( TERRAINEXTRACTOR_LIBRARIES terrainextractor )
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -318,7 +317,6 @@ target_link_libraries( dispatcher
 
 # dispatcher_app
 add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS win32 executable )
-masa_add_target_definition( dispatcher_app PLATFORM=${platform} )
 target_link_libraries( dispatcher_app
     dispatcher_dll
     license_gui
@@ -398,7 +396,6 @@ target_link_libraries( simulation_terrain
 # simulation_kernel
 # fixme not working in shared mode
 add_target( simulation_kernel server "libraries/simulation_kernel" OPTIONS recurse protocol )
-masa_add_target_definition( simulation_kernel PLATFORM=${platform} )
 masa_add_target_include( simulation_kernel "${root_dir}/src/libraries/simulation_kernel" )
 masa_add_target_compile_flag( simulation_kernel "/bigobj" )
 target_link_libraries( simulation_kernel
@@ -475,10 +472,7 @@ target_link_libraries( module_tester_test
 
 # simulation_app
 add_target( simulation_app server "applications/simulation_app" OPTIONS win32 executable )
-masa_add_target_definition( simulation_app PLATFORM=${platform} )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
-masa_add_target_definition( simulation_app _WIN32_WINNT=0x501 )
-masa_add_target_definition( simulation_app WINVER=0x501 )
 set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
 target_link_libraries( simulation_app
     simulation_kernel
@@ -494,7 +488,6 @@ add_dependencies( simulation_app
 
 # decisional_test
 add_target( decisional_test tests "tests/integration_decisionnal_test" OPTIONS executable )
-masa_add_target_definition( decisional_test PLATFORM=${platform} )
 target_link_libraries( decisional_test ${DIRECTIA_LIBRARIES} )
 masa_add_test_target( decisional_test decisional_test
     --temp_directory=${CMAKE_CURRENT_BINARY_DIR}/decisional_test.tmp
@@ -524,7 +517,6 @@ target_link_libraries( clients_gui
 
 # frontend
 add_target( frontend clients "libraries/frontend" OPTIONS qt3 qt protocol )
-masa_add_target_definition( frontend PLATFORM=${platform} )
 target_link_libraries( frontend
     clients_kernel
     ${ZIPSTREAM_LIBRARIES}
