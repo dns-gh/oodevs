@@ -26,42 +26,51 @@
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
 ImportWidget::ImportWidget( QWidget* parent, const tools::GeneralConfig& config )
-    : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
+    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
     , config_        ( config )
     , isValidVersion_( false )
 {
-    setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    setMargin( 0 );
-    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, this );
-    group->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    {
-        packageLabel_ = new QLabel( group );
-        Q3HBox* hBox = new Q3HBox( group );
-        package_ = new QLineEdit( hBox );
-        browseButton_ = new QPushButton( hBox );
-        connect( browseButton_, SIGNAL( clicked() ), SLOT( PackageBrowseClicked() ) );
-    }
-    {
-        versionLabel_ = new QLabel( group );
-        Q3HBox* hBox = new Q3HBox( group );
-        packageVersion_ = new QLineEdit( hBox );
-        packageVersion_->setReadOnly( true );
-    }
-    {
-        contentLabel_ = new QLabel( group );
-        contentLabel_->setAlignment( Qt::AlignTop );
-        Q3VBox* vBox = new Q3VBox( group );
-        vBox->setSpacing( 5 );
-        packageName_ = new QLineEdit( vBox );
-        packageName_->setReadOnly( true );
-        packageDescription_ = new QTextEdit( vBox );
-        packageDescription_->setMaximumHeight( 80 );
-        packageDescription_->setReadOnly( true );
-        packageContent_ = new QListWidget( vBox );
-        packageContent_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-    }
-    packageProgress_ = new QProgressBar( this );
+    //package
+    packageLabel_ = new QLabel();
+    package_ = new QLineEdit();
+    browseButton_ = new QPushButton();
+    connect( browseButton_, SIGNAL( clicked() ), SLOT( PackageBrowseClicked() ) );
+
+    //Version
+    versionLabel_ = new QLabel();
+    packageVersion_ = new QLineEdit();
+    packageVersion_->setReadOnly( true );
+
+    //content
+    contentLabel_ = new QLabel();
+    contentLabel_->setAlignment( Qt::AlignTop );
+    packageName_ = new QLineEdit();
+    packageName_->setReadOnly( true );
+    packageDescription_ = new QTextEdit();
+    packageDescription_->setMaximumHeight( 80 );
+    packageDescription_->setReadOnly( true );
+    packageContent_ = new QListWidget();
+    packageContent_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+
+    //progress bar
+    packageProgress_ = new QProgressBar();
     packageProgress_->hide();
+
+    QGridLayout* mainLayout = new QGridLayout( this );
+    mainLayout->addWidget( packageLabel_, 0, 0, 1, 1 );
+    mainLayout->addWidget( package_, 0, 1, 1, 1 );
+    mainLayout->addWidget( browseButton_, 0, 2, 1, 1 );
+    mainLayout->addWidget( versionLabel_, 1, 0, 1, 1 );
+    mainLayout->addWidget( packageVersion_, 1, 1, 1, 2 );
+    mainLayout->addWidget( contentLabel_, 2, 0, 1, 1 );
+    mainLayout->addWidget( packageName_, 2, 1, 1, 2 );
+    mainLayout->addWidget( packageDescription_, 3, 1, 1, 2 );
+    mainLayout->addWidget( packageContent_, 4, 1, 1, 2 );
+    mainLayout->addWidget( packageProgress_, 5, 0, 1, 3 );
+    mainLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+
+    mainLayout->setMargin( 0 );
+
 }
 
 // -----------------------------------------------------------------------------

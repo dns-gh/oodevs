@@ -65,12 +65,6 @@
 #include <QtGui/qsortfilterproxymodel.h>
 #include <QtGui/qsizepolicy.h>
 
-#include <Qt3Support/q3textedit.h>
-#include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3popupmenu.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3button.h>
-
 #pragma warning( pop )
 
 #undef min

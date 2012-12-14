@@ -161,7 +161,7 @@ void PluginSetting::OnLanguageChanged()
 {
     description_.SetCurrentLanguage( tools::readLang() );
     label_->setText( description_.GetName().c_str() );
-    QToolTip::add( label_, description_.GetDescription().c_str() );
+    label_->setToolTip( description_.GetDescription().c_str() );
 
     if( fileValue_.get() && !fileValue_->HasBeenUpdated() )
         fileValue_->setText( description_.GetDescription().empty() ? tools::translate( "PluginSetting", "Select a file..." ) : description_.GetDescription().c_str() );

@@ -35,7 +35,7 @@ namespace xml
 */
 // Created: SBO 2010-11-12
 // =============================================================================
-class ExerciseProperties : public gui::LanguageChangeObserver_ABC< Q3VBox >
+class ExerciseProperties : public gui::LanguageChangeObserver_ABC< QWidget >
                          , private boost::noncopyable
 {
     Q_OBJECT;

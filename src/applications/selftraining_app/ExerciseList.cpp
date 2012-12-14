@@ -41,13 +41,12 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
 {
     //left box
     exerciseLabel_ = new QLabel();
-
     profileLabel_ = new QLabel();
 
     QWidget* leftBox = new QWidget();
     QVBoxLayout* leftBoxLayout = new QVBoxLayout();
     {
-        exercises_ = new ExerciseListView( leftBox, config, fileLoader );
+        exercises_ = new ExerciseListView( config, fileLoader );
         connect( exercises_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex&, const QModelIndex& ) ) );
         profiles_ = new ProfileList( leftBox, config, fileLoader );
         profiles_->setVisible( showProfile );
@@ -59,7 +58,6 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     leftBoxLayout->addWidget( profiles_, 1 );
     leftBoxLayout->setSpacing( 5 );
 
-    //box
     QHBoxLayout* mainBoxLayout = new QHBoxLayout( this );
     mainBoxLayout->addLayout(leftBoxLayout );
     mainBoxLayout->setMargin( 5 );

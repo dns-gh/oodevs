@@ -34,26 +34,24 @@ ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedW
     , controllers_( controllers )
     , progressPage_( new ProgressPage( app, pages, *this ) )
 {
-    setName( "ScenarioEditPage" );
-    Q3VBox* box = new Q3VBox( this );
-    box->setMargin( 5 );
-    {
-        mainTabs_ = new QTabWidget( box );
-        connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
-        // eTabs_Edit
-        {
-            exercises_ = new ExerciseList( parent, config_, fileLoader_, controllers, true, false );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
-            connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
-            connect( exercises_, SIGNAL( ExercisePropertiesChanged() ), SLOT( OnExercisePropertiesChanged() ) );
-            mainTabs_->addTab( exercises_, "" );
-        }
-        // eTabs_Create
-        {
-            createExerciceWidget_ = new CreateExerciceWidget( *this, box, config, fileLoader );
-            mainTabs_->addTab( createExerciceWidget_, "" );
-        }
-    }
+    setWindowTitle( "ScenarioEditPage" );
+    QWidget* box = new QWidget( this );
+    QVBoxLayout* boxLayout = new QVBoxLayout( box );
+    mainTabs_ = new QTabWidget( box );
+
+    // eTabs_Edit
+    exercises_ = new ExerciseList( parent, config_, fileLoader_, controllers, true, false );
+    mainTabs_->addTab( exercises_, "" );
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
+    connect( exercises_, SIGNAL( ExercisePropertiesChanged() ), SLOT( OnExercisePropertiesChanged() ) );
+    
+    // eTabs_Create
+    createExerciceWidget_ = new CreateExerciceWidget( *this, box, config, fileLoader );
+    mainTabs_->addTab( createExerciceWidget_, "" );
+
+    boxLayout->setMargin( 5 );
+    boxLayout->addWidget( mainTabs_ );
     EnableButton( eButtonEdit, false );
     AddContent( box );
 }

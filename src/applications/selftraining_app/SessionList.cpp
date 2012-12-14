@@ -25,23 +25,29 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
 SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
+    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
     , config_( config )
     , fileLoader_( fileLoader )
 {
-    setSpacing( 5 );
     {
-        sessionLabel_ = new QLabel( this );
-        list_ = new QListWidget( this );
+        sessionLabel_ = new QLabel();
+        list_ = new QListWidget();
         list_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
         connect( list_, SIGNAL( currentRowChanged( int ) ), this, SLOT( SelectSession( int ) ) );
     }
     {
-        comments_ = new QTextEdit( this );
+        comments_ = new QTextEdit();
         comments_->setMaximumHeight( 200 );
         comments_->setReadOnly( true );
         comments_->hide();
     }
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->setSpacing( 5 );
+    layout->addWidget( sessionLabel_ );
+    layout->addWidget( list_ );
+    layout->addWidget( comments_ );
+
+    parent->layout()->addWidget( this );
 }
 
 // -----------------------------------------------------------------------------

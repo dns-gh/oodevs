@@ -145,39 +145,44 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , isLegacy_    ( ReadRegistry( "IsLegacy" ) )
 {
     setName( "ScenarioLauncherPage" );
-    Q3VBox* box = new Q3VBox( this );
-    box->setMargin( 5 );
-    {
-        tabs_ = new QTabWidget( box );
-        {
-            exercises_ = new ExerciseList( tabs_, config_, fileLoader_, controllers, true, true, true, false );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
-            connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
-            tabs_->addTab( exercises_, "" ); // General
-        }
-        {
-            Q3GroupBox* configBox = new Q3GroupBox( 1, Qt::Vertical, tabs_ );
-            configBox->setMargin( 5 );
-            configBox->setFrameShape( Q3GroupBox::NoFrame );
-            configTabs_ = new QTabWidget( configBox );
-            tabs_->addTab( configBox, "" ); // Settings
-            {
-                frontend::CheckpointConfigPanel* checkpointPanel = AddPlugin< frontend::CheckpointConfigPanel >();
-                connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
-                connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
-                connect( checkpointPanel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
-                AddPlugin< frontend::SessionConfigPanel >();
-                AddPlugin< frontend::RandomPluginConfigPanel >();
-                frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
-                connect( advancedPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
-                connect( advancedPanel, SIGNAL( NoClientSelected( bool ) ), SLOT( OnNoClientSelected( bool ) ) );
-            }
-        }
-        {
-            frontend::PluginConfigBuilder builder( config_, tabs_ );
-            plugins_.push_back( builder.BuildFromXml().Finalize() );
-        }
-    }
+
+    //general panel
+    QWidget* box = new QWidget( this );
+    QHBoxLayout* boxLayout = new QHBoxLayout( box );
+    boxLayout->setMargin( 5 );
+    tabs_ = new QTabWidget();
+    boxLayout->addWidget( tabs_ );
+
+    //general tab
+    exercises_ = new ExerciseList( tabs_, config_, fileLoader_, controllers, true, true, true, false );
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
+    tabs_->addTab( exercises_, "" ); // General
+
+    // Settings tab
+    configTabs_ = new QTabWidget();
+
+    frontend::CheckpointConfigPanel* checkpointPanel = AddPlugin< frontend::CheckpointConfigPanel >();
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
+    connect( checkpointPanel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
+    AddPlugin< frontend::SessionConfigPanel >();
+    AddPlugin< frontend::RandomPluginConfigPanel >();
+    frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
+    connect( advancedPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
+    connect( advancedPanel, SIGNAL( NoClientSelected( bool ) ), SLOT( OnNoClientSelected( bool ) ) );
+
+    QWidget* configBox = new QWidget();
+    QVBoxLayout* configBoxLayout = new QVBoxLayout( configBox );
+    configBoxLayout->setMargin( 5 );
+    configBoxLayout->addWidget( configTabs_ );
+    tabs_->addTab( configBox, "" );
+
+    //plugins tab
+    frontend::PluginConfigBuilder builder( config_, tabs_ );
+    plugins_.push_back( builder.BuildFromXml().Finalize() );
+
+    //general configuration
     EnableButton( eButtonStart, false );
     AddContent( box );
 }

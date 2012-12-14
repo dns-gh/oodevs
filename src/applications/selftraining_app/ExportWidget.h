@@ -43,7 +43,7 @@ class ExerciseListView;
 */
 // Created: JSR 2010-07-15
 // =============================================================================
-class ExportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
+class ExportWidget : public gui::LanguageChangeObserver_ABC< QWidget >
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
                    , private boost::noncopyable

@@ -33,29 +33,35 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
 {
-    setName( "ScenarioJoinPage" );
-    Q3VBox* box = new Q3VBox( this );
-    box->setMargin( 10 );
-    box->setSpacing( 10 );
-    {
-        QGroupBox* hbox = new QGroupBox( box );
-        hostLabel_ = new QLabel();
-        host_ = new QLineEdit( "127.0.0.1");
-        portLabel_ = new QLabel();
-        port_ = new QSpinBox();
-        port_->setMaxValue( 65535 );
-        port_->setValue( 10001 );
+    setWindowTitle( "ScenarioJoinPage" );
 
-        QHBoxLayout* hboxLayout = new QHBoxLayout( hbox );
-        hboxLayout->addWidget( hostLabel_ );
-        hboxLayout->addWidget( host_ );
-        hboxLayout->addWidget( portLabel_ );
-        hboxLayout->addWidget( port_ );
-    }
+    //group box
+    hostLabel_ = new QLabel();
+    host_ = new QLineEdit( "127.0.0.1");
+    portLabel_ = new QLabel();
+    port_ = new QSpinBox();
+    port_->setMaxValue( 65535 );
+    port_->setValue( 10001 );
+
+    //sub layout
+    QGroupBox* hbox = new QGroupBox();
+    QHBoxLayout* hboxLayout = new QHBoxLayout( hbox );
+    hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+    hboxLayout->addWidget( hostLabel_ );
+    hboxLayout->addWidget( host_ );
+    hboxLayout->addWidget( portLabel_ );
+    hboxLayout->addWidget( port_ );
+
+    QWidget* box = new QWidget( this );
+    QVBoxLayout* boxLayout = new QVBoxLayout( box );
+    boxLayout->setMargin( 10 );
+    boxLayout->setSpacing( 10 );
+    boxLayout->addWidget( hbox );
     {
         exercises_ = new ExerciseList( box, config_, fileLoader_, controllers, true, false, true, false );
         connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
+        boxLayout->addWidget( exercises_ );
     }
     EnableButton( eButtonJoin, false );
     AddContent( box );

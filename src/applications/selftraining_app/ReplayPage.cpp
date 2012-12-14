@@ -34,22 +34,23 @@ ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previ
     , controllers_( controllers )
     , progressPage_( new ProgressPage( app, pages, *this ) )
 {
-    setName( "ReplayPage" );
-    Q3VBox* mainBox = new Q3VBox( this );
-    {
-        Q3HBox* hbox = new Q3HBox( mainBox );
-        hbox->setMargin( 10 );
-        hbox->setSpacing( 10 );
-        {
-            exercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, true, false );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
-            connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
-        }
-        {
-            sessions_ = new SessionList( hbox, config, fileLoader_ );
-            connect( sessions_, SIGNAL( Select( const QString& ) ), SLOT( OnSelectSession( const QString& ) ) );
-        }
-    }
+    //Main Window
+    setWindowTitle( "ReplayPage" );
+    QWidget* mainBox = new QWidget( this );
+    QHBoxLayout* mainBoxLayout = new QHBoxLayout( mainBox );
+    mainBoxLayout->setMargin( 10 );
+    mainBoxLayout->setSpacing( 10 );
+
+    //exercise list 
+    exercises_ = new ExerciseList( mainBox, config, fileLoader_, controllers, false, true, false );
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
+    mainBoxLayout->addWidget( exercises_ );
+
+    //session List
+    sessions_ = new SessionList( mainBox, config, fileLoader_ );
+    connect( sessions_, SIGNAL( Select( const QString& ) ), SLOT( OnSelectSession( const QString& ) ) );
+
     EnableButton( eButtonStart, false );
     AddContent( mainBox );
 }

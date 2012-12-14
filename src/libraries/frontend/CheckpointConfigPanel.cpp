@@ -60,7 +60,6 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
     , config_( config )
     , exercise_( 0 )
 {
-
     //------checkpoint group ------//
     //frequency box
     frequencyLabel_ = new QLabel();

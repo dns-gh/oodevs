@@ -24,7 +24,7 @@
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
 ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
-    : gui::LanguageChangeObserver_ABC< Q3VBox >( parent )
+    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
     , parent_         ( granParent )
     , config_         ( config )
     , fileLoader_     ( fileLoader )
@@ -33,38 +33,48 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, co
     , terrainList_    ( 0 )
     , dataChanged_    ( false )
 {
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->setSpacing( 5 );
     setMinimumWidth( 200 );
-    setSpacing( 5 );
     if( briefing )
     {
-        Q3VBox* box = new Q3VBox( this );
-        box->setMinimumWidth( 200 );
-        box->setSpacing( 5 );
-        briefingImage_ = new QLabel( box );
-        briefingText_ = new QTextEdit( box );
+        briefingImage_ = new QLabel();
+        briefingText_ = new QTextEdit();
         briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
         briefingText_->setReadOnly( true );
         briefingText_->hide();
+
+        QWidget* box = new QWidget( this );
+        QVBoxLayout* boxLayout = new QVBoxLayout( box );
+        boxLayout->addWidget( briefingImage_ );
+        boxLayout->addWidget( briefingText_ );
+        boxLayout->setSpacing( 5 );
+        box->setMinimumWidth( 200 );
+        layout->addWidget( box );
     }
     if( models )
     {
-        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Vertical, this );
+        parametersLabel_ = new QLabel();
+
+        terrainList_ = new QComboBox();
+        connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
+
+        modelList_ = new QComboBox();
+        connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
+
+        QGroupBox* box = new QGroupBox();
+        QVBoxLayout* boxLayout = new QVBoxLayout( box );
+        boxLayout->setSpacing( 5 );
+        boxLayout->addWidget( parametersLabel_ );
+        boxLayout->addWidget( terrainList_);
+        boxLayout->addWidget( modelList_ );
         box->setEnabled( editable );
         box->setMaximumHeight( 100 );
-        Q3VBox* editBox = new Q3VBox( box );
-        editBox->setMinimumWidth( 200 );
-        editBox->setSpacing( 5 );
-        parametersLabel_ = new QLabel( editBox );
-        {
-            terrainList_ = new QComboBox( editBox );
-            connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
-        }
-        {
-            modelList_ = new QComboBox( editBox );
-            connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
-        }
+        box->setMinimumWidth( 200 );
+        layout->addWidget( box );
     }
-    setVisible( briefing || models );
+    setShown( briefing || models );
+    parent->layout()->addWidget( this );
 }
 
 // -----------------------------------------------------------------------------

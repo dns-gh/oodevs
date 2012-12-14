@@ -31,17 +31,27 @@ CreateTerrainPage::CreateTerrainPage( Application& app, QStackedWidget* pages, P
     , available_   ( frontend::CreateTerrain::IsAvailable() )
 {
     setName( "CreateTerrainPage" );
-    Q3VBox* mainBox = new Q3VBox( this );
-    mainBox->setMargin( 5 );
-    {
-        Q3GroupBox* hbox = new Q3GroupBox( 1, Qt::Vertical, mainBox );
-        terrainLabel_ = new QLabel( hbox );
-        editName_ = new QLineEdit( hbox );
-        connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
-        hbox->setEnabled( available_ );
-        EnableButton( eButtonStart, available_ );
-        errorLabel_ = new QLabel( mainBox );
-    }
+
+    terrainLabel_ = new QLabel();
+    editName_ = new QLineEdit();
+    connect( editName_, SIGNAL( textChanged( const QString& ) ), SLOT( EditNameChanged( const QString& ) ) );
+
+    QGroupBox* hbox = new QGroupBox();
+    QHBoxLayout* hboxLayout = new QHBoxLayout( hbox );
+    hboxLayout->addWidget( terrainLabel_ );
+    hboxLayout->addWidget( editName_ );
+    hboxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+    hboxLayout->setEnabled( available_ );
+    EnableButton( eButtonStart, available_ );
+
+    errorLabel_ = new QLabel();
+
+    QWidget* mainBox = new QWidget();
+    QVBoxLayout* mainLayout = new QVBoxLayout( mainBox );
+    mainLayout->addWidget( hbox );
+    mainLayout->addWidget( errorLabel_ );
+    mainLayout->setMargin( 5 );
+
     AddContent( mainBox );
     EnableButton( eButtonStart, false );
     Update();

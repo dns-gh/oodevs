@@ -25,7 +25,7 @@ namespace tools
 */
 // Created: SBO 2009-12-13
 // =============================================================================
-class SessionList : public gui::LanguageChangeObserver_ABC< Q3VBox >
+class SessionList : public gui::LanguageChangeObserver_ABC< QWidget >
                   , private boost::noncopyable
 {
     Q_OBJECT;

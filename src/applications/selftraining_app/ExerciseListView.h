@@ -32,7 +32,7 @@ class ExerciseListView : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseListView( QWidget* widget, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
+             ExerciseListView( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~ExerciseListView();
     //@}
 

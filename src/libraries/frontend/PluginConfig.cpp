@@ -96,7 +96,7 @@ void PluginConfig::OnLanguageChanged()
 
     const std::string currentLanguage = tools::readLang();
     description_.SetCurrentLanguage( currentLanguage );
-    QToolTip::add( box_, description_.GetDescription().c_str() );
+    box_->setToolTip( description_.GetDescription().c_str() );
 
     for( IT_GroupBoxDescription it = groupBoxs_.begin(); it != groupBoxs_.end(); ++it )
     {
@@ -104,7 +104,7 @@ void PluginConfig::OnLanguageChanged()
         assert( it->first && desc );
         desc->SetCurrentLanguage( currentLanguage );
         it->first->setTitle( desc->GetName().c_str() );
-        QToolTip::add( it->first, desc->GetDescription().c_str() );
+        it->first->setToolTip( desc->GetDescription().c_str() );
     }
 
     for( IT_Settings it = settings_.begin(); it != settings_.end(); ++it )

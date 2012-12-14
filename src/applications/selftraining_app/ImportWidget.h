@@ -24,7 +24,7 @@ namespace tools
 */
 // Created: JSR 2010-07-13
 // =============================================================================
-class ImportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
+class ImportWidget : public gui::LanguageChangeObserver_ABC< QWidget >
                    , private boost::noncopyable
 {
     Q_OBJECT

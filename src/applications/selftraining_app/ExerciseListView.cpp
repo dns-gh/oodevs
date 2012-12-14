@@ -58,8 +58,8 @@ namespace
 // Name: ExerciseListView::ExerciseListView
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-ExerciseListView::ExerciseListView( QWidget* widget, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
-    : QTreeView( widget )
+ExerciseListView::ExerciseListView( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
+    : QTreeView()
     , config_    ( config )
     , fileLoader_( fileLoader )
     , proxy_( new CustomSortFilterProxyModel( model_ ) )

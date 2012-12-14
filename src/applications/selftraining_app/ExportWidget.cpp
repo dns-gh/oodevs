@@ -25,95 +25,147 @@
 
 namespace bfs = boost::filesystem;
 
-namespace
-{
-    Q3GroupBox* AddTab( QWidget* parent, QTabWidget* tabs )
-    {
-        Q3GroupBox* importGroup = new Q3GroupBox( 2, Qt::Horizontal, parent );
-        importGroup->setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-        importGroup->setMargin( 0 );
-        tabs->addTab( importGroup, "" );
-        return importGroup;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
 ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
-    : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
+    : gui::LanguageChangeObserver_ABC< QWidget >( parent )
     , config_     ( config )
     , fileLoader_ ( fileLoader )
     , controllers_( controllers )
 {
-    setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
-    tabs_ = new QTabWidget( this );
+    //-------eTabs_Exercise------//
+    //exercise description
+    exerciseDescriptionLabel_ = new QLabel();
+    exerciseDescription_ = new QTextEdit();
+    exerciseDescription_->setMaximumHeight( 30 );
+    QHBoxLayout* exerciseDescriptionLayout = new QHBoxLayout();
+    exerciseDescriptionLayout->addWidget( exerciseDescriptionLabel_ );
+    exerciseDescriptionLayout->addWidget( exerciseDescription_ );
+    exerciseDescriptionLayout->setStretch( 0, 1 );
+    exerciseDescriptionLayout->setStretch( 1, 4 );
 
-    // eTabs_Exercise
-    {
-        Q3GroupBox* box = AddTab( this, tabs_ );
-        {
-            exerciseDescriptionLabel_ = new QLabel( box );
-            exerciseDescription_ = new QTextEdit( box );
-            exerciseDescription_->setMaximumHeight( 30 );
-        }
-        {
-            exerciseLabel_ = new QLabel( box );
-            exerciseList_ = new ExerciseListView( box, config, fileLoader );
-            connect( exerciseList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( OnSelectionChanged( const QModelIndex&, const QModelIndex& ) ) );
-        }
-        {
-            packageContentLabel_ = new QLabel( box );
-            exerciseContent_ = new QTreeView( box );
-            exerciseContent_->setModel( &exerciseContentModel_ );
-            exerciseContent_->setHeaderHidden( true );
-            exerciseContent_->setEditTriggers( 0 );
-            exerciseContent_->adjustSize();
-            exerciseContent_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-        }
-    }
-    // eTabs_Terrain
-    {
-        Q3GroupBox* box = AddTab( this, tabs_ );
-        {
-            terrainDescriptionLabel_ = new QLabel( box );
-            terrainDescription_ = new QTextEdit( box );
-            terrainDescription_->setMaximumHeight( 30 );
-        }
-        {
-            terrainLabel_ = new QLabel( box );
-            terrainList_ = new QListWidget( box );
-            terrainList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-            connect( terrainList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
-        }
-    }
-    // eTabs_Models
-    {
-        Q3GroupBox* box = AddTab( this, tabs_ );
-        {
-            modelsNameLabel_ = new QLabel( box );
-            modelName_ = new QLineEdit( box );
-            modelName_->setMaximumHeight( 30 );
-            connect( modelName_, SIGNAL( textEdited( const QString& ) ), SLOT( OnModelNameChanged( const QString& ) ) );
-        }
-        {
-            modelsDescriptionLabel_ = new QLabel( box );
-            modelDescription_ = new QTextEdit( box );
-            modelDescription_->setMaximumHeight( 30 );
-        }
-        {
-            modelsDecisionalLabel_ = new QLabel( box );
-            decisionalCheckBox_ = new QCheckBox( box );
-            decisionalCheckBox_->setEnabled( false );
-        }
-        {
-            modelsPhysicalLabel_ = new QLabel( box );
-            physicalList_ = new QListWidget( box );
-            physicalList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-            connect( physicalList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
-        }
-    }
+    //exercise list
+    exerciseLabel_ = new QLabel();
+    exerciseList_ = new ExerciseListView( config, fileLoader );
+    connect( exerciseList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( OnSelectionChanged( const QModelIndex&, const QModelIndex& ) ) );
+    QHBoxLayout* exerciseListLayout = new QHBoxLayout();
+    exerciseListLayout->addWidget( exerciseLabel_ );
+    exerciseListLayout->addWidget( exerciseList_ );
+    exerciseListLayout->setStretch( 0, 1 );
+    exerciseListLayout->setStretch( 1, 4 );
+
+    //package content
+    packageContentLabel_ = new QLabel();
+    exerciseContent_ = new QTreeView();
+    exerciseContent_->setModel( &exerciseContentModel_ );
+    exerciseContent_->setHeaderHidden( true );
+    exerciseContent_->setEditTriggers( 0 );
+    exerciseContent_->adjustSize();
+    exerciseContent_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    QHBoxLayout* packageContentLayout = new QHBoxLayout();
+    packageContentLayout->addWidget( packageContentLabel_ );
+    packageContentLayout->addWidget( exerciseContent_ );
+    packageContentLayout->setStretch( 0, 1 );
+    packageContentLayout->setStretch( 1, 4 );
+
+    //exercise layout
+    QWidget* exerciseTab = new QWidget();
+    QVBoxLayout* exerciseLayout = new QVBoxLayout( exerciseTab );
+    exerciseLayout->addLayout( exerciseDescriptionLayout );
+    exerciseLayout->addLayout( exerciseListLayout );
+    exerciseLayout->addLayout( packageContentLayout );
+
+    //-------eTabs_Terrain-------//
+    //terrain description
+    terrainDescriptionLabel_ = new QLabel();
+    terrainDescription_ = new QTextEdit();
+    terrainDescription_->setMaximumHeight( 30 );
+    QHBoxLayout* terrainDescriptionLayout = new QHBoxLayout();
+    terrainDescriptionLayout->addWidget( terrainDescriptionLabel_ );
+    terrainDescriptionLayout->addWidget( terrainDescription_ );
+    terrainDescriptionLayout->setStretch( 0, 1 );
+    terrainDescriptionLayout->setStretch( 1, 4 );
+
+    //terrain list
+    terrainLabel_ = new QLabel();
+    terrainList_ = new QListWidget();
+    terrainList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    connect( terrainList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
+    QHBoxLayout* terrainListLayout = new QHBoxLayout();
+    terrainListLayout->addWidget( terrainLabel_ );
+    terrainListLayout->addWidget( terrainList_ );
+    terrainListLayout->setStretch( 0, 1 );
+    terrainListLayout->setStretch( 1, 4 );
+
+    //exercise layout
+    QWidget* terrainTab = new QWidget();
+    QVBoxLayout* terrainLayout = new QVBoxLayout( terrainTab );
+    terrainLayout->addLayout( terrainDescriptionLayout );
+    terrainLayout->addLayout( terrainListLayout );
+
+    //------eTabs_Models------//
+    //model names
+    modelsNameLabel_ = new QLabel();
+    modelName_ = new QLineEdit();
+    modelName_->setMaximumHeight( 30 );
+    connect( modelName_, SIGNAL( textEdited( const QString& ) ), SLOT( OnModelNameChanged( const QString& ) ) );
+    QHBoxLayout* modelNameLayout = new QHBoxLayout();
+    modelNameLayout->addWidget( modelsNameLabel_ );
+    modelNameLayout->addWidget( modelName_ );
+    modelNameLayout->setStretch( 0, 1 );
+    modelNameLayout->setStretch( 1, 4 );
+
+    //model description
+    modelsDescriptionLabel_ = new QLabel();
+    modelDescription_ = new QTextEdit();
+    modelDescription_->setMaximumHeight( 30 );
+    QHBoxLayout* modelDescriptionLayout = new QHBoxLayout();
+    modelDescriptionLayout->addWidget( modelsDescriptionLabel_ );
+    modelDescriptionLayout->addWidget( modelDescription_ );
+    modelDescriptionLayout->setStretch( 0, 1 );
+    modelDescriptionLayout->setStretch( 1, 4 );
+
+    //model decisional
+    modelsDecisionalLabel_ = new QLabel();
+    decisionalCheckBox_ = new QCheckBox();
+    decisionalCheckBox_->setEnabled( false );
+    QHBoxLayout* modelDecisionalLayout = new QHBoxLayout();
+    modelDecisionalLayout->addWidget( modelsDecisionalLabel_ );
+    modelDecisionalLayout->addWidget( decisionalCheckBox_ );
+    modelDecisionalLayout->setStretch( 0, 1 );
+    modelDecisionalLayout->setStretch( 1, 4 );
+
+    //model physical
+    modelsPhysicalLabel_ = new QLabel();
+    physicalList_ = new QListWidget();
+    physicalList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    connect( physicalList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
+    QHBoxLayout* modelPhysicalLayout = new QHBoxLayout();
+    modelPhysicalLayout->addWidget( modelsPhysicalLabel_ );
+    modelPhysicalLayout->addWidget( physicalList_ );
+    modelPhysicalLayout->setStretch( 0, 1 );
+    modelPhysicalLayout->setStretch( 1, 4 );
+
+    //exercise layout
+    QWidget* modelTab = new QWidget();
+    QVBoxLayout* modelLayout = new QVBoxLayout( modelTab );
+    modelLayout->addLayout( modelNameLayout );
+    modelLayout->addLayout( modelDescriptionLayout );
+    modelLayout->addLayout( modelDecisionalLayout );
+    modelLayout->addLayout( modelPhysicalLayout );
+    modelLayout->setStretch( 0, 1 );
+    modelLayout->setStretch( 1, 4 );
+
+    //------general panel------/
+    //general tab container
+    tabs_ = new QTabWidget( this );
+    tabs_->addTab( exerciseTab, "" );
+    tabs_->addTab( terrainTab, "" );
+    tabs_->addTab( modelTab, "" );
+
+    //general configuration
     progress_ = new QProgressBar( this );
     progress_->hide();
     package_.first = config_.GetRootDir();
