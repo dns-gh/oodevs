@@ -15,14 +15,44 @@
 #include "CreateSession.h"
 #include "Exercise_ABC.h"
 #include "clients_gui/Tools.h"
-#include <Qt3Support/q3datetimeedit.h>
 #include <Qt3Support/q3groupbox.h>
 #include <QtGui/qlabel.h>
 #include <Qt3Support/q3listbox.h>
 #include <QtGui/qspinbox.h>
 #include <Qt3Support/q3vbox.h>
+#include <QtCore/qsettings.h>
 
 using namespace frontend;
+
+Q_DECLARE_METATYPE( QTime )
+
+namespace
+{
+    int ReadIntRegistryValue( const std::string& key )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        int val =  settings.value( ( "/sword/" + key ).c_str(), 1 ).toInt();
+        return val;
+    }
+
+    QString ReadTimeRegistryValue( const std::string& key )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        return settings.value( ( "/sword/" + key ).c_str(), QTime().addSecs( 3600 ) ).toString();
+    }
+
+    void WriteIntRegistryValue( const std::string& key, int value )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        settings.setValue( ( "/sword/" + key ).c_str(), value );
+    }
+
+    void WriteTimeRegistryValue( const std::string& key, QString date )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        settings.setValue( ( "/sword/" + key ).c_str(), date );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: CheckpointConfigPanel constructor
@@ -42,15 +72,17 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
         {
             Q3HBox* frequencyBox = new Q3HBox( checkpointsGroup_ );
             frequencyLabel_ = new QLabel( frequencyBox );
-            frequency_ = new Q3TimeEdit( frequencyBox );
-            frequency_->setDisplay ( Q3TimeEdit::Hours | Q3TimeEdit::Minutes | Q3TimeEdit::Seconds  );
-            frequency_->setTime( QTime().addSecs( 3600 ) );
+            frequency_ = new QTimeEdit( frequencyBox );
+            frequency_->setDisplayFormat( "hh:mm:ss" );
+            frequency_->setTime( QTime:: fromString( ReadTimeRegistryValue( "CheckpointFrequency" ) ) );
+            connect( frequency_, SIGNAL( timeChanged ( const QTime & ) ), SLOT( OnFrequencyChanged( const QTime & ) ) );
         }
         {
             Q3HBox* keepBox = new Q3HBox( checkpointsGroup_ );
             keepLabel_ = new QLabel( keepBox );
             keep_ = new QSpinBox( 1, 100, 1, keepBox );
-            keep_->setValue( 1 );
+            keep_->setValue( ReadIntRegistryValue( "CheckpointKept" ) );
+            connect( keep_, SIGNAL( valueChanged ( int ) ), SLOT( OnCheckpointKeptChanged( int ) ) );
         }
     }
     {
@@ -170,4 +202,22 @@ void CheckpointConfigPanel::Commit( const std::string& exercise, const std::stri
         action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
         action.Commit();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckpointConfigPanel::OnFrequencyChanged
+// Created: NPT 2012-11-28
+// -----------------------------------------------------------------------------
+void CheckpointConfigPanel::OnFrequencyChanged( const QTime& time )
+{
+    WriteTimeRegistryValue( "CheckpointFrequency", time.toString( "hh:mm:ss" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckpointConfigPanel::OnCheckpointKeptChanged
+// Created: NPT 2012-11-28
+// -----------------------------------------------------------------------------
+void CheckpointConfigPanel::OnCheckpointKeptChanged( int value )
+{
+    WriteIntRegistryValue( "CheckpointKept", value );
 }

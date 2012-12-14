@@ -18,6 +18,7 @@
 #include <QtCore/qstring.h>
 #include <QtGui/QEvent.h>
 #include <QtGui/qtabwidget.h>
+#include <QtGui/qdatetimeedit.h>
 #pragma warning( pop )
 #include <string>
 
