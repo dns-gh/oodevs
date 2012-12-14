@@ -35,9 +35,9 @@ MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_AB
     setFixedWidth( 800 );
     setFixedHeight( 600 );
     SetStyle();
-    pages_ = new Q3WidgetStack( this );
+    pages_ = new QStackedWidget( this );
     HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
-    //pages_->setCurrentWidget( home ); à décommenter au passage QT4
+    pages_->setCurrentWidget( home );
     setCentralWidget( pages_ );
     CenterWindow();
     if( !config.GetPackageFile().empty() )

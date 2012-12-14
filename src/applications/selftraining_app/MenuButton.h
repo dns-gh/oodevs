@@ -25,7 +25,7 @@ class MenuButton : public QPushButton
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MenuButton( QWidget* parent );
+    explicit MenuButton();
     virtual ~MenuButton();
     //@}
 

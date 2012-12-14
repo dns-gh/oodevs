@@ -48,7 +48,7 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( Application& app, Q3WidgetStack* pages,
+             SelfTrainingPage( Application& app, QStackedWidget* pages,
                                Page_ABC& previous, const Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,

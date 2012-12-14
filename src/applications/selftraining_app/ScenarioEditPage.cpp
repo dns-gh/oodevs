@@ -27,7 +27,7 @@
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedWidget* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonEdit, launcher )
     , config_( config )
     , fileLoader_( fileLoader )

@@ -23,7 +23,7 @@
 // Name: CreateTerrainPage constructor
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
-CreateTerrainPage::CreateTerrainPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config )
+CreateTerrainPage::CreateTerrainPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config )
     : ContentPage( pages, previous, eButtonBack | eButtonStart )
     , config_      ( config )
     , controllers_ ( controllers )

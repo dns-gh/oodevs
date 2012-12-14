@@ -32,7 +32,7 @@ namespace bfs = boost::filesystem;
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pages,
                           Page_ABC& previous, Config& config,
                           const tools::Loader_ABC& loader, kernel::Controllers& controllers,
                           frontend::LauncherClient& launcher )
@@ -48,7 +48,7 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, Q3WidgetStack* page
     , languageHasChanged_( false )
 {
     setObjectName( "OptionsPage" );
-    setMargin( 5 );
+    layout()->setMargin( 5 );
 
     SetSettingsLayout();
     SetImportLayout();

@@ -17,7 +17,7 @@
 // Name: QuitPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
+QuitPage::QuitPage( QStackedWidget* pages, Page_ABC& previous )
     : MenuPage( pages, *this, 0 )
 {
     setName( "QuitPage" );

@@ -133,7 +133,7 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_      ( config )
     , fileLoader_  ( fileLoader )

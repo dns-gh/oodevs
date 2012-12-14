@@ -34,7 +34,7 @@ class CreateTerrainPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateTerrainPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous,
+             CreateTerrainPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
                                 kernel::Controllers& controllers, const Config& config );
     virtual ~CreateTerrainPage();
     //@}

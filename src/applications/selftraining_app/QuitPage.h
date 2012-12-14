@@ -25,7 +25,7 @@ class QuitPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             QuitPage( Q3WidgetStack* pages, Page_ABC& previous );
+             QuitPage( QStackedWidget* pages, Page_ABC& previous );
     virtual ~QuitPage();
     //@}
 

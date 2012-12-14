@@ -46,7 +46,7 @@ class OptionsPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+             OptionsPage( Application& app, QWidget* parent, QStackedWidget* pages,
                           Page_ABC& previous, Config& config,
                           const tools::Loader_ABC& loader, kernel::Controllers& controllers,
                           frontend::LauncherClient& launcher );

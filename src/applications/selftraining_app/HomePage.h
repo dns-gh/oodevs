@@ -54,7 +54,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+             HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                        Config& config, const tools::Loader_ABC& fileLoader,
                        kernel::Controllers& controllers,
                        frontend::LauncherClient& launcher,

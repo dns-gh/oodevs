@@ -35,7 +35,7 @@ class ProgressPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ProgressPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous );
+             ProgressPage( Application& app, QStackedWidget* pages, Page_ABC& previous );
     virtual ~ProgressPage();
     //@}
 

@@ -27,7 +27,7 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
     , fileLoader_( fileLoader )

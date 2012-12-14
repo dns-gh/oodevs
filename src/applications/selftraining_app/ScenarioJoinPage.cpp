@@ -25,7 +25,7 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonJoin, launcher )
     , controllers_      ( controllers )
     , config_           ( config )

@@ -16,7 +16,7 @@
 // Name: LauncherClientPage constructor
 // Created: SBO 2010-10-25
 // -----------------------------------------------------------------------------
-LauncherClientPage::LauncherClientPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, frontend::LauncherClient& launcher )
+LauncherClientPage::LauncherClientPage( QStackedWidget* pages, Page_ABC& previous, unsigned short buttonFlags, frontend::LauncherClient& launcher )
     : ContentPage( pages, previous, buttonFlags )
     , launcher_( launcher )
 {

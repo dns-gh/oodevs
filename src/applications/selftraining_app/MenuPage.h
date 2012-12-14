@@ -50,7 +50,7 @@ class MenuPage : public Page_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MenuPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title = "" );
+    explicit MenuPage( QStackedWidget* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title = "" );
     virtual ~MenuPage();
     //@}
 
@@ -74,7 +74,7 @@ private:
     //! @name Member data
     //@{
     QLabel* title_ ;
-    Q3HBox* container_;
+    QWidget* container_;
     QLabel* subTitle_ ;
     std::map< QWidget*, Subtitle > subTitles_ ;
     //@}

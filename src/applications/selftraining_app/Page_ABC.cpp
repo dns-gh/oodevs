@@ -18,9 +18,9 @@ QuitPage* Page_ABC::quitPage_ = 0;
 
 namespace
 {
-    QPushButton* AddButton( QWidget* parent, Q3HBoxLayout* buttonLayout, Qt::Alignment alignment, const char* slot, int width = 160 )
+    QPushButton* AddButton( QWidget* parent, QHBoxLayout* buttonLayout, Qt::Alignment alignment, const char* slot, int width = 160 )
     {
-        QPushButton* button =  new MenuButton( parent );
+        QPushButton* button =  new MenuButton();
         button->setFixedWidth( width );
         buttonLayout->addWidget( button, 0, alignment );
         QObject::connect( button, SIGNAL( clicked() ), parent, slot );
@@ -32,8 +32,8 @@ namespace
 // Name: Page_ABC constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short flags )
-    : gui::LanguageChangeObserver_ABC< Q3VBox >( pages )
+Page_ABC::Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short flags )
+    : gui::LanguageChangeObserver_ABC< QWidget >( pages )
     , pages_       ( pages )
     , previous_    ( previous )
     , backButton_  ( 0 )
@@ -46,14 +46,18 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
     , deleteButton_( 0 )
     , titleLabel_  ( 0 )
 {
-    grid_ = new Q3GridLayout( layout(), 3, 2 );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->setContentsMargins( 0, 0, 0, 0 ); 
+    grid_ = new QGridLayout();
+    layout->addLayout( grid_ );
+    grid_->setMargin( 0 );
     grid_->setRowStretch( 0, 1 );
     grid_->setRowStretch( 1, 10 );
     grid_->setRowStretch( 2, 2 );
 
-    Q3HBoxLayout* buttonLayout = new Q3HBoxLayout();
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->setMargin( 20 );
-    grid_->addMultiCellLayout( buttonLayout, 2, 2, 0, 2 );
+    grid_->addLayout( buttonLayout, 2, 0, 1, 2 );
 
     if( flags & eButtonBack )
         backButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnBack() ) );
@@ -79,7 +83,7 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
     else if( flags & eButtonApply )
         applyButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnApply() ) );
 
-    layout()->setAutoAdd( false );
+    pages_->addWidget( this );
     hide();
 }
 
@@ -122,9 +126,11 @@ void Page_ABC::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void Page_ABC::showEvent( QShowEvent* event )
 {
-    pages_->raiseWidget( this );
+    if( pages_->indexOf( this ) == 0 )
+        pages_->addWidget( this );
+    pages_->setCurrentWidget( this );
     Update();
-    Q3VBox::showEvent( event );
+    QWidget::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +139,7 @@ void Page_ABC::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void Page_ABC::AddContent( QWidget* widget )
 {
-    grid_->addMultiCellWidget( widget, 1, 1, 0, 2 );
+    grid_->addWidget( widget, 1, 0, 1, 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +156,7 @@ void Page_ABC::SetTitle( const QString& title )
         font.setItalic( true );
         titleLabel_->setFont( font );
         titleLabel_->setFixedHeight( 50 );
-        grid_->addMultiCellWidget( titleLabel_, 0, 0, 0, 2, Qt::AlignVCenter | Qt::AlignLeft );
+        grid_->addWidget( titleLabel_, 0, 0, 1, 2, Qt::AlignVCenter | Qt::AlignLeft );
     }
     titleLabel_->setText( title );
 }

@@ -20,7 +20,7 @@
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( Application& app, Q3WidgetStack* pages,
+SelfTrainingPage::SelfTrainingPage( Application& app, QStackedWidget* pages,
                                     Page_ABC& previous, const Config& config,
                                     const tools::Loader_ABC& fileLoader,
                                     kernel::Controllers& controllers,

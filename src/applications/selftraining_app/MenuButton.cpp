@@ -15,8 +15,8 @@
 // Name: MenuButton constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuButton::MenuButton( QWidget* parent )
-    : QPushButton( parent )
+MenuButton::MenuButton()
+    : QPushButton()
     , mask_( "resources/images/selftraining/menu-mask.png" )
     , baseFont_( "Century Gothic", 16, QFont::Bold )
     , selectedFont_( "Century Gothic", 18, QFont::Bold )

@@ -23,7 +23,7 @@ class ContentPage : public Page_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ContentPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags = 0, const QString title = QString() );
+             ContentPage( QStackedWidget* pages, Page_ABC& previous, unsigned short buttonFlags = 0, const QString title = QString() );
     virtual ~ContentPage();
     //@}
 };

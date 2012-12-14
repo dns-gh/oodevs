@@ -23,7 +23,7 @@
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
                     Config& config, const tools::Loader_ABC& fileLoader,
                     kernel::Controllers& controllers,
                     frontend::LauncherClient& launcher,

@@ -21,7 +21,7 @@ class QuitPage;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class Page_ABC : public gui::LanguageChangeObserver_ABC< Q3VBox >
+class Page_ABC : public gui::LanguageChangeObserver_ABC< QWidget >
                , private boost::noncopyable
 {
     Q_OBJECT
@@ -42,7 +42,7 @@ protected:
 public:
     //! @name Constructors/Destructor
     //@{
-             Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short flags );
+             Page_ABC( QStackedWidget* pages, Page_ABC& previous, unsigned short flags );
     virtual ~Page_ABC();
     //@}
 
@@ -91,8 +91,8 @@ protected slots:
 private:
     //! @name Member data
     //@{
-    Q3GridLayout* grid_;
-    Q3WidgetStack* pages_;
+    QGridLayout* grid_;
+    QStackedWidget* pages_;
     Page_ABC& previous_;
     static QuitPage* quitPage_;
 

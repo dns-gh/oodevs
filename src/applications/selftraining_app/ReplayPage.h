@@ -47,7 +47,7 @@ class ReplayPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous,
+             ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previous,
                          const frontend::Config& config, const tools::Loader_ABC& fileLoader,
                          kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ReplayPage();

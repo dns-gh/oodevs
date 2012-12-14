@@ -87,7 +87,7 @@ private:
     //@{
     std::auto_ptr< SessionTray > sessionTray_;
     std::auto_ptr< gui::LinkInterpreter_ABC > interpreter_;
-    Q3WidgetStack* pages_;
+    QStackedWidget* pages_;
     //@}
 };
 

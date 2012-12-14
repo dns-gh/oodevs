@@ -46,7 +46,7 @@ class ScenarioEditPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+             ScenarioEditPage( Application& app, QWidget* parent, QStackedWidget* pages,
                                Page_ABC& previous, const frontend::Config& config,
                                const tools::Loader_ABC& fileLoader,
                                kernel::Controllers& controllers,

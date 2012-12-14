@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AuthoringPage( Application& app, QWidget* parent,
-                            Q3WidgetStack* pages, Page_ABC& previous,
+                            QStackedWidget* pages, Page_ABC& previous,
                             const Config& config, kernel::Controllers& controllers );
     virtual ~AuthoringPage();
     //@}

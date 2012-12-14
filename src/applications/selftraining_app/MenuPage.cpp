@@ -14,20 +14,23 @@
 
 namespace
 {
-    class TransparentContainer : public Q3HBox
+    class TransparentContainer : public QWidget
     {
     public:
         explicit TransparentContainer( QWidget* parent )
-            : Q3HBox( parent )
+            : QWidget( parent )
             , mask_( "resources/images/selftraining/menu-mask.png" )
         {
             setFixedSize( 800, 112 );
+            QHBoxLayout* layout = new QHBoxLayout( this ); 
+            layout->setMargin( 5 );
         }
     protected:
-        virtual void drawContents( QPainter* painter )
+        virtual void paintEvent( QPaintEvent* /*e*/ )
         {
-            painter->drawImage( frameRect(), mask_ );
-            Q3HBox::drawContents( painter );
+            QRect r = rect();
+            QPainter painter( this );
+            painter.drawImage( rect(), mask_ );
         }
 
     private:
@@ -39,31 +42,41 @@ namespace
 // Name: MenuPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuPage::MenuPage( Q3WidgetStack* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title )
+MenuPage::MenuPage( QStackedWidget* pages, Page_ABC& previous, unsigned short buttonFlags, const QString& title )
     : Page_ABC( pages, previous, buttonFlags )
 {
-    Q3VBox* box = new Q3VBox(this);
+    QWidget* box = new QWidget( this );
     AddContent( box );
-    box->setSpacing( 5 );
+
     // title
     QFont titleFont( "Century Gothic", 18, QFont::Bold );
-    titleFont.setItalic( true ) ;
-    title_ = new QLabel( title, box ) ;
+    titleFont.setItalic( true );
+    title_ = new QLabel( title );
     title_->setFont( titleFont );
     title_->setAlignment( Qt::AlignCenter ) ;
-    QWidget* spacer = new QWidget( box );
+
+    QWidget* spacer = new QWidget();
     spacer->setMinimumHeight( 40 );
+
     // main container
-    container_ = new TransparentContainer( box);
+    container_ = new TransparentContainer( box );
 
     // subtitle
     QFont subTitleFont( "Century Gothic", 12, QFont::Bold );
     subTitleFont.setItalic( true );
-    subTitle_ = new QLabel( box );
+    subTitle_ = new QLabel();
     subTitle_->setMargin( 5 );
     subTitle_->setFont( subTitleFont);
 
-    layout()->setAlignment( Qt::AlignCenter );
+    //QWidget* box = new QWidget( pages );
+    QVBoxLayout* boxLayout = new QVBoxLayout( box ); 
+    boxLayout->setAlignment( Qt::AlignCenter );
+    boxLayout->addWidget( title_ );
+    boxLayout->addWidget( spacer );
+    boxLayout->addWidget( container_ );
+    boxLayout->addWidget( subTitle_ );
+    boxLayout->setSpacing( 5 );
+    boxLayout->setMargin( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +94,8 @@ MenuPage::~MenuPage()
 // -----------------------------------------------------------------------------
 MenuButton* MenuPage::AddLink( Page_ABC& page, bool showOnClick )
 {
-    MenuButton* button = new MenuButton( container_ );
+    MenuButton* button = new MenuButton();
+    container_->layout()->addWidget( button );
     if( showOnClick )
         connect( button, SIGNAL( clicked() ), &page, SLOT( show() ) );
     connect( button, SIGNAL( Selected( MenuButton* ) ), this, SLOT( OnSelectedItem( MenuButton* ) ) );

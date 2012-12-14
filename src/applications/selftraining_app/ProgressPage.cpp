@@ -19,7 +19,7 @@
 // Name: ProgressPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProgressPage::ProgressPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous )
+ProgressPage::ProgressPage( Application& app, QStackedWidget* pages, Page_ABC& previous )
     : ContentPage( pages, previous, 0 )
     , app_       ( app )
 {
