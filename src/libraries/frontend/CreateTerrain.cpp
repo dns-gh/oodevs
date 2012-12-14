@@ -24,22 +24,12 @@ using namespace frontend;
 
 namespace
 {
-    QString GetDirectory()
+    bfs::path GetGenExecutable()
     {
-        QSettings settings( "MASA Group", "SWORD" );
-        QString directory = settings.value( "/Common/Components/Terrain/RootDirectory" ).toString();
-        if( directory.isNull() )
-        {
-            bfs::path dirPath = bfs::path( QApplication::applicationDirPath().toStdWString() )
-                .parent_path() / "Terrain" / "applications";
-            directory = QString::fromStdWString( dirPath.wstring() );
-        }
-        return directory;
-    }
-
-    std::string GetExecutable()
-    {
-        return ( bfs::path( GetDirectory().toStdWString() ) / "generation_app.exe" ).string();
+        const bfs::path appDir = bfs::path(
+                QApplication::applicationDirPath().toStdWString() );
+        const bfs::path terDir = appDir.parent_path() / "Terrain" / "applications";
+        return ( terDir / "generation_app.exe" );
     }
 }
 
@@ -48,13 +38,14 @@ namespace
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString& name, bool attach )
-    : SpawnCommand( config, GetExecutable().c_str(), attach, "" )
+    : SpawnCommand( config, GetGenExecutable().string().c_str(), attach, "" )
 {
     const std::string directory = config.GetTerrainDir( name.toStdString() );
     bfs::create_directories( directory );
 
     AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
-    SetWorkingDirectory( GetDirectory() );
+    const bfs::path& terDir = GetGenExecutable().parent_path();
+    SetWorkingDirectory( QString::fromStdWString( terDir.wstring() ));
 }
 
 // -----------------------------------------------------------------------------
@@ -72,5 +63,5 @@ CreateTerrain::~CreateTerrain()
 // -----------------------------------------------------------------------------
 bool CreateTerrain::IsAvailable()
 {
-    return bfs::exists( GetExecutable() );
+    return bfs::exists( GetGenExecutable() );
 }
