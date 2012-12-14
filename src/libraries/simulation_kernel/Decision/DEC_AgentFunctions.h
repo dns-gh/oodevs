@@ -203,7 +203,6 @@ public:
 
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
     static bool HasMission( DEC_Decision_ABC* pAgent );
-    static void SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission );
 
     // Test / debug
     static void DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value );

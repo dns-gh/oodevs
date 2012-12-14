@@ -479,8 +479,6 @@ void RegisterMissionParametersFunctions( sword::Brain& brain, bool isMasalife )
     directia::tools::binders::ScriptRef initParameterFunction = brain.GetScriptRef( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
         boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) ) );
-    brain.RegisterFunction( "DEC_SetMission",
-        boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignerFuseauAMissionPion_Mission",
         boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToPionMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignerFuseauAMissionAutomate_Mission",

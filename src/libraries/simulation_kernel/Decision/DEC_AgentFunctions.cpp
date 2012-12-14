@@ -1125,17 +1125,6 @@ bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::SetMission
-// Created: LDC 2009-06-18
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission )
-{
-    if( !pAgent )
-        throw MASA_EXCEPTION( "Invalid pion for SetMission" );
-    pAgent->SetMission( pMission );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::HasDotation
 // Created: LDC 2010-03-26
 // -----------------------------------------------------------------------------
