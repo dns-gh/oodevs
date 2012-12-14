@@ -117,11 +117,7 @@ void Primitive::ReadComment( xml::xistream& xis )
 {
     if( !xis.has_content() )
         return;
-    std::string lang = xis.attribute< std::string >( "lang", "" );
-    if( lang.empty() || 
-            ( lang == tools::readLang() || 
-            ( comment_.empty() && lang == "en" ) ) )
-        comment_ = xis.value< std::string >();
+    comment_ = xis.value< std::string >();
 }
 
 
