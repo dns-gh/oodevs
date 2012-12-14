@@ -58,8 +58,6 @@ class MIL_AutomateOrderManager;
 class PHY_DotationCategory;
 class MIL_DotationSupplyManager;
 class MIL_StockSupplyManager;
-class MIL_DotationSupplyManager;
-class MIL_StockSupplyManager;
 class MIL_Color;
 class PHY_Dotation;
 class PHY_DotationStock;
