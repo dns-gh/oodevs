@@ -47,21 +47,21 @@ struct PHY_DotationType::LoadingWrapper
 void PHY_DotationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
-    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eMunition       , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eCarburant      , PHY_DotationLogisticType::uniteEssence_   );
-    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eMine           , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eExplosif       , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eBarbele        , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , ePiece          , PHY_DotationLogisticType::pieces_         );
-    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eRation         , PHY_DotationLogisticType::uniteVivre_     );
-    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eAgentExtincteur, PHY_DotationLogisticType::uniteVivre_     );
-    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , eEnergie        , PHY_DotationLogisticType::uniteVivre_     );
-    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , eFuneraire      , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eDotationFamily_Munition    , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eDotationFamily_Carburant   , PHY_DotationLogisticType::uniteEssence_   );
+    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eDotationFamily_Explosif    , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eDotationFamily_Mine        , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eDotationFamily_Barbele     , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , eDotationFamily_Piece       , PHY_DotationLogisticType::pieces_         );
+    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eDotationFamily_Ration      , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eDotationFamily_AgentExtincteur, PHY_DotationLogisticType::uniteVivre_  );
+    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , eDotationFamily_Energy      , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , eDotationFamily_Funeraire   , PHY_DotationLogisticType::uniteVivre_     );
 
     dotationTypes_[ munition_       ->GetName() ] = munition_;
     dotationTypes_[ carburant_      ->GetName() ] = carburant_;
-    dotationTypes_[ mine_           ->GetName() ] = mine_;
     dotationTypes_[ explosif_       ->GetName() ] = explosif_;
+    dotationTypes_[ mine_           ->GetName() ] = mine_;
     dotationTypes_[ barbele_        ->GetName() ] = barbele_;
     dotationTypes_[ piece_          ->GetName() ] = piece_;
     dotationTypes_[ ration_         ->GetName() ] = ration_;
@@ -118,7 +118,7 @@ void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml
 // Name: PHY_DotationType constructor
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType, const PHY_DotationLogisticType& defaultLogisticType )
+PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationFamily nType, const PHY_DotationLogisticType& defaultLogisticType )
     : strName_            ( strName )
     , nType_              ( nType )
     , defaultLogisticType_( defaultLogisticType )

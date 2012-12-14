@@ -26,12 +26,12 @@ enum E_DotationFamily
 {
     eDotationFamily_Munition        = 0,
     eDotationFamily_Carburant       = 1,
-    eDotationFamily_Mine            = 2,
-    eDotationFamily_Explosif        = 3,
+    eDotationFamily_Explosif        = 2,
+    eDotationFamily_Mine            = 3,
     eDotationFamily_Barbele         = 4,
-    eDotationFamily_Ration          = 5,
-    eDotationFamily_AgentExtincteur = 6,
-    eDotationFamily_Piece           = 7,
+    eDotationFamily_Piece           = 5,
+    eDotationFamily_Ration          = 6,
+    eDotationFamily_AgentExtincteur = 7,
     eDotationFamily_Energy          = 8,
     eDotationFamily_Funeraire       = 9,
     eNbrDotationFamily              = 10
