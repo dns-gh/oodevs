@@ -22,12 +22,12 @@ namespace tools
 {
     class RealFileLoaderObserver_ABC;
     class WinArguments;
+    class WaitEvent;
 }
 
 class MIL_Config;
 class MT_ConsoleLogger;
 class MT_FileLogger;
-class SIM_Dispatcher;
 class SIM_NetworkLogger;
 
 //=============================================================================
@@ -45,8 +45,6 @@ public:
     //! @name Operations
     //@{
     int Execute();
-
-    static bool CrashWithCoreDump();
     //@}
 
 private:
@@ -54,9 +52,6 @@ private:
     //@{
     int Initialize    ();
     void Run           ();
-    void Stop          ();
-    bool Tick           ();
-    void Cleanup       ();
     int  Test          ();
     void CheckpointTest();
 
@@ -73,28 +68,23 @@ private:
 private:
     //! @name Member data
     //@{
+    const int maxConnections_;
+
     std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< MIL_Config > startupConfig_;
     std::auto_ptr< tools::WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;
     std::auto_ptr< MT_ConsoleLogger > console_;
-
-    static bool     bCrashWithCoreDump_;
-    static bool     bUserInterrupt_;
-    SIM_Dispatcher* pDispatcher_;
-    int             maxConnections_;
+    std::auto_ptr< boost::thread > gui_;
+    std::auto_ptr< boost::thread > dispatcher_;
+    std::auto_ptr< tools::WaitEvent > quit_;
 
     HWND                           hWnd_;
     HINSTANCE                      hInstance_;
     NOTIFYICONDATA                  TrayIcon_;
     unsigned int                   nIconIndex_;
-    std::auto_ptr< boost::thread > guiThread_;
-    std::auto_ptr< boost::thread > dispatcherThread_;
-    bool                           dispatcherOk_;
     //@}
 };
-
-#include "SIM_App.inl"
 
 #endif // __SIM_App_h_

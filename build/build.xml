@@ -513,6 +513,9 @@
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}">
             <syslibset libs="dbghelp,psapi,shell32,iphlpapi,advapi32"/>
             <includepath path="${libraries.dir}/simulation_kernel"/>
+            <defineset>
+                <define name="PLATFORM" value="${platform}"/>
+            </defineset>
             <defineset define="QT3_SUPPORT"/>
             <defineset define="_WIN32_WINNT=0x0501"/> <!-- for 'IsDebuggerPresent()' -->
             <linkerarg value="/STACK:15000000"/>      <!-- Because of boost serialization -->

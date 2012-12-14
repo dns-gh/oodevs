@@ -986,6 +986,9 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject_ABC.h">
       <Filter>Source Files\Model\Urban</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\dispatcher\DispatcherLoader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl">

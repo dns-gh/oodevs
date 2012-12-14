@@ -12,8 +12,8 @@
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
-#include "SIM_Dispatcher.h"
 #include "FileLoaderObserver.h"
+#include "dispatcher/DispatcherLoader.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
@@ -26,6 +26,7 @@
 #include "MT_Tools/MT_FileLogger.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Version.h"
+#include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -36,9 +37,6 @@
 #include <ctime>
 #include <io.h>
 #include <fcntl.h>
-
-bool SIM_App::bCrashWithCoreDump_ = false;
-bool SIM_App::bUserInterrupt_ = false;
 
 #define MY_WM_NOTIFYICON WM_USER + 1
 
@@ -52,17 +50,14 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
 SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
-    : observer_      ( std::auto_ptr< tools::RealFileLoaderObserver_ABC >( new FileLoaderObserver() ) )
+    : maxConnections_( maxConnections )
+    , observer_      ( new FileLoaderObserver() )
     , startupConfig_ ( new MIL_Config( *observer_ ) )
     , winArguments_  ( new tools::WinArguments( lpCmdLine ) )
-    , pNetworkLogger_( 0 )
-    , logger_        ( 0 )
-    , maxConnections_( maxConnections )
+    , quit_          ( new tools::WaitEvent() )
     , hWnd_          ( 0 )
     , hInstance_     ( hinstance )
-    , pDispatcher_   ( 0 )
     , nIconIndex_    ( 0 )
-    , dispatcherOk_  ( true )
 {
     startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
     
@@ -99,14 +94,15 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 //-----------------------------------------------------------------------------
 SIM_App::~SIM_App()
 {
+    PostMessage( hWnd_, WM_COMMAND, IDM_QUIT, 0 );
+    quit_->Signal();
+    if( dispatcher_.get() )
+        dispatcher_->join();
+    if( gui_.get() )
+        gui_->join();
+    MIL_AgentServer::DestroyWorkspace();
     MT_LOG_UNREGISTER_LOGGER( *console_ );
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
-    if( dispatcherThread_.get() && pDispatcher_ )
-    {
-        pDispatcher_->Stop();
-        dispatcherThread_->join();
-    }
-    delete pDispatcher_;
     if( pNetworkLogger_.get() )
         MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );
 }
@@ -118,11 +114,11 @@ SIM_App::~SIM_App()
 int SIM_App::Initialize()
 {
     MT_LOG_INFO_MSG( "Starting simulation GUI" );
-    guiThread_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
+    gui_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
     if( startupConfig_->IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcherThread_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
+        dispatcher_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
     }
     MT_Profiler::Initialize();
     MIL_Random::Initialize( startupConfig_->GetRandomSeed(), startupConfig_->GetRandomGaussian(), startupConfig_->GetRandomDeviation(), startupConfig_->GetRandomMean() );
@@ -165,7 +161,6 @@ LRESULT SIM_App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
              }
             return 0;
         case WM_CLOSE:
-            bUserInterrupt_ = true;
         case WM_DESTROY:
             PostQuitMessage( 0 );
             return 0;
@@ -193,15 +188,19 @@ void SIM_App::RunDispatcher()
 {
     try
     {
-        pDispatcher_ = new SIM_Dispatcher( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ), maxConnections_ );
-        pDispatcher_->Run();
+        dispatcher::DispatcherLoader loader( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ), maxConnections_ );
+        while( !quit_->IsSignaled() )
+        {
+            loader.Update();
+            quit_->Wait( boost::posix_time::milliseconds( 25 ) );
     }
-    catch( std::exception& e )
+    }
+    catch( const std::exception& e )
     {
-        dispatcherOk_ = false;
+
         MT_LOG_ERROR_MSG( "The dispatcher has crashed: " << e.what() << "." );
     }
-    Stop();
+    quit_->Signal();
 }
 
 // -----------------------------------------------------------------------------
@@ -210,6 +209,8 @@ void SIM_App::RunDispatcher()
 // -----------------------------------------------------------------------------
 void SIM_App::RunGUI()
 {
+    try
+    {
     // Window
     WNDCLASS wc;
     wc.style = 0;
@@ -243,13 +244,18 @@ void SIM_App::RunGUI()
 
     // Loop
     MSG msg;
-    while( GetMessageA( &msg, 0, 0, 0 ) )
+        while( !quit_->IsSignaled() && GetMessageA( &msg, 0, 0, 0 ) )
     {
         TranslateMessage( &msg );
         DispatchMessage( &msg );
     }
-    Shell_NotifyIcon( NIM_DELETE,&TrayIcon_ );
-    Stop();
+        Shell_NotifyIcon( NIM_DELETE, &TrayIcon_ );
+    }
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "gui: " << e.what() );
+    }
+    quit_->Signal();
 }
 
 // -----------------------------------------------------------------------------
@@ -289,58 +295,16 @@ void SIM_App::AnimateIcon()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIM_App::Cleanup
-// Created: NLD 2004-01-27
-// -----------------------------------------------------------------------------
-void SIM_App::Cleanup()
-{
-    if( dispatcherThread_.get() )
-    {
-        while( ! pDispatcher_ && dispatcherOk_ )
-            ::Sleep( 0 );
-        if( ! pDispatcher_ )
-            throw std::exception( "Dispatcher crash" );
-        pDispatcher_->Stop();
-        dispatcherThread_->join();
-    }
-    MIL_AgentServer::DestroyWorkspace();
-    ::PostMessage( hWnd_ , WM_COMMAND, IDM_QUIT, 0 );
-    guiThread_->join();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SIM_App::Run
 // Created: NLD 2004-01-27
 // -----------------------------------------------------------------------------
 void SIM_App::Run()
 {
     StartIconAnimation();
-    while( Tick() )
-    {
-        // NOTHING
-    }
+    while( !quit_->IsSignaled() )
+        if( MIL_AgentServer::GetWorkspace().Update() == MIL_AgentServer::eSimStopped )
+            break;
     StopIconAnimation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::Stop
-// Created: RDS 2008-07-08
-// -----------------------------------------------------------------------------
-void SIM_App::Stop()
-{
-    bUserInterrupt_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::Tick
-// Created: RDS 2008-07-08
-// -----------------------------------------------------------------------------
-bool SIM_App::Tick()
-{
-    MIL_AgentServer::E_SimState nSimState = MIL_AgentServer::GetWorkspace().Update();
-    bool bRun = ( nSimState != MIL_AgentServer::eSimStopped );
-    ::Sleep( 0 );
-    return bRun && !bUserInterrupt_;
 }
 
 //-----------------------------------------------------------------------------
@@ -349,13 +313,12 @@ bool SIM_App::Tick()
 //-----------------------------------------------------------------------------
 int SIM_App::Execute()
 {
-    if( startupConfig_->IsTestMode() )
-        return Test();
-    int init = Initialize();
+    const int init = Initialize();
     if( init != EXIT_SUCCESS )
         return init;
+    if( startupConfig_->IsTestMode() )
+        return Test();
     Run();
-    Cleanup();
     return EXIT_SUCCESS;
 }
 
@@ -396,9 +359,7 @@ int SIM_App::Test()
     static const std::string prefix( "ERROR: " );
     try
     {
-        Initialize();
         CheckpointTest();
-        Cleanup();
         return EXIT_SUCCESS;
     }
     catch( MT_ScipioException& exception )

@@ -222,6 +222,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\dispatcher\Config.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Dispatcher.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\DispatcherLoader.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\dispatcher_pch.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogConsignFuneral.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.h" />

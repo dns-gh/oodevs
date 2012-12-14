@@ -135,6 +135,7 @@
     <ClInclude Include="..\..\src\libraries\tools\ExerciseConfig.h" />
     <ClInclude Include="..\..\src\libraries\tools\GeneralConfig.h" />
     <ClInclude Include="..\..\src\libraries\tools\SessionConfig.h" />
+    <ClInclude Include="..\..\src\libraries\tools\WaitEvent.h" />
     <ClInclude Include="..\..\src\libraries\tools\WinArguments.h" />
     <ClInclude Include="..\..\src\libraries\tools\WorldParameters.h" />
     <ClInclude Include="..\..\src\libraries\tools\Acceptor.h" />
