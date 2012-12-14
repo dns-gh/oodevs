@@ -671,5 +671,8 @@
     <parameter type="Agent"/>
   </report>
   <report category="operational" id="453" message="Impossible de recevoir une mission en étant transporté"/>
+  <report category="operational" id="454" message="Pas de ravitaillement en %1 faute de supérieur logistique">
+    <parameter type="ResourceType"/>
+  </report>
 </reports>
-<!-- signature="3019849993" -->
+<!-- signature="2965570987" -->

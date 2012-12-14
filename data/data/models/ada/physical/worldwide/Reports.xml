@@ -671,5 +671,8 @@
     <parameter type="Agent"/>
   </report>
   <report category="operational" id="453" message="Impossible to receive a mission while transported"/>
+  <report category="operational" id="454" message="No logistic superior found for %1">
+    <parameter type="ResourceType"/>
+  </report>
 </reports>
-<!-- signature="0212572448" -->
+<!-- signature="0418872737" -->
