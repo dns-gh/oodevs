@@ -14,8 +14,8 @@
 
 class Q3GroupBox;
 class QSpinBox;
-class Q3TimeEdit;
 class QLabel;
+class QTimeEdit;
 
 namespace tools
 {
@@ -68,13 +68,15 @@ private slots:
     //@{
     void SessionSelected( const QString& session );
     void OnCheckpointSelected( const QString& checkpoint );
+    void OnFrequencyChanged( const QTime& time );
+    void OnCheckpointKeptChanged( int value );
     //@}
 
 private:
     //! @name Member data
     //@{
     const tools::GeneralConfig&   config_;
-    Q3TimeEdit*                   frequency_;
+    QTimeEdit*                    frequency_;
     QSpinBox*                     keep_;
     Q3GroupBox*                   checkpointsGroup_;
     Q3GroupBox*                   loadGroup_;

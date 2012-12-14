@@ -22,6 +22,7 @@
 #include <QtGui/qlayout.h> 
 #include <QtGui/qtreeview.h>
 #include <QtGui/qstandarditemmodel.h>
+#include <QtGui/qdatetimeedit.h>
 #pragma warning( pop )
 #include <string>
 
