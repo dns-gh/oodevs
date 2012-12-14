@@ -42,12 +42,14 @@ public:
     //@{
     virtual void Display( UserProfile& profile );
     virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
+    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnItemClicked( const QModelIndex& index );
+    virtual void OnSelect( const QItemSelection& /*selected*/, const QItemSelection& /* deselected */ );
     //@}
 
 private:

@@ -12,6 +12,7 @@
 #include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
 #include "clients_gui/LongNameHelper.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights constructor
@@ -63,6 +64,15 @@ void UserProfileUnitRights::OnItemClicked( const QModelIndex& index )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::OnSelect
+// Created: NPT 2012-12-10
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::OnSelect( const QItemSelection& , const QItemSelection&  )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::NotifyUpdated
 // Created: SBO 2008-08-26
 // -----------------------------------------------------------------------------
@@ -83,4 +93,28 @@ void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
 void UserProfileUnitRights::contextMenuEvent( QContextMenuEvent* /*event*/ )
 {
     // NOTHING
+}
+
+namespace
+{
+    bool IsCommandPost( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+}
+
+bool UserProfileUnitRights::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
+{
+    const kernel::Entity_ABC* entity1 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( left );
+    const kernel::Entity_ABC* entity2 = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( right );
+    if( !entity1 || !entity2 )
+        return false;
+    valid = true;
+    if( IsCommandPost( *entity1 ) )
+        return false;
+    if( IsCommandPost( *entity2 ) )
+        return true;
+    return entity2->GetId() < entity1->GetId();
 }
