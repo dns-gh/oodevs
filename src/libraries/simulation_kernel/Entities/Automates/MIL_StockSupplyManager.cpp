@@ -29,7 +29,6 @@
 #include "protocol/SimulationSenders.h"
 #include "Network/NET_AsnException.h"
 #include <boost/serialization/set.hpp>
-#include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StockSupplyManager )
@@ -246,7 +245,7 @@ void MIL_StockSupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCateg
     const T_Requesters& previous = previousNotifications_[ &dotationCategory ];
     BOOST_FOREACH( T_Requesters::value_type pion, requesters )
     {
-        if( boost::find( previous, pion ) == previous.end() )
+        if( std::find( previous.begin(), previous.end(), pion ) == previous.end() )
             MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogNoSuperior, dotationCategory );
         currentNotifications_[ &dotationCategory ].push_back( pion );
     }
