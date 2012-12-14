@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QString locale_;
+    std::string helpFile_;
     QWidget* root_; // à virer
     T_Anchors anchors_;
     //@}

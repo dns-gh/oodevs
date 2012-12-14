@@ -14,6 +14,7 @@
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
 #include <htmlhelp.h>
+#include <boost/filesystem.hpp>
 
 using namespace gui;
 
@@ -24,10 +25,19 @@ using namespace gui;
 HelpSystem::HelpSystem( QWidget* root, const std::string& config )
     : QObject( root )
     , root_  ( root )
-    , locale_( tools::readLang().c_str() )
+    , helpFile_( "" )
 {
     try
     {
+        const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString();
+        std::string locale = tools::readLang();
+        helpFile_ = tools::GeneralConfig::BuildResourceChildFile( "help/" + locale + "/" + strGuide + ".pdf" );
+        if( !boost::filesystem::exists( helpFile_ ) )
+        {
+            locale = "en";
+            helpFile_ =  tools::GeneralConfig::BuildResourceChildFile( "help/" + locale + "/" + strGuide + ".pdf" );
+        }
+
         xml::xifstream xis( config );
         xis >> xml::start( "widgets" )
                 >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
@@ -89,19 +99,13 @@ std::string HelpSystem::FindWidget( const QObject* root )
 // -----------------------------------------------------------------------------
 void HelpSystem::ShowHelp()
 {
-    static const std::string strHelp = "help/";
-    const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString();
-
     // pdf help
-    std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.toStdString() + "/" + strGuide + ".pdf" );
-    if( !QDesktopServices::openUrl( QUrl( resource.c_str() ) ) )
-        QMessageBox::warning( 0, tools::translate( "gui::HelpSystem", "Error" ), tools::translate( "gui::HelpSystem", "Error opening help file '%1'. Make sure you have a PDF viewer installed on your computer." ).arg( resource.c_str() ) );
+    if( !QDesktopServices::openUrl( QUrl( helpFile_.c_str() ) ) )
+        QMessageBox::warning( 0, tools::translate( "gui::HelpSystem", "Error" ), tools::translate( "gui::HelpSystem", "Error opening help file '%1'. Make sure you have a PDF viewer installed on your computer." ).arg( helpFile_.c_str() ) );
 
-    // chm help
-    //std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.toStdString() + "/" + strGuide + ".chm" );
+    // chm help (not to be removed, temporarily commented)
     //const std::string page = FindWidget( qApp->widgetAt( QCursor::pos() ) );
     //if( !page.empty() )
-    //    resource += std::string( "::/Sword_General_User_Guide/" ) + page + "/" + page + ".htm";
-
-    //HtmlHelp( 0, resource.c_str(), HH_DISPLAY_TOPIC, NULL);
+    //    page += helpFile_ + std::string( "::/Sword_General_User_Guide/" ) + page + "/" + page + ".htm";
+    //HtmlHelp( 0, page.c_str(), HH_DISPLAY_TOPIC, NULL);
 }
