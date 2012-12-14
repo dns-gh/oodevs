@@ -11,7 +11,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;PLATFORM=${CurrentPlatform}</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
