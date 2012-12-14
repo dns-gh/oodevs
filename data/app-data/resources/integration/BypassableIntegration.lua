@@ -26,13 +26,10 @@ end
 
 integration.updateBypassIt = function( object )
     if object[myself].actionBypassState == eActionObjetImpossible then
-        DEC_Trace( "impossible works" )
         return false 
     elseif object[myself].actionBypassState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" )
         return false 
     elseif object[myself].actionBypassState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" )
         return false 
     end
     return true

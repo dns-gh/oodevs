@@ -114,12 +114,10 @@ integration.updateBuildIt = function( object )
         object[myself].actionBuildState = nil
     else
         if object[myself].actionBuildState == eActionObjetImpossible then
-            DEC_Trace( "impossible works" )
             return eRC_ConstructionObjetImpossible
         elseif object[myself].actionBuildState == eActionObjetManqueDotation then
             return eRC_PasDotationConstructionObjet
         elseif object[myself].actionBuildState == eActionObjetPasDeCapacite then
-            DEC_Trace( "no capacity" ) 
             return eRC_ConstructionObjetImpossible
         end
     end
@@ -187,15 +185,12 @@ integration.updateBuildItSecu = function( object )
         return true
     else
         if object[ myself ].actionBuildState == eActionObjetImpossible then
-            DEC_Trace( "impossible work" )
             meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetManqueDotation then
-            DEC_Trace( "not enough dotation" )
             meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
             return true
         elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
-            DEC_Trace( "no capacity" ) 
             meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
             return true
         end

@@ -16,19 +16,31 @@ integration.isObjectRemoved = function( object )
     return not DEC_IsValidKnowledgeObject( object.source )
 end
 
-integration.getObjectNearestBorderPosition = function( object )
+integration.getObjectNearestBorderPosition = function( object, distance )
+    if distance == nil then
+        distance = 20 -- meters
+    end
     object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
     if object.getObjectNearestBorderPosition == nil then
-        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 10 )
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , distance )
         object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
     end
     return object.getObjectNearestBorderPosition
 end
 
-integration.getPlannedObjectNearestBorderPosition = function( object )
+integration.getObjectNearestPositionOnBorder = function( object )
+    local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 0 )
+    return DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
+end
+
+
+integration.getPlannedObjectNearestBorderPosition = function( object, distance )
+    if distance == nil then
+        distance = 20 -- meters
+    end
     object.getPlannedObjectNearestBorderPosition = object.getPlannedObjectNearestBorderPosition or nil
     if object.getPlannedObjectNearestBorderPosition == nil then
-        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_GenObject_Localisation( object.source ) , 10 )
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_GenObject_Localisation( object.source ) , distance )
         object.getPlannedObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
     end
     return object.getPlannedObjectNearestBorderPosition
