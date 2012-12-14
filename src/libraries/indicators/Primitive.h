@@ -74,7 +74,6 @@ private:
     //@{
     void ReadParameter( xml::xistream& xis );
     QString BuildParameterList() const;
-    void ReadComment( xml::xistream& xis );
     //@}
 
     //! @name Types
@@ -87,7 +86,7 @@ private:
     //@{
     const QString name_;
     const std::string category_;
-    std::string comment_;
+    const QString comment_;
     const std::string type_;
     const DataTypeFactory& types_;
     QString prototype_;

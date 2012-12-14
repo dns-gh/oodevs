@@ -14,13 +14,22 @@
 #include "Function.h"
 #include "PrimitiveParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
+
+namespace
+{
+    QString ReadComment( xml::xistream& xis )
+    {
+        std::string comment;
+        xis >> xml::start( "comments" ) >> comment >> xml::end;
+        return comment.c_str();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Primitive constructor
@@ -29,13 +38,10 @@ using namespace indicators;
 Primitive::Primitive( xml::xistream& xis, const DataTypeFactory& types )
     : name_( xis.attribute< std::string >( "name" ).c_str() )
     , category_( xis.attribute< std::string >( "category" ) )
-    , comment_( "" )
+    , comment_( ReadComment( xis ) )
     , type_( xis.attribute< std::string >( "type" ) )
     , types_( types )
 {
-    xis >> xml::start( "comments" )
-            >> xml::list( "comment", *this, &Primitive::ReadComment )
-        >> xml::end;
     xis >> xml::optional >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &Primitive::ReadParameter )
         >> xml::end;
@@ -110,24 +116,12 @@ QString Primitive::BuildParameterList() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Primitive::ReadComment
-// Created: NPT 2012-11-28
-// -----------------------------------------------------------------------------
-void Primitive::ReadComment( xml::xistream& xis )
-{
-    if( !xis.has_content() )
-        return;
-    comment_ = xis.value< std::string >();
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: Primitive::DisplayInTooltip
 // Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
 void Primitive::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( QString( "<b>%1</b><br><i>%2</i><br>%3" ).arg( name_ ).arg( prototype_ ).arg( comment_.c_str() ) );
+    displayer.Display( QString( "<b>%1</b><br><i>%2</i><br>%3" ).arg( name_ ).arg( prototype_ ).arg( comment_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,5 +136,3 @@ boost::shared_ptr< Element_ABC > Primitive::Instanciate( const std::string& inpu
         parameter->Declare( *element, resolver );
     return boost::shared_ptr< Element_ABC >( element );
 }
-
-
