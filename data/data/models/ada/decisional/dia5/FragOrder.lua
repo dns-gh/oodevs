@@ -176,7 +176,7 @@ integration.startFragOrderTask = function( self )
             mission.objectives = { CreateKnowledge( integration.ontology.types.point, integration.copyPoint( missionCourante.meetingPoint.source ) ) }
             integration.communication.StartMissionPionVersPion( {mission_type = "france.military.platoon.tasks.FaireMouvement", 
                                                               mission_objectives = { objectives = mission.objectives}, 
-                                                              echelon = eEtatEchelon_None } )
+                                                              echelon = eEtatEchelon_First } )
         else
             masalife.brain.core.stopTasks()
         end
