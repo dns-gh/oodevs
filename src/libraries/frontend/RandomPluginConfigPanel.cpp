@@ -32,33 +32,33 @@ namespace
     {
         QSettings settings( "MASA Group", "SWORD" );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
-            distributions[ i ] = settings.readBoolEntry( QString( "/sword/RandomDistribution" ) + QString::number( i ), false );
+            distributions[ i ] = settings.value( QString( "/sword/RandomDistribution" ) + QString::number( i ) ).toBool();
     }
 
     void ReadDeviation( double* deviations )
     {
         QSettings settings( "MASA Group", "SWORD" );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
-            deviations[ i ] = settings.readDoubleEntry( QString( "/sword/RandomDeviation" ) + QString::number( i ), 0.5 );
+            deviations[ i ] = settings.value( QString( "/sword/RandomDeviation" ) + QString::number( i ), 0.5 ).toDouble();
     }
 
     void ReadMean( double* means )
     {
         QSettings settings( "MASA Group", "SWORD" );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
-            means[ i ] = settings.readDoubleEntry( QString( "/sword/RandomMean" ) + QString::number( i ), 0.5 );
+            means[ i ] = settings.value( QString( "/sword/RandomMean" ) + QString::number( i ), 0.5 ).toDouble();
     }
 
     bool ReadHasSeed()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readBoolEntry( "/sword/RandomHasSeed", false );
+        return settings.value( "/sword/RandomHasSeed", false ).toBool();
     }
 
     int ReadSeed()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readNumEntry( "/sword/RandomSeed", 1 );
+        return settings.value( "/sword/RandomSeed", 1 ).toInt();
     }
 
     class Validator : public QDoubleValidator
@@ -75,7 +75,7 @@ namespace
 
             QRegExp empty( QString::fromLatin1(" *-?\\.? *") );
             if( b >= 0 &&
-                input.stripWhiteSpace().startsWith(QString::fromLatin1("-")) )
+                input.trimmed().startsWith(QString::fromLatin1("-")) )
                 return Invalid;
             if( empty.exactMatch(input) )
                 return Intermediate;
@@ -84,7 +84,7 @@ namespace
             if( !ok )
                 return Invalid;
 
-            int i = input.find( '.' );
+            int i = input.indexOf( '.' );
             if( i >= 0 )
                 if( d==0 )
                     return Invalid;
@@ -121,7 +121,7 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
     connect( hasSeed_, SIGNAL( toggled( bool ) ), SLOT( OnSeedToggled() ) );
     seed_ = new QSpinBox();
     seed_->setRange( 1, std::numeric_limits< int >::max() );
-    seed_->setLineStep( 1 );
+    seed_->setSingleStep( 1 );
     bool bHasSeed = ReadHasSeed();
     seed_->setValue( ReadSeed() );
     seed_->setEnabled( bHasSeed );
@@ -194,17 +194,17 @@ void RandomPluginConfigPanel::OnLanguageChanged()
 
     int currentIndex = ( contextList_->count() ) ? contextList_->currentIndex() : 0;
     contextList_->clear();
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Fire" ), eFire );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Wounds" ), eWounds );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Perception" ), ePerception );
-    contextList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Breakdowns" ), eBreakdowns );
-    contextList_->setCurrentItem( currentIndex );
+    contextList_->addItem( tools::translate( "RandomPluginConfigPanel", "Fire" ), eFire );
+    contextList_->addItem( tools::translate( "RandomPluginConfigPanel", "Wounds" ), eWounds );
+    contextList_->addItem( tools::translate( "RandomPluginConfigPanel", "Perception" ), ePerception );
+    contextList_->addItem( tools::translate( "RandomPluginConfigPanel", "Breakdowns" ), eBreakdowns );
+    contextList_->setCurrentIndex( currentIndex );
 
     currentIndex = ( distributionList_->count() ) ? distributionList_->currentIndex() : 0;
     distributionList_->clear();
-    distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Linear" ) );
-    distributionList_->insertItem( tools::translate( "RandomPluginConfigPanel", "Gaussian" ) );
-    distributionList_->setCurrentItem( currentIndex );
+    distributionList_->addItem( tools::translate( "RandomPluginConfigPanel", "Linear" ) );
+    distributionList_->addItem( tools::translate( "RandomPluginConfigPanel", "Gaussian" ) );
+    distributionList_->setCurrentIndex( currentIndex );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void RandomPluginConfigPanel::OnContextChanged( int index )
     ERandomContexts context = ( ERandomContexts ) index;
     if( context >= eFire && context < eContextsNbr )
     {
-        distributionList_->setCurrentItem( bDistributions_[ context ] ? 1 : 0 );
+        distributionList_->setCurrentIndex( bDistributions_[ context ] ? 1 : 0 );
         deviation_->setText( QString::number( rDeviations_[ context ] ) );
         mean_->setText( QString::number( rMeans_[ context ] ) );
         deviation_->setEnabled( bDistributions_[ context ] );
@@ -272,7 +272,7 @@ void RandomPluginConfigPanel::OnDistributionChanged( int index )
 {
     deviation_->setEnabled( index != 0 );
     mean_->setEnabled( index != 0 );
-    ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
+    ERandomContexts context = ( ERandomContexts ) contextList_->currentIndex();
     if( context >= eFire && context < eContextsNbr )
     {
         bDistributions_[ context ] = ( index != 0 );
@@ -287,7 +287,7 @@ void RandomPluginConfigPanel::OnDeviationChanged( const QString& )
 {
     if( deviation_->hasAcceptableInput() )
     {
-        ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
+        ERandomContexts context = ( ERandomContexts ) contextList_->currentIndex();
         if( context >= eFire && context < eContextsNbr )
             rDeviations_[ context ] = deviation_->text().toDouble();
     }
@@ -301,7 +301,7 @@ void RandomPluginConfigPanel::OnMeanChanged( const QString& )
 {
     if( mean_->hasAcceptableInput() )
     {
-        ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
+        ERandomContexts context = ( ERandomContexts ) contextList_->currentIndex();
         if( context >= eFire && context < eContextsNbr )
             rMeans_[ context ] = mean_->text().toDouble();
     }
@@ -325,10 +325,10 @@ void RandomPluginConfigPanel::OnDefaultClicked()
     QSettings settings( "MASA Group", "SWORD" );
     for( int i = 0; i < eContextsNbr; ++i )
     {
-        settings.writeEntry( QString( "/sword/RandomDistribution" ) + QString::number( i ), bDistributions_[ i ] );
-        settings.writeEntry( QString( "/sword/RandomDeviation" ) + QString::number( i ), rDeviations_[ i ] );
-        settings.writeEntry( QString( "/sword/RandomMean" ) + QString::number( i ), rMeans_[ i ] );
+        settings.setValue( QString( "/sword/RandomDistribution" ) + QString::number( i ), bDistributions_[ i ] );
+        settings.setValue( QString( "/sword/RandomDeviation" ) + QString::number( i ), rDeviations_[ i ] );
+        settings.setValue( QString( "/sword/RandomMean" ) + QString::number( i ), rMeans_[ i ] );
     }
-    settings.writeEntry( "/sword/RandomHasSeed", hasSeed_->isChecked() );
-    settings.writeEntry( "/sword/RandomSeed", seed_->value() );
+    settings.setValue( "/sword/RandomHasSeed", hasSeed_->isChecked() );
+    settings.setValue( "/sword/RandomSeed", seed_->value() );
 }

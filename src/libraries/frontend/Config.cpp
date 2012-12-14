@@ -30,7 +30,7 @@ namespace
     QString ReadDataDirectory()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readEntry( "/Common/DataDirectory", "" );
+        return settings.value( "/Common/DataDirectory", "" ).toString();
     }
 
     std::string GetDefaultRoot( const std::string& appName )

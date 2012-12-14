@@ -34,8 +34,8 @@ FileList::FileList(const QString& title, QWidget* parent, const QString& caption
     listWidget_ = new QListWidget(this);
     listWidget_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
     listWidget_->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    addButton_ = new QPushButton(tr("Add"), this, "add");
-    removeButton_ = new QPushButton(tr("Remove"), this, "remove");
+    addButton_ = new QPushButton(tr("Add"), this );
+    removeButton_ = new QPushButton(tr("Remove"), this );
 
     QVBoxLayout* layoutV = new QVBoxLayout;
     layoutV->addWidget(listWidget_);
@@ -66,7 +66,7 @@ void FileList::SelectionChanged()
 void FileList::OnAddClicked()
 {
     QFileDialog* fdialog = new QFileDialog(this, caption_, lastDir_, fileFilter_);
-    fdialog->setMode(QFileDialog::ExistingFiles);
+    fdialog->setFileMode( QFileDialog::ExistingFiles );
 
     QStringList files = fdialog->getOpenFileNames(); 
     if (!files.isEmpty())

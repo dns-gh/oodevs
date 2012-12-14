@@ -93,9 +93,9 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
     {
         integerValue_ = new QSpinBox();
         if( xis.has_attribute( "min" ) )
-            integerValue_->setMinValue( xis.attribute< int >( "min" ) );
+            integerValue_->setMinimum( xis.attribute< int >( "min" ) );
         if( xis.has_attribute( "max" ) )
-            integerValue_->setMaxValue( xis.attribute< int >( "max" ) );
+            integerValue_->setMaximum( xis.attribute< int >( "max" ) );
         integerValue_->setValue( xis.attribute< int >( "default", 0 ) );
         integerValue_->setHidden( !display );
         propertyLayout->addWidget( integerValue_ );
@@ -134,8 +134,8 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
         std::vector< std::string > enumerations;
         boost::split( enumerations, value, boost::is_any_of( ";" ) );
         BOOST_FOREACH( const std::string& enumeration , enumerations )
-            enumerationValue_->insertItem( enumeration.c_str() );
-        enumerationValue_->setCurrentItem( 0u );
+            enumerationValue_->addItem( enumeration.c_str() );
+        enumerationValue_->setCurrentIndex( 0u );
         enumerationValue_->setHidden( !display );
         propertyLayout->addWidget( enumerationValue_ );
     }
@@ -202,7 +202,7 @@ void PluginSetting::OnFileClicked()
     QString fileName = QFileDialog::getOpenFileName( 0, "Select recorded orders", config_.GetExercisesDir().c_str(), "Order File (*.ord)" );
     if( !fileName.isNull() && !fileName.isEmpty() )
     {
-        fileName_ = fileName;
+        fileName_ = fileName.toStdString();
         std::string::size_type size = fileName_.length() - std::min( max_size, fileName_.length() );
         std::string msg( fileName_, size, size );
         if( fileName_.size() > max_size + 2 )

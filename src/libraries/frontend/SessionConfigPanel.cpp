@@ -55,7 +55,7 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     exerciseLabel_ = new QLabel();
     exerciseNumber_ = new QSpinBox();
     exerciseNumber_->setRange( 1, 10 );
-    exerciseNumber_->setLineStep( 1 );
+    exerciseNumber_->setSingleStep( 1 );
     exerciseNumber_->setValue( 1 );
 
     //Exercise box
@@ -111,7 +111,7 @@ void SessionConfigPanel::Commit( const std::string& exercise, const std::string&
     {
         action.SetOption( "session/meta/date", session );
         action.SetOption( "session/meta/name", sessionName_->text().toStdString() );
-        action.SetOption( "session/meta/comment", sessionComment_->text().toStdString() );
+        action.SetOption( "session/meta/comment", sessionComment_->toPlainText() );
     }
     {
         action.SetOption( "session/config/simulation/network/@port", frontend::SimulationPort( exerciseNumber_->value() ) );

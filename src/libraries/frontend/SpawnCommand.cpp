@@ -91,10 +91,10 @@ void SpawnCommand::Start()
         0, 0, 0,
         0, 0, 0
     };
-    std::string debug( commandLine_.local8Bit().data() ) ;
+    std::string debug( commandLine_.toStdString() ) ;
     if( !CreateProcessA( 0,                                     // lpApplicationName
-                         commandLine_.local8Bit().data(),       // lpCommandLine
-                         0,                    // lpProcessAttributes
+                         commandLine_.toLocal8Bit().data(),     // lpCommandLine
+                         0,                                     // lpProcessAttributes
                          0,                                     // lpThreadAttributes
                          TRUE,                                  // bInheritHandles
                          CREATE_NEW_CONSOLE,                    // dwCreationFlags

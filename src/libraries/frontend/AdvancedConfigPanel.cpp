@@ -24,12 +24,12 @@ namespace
     bool ReadRegistry( const std::string& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readBoolEntry( ( "/sword/" + key ).c_str(), false );
+        return settings.value( ( "/sword/" + key ).c_str() ).toBool();
     }
     void WriteRegistry( const std::string& key, bool value )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        settings.writeEntry( ( "/sword/" + key ).c_str(), value );
+        settings.setValue( ( "/sword/" + key ).c_str(), value );
     }
 }
 
@@ -47,21 +47,21 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     stepLabel_ = new QLabel();
     stepSpin_ = new QSpinBox();
     stepSpin_->setRange( 1, 100 );
-    stepSpin_->setLineStep( 1 );
+    stepSpin_->setSingleStep( 1 );
     stepSpin_->setValue( 10 );
 
     //---
     factorLabel_ = new QLabel();
     factorSpin_ = new QSpinBox();
     factorSpin_->setRange( 1, 100 );
-    factorSpin_->setLineStep( 1 );
+    factorSpin_->setSingleStep( 1 );
     factorSpin_->setValue( 10 );
 
     //---
     endtickLabel_ = new QLabel();
     endtickSpin_ = new QSpinBox();
     endtickSpin_->setRange( 0, std::numeric_limits< int >::max() );
-    endtickSpin_->setLineStep( 1 );
+    endtickSpin_->setSingleStep( 1 );
     endtickSpin_->setValue( 0 );
 
     //---
@@ -86,7 +86,7 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     pathThreadsLabel_ = new QLabel();
     pathThreadsSpin_ = new QSpinBox();
     pathThreadsSpin_->setRange( 0, 4 );
-    pathThreadsSpin_->setLineStep( 1 );
+    pathThreadsSpin_->setSingleStep( 1 );
     pathThreadsSpin_->setValue( 1 );
 
     QWidget* threadBox = new QWidget();
@@ -102,7 +102,7 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     fragmentsFrequencyLabel_ = new QLabel();
     fragmentsFrequencySpin_ = new QSpinBox();
     stepSpin_->setRange( 0, std::numeric_limits< int >::max() );
-    stepSpin_->setLineStep( 1 );
+    stepSpin_->setSingleStep( 1 );
     fragmentsFrequencySpin_->setValue( 200 );
 
     QWidget* freqBox = new QWidget();
