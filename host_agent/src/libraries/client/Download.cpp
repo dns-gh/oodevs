@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Download.h"
+#include "moc_Download.cpp"
 
 #include "Helpers.h"
 #include "QAsync.h"

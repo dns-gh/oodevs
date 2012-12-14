@@ -11,7 +11,7 @@ add_flag( CMAKE_CXX_FLAGS "/wd4505" )
 # set warnings as errors
 add_flag( CMAKE_CXX_FLAGS "/WX" )
 
-set( root_dir ${CMAKE_SOURCE_DIR}/.. )
+get_filename_component( root_dir "${CMAKE_SOURCE_DIR}/.." REALPATH )
 
 set( COMPANY "MASA Group" )
 set( PRODUCT "Sword Cloud" )
@@ -41,155 +41,78 @@ masa_find_with_prefix( ZLIB zlib REQUIRED )
 set( OPENSSL_LIBRARIES libeay32 ssleay32 )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork )
 
-################################################################################
+masa_set_external_library( ARCHIVE_LIBRARIES            archive_static_d archive_static )
+masa_set_external_library( CPP_NETLIB_CLIENT_LIBRARIES  cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+masa_set_external_library( CPP_NETLIB_URI_LIBRARIES     cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+masa_set_external_library( MONGOOSE_LIBRARIES           mongoose_d mongoose )
+masa_set_external_library( ZLIB_LIBRARIES               zlibd zlib )
+masa_set_internal_library( BCRYPT_LIBRARIES             bcrypt )
+masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
+
 # runtime
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/libraries/runtime/*.h"
-    "${root_dir}/src/libraries/runtime/*.cpp"
+masa_add_target( runtime libraries "libraries/runtime" )
+target_link_libraries( runtime
+    shlwapi
+    ${ARCHIVE_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
-if( MSVC )
-    masa_glob_dir( win32_files win32
-        "${root_dir}/src/libraries/runtime/win32/*.cpp"
-        "${root_dir}/src/libraries/runtime/win32/*.h"
-    )
-    list( APPEND files ${win32_files} )
-endif()
-masa_add_static_library( runtime ${files} )
-masa_set_target_folder( runtime libraries )
-if( MSVC )
-    masa_add_target_external_library( runtime archive_static_d archive_static )
-    masa_add_target_external_library( runtime zlibd zlib )
-    target_link_libraries( runtime shlwapi )
+if( WIN32 )
+    masa_add_target( runtime_win32 libraries "libraries/runtime/win32" )
+    target_link_libraries( runtime runtime_win32 )
 endif()
 
-################################################################################
 # web_server
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/libraries/web/*.h"
-    "${root_dir}/src/libraries/web/*.cpp"
+masa_add_target( web libraries "libraries/web" )
+target_link_libraries( web
+    ws2_32
+    ${CPP_NETLIB_CLIENT_LIBRARIES}
+    ${CPP_NETLIB_URI_LIBRARIES}
+    ${MONGOOSE_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
 )
-masa_add_static_library( web ${files} )
-masa_set_target_folder( web libraries )
-if( MSVC )
-    masa_add_target_external_library( web cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
-    masa_add_target_external_library( web cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
-    masa_add_target_external_library( web mongoose_d mongoose )
-    target_link_libraries( web ws2_32 )
-endif()
-target_link_libraries( web ${OPENSSL_LIBRARIES} )
 
-################################################################################
 # host
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/libraries/host/*.h"
-    "${root_dir}/src/libraries/host/*.cpp"
+masa_add_target( host libraries "libraries/host" )
+target_link_libraries( host
+    ${BCRYPT_LIBRARIES}
+    ${SQLITE3_LIBRARIES}
 )
-masa_add_static_library( host ${files} )
-masa_set_target_folder( host libraries )
-if( MSVC )
-    masa_add_target_library( host bcrypt )
-    masa_add_target_library( host sqlite3 )
-endif()
 
-################################################################################
 # cloud_server
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/applications/cloud_server/*.cpp"
-)
-masa_configure_rc( cloud_server files res
-    "${root_dir}/src/applications/cloud_server/version.rc.in"
-)
-masa_add_executable_target( cloud_server ${files} )
-masa_set_target_folder( cloud_server applications )
+masa_add_target( cloud_server applications "applications/cloud_server" OPTIONS executable )
 target_link_libraries( cloud_server
     host
     runtime
     web
 )
 
-################################################################################
 # client
-################################################################################
-set( root "${root_dir}/src/libraries/client" )
-masa_glob_dir( files src "${root}/*.cpp" )
-masa_glob_qt4_headers( files src "${root}/*.h" )
-masa_glob_qt4_ui( files ui "${root}/*.ui" )
-masa_add_static_library( client ${files} )
-masa_set_target_folder( client libraries )
-masa_set_target_qt4( client )
+masa_add_target( client libraries "libraries/client" OPTIONS qt )
 
-################################################################################
 # cloud_client
-################################################################################
-set( root "${root_dir}/src/applications/cloud_client" )
-masa_glob_dir( files src "${root}/*.cpp" )
-masa_configure_rc( cloud_client files res "${root}/version.rc.in" )
-masa_glob_qt4_rc( files res "${root}/*.qrc" )
-masa_add_executable_target( cloud_client WIN32 ${files} )
-masa_set_target_folder( cloud_client applications )
-masa_set_target_qt4( cloud_client )
+masa_add_target( cloud_client applications "applications/cloud_client" OPTIONS win32 qt executable )
 target_link_libraries( cloud_client
     client
     host
     runtime
 )
 
-################################################################################
 # runtime_test
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/tests/runtime_test/*.cpp"
-    "${root_dir}/src/tests/runtime_test/*.h"
-)
-if( WIN32 )
-    masa_glob_dir( win32_files win32
-        "${root_dir}/src/tests/runtime_test/Win32*.cpp"
-        "${root_dir}/src/tests/runtime_test/Win32*.h"
-    )
-    list( REMOVE_ITEM files ${win32_files} )
-    list( APPEND files ${win32_files} )
-endif()
-masa_add_executable_target( runtime_test ${files} )
-masa_set_target_folder( runtime_test tests )
-target_link_libraries( runtime_test
-    runtime
-)
-masa_add_test_target( runtime_test runtime
-    "--data_directory=${root_dir}/src/tests/runtime_test" )
+masa_add_target( runtime_test tests "tests/runtime_test" OPTIONS test )
+target_link_libraries( runtime_test runtime )
 
-################################################################################
 # host_test
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/tests/host_test/*.cpp"
-    "${root_dir}/src/tests/host_test/*.h"
-)
-masa_add_executable_target( host_test ${files} )
+masa_add_target( host_test tests "tests/host_test" OPTIONS test )
 masa_set_target_folder( host_test tests )
 target_link_libraries( host_test
     host
     runtime
     web
 )
-masa_add_test_target( host_test host
-   "--data_directory=${root_dir}/src/tests/host_test" )
 
-################################################################################
 # web_test
-################################################################################
-masa_glob_dir( files src
-    "${root_dir}/src/tests/web_test/*.cpp"
-    "${root_dir}/src/tests/web_test/*.h"
-)
-masa_add_executable_target( web_test ${files} )
-masa_set_target_folder( web_test tests )
+masa_add_target( web_test tests "tests/web_test" OPTIONS test )
 target_link_libraries( web_test
     runtime
     web
 )
-masa_add_test_target( web_test web
-    "--data_directory=${root_dir}/src/tests/web_test" )

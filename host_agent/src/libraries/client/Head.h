@@ -17,8 +17,6 @@
 #include <QMainWindow>
 #include <QProgressBar>
 
-#include "ui_head.h"
-
 #include <boost/scoped_ptr.hpp>
 
 namespace runtime
@@ -32,6 +30,11 @@ namespace gui
 {
     class Context;
     enum HttpCommand;
+}
+
+namespace Ui
+{
+    class Head;
 }
 
 namespace gui
@@ -55,7 +58,7 @@ private slots:
     void OnSingleInstanceError();
 
 private:
-    Ui::Head ui_;
+    boost::scoped_ptr< Ui::Head > ui_;
     QProgressBar progress_;
     QLabel count_;
     ItemModel items_;

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "ItemModel.h"
+#include "moc_ItemModel.cpp"
 #include "Helpers.h"
 
 #include "runtime/PropertyTree.h"

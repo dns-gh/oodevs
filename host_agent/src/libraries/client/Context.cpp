@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Context.h"
+#include "moc_Context.cpp"
 
 #include "Download.h"
 #include "Helpers.h"
