@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyRequest.h"
 #include "SupplyResource_ABC.h"
+#include "SupplyRecipient_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -61,8 +62,8 @@ void SupplyRequest::AddResource( boost::shared_ptr< SupplyResource_ABC > resourc
     assert( quantity > 0 );
     if( quantity <= 0 )
         return;
-    resourceRequests_.push_back( std::make_pair( resource, quantity ) );
-    pionRequests_.push_back( &pion );
+    resources_.push_back( std::make_pair( resource, quantity ) );
+    requesters_.push_back( &pion );
     requestedQuantity_ += quantity;
     if( resource->HasReachedSupplyThreshold() )
         complementarySupply_ = false;
@@ -92,25 +93,30 @@ bool SupplyRequest::AffectSupplier( boost::shared_ptr< LogisticLink_ABC > suppli
 {
     if( supplier_ )
         return true;
-
     if( !AffectSupplier( supplier->GetSuperior() ) )
         return false;
-
-    const double authorizedQuantity = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_, pionRequests_ );
+    const double authorizedQuantity = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_, requesters_ );
     if( authorizedQuantity <= 0 )
     {
         supplier_ = 0;
         return false;
     }
-    assert( authorizedQuantity <= requestedQuantity_ );
-
-    // Update the requested quantities according to the quota limitations
-    const double ratio = authorizedQuantity / requestedQuantity_;
-    BOOST_FOREACH( T_ResourceRequests::value_type& data, resourceRequests_ )
-        data.second *= ratio;
     supplierQuotas_ = supplier;
-    requestedQuantity_ = authorizedQuantity;
+    assert( authorizedQuantity <= requestedQuantity_ );
+    UpdateRequestedQuantities( authorizedQuantity );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest::UpdateRequestedQuantities
+// Created: MCO 2012-12-11
+// -----------------------------------------------------------------------------
+void SupplyRequest::UpdateRequestedQuantities( double authorizedQuantity )
+{
+    const double ratio = authorizedQuantity / requestedQuantity_;
+    BOOST_FOREACH( T_Resources::value_type& data, resources_ )
+        data.second *= ratio;
+    requestedQuantity_ = authorizedQuantity;
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +127,7 @@ double SupplyRequest::Supply()
 {
           double suppliedQuantity = 0;
     const double tmp              = convoyedQuantity_ / requestedQuantity_;
-    BOOST_FOREACH( T_ResourceRequests::value_type& data, resourceRequests_ )
+    BOOST_FOREACH( T_Resources::value_type& data, resources_ )
     {
         const double value = data.second * tmp;
         suppliedQuantity += data.first->Supply( value );
@@ -179,9 +185,14 @@ void SupplyRequest::ReturnStockNotAssignedToConvoy()
         supplier_->SupplyReturnStock( dotationCategory_, tmp );
 }
 
-// =============================================================================
-// Accessors
-// =============================================================================
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest::NotifySuperiorNotAvailable
+// Created: MCO 2012-12-11
+// -----------------------------------------------------------------------------
+void SupplyRequest::NotifySuperiorNotAvailable( SupplyRecipient_ABC& recipient )
+{
+    recipient.NotifySuperiorNotAvailable( dotationCategory_, requesters_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequest::GetSupplier
@@ -227,10 +238,6 @@ bool SupplyRequest::IsComplementary() const
 {
     return complementarySupply_;
 }
-
-// =============================================================================
-// Network
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequest::Serialize

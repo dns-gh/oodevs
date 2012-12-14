@@ -34,9 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_AutomateLOG& GetSuperior() const { return *superior_; }
+    virtual MIL_AutomateLOG& GetSuperior() const;
 
-    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters );
+    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Requesters& requesters );
     virtual void   ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity );
     //@}
 

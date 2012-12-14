@@ -31,7 +31,6 @@ namespace logistic {
 // =============================================================================
 class LogisticLink : public LogisticLink_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,10 +41,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_AutomateLOG& GetSuperior() const { return *superior_; }
-    bool operator==( const LogisticLink& rhs ) const;
+    virtual MIL_AutomateLOG& GetSuperior() const;
 
-    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters ); // Return quantity consumed
+    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Requesters& requesters ); // Return quantity consumed
     virtual void   ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity );
     //@}
 
@@ -74,7 +72,7 @@ private:
     void ReadQuota( xml::xistream& xis );
     void SendQuotas( unsigned int context = 0 ) const;
 
-    T_Agents ComputeNotifications( T_Agents& notifications, T_Agents requesters ) const;
+    T_Requesters ComputeNotifications( T_Requesters& notifications, T_Requesters requesters ) const;
     //@}
 
 public:
@@ -84,7 +82,7 @@ public:
     {
         double quota_;
         double quotaThreshold_;
-        T_Agents notifications_;
+        T_Requesters notifications_;
 
         bool operator==( const struct sDotationQuota& rhs ) const
         {

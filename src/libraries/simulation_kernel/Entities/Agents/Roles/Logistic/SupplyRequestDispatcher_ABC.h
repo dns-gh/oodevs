@@ -12,9 +12,11 @@
 
 class MIL_AutomateLOG;
 
-namespace logistic {
-   class SupplyRequest_ABC;
-   class SupplyConsign_ABC;
+namespace logistic
+{
+    class SupplyRecipient_ABC;
+    class SupplyRequest_ABC;
+    class SupplyConsign_ABC;
 
 // =============================================================================
 /** @class  SupplyRequestDispatcher_ABC
@@ -33,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Dispatch( SupplyRequest_ABC& request ) = 0;
+    virtual void Dispatch( SupplyRecipient_ABC& recipient, SupplyRequest_ABC& request ) = 0;
     virtual bool AllowSupply() = 0;
     //@}
 
@@ -43,6 +45,6 @@ public:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyRequestDispatcher_ABC_h_

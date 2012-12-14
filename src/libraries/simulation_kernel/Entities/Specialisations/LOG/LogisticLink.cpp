@@ -129,19 +129,10 @@ void LogisticLink::WriteQuotas( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLink::operator==
-// Created: NLD 2011-01-10
-// -----------------------------------------------------------------------------
-bool LogisticLink::operator==( const LogisticLink& rhs ) const
-{
-    return &superior_ == &rhs.superior_ && quotas_ == rhs.quotas_ && useQuotas_ == rhs.useQuotas_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters )
+double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Requesters& requesters )
 {
     if( useQuotas_ )
     {
@@ -171,9 +162,9 @@ double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory,
 // Name: LogisticLink::ComputeNotifications
 // Created: MCO 2012-12-03
 // -----------------------------------------------------------------------------
-LogisticLink::T_Agents LogisticLink::ComputeNotifications( T_Agents& notifications, T_Agents requesters ) const
+LogisticLink::T_Requesters LogisticLink::ComputeNotifications( T_Requesters& notifications, T_Requesters requesters ) const
 {
-    T_Agents result;
+    T_Requesters result;
     boost::set_difference( boost::sort( requesters ), notifications, std::back_inserter( result ) );
     boost::copy( result, std::back_inserter( notifications ) );
     boost::sort( notifications );
@@ -181,7 +172,7 @@ LogisticLink::T_Agents LogisticLink::ComputeNotifications( T_Agents& notificatio
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLink::ConsumeQuota
+// Name: LogisticLink::ReturnQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
 void LogisticLink::ReturnQuota( const PHY_DotationCategory& dotationCategory, double quantity )
@@ -332,4 +323,13 @@ void LogisticLink::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< LogisticLink_ABC >( *this )
          & quotas_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLink::GetSuperior
+// Created: MCO 2012-12-11
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& LogisticLink::GetSuperior() const
+{
+    return *superior_;
 }

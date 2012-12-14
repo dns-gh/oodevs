@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyRequestHierarchyDispatcher.h"
+#include "SupplyRecipient_ABC.h"
 #include "SupplyRequest_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
@@ -22,13 +23,12 @@ using namespace logistic;
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 SupplyRequestHierarchyDispatcher::SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy, bool forceSupply )
-    : logisticHierarchy_                ( logisticHierarchy )
-    , forceSupply_                      ( forceSupply )
-    , nbMandatoryRequests_              ( 0 )
-    , nbMandatoryRequestsSatisfied_     ( 0 )
-    , nbComplementaryRequests_          ( 0 )
-    , nbComplementaryRequestsSatisfied_ ( 0 )
+    : logisticHierarchy_               ( logisticHierarchy )
+    , forceSupply_                     ( forceSupply )
+    , nbMandatoryRequestsSatisfied_    ( 0 )
+    , nbComplementaryRequests_         ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,35 +37,32 @@ SupplyRequestHierarchyDispatcher::SupplyRequestHierarchyDispatcher( const Logist
 // -----------------------------------------------------------------------------
 SupplyRequestHierarchyDispatcher::~SupplyRequestHierarchyDispatcher()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestHierarchyDispatcher::Dispatch
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRequest_ABC& request )
+void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRecipient_ABC& recipient, SupplyRequest_ABC& request )
 {
     // Filter out too small requests (0.xyz as quantity)
-    if( (int)request.GetRequestedQuantity() < 1 )
+    if( request.GetRequestedQuantity() < 1 )
         return;
-
     tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > it = logisticHierarchy_.CreateSuperiorLinksIterator();
+    if( ! it.HasMoreElements() )
+    {
+        request.NotifySuperiorNotAvailable( recipient );
+        return;
+    }
     if( request.IsComplementary() )
-        ++ nbComplementaryRequests_;
-    else
-        ++ nbMandatoryRequests_;
+        ++nbComplementaryRequests_;
     while( it.HasMoreElements() )
     {
         if( request.AffectSupplier( it.NextElement() ) )
         {
-            if( request.IsComplementary() )
-                ++ nbComplementaryRequestsSatisfied_;
-            else
-                ++ nbMandatoryRequestsSatisfied_;
+            if( ! request.IsComplementary() )
+                ++nbMandatoryRequestsSatisfied_;
             return;
         }
     }
@@ -77,5 +74,5 @@ void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRequest_ABC& request )
 // -----------------------------------------------------------------------------
 bool SupplyRequestHierarchyDispatcher::AllowSupply()
 {
-    return nbMandatoryRequestsSatisfied_ > 0 || ( nbComplementaryRequests_ > 0 && forceSupply_ );
+    return nbMandatoryRequestsSatisfied_ > 0 || forceSupply_ && nbComplementaryRequests_ > 0;
 }

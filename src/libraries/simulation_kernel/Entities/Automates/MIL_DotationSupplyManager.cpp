@@ -23,6 +23,8 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
+#include <boost/range/algorithm.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
 
@@ -62,10 +64,6 @@ MIL_DotationSupplyManager::~MIL_DotationSupplyManager()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHEKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::serialize
@@ -107,7 +105,7 @@ void MIL_DotationSupplyManager::save( MIL_CheckPointOutArchive& file, const unsi
 void MIL_DotationSupplyManager::Update()
 {
     supplyRequests_->Update();
-    if( bDotationSupplyNeeded_ && pAutomate_->GetLogisticHierarchy().HasSuperior() )
+    if( bDotationSupplyNeeded_ )
     {
         logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy(), bDotationSupplyExplicitlyRequested_ );
         bDotationSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
@@ -122,6 +120,8 @@ void MIL_DotationSupplyManager::Clean()
 {
     bDotationSupplyExplicitlyRequested_ = false;
     supplyRequests_->Clean();
+    previousNotifications_ = currentNotifications_;
+    currentNotifications_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,6 +235,21 @@ void MIL_DotationSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const 
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )
         logisticBase->OnSupplyConvoyLeaving( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::NotifySuperiorNotAvailable
+// Created: MCO 2012-12-11
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
+{
+    const T_Requesters& previous = previousNotifications_[ &dotationCategory ];
+    BOOST_FOREACH( T_Requesters::value_type pion, requesters )
+    {
+        if( boost::find( previous, pion ) == previous.end() )
+            MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogNoSuperior, dotationCategory );
+        currentNotifications_[ &dotationCategory ].push_back( pion );
+    }
 }
 
 // -----------------------------------------------------------------------------

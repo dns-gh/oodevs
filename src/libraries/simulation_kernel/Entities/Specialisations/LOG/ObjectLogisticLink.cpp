@@ -57,9 +57,11 @@ ObjectLogisticLink::~ObjectLogisticLink()
 // Name: ObjectLogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-double ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double quantity, const T_Agents& )
+double ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Requesters& /*requesters*/ )
 {
-    return quantity;
+    if( superior_->SupplyHasStock( dotationCategory ) )
+        return quantity;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +104,15 @@ void ObjectLogisticLink::OnReceiveChangeQuotas( const sword::MissionParameter& )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ObjectLogisticLink::GetSuperior
+// Created: MCO 2012-12-11
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG& ObjectLogisticLink::GetSuperior() const
+{
+    return *superior_;
+}
+
 // =============================================================================
 // NETWORK
 // =============================================================================
@@ -124,4 +135,3 @@ void ObjectLogisticLink::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< LogisticLink_ABC >( *this );
 }
-

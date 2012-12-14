@@ -364,9 +364,9 @@ void MIL_AutomateLOG::NotifyQuotaThresholdReached( const PHY_DotationCategory& d
 // Name: MIL_AutomateLOG::NotifyQuotaExceeded
 // Created: MCO 2012-11-19
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Agents& requesters ) const
+void MIL_AutomateLOG::NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const
 {
-    BOOST_FOREACH( T_Agents::value_type pion, requesters )
+    BOOST_FOREACH( T_Requesters::value_type pion, requesters )
     {
         MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogQuotaExceeded, dotationCategory );
         if( pAssociatedAutomate_ )

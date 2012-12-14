@@ -12,7 +12,8 @@
 
 #include "SupplyRequestDispatcher_ABC.h"
 
-namespace logistic {
+namespace logistic
+{
    class SupplySupplier_ABC;
 
 // =============================================================================
@@ -26,22 +27,24 @@ class SupplyRequestManualDispatcher : public SupplyRequestDispatcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyRequestManualDispatcher( SupplySupplier_ABC& supplier );
+    explicit SupplyRequestManualDispatcher( SupplySupplier_ABC& supplier );
     virtual ~SupplyRequestManualDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Dispatch   ( SupplyRequest_ABC& request );
+    virtual void Dispatch( SupplyRecipient_ABC& recipient, SupplyRequest_ABC& request );
     virtual bool AllowSupply();
     //@}
 
 private:
+    //! @name Member data
+    //@{
     SupplySupplier_ABC& supplier_;
-    unsigned nbRequests_;
-    unsigned nbRequestsSatisfied_;
+    bool supply_;
+    //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyRequestManualDispatcher_h_

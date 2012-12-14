@@ -15,7 +15,8 @@
 
 class PHY_DotationCategory;
 
-namespace logistic {
+namespace logistic
+{
     class SupplyRequest_ABC;
     class SupplyRequestBuilder_ABC;
     class SupplyRequestDispatcher_ABC;
@@ -31,7 +32,7 @@ class SupplyRequestContainer : public SupplyRequestContainer_ABC
                              , public SupplyRequestParameters_ABC
 {
 public:
-    //! @name Types to ease the pain ...
+    //! @name Types
     //@{
     typedef std::vector< std::pair< const PHY_ComposanteTypePion* , unsigned > > T_Transporters;
     //@}
@@ -39,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyRequestContainer( boost::shared_ptr< SupplyRequestBuilder_ABC > builder );
+    explicit SupplyRequestContainer( boost::shared_ptr< SupplyRequestBuilder_ABC > builder );
     virtual ~SupplyRequestContainer();
     //@}
 
@@ -80,7 +81,6 @@ private:
     //! @name Tools
     //@{
     void Prepare();
-    void DispatchSupplyRequestsToSuppliers( SupplyRequestDispatcher_ABC& dispatcher );
     //@}
 
 private:
@@ -104,6 +104,6 @@ private:
     const SupplyConvoyFactory_ABC* convoyFactory_;
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyRequestContainer_h_

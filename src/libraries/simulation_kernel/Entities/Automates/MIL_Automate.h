@@ -223,7 +223,7 @@ public:
     //! @name Logistic : supply
     //@{
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
-    virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Agents& requesters ) const;
+    virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const;
 
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply     ();
