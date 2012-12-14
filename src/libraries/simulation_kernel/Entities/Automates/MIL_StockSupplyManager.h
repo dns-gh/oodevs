@@ -79,7 +79,7 @@ public:
     virtual void OnSupplyDone          ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-
+    virtual void NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
     virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 
@@ -98,7 +98,7 @@ private:
     //@{
     typedef std::list< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
     typedef std::set< boost::shared_ptr< const logistic::SupplyConsign_ABC > > T_Supplies;
-    //@}
+    typedef std::map< const PHY_DotationCategory*, T_Requesters > T_Notifications;
     //@}
 
 private:
@@ -111,6 +111,7 @@ private:
     T_SupplyRequests manualSupplyRequests_;
     unsigned int          nTickRcStockSupplyQuerySent_;
     T_Supplies scheduledSupplies_;
+    T_Notifications currentNotifications_, previousNotifications_;
     //@}
 };
 

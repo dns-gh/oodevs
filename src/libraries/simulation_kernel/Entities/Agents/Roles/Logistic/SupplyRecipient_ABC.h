@@ -14,12 +14,15 @@
 
 class MIL_AgentPion;
 class MIL_AutomateLOG;
+class PHY_DotationCategory;
 
-namespace sword {
+namespace sword
+{
     class AutomatId;
 }
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConsign_ABC;
 
 // =============================================================================
@@ -30,6 +33,12 @@ namespace logistic {
 // =============================================================================
 class SupplyRecipient_ABC
 {
+protected:
+    //! @name Types
+    //@{
+    typedef std::vector< const MIL_AgentPion* > T_Requesters;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -51,6 +60,8 @@ public:
     virtual void OnSupplyScheduled     ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
     virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+
+    virtual void NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) = 0;
     //@}
 
     //! @name Network
@@ -59,6 +70,6 @@ public:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyConveyor_ABC_h_

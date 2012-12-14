@@ -14,8 +14,6 @@
 #include "SupplyRequestDispatcher_ABC.h"
 #include "SupplyRequestBuilder_ABC.h"
 #include "SupplyConsign.h"
-#include "SupplyConvoyVirtualFactory.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include <boost/foreach.hpp>
 
 using namespace logistic;
@@ -29,6 +27,7 @@ SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequest
     , transportersProvider_( 0 )
     , convoyFactory_       ( &SupplyConvoyVirtualFactory::Instance() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,11 +36,8 @@ SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequest
 // -----------------------------------------------------------------------------
 SupplyRequestContainer::~SupplyRequestContainer()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// Operations
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::AddResource
@@ -53,17 +49,6 @@ void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, const 
     if( !supplyRequest.get() )
         supplyRequest.reset( new SupplyRequest( resource->GetCategory() ) );
     supplyRequest->AddResource( resource, pion, quantity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRequestContainer::DispatchSupplyRequestsToSuppliers
-// Created: NLD 2005-01-24
-// -----------------------------------------------------------------------------
-void SupplyRequestContainer::DispatchSupplyRequestsToSuppliers( SupplyRequestDispatcher_ABC& dispatcher )
-{
-    BOOST_FOREACH( T_RecipientRequests::value_type& recipientRequest, requests_ )
-        BOOST_FOREACH( T_Requests::value_type& request, recipientRequest.second )
-            dispatcher.Dispatch( *request.second );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +75,9 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
 
     Prepare();
     builder_->Process( *this );
-    DispatchSupplyRequestsToSuppliers( dispatcher );
+    BOOST_FOREACH( T_RecipientRequests::value_type& recipient, requests_ )
+        BOOST_FOREACH( T_Requests::value_type& request, recipient.second )
+            dispatcher.Dispatch( *recipient.first, *request.second );
     if( !dispatcher.AllowSupply() )
         return false;
 
@@ -117,10 +104,6 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
     return mandatoryRequestsFullySatisfied;
 }
 
-// =============================================================================
-// Main
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::Update
 // Created: NLD 2005-01-24
@@ -146,10 +129,6 @@ void SupplyRequestContainer::Clean()
     BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
         data.second->Clean();
 }
-
-// =============================================================================
-// Parameters
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::SetTransportersProvider
@@ -202,7 +181,7 @@ void SupplyRequestContainer::SetPathToRecipient( SupplyRecipient_ABC& recipient,
 // -----------------------------------------------------------------------------
 const T_PointVector& SupplyRequestContainer::GetPathToRecipient( SupplyRecipient_ABC& recipient ) const
 {
-    static T_PointVector default;
+    static const T_PointVector default;
     T_RecipientPaths::const_iterator it = recipientPaths_.find( &recipient );
     if( it == recipientPaths_.end() )
         return default;
@@ -264,10 +243,6 @@ const SupplyConvoyFactory_ABC& SupplyRequestContainer::GetConvoyFactory() const
     return *convoyFactory_;
 }
 
-// =============================================================================
-// Network
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::SendChangedState
 // Created: NLD 2005-01-24
@@ -287,4 +262,3 @@ void SupplyRequestContainer::SendFullState() const
     BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
         data.second->SendFullState();
 }
-

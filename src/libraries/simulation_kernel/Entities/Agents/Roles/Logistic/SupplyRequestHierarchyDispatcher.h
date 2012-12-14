@@ -12,7 +12,8 @@
 
 #include "SupplyRequestDispatcher_ABC.h"
 
-namespace logistic {
+namespace logistic
+{
    class LogisticHierarchy_ABC;
 
 // =============================================================================
@@ -26,25 +27,26 @@ class SupplyRequestHierarchyDispatcher : public SupplyRequestDispatcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy, bool forceSupply = false );
+    explicit SupplyRequestHierarchyDispatcher( const LogisticHierarchy_ABC& logisticHierarchy, bool forceSupply = false );
     virtual ~SupplyRequestHierarchyDispatcher();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Dispatch   ( SupplyRequest_ABC& request );
+    virtual void Dispatch( SupplyRecipient_ABC& recipient, SupplyRequest_ABC& request );
     virtual bool AllowSupply();
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const LogisticHierarchy_ABC& logisticHierarchy_;
     const bool forceSupply_;
-    unsigned nbMandatoryRequests_;
     unsigned nbMandatoryRequestsSatisfied_;
     unsigned nbComplementaryRequests_;
-    unsigned nbComplementaryRequestsSatisfied_;
+    //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyRequestHierarchyDispatcher_h_

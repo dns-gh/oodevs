@@ -34,7 +34,7 @@ class LogisticHierarchyOwner_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< const MIL_AgentPion* > T_Agents;
+    typedef std::vector< const MIL_AgentPion* > T_Requesters;
     //@}
 
 public:
@@ -47,7 +47,7 @@ public:
     //! @name Events
     //@{
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const = 0;
-    virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Agents& requesters ) const = 0;
+    virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const = 0;
     //@}
 
     //! @name Accessors

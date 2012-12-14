@@ -42,6 +42,8 @@ public:
 
     virtual void ReserveStock();
     virtual void ReturnStockNotAssignedToConvoy();
+
+    virtual void NotifySuperiorNotAvailable( SupplyRecipient_ABC& recipient );
     //@}
 
     //! @name Accessors
@@ -61,14 +63,22 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::pair< boost::shared_ptr< SupplyResource_ABC > , double /*quantity requested*/ > > T_ResourceRequests;
-    typedef std::vector< const MIL_AgentPion* > T_PionRequests;
+    typedef std::vector< std::pair< boost::shared_ptr< SupplyResource_ABC > , double /*quantity requested*/ > > T_Resources;
+    typedef std::vector< const MIL_AgentPion* > T_Requesters;
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void UpdateRequestedQuantities( double authorizedQuantity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     const PHY_DotationCategory& dotationCategory_;
-    T_ResourceRequests resourceRequests_;
-    T_PionRequests pionRequests_;
+    T_Resources resources_;
+    T_Requesters requesters_;
     SupplySupplier_ABC* supplier_;
     double requestedQuantity_;
     double grantedQuantity_;
@@ -76,6 +86,7 @@ private:
     double suppliedQuantity_;
     bool complementarySupply_;
     boost::shared_ptr< LogisticLink_ABC > supplierQuotas_;
+    //@}
 };
 
 } // end namespace logistic

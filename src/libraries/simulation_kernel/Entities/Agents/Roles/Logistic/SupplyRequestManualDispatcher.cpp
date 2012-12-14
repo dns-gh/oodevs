@@ -18,10 +18,10 @@ using namespace logistic;
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 SupplyRequestManualDispatcher::SupplyRequestManualDispatcher( SupplySupplier_ABC& supplier )
-    : supplier_           ( supplier )
-    , nbRequests_         ( 0 )
-    , nbRequestsSatisfied_( 0 )
+    : supplier_( supplier )
+    , supply_  ( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -30,21 +30,17 @@ SupplyRequestManualDispatcher::SupplyRequestManualDispatcher( SupplySupplier_ABC
 // -----------------------------------------------------------------------------
 SupplyRequestManualDispatcher::~SupplyRequestManualDispatcher()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestManualDispatcher::Dispatch
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-void SupplyRequestManualDispatcher::Dispatch( SupplyRequest_ABC& request )
+void SupplyRequestManualDispatcher::Dispatch( SupplyRecipient_ABC& /*recipient*/, SupplyRequest_ABC& request )
 {
-    ++nbRequests_;
     if( request.AffectSupplier( supplier_ ) )
-        ++ nbRequestsSatisfied_;
+        supply_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +49,5 @@ void SupplyRequestManualDispatcher::Dispatch( SupplyRequest_ABC& request )
 // -----------------------------------------------------------------------------
 bool SupplyRequestManualDispatcher::AllowSupply()
 {
-    return nbRequestsSatisfied_ > 0;
+    return supply_;
 }

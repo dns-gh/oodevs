@@ -13,11 +13,14 @@
 class PHY_DotationCategory;
 class MIL_AgentPion;
 
-namespace sword {
+namespace sword
+{
     class SupplyResourceRequest;
 }
 
-namespace logistic {
+namespace logistic
+{
+    class SupplyRecipient_ABC;
     class SupplyResource_ABC;
     class SupplySupplier_ABC;
     class LogisticLink_ABC;
@@ -39,9 +42,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity ) = 0;
-    virtual bool   AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
-    virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
+    virtual void AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity ) = 0;
+    virtual bool AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
+    virtual bool AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
     
     virtual double Supply          () = 0; // Return the quantity supplied;
     virtual double Convoy          ( double quantity ) = 0; // Return the quantity convoyed
@@ -51,6 +54,8 @@ public:
     virtual void ReturnStockNotAssignedToConvoy() = 0;
 
     virtual bool IsComplementary() const = 0;
+
+    virtual void NotifySuperiorNotAvailable( SupplyRecipient_ABC& recipient ) = 0;
     //@}
     
     //! @name Accessors
@@ -67,6 +72,6 @@ public:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyRequest_ABC_h_

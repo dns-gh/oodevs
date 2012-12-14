@@ -37,7 +37,7 @@ class LogisticLink_ABC : public network::NetworkMessageSender_ABC
 protected:
     //! @name Types
     //@{
-    typedef std::vector< const MIL_AgentPion* > T_Agents;
+    typedef std::vector< const MIL_AgentPion* > T_Requesters;
     //@}
 
 public:
@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_AutomateLOG& GetSuperior () const = 0;
-    virtual double           ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters ) = 0; // Return quantity consumed
+    virtual double           ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Requesters& requesters ) = 0; // Return quantity consumed
     virtual void             ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
     //@}
 

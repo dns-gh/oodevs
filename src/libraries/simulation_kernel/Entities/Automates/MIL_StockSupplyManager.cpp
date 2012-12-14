@@ -29,6 +29,7 @@
 #include "protocol/SimulationSenders.h"
 #include "Network/NET_AsnException.h"
 #include <boost/serialization/set.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StockSupplyManager )
@@ -116,7 +117,7 @@ void MIL_StockSupplyManager::Update()
         return;
 
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
-    if( logisticManager && logisticManager->GetLogisticHierarchy().HasSuperior() )
+    if( logisticManager )
     {
         logistic::SupplyRequestHierarchyDispatcher dispatcher( logisticManager->GetLogisticHierarchy() );
         bStockSupplyNeeded_ = !autoSupplyRequest_->Execute( dispatcher );
@@ -132,6 +133,8 @@ void MIL_StockSupplyManager::Clean()
     autoSupplyRequest_->Clean();
     BOOST_FOREACH( T_SupplyRequests::value_type& data, manualSupplyRequests_ )
         data->Clean();
+    previousNotifications_ = currentNotifications_;
+    currentNotifications_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,22 +157,15 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 {
     if( bStockSupplyNeeded_ )
         return;
-
     if( IsSupplyInProgress( dotationCategory ) )
         return;
-
     bStockSupplyNeeded_ = true;
-
     // Pas de RC si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 )
         MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementStocks );
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
-
-// =============================================================================
-// SupplyRecipient_ABC
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::GetPosition
@@ -242,6 +238,21 @@ void MIL_StockSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const log
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::NotifySuperiorNotAvailable
+// Created: MCO 2012-12-11
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
+{
+    const T_Requesters& previous = previousNotifications_[ &dotationCategory ];
+    BOOST_FOREACH( T_Requesters::value_type pion, requesters )
+    {
+        if( boost::find( previous, pion ) == previous.end() )
+            MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogNoSuperior, dotationCategory );
+        currentNotifications_[ &dotationCategory ].push_back( pion );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
@@ -280,8 +291,8 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowPa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::SendChangedState
-// Created: MIL_StockSupplyManager 2005-01-25
+// Name: MIL_StockSupplyManager::SendChangedState
+// Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::SendChangedState() const
 {
