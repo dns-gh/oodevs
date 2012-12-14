@@ -7,42 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __CreateTerrain_h_
-#define __CreateTerrain_h_
+#ifndef FRONTEND_CREATETERRAIN_H
+#define FRONTEND_CREATETERRAIN_H
 
-#include "SpawnCommand.h"
+#include <boost/shared_ptr.hpp>
+
+namespace tools
+{
+    class GeneralConfig;
+}
 
 namespace frontend
 {
 
-// =============================================================================
-/** @class  CreateTerrain
-    @brief  CreateTerrain
-*/
-// Created: AGE 2007-10-04
-// =============================================================================
-class CreateTerrain : public SpawnCommand
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             CreateTerrain( const tools::GeneralConfig& config, const QString& name, bool attach = false );
-    virtual ~CreateTerrain();
-    //@}
+class ProcessObserver_ABC;
+class ProcessWrapper;
 
-    //! @name Operations
-    //@{
-    static bool IsAvailable();
-    //@}
+// Return true if the terrain generation application is available in the
+// current environment, and CreateTerrain() has a chance to succeed.
+bool IsTerrainAvailable();
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    CreateTerrain( const CreateTerrain& );            //!< Copy constructor
-    CreateTerrain& operator=( const CreateTerrain& ); //!< Assignment operator
-    //@}
-};
+// Spawn terrain creation application in a new attached process and return it.
+boost::shared_ptr< frontend::ProcessWrapper > CreateTerrain(
+    ProcessObserver_ABC& observer, const tools::GeneralConfig& config,
+    const QString& name );
 
-}
+}  // namespace frontend
 
-#endif // __CreateTerrain_h_
+#endif // FRONTEND_CREATETERRAIN_H

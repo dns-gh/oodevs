@@ -28,7 +28,7 @@ CreateTerrainPage::CreateTerrainPage( Application& app, QStackedWidget* pages, P
     , config_      ( config )
     , controllers_ ( controllers )
     , progressPage_( new ProgressPage( app, pages, *this ) )
-    , available_   ( frontend::CreateTerrain::IsAvailable() )
+    , available_   ( frontend::IsTerrainAvailable() )
 {
     setWindowTitle( "CreateTerrainPage" );
 
@@ -87,8 +87,7 @@ void CreateTerrainPage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void CreateTerrainPage::OnStart()
 {
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::CreateTerrain( config_, editName_->text(), true ) );
-    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
+    auto process = frontend::CreateTerrain( *progressPage_, config_, editName_->text());
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();

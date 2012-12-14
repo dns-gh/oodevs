@@ -9,59 +9,60 @@
 
 #include "frontend_pch.h"
 #include "CreateTerrain.h"
+#include "SpawnCommand.h"
+#include "ProcessWrapper.h"
 #include "tools/GeneralConfig.h"
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/make_shared.hpp>
 #pragma warning( push, 0 )
 #include <QtGui/qapplication.h>
-#include <QtCore/QDir>
-#include <QtCore/qsettings.h>
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 
-using namespace frontend;
+namespace frontend
+{
 
 namespace
 {
-    bfs::path GetGenExecutable()
+
+bfs::path GetGenExecutable()
+{
+    const bfs::path appDir = bfs::path(
+            QApplication::applicationDirPath().toStdWString() );
+    const bfs::path terDir = appDir.parent_path() / "Terrain" / "applications";
+    return ( terDir / "generation_app.exe" );
+}
+
+class TerrainCommand: public SpawnCommand
+{
+public:
+    TerrainCommand( const tools::GeneralConfig& config, const QString& name )
+        : SpawnCommand( config, GetGenExecutable().string().c_str(), true, "")
     {
-        const bfs::path appDir = bfs::path(
-                QApplication::applicationDirPath().toStdWString() );
-        const bfs::path terDir = appDir.parent_path() / "Terrain" / "applications";
-        return ( terDir / "generation_app.exe" );
+        const std::string directory = config.GetTerrainDir( name.toStdString() );
+        bfs::create_directories( directory );
+
+        AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
+        const bfs::path& terDir = GetGenExecutable().parent_path();
+        SetWorkingDirectory( QString::fromStdWString( terDir.wstring() ));
     }
-}
+};
 
-// -----------------------------------------------------------------------------
-// Name: CreateTerrain constructor
-// Created: AGE 2007-10-04
-// -----------------------------------------------------------------------------
-CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString& name, bool attach )
-    : SpawnCommand( config, GetGenExecutable().string().c_str(), attach, "" )
-{
-    const std::string directory = config.GetTerrainDir( name.toStdString() );
-    bfs::create_directories( directory );
+}  //namespace
 
-    AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
-    const bfs::path& terDir = GetGenExecutable().parent_path();
-    SetWorkingDirectory( QString::fromStdWString( terDir.wstring() ));
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateTerrain destructor
-// Created: AGE 2007-10-04
-// -----------------------------------------------------------------------------
-CreateTerrain::~CreateTerrain()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateTerrain::IsAvailable
-// Created: SBO 2009-06-12
-// -----------------------------------------------------------------------------
-bool CreateTerrain::IsAvailable()
+bool IsTerrainAvailable()
 {
     return bfs::exists( GetGenExecutable() );
 }
+
+boost::shared_ptr< frontend::ProcessWrapper > CreateTerrain(
+    ProcessObserver_ABC& observer, const tools::GeneralConfig& config,
+    const QString& name )
+{
+    auto cmd = boost::make_shared< TerrainCommand >( config, name );
+    auto process = boost::make_shared< ProcessWrapper >( observer, cmd );
+    return process;
+}
+
+}  // namespace frontend
