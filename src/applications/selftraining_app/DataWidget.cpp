@@ -110,9 +110,9 @@ namespace
 {
     std::pair< std::string, std::string > Extract( const std::string& value )
     {
-        QStringList values = QStringList::split( "/", value.c_str() );
+        QStringList values = QString( value.c_str() ).split("/");
         if( values.size() == 2 )
-            return std::make_pair( values[ 0 ], values[ 1 ] );
+            return std::make_pair( values[ 0 ].toStdString(), values[ 1 ].toStdString() );
         return std::make_pair( "", "" );
     }
 }

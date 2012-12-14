@@ -56,7 +56,7 @@ OptionsPage::OptionsPage( Application& app, QWidget* parent, QStackedWidget* pag
     SetDataLayout();
     AddContent( tabs_ );
 
-    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), SLOT( UpdateButton() ) );
+    connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( UpdateButton() ) );
 
     // Init data
     Reset();
@@ -272,7 +272,7 @@ void OptionsPage::OnButtonChanged( bool enabled, const QString& text )
 // -----------------------------------------------------------------------------
 void OptionsPage::UpdateButton()
 {
-    switch( tabs_->currentPageIndex() )
+    switch( tabs_->currentIndex() )
     {
         default:
             break;
@@ -349,7 +349,7 @@ void OptionsPage::CreateDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnApply()
 {
-    switch( tabs_->currentPageIndex() )
+    switch( tabs_->currentIndex() )
     {
         default:
             break;
@@ -438,6 +438,6 @@ void OptionsPage::Reset()
 void OptionsPage::ShowPackageInstallation( const QString& package )
 {
     import_->SelectPackage( package );
-    tabs_->showPage( import_ );
+    tabs_->setCurrentIndex( tabs_->indexOf( import_ ) );
     QTimer::singleShot( 1, this, SLOT( show() ) );
 }

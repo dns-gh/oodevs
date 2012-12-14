@@ -20,7 +20,7 @@
 QuitPage::QuitPage( QStackedWidget* pages, Page_ABC& previous )
     : MenuPage( pages, *this, 0 )
 {
-    setName( "QuitPage" );
+    setWindowTitle( "QuitPage" );
     yesButton_ = AddLink( *this, false );
     connect( yesButton_, SIGNAL( clicked() ), this, SLOT( OnQuit() ) );
     noButton_ = AddLink( previous );

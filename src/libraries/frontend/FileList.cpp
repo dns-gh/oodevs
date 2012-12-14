@@ -90,67 +90,57 @@ void FileList::OnAddClicked()
 
 void FileList::OnRemoveClicked()
 {
-    QList<QListWidgetItem*> selectedItems = listWidget_->selectedItems();
-    for (int i = 0; i < selectedItems.size(); ++i)
-    {
-        delete listWidget_->takeItem(listWidget_->row(selectedItems.at(i)));
-    }
+    QList< QListWidgetItem* > selectedItems = listWidget_->selectedItems();
+    for( int i = 0; i < selectedItems.size(); ++i )
+        delete listWidget_->takeItem( listWidget_->row( selectedItems.at( i ) ) );
 }
 
-void FileList::GetFiles(FileVec_T& filesToFill) const
+void FileList::GetFiles( FileVec_T& filesToFill ) const
 {
-    filesToFill.reserve(listWidget_->count());
-    for (int i = 0; i < listWidget_->count(); ++i)
-    {
-        filesToFill.push_back(listWidget_->item(i)->text().toStdString());
-    }
+    filesToFill.reserve( listWidget_->count() );
+    for( int i = 0; i < listWidget_->count(); ++i)
+        filesToFill.push_back( listWidget_->item( i )->text().toStdString() );
 }
 
-void FileList::SetFiles(const FileVec_T& files)
+void FileList::SetFiles( const FileVec_T& files )
 {
     listWidget_->clear();
     QStringList itemsToAdd;
 
-    itemsToAdd.reserve( static_cast<int>( files.size() ));
-    for (unsigned i = 0; i < files.size(); ++i)
+    itemsToAdd.reserve( static_cast< int >( files.size() ) );
+    for( unsigned int i = 0; i < files.size(); ++i )
     {
-        itemsToAdd.append(tr(files[i].c_str()));
+        itemsToAdd.append( tr( files[ i ].c_str() ) );
     }
 
-    listWidget_->addItems(itemsToAdd);
+    listWidget_->addItems( itemsToAdd );
 }
 
-void FileList::SetFilesDelimited(const std::string& files, const std::string& delimiters)
+void FileList::SetFilesDelimited( const std::string& files, const std::string& delimiters )
 {
     FileVec_T fileV;
-    boost::split(fileV, files, boost::is_any_of(delimiters));
-    SetFiles(fileV);
+    boost::split( fileV, files, boost::is_any_of( delimiters ) );
+    SetFiles( fileV );
 }
 
-std::string FileList::GetFilesDelimited(const std::string& delimiter) const
-{
+std::string FileList::GetFilesDelimited( const std::string& delimiter ) const
+{ 
     FileVec_T fileV;
-    GetFiles(fileV);
+    GetFiles( fileV );
     std::string result;
     // reserve with a guess of 15 characters per file.
-    result.reserve(fileV.size() * (15 + delimiter.length()));
-    FileVec_T::iterator i, iend;
-    i = fileV.begin();
-    iend = fileV.end();
-
-    for (; i != iend; ++i)
+    result.reserve( fileV.size() * (15 + delimiter.length() ) );
+    for( FileVec_T::iterator i = fileV.begin(); i != fileV.end(); ++i )
     {
-        if (!result.empty()) 
+        if ( !result.empty() ) 
             result += delimiter;
-
-        result += *i;        
+        result += *i;
     }
     return result;
 }
 
 void FileList::OnLanguageChanged()
 {
+    //NOTHING
 }
-
-
 }

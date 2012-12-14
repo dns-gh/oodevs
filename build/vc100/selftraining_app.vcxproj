@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\selftraining_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Config.cpp" />
+    <ClCompile Include="..\..\src\applications\selftraining_app\CustomEvent.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\DataWidget.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseListView.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Launcher.cpp" />
@@ -220,6 +221,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\selftraining_app\CustomEvent.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\ExerciseListView.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\Launcher.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\LinkInterpreter.h" />

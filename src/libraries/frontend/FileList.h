@@ -36,11 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    void GetFiles(FileVec_T& filesToFill) const;
-    void SetFiles(const FileVec_T& files);
-    void SetFilesDelimited(const std::string& files, const std::string& delimiters = ",");
-    std::string GetFilesDelimited(const std::string& delimiter = ",") const;
-
+    void GetFiles( FileVec_T& filesToFill ) const;
+    void SetFiles( const FileVec_T& files );
+    void SetFilesDelimited( const std::string& files, const std::string& delimiters = "," );
+    std::string GetFilesDelimited( const std::string& delimiter = "," ) const;
     virtual void OnLanguageChanged();
     //@}
 

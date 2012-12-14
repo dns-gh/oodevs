@@ -170,7 +170,7 @@ ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config,
     progress_->hide();
     package_.first = config_.GetRootDir();
     controllers_.Register( *this );
-    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnButtonChanged() ) );
+    connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( OnButtonChanged() ) );
     Update();
 }
 
@@ -294,7 +294,7 @@ bool ExportWidget::IsButtonEnabled()
 {
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
-        package_.second = std::string( text ) + ".otpak";
+        package_.second = text.toStdString() + ".otpak";
     return !text.isEmpty();
 }
 
@@ -304,7 +304,7 @@ bool ExportWidget::IsButtonEnabled()
 // -----------------------------------------------------------------------------
 void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QModelIndex& /*previous*/ )
 {
-    std::string exercise( exerciseList_->GetExerciseName( modelIndex ) );
+    std::string exercise( exerciseList_->GetExerciseName( modelIndex ).toStdString() );
     exerciseContentModel_.clear();
     if( !exercise.empty() )
     {
@@ -527,7 +527,7 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
     {
-        std::string description = GetCurrentDescription()->text().toStdString();
+        std::string description = GetCurrentDescription()->toPlainText().toStdString();
         QString package = GetCurrentPackage();
 
         if( description.empty() )
@@ -552,7 +552,7 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
 void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
 {
     progress_->show();
-    setCursor( Qt::waitCursor );
+    setCursor( Qt::WaitCursor );
     WriteContent( archive );
     switch( tabs_->currentIndex() )
     {
@@ -603,7 +603,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     default:
         break;
     }
-    setCursor( Qt::arrowCursor );
+    setCursor( Qt::ArrowCursor );
     progress_->hide();
 }
 

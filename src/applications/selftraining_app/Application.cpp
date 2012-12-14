@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "moc_Application.cpp"
 #include "Config.h"
+#include "CustomEvent.h"
 #include "Launcher.h"
 #include "MainWindow.h"
 #include "MessageDialog.h"
@@ -153,7 +154,7 @@ QWidget* Application::GetMainWindow()
 bool Application::eventFilter( QObject* emitter, QEvent* event )
 {
     if( event && event->type() == QEvent::User + 666 )
-        if( QString* message = static_cast< QString* >( static_cast< QCustomEvent* >( event )->data() ) )
+        if( QString* message = static_cast< QString* >( static_cast< CustomEvent* >( event )->GetData() ) )
         {
             QMessageBox::critical( 0, tools::translate( "Application", "Error" ), *message );
             delete message;
@@ -161,7 +162,7 @@ bool Application::eventFilter( QObject* emitter, QEvent* event )
         }
     if( event && event->type() == QEvent::User + 667 )
     {
-        static_cast< ProgressPage* >( static_cast< QCustomEvent* >( event )->data() )->DoNotifyStopped();
+        static_cast< ProgressPage* >( static_cast< CustomEvent* >( event )->GetData() )->DoNotifyStopped();
         return true;
     }
     return Application_ABC::eventFilter( emitter, event );

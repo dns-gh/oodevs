@@ -106,7 +106,7 @@ void ScenarioEditPage::Update()
 void ScenarioEditPage::OnEdit()
 {
     EnableButton( eButtonEdit, false );
-    switch( mainTabs_->currentPageIndex() )
+    switch( mainTabs_->currentIndex() )
     {
     case eTabs_Edit:
         if( exercise_ && exercises_->ChangeExerciceParameters() )
@@ -188,7 +188,7 @@ void ScenarioEditPage::ToggleChanged( bool )
 void ScenarioEditPage::UpdateEditButton()
 {
     bool enable = true;
-    switch( mainTabs_->currentPageIndex() )
+    switch( mainTabs_->currentIndex() )
     {
     case eTabs_Edit:
         enable = exercise_ != 0 && exercises_->IsPropertiesValid();

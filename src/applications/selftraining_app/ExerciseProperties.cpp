@@ -105,21 +105,21 @@ void ExerciseProperties::Update()
     if( terrainList_ )
     {
         terrainList_->clear();
-        terrainList_->insertItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
-        terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+        terrainList_->addItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
+        terrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
 
         modelList_->clear();
-        modelList_->insertItem( tools::translate( "ExerciseProperties", "Model:" ) );
+        modelList_->addItem( tools::translate( "ExerciseProperties", "Model:" ) );
         const QStringList decisionalModels = frontend::commands::ListModels( config_ );
         int index = 1;
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
             const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
-                modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+                modelList_->addItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
         }
         if( modelList_->count() == 2 )
-            modelList_->setCurrentItem( 1 );
+            modelList_->setCurrentIndex( 1 );
         modelList_->setVisible( modelList_->count() > 1 );
     }
 }
@@ -171,11 +171,11 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         if( terrainList_ )
         {
             const QStringList terrainList = frontend::commands::ListTerrains( config_ );
-            int index = terrainList.findIndex( currentTerrain_.c_str() );
-            terrainList_->setCurrentItem( index + 1 );
+            int index = terrainList.indexOf( currentTerrain_.c_str() );
+            terrainList_->setCurrentIndex( index + 1 );
             int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( currentData_.c_str() ).arg( currentPhysical_.c_str() ) );
             if( modelIndex != -1 )
-                modelList_->setCurrentItem( modelIndex );
+                modelList_->setCurrentIndex( modelIndex );
         }
     }
     catch( ... )
@@ -217,7 +217,7 @@ void ExerciseProperties::ModelChanged()
 bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
     // Be sure to commit if mismatched terrain or data, even if no changes has occured
-    if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().toStdString() != currentTerrain_ )
+    if( terrainList_ && terrainList_->currentIndex() > 0 && terrainList_->currentText().toStdString() != currentTerrain_ )
     {
         MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
@@ -225,9 +225,9 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
         else
             return false;
     }
-    if( modelList_ && modelList_->currentItem() > 0 )
+    if( modelList_ && modelList_->currentIndex() > 0 )
     {
-        const QStringList model = QStringList::split( "/", modelList_->currentText() );
+        const QStringList model = QString( modelList_->currentText() ).split( "/" );
         if( model.front().toStdString() != currentData_ || model.back().toStdString() != currentPhysical_ )
         {
             MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected model is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
@@ -239,10 +239,10 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     }
 
     if( dataChanged_ )
-        if( terrainList_ && terrainList_->currentItem() > 0 && modelList_ && modelList_->currentItem() > 0 )
+        if( terrainList_ && terrainList_->currentIndex() > 0 && modelList_ && modelList_->currentIndex() > 0 )
         {
             const std::string terrain = terrainList_->currentText().toStdString();
-            const QStringList model = QStringList::split( "/", modelList_->currentText() );
+            const QStringList model = QString( modelList_->currentText() ).split( "/" );
             frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().toStdString(), model.back().toStdString() );
         }
     dataChanged_ = false;

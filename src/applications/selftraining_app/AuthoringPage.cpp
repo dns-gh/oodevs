@@ -31,7 +31,7 @@ AuthoringPage::AuthoringPage( Application& app, QWidget* /*parent*/,
     , config_     ( config )
     , controllers_( controllers )
 {
-    setName( "AuthoringPage" );
+    setWindowTitle( "AuthoringPage" );
     progressPage_ = new ProgressPage( app, pages, *this );
 
     authoring_ = AddLink( *this, false );

@@ -64,6 +64,7 @@
 #include <QtGui/qaction.h>
 #include <QtGui/qsortfilterproxymodel.h>
 #include <QtGui/qsizepolicy.h>
+#include <QtGui/qpalette.h>
 
 #pragma warning( pop )
 

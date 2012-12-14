@@ -29,7 +29,7 @@ SelfTrainingPage::SelfTrainingPage( Application& app, QStackedWidget* pages,
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
 {
-    setName( "SelfTrainingPage" );
+    setWindowTitle( "SelfTrainingPage" );
     launcher_ = new ScenarioLauncherPage( app, pages, *this, controllers, config, fileLoader, launcher, interpreter );
     startButton_ = AddLink( *launcher_, false );
     connect( startButton_, SIGNAL( clicked() ), this, SLOT( OnStart() ) );

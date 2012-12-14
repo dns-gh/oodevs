@@ -32,7 +32,7 @@ HomePage::HomePage( Application& app, QWidget* parent, QStackedWidget* pages,
     , config_( config )
     , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, launcher ) )
 {
-    setName( "HomePage" );
+    setWindowTitle( "HomePage" );
 
     adaptPage_ = new AuthoringPage( app, parent, pages, *this, config, controllers );
     adapt_ =   AddLink( *adaptPage_ );

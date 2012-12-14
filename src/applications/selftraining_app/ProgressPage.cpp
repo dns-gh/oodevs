@@ -11,6 +11,7 @@
 #include "ProgressPage.h"
 #include "moc_ProgressPage.cpp"
 #include "Application.h"
+#include "CustomEvent.h"
 #include "frontend/Process_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
@@ -58,7 +59,10 @@ void ProgressPage::Attach( boost::shared_ptr< frontend::Process_ABC > process )
 {
     process_ = process;
     if( !timer_->isActive() )
-        timer_->start( 200, false );
+    {
+        timer_->start( 200 );
+        timer_->setSingleShot( false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +79,7 @@ void ProgressPage::UpdateProgress()
         if( weak.get() )
         {
             percentage = weak->GetPercentage();
-            message = weak->GetStatus();
+            message = weak->GetStatus().toStdString();
         }
     }
     label_->setText( message.c_str() );
@@ -94,7 +98,7 @@ void ProgressPage::UpdateProgress()
 // -----------------------------------------------------------------------------
 void ProgressPage::NotifyStopped()
 {
-    QApplication::postEvent( qApp, new QCustomEvent( static_cast< QEvent::Type >( QEvent::User + 667 ), static_cast< void* >( this ) ) );
+    QApplication::postEvent( qApp, new CustomEvent( 667, static_cast< void* >( this ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,5 +122,5 @@ void ProgressPage::NotifyError( const std::string& error, std::string /*commande
 {
     NotifyStopped();
     QString* message = new QString( error.c_str() );
-    QApplication::postEvent( qApp, new QCustomEvent( static_cast< QEvent::Type >( QEvent::User + 666 ), static_cast< void* >( message ) ) );
+    QApplication::postEvent( qApp, new CustomEvent( 666, static_cast< void* >( message ) ) );
 }

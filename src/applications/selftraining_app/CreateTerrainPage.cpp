@@ -30,7 +30,7 @@ CreateTerrainPage::CreateTerrainPage( Application& app, QStackedWidget* pages, P
     , progressPage_( new ProgressPage( app, pages, *this ) )
     , available_   ( frontend::CreateTerrain::IsAvailable() )
 {
-    setName( "CreateTerrainPage" );
+    setWindowTitle( "CreateTerrainPage" );
 
     terrainLabel_ = new QLabel();
     editName_ = new QLineEdit();
@@ -110,7 +110,7 @@ void CreateTerrainPage::EditNameChanged( const QString& name )
     {
         bool exists = false;
         for( QStringList::iterator it = existingTerrains_.begin(); it != existingTerrains_.end(); ++it )
-            if( (*it).lower() == name.lower() )
+            if( (*it).toLower() == name.toLower() )
             {
                 exists = true;
                 break;

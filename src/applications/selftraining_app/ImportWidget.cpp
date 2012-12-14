@@ -117,15 +117,15 @@ void ImportWidget::InstallExercise()
 {
     if( packageContent_->count() )
     {
-        zip::izipfile archive( package_->text() );
+        zip::izipfile archive( package_->text().toStdString().c_str() );
         if( archive.isOk() )
         {
             packageProgress_->show();
             packageProgress_->setValue( 0 );
             packageProgress_->setMaximum( packageContent_->count() );
-            setCursor( Qt::waitCursor );
+            setCursor( Qt::WaitCursor );
             frontend::commands::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
-            setCursor( Qt::arrowCursor );
+            setCursor( Qt::ArrowCursor );
             packageProgress_->hide();
         }
     }
@@ -146,7 +146,7 @@ bool ImportWidget::IsButtonEnabled() const
 // -----------------------------------------------------------------------------
 bool ImportWidget::ReadPackageContentFile()
 {
-    zip::izipfile archive( package_->text() );
+    zip::izipfile archive( package_->text().toStdString().c_str() );
     if( !archive.isOk() )
         return false;
     zip::izipstream zipStream( archive, "content.xml" );

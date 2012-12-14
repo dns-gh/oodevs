@@ -43,7 +43,7 @@ MenuButton::~MenuButton()
 void MenuButton::enterEvent( QEvent* )
 {
     hasMouse_ = true;
-    repaint( false );
+    repaint();
     emit ( Selected( this ) ) ;
 }
 
@@ -54,7 +54,7 @@ void MenuButton::enterEvent( QEvent* )
 void MenuButton::leaveEvent( QEvent* )
 {
     hasMouse_ = false;
-    repaint( false );
+    repaint();
     emit ( UnSelected( this ) ) ;
 }
 
@@ -76,11 +76,11 @@ void MenuButton::paintEvent( QPaintEvent* )
     QPainter painter;
     if( painter.begin( this ) )
     {
-        const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ;
-        const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ;
+        const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_ ;
+        const QPalette::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QPalette::BrightText : QPalette::ButtonText ) : QPalette::Light ;
         painter.setFont( font );
-        painter.setPen( colorGroup().color( colorRole ) );
-        painter.drawText( rect(), Qt::AlignCenter | Qt::SingleLine, text() );
+        painter.setPen( palette().color( colorRole ) );
+        painter.drawText( rect(), Qt::AlignCenter | Qt::TextSingleLine, text() );
         painter.end();
     }
 }

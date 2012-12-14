@@ -46,8 +46,8 @@ namespace
     std::string MakeLink( const std::string& file )
     {
         const QFileInfo info( file.c_str() );
-        const QString protocol = info.extension( false ) == "exe" ? "cmd" : "file";
-        return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).toStdString();
+        const QString protocol = info.suffix() == "exe" ? "cmd" : "file";
+        return QString( "%1://%2" ).arg( protocol ).arg( info.absoluteFilePath() ).toStdString();
     }
 
     bool IsValid( const std::string& fileName, const tools::Loader_ABC& fileLoader )
@@ -125,7 +125,7 @@ namespace
     bool ReadRegistry( const std::string& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readBoolEntry( ( "/sword/" + key ).c_str(), false );
+        return settings.value( ( "/sword/" + key ).c_str() ).toBool();
     }
 }
 
@@ -144,7 +144,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , noClient_    ( ReadRegistry( "NoClientSelected" ) )
     , isLegacy_    ( ReadRegistry( "IsLegacy" ) )
 {
-    setName( "ScenarioLauncherPage" );
+    setWindowTitle( "ScenarioLauncherPage" );
 
     //general panel
     QWidget* box = new QWidget( this );
@@ -302,7 +302,7 @@ void ScenarioLauncherPage::OnStart()
         const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName.toStdString() ), fileLoader_ );
         if( ! resources.empty() )
         {
-            std::string file = *resources.begin();
+            std::string file = resources.begin()->toStdString();
             file = ( bfs::path( config_.GetExerciseDir( exerciseName.toStdString() ) ) / file ).string();
             interpreter_.Interprete( MakeLink( file ).c_str() );
         }

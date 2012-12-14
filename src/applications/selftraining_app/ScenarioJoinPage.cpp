@@ -40,7 +40,7 @@ ScenarioJoinPage::ScenarioJoinPage( Application& app, QStackedWidget* pages, Pag
     host_ = new QLineEdit( "127.0.0.1");
     portLabel_ = new QLabel();
     port_ = new QSpinBox();
-    port_->setMaxValue( 65535 );
+    port_->setMaximum( 65535 );
     port_->setValue( 10001 );
 
     //sub layout
