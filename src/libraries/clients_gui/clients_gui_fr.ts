@@ -726,6 +726,14 @@ Please check access permissions or write protection.</source>
         <source>Sword_General_User_Guide</source>
         <translation>Guide_Utilisateur_General_Sword</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Error opening help file &apos;%1&apos;. Make sure you have a PDF viewer installed on your computer.</source>
+        <translation>Erreur à l'ouverture du fichier &apos;%1&apos;. Assurez-vous d'avoir un visionneur PDF installé sur votre ordinateur.</translation>
+    </message>
 </context>
 <context>
     <name>gui::HighlightColorModifier</name>

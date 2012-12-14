@@ -91,10 +91,17 @@ void HelpSystem::ShowHelp()
 {
     static const std::string strHelp = "help/";
     const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString();
-    std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.toStdString() + "/" + strGuide + ".chm" );
-    const std::string page = FindWidget( qApp->widgetAt( QCursor::pos() ) );
-    if( !page.empty() )
-        resource += std::string( "::/Sword_General_User_Guide/" ) + page + "/" + page + ".htm";
 
-    HtmlHelp( 0, resource.c_str(), HH_DISPLAY_TOPIC, NULL);
+    // pdf help
+    std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.toStdString() + "/" + strGuide + ".pdf" );
+    if( !QDesktopServices::openUrl( QUrl( resource.c_str() ) ) )
+        QMessageBox::warning( 0, tools::translate( "gui::HelpSystem", "Error" ), tools::translate( "gui::HelpSystem", "Error opening help file '%1'. Make sure you have a PDF viewer installed on your computer." ).arg( resource.c_str() ) );
+
+    // chm help
+    //std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.toStdString() + "/" + strGuide + ".chm" );
+    //const std::string page = FindWidget( qApp->widgetAt( QCursor::pos() ) );
+    //if( !page.empty() )
+    //    resource += std::string( "::/Sword_General_User_Guide/" ) + page + "/" + page + ".htm";
+
+    //HtmlHelp( 0, resource.c_str(), HH_DISPLAY_TOPIC, NULL);
 }

@@ -28,12 +28,12 @@ Section "!${PRODUCT_NAME}"
     ;---- resources: documentation ----
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\en\final\*.chm"
+    File "${DOCDIR}\en\final\Sword_General_User_Guide.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications\resources\help\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\fr\final\*.chm"
+    File "${DOCDIR}\fr\final\Guide_Utilisateur_General_Sword.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;---- readme / changelog files ----
