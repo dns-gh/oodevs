@@ -66,7 +66,6 @@ protected slots:
     virtual void OnClear() = 0;
     virtual void OnRequestPopup( const QPoint& pos ) = 0;
     virtual void OnSelectionChanged( const QItemSelection& newSelection , const QItemSelection& oldSelection ) = 0;
-    virtual void TurnHeaderBlack() = 0;
     //@}
 };
 
@@ -116,7 +115,6 @@ protected:
     unsigned int Count() const;
     void Select( const Param_ABC& param );
     virtual void DeleteElement( Param_ABC& param );
-    virtual void SetName( const QString& name );
     //@}
 
 private:
@@ -134,7 +132,6 @@ private:
     virtual void OnClear();
     virtual void OnRequestPopup( const QPoint& pos );
     virtual void OnSelectionChanged( const QItemSelection& newSelection , const QItemSelection& oldSelection );
-    virtual void TurnHeaderBlack();
     //@}
 
 private:
@@ -145,7 +142,6 @@ private:
     bool CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
     void DeleteItem( QStandardItem* item );
     void Clear();
-    bool Invalid();
     //@}
 
     //! @name Types

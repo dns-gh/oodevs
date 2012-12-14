@@ -328,45 +328,6 @@ void ListParameter< ConcreteElement >::Select( const Param_ABC& param )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListParameter::Invalid
-// Created: SBO 2007-04-27
-// -----------------------------------------------------------------------------
-template< typename ConcreteElement >
-bool ListParameter< ConcreteElement >::Invalid()
-{
-    if( list_ )
-        list_->header()->setPaletteForegroundColor( Qt::red );
-    QTimer::singleShot( 3000, this, SLOT( TurnHeaderBlack() ) );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ListParameter::TurnHeaderBlack
-// Created: SBO 2007-04-27
-// -----------------------------------------------------------------------------
-template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::TurnHeaderBlack()
-{
-    if( list_ )
-        list_->header()->setPaletteForegroundColor( Qt::black );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ListParameter::SetName
-// Created: ABR 2011-01-21
-// -----------------------------------------------------------------------------
-template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::SetName( const QString& name )
-{
-    if( list_ )
-    {
-        assert( model_.columnCount() == 1 );
-       // model_.item( 0 )->setText( name );
-    }
-    ListParameterBase::SetName( name );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ListParameter::CommitTo
 // Created: ABR 2011-11-30
 // -----------------------------------------------------------------------------
