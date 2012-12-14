@@ -13,6 +13,7 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -31,14 +32,15 @@ class StaticModel;
 */
 // Created: LDC 2011-03-23
 // =============================================================================
-class PopulationOptionChooser : public QDockWidget
+class PopulationOptionChooser : public QDialog
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                               , public tools::ElementObserver_ABC< kernel::Inhabitant_ABC >
                               , public kernel::OptionsObserver_ABC
+                              , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -52,34 +54,26 @@ public:
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void NotifyCreated( const kernel::Inhabitant_ABC& inhabitant );
-    virtual void NotifyDeleted( const kernel::Inhabitant_ABC& inhabitant );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual bool eventFilter( QObject * watched, QEvent * event ) ;
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    void OnDensityToggled( bool toggled );
-    void OnOccupationToggled( bool toggled );
-    void OnAccomodationToggled( bool toggled );
-    void OnPopulationToggled( bool ) ;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationOptionChooser( const PopulationOptionChooser& );            //!< Copy constructor
-    PopulationOptionChooser& operator=( const PopulationOptionChooser& ); //!< Assignment operator
+    void OnDisplayChanged( int index );
+    void OnActivityChanged( int index );
+    void OnOccupationChanged( QListWidgetItem* );
+    void Show();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Q3ButtonGroup* activities_;
-    Q3ButtonGroup* populations_;
-    QRadioButton* density_;
-    QRadioButton* occupation_;
+    QComboBox* displayCombo_ ;
+    QComboBox* activityCombo_ ;
+    QListWidget* occupationList_ ;
     tools::StringResolver< kernel::AccommodationType >& accomodations_;
     //@}
 };
