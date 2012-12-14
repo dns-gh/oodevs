@@ -25,6 +25,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -614,7 +615,10 @@ void MIL_BurningCells::BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
     if( it != burningCellsByCoordinates_.end() )
     {
         if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
-            agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+        {
+            MIL_BurnEffectManipulator manipulator( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+            agent.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
+        }
     }
 }
 // -----------------------------------------------------------------------------
