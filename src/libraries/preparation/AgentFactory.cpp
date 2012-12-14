@@ -307,7 +307,6 @@ Population_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, cons
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
     const geometry::Point2f position = model_.ReadPosition( xis, result );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
