@@ -19,7 +19,6 @@ namespace tools
 
 class QLineEdit;
 class QSpinBox;
-class Q3TextEdit;
 class QLabel;
 
 namespace frontend
@@ -51,7 +50,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QLineEdit*                  sessionName_;
-    Q3TextEdit*                 sessionComment_;
+    QTextEdit*                  sessionComment_;
     QSpinBox*                   exerciseNumber_;
     QLabel*                     nameLabel_;
     QLabel*                     commentLabel_;

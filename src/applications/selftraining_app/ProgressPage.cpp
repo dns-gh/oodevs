@@ -23,16 +23,21 @@ ProgressPage::ProgressPage( Application& app, QStackedWidget* pages, Page_ABC& p
     : ContentPage( pages, previous, 0 )
     , app_       ( app )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->layout()->setAlignment( Qt::AlignCenter );
-    box->layout()->setSpacing( 10 );
-    label_ = new QLabel( box );
+    label_ = new QLabel();
     label_->setAlignment( Qt::AlignCenter );
-    progressBar_ = new Q3ProgressBar( 100, box );
-    progressBar_->setCenterIndicator( true );
-    AddContent( box );
+
+    progressBar_ = new QProgressBar();
+
     timer_ = new QTimer( this );
     connect( timer_, SIGNAL( timeout() ), this, SLOT( UpdateProgress() ) );
+
+    QWidget* box = new QWidget( this );
+    QVBoxLayout* boxLayout = new QVBoxLayout( box );
+    boxLayout->setAlignment( Qt::AlignCenter );
+    boxLayout->addWidget( label_ );
+    boxLayout->addWidget( progressBar_ );
+    boxLayout->setSpacing( 10 );
+    AddContent( box );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +79,7 @@ void ProgressPage::UpdateProgress()
         }
     }
     label_->setText( message.c_str() );
-    progressBar_->setProgress( percentage );
+    progressBar_->setValue( percentage );
     setCursor( percentage < 100 ? Qt::WaitCursor : Qt::ArrowCursor );
     if( percentage == 100 )
     {

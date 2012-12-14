@@ -37,7 +37,7 @@ SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, c
         connect( list_, SIGNAL( currentRowChanged( int ) ), this, SLOT( SelectSession( int ) ) );
     }
     {
-        comments_ = new Q3TextEdit( this );
+        comments_ = new QTextEdit( this );
         comments_->setMaximumHeight( 200 );
         comments_->setReadOnly( true );
         comments_->hide();

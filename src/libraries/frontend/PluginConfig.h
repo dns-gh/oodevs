@@ -15,9 +15,6 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-class Q3GroupBox;
-class Q3ScrollView;
-
 namespace xml
 {
     class xistream;
@@ -64,7 +61,7 @@ private:
 
     //! @name Type
     //@{
-    typedef std::map< Q3GroupBox*, kernel::XmlDescription* > T_GroupBoxDescription;
+    typedef std::map< QGroupBox*, kernel::XmlDescription* > T_GroupBoxDescription;
     typedef T_GroupBoxDescription::iterator                IT_GroupBoxDescription;
 
     typedef std::vector< boost::shared_ptr< PluginSetting > > T_Settings;
@@ -80,8 +77,8 @@ private:
     const std::string           version_;
     kernel::XmlDescription      description_;
     QString                     label_;
-    Q3GroupBox*                 box_;
-    Q3ScrollView*               view_;
+    QGroupBox*                  box_;
+    QScrollArea*                view_;
     T_Settings                  settings_;
     T_GroupBoxDescription       groupBoxs_;
     //@}

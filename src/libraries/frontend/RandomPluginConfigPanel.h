@@ -21,7 +21,6 @@ class QComboBox;
 class QCheckBox;
 class QLineEdit;
 class QSpinBox;
-class Q3GroupBox;
 class QLabel;
 class QPushButton;
 
@@ -91,7 +90,7 @@ private:
     bool                        bDistributions_[ eContextsNbr ];
     double                      rDeviations_[ eContextsNbr ];
     double                      rMeans_[ eContextsNbr ];
-    Q3GroupBox*                 mainBox_;
+    QGroupBox*                  mainBox_;
     QLabel*                     contextLabel_;
     QLabel*                     distributionLabel_;
     QLabel*                     standardDeviationLabel_;

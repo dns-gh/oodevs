@@ -59,7 +59,7 @@ private:
     Application& app_;
     boost::weak_ptr< frontend::Process_ABC > process_;
     QLabel* label_;
-    Q3ProgressBar* progressBar_;
+    QProgressBar* progressBar_;
     QTimer* timer_;
     //@}
 };

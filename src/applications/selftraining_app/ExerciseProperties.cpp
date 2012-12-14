@@ -41,7 +41,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, co
         box->setMinimumWidth( 200 );
         box->setSpacing( 5 );
         briefingImage_ = new QLabel( box );
-        briefingText_ = new Q3TextEdit( box );
+        briefingText_ = new QTextEdit( box );
         briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
         briefingText_->setReadOnly( true );
         briefingText_->hide();

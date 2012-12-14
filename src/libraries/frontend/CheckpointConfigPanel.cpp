@@ -15,10 +15,8 @@
 #include "CreateSession.h"
 #include "Exercise_ABC.h"
 #include "clients_gui/Tools.h"
-#include <Qt3Support/q3groupbox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qspinbox.h>
-#include <Qt3Support/q3vbox.h>
 #include <QtCore/qsettings.h>
 
 using namespace frontend;
@@ -62,51 +60,77 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
     , config_( config )
     , exercise_( 0 )
 {
-    Q3VBox* vbox = new Q3VBox( this );
-    vbox->setMargin( 5 );
-    {
-        checkpointsGroup_ = new Q3GroupBox( 2, Qt::Vertical, vbox );
-        checkpointsGroup_->setCheckable( true );
-        checkpointsGroup_->setChecked( false );
-        {
-            Q3HBox* frequencyBox = new Q3HBox( checkpointsGroup_ );
-            frequencyLabel_ = new QLabel( frequencyBox );
-            frequency_ = new QTimeEdit( frequencyBox );
-            frequency_->setDisplayFormat( "hh:mm:ss" );
-            frequency_->setTime( QTime:: fromString( ReadTimeRegistryValue( "CheckpointFrequency" ) ) );
-            connect( frequency_, SIGNAL( timeChanged ( const QTime & ) ), SLOT( OnFrequencyChanged( const QTime & ) ) );
-        }
-        {
-            Q3HBox* keepBox = new Q3HBox( checkpointsGroup_ );
-            keepLabel_ = new QLabel( keepBox );
-            keep_ = new QSpinBox( 1, 100, 1, keepBox );
-            keep_->setValue( ReadIntRegistryValue( "CheckpointKept" ) );
-            connect( keep_, SIGNAL( valueChanged ( int ) ), SLOT( OnCheckpointKeptChanged( int ) ) );
-        }
-    }
-    {
-        loadGroup_ = new Q3GroupBox( 2, Qt::Horizontal, vbox );
-        loadGroup_->setCheckable( true );
-        loadGroup_->setChecked( false );
-        {
-            Q3VBox* box = new Q3VBox( loadGroup_ );
-            sessionLabel_ = new QLabel( box );
-            box->setSpacing( 5 );
-            sessions_ = new QListWidget( box );
-            sessions_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-            connect( sessions_, SIGNAL( currentTextChanged( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
-        }
-        {
-            QWidget* box = new QWidget( loadGroup_ );
-            QVBoxLayout* boxLayout = new QVBoxLayout( box );
-            checkpoints_ = new CheckpointList( config_ );
-            connect( checkpoints_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
-            boxLayout->addWidget( checkpoints_ );
-            boxLayout->setSpacing( 5 );
-            boxLayout->setMargin( 0 );
-        }
-        connect( loadGroup_, SIGNAL( toggled( bool ) ), checkpoints_, SLOT( Toggle( bool ) ) );
-    }
+
+    //------checkpoint group ------//
+    //frequency box
+    frequencyLabel_ = new QLabel();
+    frequency_ = new QTimeEdit();
+    frequency_->setDisplayFormat( "hh:mm:ss" );
+    frequency_->setTime( QTime:: fromString( ReadTimeRegistryValue( "CheckpointFrequency" ) ) );
+    connect( frequency_, SIGNAL( timeChanged ( const QTime & ) ), SLOT( OnFrequencyChanged( const QTime & ) ) );
+
+    QHBoxLayout* frequencyBox = new QHBoxLayout();
+    frequencyBox->addWidget( frequencyLabel_ );
+    frequencyBox->addWidget( frequency_ );
+
+    //keep box
+    keepLabel_ = new QLabel();
+    keep_ = new QSpinBox();
+    keep_->setRange( 1, 100 );
+    keep_->setValue( ReadIntRegistryValue( "CheckpointKept" ) );
+    connect( keep_, SIGNAL( valueChanged ( int ) ), SLOT( OnCheckpointKeptChanged( int ) ) );
+
+    QHBoxLayout* keepBox = new QHBoxLayout();
+    keepBox->addWidget( keepLabel_ );
+    keepBox->addWidget( keep_ );
+
+    //checkpoint groupbox
+    checkpointsGroup_ = new QGroupBox();
+    checkpointsGroup_->setCheckable( true );
+    checkpointsGroup_->setChecked( false );
+    QVBoxLayout* checkpointsGroupLayout = new QVBoxLayout( checkpointsGroup_ );
+    checkpointsGroup_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    checkpointsGroupLayout->addLayout( frequencyBox );
+    checkpointsGroupLayout->addLayout( keepBox );
+    //------end checkpoint group------//
+
+    //------load group------//
+    //session box
+    sessionLabel_ = new QLabel();
+    sessions_ = new QListWidget();
+    sessions_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
+    connect( sessions_, SIGNAL( currentTextChanged( const QString& ) ), SLOT( SessionSelected( const QString& ) ) );
+
+    QVBoxLayout* sessionBoxLayout = new QVBoxLayout();
+    sessionBoxLayout->setSpacing( 5 );
+    sessionBoxLayout->addWidget( sessionLabel_ );
+    sessionBoxLayout->addWidget( sessions_ );
+
+    //checkpoint box
+    QVBoxLayout* boxLayout = new QVBoxLayout();
+    checkpoints_ = new CheckpointList( config_ );
+    connect( checkpoints_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
+    boxLayout->addWidget( checkpoints_ );
+    boxLayout->setMargin( 0 );
+    boxLayout->setSpacing( 5 );
+
+    //load group box
+    loadGroup_ = new QGroupBox();
+    loadGroup_->setCheckable( true );
+    loadGroup_->setChecked( false );
+    QHBoxLayout* loadGroupLayout = new QHBoxLayout( loadGroup_ );
+    loadGroupLayout->addLayout( sessionBoxLayout );
+    loadGroupLayout->addLayout( boxLayout );
+    loadGroupLayout->setSpacing( 10 );
+    connect( loadGroup_, SIGNAL( toggled( bool ) ), checkpoints_, SLOT( Toggle( bool ) ) );
+    //------end load group------//
+
+    //------main panel------//
+    QVBoxLayout* vBoxLayout = new QVBoxLayout( this );
+    vBoxLayout->setMargin( 5 );
+    vBoxLayout->addWidget( checkpointsGroup_ );
+    vBoxLayout->addWidget( loadGroup_ );
+    //------end main panel------//
 }
 
 // -----------------------------------------------------------------------------

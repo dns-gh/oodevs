@@ -13,10 +13,8 @@
 #include "clients_gui/tools.h"
 #include "frontend/CreateSession.h"
 #include <QtGui/qcheckbox.h>
-#include <Qt3Support/q3groupbox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qspinbox.h>
-#include <Qt3Support/q3vbox.h>
 #include <QtCore/qsettings.h>
 
 using namespace frontend;
@@ -43,61 +41,113 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setMargin( 5 );
-    timeBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
-    {
-        Q3HBox* stepBox = new Q3HBox( timeBox_ );
-        stepLabel_ = new QLabel( stepBox );
-        stepSpin_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, stepBox );
-        stepSpin_->setValue( 10 );
-    }
-    {
-        Q3HBox* factorBox = new Q3HBox( timeBox_ );
-        factorLabel_ = new QLabel( factorBox );
-        factorSpin_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, factorBox );
-        factorSpin_->setValue( 10 );
-    }
-    {
-        Q3HBox* endTickBox = new Q3HBox( timeBox_ );
-        endtickLabel_ = new QLabel( endTickBox );
-        endtickSpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, endTickBox );
-        endtickSpin_->setValue( 0 );
-    }
-    {
-        Q3HBox* pausedBox = new Q3HBox( timeBox_ );
-        pausedLabel_ = new QLabel( pausedBox );
-        pausedCheckBox_ = new QCheckBox( pausedBox );
-        pausedCheckBox_->setChecked( false );
-    }
-    pathfindBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
-    {
-        Q3HBox* threadBox = new Q3HBox( pathfindBox_ );
-        pathThreadsLabel_ = new QLabel( threadBox );
-        pathThreadsSpin_ = new QSpinBox( 0, 4, 1, threadBox );
-        pathThreadsSpin_->setValue( 1 );
-    }
-    recordBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
-    {
-        Q3HBox* freqBox = new Q3HBox( recordBox_ );
-        fragmentsFrequencyLabel_ = new QLabel( freqBox );
-        fragmentsFrequencySpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox );
-        fragmentsFrequencySpin_->setValue( 200 );
-    }
-    clientBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
-    {
-        noClientLabel_ = new QLabel( clientBox_ );
-        noClientCheckBox_ = new QCheckBox( clientBox_ );
-        noClientCheckBox_->setChecked( ReadRegistry( "NoClientSelected" ) );
-        connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( NoClientChecked( int ) ) );
-    }
-    legacyBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
-    {
-        legacyLabel_ = new QLabel( legacyBox_ );
-        legacyCheckBox_ = new QCheckBox( legacyBox_ );
-        legacyCheckBox_->setChecked( ReadRegistry( "IsLegacy" ) );
-        connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
-    }
+    //time box
+
+    //---
+    stepLabel_ = new QLabel();
+    stepSpin_ = new QSpinBox();
+    stepSpin_->setRange( 1, 100 );
+    stepSpin_->setLineStep( 1 );
+    stepSpin_->setValue( 10 );
+
+    //---
+    factorLabel_ = new QLabel();
+    factorSpin_ = new QSpinBox();
+    factorSpin_->setRange( 1, 100 );
+    factorSpin_->setLineStep( 1 );
+    factorSpin_->setValue( 10 );
+
+    //---
+    endtickLabel_ = new QLabel();
+    endtickSpin_ = new QSpinBox();
+    endtickSpin_->setRange( 0, std::numeric_limits< int >::max() );
+    endtickSpin_->setLineStep( 1 );
+    endtickSpin_->setValue( 0 );
+
+    //---
+    pausedLabel_ = new QLabel();
+    pausedCheckBox_ = new QCheckBox();
+    pausedCheckBox_->setChecked( false );
+
+    //---
+    timeBox_ = new QGroupBox();
+    QGridLayout* timeBoxLayout = new QGridLayout( timeBox_ );
+    timeBoxLayout->addWidget( stepLabel_, 0, 0, 1, 1 );
+    timeBoxLayout->addWidget( stepSpin_, 0, 1, 1, 1 );
+    timeBoxLayout->addWidget( factorLabel_, 0, 2, 1, 1 );
+    timeBoxLayout->addWidget( factorSpin_, 0, 3, 1, 1 );
+    timeBoxLayout->addWidget( endtickLabel_, 1, 0, 1, 1 );
+    timeBoxLayout->addWidget( endtickSpin_, 1, 1, 1, 1 );
+    timeBoxLayout->addWidget( pausedLabel_, 1, 2, 1, 1 );
+    timeBoxLayout->addWidget( pausedCheckBox_, 1, 3, 1, 1 );
+
+
+    // pathfind box
+    pathThreadsLabel_ = new QLabel();
+    pathThreadsSpin_ = new QSpinBox();
+    pathThreadsSpin_->setRange( 0, 4 );
+    pathThreadsSpin_->setLineStep( 1 );
+    pathThreadsSpin_->setValue( 1 );
+
+    QWidget* threadBox = new QWidget();
+    QHBoxLayout* threadBoxLayout = new QHBoxLayout( threadBox );
+    threadBoxLayout->addWidget( pathThreadsLabel_ );
+    threadBoxLayout->addWidget( pathThreadsSpin_ );
+
+    pathfindBox_ = new QGroupBox();
+    QHBoxLayout* pathfindBoxLayout = new QHBoxLayout( pathfindBox_ );
+    pathfindBoxLayout->addWidget( threadBox );
+
+    //record box
+    fragmentsFrequencyLabel_ = new QLabel();
+    fragmentsFrequencySpin_ = new QSpinBox();
+    stepSpin_->setRange( 0, std::numeric_limits< int >::max() );
+    stepSpin_->setLineStep( 1 );
+    fragmentsFrequencySpin_->setValue( 200 );
+
+    QWidget* freqBox = new QWidget();
+    QHBoxLayout* freqBoxLayout = new QHBoxLayout( freqBox );
+    freqBoxLayout->addWidget( fragmentsFrequencyLabel_ );
+    freqBoxLayout->addWidget( fragmentsFrequencySpin_ );
+
+    recordBox_ = new QGroupBox();
+    QHBoxLayout* recordBoxLayout = new QHBoxLayout( recordBox_ );
+    recordBoxLayout->addWidget( freqBox );
+
+    //client box
+    noClientLabel_ = new QLabel();
+
+    noClientCheckBox_ = new QCheckBox();
+    noClientCheckBox_->setChecked( false );
+    connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( NoClientChecked( int ) ) );
+
+    clientBox_ = new QGroupBox();
+    QHBoxLayout* clientBoxLayout = new QHBoxLayout( clientBox_ );
+    clientBoxLayout->addWidget( noClientLabel_ );
+    clientBoxLayout->addWidget( noClientCheckBox_ );
+    clientBoxLayout->setMargin( 5 );
+
+    //legacy box
+    legacyLabel_ = new QLabel();
+
+    legacyCheckBox_ = new QCheckBox();
+    legacyCheckBox_->setChecked( false );
+    connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
+
+    legacyBox_ = new QGroupBox();
+    QHBoxLayout* commentBoxLayout = new QHBoxLayout( legacyBox_ );
+    commentBoxLayout->addWidget( legacyLabel_ );
+    commentBoxLayout->addWidget( legacyCheckBox_ );
+    commentBoxLayout->setMargin( 5 );
+
+    //general panel
+    QVBoxLayout* boxLayout = new QVBoxLayout( this );
+    boxLayout->setMargin( 5 );
+    boxLayout->addWidget( timeBox_ );
+    boxLayout->addWidget( pathfindBox_ );
+    boxLayout->addWidget( recordBox_ );
+    boxLayout->addWidget( clientBox_ );
+    boxLayout->addWidget( legacyBox_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +176,7 @@ void AdvancedConfigPanel::OnLanguageChanged()
 
     recordBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Recorder" ) );
     fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ) );
-    
+
     clientBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Client" ) );
     noClientLabel_->setText( tools::translate( "AdvancedConfigPanel", "Do not start gaming client" ) );
 

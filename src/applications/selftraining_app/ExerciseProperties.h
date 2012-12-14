@@ -82,7 +82,7 @@ private:
     QWidget* parent_;
     QLabel* parametersLabel_;
     QLabel* briefingImage_;
-    Q3TextEdit* briefingText_;
+    QTextEdit* briefingText_;
     QComboBox* terrainList_;
     QComboBox* modelList_;
     bool dataChanged_;

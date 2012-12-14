@@ -19,7 +19,6 @@ namespace tools
 
 class QCheckBox;
 class QSpinBox;
-class Q3GroupBox;
 class QLabel;
 
 namespace frontend
@@ -67,7 +66,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
 
-    Q3GroupBox*                 timeBox_;
+    QGroupBox*                  timeBox_;
     QLabel*                     stepLabel_;
     QSpinBox*                   stepSpin_;
     QLabel*                     factorLabel_;
@@ -77,19 +76,19 @@ private:
     QLabel*                     pausedLabel_;
     QCheckBox*                  pausedCheckBox_;
 
-    Q3GroupBox*                 pathfindBox_;
+    QGroupBox*                  pathfindBox_;
     QLabel*                     pathThreadsLabel_;
     QSpinBox*                   pathThreadsSpin_;
 
-    Q3GroupBox*                 recordBox_;
+    QGroupBox*                  recordBox_;
     QLabel*                     fragmentsFrequencyLabel_;
     QSpinBox*                   fragmentsFrequencySpin_;
 
-    Q3GroupBox*                 clientBox_;
+    QGroupBox*                  clientBox_;
     QLabel*                     noClientLabel_;
     QCheckBox*                  noClientCheckBox_;
 
-	Q3GroupBox*                 legacyBox_;
+	QGroupBox*                  legacyBox_;
     QLabel*                     legacyLabel_;
     QCheckBox*                  legacyCheckBox_;
     //@}

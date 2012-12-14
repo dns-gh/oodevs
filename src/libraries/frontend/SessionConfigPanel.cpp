@@ -16,8 +16,6 @@
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qspinbox.h>
-#include <Qt3Support/q3textedit.h>
-#include <Qt3Support/q3vbox.h>
 #pragma warning( pop )
 
 using namespace frontend;
@@ -30,32 +28,48 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    Q3VBox* exerciseBox = new Q3VBox( this );
-    exerciseBox->setMargin( 5 );
-    {
-        Q3HBox* sessionBox = new Q3HBox( exerciseBox );
-        nameLabel_ = new QLabel( sessionBox );
-        sessionBox->setStretchFactor( nameLabel_, 1 );
-        sessionName_ = new QLineEdit( sessionBox );
-        sessionBox->setStretchFactor( sessionName_, 2 );
-        sessionName_->setText( "" );
-    }
-    {
-        Q3HBox* commentBox = new Q3HBox( exerciseBox );
-        commentLabel_ = new QLabel( commentBox );
-        commentBox->setStretchFactor( commentLabel_, 1 );
-        sessionComment_ = new Q3TextEdit( commentBox );
-        commentBox->setStretchFactor( sessionComment_, 2 );
-        sessionComment_->setText( "" );
-    }
-    {
-        Q3HBox* exerciseNumberBox = new Q3HBox( exerciseBox );
-        exerciseLabel_ = new QLabel( exerciseNumberBox );
-        exerciseNumberBox->setStretchFactor( exerciseLabel_, 1 );
-        exerciseNumber_ = new QSpinBox( 1, 10, 1, exerciseNumberBox );
-        exerciseNumberBox->setStretchFactor( exerciseNumber_, 2 );
-        exerciseNumber_->setValue( 1 );
-    }
+    //session box
+    nameLabel_ = new QLabel();
+    sessionName_ = new QLineEdit();
+    sessionName_->setText( "" );
+
+    QWidget* sessionBox = new QWidget();
+    QHBoxLayout* sessionBoxLayout = new QHBoxLayout( sessionBox );
+    sessionBoxLayout->addWidget( nameLabel_ );
+    sessionBoxLayout->addWidget( sessionName_ );
+    sessionBoxLayout->setStretchFactor( nameLabel_, 1 );
+    sessionBoxLayout->setStretchFactor( sessionName_, 2 );
+
+    commentLabel_ = new QLabel();
+    sessionComment_ = new QTextEdit();
+    sessionComment_->setText( "" );
+
+    //exercise number box
+    QWidget* commentBox = new QWidget();
+    QHBoxLayout* commentBoxLayout = new QHBoxLayout( commentBox );
+    commentBoxLayout->addWidget( commentLabel_ );
+    commentBoxLayout->addWidget( sessionComment_ );
+    commentBoxLayout->setStretchFactor( commentLabel_, 1 );
+    commentBoxLayout->setStretchFactor( sessionComment_, 2 );
+
+    exerciseLabel_ = new QLabel();
+    exerciseNumber_ = new QSpinBox();
+    exerciseNumber_->setRange( 1, 10 );
+    exerciseNumber_->setLineStep( 1 );
+    exerciseNumber_->setValue( 1 );
+
+    //Exercise box
+    QWidget* exerciseNumberBox = new QWidget();
+    QHBoxLayout* exerciseNumberBoxLayout = new QHBoxLayout( exerciseNumberBox );
+    exerciseNumberBoxLayout->addWidget( exerciseLabel_ );
+    exerciseNumberBoxLayout->addWidget( exerciseNumber_ );
+    exerciseNumberBoxLayout->setStretchFactor( exerciseLabel_, 1 );
+    exerciseNumberBoxLayout->setStretchFactor( exerciseNumber_, 2 );
+
+    QVBoxLayout* exerciseBoxLayout = new QVBoxLayout( this );
+    exerciseBoxLayout->addWidget( sessionBox );
+    exerciseBoxLayout->addWidget( commentBox );
+    exerciseBoxLayout->addWidget( exerciseNumberBox );
 }
 
 // -----------------------------------------------------------------------------

@@ -65,14 +65,9 @@
 #include <QtGui/qsortfilterproxymodel.h>
 #include <QtGui/qsizepolicy.h>
 
-#include <Qt3Support/q3progressbar.h>
-#include <Qt3Support/q3gridlayout.h>
-#include <Qt3Support/q3boxlayout.h>
 #include <Qt3Support/q3textedit.h>
 #include <Qt3Support/q3vbox.h>
-#include <Qt3Support/q3widgetstack.h>
 #include <Qt3Support/q3popupmenu.h>
-#include <Qt3Support/q3mainwindow.h>
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3button.h>
 

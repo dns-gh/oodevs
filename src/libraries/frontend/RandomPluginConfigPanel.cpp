@@ -16,7 +16,6 @@
 #include "QtCore/qcoreapplication.h"
 #include <QtGui/qcheckbox.h>
 #include <QtGui/qcombobox.h>
-#include <Qt3Support/q3groupbox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qpushbutton.h>
@@ -118,38 +117,54 @@ RandomPluginConfigPanel::RandomPluginConfigPanel( QWidget* parent, const tools::
     : PluginConfig_ABC( parent )
     , config_( config )
 {
-    setMargin( 5 );
-
-    mainBox_ = new Q3GroupBox( 2, Qt::Horizontal, this );
-    hasSeed_ = new QCheckBox( mainBox_ );
+    hasSeed_ = new QCheckBox();
     connect( hasSeed_, SIGNAL( toggled( bool ) ), SLOT( OnSeedToggled() ) );
-    seed_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, mainBox_ );
+    seed_ = new QSpinBox();
+    seed_->setRange( 1, std::numeric_limits< int >::max() );
+    seed_->setLineStep( 1 );
     bool bHasSeed = ReadHasSeed();
     seed_->setValue( ReadSeed() );
     seed_->setEnabled( bHasSeed );
     hasSeed_->setChecked( bHasSeed );
 
-    contextLabel_ = new QLabel( mainBox_ );
-    contextList_ = new QComboBox( mainBox_ );
+    contextLabel_ = new QLabel();
+    contextList_ = new QComboBox();
     connect( contextList_, SIGNAL( activated( int ) ), SLOT( OnContextChanged( int ) ) );
 
-    distributionLabel_ = new QLabel( mainBox_ );
-    distributionList_ = new QComboBox( mainBox_ );
+    distributionLabel_ = new QLabel();
+    distributionList_ = new QComboBox();
     connect( distributionList_, SIGNAL( activated( int ) ), SLOT( OnDistributionChanged( int ) ) );
 
-    standardDeviationLabel_ = new QLabel( mainBox_ );
-    deviation_ = new QLineEdit( mainBox_ );
+    standardDeviationLabel_ = new QLabel();
+    deviation_ = new QLineEdit();
     deviation_->setValidator( new Validator( deviation_ ) );
     connect( deviation_, SIGNAL( textChanged( const QString& ) ), SLOT( OnDeviationChanged( const QString& ) ) );
 
-    meanLabel_ = new QLabel( mainBox_ );
-    mean_ = new QLineEdit( mainBox_ );
+    meanLabel_ = new QLabel();
+    mean_ = new QLineEdit();
     mean_->setValidator( new Validator( mean_ ) );
     connect( mean_, SIGNAL( textChanged( const QString& ) ), SLOT( OnMeanChanged( const QString& ) ) );
 
-    defaultButton_ = new QPushButton( mainBox_ );
+    defaultButton_ = new QPushButton();
     connect( defaultButton_, SIGNAL( clicked() ), this, SLOT( OnDefaultClicked() ) );
 
+    mainBox_ = new QGroupBox();
+    QGridLayout* commentBoxLayout = new QGridLayout( mainBox_ );
+    commentBoxLayout->addWidget( hasSeed_, 0, 0, 1, 1 );
+    commentBoxLayout->addWidget( seed_, 0, 1, 1, 1 );
+    commentBoxLayout->addWidget( contextLabel_, 1, 0, 1, 1 );
+    commentBoxLayout->addWidget( contextList_, 1, 1, 1, 1 );
+    commentBoxLayout->addWidget( distributionLabel_, 2, 0, 1, 1 );
+    commentBoxLayout->addWidget( distributionList_, 2, 1, 1, 1 );
+    commentBoxLayout->addWidget( standardDeviationLabel_, 3, 0, 1, 1 );
+    commentBoxLayout->addWidget( deviation_, 3, 1, 1, 1 );
+    commentBoxLayout->addWidget( meanLabel_, 4, 0, 1, 1 );
+    commentBoxLayout->addWidget( mean_, 4, 1, 1, 1 );
+    commentBoxLayout->addWidget( defaultButton_, 5, 0, 1, 1 );
+
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->addWidget( mainBox_ );
+    layout->setMargin( 5 );
     ReadRandomValues();
     OnContextChanged( 0 );
 }

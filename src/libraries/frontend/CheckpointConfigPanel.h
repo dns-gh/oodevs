@@ -12,10 +12,10 @@
 
 #include "PluginConfig_ABC.h"
 
-class Q3GroupBox;
 class QSpinBox;
 class QLabel;
 class QTimeEdit;
+class QGroupBox;
 
 namespace tools
 {
@@ -78,8 +78,8 @@ private:
     const tools::GeneralConfig&   config_;
     QTimeEdit*                    frequency_;
     QSpinBox*                     keep_;
-    Q3GroupBox*                   checkpointsGroup_;
-    Q3GroupBox*                   loadGroup_;
+    QGroupBox*                    checkpointsGroup_;
+    QGroupBox*                    loadGroup_;
     QListWidget*                  sessions_;
     CheckpointList*               checkpoints_;
     const frontend::Exercise_ABC* exercise_;

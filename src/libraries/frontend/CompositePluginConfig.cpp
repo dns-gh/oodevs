@@ -13,7 +13,6 @@
 #include <clients_kernel/Tools.h>
 #include <algorithm>
 #include <boost/bind.hpp>
-#include <Qt3Support/q3groupbox.h>
 
 using namespace frontend;
 
@@ -25,10 +24,11 @@ CompositePluginConfig::CompositePluginConfig( QTabWidget* parent )
     : PluginConfig_ABC( parent )
     , parent_( parent )
 {
-    Q3GroupBox* pluginsBox = new Q3GroupBox( 1, Qt::Vertical, this );
-    pluginsBox->setMargin( 5 );
-    pluginsBox->setFrameShape( Q3GroupBox::NoFrame );
-    tabs_ = new QTabWidget( pluginsBox );
+    tabs_ = new QTabWidget();
+    QVBoxLayout* pluginsBoxLayout = new QVBoxLayout( this );
+    pluginsBoxLayout->setMargin( 5 );
+    pluginsBoxLayout->addWidget( tabs_ );
+
     parentTabIndex_ = parent->addTab( this, "" );
 }
 

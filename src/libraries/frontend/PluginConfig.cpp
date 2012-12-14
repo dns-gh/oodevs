@@ -16,8 +16,6 @@
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
 #include <Qt/qapplication.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3scrollview.h>
 #include <QtCore/qsettings.h>
 #include <QtCore/qstring.h>
 #include <QtGui/qtooltip.h>
@@ -57,25 +55,26 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     , version_        ( xis.attribute< std::string >( "version" ) )
     , description_    ( xis, tools::readLang() )
 {
-    setMargin( 5 );
-    view_ = new Q3ScrollView( this );
-    view_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
-    view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    view_->setResizePolicy( Q3ScrollView::AutoOneFit );
-    view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
-    view_->enableClipper( true );
-
-    box_ = new Q3GroupBox( 2, Qt::Horizontal, view_->viewport() );
+    box_ = new QGroupBox();
+    QVBoxLayout* boxLayout = new QVBoxLayout( box_ );
+    boxLayout->setMargin( 5 );
+    boxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
     box_->setCheckable( true );
     box_->setChecked( false );
     box_->setFlat( true );
     xis >> xml::start( "settings" )
-            >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
-            >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
-    // Add empty label to fix viewport bug of not displaying the overall content
-    QLabel* label = new QLabel( QString( ""), box_ );
-    label->setMinimumHeight( 15 );
-    view_->addChild( box_ );
+        >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box_ )
+        >> xml::list( "group", *this, &PluginConfig::ReadGroup, box_ );
+
+    view_ = new QScrollArea();
+    view_->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+    view_->setWidgetResizable( true );
+    view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    view_->setWidget( box_ );
+
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->addWidget( view_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,11 +192,15 @@ void PluginConfig::ReadSetting( xml::xistream& xis, QWidget* parent )
 // -----------------------------------------------------------------------------
 void PluginConfig::ReadGroup( xml::xistream& xis, QWidget* parent )
 {
-    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, parent );
+    QGroupBox* box = new QGroupBox();
+    QVBoxLayout* boxLayout = new QVBoxLayout( box );
+    boxLayout->setSizeConstraint( QLayout::SetMinAndMaxSize );
+    parent->layout()->addWidget( box );
+
     groupBoxs_[ box ] = new kernel::XmlDescription( xis, tools::readLang() );
-    box->setMargin( 5 );
-    static_cast< Q3GroupBox* >( parent )->setColumns( 1 );
+    boxLayout->setMargin( 5 );
+
     xis >> xml::start( "settings" )
-            >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box )
-            >> xml::list( "group", *this, &PluginConfig::ReadGroup, box );
+        >> xml::list( "setting", *this, &PluginConfig::ReadSetting, box )
+        >> xml::list( "group", *this, &PluginConfig::ReadGroup, box );
 }

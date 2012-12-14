@@ -24,7 +24,6 @@ class QTimeEdit;
 class QWidget;
 class QComboBox;
 class QPushButton;
-class Q3TimeEdit;
 class QLabel;
 
 namespace tools
@@ -52,7 +51,7 @@ class FileButtonEvent : public QPushButton
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FileButtonEvent( PluginSetting& plugins, QWidget* parent );
+    explicit FileButtonEvent( PluginSetting& plugins );
     //@}
 
     //! @name Operation
@@ -111,7 +110,7 @@ private:
     QLineEdit*                       stringValue_;
     QSpinBox*                        integerValue_;
     QCheckBox*                       booleanValue_;
-    Q3TimeEdit*                      timeValue_;
+    QTimeEdit*                       timeValue_;
     QComboBox*                       enumerationValue_;
     FileList*                        fileList_;
     std::string                      fileName_;
