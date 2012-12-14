@@ -127,7 +127,6 @@ extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFaca
     }
 }
 
-#define PLATFORM platform
 #include "dispatcher/DispatcherLoader.h"
 
 namespace // for compilation check only
