@@ -13,7 +13,6 @@
 #include "CreateExerciceWidget.h"
 #include "ExerciseList.h"
 #include "ExportWidget.h"
-#include "ImportWidget.h"
 #include "ProgressPage.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
