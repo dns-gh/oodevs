@@ -1633,7 +1633,7 @@
         <update name="mongoose"/>
         <update name="openssl"/>
         <update name="proj4"/>
-        <update name="protobuf" version="2.3.0"/>
+        <update name="protobuf"/>
         <update name="qt"/>
         <update name="spatialite"/>
         <update name="steel"/>
