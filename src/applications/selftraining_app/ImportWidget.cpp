@@ -163,7 +163,7 @@ bool ImportWidget::ReadPackageContentFile()
                 >> xml::content( "version", version )
             >> xml::end;
         packageName_->setText( name.c_str() );
-        isValidVersion_ = tools::CheckVersion( version, tools::AppProjectVersion() ) || version.empty();
+        isValidVersion_ = tools::CheckVersion( version, tools::AppProjectVersion() );
         QPalette* palette = new QPalette();
         if( !isValidVersion_ )
             palette->setColor( QPalette::Text, Qt::red );
