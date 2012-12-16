@@ -117,7 +117,7 @@
     </target>
 
     <target name="actions" depends="protocol,clients_kernel" description="build actions static library">
-        <build-lib name="actions" depends="qt4" pattern="lib${ant.project.name}_actions-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="actions" depends="qt4" pattern="lib${ant.project.name}_actions-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
@@ -1570,7 +1570,6 @@
             <!-- These cannot really be fixed, either no project or vc80 -->
             <arg value="--exclude=module_tester"/>
             <!-- These should be fixed -->
-            <arg value="--exclude=actions"/>
             <arg value="--exclude=hla_plugin"/>
             <!-- cmake targets are not used by "all" -->
             <arg value="--optional-target=*cmake*"/>

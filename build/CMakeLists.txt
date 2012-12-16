@@ -169,7 +169,7 @@ target_link_libraries( clients_kernel
 )
 
 # actions
-add_target( actions common "libraries/actions" OPTIONS qt3 protocol warnings )
+add_target( actions common "libraries/actions" OPTIONS qt3 protocol )
 target_link_libraries( actions clients_kernel )
 
 # reports
