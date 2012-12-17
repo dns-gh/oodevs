@@ -11,7 +11,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>WIN64;PLATFORM=${CurrentPlatform};_WIN32_WINNT=0x501;WINVER=0x501</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN64;PLATFORM=vc100_x64;_WIN32_WINNT=0x501;WINVER=0x501</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
