@@ -13,6 +13,7 @@
 #include "Hierarchies.h"
 #include "tools/Resolver.h"
 #include "Creatable.h"
+#include "boost/noncopyable.hpp"
 
 namespace kernel
 {
@@ -52,6 +53,7 @@ public:
     virtual void RemoveSubordinate    ( const Entity_ABC& entity );
     virtual void UnregisterSubordinate( const Entity_ABC& entity );
     virtual void UnregisterParent     ();
+    virtual void NotifySuperiorChanged( const Entity_ABC* /*newSuperior*/ ){};
     //@}
 
 protected:
@@ -65,14 +67,6 @@ protected:
     virtual void CreateDictionary( PropertiesDictionary& dico ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntityHierarchies( const EntityHierarchies& );            //!< Copy constructor
-    EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignment operator
-    //@}
-
-protected:
     //! @name Member data
     //@{
     Controller& controller_;

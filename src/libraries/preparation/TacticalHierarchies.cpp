@@ -39,4 +39,3 @@ void TacticalHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
     kernel::EntityHierarchies< kernel::TacticalHierarchies >::ChangeSuperior( &superior );
 }
-

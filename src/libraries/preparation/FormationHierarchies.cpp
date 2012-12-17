@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "FormationHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -75,6 +76,25 @@ void FormationHierarchies::UnregisterParent()
 {
     superior_ = 0;
     MergingTacticalHierarchies::UnregisterParent();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchies::NotifySuperiorChanged
+// Created: NPT 2012-12-14
+// -----------------------------------------------------------------------------
+void FormationHierarchies::NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior )
+{
+    if( newSuperior && newSuperior->Retrieve< kernel::TacticalHierarchies >() )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& entity = it.NextElement();
+            if( const ::TacticalHierarchies* hierarchies = static_cast< const ::TacticalHierarchies* >( entity.Retrieve< kernel::TacticalHierarchies >() ) )
+                const_cast< ::TacticalHierarchies* >( hierarchies )->NotifySuperiorChanged( hierarchies->GetSuperior() );
+        }
+        UpdateSymbolUpward();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -108,6 +108,16 @@ void GhostHierarchies::UpdateSymbolUpward()
 }
 
 // -----------------------------------------------------------------------------
+// Name: GhostHierarchies::NotifySuperiorChanged
+// Created: NPT 2012-12-14
+// -----------------------------------------------------------------------------
+void GhostHierarchies::NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior )
+{
+    if( newSuperior && newSuperior->Retrieve< kernel::TacticalHierarchies >() )
+        UpdateKarma( *newSuperior );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GhostHierarchies::GetSuperior
 // Created: SBO 2008-10-06
 // -----------------------------------------------------------------------------

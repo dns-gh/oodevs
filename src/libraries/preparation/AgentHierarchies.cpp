@@ -73,6 +73,16 @@ void AgentHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentHierarchies::InternalNotifySuperiorChanged
+// Created: NPT 2012-12-13
+// -----------------------------------------------------------------------------
+void AgentHierarchies::NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior )
+{
+    if( newSuperior && newSuperior->Retrieve< kernel::TacticalHierarchies >() )
+        UpdateKarma( *newSuperior );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentHierarchies::UpdateKarma
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------

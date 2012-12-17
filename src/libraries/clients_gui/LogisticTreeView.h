@@ -16,6 +16,7 @@
 namespace kernel
 {
     class LogisticLevel;
+    class TacticalHierarchies;
 }
 
 namespace gui
@@ -31,6 +32,7 @@ class LogisticTreeView : public HierarchyTreeView_ABC
                        , public tools::ElementObserver_ABC< kernel::Ghost_ABC >
                        , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                        , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+                       , public tools::ElementObserver_ABC< kernel::TacticalHierarchies >
 {
 
 public:
@@ -89,6 +91,7 @@ private:
     virtual void NotifyCreated( const kernel::Ghost_ABC& ghost );
     virtual void NotifyUpdated( const kernel::Ghost_ABC& ghost );
     virtual void NotifyDeleted( const kernel::Ghost_ABC& ghost );
+    virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
     //@}
 
     //! @name Drag N Drop

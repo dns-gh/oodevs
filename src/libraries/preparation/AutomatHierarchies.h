@@ -12,6 +12,7 @@
 
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "TacticalHierarchies.h"
 
 // =============================================================================
 /** @class  AutomatHierarchies
@@ -35,6 +36,7 @@ public:
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
     virtual void UpdateSymbolUpward();
+    virtual void NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior );
     //@}
 
 private:

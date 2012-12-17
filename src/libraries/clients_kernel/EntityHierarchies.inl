@@ -10,6 +10,7 @@
 #include "Entity_ABC.h"
 #include "Controller.h"
 #include "PropertiesDictionary.h"
+#include "TacticalHierarchies.h"
 #include "Tools.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -156,6 +157,7 @@ void EntityHierarchies< Interface >::ChangeSuperior( Entity_ABC* superior )
     SetSuperiorInternal( superior );
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->AddSubordinate( entity_ );
+    NotifySuperiorChanged( superior );
     controller_.Update( *(Interface*)this );
 }
 

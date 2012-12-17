@@ -11,6 +11,7 @@
 #define __AgentHierarchies_h_
 
 #include "TacticalHierarchies.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -27,6 +28,7 @@ class Agent;
 // Created: AGE 2006-09-20
 // =============================================================================
 class AgentHierarchies : public TacticalHierarchies
+                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,16 +46,11 @@ public:
     void SetSymbol( const std::string& symbol );
     virtual void UpdateSymbolUpward();
     virtual void UpdateSymbolDownward();
+    virtual void NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior );
     void UpdateSymbol( const std::string& level, const std::string& symbol );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
-    AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );

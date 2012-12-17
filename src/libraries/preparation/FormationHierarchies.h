@@ -42,6 +42,7 @@ public:
     virtual void SetLevel( E_NatureLevel level );
     void ChangeSuperior( kernel::Entity_ABC& superior );
     virtual void UnregisterParent();
+    virtual void NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior );
     //@}
 
 private:

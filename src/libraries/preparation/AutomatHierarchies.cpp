@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "AutomatHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -96,6 +97,25 @@ void AutomatHierarchies::UpdateSymbolUpward()
         }
     }
     MergingTacticalHierarchies::UpdateSymbolUpward();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::NotifySuperiorChanged
+// Created: NPT 2012-12-14
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::NotifySuperiorChanged( const kernel::Entity_ABC* newSuperior )
+{
+    if( newSuperior && newSuperior->Retrieve< kernel::TacticalHierarchies >() )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& entity = it.NextElement();
+            if( const ::TacticalHierarchies* hierarchies = static_cast< const ::TacticalHierarchies* >( entity.Retrieve< kernel::TacticalHierarchies >() ) )
+                const_cast< ::TacticalHierarchies* >( hierarchies )->NotifySuperiorChanged( hierarchies->GetSuperior() );
+        }
+        UpdateSymbolUpward();
+    }
 }
 
 // -----------------------------------------------------------------------------

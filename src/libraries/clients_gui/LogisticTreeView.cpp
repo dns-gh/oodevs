@@ -144,10 +144,6 @@ void LogisticTreeView::CreateOrReplace( const kernel::Entity_ABC& entity )
     const kernel::Entity_ABC* superior = RetrieveSuperior( entity );
     QStandardItem* superiorItem = ( superior ) ? dataModel_.FindDataItem( *superior ) : 0;
 
-    //item = ( superiorItem )
-    //    ? dataModel_.AddChildSafeItem( superiorItem, superiorItem->rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled )
-    //    : dataModel_.AddChildSafeItem( &typeItem, typeItem.rowCount(), 0, entity.GetName(), entity.GetTooltip(), entity, Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled );
-
     if( !item )
     {
         QStandardItem* parent = ( superiorItem ) ? superiorItem : &typeItem;
@@ -336,6 +332,32 @@ void LogisticTreeView::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 {
     if( ghost.GetGhostType() == eGhostType_Automat)
         NotifyDeletedInternal( ghost );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::NotifyUpdated
+// Created: NPT 2012-12-13
+// -----------------------------------------------------------------------------
+void LogisticTreeView::NotifyUpdated( const kernel::TacticalHierarchies& hierarchy )
+{
+    const kernel::Entity_ABC& entity = static_cast< const kernel::Hierarchies& >( hierarchy ).GetEntity();
+    QStandardItem* entityItem = dataModel_.FindDataItem( entity );
+    if( !entityItem )
+        return;
+
+    QStandardItem* parent = entityItem->parent();
+    while( parent && parent->parent() )
+        parent = parent->parent();
+    if( !parent )
+        return;
+    kernel::Team_ABC* oldTeam = dataModel_.GetDataFromItem< kernel::Team_ABC >( *parent );
+
+    if( oldTeam && oldTeam->GetId() != hierarchy.GetTop().GetId() )
+    {
+        //Faire sauter les liens log et replacer correctement sous la bonne team
+        SetSuperior( entity, 0 );
+        CreateOrReplace( entity );
+    }
 }
 
 // -----------------------------------------------------------------------------
