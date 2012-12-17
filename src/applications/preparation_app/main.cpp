@@ -12,6 +12,7 @@
 #include "clients_gui/ApplicationMonitor.h"
 #include "tools/WinArguments.h"
 #include "clients_kernel/Tools.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/filesystem.hpp>
@@ -59,6 +60,18 @@ int main( int argc, char** argv )
     return EXIT_FAILURE;
 }
 
+int mainWrapper( int argc, char** argv )
+{
+    __try
+    {
+        return main( argc, argv );
+    }
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+        return EXIT_FAILURE;
+    }
+}
+
 int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
 {
     tools::WinArguments winArgs( lpCmdLine ) ;
@@ -72,9 +85,10 @@ int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LP
             ( debugDir / "preparation.log" ).string().c_str(), 1, -1,
             MT_Logger_ABC::eLogLevel_All )).swap( logger );
         MT_LOG_REGISTER_LOGGER( *logger );
+        MT_CrashHandler::SetRootDirectory( debugRoot );
     }
 
-    int ret = main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) );
+    int ret = mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ));
     if( logger )
         MT_LOG_UNREGISTER_LOGGER( *logger );
     return ret;
