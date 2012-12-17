@@ -86,7 +86,7 @@ namespace
     void AddWeapon( core::Model& weapons, const PHY_Weapon& weapon )
     {
         core::Model& w = weapons.AddElement();
-        w[ "type" ] = weapon.GetType().GetName();
+        w[ "type" ] = weapon.GetType().GetID();
     }
 }
 

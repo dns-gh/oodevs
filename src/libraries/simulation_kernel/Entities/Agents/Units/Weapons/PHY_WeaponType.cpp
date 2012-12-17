@@ -81,6 +81,11 @@ void PHY_WeaponType::Terminate()
     weaponTypes_.clear();
 }
 
+namespace
+{
+    std::size_t identifier = 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType constructor
 // Created: NLD 2004-08-05
@@ -95,6 +100,7 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
     , rReloadingDuration_ ( 1. )
     , pDirectFireData_    ( 0 )
     , pIndirectFireData_  ( 0 )
+    , identifier_         ( identifier++ )
 {
     if( !pLauncherType_ )
         xis.error( "Unknown launcher type '" + strLauncher + "'" );
@@ -537,6 +543,15 @@ double PHY_WeaponType::GetReloadingDuration() const
 const std::string& PHY_WeaponType::GetName() const
 {
     return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetID
+// Created: MCO 2012-12-17
+// -----------------------------------------------------------------------------
+std::size_t PHY_WeaponType::GetID() const
+{
+    return identifier_;
 }
 
 // -----------------------------------------------------------------------------

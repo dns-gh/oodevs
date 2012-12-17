@@ -34,37 +34,6 @@ DEFINE_HOOK( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDur
 using namespace sword;
 using namespace sword::fire;
 
-namespace
-{
-    std::unordered_map< std::string, boost::shared_ptr< WeaponType > > types;
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponType::Initialize
-// Created: NLD 2004-08-05
-// -----------------------------------------------------------------------------
-void WeaponType::Initialize( xml::xisubstream xis, double tickDuration )
-{
-    ::SWORD_Log( SWORD_LOG_LEVEL_INFO, "Initializing weapons" );
-    xis >> xml::start( "weapons" )
-            >> xml::list( "weapon-system", boost::bind( &WeaponType::ReadWeapon, _1, tickDuration ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponType::ReadWeapon
-// Created: ABL 2007-07-20
-// -----------------------------------------------------------------------------
-void WeaponType::ReadWeapon( xml::xistream& xis, double tickDuration )
-{
-    std::string strLauncher, strAmmunition;
-    xis >> xml::attribute( "launcher", strLauncher )
-        >> xml::attribute( "munition", strAmmunition );
-    boost::shared_ptr< WeaponType >& pWeaponType = types[ strLauncher + "/" + strAmmunition ];
-    if( pWeaponType )
-        xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
-    pWeaponType.reset( new WeaponType( strLauncher, strAmmunition, xis, tickDuration ) );
-}
-
 // -----------------------------------------------------------------------------
 // Name: WeaponType constructor
 // Created: NLD 2004-08-05
@@ -105,6 +74,45 @@ WeaponType::WeaponType( const std::string& strLauncher, const std::string& strAm
         xis.error( "reloading: duration <= 0" );
     xis >> xml::list( "direct-fire", *this, &WeaponType::ReadDirect )
         >> xml::list( "indirect-fire", *this, &WeaponType::ReadIndirect, tickDuration );
+}
+
+namespace
+{
+    std::vector< boost::shared_ptr< WeaponType > > types;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::Initialize
+// Created: NLD 2004-08-05
+// -----------------------------------------------------------------------------
+void WeaponType::Initialize( xml::xisubstream xis, double tickDuration )
+{
+    ::SWORD_Log( SWORD_LOG_LEVEL_INFO, "Initializing weapons" );
+    xis >> xml::start( "weapons" )
+            >> xml::list( "weapon-system", boost::bind( &WeaponType::ReadWeapon, _1, tickDuration ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::ReadWeapon
+// Created: ABL 2007-07-20
+// -----------------------------------------------------------------------------
+void WeaponType::ReadWeapon( xml::xistream& xis, double tickDuration )
+{
+    std::string strLauncher, strAmmunition;
+    xis >> xml::attribute( "launcher", strLauncher )
+        >> xml::attribute( "munition", strAmmunition );
+    types.push_back( boost::shared_ptr< WeaponType >( new WeaponType( strLauncher, strAmmunition, boost::ref( xis ), tickDuration ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponType::FindWeaponType
+// Created: NLD 2004-08-06
+// -----------------------------------------------------------------------------
+boost::shared_ptr< WeaponType > WeaponType::FindWeaponType( std::size_t type )
+{
+    if( type >= types.size() )
+        throw MASA_EXCEPTION( "Unknown weapon type : " + boost::lexical_cast< std::string >( type ) );
+    return types[ type ];
 }
 
 // -----------------------------------------------------------------------------
@@ -407,18 +415,6 @@ double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, boost:
     if( CheckIndirectFireDotation( firer, dotation, checkAmmo ) )
         return pIndirectFireData_->GetMinRange();
     return std::numeric_limits< double >::max();
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponType::FindWeaponType
-// Created: NLD 2004-08-06
-// -----------------------------------------------------------------------------
-boost::shared_ptr< WeaponType > WeaponType::FindWeaponType( const std::string& type )
-{
-    auto it = types.find( type );
-    if( it == types.end() )
-        throw MASA_EXCEPTION( "Unknown weapon type : " + type );
-    return it->second;
 }
 
 // -----------------------------------------------------------------------------

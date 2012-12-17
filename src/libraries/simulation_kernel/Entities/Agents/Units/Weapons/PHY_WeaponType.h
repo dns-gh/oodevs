@@ -67,6 +67,7 @@ public:
     const std::string&          GetName             () const;
           bool                  CanDirectFire       () const;
           bool                  CanIndirectFire     () const;
+    std::size_t GetID() const;
     //@}
 
     //! @name Operations
@@ -128,6 +129,7 @@ private:
     const PHY_LauncherType*     pLauncherType_;
     const PHY_DotationCategory* pDotationCategory_;
           std::string           strName_;
+          std::size_t           identifier_;
 
           unsigned int                  nNbrAmmoPerBurst_;
           double              rBurstDuration_;

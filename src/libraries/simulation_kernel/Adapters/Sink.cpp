@@ -317,7 +317,7 @@ namespace
 {
     void AddWeapon( core::Model& weapons, const PHY_Weapon& weapon )
     {
-        weapons.AddElement()[ "type" ] = weapon.GetType().GetName();
+        weapons.AddElement()[ "type" ] = weapon.GetType().GetID();
     }
     void UpdateKnowledge( core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
     {
