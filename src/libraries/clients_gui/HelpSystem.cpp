@@ -33,10 +33,7 @@ HelpSystem::HelpSystem( QWidget* root, const std::string& config )
         std::string locale = tools::readLang();
         helpFile_ = tools::GeneralConfig::BuildResourceChildFile( "help/" + locale + "/" + strGuide + ".pdf" );
         if( !boost::filesystem::exists( helpFile_ ) )
-        {
-            locale = "en";
-            helpFile_ =  tools::GeneralConfig::BuildResourceChildFile( "help/" + locale + "/" + strGuide + ".pdf" );
-        }
+            helpFile_ =  tools::GeneralConfig::BuildResourceChildFile( "help/en/Sword_General_User_Guide.pdf" );
 
         xml::xifstream xis( config );
         xis >> xml::start( "widgets" )
@@ -99,6 +96,9 @@ std::string HelpSystem::FindWidget( const QObject* root )
 // -----------------------------------------------------------------------------
 void HelpSystem::ShowHelp()
 {
+    if( !boost::filesystem::exists( helpFile_ ) )
+        return;
+
     // pdf help
     if( !QDesktopServices::openUrl( QUrl( helpFile_.c_str() ) ) )
         QMessageBox::warning( 0, tools::translate( "gui::HelpSystem", "Error" ), tools::translate( "gui::HelpSystem", "Error opening help file '%1'. Make sure you have a PDF viewer installed on your computer." ).arg( helpFile_.c_str() ) );
