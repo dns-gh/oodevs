@@ -194,7 +194,7 @@
     </target>
 
     <target name="hla_plugin" depends="dispatcher,rpr" description="build hla_plugin static library">
-        <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
+        <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
@@ -1569,8 +1569,6 @@
             <arg value="${root.dir}/build/vc100/sword.sln"/>
             <!-- These cannot really be fixed, either no project or vc80 -->
             <arg value="--exclude=module_tester"/>
-            <!-- These should be fixed -->
-            <arg value="--exclude=hla_plugin"/>
             <!-- cmake targets are not used by "all" -->
             <arg value="--optional-target=*cmake*"/>
             <arg value="--optional-target=generate-signatures"/>
