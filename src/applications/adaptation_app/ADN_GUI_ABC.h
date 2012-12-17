@@ -70,6 +70,7 @@ public:
     virtual bool SelectItem( const QString& name );
 
     void ApplyFilter( const ADN_NavigationInfos::UsedBy& usedByInfos );
+    void ClearFilters();
 
     QWidget* GetMainWidget() const { return pMainWidget_; }
     ADN_ListView* GetListView() const { return pListView_; }

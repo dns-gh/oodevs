@@ -62,6 +62,7 @@ public:
     void Swap( ADN_StandardItem* src, ADN_StandardItem* dest );
     int ChildCount() const;
     void Clear();
+    void ClearFilters();
     void CreateTableFrom( std::stringstream& stream ) const;
 
     void setEnabled( bool b );
@@ -121,6 +122,7 @@ signals:
     void ItemSelected( void* pData );
     void UsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );
     void GoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
+    void PurgeLineEdit();
 
 protected:
     void*                       pCurData_;

@@ -93,6 +93,16 @@ void ADN_GUI_ABC::ApplyFilter( const ADN_NavigationInfos::UsedBy& usedByInfos )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC::ClearFilters
+// Created: JSR 2012-12-14
+// -----------------------------------------------------------------------------
+void ADN_GUI_ABC::ClearFilters()
+{
+    if( pListView_ )
+        pListView_->ClearFilters();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_GUI_ABC::SelectItem
 // Created: ABR 2012-03-05
 // -----------------------------------------------------------------------------

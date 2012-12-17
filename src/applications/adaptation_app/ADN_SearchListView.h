@@ -97,6 +97,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( ADN_GUI_ABC* gui, ADN_Ref_AB
     // Search box
     lineEdit_ = new gui::SearchLineEdit( this );
     connect( lineEdit_, SIGNAL( textChanged( const QString& ) ), listView_, SLOT( OnFilterChanged( const QString& ) ) );
+    connect( listView_, SIGNAL( PurgeLineEdit() ), lineEdit_, SLOT( clear() ) );
     layout->addWidget( lineEdit_);
     layout->addWidget( listView_, 1 );
 }

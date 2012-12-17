@@ -567,6 +567,7 @@ void ADN_Workspace::OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo )
     assert( elements_[ goToInfo.targetTab_ ] != 0 );
     if( goToInfo.subTargetTab_ != -1 )
         elements_[ goToInfo.targetTab_ ]->GetGuiABC().ChangeCurrentSubTab( goToInfo.subTargetTab_ );
+    elements_[ goToInfo.targetTab_ ]->GetGuiABC().ClearFilters();
 
     if( !elements_[ goToInfo.targetTab_ ]->GetGuiABC().SelectItem( goToInfo.targetName_ ) )
         elements_[ goToInfo.targetTab_ ]->GetGuiABC().FindSubTabAndSelectItem( goToInfo.targetName_ );
