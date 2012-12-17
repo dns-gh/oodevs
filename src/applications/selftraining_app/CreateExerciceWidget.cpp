@@ -120,6 +120,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
     layout->addWidget( saveAsGroupBox_ );
 
     UpdateExercises();
+    UpdateTerrains();
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +168,9 @@ void CreateExerciceWidget::Update()
         sessionList_->setCurrentRow( 0 );
     }
     if( exerciseList_->count() != frontend::commands::ListExercises( config_ ).size() )
-        UpdateExercises( items.empty()? 0 : items[ 0 ]->text() );
+        UpdateExercises( items.empty()? 0 : items[ 0 ]->text() );;
+    if( editTerrainList_->count() - 1 != frontend::commands::ListTerrains( config_ ).size() )
+        UpdateTerrains();
 }
 
 // -----------------------------------------------------------------------------
@@ -176,9 +179,7 @@ void CreateExerciceWidget::Update()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::UpdateExercises( QString selectedItem /*= ""*/ )
 {
-    editTerrainList_->clear();
-    editTerrainList_->addItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
-    editTerrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
+    //models
     editModelList_->clear();
     editModelList_->addItem( tools::translate( "CreateExerciceWidget", "Model:" ) );
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
@@ -192,11 +193,23 @@ void CreateExerciceWidget::UpdateExercises( QString selectedItem /*= ""*/ )
         editModelList_->setCurrentIndex( 1 );
     editModelList_->setVisible( editModelList_->count() > 2 );
 
+    //exercises
     exerciseList_->clear();
     exerciseList_->addItems( frontend::commands::ListExercises( config_ ) );
     QList< QListWidgetItem* > items = exerciseList_->findItems( selectedItem, Qt::MatchExactly );
     if( !items.isEmpty() )
         exerciseList_->setItemSelected( items[ 0 ], true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateExerciceWidget::UpdateTerrains
+// Created: NPT 2012-12-17
+// -----------------------------------------------------------------------------
+void CreateExerciceWidget::UpdateTerrains()
+{
+    editTerrainList_->clear();
+    editTerrainList_->addItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
+    editTerrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
 }
 
 // -----------------------------------------------------------------------------

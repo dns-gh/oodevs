@@ -56,6 +56,7 @@ private:
     //@{
     virtual void OnLanguageChanged();
     void UpdateExercises( QString selectedItem = "" );
+    void UpdateTerrains();
     //@}
 
 private slots:
