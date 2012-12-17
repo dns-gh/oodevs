@@ -78,9 +78,9 @@ private:
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;
     std::auto_ptr< MT_ConsoleLogger > console_;
+    std::auto_ptr< tools::WaitEvent > quit_;
     std::auto_ptr< boost::thread > gui_;
     std::auto_ptr< boost::thread > dispatcher_;
-    std::auto_ptr< tools::WaitEvent > quit_;
 
     HWND hWnd_;
     HINSTANCE hInstance_;
