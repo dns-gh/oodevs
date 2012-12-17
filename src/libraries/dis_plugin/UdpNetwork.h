@@ -16,6 +16,7 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+#include "tools/WaitEvent.h"
 
 namespace dispatcher
 {
@@ -67,7 +68,6 @@ private:
     //! @name Helpers
     //@{
     void Start();
-    void Stop();
     void Sent( boost::shared_ptr< std::string >, const boost::system::error_code& );
     //@}
 
@@ -78,7 +78,7 @@ protected:
     boost::asio::ip::udp::endpoint target_;
     boost::asio::io_service service_;
     boost::asio::ip::udp::socket socket_;
-    bool terminated_;
+    tools::WaitEvent quit_;
     boost::thread thread_;
     //@}
 };

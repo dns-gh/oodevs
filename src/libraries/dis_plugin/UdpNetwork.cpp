@@ -24,10 +24,9 @@ namespace i = boost::asio::ip;
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 UdpNetwork::UdpNetwork( const std::string& target, unsigned short port, dispatcher::Logger_ABC& logger )
-    : logger_    ( logger )
-    , socket_    ( service_, boost::asio::ip::udp::v4() )
-    , terminated_( false )
-    , thread_    ( boost::bind( &UdpNetwork::Start, this ) )
+    : logger_( logger )
+    , socket_( service_, boost::asio::ip::udp::v4() )
+    , thread_( boost::bind( &UdpNetwork::Start, this ) )
 {
     try
     {
@@ -52,9 +51,10 @@ UdpNetwork::~UdpNetwork()
 {
     try
     {
-        terminated_ = true;
-        service_.post( boost::bind( &UdpNetwork::Stop, this ) );
+        quit_.Signal();
+        service_.stop();
         thread_.join();
+        socket_.close();
     }
     catch( const std::exception& e )
     {
@@ -69,21 +69,11 @@ UdpNetwork::~UdpNetwork()
 void UdpNetwork::Start()
 {
     ::SetThreadPriority( ::GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL );
-    while( !terminated_ )
+    do
     {
         service_.run();
-        ::Sleep( 100 );
         service_.reset();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UdpNetwork::Stop
-// Created: ZEBRE 2007-05-11
-// -----------------------------------------------------------------------------
-void UdpNetwork::Stop()
-{
-    socket_.close();
+    } while( !quit_.Wait( boost::posix_time::milliseconds( 100 ) ) );
 }
 
 // -----------------------------------------------------------------------------
