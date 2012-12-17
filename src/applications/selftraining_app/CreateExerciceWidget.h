@@ -51,6 +51,7 @@ private:
     //@{
     virtual void OnLanguageChanged();
     void UpdateExercises();
+    void UpdateCombo();
     //@}
 
 private slots:

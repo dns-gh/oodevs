@@ -66,6 +66,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
             contentList_->adjustSize();
         }
     }
+    UpdateCombo();
     UpdateExercises();
 }
 
@@ -103,15 +104,20 @@ void CreateExerciceWidget::Update()
         std::string exercise( item->text().toAscii().constData() );
         contentList_->clear();
         contentList_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, contentList_ ) );
+        UpdateCombo();
+    }
+    else
+    {
+        UpdateCombo();
         UpdateExercises();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget::UpdateExercises
-// Created: ABR 2011-04-14
+// Name: CreateExerciceWidget::UpdateCombo
+// Created: ABR 2012-12-17
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::UpdateExercises()
+void CreateExerciceWidget::UpdateCombo()
 {
     editTerrainList_->clear();
     editTerrainList_->insertItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
@@ -128,7 +134,14 @@ void CreateExerciceWidget::UpdateExercises()
     if( editModelList_->count() == 2 )
         editModelList_->setCurrentItem( 1 );
     editModelList_->setShown( editModelList_->count() > 2 );
+}
 
+// -----------------------------------------------------------------------------
+// Name: CreateExerciceWidget::UpdateExercises
+// Created: ABR 2011-04-14
+// -----------------------------------------------------------------------------
+void CreateExerciceWidget::UpdateExercises()
+{
     exerciseList_->clear();
     exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
 }
@@ -186,6 +199,7 @@ bool CreateExerciceWidget::EnableEditButton()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
 {
+    Update();
     if( !item )
         return;
     std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toAscii().constData() ) );
@@ -209,6 +223,5 @@ void CreateExerciceWidget::OnSelectionChanged( Q3ListBoxItem* item )
         if( index != -1 )
             editModelList_->setCurrentItem( index + 1 );
     }
-    Update();
     page_.UpdateEditButton();
 }
