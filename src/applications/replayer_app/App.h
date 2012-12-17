@@ -19,6 +19,7 @@
 namespace tools
 {
     class RealFileLoaderObserver_ABC;
+    class WaitEvent;
 }
 
 namespace dispatcher
@@ -70,6 +71,7 @@ private:
     std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< dispatcher::Config >   config_;
     std::auto_ptr< dispatcher::Replayer > replayer_;
+    std::auto_ptr< tools::WaitEvent > quit_;
     //@}
 
     //! @name GUI Member data
@@ -79,7 +81,6 @@ private:
     NOTIFYICONDATA                 TrayIcon_;
     unsigned int                   nIconIndex_;
     std::auto_ptr< boost::thread > guiThread_ ;
-    static bool                    bUserInterrupt_;
     bool                           test_;
     //@}
 };

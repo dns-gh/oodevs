@@ -12,6 +12,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include <tools/Exception.h>
+#include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
 #include "resource.h"
 #include "dispatcher/Config.h"
@@ -19,8 +20,6 @@
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
-
-bool App::bUserInterrupt_ = false;
 
 #define MY_WM_NOTIFYICON WM_USER + 1
 
@@ -46,6 +45,7 @@ namespace
 App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPSTR lpCmdLine, int /* nCmdShow */, bool replayLog )
     : observer_( new tools::NullFileLoaderObserver() )
     , config_  ( new dispatcher::Config( *observer_ ) )
+    , quit_    ( new tools::WaitEvent() )
     , test_    ( false )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
@@ -82,14 +82,9 @@ void App::Execute()
     StartIconAnimation();
     try
     {
-        for( ; !bUserInterrupt_; )
-        {
-            ::Sleep( 10 );
+        do
             replayer_->Update();
-            // do one update only in test mode
-            if( test_ )
-                break;
-        }
+        while( !test_ && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
     }
     catch( const std::exception& e )
     {
@@ -123,16 +118,12 @@ LRESULT App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
              }
             break;
         case WM_CLOSE:
-            bUserInterrupt_ = true;
         case WM_DESTROY:
             PostQuitMessage( 0 );
             break;
         case WM_COMMAND:
             if( LOWORD( wParam ) == IDM_QUIT )
-            {
-                bUserInterrupt_ = true;
                 PostQuitMessage( 0 );
-            }
             break;
         case WM_TIMER:
             application->AnimateIcon();
@@ -149,46 +140,54 @@ LRESULT App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
 // -----------------------------------------------------------------------------
 void App::RunGUI( HINSTANCE hinstance )
 {
-    // Window
-    WNDCLASS wc;
-
-    wc.style = 0;
-    wc.lpfnWndProc = &App::MainWndProc;
-    wc.cbClsExtra = 0;
-    wc.cbWndExtra = 0;
-    wc.hInstance = hInstance_ = hinstance;
-    wc.hIcon = LoadIcon( NULL, IDI_APPLICATION );
-    wc.hCursor = LoadCursor( NULL, IDC_ARROW );
-    wc.hbrBackground = (HBRUSH)( 1 + COLOR_BTNFACE );
-    wc.lpszMenuName = NULL;
-    wc.lpszClassName = "MaWinClass";
-
-    if( !RegisterClass( &wc ) )
-        return;
-    hWnd_ = CreateWindow( "MaWinClass", "Replay", WS_OVERLAPPEDWINDOW,
-                          CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
-                          NULL, NULL, hInstance_, NULL );
-    ::SetWindowLongPtr( hWnd_, GWLP_USERDATA, (LONG_PTR)this );
-    ShowWindow( hWnd_ , SW_HIDE );
-
-    // Tray
-    ZeroMemory( &TrayIcon_, sizeof( NOTIFYICONDATA ) );
-    TrayIcon_.cbSize = sizeof( NOTIFYICONDATA );
-    TrayIcon_.hWnd = hWnd_;
-    TrayIcon_.uID = 0;
-    TrayIcon_.hIcon = LoadIcon( hInstance_, MAKEINTRESOURCE( IDI_ICON1 ) );
-    TrayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
-    TrayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-    strcpy_s( TrayIcon_.szTip, "Replay" );
-    Shell_NotifyIcon( NIM_ADD,&TrayIcon_ );
-
-    MSG msg;
-    while( GetMessageA( &msg, NULL, 0, 0 ) )
+    try
     {
-        TranslateMessage( &msg );
-        DispatchMessage( &msg );
+        // Window
+        WNDCLASS wc;
+
+        wc.style = 0;
+        wc.lpfnWndProc = &App::MainWndProc;
+        wc.cbClsExtra = 0;
+        wc.cbWndExtra = 0;
+        wc.hInstance = hInstance_ = hinstance;
+        wc.hIcon = LoadIcon( NULL, IDI_APPLICATION );
+        wc.hCursor = LoadCursor( NULL, IDC_ARROW );
+        wc.hbrBackground = (HBRUSH)( 1 + COLOR_BTNFACE );
+        wc.lpszMenuName = NULL;
+        wc.lpszClassName = "MaWinClass";
+
+        if( !RegisterClass( &wc ) )
+            return;
+        hWnd_ = CreateWindow( "MaWinClass", "Replay", WS_OVERLAPPEDWINDOW,
+                                CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
+                                NULL, NULL, hInstance_, NULL );
+        ::SetWindowLongPtr( hWnd_, GWLP_USERDATA, (LONG_PTR)this );
+        ShowWindow( hWnd_ , SW_HIDE );
+
+        // Tray
+        ZeroMemory( &TrayIcon_, sizeof( NOTIFYICONDATA ) );
+        TrayIcon_.cbSize = sizeof( NOTIFYICONDATA );
+        TrayIcon_.hWnd = hWnd_;
+        TrayIcon_.uID = 0;
+        TrayIcon_.hIcon = LoadIcon( hInstance_, MAKEINTRESOURCE( IDI_ICON1 ) );
+        TrayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
+        TrayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
+        strcpy_s( TrayIcon_.szTip, "Replay" );
+        Shell_NotifyIcon( NIM_ADD,&TrayIcon_ );
+
+        MSG msg;
+        while( GetMessageA( &msg, NULL, 0, 0 ) )
+        {
+            TranslateMessage( &msg );
+            DispatchMessage( &msg );
+        }
+        Shell_NotifyIcon( NIM_DELETE, &TrayIcon_ );
     }
-    Shell_NotifyIcon( NIM_DELETE, &TrayIcon_ );
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "gui: " << tools::GetExceptionMsg( e ) );
+    }
+    quit_->Signal();
 }
 
 // -----------------------------------------------------------------------------
