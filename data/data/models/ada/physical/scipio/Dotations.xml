@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<resources model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Resources.xsd">
+<resources model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Resources.xsd">
   <resource category="munition" codeEMAT6="" codeEMAT8="1305 452 0200" codeLFRIL="" codeNNO="1305 14 399 9367" id="1" id-nature="3" name="CART 12.7 SBP" nature="Solide" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
@@ -2254,13 +2254,13 @@
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
-      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
-      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
-      <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
-      <attrition destruction="0.1" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.6"/>
+      <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.15" repairable-without-evacuation="0.65"/>
+      <attrition destruction="0.05" protection="BlindeLeger" repairable-with-evacuation="0.3" repairable-without-evacuation="0.65"/>
+      <attrition destruction="0.05" protection="TransportBlinde" repairable-with-evacuation="0.3" repairable-without-evacuation="0.65"/>
+      <attrition destruction="0.1" protection="Aeronef" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Bois" value="0.9"/>
@@ -2285,13 +2285,13 @@
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
-      <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
-      <attrition destruction="0.3" protection="TransportBlinde" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
-      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
-      <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
-      <attrition destruction="0.1" protection="Combattant" repairable-with-evacuation="0.4" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.6"/>
+      <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0.15" repairable-without-evacuation="0.65"/>
+      <attrition destruction="0.05" protection="BlindeLeger" repairable-with-evacuation="0.3" repairable-without-evacuation="0.65"/>
+      <attrition destruction="0.05" protection="TransportBlinde" repairable-with-evacuation="0.3" repairable-without-evacuation="0.65"/>
+      <attrition destruction="0.1" protection="Aeronef" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
     <urban-modifiers>
       <urban-modifier material-type="Bois" value="0.9"/>
@@ -2560,19 +2560,6 @@
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9140 14 507 3290" id="117" id-nature="2" name="F-63 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 310 5441" id="118" id-nature="2" name="F-57 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 209 3957" id="119" id-nature="1" name="F-35 1" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 235 4213" id="121" id-nature="3" name="mine classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
-    <attritions>
-      <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
-      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
-      <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-      <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-    </attritions>
-  </resource>
   <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1375 14 235 7101" id="120" id-nature="3" name="PETD 500 G T ID M 1" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2586,10 +2573,20 @@
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </resource>
+  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 235 4213" id="121" id-nature="3" name="mine classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.1" protection="BlindeLeger" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="TransportBlinde" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+  </resource>
   <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="5680 14 210 7134" id="122" id-nature="3" name="barbele classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8970 14 481 4053" id="139" id-nature="3" name="RATION DE COMBAT 1" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8960 14 489 7152" id="140" id-nature="3" name="EAU MINERALE 1L T 1" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="00010057" codeLFRIL="" codeNNO="1111110020057" id="141" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="00010058" codeLFRIL="" codeNNO="1111110020058" id="123" id-nature="3" name="Rechange NTI1 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="00010059" codeLFRIL="" codeNNO="1111110020059" id="124" id-nature="3" name="Rechange NTI2 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="00010060" codeLFRIL="" codeNNO="1111110020060" id="125" id-nature="3" name="Rechange NTI3" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
@@ -2606,6 +2603,9 @@
   <resource category="piece" codeEMAT6="" codeEMAT8="00030072" codeLFRIL="" codeNNO="1111110030072" id="136" id-nature="3" name="Rechange NTI1 DEM" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="00030071" codeLFRIL="" codeNNO="1111110030071" id="137" id-nature="3" name="Rechange NTI1 COTAC" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="00030073" codeLFRIL="" codeNNO="1111110030073" id="138" id-nature="3" name="Rechange NTI1 TRS" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8970 14 481 4053" id="139" id-nature="3" name="RATION DE COMBAT 1" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8960 14 489 7152" id="140" id-nature="3" name="EAU MINERALE 1L T 1" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="00010057" codeLFRIL="" codeNNO="1111110020057" id="141" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="00010071" codeLFRIL="" codeNNO="1111110020071" id="142" id-nature="6" name="electricite" nature="Electricite" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="00010072" codeLFRIL="" codeNNO="1111110020072" id="143" id-nature="5" name="eau courante" nature="Liquide" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="00010073" codeLFRIL="" codeNNO="1111110020073" id="144" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
@@ -2613,4 +2613,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="146" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="147" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="0857610226" -->
+<!-- signature="0676462953" -->
