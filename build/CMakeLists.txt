@@ -225,7 +225,7 @@ add_target( 3a_test tests "tests/3a_test" OPTIONS protocol test )
 target_link_libraries( 3a_test 3a )
 
 # actions_test
-add_target( actions_test tests "tests/actions_test" OPTIONS protocol test warnings )
+add_target( actions_test tests "tests/actions_test" OPTIONS protocol test )
 target_link_libraries( actions_test actions )
 
 # propagation_test
