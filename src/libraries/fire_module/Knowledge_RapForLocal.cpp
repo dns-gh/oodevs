@@ -84,7 +84,7 @@ namespace
     double GetRapForLocal( const wrapper::View& model, const wrapper::View& entity, Knowledge_RapForLocal::T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData, double defaultValue )
     {
         const T_DangerosityCache& cache = GetCache( model, entity );
-        const unsigned int id = entity[ "knowledges" ];
+        const std::size_t id = entity[ "knowledges" ];
         const wrapper::View& knowledges = model[ "knowledges" ][ id ];
         double rTotalFightScoreEnemy  = 0;
         double rTotalFightScoreFriend = 0;
@@ -93,7 +93,7 @@ namespace
         std::vector< std::size_t > ids;
         for( std::size_t i = 0; i < enemies.GetSize(); ++i )
         {
-            const SWORD_Model* knowledgeEnemy = knowledges[ static_cast< unsigned int >( enemies.GetElement( i ) ) ];
+            const SWORD_Model* knowledgeEnemy = knowledges[ static_cast< std::size_t >( enemies.GetElement( i ) ) ];
             if( ! filter( knowledgeEnemy, userData ) )
                 continue;
             double rDangerosity = GET_HOOK( EvaluateDangerosity )( knowledgeEnemy, entity );
@@ -110,7 +110,7 @@ namespace
         const wrapper::View& friends = model[ "friends" ][ id ];
         for( std::size_t i = 0; i < friends.GetSize(); ++i )
         {
-            const SWORD_Model* knowledgeFriend = knowledges[ static_cast< unsigned int >( friends.GetElement( i ) ) ];
+            const SWORD_Model* knowledgeFriend = knowledges[ static_cast< std::size_t >( friends.GetElement( i ) ) ];
             if( ! filter( knowledgeFriend, userData ) )
                 continue;
             for( auto it = ids.begin(); it != ids.end(); ++it )
