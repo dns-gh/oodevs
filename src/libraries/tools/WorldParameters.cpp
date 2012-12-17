@@ -30,11 +30,11 @@ WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const std::strin
                                   const std::string& populationFile )
     : dataset_ ( dataset )
     , physical_( physical )
+    , terrainSamePhysical_( true )
 {
     fileLoader.LoadFile( terrainFile, boost::bind( &WorldParameters::ReadTerrain, this, boost::cref( terrainFile ), _1 ) );
     if( !populationFile.empty() )
         fileLoader.LoadFile( populationFile, boost::bind( &WorldParameters::ReadPopulation, this, boost::cref( populationFile ), _1 ) );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -115,6 +115,7 @@ void WorldParameters::Purge()
     yMin_.clear();
     yMax_.clear();
     utmZones_.clear();
+    terrainSamePhysical_ = true;
 }
 
 namespace
@@ -148,6 +149,7 @@ void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream
     std::string urban( "urban/urban.xml" );
     if( xis.has_child( "terrain" ) )
     {
+        std::string terrainDataSet, terrainPhysical;
         xis >> xml::start( "terrain" )
             >> xml::start( "data" )
                 >> xml::start( "location" )
@@ -178,8 +180,13 @@ void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream
                 >> xml::optional >> xml::start( "urban" )
                     >> xml::attribute( "file", urban )
                 >> xml::end
+                >> xml::optional >> xml::start( "model" )
+                    >> xml::attribute( "dataset", terrainDataSet )
+                    >> xml::attribute( "physical", terrainPhysical )
+                >> xml::end
             >> xml::end
         >> xml::end;
+        terrainSamePhysical_ = ( terrainDataSet == dataset_ && terrainPhysical == physical_ );
     }
     else
     {

@@ -73,6 +73,7 @@ public:
     std::string dataset_;
     std::string physical_;
     std::vector< unsigned char > utmZones_;
+    bool terrainSamePhysical_;
     //@}
 };
 

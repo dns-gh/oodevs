@@ -76,23 +76,21 @@ void Architecture::Initialize( unsigned int height, unsigned int floorNumber, un
     occupation_.value_ = static_cast< unsigned int >( occupation * 100u );
     trafficability_.value_ = trafficability;
 
-    if( material.empty() || material == "default" )
+    material_ = objectTypes_.StringResolver< MaterialCompositionType >::Find( material );
+    if( !material_ )
     {
         tools::Iterator< const MaterialCompositionType& > it = static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).CreateIterator();
         assert( it.HasMoreElements() );
         material_ = const_cast< MaterialCompositionType* >( &it.NextElement() );
     }
-    else
-        material_ = &static_cast< const tools::StringResolver< MaterialCompositionType >& >( objectTypes_ ).Get( material );
 
-    if( roofShape.empty() || roofShape == "default" )
+    roofShape_ = objectTypes_.StringResolver< RoofShapeType >::Find( roofShape );
+    if( !roofShape_ )
     {
         tools::Iterator< const RoofShapeType& > it = static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).CreateIterator();
         assert( it.HasMoreElements() );
         roofShape_ = const_cast< RoofShapeType* >( &it.NextElement() );
     }
-    else
-        roofShape_ = &static_cast< const tools::StringResolver< RoofShapeType >& >( objectTypes_ ).Get( roofShape );
 }
 
 template< typename T >

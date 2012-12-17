@@ -108,6 +108,8 @@ public:
 
     const std::vector< unsigned char >& GetUtmZones() const;
 
+    bool IsTerrainSamePhysicalRef() const;
+
     void SerializeAndSignTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const;  //$$$ Rien à foutre la ...
     //@}
 

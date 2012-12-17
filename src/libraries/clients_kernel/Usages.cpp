@@ -130,16 +130,20 @@ void Usages::UpdateMotivations( float livingSpace )
 // -----------------------------------------------------------------------------
 void Usages::Add( const std::string& usage, unsigned int proportion )
 {
-    usages_[ usage ] = proportion;
-    const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usage.c_str();
-    float occupation = livingSpace_ * proportion * 0.01f;
     AccommodationType* accommodation = accommodationTypes_.Find( usage );
-    occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
-    occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
+    if( accommodation )
+    {
+        usages_[ usage ] = proportion;
+        const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usage.c_str();
+        float occupation = livingSpace_ * proportion * 0.01f;
 
-    CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ] );
-    CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usage ].first );
-    CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usage ].second );
+        occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation->GetNominalCapacity() ) );
+        occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation->GetMaxCapacity() ) );
+
+        CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ] );
+        CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usage ].first );
+        CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usage ].second );
+    }
 
     UpdateDefault();
 }
