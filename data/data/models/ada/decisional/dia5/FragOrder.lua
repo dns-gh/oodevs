@@ -353,32 +353,30 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then
-        orderType = "france.military.platoon.combat.support.log.tasks.RenforcerEnRemorqueurs"
         mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, integration.getPionARenforcerParameter( self ) )
         mission.nbrRemorqueurs = integration.getNbrRemorqueursParameter( self )
-    else
-        integration.cleanFragOrder( self )
-        return
+        integration.StartLendTugs ( meKnowledge, mission.pionARenforcer, mission.nbrRemorqueurs  )
     end
+    integration.cleanFragOrder( self )
+    return
   elseif orderType == "Rep_OrderConduite_Pion_TransfererRemorqueurs" then
     if integration.isLogisticTypeUnit( ) then   
-        orderType = "france.military.platoon.combat.support.log.tasks.TransfererRemorqueurs"
         mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, integration.getPionRenforceParameter( self ) )
         mission.pionARenforcer = CreateKnowledge( integration.ontology.types.agent, integration.getPionARenforcerParameter( self ) )
         mission.nbrRemorqueurs = integration.getNbrRemorqueursParameter( self )
-    else
-        integration.cleanFragOrder( self )
-        return
+        integration.StartGetTugs ( mission.pionRenforce, mission.nbrRemorqueurs )
+        integration.StartLendTugs ( mission.pionRenforce, mission.pionARenforcer, mission.nbrRemorqueurs  )
     end
+    integration.cleanFragOrder( self )
+    return
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" then
-    if integration.isLogisticTypeUnit( ) then     
-        orderType = "france.military.platoon.combat.support.log.tasks.ReprendreAuxOrdresRemorqueurs"
+    if integration.isLogisticTypeUnit( ) then
         mission.pionRenforce = CreateKnowledge( integration.ontology.types.agent, integration.getPionRenforceParameter( self ) )
         mission.nbrRemorqueurs = integration.getNbrRemorqueursParameter( self )
-    else
-        integration.cleanFragOrder( self )
-        return
+        integration.StartGetTugs ( mission.pionRenforce, mission.nbrRemorqueurs )
     end
+    integration.cleanFragOrder( self )
+    return
   elseif orderType == "france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" then
     if myself.obstacleToActivate then  -- les unités qui ont construits des obstacles à activer sont les seules à recevoir l'ODC
         local obstacles = {}

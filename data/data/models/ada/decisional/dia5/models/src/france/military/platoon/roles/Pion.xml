@@ -40,9 +40,7 @@
 		<skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
 		<skill name="france.military.platoon.combat.support.circu.skills.AppuyerMouvement"/>
 		<skill name="france.military.platoon.combat.support.circu.skills.ConstruireZone"/>
-		<skill name="france.military.platoon.combat.support.log.skills.RecupererRemorqueurs"/>
 		<skill name="france.military.platoon.combat.support.log.skills.RecupererVSRAM"/>
-		<skill name="france.military.platoon.combat.support.log.skills.PreterRemorqueurs"/>
 		<skill name="france.military.platoon.combat.support.log.skills.PreterVSRAM"/>
 		<skill name="sword.military.platoon.skills.DropUnit"/>
 		<skill name="france.military.platoon.combat.support.art.skills.ReconnaitreZoneDeploiement"/>

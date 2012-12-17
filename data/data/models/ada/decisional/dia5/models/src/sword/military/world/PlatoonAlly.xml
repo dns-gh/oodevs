@@ -1320,37 +1320,6 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
-        <method name="LendTugs">
-            <description>Action physique de prêter des remorqueurs.</description>
-            <argument name="pionRenforce">
-                <type>
-                    <class name="sword.military.world.PlatoonAlly"/>
-                </type>
-            </argument>
-            <argument name="pionARenforcer">
-                <type>
-                    <class name="sword.military.world.PlatoonAlly"/>
-                </type>
-            </argument>
-            <argument name="nbrRemorqueurs">
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </argument>
-        </method>
-        <method name="GetTugs">
-            <description>Action physique de prêter des remorqueurs.</description>
-            <argument name="pionRenforce">
-                <type>
-                    <class name="sword.military.world.PlatoonAlly"/>
-                </type>
-            </argument>
-            <argument name="nbrRemorqueurs">
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </argument>
-        </method>
         <method name="LendVSRAM">
             <description>Action physique de prêter des ambulances.</description>
             <argument name="pionRenforce">

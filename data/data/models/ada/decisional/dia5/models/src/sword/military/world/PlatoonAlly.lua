@@ -920,18 +920,6 @@ return
         start = integration.activateSensors,
         stop = integration.deactivateSensors
     } ),
-    LendTugs = masalife.brain.integration.startStopAction(
-    {
-        start = function( self, pionRenforce, pionARenforcer, nbrRemorqueurs)
-            integration.StartLendTugs( pionRenforce, pionARenforcer, nbrRemorqueurs )
-        end,
-    } ),
-    GetTugs = masalife.brain.integration.startStopAction(
-    {
-        start = function( self, pionRenforce, nbrRemorqueurs )
-            integration.StartGetTugs( pionRenforce, nbrRemorqueurs )
-        end,
-    } ),
     LendVSRAM = masalife.brain.integration.startStopAction(
     {
         start = function( self, pionRenforce, pionARenforcer, nbrAmbulances)
