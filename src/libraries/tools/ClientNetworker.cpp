@@ -14,6 +14,7 @@
 #include "BufferedMessageCallback.h"
 #include "BufferedConnectionCallback.h"
 #include "ObjectMessageService.h"
+#include "WaitEvent.h"
 #include <boost/bind.hpp>
 #include "asio.h"
 
@@ -32,8 +33,8 @@ ClientNetworker::ClientNetworker( const std::string& host /* = "" */, bool retry
     , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
     , connector_       ( new Connector( *service_, *sockets_, *connectionBuffer_ ) )
+    , quit_            ( new WaitEvent() )
     , retry_           ( retry )
-    , stopped_         ( false )
     , thread_          ( boost::bind( &ClientNetworker::Run, this ) )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ClientNetworker::ConnectionError, this, _1, _2 ) );
@@ -50,8 +51,11 @@ ClientNetworker::~ClientNetworker()
 {
     try
     {
-        service_->post( boost::bind( &ClientNetworker::Stop, this ) );
+        quit_->Signal();
+        service_->stop();
         thread_.join();
+        connector_->Close();
+        sockets_->Disconnect();
     }
     catch( ... )
     {
@@ -135,23 +139,11 @@ void ClientNetworker::ConnectionWarning( const std::string& , const std::string&
 void ClientNetworker::Run()
 {
     ::SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL );
-    while( !stopped_ )
+    do
     {
         service_->run();
-        ::Sleep( 100 );
         service_->reset();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientNetworker::Stop
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void ClientNetworker::Stop()
-{
-    stopped_ = true;
-    connector_->Close();
-    sockets_->Disconnect();
+    } while( !quit_->Wait( boost::posix_time::milliseconds( 100 ) ) );
 }
 
 // -----------------------------------------------------------------------------
