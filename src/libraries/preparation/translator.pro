@@ -30,6 +30,7 @@ LogisticBaseStates.cpp \
 LogisticLevelAttritube.cpp \
 MedicalTreatmentAttribute.cpp \
 MineAttribute.cpp \
+Model.cpp \
 NBCAttribute.cpp \
 Object.cpp \
 ObstacleAttribute.cpp \

@@ -86,18 +86,22 @@ void Usages::UpdateDefault()
 // -----------------------------------------------------------------------------
 void Usages::Add( const std::string& usage, unsigned int proportion )
 {
-    usages_[ usage ] = proportion;
-    const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usage.c_str();
-    float occupation = livingSpace_ * proportion * 0.01f;
     AccommodationType* accommodation = accommodationTypes_.Find( usage );
-    occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
-    occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
+    if( accommodation )
+    {
+        usages_[ usage ] = proportion;
+        const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usage.c_str();
+        float occupation = livingSpace_ * proportion * 0.01f;
 
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ usage ] ) );
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].first ) );
-    dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].second ) );
+        occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation->GetNominalCapacity() ) );
+        occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation->GetMaxCapacity() ) );
 
-    controller_.Update( kernel::DictionaryUpdated( owner_, motivationString ) );
+        dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Percentage" ), static_cast< const unsigned int &>( usages_[ usage ] ) );
+        dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Nominal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].first ) );
+        dictionary_.Register( owner_, motivationString + tools::translate( "Block", "/Maximal capacity" ), static_cast< const unsigned int &>( occupations_[ usage ].second ) );
+
+        controller_.Update( kernel::DictionaryUpdated( owner_, motivationString ) );
+    }
 
     UpdateDefault();
 }

@@ -43,6 +43,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
@@ -316,10 +317,13 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config )
 {
+    config_ = &config;
+    if( !config.IsTerrainSamePhysicalRef() )
+        AppendLoadingError( eOthers, tools::translate( "Model", "Terrain's physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save." ).toAscii().constData(), 0 );
+
     width_ = config.GetTerrainWidth();
     height_ = config.GetTerrainHeight();
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
-    config_ = &config;
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) );
     config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
@@ -411,11 +415,8 @@ void Model::SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban /* 
 void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& errorMsg, kernel::Entity_ABC* entity /* = 0 */ )
 {
     ModelConsistencyChecker::ConsistencyError error( type );
-    if( entity )
-    {
-        kernel::SafePointer< kernel::Entity_ABC >* safePtr = ( entity ) ? new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity ) : 0;
-        error.items_.push_back( safePtr );
-    }
+    kernel::SafePointer< kernel::Entity_ABC >* safePtr = new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity );
+    error.items_.push_back( safePtr );
     error.optional_ = errorMsg;
     loadingErrors_.push_back( error );
 }

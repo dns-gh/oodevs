@@ -401,6 +401,13 @@
     </message>
 </context>
 <context>
+    <name>Model</name>
+    <message>
+        <source>Terrain&apos;s physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save.</source>
+        <translation>La base physique du terrain ne correspond pas à celle de l'exercice. Tous les materiaux, formes de toit, usages et infrastructures des blocs urbains seront perdus à la prochaine sauvegarde.</translation>
+    </message>
+</context>
+<context>
     <name>NBC</name>
     <message>
         <source>NBC agent(s):</source>
