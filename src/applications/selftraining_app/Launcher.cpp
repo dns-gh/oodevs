@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "Launcher.h"
 #include "launcher_dll/LauncherFacade.h"
+#include "tools/WaitEvent.h"
 
 namespace
 {
@@ -27,7 +28,7 @@ namespace
 // -----------------------------------------------------------------------------
 Launcher::Launcher( int argc, char** argv )
     : launcher_( CreateFacade( argc, argv ) )
-    , running_ ( true )
+    , quit_    ( new tools::WaitEvent() )
     , thread_  ( new boost::thread( boost::bind( &Launcher::Run, this ) ) )
 {
     // NOTHING
@@ -39,11 +40,8 @@ Launcher::Launcher( int argc, char** argv )
 // -----------------------------------------------------------------------------
 Launcher::~Launcher()
 {
-    if( thread_.get() )
-    {
-        Stop();
-        thread_->join();
-    }
+    quit_->Signal();
+    thread_->join();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,22 +50,9 @@ Launcher::~Launcher()
 // -----------------------------------------------------------------------------
 void Launcher::Run()
 {
-    if( IsInitialized() )
-        while( running_ )
-        {
-            launcher_->Update();
-            boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) ) ;
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Launcher::Stop
-// Created: SBO 2010-11-03
-// -----------------------------------------------------------------------------
-void Launcher::Stop()
-{
-    boost::recursive_mutex::scoped_lock locker( mutex_ );
-    running_ = false;
+    do
+        launcher_->Update();
+    while( !quit_->Wait( boost::posix_time::milliseconds( 25 ) ) );
 }
 
 // -----------------------------------------------------------------------------

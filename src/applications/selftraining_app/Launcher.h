@@ -17,6 +17,11 @@
 
 class LauncherFacade;
 
+namespace tools
+{
+    class WaitEvent;
+}
+
 // =============================================================================
 /** @class  Launcher
     @brief  Launcher
@@ -35,7 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    void Stop();
     bool IsInitialized() const;
     std::string GetLastError() const;
     void SetRootDir( const std::string& directory );
@@ -51,9 +55,8 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< LauncherFacade > launcher_;
-    bool running_;
+    std::auto_ptr< tools::WaitEvent > quit_;
     std::auto_ptr< boost::thread > thread_;
-    boost::recursive_mutex mutex_;
     //@}
 };
 
