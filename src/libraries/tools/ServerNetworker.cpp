@@ -14,6 +14,7 @@
 #include "ObjectMessageService.h"
 #include "SocketManager.h"
 #include "Acceptor.h"
+#include "WaitEvent.h"
 #include "asio.h"
 
 using namespace tools;
@@ -29,8 +30,7 @@ ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=
     , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
     , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
-    , stopped_         ( false )
-    , thread_          ()
+    , quit_            ( new WaitEvent() )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ServerNetworker::ConnectionError, this, _1, _2 ) );
     messageService_->RegisterWarningCallback( boost::bind( &ServerNetworker::ConnectionWarning, this, _1, _2 ) );
@@ -46,8 +46,11 @@ ServerNetworker::~ServerNetworker()
 {
     try
     {
-        service_->post( boost::bind( &ServerNetworker::Stop, this ) );
+        DenyConnections();
+        quit_->Signal();
+        service_->stop();
         thread_.join();
+        sockets_->Disconnect();
     }
     catch( ... )
     {
@@ -99,23 +102,11 @@ void ServerNetworker::Update()
 void ServerNetworker::Run()
 {
     ::SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_ABOVE_NORMAL );
-    while( !stopped_ )
+    do
     {
         service_->run();
-        ::Sleep( 100 );
         service_->reset();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ServerNetworker::Stop
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void ServerNetworker::Stop()
-{
-    stopped_ = true;
-    acceptor_->DenyConnections();
-    sockets_->Disconnect();
+    } while( !quit_->Wait( boost::posix_time::milliseconds( 100 ) ) );
 }
 
 // -----------------------------------------------------------------------------

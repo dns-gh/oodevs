@@ -35,6 +35,7 @@ namespace tools
     class BufferedConnectionCallback;
     class SocketManager;
     class Acceptor;
+    class WaitEvent;
 
 // =============================================================================
 /** @class  ServerNetworker
@@ -98,7 +99,6 @@ private:
     //! @name Helpers
     //@{
     void Run();
-    void Stop();
     //@}
 
 private:
@@ -110,7 +110,7 @@ private:
     std::auto_ptr< SocketManager >                  sockets_;
     std::auto_ptr< ObjectMessageService >           messageService_;
     std::auto_ptr< Acceptor >                       acceptor_;
-    bool                                            stopped_;
+    std::auto_ptr< WaitEvent >                      quit_;
     boost::thread                                   thread_;
     //@}
 };
