@@ -45,7 +45,7 @@ namespace
         return ( rRapForBoundMax - rRapForBoundMin ) / rBaseTimeValue;
     }
 
-    typedef boost::container::flat_map< std::pair< std::size_t, std::size_t >, double > T_DangerosityCache;
+    typedef std::vector< double > T_DangerosityCache;
     std::map< std::size_t, T_DangerosityCache > caches;
 
     void FillCache( T_DangerosityCache& cache, std::size_t id, const wrapper::View& knowledges, const wrapper::View& model )
@@ -61,7 +61,7 @@ namespace
             for( std::size_t j = 0; j < es; ++j )
             {
                 const SWORD_Model* e = knowledges[ static_cast< std::size_t >( enemies.GetElement( j ) ) ];
-                cache.insert( cache.end(), std::make_pair( std::make_pair( i, j ), GET_HOOK( EvaluateDangerosity2 )( f, e ) ) );
+                cache.push_back( GET_HOOK( EvaluateDangerosity2 )( f, e ) );
             }
         }
     }
@@ -114,7 +114,7 @@ namespace
             if( ! filter( knowledgeFriend, userData ) )
                 continue;
             for( auto it = ids.begin(); it != ids.end(); ++it )
-                rTotalFightScoreFriend += cache.find( std::make_pair( i, *it ) )->second;
+                rTotalFightScoreFriend += cache[ i * *it ];
         }
         return ( rTotalFightScoreFriend / dangerousEnemies.size() ) / rTotalFightScoreEnemy;
     }
