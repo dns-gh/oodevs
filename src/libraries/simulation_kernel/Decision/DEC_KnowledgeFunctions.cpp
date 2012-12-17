@@ -466,7 +466,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetCollidingDisasters( cons
 {
     T_KnowledgeObjectDiaIDVector result;
     T_KnowledgeObjectDiaIDVector objectsColliding;
-    callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
+    callerAgent.GetArmy().GetKnowledge().GetObjects( objectsColliding );
     for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
         if( *it )
         {
