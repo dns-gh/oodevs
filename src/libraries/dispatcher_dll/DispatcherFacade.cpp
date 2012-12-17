@@ -62,3 +62,68 @@ void DispatcherFacade::Update()
 {
     dispatcher_->Update();
 }
+
+// -----------------------------------------------------------------------------
+// Name: CreateDispatcherFacade
+// Created: SLI 2012-07-18
+// -----------------------------------------------------------------------------
+extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
+{
+    try
+    {
+        return new DispatcherFacade( argc, argv, maxConnections );
+    }
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Initializing: " << e.what() );
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Initializing: Unknown error" );
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DestroyDispatcherFacade
+// Created: SLI 2012-07-18
+// -----------------------------------------------------------------------------
+extern "C" __declspec(dllexport) void DestroyDispatcherFacade( void* dispatchFacade )
+{
+    if( dispatchFacade )
+        delete static_cast< DispatcherFacade* >( dispatchFacade );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UpdateDispatcherFacade
+// Created: SLI 2012-07-18
+// -----------------------------------------------------------------------------
+extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFacade )
+{
+    try
+    {
+        if( dispatchFacade )
+            static_cast< DispatcherFacade* >( dispatchFacade )->Update();
+    }
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Updating: " << e.what() );
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Updating: Unknown error" );
+    }
+}
+
+#ifndef PLATFORM
+#define PLATFORM platform
+#endif
+#include "dispatcher/DispatcherLoader.h"
+
+namespace // for compilation check only
+{
+    static const dispatcher::DispatcherLoader::T_FacadeCreator creator = &CreateDispatcherFacade;
+    static const dispatcher::DispatcherLoader::T_FacadeDestructor destructor = &DestroyDispatcherFacade;
+    static const dispatcher::DispatcherLoader::T_FacadeUpdator updator = &UpdateDispatcherFacade;
+}
+
