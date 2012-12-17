@@ -107,6 +107,7 @@ create = function( self )
         -- Init
         local Activate = Activate
         myself.leadData = {}
+        myself.leadData.noASSScoutUnit = false
         self.entitiesWithoutMission = copyTable( self.parameters.commandingEntities )
         myself.feedback = false
         self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
@@ -138,6 +139,9 @@ create = function( self )
         local bestUnits = issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First )
         
         if #bestUnits == 0 then
+            if self.params.companyTask == "france.military.company.combat.support.art.tasks.RecoEtDeploiement" then -- Gestion de reco et déployement quand il n'y a pas d'unités de reco'
+                myself.leadData.noASSScoutUnit = true
+            end
             return
         end
 end,
@@ -149,7 +153,7 @@ activate = function( self )
     end
     
     -- Si on a recu l'ordre de conduite poursuivre alors on distribue les missions au second echelon
-    if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Poursuivre" ) ~= nil then
+    if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Poursuivre" ) ~= nil or myself.leadData.noASSScoutUnit then
         -- Le second echelon recoit les missions de "supportTask"
         issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second )
 

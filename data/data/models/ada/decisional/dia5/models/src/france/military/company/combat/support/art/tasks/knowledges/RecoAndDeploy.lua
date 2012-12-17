@@ -6,6 +6,8 @@ return
         myself.leadData.pionCourantSite = 0
         myself.leadData.NombreTotalSitesAConstruire = 0
         myself.leadData.deployPositionIndex = 1
+        myself.leadData.areaFire = {}
+        myself.leadData.deployFirePositionIndex = 0
     end,
 
     getObjective = function( self, params )
@@ -45,7 +47,7 @@ return
            myself.leadData.deployPositionIndex = myself.leadData.deployPositionIndex + 1 
            myself.leadData.NombreTotalSitesAConstruire = myself.leadData.NombreTotalSitesAConstruire + 2 -- On ajoute 2 à la liste des sites (2 sites par zone)
        else                                                 -- nb de zone > nb de pions: chaque pion recoit une ou plusieurs sous-zone
-           for i=1, #areasKn do               
+           for i=1, #areasKn do
               if  i % nbFront ==  myself.leadData.pionCourant % nbFront then  
                   result[#result+1] = areasKn[ myself.leadData.deployPositionIndex ]     
                   myself.leadData.deployPositionIndex = myself.leadData.deployPositionIndex + 1      
@@ -57,14 +59,30 @@ return
     end,
     
     getFirePositions = function( self, params )
-        
-        if not meKnowledge.constructedObjects then
-          return {}
+        local nbrFront = params.maxNbrFront
+        if not meKnowledge.constructedObjects then -- no fire position constructed
+            if myself.leadData.noASSScoutUnit then -- no  ASS reco units, deploy inside area given by mission parameter
+                for i=1, #params.objectives do
+                    local position = params.objectives[i]
+                    local nbParts = math.max((nbrFront /#params.objectives),1)
+                    local subAreas = DEC_Geometry_SplitLocalisation( position.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
+                    subAreas = subAreas.first
+                    for _, area in pairs( subAreas ) do
+                        myself.leadData.areaFire[#myself.leadData.areaFire + 1] = CreateKnowledge( sword.military.world.Area, area )
+                    end
+                    if #subAreas == 0 then
+                        myself.leadData.areaFire[#myself.leadData.areaFire + 1] = position -- cas ou la zone est hors limite
+                    end
+                end
+                myself.leadData.deployFirePositionIndex = myself.leadData.deployFirePositionIndex % #myself.leadData.areaFire + 1
+                return { myself.leadData.areaFire[ myself.leadData.deployFirePositionIndex ] }
+            else
+                return {} -- deploy on position, no better choice
+            end
         end
         
         myself.leadData.pionCourantSite = myself.leadData.pionCourantSite + 1 
 
-        local nbrFront = params.maxNbrFront
         local objectsFromAutomat = {}
         local objectsInArea = {}
         
@@ -76,7 +94,7 @@ return
                 local objet = meKnowledge.constructedObjects[j]
                 if integration.isPointInLocalisation(objet, params.objectives[i]) then
                     objectsInArea[i][#objectsInArea[i]+1] = objet
-                end               
+                end
              end 
         end        
         if #params.objectives >= nbrFront then
