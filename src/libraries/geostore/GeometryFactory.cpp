@@ -61,7 +61,7 @@ gaiaGeomCollPtr GeometryFactory::InitGeometryCollection()
 // -----------------------------------------------------------------------------
 gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
 {
-    if( gaiaIsValid( geom ) != 1 || gaiaDimension( geom ) < 0 )
+    if( gaiaDimension( geom ) < 0 || gaiaIsValid( geom ) != 1 )
     {
         gaiaFreeGeomColl( geom );
         geom = 0;
