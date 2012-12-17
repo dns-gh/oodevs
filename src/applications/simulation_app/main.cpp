@@ -122,6 +122,10 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app->Execute();
     }
+    catch( const FlexLmLicense::LicenseError& e )
+    {
+        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
+    }
     catch( const tools::Exception& e )
     {
         std::string errorMsg = e.CreateLoggerMsg();
@@ -140,10 +144,6 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_ERROR_MSG( "Bad alloc" );
         if( verbose )
             MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
-    }
-    catch( const FlexLmLicense::LicenseError& e )
-    {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
     catch( const std::exception& e )
     {
