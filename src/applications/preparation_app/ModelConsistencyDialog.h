@@ -61,6 +61,7 @@ private:
     //! @name Member data
     //@{
     kernel::ActionController& actionController_;
+    const kernel::SafePointer< kernel::Entity_ABC > emptyEntity_; 
     //@}
 };
 

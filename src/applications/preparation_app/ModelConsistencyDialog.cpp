@@ -56,6 +56,7 @@ namespace
 ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : T_Parent( parent, *new ModelConsistencyChecker( model, staticModel, controllers, fileLoaderObserver ), *new gui::FilterProxyModel< E_ConsistencyCheck >( IsError, Convert ) )
     , actionController_( controllers.actions_ )
+    , emptyEntity_( controllers )
 {
     // Base size
     setMinimumSize( 900, 500 );
@@ -177,9 +178,9 @@ void ModelConsistencyDialog::UpdateDataModel()
         for( ModelConsistencyChecker::CIT_Items entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt, ++currentRow )
         {
             QList< QStandardItem* > items;
-            const kernel::SafePointer< kernel::Entity_ABC >& entity = **entityIt;
-            if( entity )
+            if( *entityIt && **entityIt )
             {
+                const kernel::SafePointer< kernel::Entity_ABC >& entity = **entityIt;
                 AddIcon( entity, error.type_, items );
                 AddItem( static_cast< unsigned int >( entity->GetId() ), locale().toString( static_cast< unsigned int >( entity->GetId() ) ), entity, error.type_, items );
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
@@ -188,15 +189,15 @@ void ModelConsistencyDialog::UpdateDataModel()
             }
             else
             {
-                AddIcon( entity, error.type_, items );
-                AddItem( 0, "---", entity, error.type_, items );
-                AddItem( "---", "---", entity, error.type_, items );
-                AddItem( "---", "---", entity, error.type_, items );
+                AddIcon( emptyEntity_, error.type_, items );
+                AddItem( 0, "---", emptyEntity_, error.type_, items );
+                AddItem( "---", "---", emptyEntity_, error.type_, items );
+                AddItem( "---", "---", emptyEntity_, error.type_, items );
             }
             QString text = errorDescriptions_[ error.type_ ];
             if( text.contains( "%1" ) )
                 text = text.arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() );
-            AddItem( text, text, entity, error.type_, items  );
+            AddItem( text, text, ( *entityIt && **entityIt ) ? **entityIt : emptyEntity_, error.type_, items  );
             dataModel_->appendRow( items );
         }
     }
