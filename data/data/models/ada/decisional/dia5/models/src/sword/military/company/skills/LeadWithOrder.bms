@@ -73,8 +73,14 @@ local function manageAddedAndDeletedUnits( self )
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
                 if not DEC_HasMission( entity.source ) then -- Si le pion n'a pas de mission
-                    local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
-                    issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
+                    local tasksForNewEntity = ""
+                    if myself.taskParams.echelonNumber == 1 then
+                          tasksForNewEntity = self.params.mainTasks
+                          issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_First, { entity } )
+                    else
+                          tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
+                          issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
+                    end
                 end
             end
         end
