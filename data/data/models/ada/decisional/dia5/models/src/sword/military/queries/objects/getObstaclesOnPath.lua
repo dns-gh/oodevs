@@ -13,14 +13,14 @@ queryImplementation "getObstaclesOnPath"
 
         local result = knowledgeManager.getQueryResult( "getObstacleOnPath" )
         local currentObstacle = {}
-        if meKnowledge:isMoving() then                
-            local object = DEC_GetNextObjectOnPath( nil, 0.0, {} )
+        if meKnowledge:isMoving() then
+            local object = DEC_GetNextObjectOnPath( nil, 200.0, {} )
             -- Object on the path 
             if object.first then
                 -- Check if object knowledge is already in result table else create knowledge of it
                 local objectToAdd = CheckEqualObjects( object.second.first, result )
                 if not objectToAdd then
-                    local kn = CreateKnowledge( integration.ontology.types.object, object.second.first ) 
+                    local kn = CreateKnowledge( integration.ontology.types.object, object.second.first )
                     currentObstacle = { kn }
                 else
                     currentObstacle = { objectToAdd }

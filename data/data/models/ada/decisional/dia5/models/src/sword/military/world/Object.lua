@@ -290,7 +290,7 @@ return
         return integration.activateIt( self )
     end,
     canRemoveIt = function( self )
-        return integration.canRemoveIt( self )
+        return integration.canRemoveIt( self ) or integration.isInEffectArea( self )
     end,
     removeIt = masalife.brain.integration.startStopAction( 
     { 
@@ -314,7 +314,7 @@ return
         stop = integration.stopDemineIt
      } ),
     canBypassIt = function( self )
-        return integration.canBypassIt( self )
+        return integration.canBypassIt( self ) or integration.isInEffectArea( self )
     end,
     canBeBypassed = function( self )
         return integration.canBeBypassed( self )
