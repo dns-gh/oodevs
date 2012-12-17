@@ -61,7 +61,7 @@ void Transports::DoUpdate( const sword::UnitAttributes& message )
         transported_.clear();
         transported_.resize( message.transported_units().elem_size() );
         for( int i = 0; i < message.transported_units().elem_size(); ++i )
-            transported_.push_back( resolver_.Find( message.transported_units().elem( i ).id() ) );
+            transported_[ i ] = resolver_.Find( message.transported_units().elem( i ).id() );
     }
     if( message.has_transporting_unit() )
         transporter_ = resolver_.Find( message.transporting_unit().id() );

@@ -333,6 +333,8 @@ bool PHY_RoleAction_Transport::AddPion( MIL_Agent_ABC& transported, bool bTransp
         return false;
 
     transportedPions_[ &transported ].sTransportData::sTransportData( weightComp->TotalTransportedWeight(), bTransportOnlyLoadable );
+
+    bHasChanged_ = true;
     return true;
 }
 
