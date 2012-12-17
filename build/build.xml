@@ -42,7 +42,7 @@
     </math>
 
     <!-- definitions -->
-    <defineset>
+    <defineset id="global">
         <define name="BOOST_SPIRIT_THREADSAFE"/>
         <define name="PLATFORM" value="${platform}"/>
         <define name="_WIN32_WINNT" value="0x501"/>
