@@ -156,21 +156,21 @@ void MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void MaintenanceResolver::InitHeader()
 {
-    MaintenanceConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
-    consign.tick_           = tools::translate( "logistic", "tick" ).toStdString();
-    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toStdString();
-    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toStdString();
-    consign.unitId_         = tools::translate( "logistic", "unit id" ).toStdString();
-    consign.providerId_     = tools::translate( "logistic", "provider id" ).toStdString();
-    consign.stateId_        = tools::translate( "logistic", "state id" ).toStdString();
-    consign.equipmentId_    = tools::translate( "logistic", "equipment id" ).toStdString();
-    consign.breakdownId_    = tools::translate( "logistic", "breakdown id" ).toStdString();
-    consign.simTime_        = tools::translate( "logistic", "GDH" ).toStdString();
-    consign.unit_           = tools::translate( "logistic", "unit" ).toStdString();
-    consign.provider_       = tools::translate( "logistic", "provider" ).toStdString();
-    consign.equipment_      = tools::translate( "logistic", "equipment" ).toStdString();
-    consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toStdString();
-    consign.state_          = tools::translate( "logistic", "state" ).toStdString();
+    MaintenanceConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
+    consign.tick_           = tools::translate( "logistic", "tick" ).toAscii().constData();
+    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toAscii().constData();
+    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toAscii().constData();
+    consign.unitId_         = tools::translate( "logistic", "unit id" ).toAscii().constData();
+    consign.providerId_     = tools::translate( "logistic", "provider id" ).toAscii().constData();
+    consign.stateId_        = tools::translate( "logistic", "state id" ).toAscii().constData();
+    consign.equipmentId_    = tools::translate( "logistic", "equipment id" ).toAscii().constData();
+    consign.breakdownId_    = tools::translate( "logistic", "breakdown id" ).toAscii().constData();
+    consign.simTime_        = tools::translate( "logistic", "GDH" ).toAscii().constData();
+    consign.unit_           = tools::translate( "logistic", "unit" ).toAscii().constData();
+    consign.provider_       = tools::translate( "logistic", "provider" ).toAscii().constData();
+    consign.equipment_      = tools::translate( "logistic", "equipment" ).toAscii().constData();
+    consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toAscii().constData();
+    consign.state_          = tools::translate( "logistic", "state" ).toAscii().constData();
     SetHeader( consign );
 }
 

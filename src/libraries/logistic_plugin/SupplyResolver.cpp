@@ -261,11 +261,11 @@ void SupplyResolver::InitHeader()
     SupplyConsignData::Resource resource;
     resource.recipientAutomatId_ = 0;
     resource.recipientId_ = tools::translate( "logistic", "recipient id" ).toAscii().constData();
-    resource.id_        = tools::translate( "logistic", "resource type id" ).toStdString();
-    resource.type_      = tools::translate( "logistic", "resource type" ).toStdString();
-    resource.requested_ = tools::translate( "logistic", "requested" ).toStdString();
-    resource.granted_   = tools::translate( "logistic", "granted" ).toStdString();
-    resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toStdString();
+    resource.id_        = tools::translate( "logistic", "resource type id" ).toAscii().constData();
+    resource.type_      = tools::translate( "logistic", "resource type" ).toAscii().constData();
+    resource.requested_ = tools::translate( "logistic", "requested" ).toAscii().constData();
+    resource.granted_   = tools::translate( "logistic", "granted" ).toAscii().constData();
+    resource.conveyed_  = tools::translate( "logistic", "conveyed" ).toAscii().constData();
     for( int i = 0; i < 15; ++i )
         consign.resources_[ i ] = resource;
     SetHeader( consign );

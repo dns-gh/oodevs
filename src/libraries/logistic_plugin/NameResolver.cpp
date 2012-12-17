@@ -51,7 +51,7 @@ void NameResolver::GetAgentName( int id, std::string& name ) const
 {
     const dispatcher::Agent_ABC* pAgent = model_.Agents().Find( static_cast< unsigned int >( id ) );
     if( pAgent && !pAgent->GetExtension( "NomLong" , name ) )
-        name = pAgent->GetName().toStdString();
+        name = pAgent->GetName().toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void NameResolver::GetAutomatName( int id, std::string& name ) const
 {
     const dispatcher::Automat_ABC* pAutomat = model_.Automats().Find( static_cast< unsigned int >( id ) );
     if( pAutomat && !pAutomat->GetExtension( "NomLong" , name ) )
-        name = pAutomat->GetName().toStdString();
+        name = pAutomat->GetName().toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void NameResolver::GetFormationName( int id, std::string& name ) const
 {
     const dispatcher::Formation_ABC* pFormation = model_.Formations().Find( static_cast< unsigned int >( id ) );
     if( pFormation && !pFormation->GetExtension( "NomLong" , name ) )
-        name = pFormation->GetName().toStdString();
+        name = pFormation->GetName().toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------
