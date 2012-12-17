@@ -209,13 +209,6 @@ bool WeaponType::CheckIndirectFireDotation( const wrapper::View& firer, boost::o
 
 namespace
 {
-    boost::shared_ptr< WeaponType > FindWeaponType( const std::string& weapon )
-    {
-        boost::shared_ptr< WeaponType > type = WeaponType::FindWeaponType( weapon );
-        if( !type )
-            throw MASA_EXCEPTION( "Unknown weapon type : " + weapon );
-        return type;
-    }
     template< typename Accumulator, typename Filter, typename Operation >
     double Get( Accumulator accumulator, const wrapper::View& firer, Filter filter, Operation operation, double init )
     {
@@ -229,7 +222,7 @@ namespace
                 const wrapper::View& weapons = component[ "weapons" ];
                 for( std::size_t w = 0; w < weapons.GetSize(); ++w )
                 {
-                    boost::shared_ptr< WeaponType > type = FindWeaponType( weapons.GetElement( w )[ "type" ] );
+                    boost::shared_ptr< WeaponType > type = WeaponType::FindWeaponType( weapons.GetElement( w )[ "type" ] );
                     result = accumulator( result, operation( type ) );
                 }
             }
@@ -420,11 +413,11 @@ double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, boost:
 // Name: WeaponType::FindWeaponType
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< WeaponType > WeaponType::FindWeaponType( const std::string& strType )
+boost::shared_ptr< WeaponType > WeaponType::FindWeaponType( const std::string& type )
 {
-    auto it = types.find( strType );
+    auto it = types.find( type );
     if( it == types.end() )
-        return boost::shared_ptr< WeaponType >();
+        throw MASA_EXCEPTION( "Unknown weapon type : " + type );
     return it->second;
 }
 

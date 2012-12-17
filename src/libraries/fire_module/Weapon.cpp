@@ -31,8 +31,7 @@ Weapon::Weapon( ModuleFacade& module, const wrapper::View& model, const wrapper:
     , weapon_( weapon )
     , type_  ( WeaponType::FindWeaponType( weapon[ "type" ] ) )
 {
-     if( ! type_ )
-         throw MASA_EXCEPTION( "Unknown weapon type : " + weapon[ "type" ] );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

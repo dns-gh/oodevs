@@ -50,7 +50,7 @@ public:
     //@{
     static void Initialize( xml::xisubstream xis, double tickDuration );
 
-    static boost::shared_ptr< WeaponType > FindWeaponType( const std::string& strType );
+    static boost::shared_ptr< WeaponType > FindWeaponType( const std::string& type );
     //@}
 
     //! @name Accessors
