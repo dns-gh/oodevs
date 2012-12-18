@@ -25,6 +25,22 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
 
+namespace
+{
+    MIL_Object_ABC* CreateObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
+    {
+        if( !pGenObject )
+            throw MASA_EXCEPTION( "Invalid genObject in PHY_ActionConstructObject" );
+        return MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(),
+                                                                         pGenObject->GetTypeName(),
+                                                                         &pGenObject->GetLocalisation(),
+                                                                         pGenObject->GetObstacleType(),
+                                                                         pGenObject->GetExternalIdentifier(),
+                                                                         pGenObject->GetName(),
+                                                                         pGenObject->GetDensity() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConstructObject constructor
 // Created: NLD 2004-08-18
@@ -32,13 +48,7 @@
 PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject, bool instantaneous )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_      ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(),
-                                                                                       pGenObject->GetTypeName(),
-                                                                                       &pGenObject->GetLocalisation(),
-                                                                                       pGenObject->GetObstacleType(),
-                                                                                       pGenObject->GetExternalIdentifier(),
-                                                                                       pGenObject->GetName(),
-                                                                                       pGenObject->GetDensity() ) )
+    , pObject_      ( CreateObject( pion, pGenObject ) )
     , instantaneous_( instantaneous )
 {
     role_.SetCreator( *pObject_ );
