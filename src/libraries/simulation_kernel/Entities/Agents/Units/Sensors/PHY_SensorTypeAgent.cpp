@@ -697,14 +697,18 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationConcentration& target, double /*rSensorHeight*/ ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationConcentration& target, double rSensorHeight ) const
 {
     const double     rDistanceMaxModificator = GetSourceFactor( source );
-    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& vSourcePos            = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator ) )
         return PHY_PerceptionLevel::notSeen_;
-    return PHY_PerceptionLevel::identified_;
+
+    const double rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const double rTargetAltitude = MIL_Tools::GetAltitude( target.GetPosition() ) + 2;
+    return RayTrace( vSourcePos, rSourceAltitude, target.GetPosition(), rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ? 
+        PHY_PerceptionLevel::notSeen_ : PHY_PerceptionLevel::identified_;
 }
 
 // -----------------------------------------------------------------------------
@@ -721,17 +725,20 @@ double PHY_SensorTypeAgent::ComputePerceptionAccuracy( const MIL_Agent_ABC& sour
 // Name: PHY_SensorTypeAgent::ComputePerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationFlow& target, double /*rSensorHeight*/, T_PointVector& shape ) const
+const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_PopulationFlow& target, double rSensorHeight, T_PointVector& shape ) const
 {
     const double     rDistanceMaxModificator = GetSourceFactor( source );
-    const MT_Vector2D& vSourcePos              = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& vSourcePos            = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
 
-    if( rDistanceMaxModificator == 0. )
+    if( rDistanceMaxModificator == 0. || !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
         return PHY_PerceptionLevel::notSeen_;
 
-    if( !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
-        return PHY_PerceptionLevel::notSeen_;
-    return PHY_PerceptionLevel::identified_;
+    MT_Vector2D targetPosition;
+    target.GetLocation().ComputeNearestPoint( vSourcePos, targetPosition );
+    const double rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
+    const double rTargetAltitude = MIL_Tools::GetAltitude( targetPosition ) + 2;
+    return RayTrace( vSourcePos, rSourceAltitude, targetPosition, rTargetAltitude, rDistanceMaxModificator ) == PHY_PerceptionLevel::notSeen_ ? 
+        PHY_PerceptionLevel::notSeen_ : PHY_PerceptionLevel::identified_;
 }
 
 // -----------------------------------------------------------------------------
