@@ -70,12 +70,11 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     // -----------------------------------------------------------------------------
     ~Download()
     {
-        if( !rpy_.isNull() )
-        {
-            disconnect( rpy_ );
-            rpy_->abort();
-        }
+        Close();
         async_.Join();
+        rpy_->disconnect( this );
+        rpy_->abort();
+        rpy_->deleteLater();
     }
 
     // -----------------------------------------------------------------------------
@@ -242,7 +241,6 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
             emit Error( id_, rpy_->errorString() );
         Finish();
         async_.Join();
-        rpy_->deleteLater();
         emit Progress( id_, current_, 100 );
         emit End( id_ );
     }
