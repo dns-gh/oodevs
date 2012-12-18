@@ -18,6 +18,16 @@
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
 
+namespace
+{
+    MIL_Object_ABC* CreateObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
+    {
+        if( !pGenObject )
+            throw std::runtime_error( "Invalid genObject in PHY_ActionPrepareObject" );
+        return MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionPrepareObject constructor
 // Prepared: NLD 2004-08-18
@@ -25,7 +35,7 @@
 PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() ) )
+    , pObject_( CreateObject( pion, pGenObject ) )
 {
     pObject_->Initialize( *pGenObject.get() );
     pObject_->RetrieveAttribute< ConstructionAttribute >()->Set( 0. );
