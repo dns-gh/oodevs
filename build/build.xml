@@ -1324,7 +1324,7 @@
     </target>
 
     <target name="package.debug" description="create a zip with all PDB files">
-        <safe-move file="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip">
+        <safe-move file="${out.dir}/SWORD_debug_${platform}_${version.project}.zip">
             <copy todir="${out.dir}/pdb" flatten="true">
                 <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
             </copy>
@@ -1335,7 +1335,7 @@
     </target>
 
     <target name="package.ts" description="create a zip with all ts files">
-        <safe-move file="${dist.dir}/SWORD_ts_${version.project}.zip">
+        <safe-move file="${out.dir}/SWORD_ts_${version.project}.zip">
             <copy todir="${out.dir}/ts" flatten="true">
                 <fileset dir="${src.dir}" includes="**/*.ts"/>
             </copy>
