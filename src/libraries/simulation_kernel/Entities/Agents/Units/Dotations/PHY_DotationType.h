@@ -17,7 +17,7 @@
 
 namespace xml
 {
-    class xistream;
+    class xisubstream;
 }
 
 class PHY_DotationCategory;
@@ -44,15 +44,15 @@ public:
     //@}
 
 public:
-    //! @name Manager
+    //! @name Operations
     //@{
-    static void Initialize( xml::xistream& xis );
+    static void Initialize( xml::xisubstream xis );
     static void Terminate ();
 
-    static const PHY_DotationType*     FindDotationType    ( const std::string& strName );
-    static const PHY_DotationType*     FindDotationType    ( unsigned int nID );
-    static const PHY_DotationCategory* FindDotationCategory( unsigned int nID );
-    static const PHY_DotationCategory* FindDotationCategory( const std::string& strName );
+    static const PHY_DotationType*     FindDotationType    ( const std::string& name );
+    static const PHY_DotationType*     FindDotationType    ( unsigned int id );
+    static const PHY_DotationCategory* FindDotationCategory( unsigned int id );
+    static const PHY_DotationCategory* FindDotationCategory( const std::string& name );
     //@}
 
     //! @name Accessors
@@ -67,43 +67,24 @@ public:
     //@}
 
 private:
-    //! @name Types
+    //! @name Constructors/Destructor
     //@{
-    typedef std::map< std::string, const PHY_DotationType* > T_DotationTypeMap;
-    typedef T_DotationTypeMap::const_iterator              CIT_DotationTypeMap;
-
-    typedef std::map< std::string, const PHY_DotationCategory* > T_DotationCategoryMap;
-    typedef T_DotationCategoryMap::const_iterator              CIT_DotationCategoryMap;
-
-    typedef std::map< unsigned int, const PHY_DotationCategory* > T_DotationCategoryIDMap;
-    typedef T_DotationCategoryIDMap::const_iterator             CIT_DotationCategoryIDMap;
-    //@}
-
-private:
-     PHY_DotationType( const std::string& strName, E_DotationFamily nType );
-    ~PHY_DotationType();
-
-    //! @name Initialisation
-    //@{
-    const PHY_DotationCategory* InternalFindDotationCategory( unsigned int nID ) const;
-    const PHY_DotationCategory* InternalFindDotationCategory( const std::string& strName ) const;
-
-    void RegisterDotation( const std::string& strCategoryName, xml::xistream& xis );
+    PHY_DotationType( const std::string& name, E_DotationFamily type );
     //@}
 
     //! @name Helpers
     //@{
+    void RegisterDotation( xml::xistream& xis );
+
     static void ReadDotation( xml::xistream& xis );
     //@}
 
 private:
-    const std::string               strName_;
-    const E_DotationFamily          nType_;
-          T_DotationCategoryMap     dotationCategories_;
-
-private:
-    static T_DotationTypeMap       dotationTypes_;
-    static T_DotationCategoryIDMap dotationCategorieIDs_;
+    //! @name Memnber data
+    //@{
+    const std::string      name_;
+    const E_DotationFamily type_;
+    //@}
 };
 
 #endif // __PHY_DotationType_h_

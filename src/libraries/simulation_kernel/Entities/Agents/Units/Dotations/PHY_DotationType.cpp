@@ -17,6 +17,7 @@
 #include "PHY_DotationLogisticType.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 PHY_DotationType* PHY_DotationType::munition_ = 0;
 PHY_DotationType* PHY_DotationType::carburant_ = 0;
@@ -29,40 +30,42 @@ PHY_DotationType* PHY_DotationType::agentExtincteur_ = 0;
 PHY_DotationType* PHY_DotationType::energie_ = 0;
 PHY_DotationType* PHY_DotationType::funeraire_ = 0;
 
-PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
-PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
+namespace
+{
+    std::map< std::string, PHY_DotationType* > types;
+    std::map< std::string, boost::shared_ptr< const PHY_DotationCategory > > categoriesByName;
+    std::map< unsigned int, boost::shared_ptr< const PHY_DotationCategory > > categoriesByIdentifier;
+}
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-void PHY_DotationType::Initialize( xml::xistream& xis )
+void PHY_DotationType::Initialize( xml::xisubstream xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
-    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eDotationFamily_Munition		);
-    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eDotationFamily_Carburant		);
-    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eDotationFamily_Explosif		);
-    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eDotationFamily_Mine			);
-    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eDotationFamily_Barbele			);
-    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , eDotationFamily_Piece			);
-    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eDotationFamily_Ration			);
-    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eDotationFamily_AgentExtincteur	);
-    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , eDotationFamily_Energy      	);
-    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , eDotationFamily_Funeraire		);
-
-    dotationTypes_[ munition_       ->GetName() ] = munition_;
-    dotationTypes_[ carburant_      ->GetName() ] = carburant_;
-    dotationTypes_[ explosif_       ->GetName() ] = explosif_;
-    dotationTypes_[ mine_           ->GetName() ] = mine_;
-    dotationTypes_[ barbele_        ->GetName() ] = barbele_;
-    dotationTypes_[ piece_          ->GetName() ] = piece_;
-    dotationTypes_[ ration_         ->GetName() ] = ration_;
-    dotationTypes_[ agentExtincteur_->GetName() ] = agentExtincteur_;
-    dotationTypes_[ energie_        ->GetName() ] = energie_;
-    dotationTypes_[ funeraire_      ->GetName() ] = funeraire_;
+    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eDotationFamily_Munition        );
+    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eDotationFamily_Carburant       );
+    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eDotationFamily_Explosif        );
+    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eDotationFamily_Mine            );
+    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eDotationFamily_Barbele         );
+    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , eDotationFamily_Piece           );
+    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eDotationFamily_Ration          );
+    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eDotationFamily_AgentExtincteur );
+    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , eDotationFamily_Energy          );
+    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , eDotationFamily_Funeraire       );
+    types[ munition_       ->GetName() ] = munition_;
+    types[ carburant_      ->GetName() ] = carburant_;
+    types[ explosif_       ->GetName() ] = explosif_;
+    types[ mine_           ->GetName() ] = mine_;
+    types[ barbele_        ->GetName() ] = barbele_;
+    types[ piece_          ->GetName() ] = piece_;
+    types[ ration_         ->GetName() ] = ration_;
+    types[ agentExtincteur_->GetName() ] = agentExtincteur_;
+    types[ energie_        ->GetName() ] = energie_;
+    types[ funeraire_      ->GetName() ] = funeraire_;
     xis >> xml::start( "resources" )
-            >> xml::list( "resource", &PHY_DotationType::ReadDotation )
-        >> xml::end;
+            >> xml::list( "resource", &PHY_DotationType::ReadDotation );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,10 +74,10 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationType::ReadDotation( xml::xistream& xis )
 {
-    CIT_DotationTypeMap it = dotationTypes_.find( xis.attribute< std::string >( "category" ) );
-    if( it == dotationTypes_.end() )
-        xis.error( "Invalid dotation category name" );
-    const_cast< PHY_DotationType& >( *it->second ).RegisterDotation( xis.attribute< std::string >( "name" ), xis );
+    auto it = types.find( xis.attribute< std::string >( "category" ) );
+    if( it == types.end() )
+        throw MASA_EXCEPTION( xis.context() + "Invalid dotation category name" );
+    it->second->RegisterDotation( xis );
 }
 
 //-----------------------------------------------------------------------------
@@ -83,25 +86,28 @@ void PHY_DotationType::ReadDotation( xml::xistream& xis )
 //-----------------------------------------------------------------------------
 void PHY_DotationType::Terminate()
 {
-    for( CIT_DotationTypeMap itDotationType = dotationTypes_.begin(); itDotationType != dotationTypes_.end(); ++itDotationType )
-        delete itDotationType->second;
-    dotationTypes_.clear();
-    dotationCategorieIDs_.clear();
+    for( auto it = types.begin(); it != types.end(); ++it )
+        delete it->second;
+    types.clear();
+    categoriesByName.clear();
+    categoriesByIdentifier.clear();
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::RegisterDotation
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml::xistream& xis )
+void PHY_DotationType::RegisterDotation( xml::xistream& xis )
 {
-    const PHY_DotationCategory*& pCategory = dotationCategories_[ strCategoryName ];
+    const std::string name = xis.attribute< std::string >( "name" );
+    boost::shared_ptr< const PHY_DotationCategory >& pCategory = categoriesByName[ name ];
     if( pCategory )
-        xis.error( "Dotation category '" + strCategoryName + "' already registered" );
-    pCategory = new PHY_DotationCategory( *this, strCategoryName, xis );
-    const PHY_DotationCategory*& pCategoryID = dotationCategorieIDs_[ pCategory->GetMosID() ];
+        throw MASA_EXCEPTION( xis.context() + "Dotation category '" + name + "' already registered" );
+    pCategory = boost::make_shared< PHY_DotationCategory >( boost::cref( *this ), name, boost::ref( xis ) );
+    const unsigned int id = xis.attribute< unsigned int >( "id" );
+    boost::shared_ptr< const PHY_DotationCategory >& pCategoryID = categoriesByIdentifier[ id ];
     if( pCategoryID )
-        xis.error( "Dotation category ID already registered" );
+        throw MASA_EXCEPTION( xis.context() + "Dotation category ID already registered" );
     pCategoryID = pCategory;
 }
 
@@ -109,71 +115,34 @@ void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml
 // Name: PHY_DotationType constructor
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationFamily nType )
-    : strName_            ( strName )
-    , nType_              ( nType )
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: PHY_DotationType::Initialize
-// Created: NLD/JVT 2004-08-03
-//-----------------------------------------------------------------------------
-PHY_DotationType::~PHY_DotationType()
+PHY_DotationType::PHY_DotationType( const std::string& name, E_DotationFamily type )
+    : name_( name )
+    , type_( type )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationType::InternalFindDotationCategory
+// Name: PHY_DotationType::FindDotationType
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( unsigned int nID ) const
+const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& name )
 {
-    for( auto it = dotationCategories_.begin(); it != dotationCategories_.end(); ++it )
-    {
-        if( it->second->GetMosID() == nID )
-            return it->second;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationType::FindDotationCategory
-// Created: NLD 2004-08-04
-// -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( const std::string& strName ) const
-{
-    CIT_DotationCategoryMap it = dotationCategories_.find( strName );
-    if( it == dotationCategories_.end() )
+    auto it = types.find( name );
+    if( it == types.end() )
         return 0;
     return it->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationType::FindDotationType
-// Created: NLD 2004-08-04
-// -----------------------------------------------------------------------------
-const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& strName )
-{
-    CIT_DotationTypeMap itDotationType = dotationTypes_.find( strName );
-    if( itDotationType == dotationTypes_.end() )
-        return 0;
-    return itDotationType->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationType::FindDotationType
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-const PHY_DotationType* PHY_DotationType::FindDotationType( unsigned int nID )
+const PHY_DotationType* PHY_DotationType::FindDotationType( unsigned int id )
 {
-    for( auto it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
-    {
-        if( it->second->GetID() == nID )
+    for( auto it = types.begin(); it != types.end(); ++it )
+        if( it->second->GetID() == id )
             return it->second;
-    }
     return 0;
 }
 
@@ -181,14 +150,11 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( unsigned int nID )
 // Name: PHY_DotationType::FindDotationCategory
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int nID )
+const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int id )
 {
-    for( auto it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
-    {
-        const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( nID );
-        if( pDotationCategory )
-            return pDotationCategory;
-    }
+    auto it = categoriesByIdentifier.find( id );
+    if( it != categoriesByIdentifier.end() )
+        return it->second.get();
     return 0;
 }
 
@@ -196,14 +162,11 @@ const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int
 // Name: PHY_DotationType::FindDotationCategory
 // Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::string& strName )
+const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::string& name )
 {
-    for( auto it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
-    {
-        const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( strName );
-        if( pDotationCategory )
-            return pDotationCategory;
-    }
+    auto it = categoriesByName.find( name );
+    if( it != categoriesByName.end() )
+        return it->second.get();
     return 0;
 }
 
@@ -213,7 +176,7 @@ const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::s
 // -----------------------------------------------------------------------------
 const std::string& PHY_DotationType::GetName() const
 {
-    return strName_;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +185,7 @@ const std::string& PHY_DotationType::GetName() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_DotationType::GetID() const
 {
-    return nType_;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -231,5 +194,5 @@ unsigned int PHY_DotationType::GetID() const
 // -----------------------------------------------------------------------------
 bool PHY_DotationType::operator==( const PHY_DotationType& rhs ) const
 {
-    return rhs.nType_ == nType_;
+    return rhs.type_ == type_;
 }
