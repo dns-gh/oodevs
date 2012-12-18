@@ -1324,21 +1324,25 @@
     </target>
 
     <target name="package.debug" description="create a zip with all PDB files">
-        <copy todir="${out.dir}/pdb" flatten="true">
-            <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
-        </copy>
-        <zip destfile="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip">
-            <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
-        </zip>
+        <safe-move file="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip">
+            <copy todir="${out.dir}/pdb" flatten="true">
+                <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
+            </copy>
+            <zip destfile="@{file}">
+                <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
+            </zip>
+        </safe-move>
     </target>
 
     <target name="package.ts" description="create a zip with all ts files">
-        <copy todir="${out.dir}/ts" flatten="true">
-            <fileset dir="${src.dir}" includes="**/*.ts"/>
-        </copy>
-        <zip destfile="${dist.dir}/SWORD_ts_${version.project}.zip">
-            <fileset dir="${out.dir}/ts" includes="*.ts"/>
-        </zip>
+        <safe-move file="${dist.dir}/SWORD_ts_${version.project}.zip">
+            <copy todir="${out.dir}/ts" flatten="true">
+                <fileset dir="${src.dir}" includes="**/*.ts"/>
+            </copy>
+            <zip destfile="@{file}">
+                <fileset dir="${out.dir}/ts" includes="*.ts"/>
+            </zip>
+        </safe-move>
     </target>
 
     <target name="package.wise-driver" depends="application.wise_driver_dll" description="package the wise driver installer" if="is-vc80">
