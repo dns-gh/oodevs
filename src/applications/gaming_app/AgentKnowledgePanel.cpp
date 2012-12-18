@@ -129,7 +129,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! IsVisible() || selected_ != &knowledges )
         return;
 
-    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), knowledges.Count() );
+    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), knowledges.Count(), *display_ );
     int i = 0;
     tools::Iterator< const AgentKnowledge_ABC& > iterator = knowledges.CreateIterator();
     while( iterator.HasMoreElements() )

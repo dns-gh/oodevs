@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "InfoPanel_ABC.h"
 #include "PanelStack_ABC.h"
+#include "DisplayBuilder.h"
 
 using namespace gui;
 
@@ -60,6 +61,19 @@ void InfoPanel_ABC::Hide()
 bool InfoPanel_ABC::IsVisible() const
 {
     return isVisible();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoPanel_ABC::ResizeModelOnNewContent
+// Created: LGY 2012-12-18
+// -----------------------------------------------------------------------------
+void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSelectionModel* selectionModel, int wantedSize,
+                                             DisplayBuilder& display )
+{
+    ResizeModelOnNewContent( model, selectionModel, wantedSize );
+    // reset display information
+    if( wantedSize == 0 )
+        display.Clear();
 }
 
 // -----------------------------------------------------------------------------

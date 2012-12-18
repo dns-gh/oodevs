@@ -146,7 +146,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
     if( !selected_ || selected_ != &element )
         return;
 
-    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), element.Count() );
+    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), element.Count(), *display_ );
     int i = 0;
     tools::Iterator< const kernel::ObjectKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )

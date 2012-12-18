@@ -13,6 +13,7 @@
 namespace gui
 {
     class PanelStack_ABC;
+    class DisplayBuilder;
 
 // =============================================================================
 /** @class  InfoPanel_ABC
@@ -34,6 +35,8 @@ public:
     void Show();
     void Hide();
     bool IsVisible() const;
+    void ResizeModelOnNewContent( QStandardItemModel* model, QItemSelectionModel* selectionModel,
+                                  int wantedSize, DisplayBuilder& display );
     void ResizeModelOnNewContent( QStandardItemModel* model, QItemSelectionModel* selectionModel, int wantedSize );
     //@}
 
