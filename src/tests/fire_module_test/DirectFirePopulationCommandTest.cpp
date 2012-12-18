@@ -114,7 +114,7 @@ namespace
             , weapon     ( component_2[ "weapons" ].AddElement() )
         {
             component_2[ "volume" ] = volume_1;
-            weapon[ "type" ] = "launcher_1/ammo_1";
+            weapon[ "type" ] = system_1;
             MOCK_EXPECT( IsTemporarilyBlocked ).returns( false );
         }
         core::Model& component_2;
