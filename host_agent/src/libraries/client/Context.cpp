@@ -85,9 +85,7 @@ Context::~Context()
     if( !single_ )
         return;
 
-    const Path next = fs_.MakeAnyPath( root_ / trash_dir );
-    fs_.Rename( root_ / tmp_dir, next / "_" );
-
+    fs_.Rename( root_ / tmp_dir, fs_.MakeAnyPath( root_ / trash_dir ) / "_" );
     single_.reset();
     fs_.Remove( root_ / trash_dir );
 }
@@ -109,8 +107,9 @@ void Context::Start()
 
     ParseArguments();
     fs_.MakePaths( root_ / install_dir );
-    fs_.MakePaths( root_ / tmp_dir );
     fs_.MakePaths( root_ / trash_dir );
+    fs_.Rename( root_ / tmp_dir, fs_.MakeAnyPath( root_ / trash_dir ) / "_" );
+    fs_.MakePaths( root_ / tmp_dir );
     ProcessCommand();
 }
 
