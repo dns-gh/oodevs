@@ -102,7 +102,7 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanKnowledges& element )
     if( ! IsVisible() || selected_ != &element )
         return;
 
-    ResizeModelOnNewContent( &knowledgeModel_, element.Count() );
+    ResizeModelOnNewContent( &knowledgeModel_, pKnowledgeListView_->selectionModel(), element.Count() );
     int i = 0;
     tools::Iterator< const kernel::UrbanKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )
@@ -124,7 +124,7 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanPerceptions& element )
          return;
 
      int knowledgeSize = static_cast< int >( element.detectingAutomats_.size() );
-     ResizeModelOnNewContent( &perceptionModel_, knowledgeSize );
+     ResizeModelOnNewContent( &perceptionModel_, pPerceptionListView_->selectionModel(), knowledgeSize );
      for( int i = 0; i < knowledgeSize; ++i )
          perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
 }

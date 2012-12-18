@@ -104,7 +104,7 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 {
     const tools::Resolver< PopulationConcentration_ABC >& concentrations = static_cast< const tools::Resolver< PopulationConcentration_ABC >& >( population );
     const tools::Resolver< PopulationFlow_ABC >& flows = static_cast< const tools::Resolver< PopulationFlow_ABC >& >( population );
-    ResizeModelOnNewContent( &pPartsModel_, concentrations.Count() + flows.Count() );
+    ResizeModelOnNewContent( &pPartsModel_, pPartsListView_->selectionModel(), concentrations.Count() + flows.Count() );
 
     //concentrations
     tools::Iterator< const PopulationConcentration_ABC& > iteratorConcentration = concentrations.CreateIterator();

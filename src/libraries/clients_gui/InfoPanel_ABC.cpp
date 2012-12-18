@@ -66,8 +66,9 @@ bool InfoPanel_ABC::IsVisible() const
 // Name: InfoPanel_ABC::resizeModelOnContent
 // Created: NPT 2012-10-23
 // -----------------------------------------------------------------------------
-void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, int wantedSize )
+void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, QItemSelectionModel* selectionModel, int wantedSize )
 {
+    selectionModel->blockSignals( true );
     int modelSize = model->rowCount();
     if( modelSize > wantedSize )
         model->removeRows( wantedSize, modelSize - wantedSize );
@@ -79,5 +80,6 @@ void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, int want
                 list.append( new QStandardItem() );
             model->appendRow( list );
         }
+    selectionModel->blockSignals( false );
 }
 
