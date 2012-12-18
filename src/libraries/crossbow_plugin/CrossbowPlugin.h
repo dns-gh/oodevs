@@ -79,11 +79,6 @@ private:
     CrossbowPlugin& operator=( const CrossbowPlugin& ); //!< Assignment operator
     //@}
 
-    //! @name Copy/Assignment
-    //@{
-    void OnReceiveMessengerToClient( const std::string& /*link*/, const sword::MessengerToClient& message );
-    //@}
-
 public:
     class ListenerThread;
 

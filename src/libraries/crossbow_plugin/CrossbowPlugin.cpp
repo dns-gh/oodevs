@@ -110,7 +110,6 @@ CrossbowPlugin::CrossbowPlugin( dispatcher::Model_ABC& model, const kernel::Stat
     {
         logger.LogError( "CrossbowPlugin : load failed - " + std::string( ex.what() ) );
     }
-    // dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,14 +154,4 @@ void CrossbowPlugin::Send( const sword::MessengerToClient& asnMsg )
 {
     if( crossbowPublisher_.get() )
         crossbowPublisher_->Receive( asnMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CrossbowPlugin::OnReceiveMessengerToClient
-// Created: JCR 2009-06-27
-// -----------------------------------------------------------------------------
-void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, const sword::MessengerToClient& message )
-{
-    if( crossbowPublisher_.get() )
-        crossbowPublisher_->Receive( message );
 }
