@@ -50,7 +50,6 @@ public:
 
     //! @name Operations
     //@{
-    void Rename( const QString& name );
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool IsActivated() const;

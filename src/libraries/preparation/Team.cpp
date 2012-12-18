@@ -59,16 +59,6 @@ Team::~Team()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::Rename
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void Team::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Team::SerializeAttributes
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
@@ -88,7 +78,7 @@ void Team::CreateDictionary( Controller& controller )
     Attach( dictionary );
     const Team& constSelf = *this;
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Name" ), name_, *static_cast< kernel::EntityImplementation< kernel::Team_ABC >* >( this ), &Team::Rename );
 }
 
 // -----------------------------------------------------------------------------

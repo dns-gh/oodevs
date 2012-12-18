@@ -39,6 +39,7 @@ private:
     virtual void viewportDropEvent( QDropEvent* pEvent );
     virtual void viewportDragMoveEvent( QDragMoveEvent *pEvent );
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
+    virtual void NotifyCreated( const kernel::Population_ABC& population );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual void keyPressEvent( QKeyEvent* key );

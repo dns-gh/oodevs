@@ -70,6 +70,17 @@ void PopulationListView::NotifySelectionChanged( const std::vector< const kernel
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView::NotifyCreated
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+void PopulationListView::NotifyCreated( const kernel::Population_ABC& population )
+{
+    gui::PopulationListView::NotifyCreated( population );
+    if( gui::ValuedListItem* item = gui::FindItem( static_cast< const kernel::Entity_ABC* >( &population ), firstChild() ) )
+        item->setRenameEnabled( 0, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::NotifyCreated
 // Created: SBO 2007-03-23
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )

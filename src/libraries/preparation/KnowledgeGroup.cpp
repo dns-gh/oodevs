@@ -84,7 +84,7 @@ void KnowledgeGroup::CreateDictionary( Controller& controller )
     Attach( dictionary );
     const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Identifier" ), static_cast< const unsigned long >( id_ ) );
-    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *this, &KnowledgeGroup::Rename );
+    dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Info/Name" ), name_, *static_cast< kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >* >( this ), &KnowledgeGroup::Rename );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), static_cast< const KnowledgeGroup* >( this )->communicationDelay_ ); // LTO
 }
@@ -97,18 +97,6 @@ void KnowledgeGroup::CreateDictionary( Controller& controller )
 void KnowledgeGroup::UpdateCommunicationDelay()
 {
     communicationDelay_ = type_ ? type_->ShowCommunicationDelay() : "0m0s";
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Rename
-// Created: SBO 2006-10-10
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Rename( const QString& name )
-{
-    if( name == name_ )
-        return;
-    name_ = name;
-    Touch();
 }
 
 // -----------------------------------------------------------------------------

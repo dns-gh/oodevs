@@ -24,7 +24,7 @@ ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controlle
     , modelBuilder_( modelBuilder )
     , selected_( controllers )
 {
-    // NOTHING
+    connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +64,17 @@ void ObjectListView::keyPressEvent( QKeyEvent* key )
     }
     else
         gui::ObjectListView::keyPressEvent( key );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::NotifyCreated
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
+{
+    gui::ObjectListView::NotifyCreated( object );
+    if( gui::ValuedListItem* item = gui::FindItem( static_cast< const kernel::Entity_ABC* >( &object ), firstChild() ) )
+        item->setRenameEnabled( 0, true );
 }
 
 // -----------------------------------------------------------------------------

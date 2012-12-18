@@ -78,6 +78,17 @@ void InhabitantListView::NotifyCreated( const kernel::Team_ABC& team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: InhabitantListView::NotifyCreated
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+void InhabitantListView::NotifyCreated( const kernel::Inhabitant_ABC& inhabitant )
+{
+    gui::InhabitantListView::NotifyCreated( inhabitant );
+    if( gui::ValuedListItem* item = gui::FindItem( static_cast< const kernel::Entity_ABC* >( &inhabitant ), firstChild() ) )
+        item->setRenameEnabled( 0, true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: InhabitantListView::dragObject
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------

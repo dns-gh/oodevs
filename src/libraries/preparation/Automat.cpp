@@ -73,16 +73,6 @@ const AutomatType& Automat::GetType() const
     return type_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Automat::Rename
-// Created: SBO 2006-10-10
-// -----------------------------------------------------------------------------
-void Automat::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
 namespace
 {
     // $$$$ LGY 2012-02-07 : hardcoded for displaying !!!
@@ -141,7 +131,7 @@ void Automat::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     const Automat& constSelf = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_, *this, &Automat::Rename );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_, *static_cast< EntityImplementation< kernel::Automat_ABC >* >( this ), &Automat::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Type" ), constSelf.type_ );
 }
 

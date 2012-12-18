@@ -45,7 +45,7 @@ public:
     QSize sizeHint() const;
     //@}
 
-private:
+protected:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );

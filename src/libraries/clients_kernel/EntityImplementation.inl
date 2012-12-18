@@ -47,6 +47,20 @@ QString EntityImplementation< I >::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityImplementation::Rename
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::Rename( const QString& name )
+{
+    if( name_ != name )
+    {
+        name_ = name;
+        Touch();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityImplementation::GetId
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------

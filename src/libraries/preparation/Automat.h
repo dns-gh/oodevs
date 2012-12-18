@@ -57,7 +57,6 @@ public:
     //@{
     virtual const kernel::AutomatType& GetType() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
-    void Rename( const QString& name );
     //@}
 
     //! @name Extensions

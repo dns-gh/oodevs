@@ -87,7 +87,6 @@ public:
     //! @name Operations
     //@{
     void InitializeSymbol() const;
-    void Rename( const QString& name );
     //@}
 
     //! @name Accessors

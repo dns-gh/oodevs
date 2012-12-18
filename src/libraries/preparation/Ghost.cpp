@@ -186,7 +186,7 @@ void Ghost::CreateDictionary( kernel::Controller& controller )
     const Ghost& constSelf = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Identifier" ), constSelf.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Ghost type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Name" ), name_, *this, &Ghost::Rename );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Name" ), name_, *static_cast<  kernel::EntityImplementation< kernel::Ghost_ABC >* >( this ), &Ghost::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Type" ), type_ );
 }
 
@@ -411,16 +411,6 @@ void Ghost::SerializeGhostAttributes( xml::xostream& xos ) const
                 << xml::end; //! profile
         xos << xml::end; //! profiles
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Ghost::Rename
-// Created: ABR 2011-10-19
-// -----------------------------------------------------------------------------
-void Ghost::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
 }
 
 // -----------------------------------------------------------------------------

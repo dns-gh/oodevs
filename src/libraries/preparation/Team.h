@@ -53,7 +53,6 @@ public:
 
     //! @name Operations
     //@{
-    void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}

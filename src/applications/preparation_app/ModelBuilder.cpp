@@ -26,7 +26,9 @@
 #include "preparation/AutomatPositions.h"
 #include "preparation/Agent.h"
 #include "preparation/Ghost.h"
+#include "preparation/Inhabitant.h"
 #include "preparation/Object.h"
+#include "preparation/Population.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -76,8 +78,11 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
     , selectedGhost_( controllers )
-    , toDelete_( controllers )
+    , selectedInhabitant_( controllers )
+    , selectedObject_( controllers )
+    , selectedPopulation_( controllers )
     , selectedUrbanObject_( controllers )
+    , toDelete_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
     controllers_.Register( *this );
@@ -360,6 +365,7 @@ void ModelBuilder::ClearSelection()
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
     selectedGhost_ = 0;
+    selectedObject_ = 0;
     selectedUrbanObject_ = 0;
 }
 
@@ -423,6 +429,36 @@ void ModelBuilder::Select( const Formation_ABC& element )
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Select
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::Inhabitant_ABC& element )
+{
+    ClearSelection();
+    selectedInhabitant_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::Object_ABC& element )
+{
+    ClearSelection();
+    selectedObject_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
+// Created: JSR 2012-12-18
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::Population_ABC& element )
+{
+    ClearSelection();
+    selectedPopulation_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
 // Created: LGY 2012-08-28
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const kernel::UrbanObject_ABC& element )
@@ -453,11 +489,12 @@ void ModelBuilder::Select( const Ghost_ABC& element )
 
 namespace
 {
-    template< typename Concrete, typename T >
-    void Rename( T& entity, const QString& text )
+    template< typename T >
+    void Rename( kernel::SafePointer< T >& entity, const QString& text )
     {
-        if( Concrete* concrete = dynamic_cast< Concrete* >( entity.ConstCast() ) )
-            concrete->Rename( text );
+        kernel::EntityImplementation< T >* impl = static_cast< kernel::EntityImplementation< T >* >( entity.ConstCast() );
+        if( impl )
+            impl->Rename( text );
     }
 }
 
@@ -468,17 +505,23 @@ namespace
 void ModelBuilder::OnRename( Q3ListViewItem*, int, const QString& text )
 {
     if( selectedTeam_ )
-        Rename< Team >( selectedTeam_, text );
+        Rename< Team_ABC >( selectedTeam_, text );
     else if( selectedAgent_ )
-        Rename< Agent >( selectedAgent_, text );
+        Rename< Agent_ABC >( selectedAgent_, text );
     else if( selectedAutomat_ )
-        Rename< Automat >( selectedAutomat_, text );
+        Rename< Automat_ABC >( selectedAutomat_, text );
     else if( selectedFormation_ )
-        Rename< Formation >( selectedFormation_, text );
+        Rename< Formation_ABC >( selectedFormation_, text );
     else if( selectedGroup_ )
-        Rename< KnowledgeGroup >( selectedGroup_, text );
+        Rename< KnowledgeGroup_ABC >( selectedGroup_, text );
     else if( selectedGhost_ )
-        Rename< Ghost >( selectedGhost_, text );
+        Rename< Ghost_ABC >( selectedGhost_, text );
+    else if( selectedInhabitant_ )
+        Rename< Inhabitant_ABC >( selectedInhabitant_, text );
+    else if( selectedObject_ )
+        Rename< Object_ABC >( selectedObject_, text );
+    else if( selectedPopulation_ )
+        Rename< Population_ABC >( selectedPopulation_, text );
     else if( selectedUrbanObject_ )
-        Rename< kernel::UrbanObject >( selectedUrbanObject_, text );
+        Rename< kernel::UrbanObject_ABC >( selectedUrbanObject_, text );
 }

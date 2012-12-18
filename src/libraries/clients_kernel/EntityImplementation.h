@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
+    virtual void Rename( const QString& name );
     virtual unsigned long GetId() const;
 
     void Polish();

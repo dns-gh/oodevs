@@ -69,12 +69,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Object( const Object& );
-    Object& operator=( const Object& );
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );

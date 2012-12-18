@@ -19,6 +19,8 @@ namespace kernel
     class AutomatType;
     class Controllers;
     class ContextMenu;
+    class Inhabitant_ABC;
+    class Population_ABC;
     class Team_ABC;
     class KnowledgeGroup_ABC;
     class Formation_ABC;
@@ -26,6 +28,7 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class Ghost_ABC;
+    class Object_ABC;
     class UrbanObject_ABC;
 }
 
@@ -46,10 +49,13 @@ class ModelBuilder : public QObject
                    , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                    , public tools::SelectionObserver_Base< kernel::Formation_ABC >
                    , public tools::SelectionObserver_Base< kernel::Ghost_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Inhabitant_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Object_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Population_ABC >
                    , public tools::SelectionObserver_Base< kernel::UrbanObject_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -92,6 +98,9 @@ private:
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Ghost_ABC& element );
+    virtual void Select( const kernel::Inhabitant_ABC& element );
+    virtual void Select( const kernel::Object_ABC& element );
+    virtual void Select( const kernel::Population_ABC& element );
     virtual void Select( const kernel::UrbanObject_ABC& element );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
@@ -113,6 +122,9 @@ private:
     kernel::SafePointer< kernel::Automat_ABC >        selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC >      selectedFormation_;
     kernel::SafePointer< kernel::Ghost_ABC >          selectedGhost_;
+    kernel::SafePointer< kernel::Inhabitant_ABC >     selectedInhabitant_;
+    kernel::SafePointer< kernel::Object_ABC >         selectedObject_;
+    kernel::SafePointer< kernel::Population_ABC >     selectedPopulation_;
     kernel::SafePointer< kernel::UrbanObject_ABC >    selectedUrbanObject_;
     kernel::SafePointer< kernel::Entity_ABC >         toDelete_;
     std::auto_ptr< QMessageBox >                      confirmation_;

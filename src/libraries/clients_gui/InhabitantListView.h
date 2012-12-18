@@ -39,7 +39,7 @@ public:
     virtual ~InhabitantListView();
     //@}
 
-private:
+protected:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Inhabitant_ABC& inhabitant );

@@ -160,16 +160,6 @@ const AgentType& Agent::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Rename
-// Created: SBO 2006-10-10
-// -----------------------------------------------------------------------------
-void Agent::Rename( const QString& name )
-{
-    name_ = name;
-    Touch();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------
@@ -179,7 +169,7 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     const Agent& constSelf = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, *this, &Agent::Rename );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_, *static_cast< kernel::EntityImplementation< kernel::Agent_ABC >* >( this ), &Agent::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), constSelf.type_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Weight" ), weight_ );
