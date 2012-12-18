@@ -55,11 +55,9 @@ using namespace sword;
 
 namespace
 {
-    const PHY_DotationCategory* GetDotationCategory( const char* dotation )
+    const PHY_DotationCategory* GetDotationCategory( int dotation )
     {
-        if( ! dotation )
-            return 0;
-        return PHY_DotationType::FindDotationCategory( dotation );
+        return PHY_DotationType::FindDotationCategory( static_cast< unsigned int >( dotation ) );
     }
     DEFINE_HOOK( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) )
     {
@@ -75,7 +73,7 @@ namespace
     {
         return MIL_Random::rand_io( min, max, MIL_Random::eFire );
     }
-    DEFINE_HOOK( HasDotation, 2, bool, ( const SWORD_Model* entity, const char* dotation ) )
+    DEFINE_HOOK( HasDotation, 2, bool, ( const SWORD_Model* entity, int dotation ) )
     {
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
@@ -88,7 +86,7 @@ namespace
         pion.Execute( *dotationComputer );
         return dotationComputer->HasDotation( *category );
     }
-    DEFINE_HOOK( GetDotationValue, 2, double, ( const SWORD_Model* entity, const char* dotation ) )
+    DEFINE_HOOK( GetDotationValue, 2, double, ( const SWORD_Model* entity, int dotation ) )
     {
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
@@ -101,7 +99,7 @@ namespace
         pion.Execute( *dotationComputer );
         return dotationComputer->GetDotationValue( *category );
     }
-    DEFINE_HOOK( CanFire, 3, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) )
+    DEFINE_HOOK( CanFire, 3, bool, ( const SWORD_Model* component, int dotation, const SWORD_Model* parameters ) )
     {
         const PHY_ComposantePion& compFirer = GET_DATA( component, PHY_ComposantePion );
         if( !compFirer.CanFire() )
@@ -144,7 +142,7 @@ namespace
         pion.Execute( *computer );
         return computer->GetDuration();
     }
-    DEFINE_HOOK( ReserveAmmunition, 3, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) )
+    DEFINE_HOOK( ReserveAmmunition, 3, size_t, ( const SWORD_Model* firer, int dotation, size_t ammos ) )
     {
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
@@ -168,7 +166,7 @@ namespace
         const MIL_Agent_ABC& knowledge = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
         return pion.Distance( knowledge );
     }
-    DEFINE_HOOK( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) )
+    DEFINE_HOOK( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, int dotation, double rPh ) )
     {
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
@@ -203,9 +201,9 @@ namespace
         }
         return type->GetPHModificator();
     }
-    DEFINE_HOOK( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, const char* dotation ) )
+    DEFINE_HOOK( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, int dotation ) )
     {
-        const PHY_DotationCategory* category = GetDotationCategory( dotation );
+        const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( static_cast< unsigned int >( dotation ) );
         if( ! category )
         {
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyDangerosity hook implementation : " << dotation );

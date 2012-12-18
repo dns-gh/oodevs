@@ -19,28 +19,28 @@
     APPLY( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDuration ) ) \
     APPLY( InitializeDecisional, 2, void, ( const char* xml, double tickDuration ) ) \
     APPLY( GetDangerosity, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) ) \
-    APPLY( GetMaxRangeToFireOn, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) ) \
+    APPLY( GetMaxRangeToFireOn, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, int dotation ) ) \
     APPLY( GetMinRangeToFireOn, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
     APPLY( GetMaxRangeToFire, 3, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
-    APPLY( GetMaxRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) ) \
-    APPLY( GetMinRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) ) \
+    APPLY( GetMaxRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), int dotation, bool checkAmmo ) ) \
+    APPLY( GetMinRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), int dotation, bool checkAmmo ) ) \
     APPLY( GetMaxRangeToFireOnWithPosture, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
     APPLY( GetMinRangeToFireOnWithPosture, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) ) \
     APPLY( GetForceRatio, 2, double, ( const SWORD_Model* model, const SWORD_Model* entity ) ) \
     APPLY( GetDangerousEnemies, 4, void, ( const SWORD_Model* model, const SWORD_Model* entity, void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) ) \
     APPLY( ComputeForceRatio, 4, double, ( const SWORD_Model* model, const SWORD_Model* entity, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) ) \
-    APPLY( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
+    APPLY( GetAmmunitionForIndirectFire, 4, int, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 
 #define USED_HOOKS( APPLY ) \
-    APPLY( HasDotation, 2, bool, ( const SWORD_Model* entity, const char* dotation ) ) \
-    APPLY( GetDotationValue, 2, double, ( const SWORD_Model* entity, const char* dotation ) ) \
-    APPLY( CanFire, 3, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) ) \
+    APPLY( HasDotation, 2, bool, ( const SWORD_Model* entity, int dotation ) ) \
+    APPLY( GetDotationValue, 2, double, ( const SWORD_Model* entity, int dotation ) ) \
+    APPLY( CanFire, 3, bool, ( const SWORD_Model* component, int dotation, const SWORD_Model* parameters ) ) \
     APPLY( CanComponentFire, 1, bool, ( const SWORD_Model* component ) ) \
     APPLY( GetWeaponReloadingDuration, 2, double, ( const SWORD_Model* firer, double rDuration ) ) \
-    APPLY( ReserveAmmunition, 3, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) ) \
+    APPLY( ReserveAmmunition, 3, size_t, ( const SWORD_Model* firer, int dotation, size_t ammos ) ) \
     APPLY( GetDistance, 2, double, ( const SWORD_Model* firer, const SWORD_Model* target ) ) \
-    APPLY( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) ) \
-    APPLY( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, const char* dotation ) ) \
+    APPLY( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, int dotation, double rPh ) ) \
+    APPLY( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, int dotation ) ) \
     APPLY( IsTemporarilyBlocked, 2, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) ) \
     APPLY( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) ) \
     APPLY( GetFireRandomNumber, 2, double, ( double min, double max ) ) \
@@ -75,8 +75,8 @@ namespace fire
             , posture_1( 1 )
             , posture_2( 2 )
             , volume_1 ( 0 )
-            , ammo_1   ( "ammo_1" )
-            , ammo_2   ( "ammo_2" )
+            , ammo_1   ( 1 )
+            , ammo_2   ( 2 )
             , system_1 ( 0 )
             , system_2 ( 1 )
             , non_existing_system( 7 )
@@ -104,12 +104,12 @@ namespace fire
                                  "  </launcher>"
                                  "</launchers>" );
             InitializeDotations( "<resources>"
-                                 "  <resource name='ammo_1'>"
+                                 "  <resource name='ammo_1' id='1'>"
                                  "    <attritions>"
                                  "      <attrition/>"
                                  "    </attritions>"
                                  "  </resource>"
-                                 "  <resource name='ammo_2'>"
+                                 "  <resource name='ammo_2' id='2'>"
                                  "    <indirect-fires>"
                                  "      <indirect-fire type='explosion'/>"
                                  "    </indirect-fires>"
@@ -143,7 +143,7 @@ namespace fire
         SWORD_Model* firer;
         core::Model& target;
         SWORD_Model* enemy;
-        std::string ammo_1, ammo_2;
+        int ammo_1, ammo_2;
         std::size_t posture_1, posture_2;
         std::size_t volume_1;
         std::size_t system_1, system_2, non_existing_system;

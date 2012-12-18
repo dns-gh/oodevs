@@ -192,7 +192,7 @@ namespace detail
 #define HOOK_DECL(n, S) \
     ( HOOK_PARAMS( n, S ) )
 
-#define DEFINE_HOOK( Hook, arity, result, parameters ) \
+#define DEFINE_HOOK_WITH_DEFAULT_RESULT( Hook, arity, result, parameters, default ) \
     static struct Hook ## _DefinitionWrapper : private sword::wrapper::Hook_ABC \
     { \
         typedef result result_type; \
@@ -229,7 +229,7 @@ namespace detail
             { \
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in " #Hook " hook" ); \
             } \
-            return boost::function_types::result_type< result parameters >::type(); \
+            return default; \
         } \
     private: \
         virtual void Apply( bool profiling ) \
@@ -256,6 +256,10 @@ namespace detail
         } \
     } Hook; \
     result Hook ## _DefinitionWrapper::Implement parameters
+
+#define DEFINE_HOOK( Hook, arity, result, parameters ) \
+    DEFINE_HOOK_WITH_DEFAULT_RESULT( Hook, arity, result, parameters, \
+        boost::function_types::result_type< result parameters >::type() )
 
 #define GET_HOOK( Hook ) Hook
 

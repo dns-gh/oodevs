@@ -109,17 +109,17 @@ DECLARE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vecto
 
 // fire
 DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) )
-DECLARE_HOOK( GetMaxRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
+DECLARE_HOOK( GetMaxRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, int dotation ) )
 DECLARE_HOOK( GetMinRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 DECLARE_HOOK( GetMaxRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 DECLARE_HOOK( GetMinRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 DECLARE_HOOK( GetMaxRangeToFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
-DECLARE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
-DECLARE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
+DECLARE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), int dotation, bool checkAmmo ) )
+DECLARE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), int dotation, bool checkAmmo ) )
 DECLARE_HOOK( GetForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
 DECLARE_HOOK( GetDangerousEnemies, void, ( const SWORD_Model* model, const SWORD_Model* entity, void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
 DECLARE_HOOK( ComputeForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
-DECLARE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
+DECLARE_HOOK( GetAmmunitionForIndirectFire, int, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Decision constructor
@@ -847,6 +847,12 @@ namespace
     {
         return IsMajor( component ) && CanFire( component );
     }
+    int GetDotationIdentifier( const PHY_DotationCategory* dotation )
+    {
+        if( dotation )
+            return dotation->GetMosID();
+        return -1;
+    }
     double GetMaxRangeToFireOnEnemy( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH, const PHY_DotationCategory* dotation )
     {
         if( ! target || ! target->IsValid() )
@@ -854,7 +860,7 @@ namespace
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
         const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
-        return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH, dotation ? dotation->GetName().c_str() : 0 );
+        return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH, GetDotationIdentifier( dotation ) );
     }
     double GetMinRangeToFireOnEnemy( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
     {
@@ -928,14 +934,14 @@ namespace
         if( ! dotation )
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        return GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &CanFire, dotation->GetName().c_str(), true );
+        return GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &CanFire, GetDotationIdentifier( dotation ), true );
     }
     double GetMinRangeToIndirectFire( const MIL_Agent_ABC& agent, const core::Model& model, const PHY_DotationCategory* dotation )
     {
         if( ! dotation )
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const double range = GET_HOOK( GetMinRangeToIndirectFire )( core::Convert( &entity ), &CanFire, dotation->GetName().c_str(), true );
+        const double range = GET_HOOK( GetMinRangeToIndirectFire )( core::Convert( &entity ), &CanFire, GetDotationIdentifier( dotation ), true );
         if( range == std::numeric_limits< double >::max() )
             return -1;
         return range;
@@ -945,14 +951,14 @@ namespace
         if( ! dotation )
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        return GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &CanFire, dotation->GetName().c_str(), false );
+        return GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &CanFire, GetDotationIdentifier( dotation ), false );
     }
     double GetMinRangeToIndirectFireWithoutAmmoCheck( const MIL_Agent_ABC& agent, const core::Model& model, const PHY_DotationCategory* dotation )
     {
         if( ! dotation )
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const double range = GET_HOOK( GetMinRangeToIndirectFire )( core::Convert( &entity ), &CanFire, dotation->GetName().c_str(), false );
+        const double range = GET_HOOK( GetMinRangeToIndirectFire )( core::Convert( &entity ), &CanFire, GetDotationIdentifier( dotation ), false );
         if( range == std::numeric_limits< double >::max() )
             return -1;
         return range;
@@ -974,14 +980,14 @@ namespace
         if( ! dotation )
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        return GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &NullFilter, dotation->GetName().c_str(), true );
+        return GET_HOOK( GetMaxRangeToIndirectFire )( core::Convert( &entity ), &NullFilter, GetDotationIdentifier( dotation ), true );
     }
     double GetTheoricMinRangeToIndirectFire( const MIL_Agent_ABC& agent, const core::Model& model, const PHY_DotationCategory* dotation )
     {
         if( ! dotation )
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const double range = GET_HOOK( GetMinRangeToIndirectFire )( core::Convert( &entity ), &NullFilter, dotation->GetName().c_str(), true );
+        const double range = GET_HOOK( GetMinRangeToIndirectFire )( core::Convert( &entity ), &NullFilter, GetDotationIdentifier( dotation ), true );
         if( range == std::numeric_limits< double >::max() )
             return -1;
         return range;
@@ -992,13 +998,8 @@ namespace
         if( ! pClass )
             return 0;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const char* dotation = GET_HOOK( GetAmmunitionForIndirectFire )( core::Convert( &model ), core::Convert( &entity ), pClass->GetName().c_str(), pTarget );
-        if( ! dotation )
-            return 0;
-        const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );
-        if( ! category )
-            MT_LOG_ERROR_MSG( "Unknown dotation category in GetAmmunitionForIndirectFire : " << dotation );
-        return category;
+        int dotation = GET_HOOK( GetAmmunitionForIndirectFire )( core::Convert( &model ), core::Convert( &entity ), pClass->GetName().c_str(), pTarget );
+        return PHY_DotationType::FindDotationCategory( static_cast< unsigned int >( dotation ) );
     }
 }
 

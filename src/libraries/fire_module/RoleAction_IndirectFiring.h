@@ -45,7 +45,7 @@ public:
     //int  Fire( MIL_Effect_IndirectFire* pEffect );
     //void FireSuspended();
 
-    const char* GetAmmunitionForIndirectFire( ModuleFacade& module, const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target );
+    int GetAmmunitionForIndirectFire( ModuleFacade& module, const wrapper::View& model, const wrapper::View& firer, const std::string& type, const MT_Vector2D* target );
     //int ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo );
     ////@}
 

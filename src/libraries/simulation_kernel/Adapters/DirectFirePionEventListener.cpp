@@ -129,8 +129,8 @@ void DirectFirePionEventListener::Update( const core::Model& event )
 {
     MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
     MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
-    const std::string& dotation = event[ "dotation" ];
-    const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );
+    const int dotation = event[ "dotation" ];
+    const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( static_cast< unsigned int >( dotation ) );
     if( ! category )
     {
         MT_LOG_ERROR_MSG( "Unknown dotation category in DirectFirePionEventListener : " << dotation );

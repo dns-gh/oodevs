@@ -38,7 +38,7 @@ public:
     //@{
     void ApplyOnWeapon( ModuleFacade& module, const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon );
 
-    const char* GetResult() const;
+    int GetResult() const;
     //@}
 
 private:
@@ -47,7 +47,7 @@ private:
     const wrapper::View firer_;
     const std::string type_;
     const MT_Vector2D* target_;
-    const DotationCategory* pAmmunition_;
+    const DotationCategory* pCategory_;
     double dotationValue_;
     //@}
 };

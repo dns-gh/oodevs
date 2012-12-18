@@ -35,7 +35,7 @@ DEFINE_HOOK( GetDangerousEnemies, 4, void, ( const SWORD_Model* model, const SWO
     assert( module );
     module->GetDangerousEnemies( model, entity, visitor, userData );
 }
-DEFINE_HOOK( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
+DEFINE_HOOK_WITH_DEFAULT_RESULT( GetAmmunitionForIndirectFire, 4, int, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ), -1 )
 {
     if( !type )
         throw MASA_EXCEPTION( "Invalid null type" );

@@ -12,7 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/optional.hpp>
 #include <map>
 
 class MT_Vector2D;
@@ -77,21 +76,21 @@ public:
     double GetDangerosity     ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH, bool checkAmmo ) const;
     double GetDangerosity     ( const wrapper::View& firer, const wrapper::View& target, double distance, bool checkAmmo ) const;
 
-    double GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, const char* dotation ) const;
+    double GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, int dotation ) const;
     double GetMinRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const;
     double GetMaxRangeToFire( double rWantedPH ) const;
 
     double GetMaxRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const;
     double GetMinRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const;
 
-    double GetMaxRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const;
-    double GetMinRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const;
+    double GetMaxRangeToIndirectFire( const wrapper::View& firer, int dotation, bool checkAmmo ) const;
+    double GetMinRangeToIndirectFire( const wrapper::View& firer, int dotation, bool checkAmmo ) const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-     WeaponType( const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis, double tickDuration );
+     WeaponType( const std::string& launcher, const std::string& ammunition, xml::xistream& xis, double tickDuration );
     //@}
 
      //! @name Helpers
@@ -100,7 +99,7 @@ private:
     void ReadDirect       ( xml::xistream& xis );
     void ReadIndirect     ( xml::xistream& xis, double tickDuration );
     bool CheckDirectFireDotation( const wrapper::View& firer, bool checkAmmo ) const;
-    bool CheckIndirectFireDotation( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const;
+    bool CheckIndirectFireDotation( const wrapper::View& firer, int dotation, bool checkAmmo ) const;
     //@}
 
 private:

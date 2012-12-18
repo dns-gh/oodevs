@@ -38,18 +38,18 @@ using namespace sword::fire;
 // Name: WeaponType constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-WeaponType::WeaponType( const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis, double tickDuration )
-    : pLauncherType_     ( LauncherType::FindLauncherType( strLauncher ) )
-    , dotation_          ( DotationCategory::FindDotationCategory( strAmmunition ) )
+WeaponType::WeaponType( const std::string& launcher, const std::string& ammunition, xml::xistream& xis, double tickDuration )
+    : pLauncherType_     ( LauncherType::FindLauncherType( launcher ) )
+    , dotation_          ( DotationCategory::FindDotationCategory( ammunition ) )
     , nNbrAmmoPerBurst_  ( 1 )
     , rBurstDuration_    ( 1. )
     , nNbrAmmoPerLoader_ ( 1 )
     , rReloadingDuration_( 1. )
 {
     if( ! pLauncherType_ )
-        xis.error( "Unknown launcher type '" + strLauncher + "'" );
+        xis.error( "Unknown launcher type '" + launcher + "'" );
     if( ! dotation_ )
-        xis.error( "Unknown dotation category '" + strAmmunition + "'" );
+        xis.error( "Unknown dotation category '" + ammunition + "'" );
     std::string burstTime, reloadingTime;
     xis >> xml::start( "burst" )
             >> xml::attribute( "munition", nNbrAmmoPerBurst_ )
@@ -98,10 +98,10 @@ void WeaponType::Initialize( xml::xisubstream xis, double tickDuration )
 // -----------------------------------------------------------------------------
 void WeaponType::ReadWeapon( xml::xistream& xis, double tickDuration )
 {
-    std::string strLauncher, strAmmunition;
-    xis >> xml::attribute( "launcher", strLauncher )
-        >> xml::attribute( "munition", strAmmunition );
-    types.push_back( boost::shared_ptr< WeaponType >( new WeaponType( strLauncher, strAmmunition, boost::ref( xis ), tickDuration ) ) );
+    std::string launcher, ammunition;
+    xis >> xml::attribute( "launcher", launcher )
+        >> xml::attribute( "munition", ammunition );
+    types.push_back( boost::shared_ptr< WeaponType >( new WeaponType( launcher, ammunition, boost::ref( xis ), tickDuration ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,13 +202,13 @@ bool WeaponType::CheckDirectFireDotation( const wrapper::View& firer, bool check
 // Name: WeaponType::CheckIndirectFireDotation
 // Created: MCO 2012-06-22
 // -----------------------------------------------------------------------------
-bool WeaponType::CheckIndirectFireDotation( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const
+bool WeaponType::CheckIndirectFireDotation( const wrapper::View& firer, int dotation, bool checkAmmo ) const
 {
     if( ! pIndirectFireData_.get() )
         return false;
     if( ! dotation )
         return true;
-    if( DotationCategory::FindDotationCategory( *dotation ) != dotation_ )
+    if( DotationCategory::FindDotationCategory( dotation ) != dotation_ )
         return false;
     if( ! checkAmmo )
         return true;
@@ -253,7 +253,7 @@ DEFINE_HOOK( GetDangerosity, 5, double, ( const SWORD_Model* firer, const SWORD_
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetDangerosity, _1, firer, target, distance, checkAmmo ) );
 }
-DEFINE_HOOK( GetMaxRangeToFireOn, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
+DEFINE_HOOK( GetMaxRangeToFireOn, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, int dotation ) )
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFireOn, _1, firer, target, rWantedPH, dotation ) );
 }
@@ -273,22 +273,13 @@ DEFINE_HOOK( GetMinRangeToFireOnWithPosture, 4, double, ( const SWORD_Model* fir
 {
     return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToFireOnWithPosture, _1, firer, target, rWantedPH ) );
 }
-namespace
+DEFINE_HOOK( GetMaxRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), int dotation, bool checkAmmo ) )
 {
-    boost::optional< std::string > MakeDotation( const char* dotation )
-    {
-        if( dotation )
-            return dotation;
-        return boost::none;
-    }
+    return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToIndirectFire, _1, firer, dotation, checkAmmo ), -1 );
 }
-DEFINE_HOOK( GetMaxRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
+DEFINE_HOOK( GetMinRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), int dotation, bool checkAmmo ) )
 {
-    return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToIndirectFire, _1, firer, MakeDotation( dotation ), checkAmmo ), -1 );
-}
-DEFINE_HOOK( GetMinRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
-{
-    return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToIndirectFire, _1, firer, MakeDotation( dotation ), checkAmmo ) );
+    return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToIndirectFire, _1, firer, dotation, checkAmmo ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,16 +322,17 @@ double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::Vi
 // Name: WeaponType::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, const char* dotation ) const
+double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, int dotation ) const
 {
     if( ! pDirectFireData_.get() )
         return 0;
     const int major = target[ "major" ];
     if( major == -1 )
         return 0;
-    if( dotation ) // $$$$ MCO 2012-05-09: weird that we don't check if firer has enough ammo in the else case
+    boost::shared_ptr< DotationCategory > category = DotationCategory::FindDotationCategory( dotation );
+    if( category ) // $$$$ MCO 2012-05-09: weird that we don't check if firer has enough ammo in the else case
     {
-        if( dotation != dotation_->GetName() ) // $$$$ MCO 2012-06-21: pouah GetName
+        if( category != dotation_ )
             return 0;
         if( ! dotation_->HasDotation( firer ) )
             return 0;
@@ -399,7 +391,7 @@ double WeaponType::GetMinRangeToFireOnWithPosture( const wrapper::View& firer, c
 // Name: WeaponType::GetMaxRangeToIndirectFire
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const
+double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, int dotation, bool checkAmmo ) const
 {
     if( CheckIndirectFireDotation( firer, dotation, checkAmmo ) )
         return pIndirectFireData_->GetMaxRange();
@@ -410,7 +402,7 @@ double WeaponType::GetMaxRangeToIndirectFire( const wrapper::View& firer, boost:
 // Name: WeaponType::GetMinRangeToIndirectFire
 // Created: MCO 2012-06-25
 // -----------------------------------------------------------------------------
-double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, boost::optional< std::string > dotation, bool checkAmmo ) const
+double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, int dotation, bool checkAmmo ) const
 {
     if( CheckIndirectFireDotation( firer, dotation, checkAmmo ) )
         return pIndirectFireData_->GetMinRange();

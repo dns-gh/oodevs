@@ -249,7 +249,7 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
     event[ "entity/data" ] = firer[ "data" ];
     event[ "enemy/data" ] = target[ "data" ];
     event[ "component/data" ] = compTarget[ "data" ];
-    event[ "dotation" ] = dotation_.GetName();
+    event[ "dotation" ] = dotation_.GetIdentifier();
     event[ "running" ] = true;
     event[ "hit" ] = hit;
     event[ "use-ph" ] = bUsePH;
@@ -272,7 +272,7 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
     event[ "entity/data" ] = firer[ "data" ];
     event[ "element" ] = element;
     event[ "hits" ] = hits;
-    event[ "dotation" ] = dotation_.GetName();
+    event[ "dotation" ] = dotation_.GetIdentifier();
     event[ "running" ] = true;
     event.Post();
 }

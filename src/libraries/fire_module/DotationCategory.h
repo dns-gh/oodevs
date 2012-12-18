@@ -40,12 +40,13 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit DotationCategory( xml::xistream& xis );
-    virtual ~DotationCategory();
     //@}
 
     //! @name Operations
     //@{
     static boost::shared_ptr< DotationCategory > FindDotationCategory( const std::string& name );
+    static boost::shared_ptr< DotationCategory > FindDotationCategory( int identifier );
+
     static void Initialize( xml::xisubstream xis );
 
     double ModifyPh( const wrapper::View& firer, const wrapper::View& target, double ph ) const;
@@ -59,7 +60,9 @@ public:
     bool CanBeUsedForDirectFire() const;
     bool CanBeUsedForIndirectFire() const;
     bool HasDotation( const wrapper::View& firer ) const;
-    const std::string& GetName() const;
+
+    const int& GetIdentifier() const;
+
     bool CanFire( const wrapper::View& component, const wrapper::View& parameters ) const;
     bool CanFire( const wrapper::View& component, const std::string& type ) const;
 
@@ -93,7 +96,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string strName_;
+    int id_;
     std::set< std::string, CaseInsensitiveCompare > indirectTypes_;
     bool directFire_;
     //@}

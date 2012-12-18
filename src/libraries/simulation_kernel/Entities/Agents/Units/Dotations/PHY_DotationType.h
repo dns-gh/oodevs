@@ -29,7 +29,7 @@ class PHY_DotationCategory;
 class PHY_DotationType : private boost::noncopyable
 {
 public:
-    //! @name Types
+    //! @name Member data
     //@{
     static PHY_DotationType* munition_;
     static PHY_DotationType* carburant_;
@@ -51,8 +51,8 @@ public:
 
     static const PHY_DotationType*     FindDotationType    ( const std::string& name );
     static const PHY_DotationType*     FindDotationType    ( unsigned int id );
-    static const PHY_DotationCategory* FindDotationCategory( unsigned int id );
     static const PHY_DotationCategory* FindDotationCategory( const std::string& name );
+    static const PHY_DotationCategory* FindDotationCategory( unsigned int id );
     //@}
 
     //! @name Accessors

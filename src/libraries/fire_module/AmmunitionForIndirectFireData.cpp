@@ -23,7 +23,7 @@ AmmunitionForIndirectFireData::AmmunitionForIndirectFireData( const wrapper::Vie
     : firer_        ( firer )
     , type_         ( type )
     , target_       ( target )
-    , pAmmunition_  ( 0 )
+    , pCategory_    ( 0 )
     , dotationValue_( 0 )
 {
     // NOTHING
@@ -47,11 +47,11 @@ void AmmunitionForIndirectFireData::ApplyOnWeapon( ModuleFacade& module, const w
     const Weapon w( module, model, weapon );
     if( ! w.CanIndirectFire( firer_, component, type_, target_ ) )
         return;
-    const DotationCategory& ammunition = w.GetDotation();
-    const double value = ammunition.GetValue( firer_ );
-    if( ! pAmmunition_ || dotationValue_ < value )
+    const DotationCategory& category = w.GetDotation();
+    const double value = category.GetValue( firer_ );
+    if( ! pCategory_ || dotationValue_ < value )
     {
-        pAmmunition_ = &ammunition;
+        pCategory_ = &category;
         dotationValue_ = value;
     }
 }
@@ -60,7 +60,7 @@ void AmmunitionForIndirectFireData::ApplyOnWeapon( ModuleFacade& module, const w
 // Name: AmmunitionForIndirectFireData::GetResult
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
-const char* AmmunitionForIndirectFireData::GetResult() const
+int AmmunitionForIndirectFireData::GetResult() const
 {
-    return pAmmunition_ ? pAmmunition_->GetName().c_str() : 0;
+    return pCategory_ ? pCategory_->GetIdentifier() : -1;
 }

@@ -13,14 +13,15 @@
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lambda/lambda.hpp>
+#include <boost/make_shared.hpp>
 #include <map>
 
-DECLARE_HOOK( ModifyPh, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) )
-DECLARE_HOOK( ModifyDangerosity, double, ( const SWORD_Model* compTarget, const char* dotation ) )
-DECLARE_HOOK( HasDotation, bool, ( const SWORD_Model* entity, const char* dotation ) )
-DECLARE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) )
-DECLARE_HOOK( ReserveAmmunition, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) )
-DECLARE_HOOK( GetDotationValue, double, ( const SWORD_Model* entity, const char* dotation ) )
+DECLARE_HOOK( ModifyPh, double, ( const SWORD_Model* firer, const SWORD_Model* target, int dotation, double rPh ) )
+DECLARE_HOOK( ModifyDangerosity, double, ( const SWORD_Model* compTarget, int dotation ) )
+DECLARE_HOOK( HasDotation, bool, ( const SWORD_Model* entity, int dotation ) )
+DECLARE_HOOK( CanFire, bool, ( const SWORD_Model* component, int dotation, const SWORD_Model* parameters ) )
+DECLARE_HOOK( ReserveAmmunition, size_t, ( const SWORD_Model* firer, int dotation, size_t ammos ) )
+DECLARE_HOOK( GetDotationValue, double, ( const SWORD_Model* entity, int dotation ) )
 
 DEFINE_HOOK( InitializeDotations, 1, void, ( const char* xml ) )
 {
@@ -35,8 +36,8 @@ using namespace sword::fire;
 
 namespace
 {
-    typedef std::map< std::string, boost::shared_ptr< DotationCategory > > T_Dotations;
-    T_Dotations dotations;
+    std::map< std::string, boost::shared_ptr< DotationCategory > > dotationsByName;
+    std::map< int, boost::shared_ptr< DotationCategory > > dotationsByIdentifier;
 }
 
 //-----------------------------------------------------------------------------
@@ -44,20 +45,11 @@ namespace
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 DotationCategory::DotationCategory( xml::xistream& xis )
-    : strName_   ( xis.attribute< std::string >( "name" ) )
+    : id_        ( xis.attribute< int >( "id" ) )
     , directFire_( false )
 {
     xis >> xml::list( "attritions", *this, &DotationCategory::ReadAttritions )
         >> xml::list( "indirect-fires", *this, &DotationCategory::ReadIndirectFires );
-}
-
-//-----------------------------------------------------------------------------
-// Name: DotationCategory::~DotationCategory
-// Created: NLD/JVT 2004-08-03
-//-----------------------------------------------------------------------------
-DotationCategory::~DotationCategory()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +69,9 @@ void DotationCategory::Initialize( xml::xisubstream xis )
 // -----------------------------------------------------------------------------
 void DotationCategory::ReadResource( xml::xistream& xis )
 {
-    const std::string name = xis.attribute< std::string >( "name" );
-    dotations[ name ].reset( new DotationCategory( xis ) );
+    boost::shared_ptr< DotationCategory > category = boost::make_shared< DotationCategory >( boost::ref( xis ) );
+    dotationsByIdentifier[ category->id_ ] = category;
+    dotationsByName[ xis.attribute< std::string >( "name" ) ] = category;
 }
 
 // -----------------------------------------------------------------------------
@@ -114,8 +107,20 @@ void DotationCategory::ReadIndirectFire( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DotationCategory > DotationCategory::FindDotationCategory( const std::string& name )
 {
-    T_Dotations::const_iterator it = dotations.find( name );
-    if( it == dotations.end() )
+    auto it = dotationsByName.find( name );
+    if( it == dotationsByName.end() )
+        return boost::shared_ptr< DotationCategory >();
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DotationCategory > DotationCategory::FindDotationCategory
+// Created: MCO 2012-12-18
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DotationCategory > DotationCategory::FindDotationCategory( int identifier )
+{
+    auto it = dotationsByIdentifier.find( identifier );
+    if( it == dotationsByIdentifier.end() )
         return boost::shared_ptr< DotationCategory >();
     return it->second;
 }
@@ -126,7 +131,7 @@ boost::shared_ptr< DotationCategory > DotationCategory::FindDotationCategory( co
 // -----------------------------------------------------------------------------
 double DotationCategory::ModifyPh( const wrapper::View& firer, const wrapper::View& target, double ph ) const
 {
-    return GET_HOOK( ::ModifyPh )( firer, target, strName_.c_str(), ph );
+    return GET_HOOK( ::ModifyPh )( firer, target, id_, ph );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,16 +140,16 @@ double DotationCategory::ModifyPh( const wrapper::View& firer, const wrapper::Vi
 // -----------------------------------------------------------------------------
 double DotationCategory::ModifyDangerosity( const wrapper::View& compTarget ) const
 {
-    return GET_HOOK( ::ModifyDangerosity )( compTarget, strName_.c_str() );
+    return GET_HOOK( ::ModifyDangerosity )( compTarget, id_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DotationCategory::GetName
-// Created: MCO 2012-06-21
+// Name: DotationCategory::GetIdentifier
+// Created: MCO 2012-12-18
 // -----------------------------------------------------------------------------
-const std::string& DotationCategory::GetName() const
+const int& DotationCategory::GetIdentifier() const
 {
-    return strName_;
+    return id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +158,7 @@ const std::string& DotationCategory::GetName() const
 // -----------------------------------------------------------------------------
 bool DotationCategory::HasDotation( const wrapper::View& firer ) const
 {
-    return GET_HOOK( ::HasDotation )( firer, strName_.c_str() );
+    return GET_HOOK( ::HasDotation )( firer, id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +167,7 @@ bool DotationCategory::HasDotation( const wrapper::View& firer ) const
 // -----------------------------------------------------------------------------
 bool DotationCategory::CanFire( const wrapper::View& component, const wrapper::View& parameters ) const
 {
-    return GET_HOOK( ::CanFire )( component, strName_.c_str(), parameters );
+    return GET_HOOK( ::CanFire )( component, id_, parameters );
 }
 
 DECLARE_HOOK( CanComponentFire, bool, ( const SWORD_Model* component ) )
@@ -184,7 +189,7 @@ bool DotationCategory::CanFire( const wrapper::View& component, const std::strin
 // -----------------------------------------------------------------------------
 std::size_t DotationCategory::ReserveAmmunition( const wrapper::View& firer, std::size_t ammos )
 {
-    return GET_HOOK( ::ReserveAmmunition )( firer, strName_.c_str(), ammos );
+    return GET_HOOK( ::ReserveAmmunition )( firer, id_, ammos );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,5 +216,5 @@ bool DotationCategory::CanBeUsedForIndirectFire() const
 // -----------------------------------------------------------------------------
 double DotationCategory::GetValue( const wrapper::View& entity ) const
 {
-    return GET_HOOK( GetDotationValue )( entity, strName_.c_str() );
+    return GET_HOOK( GetDotationValue )( entity, id_ );
 }
