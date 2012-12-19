@@ -19,6 +19,7 @@
 #include "protocol/ClientBroadcaster_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <map>
+#include <set>
 
 namespace dispatcher
 {

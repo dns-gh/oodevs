@@ -272,3 +272,15 @@ void ClientToSimulation::Convert( const Common::MsgControlExportRequestAck& from
                               ( sword::ControlExportRequestAck::failure, Common::MsgControlExportRequestAck::failure ) );
     CONVERT( directory_name );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientToSimulation::Convert
+// Created: LDC 2012-12-14
+// -----------------------------------------------------------------------------
+void ClientToSimulation::Convert( const Common::MsgLogHistoryRequestForPlay& from, sword::LogHistoryRequestForPlay* to )
+{
+    CONVERT( exercise );
+    CONVERT( profile );
+    CONVERT_DATE( date_time );
+    CONVERT( session );
+}

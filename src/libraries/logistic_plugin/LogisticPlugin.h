@@ -22,17 +22,14 @@ namespace tools
     class SessionConfig;
 }
 
+namespace dispatcher
+{
+    class ClientsNetworker;
+}
+
 namespace xml
 {
     class xistream;
-}
-
-namespace boost
-{
-    namespace gregorian
-    {
-        class date;
-    }
 }
 
 namespace plugins
@@ -57,7 +54,7 @@ public:
              LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
                  const std::string& maintenanceFile, const std::string& supplyFile,
                  const std::string& funeralFile, const std::string& medicalFile,
-                 int maxHistoricFiles, int maxFileLines );
+                 int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients );
     virtual ~LogisticPlugin();
     //@}
 
@@ -76,7 +73,6 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
-    virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
     virtual int GetConsignCount( E_LogisticType eLogisticType ) const;
     virtual void SetMaxLinesInFile( int maxLines );
     //@}
@@ -89,14 +85,21 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void OnReceive( const sword::ClientToSim& message );
+    void OnReceiveClientToMessenger( const sword::ClientToMessenger& message );
+    //@}
+
     //! @name Member data
     //@{    
-    std::vector< ConsignResolver_ABC* >         resolvers_;
-    boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
+    std::vector< ConsignResolver_ABC* > resolvers_;
+    boost::shared_ptr<const NameResolver_ABC> nameResolver_;
+    dispatcher::ClientsNetworker& clients_;
     //@}
 };
 
-LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines );
+LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients );
 
 }
 }

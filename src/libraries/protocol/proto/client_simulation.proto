@@ -256,6 +256,7 @@ message ClientToSim {
         optional BurningCellRequest             burning_cell_request              = 23; //!< @copybrief BurningCellRequest
         optional OrderStream                    order_stream                      = 24; //!< @copybrief OrderStream
         optional ControlExportRequest           control_export                    = 25; //!< @copybrief ControlExportRequest
+        optional LogHistoryRequestForPlay       log_history_request_for_play      = 26; // FT 45373
     }
     /** @property context
         @brief Identifies the request matching the response

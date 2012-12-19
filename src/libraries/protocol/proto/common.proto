@@ -1496,3 +1496,27 @@ enum KnowledgeMagicActionType
     update_type         = 3; //!< A update type knowledge magic action
     add_knowledge       = 4; //!< An add knowledge in group magic action
 }
+
+message LogHistoryRequestForPlay {
+    required string exercise = 1;  //!< exercise to list checkpoint from
+    required string profile = 2;
+    required DateTime date_time = 3;
+    optional string session  = 4;  //!< session to list checkpoint from
+}
+
+message LogHistoryRequestForPlayAck {
+    required string exercise = 1;   //!< exercise to list checkpoint from
+    required string session  = 2;   //!< session to list checkpoint from
+    required string profile = 3;
+    required DateTime date_time = 4;
+}
+
+message LogHistoryRequestForReplay {
+    required string exercise = 1;   //!< exercise to list checkpoint from
+    required string session  = 2;   //!< session to list checkpoint from
+}
+
+message LogHistoryRequestForReplayAck {
+    required string exercise = 1;   //!< exercise to list checkpoint from
+    required string session  = 2;   //!< session to list checkpoint from
+}

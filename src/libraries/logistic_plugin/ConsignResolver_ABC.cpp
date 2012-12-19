@@ -9,11 +9,13 @@
 
 #include "ConsignResolver_ABC.h"
 #include "clients_kernel/Tools.h"
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/regex.hpp>
 
 namespace bfs = boost::filesystem;
 namespace bg = boost::gregorian;
+namespace bpt = boost::posix_time;
 
 namespace plugins
 {
@@ -53,6 +55,20 @@ namespace logistic
         for ( std::map< int, ConsignData_ABC* >::iterator it = consignsData_.begin(); it != consignsData_.end(); ++it )
             delete it->second;
     }
+    
+    // -----------------------------------------------------------------------------
+    // Name: ConsignResolver_ABC::Receive
+    // Created: LDC 2012-12-14
+    // -----------------------------------------------------------------------------
+    bool ConsignResolver_ABC::Receive( const sword::SimToClient& message )
+    {
+        if( IsManageable( message ) )
+        {
+            bg::date today = bpt::second_clock::local_time().date();
+            return Receive( message, today );
+        }
+        return false;
+    }
 
     // -----------------------------------------------------------------------------
     // Name: ConsignResolver_ABC::Receive
@@ -60,8 +76,6 @@ namespace logistic
     // -----------------------------------------------------------------------------
     bool ConsignResolver_ABC::Receive( const sword::SimToClient& message, const boost::gregorian::date& today )
     {
-        if( !IsManageable( message ) )
-            return false;
         if( !IsEmptyLineMessage( message ) )
             CheckOutputFile( today );
         if( output_.is_open() )
@@ -130,11 +144,31 @@ namespace logistic
             else
                 curFileIndex_ = 0;
         }
-        std::string newFileName( name_ );
-        AppendDateWithExtension( newFileName, today, curFileIndex_++ );
-        curLineIndex_ = 0;
         fileDate_ = today;
-        fileName_ = newFileName;
+        // Move current to newFileName
+        if( output_.is_open() )
+            output_.close();
+        if( !fileName_.empty() && bfs::exists( fileName_ ) )
+        {
+            std::string newFileName( name_ );
+            AppendDateWithExtension( newFileName, today, curFileIndex_ );
+            curLineIndex_ = 0;
+            bfs::path from( fileName_ );
+            bfs::path to( newFileName );
+            bfs::rename( from, to );
+            curFileIndex_++;
+        }
+        fileName_ = "current";
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: ConsignResolver_ABC::ForceNewFile
+    // Created: LDC 2012-12-14
+    // -----------------------------------------------------------------------------
+    void ConsignResolver_ABC::ForceNewFile()
+    {
+        bg::date today = bpt::second_clock::local_time().date();
+        SetNewFile( today );
     }
 
     // -----------------------------------------------------------------------------
@@ -171,11 +205,10 @@ namespace logistic
     void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
     {
         const bfs::path curPath( name_ );
-        boost::regex fileRegex(
-            EscapeRegex( curPath.filename() ) + "\\.(\\d{8})\\.\\d+\\.csv$");
+        boost::regex fileRegex( EscapeRegex( curPath.filename() ) + "\\.(\\d{8})\\.\\d+\\.csv$");
         const std::string minDate = to_iso_string( today - bg::days( daysBeforeToKeep_ ) );
 
-        boost::smatch m;
+        boost::smatch match;
         std::vector< bfs::path > filesToRemove;
         bfs::directory_iterator end;
         for( bfs::directory_iterator dir_it( curPath.parent_path() ) ; dir_it != end ; ++dir_it )
@@ -184,11 +217,11 @@ namespace logistic
             {
                 const std::string fileName = dir_it->path().filename();
                 // ISO date lexicographic order matches the chronological one
-                if( boost::regex_match( fileName, m, fileRegex ) && m.str(1) < minDate)
+                if( boost::regex_match( fileName, match, fileRegex ) && match.str(1) < minDate)
                     filesToRemove.push_back( dir_it->path() );
             }
         }
-        for( std::vector< bfs::path >::const_iterator it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
+        for( auto it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
         {
             try
             {

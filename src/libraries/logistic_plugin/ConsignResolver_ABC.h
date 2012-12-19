@@ -50,7 +50,9 @@ public:
 
     //! @name Operations
     //@{
+    bool Receive( const sword::SimToClient& message );
     bool Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
+    void ForceNewFile();
     void SetTime( int tick, const std::string& simTime );
     void GetSimTime( std::string& simTime, std::string& tick ) const;
     const NameResolver_ABC& GetNameResolver() const;
@@ -64,7 +66,7 @@ protected:
 
     //! @name Operations
     //@{
-    virtual bool IsManageable( const sword::SimToClient& ) { return false; }
+    virtual bool IsManageable( const sword::SimToClient& ) = 0;
     virtual void ManageMessage( const sword::SimToClient& ) {}
     virtual bool IsEmptyLineMessage( const sword::SimToClient& ) = 0;
     ConsignData_ABC& GetConsign( int requestId );

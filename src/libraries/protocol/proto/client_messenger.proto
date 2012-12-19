@@ -283,6 +283,7 @@ message ClientToMessenger {
         optional ClientObjectCreationRequest    client_object_creation_request    = 17; //!< @copybrief ClientObjectCreationRequest @see ClientObjectCreationRequest
         optional ClientObjectUpdateRequest      client_object_update_request      = 18; //!< @copybrief ClientObjectUpdateRequest @see ClientObjectUpdateRequest
         optional ClientObjectDestructionRequest client_object_destruction_request = 19; //!< @copybrief ClientObjectDestructionRequest @see ClientObjectDestructionRequest
+        optional LogHistoryRequestForPlayAck    log_history_request_for_play_ack  = 20; //!< @copybrief LogHistoryRequestForPlayAck @see LogHistoryRequestForPlayAck
     }
     /** @property context
         @brief Identifies the request matching the response.

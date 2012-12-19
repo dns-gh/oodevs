@@ -509,6 +509,7 @@ void Converter::ReceiveClientToSim( const MsgsClientToSim::MsgClientToSim& msg )
     FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
     FORWARD( server_, ClientToSimulation, order_stream )
     FORWARD( server_, ClientToSimulation, control_export )
+    FORWARD( server_, ClientToSimulation, log_history_request_for_play )
 }
 
 // -----------------------------------------------------------------------------

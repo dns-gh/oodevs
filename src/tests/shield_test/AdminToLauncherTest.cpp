@@ -123,6 +123,9 @@ BOOST_FIXTURE_TEST_CASE(session_notification_to_launcher_is_converted, ContextFi
     content.mutable_session_notification()->set_exercise( "name" );
     content.mutable_session_notification()->set_session( "session" );
     content.mutable_session_notification()->mutable_notification()->mutable_directory_change();
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_notification { exercise: \"name\" session: \"session\" notification { directory_change { } } } }" ) );
+    content.mutable_session_notification()->mutable_notification()->mutable_log_history_request_for_play_ack()->set_profile( "profile" );
+    content.mutable_session_notification()->mutable_notification()->mutable_log_history_request_for_play_ack()->mutable_date_time()->set_data( "date" );
+    content.mutable_session_notification()->mutable_notification()->mutable_log_history_request_for_replay();
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_notification { exercise: \"name\" session: \"session\" notification { directory_change { } log_history_request_for_play_ack { profile: \"profile\" date_time { data: \"date\" } } log_history_request_for_replay { } } } }" ) );
     converter.ReceiveAdminToLauncher( msg );
 }

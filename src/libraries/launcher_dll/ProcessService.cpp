@@ -721,10 +721,22 @@ void ProcessService::SendSessionNotification( const sword::SessionNotificationRe
     if( it != processes_.end() )
     {
         boost::shared_ptr< SwordFacade > client( it->second );
-        plugins::messenger::ClientObjectCreationRequest message;
-        message().set_name( "NotifModificationAnnuaire" );
-        message().set_persistent( false );
-        message.Send( *client );
+        if( message.notification().has_directory_change() )
+        {
+            plugins::messenger::ClientObjectCreationRequest answer;
+            answer().set_name( "NotifModificationAnnuaire" );
+            answer().set_persistent( false );
+            answer.Send( *client );
+        }
+        if( message.notification().has_log_history_request_for_play_ack() )
+        {
+            sword::ClientToMessenger answer;
+            answer.mutable_message()->mutable_log_history_request_for_play_ack()->set_exercise( message.exercise() );
+            answer.mutable_message()->mutable_log_history_request_for_play_ack()->set_session( message.session() );
+            answer.mutable_message()->mutable_log_history_request_for_play_ack()->set_profile( message.notification().log_history_request_for_play_ack().profile() );
+            answer.mutable_message()->mutable_log_history_request_for_play_ack()->mutable_date_time()->set_data( message.notification().log_history_request_for_play_ack().date_time().data() );
+            client->Send( answer );
+        }
     }
 }
 

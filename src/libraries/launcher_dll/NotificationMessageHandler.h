@@ -34,6 +34,7 @@ public:
     //@{
     virtual bool OnReceiveMessage( const sword::SimToClient& message );
     virtual bool OnReceiveMessage( const sword::AuthenticationToClient& message );
+    virtual bool OnReceiveMessage( const sword::MessengerToClient& message );
     //@}
 };
 

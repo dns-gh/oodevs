@@ -62,6 +62,15 @@ protected:
         if ( publisher_.get() )
             message.Send( *publisher_ );
     }
+    template< typename T >
+    void SendWithContext( T& message, int context )
+    {
+        if ( publisher_.get() )
+        {
+            message.set_context( context );
+            publisher_->Send( message );
+        }
+    }
     //@}
     
 protected:

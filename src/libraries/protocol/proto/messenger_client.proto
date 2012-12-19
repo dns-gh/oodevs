@@ -720,6 +720,7 @@ message MessengerToClient {
         optional MarkerCreationRequestAck          marker_creation_request_ack          = 35; //!< @copybrief MarkerCreationRequestAck @see MarkerCreationRequestAck
         optional MarkerUpdateRequestAck            marker_update_request_ack            = 36; //!< @copybrief MarkerUpdateRequestAck @see MarkerUpdateRequestAck
         optional MarkerDestructionRequestAck       marker_destruction_request_ack       = 37; //!< @copybrief MarkerDestructionRequestAck @see MarkerDestructionRequestAck
+        optional LogHistoryRequestForPlay          log_history_request_for_play         = 38; //!< @copybrief LogHistoryRequestForPlay @see LogHistoryRequestForPlay
     }
     /** @property context
         @brief Identifies the request matching the response.

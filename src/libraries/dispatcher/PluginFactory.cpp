@@ -91,7 +91,7 @@ void PluginFactory::Instanciate()
     if( config_.GetLogisticFiles() > 0 )
     {
         boost::shared_ptr< plugins::logistic::NameResolver > nameResolver( new plugins::logistic::NameResolver( model_, staticModel_ ) );
-        handler_.Add( CreateLogisticPlugin( nameResolver, config_, config_.GetLogisticFiles() - 1, config_.GetLogisticLogSize() ) );
+        handler_.Add( CreateLogisticPlugin( nameResolver, config_, config_.GetLogisticFiles() - 1, config_.GetLogisticLogSize(), clients_ ) );
     }
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )

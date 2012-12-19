@@ -153,6 +153,20 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionNotification
     CONVERT_CB( notification, ConvertNotification );
 }
 
+namespace
+{
+    void ConvertLogHistoryRequestForPlayAck( const MsgsAdminToLauncher::MsgSessionNotification::LogHistoryRequestForPlayAck& from, sword::SessionNotificationRequest::LogHistoryRequestForPlayAck* to )
+    {
+        CONVERT( profile );
+        CONVERT_DATE( date_time );
+    }
+
+    void ConvertLogHistoryRequestForReplay( const MsgsAdminToLauncher::MsgSessionNotification::LogHistoryRequestForReplay&, sword::SessionNotificationRequest::LogHistoryRequestForReplay* )
+    {
+        // NOTHING
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AdminToLauncher::ConvertNotification
 // Created: AHC 2011-05-12
@@ -160,6 +174,8 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionNotification
 void AdminToLauncher::ConvertNotification( const MsgsAdminToLauncher::MsgSessionNotification::Notification& from, sword::SessionNotificationRequest::Notification* to )
 {
     CONVERT_CB( directory_change, ConvertDirectoryChange );
+    CONVERT_CB( log_history_request_for_play_ack, ConvertLogHistoryRequestForPlayAck );
+    CONVERT_CB( log_history_request_for_replay, ConvertLogHistoryRequestForReplay );
 }
 // -----------------------------------------------------------------------------
 // Name: AdminToLauncher::ConvertNotification

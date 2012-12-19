@@ -50,6 +50,7 @@ public:
     static void Convert( const Common::MsgControlExportRequest& from, sword::ControlExportRequest* to );
     static void Convert( const Common::MsgControlExportRequestAck& from, sword::ControlExportRequestAck* to );
     static void Convert( const MsgsClientToSim::MsgOrderStream& from, sword::OrderStream* to );
+    static void Convert( const Common::MsgLogHistoryRequestForPlay& from, sword::LogHistoryRequestForPlay* to );
     //@}
 };
 

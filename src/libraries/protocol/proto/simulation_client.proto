@@ -2595,6 +2595,7 @@ message SimToClient {
         optional LogFuneralHandlingUpdate               log_funeral_handling_update               = 144; //!< @copybrief LogLogFuneralHandlingUpdateMedicalHandlingUpdate
         optional LogFuneralHandlingDestruction          log_funeral_handling_destruction          = 145; //!< @copybrief LogFuneralHandlingDestruction
         optional ControlExportRequestAck                control_export_request_ack                = 146; //!< @copybrief ControlExportRequestAck
+        optional LogHistoryRequestForPlayAck            log_history_request_for_play_ack          = 147; //!< @copybrief LogHistoryRequestForPlayAck @see LogHistoryRequestForPlayAck
     }
     /** @property context
         @brief Identifies the request matching the response

@@ -14,6 +14,7 @@
 #include "MedicalResolver.h"
 #include "SupplyResolver.h"
 #include "clients_kernel/Tools.h"
+#include "dispatcher/ClientsNetworker.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -69,8 +70,9 @@ namespace
 // -----------------------------------------------------------------------------
 LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const std::string& maintenanceFile,
                                 const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile,
-                                int maxHistoricFiles, int maxFileLines )
+                                int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients )
     : nameResolver_( nameResolver )
+    , clients_( clients )
 {
     QString lang = ReadLang();
     InitTranslator( "ENT", lang );
@@ -82,8 +84,11 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile, *nameResolver, maxHistoricFiles, maxFileLines );
     resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile, *nameResolver, maxHistoricFiles, maxFileLines );
     resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile, *nameResolver, maxHistoricFiles, maxFileLines );
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
         (*r)->InitHeader();
+    
+    clients.RegisterMessage( *this, &LogisticPlugin::OnReceive );
+    clients.RegisterMessage( *this, &LogisticPlugin::OnReceiveClientToMessenger );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,37 +97,68 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
 // -----------------------------------------------------------------------------
 LogisticPlugin::~LogisticPlugin()
 {
-    for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
         delete *r;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticPlugin::Receive
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void LogisticPlugin::Receive( const sword::SimToClient& message )
-{
-    Receive( message, bpt::second_clock::local_time().date() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticPlugin::Receive
 // Created: MMC 2012-09-11
 // -----------------------------------------------------------------------------
-void LogisticPlugin::Receive( const sword::SimToClient& message, const bg::date& today )
+void LogisticPlugin::Receive( const sword::SimToClient& message )
 {
     if( message.message().has_control_begin_tick() )
     {
         int currentTick = message.message().control_begin_tick().current_tick();
         std::string simTime = message.message().control_begin_tick().date_time().data();        
-        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
             (*r)->SetTime( currentTick, simTime );
     }
     else
     {
-        for( IT_ConsignResolvers r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            if( (*r)->Receive( message, today ) )
+        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
+            if( (*r)->Receive( message ) )
                 break;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::OnReceive
+// Created: LDC 2012-12-14
+// -----------------------------------------------------------------------------
+void LogisticPlugin::OnReceive( const sword::ClientToSim& message )
+{
+    if( message.message().has_log_history_request_for_play() )
+    {
+        sword::LogHistoryRequestForPlay request = message.message().log_history_request_for_play();
+        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
+            (*r)->ForceNewFile();
+        sword::MessengerToClient messageToLauncher;
+        sword::LogHistoryRequestForPlay* answer = messageToLauncher.mutable_message()->mutable_log_history_request_for_play();
+        answer->mutable_date_time()->set_data( request.date_time().data() );
+        answer->set_profile( request.profile() );
+        answer->set_exercise( request.exercise() );
+        answer->set_session( request.session() );
+        clients_.Send( messageToLauncher );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::OnReceiveClientToMessenger
+// Created: LDC 2012-12-17
+// -----------------------------------------------------------------------------
+void LogisticPlugin::OnReceiveClientToMessenger( const sword::ClientToMessenger& message )
+{
+    if( message.message().has_log_history_request_for_play_ack() )
+    {
+        auto request = message.message().log_history_request_for_play_ack();
+        sword::SimToClient answer;
+        auto redirectedMessage = answer.mutable_message()->mutable_log_history_request_for_play_ack();
+        redirectedMessage->set_exercise( request.exercise() );
+        redirectedMessage->set_session( request.session() );
+        redirectedMessage->set_profile( request.profile() );
+        redirectedMessage->mutable_date_time()->set_data( request.date_time().data() );
+        clients_.Send( answer );
     }
 }
 
@@ -153,7 +189,7 @@ void LogisticPlugin::SetMaxLinesInFile( int maxLines )
 }
 
 
-LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines )
+LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients )
 {
     return new LogisticPlugin(
         nameResolver,
@@ -161,7 +197,7 @@ LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver
         config.BuildSessionChildFile( "LogRavitaillement" ),
         config.BuildSessionChildFile( "LogFuneraire" ),
         config.BuildSessionChildFile( "LogMedical" ),
-        maxHistoricFiles, maxFileLines ); 
+        maxHistoricFiles, maxFileLines, clients ); 
 }
 
 }  // namespace logistic

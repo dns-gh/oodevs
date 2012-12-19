@@ -243,3 +243,13 @@ BOOST_FIXTURE_TEST_CASE( order_stream_from_client_is_converted, ContextFixture< 
     MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { order_stream { serialized_order: \"order\" } }" ) );
     converter.ReceiveClientToSim( msg );
 }
+
+BOOST_FIXTURE_TEST_CASE( order_log_history_request_for_play_is_converted, ContextFixture< MsgsClientToSim::MsgClientToSim > )
+{
+    content.mutable_log_history_request_for_play()->set_exercise( "exercise" );
+    content.mutable_log_history_request_for_play()->set_profile( "profile" );
+    content.mutable_log_history_request_for_play()->mutable_date_time()->set_data( "date" );
+    content.mutable_log_history_request_for_play()->set_session( "session" );
+    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { log_history_request_for_play { exercise: \"exercise\" profile: \"profile\" date_time { data: \"date\" } session: \"session\" } }" ) );
+    converter.ReceiveClientToSim( msg );
+}

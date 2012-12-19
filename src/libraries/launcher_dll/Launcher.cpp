@@ -129,6 +129,7 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().checkpoint_delete_request() );
     else if( message.message().has_session_notification() )
         HandleRequest( endpoint, message.message().session_notification() );
+
 }
 
 // -----------------------------------------------------------------------------

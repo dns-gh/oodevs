@@ -9,6 +9,8 @@
 
 #include "launcher_dll_pch.h"
 #include "NotificationMessageHandler.h"
+#include "protocol/LauncherSenders.h"
+#include "protocol/Messenger.h"
 
 using namespace launcher;
 
@@ -98,6 +100,26 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::AuthenticationTo
         SessionNotification response;
         *response().mutable_notification()->mutable_profile_update()->mutable_profile() = message.message().profile_update().profile();
         Send( response );
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotificationMessageHandler::OnReceiveMessage
+// Created: LDC 2012-12-17
+// -----------------------------------------------------------------------------
+bool NotificationMessageHandler::OnReceiveMessage( const sword::MessengerToClient& message )
+{
+    if( message.message().has_log_history_request_for_play() )
+    {
+        sword::LogHistoryRequestForPlay request = message.message().log_history_request_for_play();
+        sword::LauncherToAdmin adminMessage;
+        sword::SessionNotification* notification = adminMessage.mutable_message()->mutable_session_notification();
+        notification->set_exercise( request.exercise() );
+        notification->set_session( request.session() );
+        notification->mutable_notification()->mutable_log_history_request_for_play()->set_profile( request.profile() );
+        notification->mutable_notification()->mutable_log_history_request_for_play()->mutable_date_time()->set_data( request.date_time().data() );
+        SendWithContext( adminMessage, 0 );
     }
     return false;
 }

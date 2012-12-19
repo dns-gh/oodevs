@@ -246,13 +246,25 @@ namespace
     {
         CONVERT_CB( profile, ConvertProfileDescription );
     }
-
+    void ConvertExportCreation( const sword::SessionNotification::ExportCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::ExportCreation* to )
+    {
+        CONVERT( export_directory );
+    }
+    void ConvertLogHistoryRequestForPlay( const sword::SessionNotification::LogHistoryRequestForPlay& from, MsgsLauncherToAdmin::MsgSessionNotification::LogHistoryRequestForPlay* to )
+    {
+        CONVERT( profile );
+        CONVERT_DATE( date_time );
+    }
     void ConvertNotification( const sword::SessionNotification::Notification& from, MsgsLauncherToAdmin::MsgSessionNotification::Notification* to )
     {
         CONVERT_CB( unit_update, ConvertUnitUpdate );
         CONVERT_CB( formation_update, ConvertFormationUpdate );
         CONVERT_CB( profile_creation, ConvertProfileCreation );
         CONVERT_CB( profile_update, ConvertProfileUpdate );
+        CONVERT_CB( export_creation, ConvertExportCreation );
+        CONVERT_CB( log_history_request_for_play, ConvertLogHistoryRequestForPlay );
+        if( to && from.has_log_history_request_for_replay_ack() )
+            to->mutable_log_history_request_for_replay_ack();
     }
 }
 
