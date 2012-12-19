@@ -2661,9 +2661,11 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.cpp">
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.cpp">
       <Filter>Source Files\Entities\Automates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5394,9 +5396,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Flying\FlyListener_ABC.h">
       <Filter>Source Files\Entities\Agents\Actions\Flying</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory_ABC.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
@@ -5456,6 +5455,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.h">
       <Filter>Source Files\Entities\Automates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory_ABC.h">
+      <Filter>Source Files\Entities\Agents\Actions\Moving</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
