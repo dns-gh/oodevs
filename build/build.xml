@@ -1373,12 +1373,14 @@
                     <description>@{description}</description>
                 </content>
             </echoxml>
-            <zip destfile="${dist.dir}/SWORD_@{name}_${version.project.major}.otpak" filesonly="true">
-                <fileset dir="${data.dir}">
-                    <elements/>
-                </fileset>
-                <fileset dir="${out.dir}" includes="content.xml"/>
-            </zip>
+            <safe-move file="${out.dir}/SWORD_@{name}_${version.project.major}.otpak">
+                <zip destfile="@{file}" filesonly="true">
+                    <fileset dir="${data.dir}">
+                        <elements/>
+                    </fileset>
+                    <fileset dir="${out.dir}" includes="content.xml"/>
+                </zip>
+            </safe-move>
             <delete file="${out.dir}/content.xml"/>
         </sequential>
     </macrodef>
