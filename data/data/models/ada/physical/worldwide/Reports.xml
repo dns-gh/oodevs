@@ -674,5 +674,8 @@
   <report category="operational" id="454" message="No logistic superior found for %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="455" message="No stock available at logistic superior for %1">
+    <parameter type="ResourceType"/>
+  </report>
 </reports>
-<!-- signature="0418872737" -->
+<!-- signature="2840553242" -->

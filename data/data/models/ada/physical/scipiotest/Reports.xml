@@ -674,5 +674,8 @@
   <report category="operational" id="454" message="Pas de ravitaillement en %1 faute de supérieur logistique">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="455" message="Pas de ravitaillement en %1 car le supérieur logistique ne dispose pas des stocks nécessaires">
+    <parameter type="ResourceType"/>
+  </report>
 </reports>
-<!-- signature="2965570987" -->
+<!-- signature="2500520245" -->
