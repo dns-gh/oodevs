@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="debug|win32">
@@ -184,6 +184,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.cpp" />
@@ -983,6 +984,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\WoundEffectsHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.h" />

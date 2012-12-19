@@ -11,6 +11,7 @@
 #define __SupplyRecipient_ABC_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include <boost/noncopyable.hpp>
 
 class MIL_AgentPion;
 class MIL_AutomateLOG;
@@ -31,7 +32,7 @@ namespace logistic
 */
 // Created: NLD 2011-01-10
 // =============================================================================
-class SupplyRecipient_ABC
+class SupplyRecipient_ABC : boost::noncopyable
 {
 protected:
     //! @name Types
@@ -62,6 +63,7 @@ public:
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
 
     virtual void NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) = 0;
+    virtual void NotifyStockNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) = 0;
     //@}
 
     //! @name Network

@@ -2662,6 +2662,9 @@
       <Filter>Source Files\Entities\Agents\Units\Sensors\Types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.cpp">
+      <Filter>Source Files\Entities\Automates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5450,6 +5453,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\WoundEffectsHandler_ABC.h">
       <Filter>Source Files\Entities\Agents\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.h">
+      <Filter>Source Files\Entities\Automates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

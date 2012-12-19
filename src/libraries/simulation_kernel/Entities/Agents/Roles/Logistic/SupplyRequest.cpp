@@ -89,12 +89,15 @@ bool SupplyRequest::AffectSupplier( SupplySupplier_ABC& supplier )
 // Name: SupplyRequest::AffectSupplier
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-bool SupplyRequest::AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier )
+bool SupplyRequest::AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier )
 {
     if( supplier_ )
         return true;
     if( !AffectSupplier( supplier->GetSuperior() ) )
+    {
+        recipient.NotifyStockNotAvailable( dotationCategory_, requesters_ );
         return false;
+    }
     const double authorizedQuantity = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_, requesters_ );
     if( authorizedQuantity <= 0 )
     {

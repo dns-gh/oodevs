@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_StockSupplyManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -30,10 +29,9 @@
 #include "Network/NET_AsnException.h"
 #include <boost/serialization/set.hpp>
 #include <boost/range/algorithm.hpp>
-#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StockSupplyManager )
-using namespace sword;
+
 using namespace sword;
 
 // -----------------------------------------------------------------------------
@@ -47,6 +45,7 @@ MIL_StockSupplyManager::MIL_StockSupplyManager( MIL_Automate& automate )
     , autoSupplyRequest_          ( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) )
     , nTickRcStockSupplyQuerySent_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +57,7 @@ MIL_StockSupplyManager::MIL_StockSupplyManager()
     , bStockSupplyNeeded_         ( false )
     , nTickRcStockSupplyQuerySent_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -66,11 +66,8 @@ MIL_StockSupplyManager::MIL_StockSupplyManager()
 // -----------------------------------------------------------------------------
 MIL_StockSupplyManager::~MIL_StockSupplyManager()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// CHEKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::load
@@ -81,8 +78,6 @@ void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned
     file >> pAutomate_
          >> bStockSupplyNeeded_
          >> nTickRcStockSupplyQuerySent_;
-
-    // $$ TMP
     assert( pAutomate_ );
     supplyRequestBuilder_.reset( new logistic::SupplyStockRequestBuilder( *pAutomate_, *this ) );
     autoSupplyRequest_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
@@ -99,10 +94,6 @@ void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigne
          << nTickRcStockSupplyQuerySent_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::Update
 // Created: NLD 2005-01-27
@@ -110,12 +101,10 @@ void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigne
 void MIL_StockSupplyManager::Update()
 {
     autoSupplyRequest_->Update();
-    for( T_SupplyRequests::iterator it = manualSupplyRequests_.begin(); it != manualSupplyRequests_.end(); )
+    for( auto it = manualSupplyRequests_.begin(); it != manualSupplyRequests_.end(); )
         (*it)->Update() ? it = manualSupplyRequests_.erase( it ) : ++it;
-
     if( !bStockSupplyNeeded_ )
         return;
-
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
     if( logisticManager )
     {
@@ -131,10 +120,8 @@ void MIL_StockSupplyManager::Update()
 void MIL_StockSupplyManager::Clean()
 {
     autoSupplyRequest_->Clean();
-    BOOST_FOREACH( T_SupplyRequests::value_type& data, manualSupplyRequests_ )
-        data->Clean();
-    previousNotifications_ = currentNotifications_;
-    currentNotifications_.clear();
+    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Clean ) );
+    MIL_SupplyManager::Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,10 +130,9 @@ void MIL_StockSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
 {
-    for( T_Supplies::const_iterator it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
-        if( (*it)->IsSupplying( dotationCategory, *this ) )
-            return true;
-    return false;
+    return boost::find_if( scheduledSupplies_,
+            boost::bind( &logistic::SupplyConsign_ABC::IsSupplying, _1, boost::cref( dotationCategory ), boost::cref( *this ) ) )
+        != scheduledSupplies_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,9 +141,7 @@ bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bStockSupplyNeeded_ )
-        return;
-    if( IsSupplyInProgress( dotationCategory ) )
+    if( bStockSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
         return;
     bStockSupplyNeeded_ = true;
     // Pas de RC si RC envoyé au tick précédent
@@ -201,7 +185,7 @@ void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logisti
 void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementStockAnnule );
-    bStockSupplyNeeded_ = true; //$$ ..
+    bStockSupplyNeeded_ = true;
     scheduledSupplies_.erase( supplyConsign );
 }
 
@@ -238,21 +222,6 @@ void MIL_StockSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const log
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::NotifySuperiorNotAvailable
-// Created: MCO 2012-12-11
-// -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
-{
-    const T_Requesters& previous = previousNotifications_[ &dotationCategory ];
-    BOOST_FOREACH( T_Requesters::value_type pion, requesters )
-    {
-        if( boost::find( previous, pion ) == previous.end() )
-            MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogNoSuperior, dotationCategory );
-        currentNotifications_[ &dotationCategory ].push_back( pion );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
@@ -270,10 +239,6 @@ bool MIL_StockSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& logis
     const MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
     return logisticManager && logisticManager == &logisticBase;
 }
-
-// =============================================================================
-// Network
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow
@@ -297,8 +262,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowPa
 void MIL_StockSupplyManager::SendChangedState() const
 {
     autoSupplyRequest_->SendChangedState();
-    BOOST_FOREACH( const T_SupplyRequests::value_type& data, manualSupplyRequests_ )
-        data->SendChangedState();
+    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,6 +272,5 @@ void MIL_StockSupplyManager::SendChangedState() const
 void MIL_StockSupplyManager::SendFullState() const
 {
     autoSupplyRequest_->SendFullState();
-    BOOST_FOREACH( const T_SupplyRequests::value_type& data, manualSupplyRequests_ )
-        data->SendFullState();
+    boost::for_each( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::SendFullState ) );
 }
