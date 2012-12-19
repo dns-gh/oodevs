@@ -100,11 +100,10 @@ private:
     //! @name Member data
     //@{
     MIL_Automate*         pAutomate_;
-    bool                  bStockSupplyNeeded_;
+    bool                  bSupplyNeeded_;
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
     std::auto_ptr< logistic::SupplyRequestContainer > autoSupplyRequest_;
     T_SupplyRequests manualSupplyRequests_;
-    unsigned int          nTickRcStockSupplyQuerySent_;
     T_Supplies scheduledSupplies_;
     //@}
 };

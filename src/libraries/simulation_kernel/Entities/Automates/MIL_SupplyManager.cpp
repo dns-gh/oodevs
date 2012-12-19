@@ -9,8 +9,28 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_SupplyManager.h"
+#include "MIL_AgentServer.h"
 #include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
+
+// -----------------------------------------------------------------------------
+// Name: MIL_SupplyManager::MIL_SupplyManager
+// Created: MCO 2012-12-19
+// -----------------------------------------------------------------------------
+MIL_SupplyManager::MIL_SupplyManager()
+    : nTickRcSupplyQuerySent_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_SupplyManager::~MIL_SupplyManager
+// Created: MCO 2012-12-19
+// -----------------------------------------------------------------------------
+MIL_SupplyManager::~MIL_SupplyManager()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_SupplyManager::NotifySuperiorNotAvailable
@@ -53,4 +73,17 @@ void MIL_SupplyManager::Clean()
 {
     previousNotifications_ = currentNotifications_;
     currentNotifications_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_SupplyManager::SendSupplyNeededReport
+// Created: MCO 2012-12-19
+// -----------------------------------------------------------------------------
+bool MIL_SupplyManager::SendSupplyNeededReport()
+{
+    // Pas de RC si RC envoyé au tick précédent
+    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    bool result = ( nCurrentTick > ( nTickRcSupplyQuerySent_ + 1 ) || nTickRcSupplyQuerySent_ == 0 );
+    nTickRcSupplyQuerySent_ = nCurrentTick;
+    return result;
 }

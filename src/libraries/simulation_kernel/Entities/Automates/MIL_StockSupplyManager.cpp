@@ -39,11 +39,10 @@ using namespace sword;
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
 MIL_StockSupplyManager::MIL_StockSupplyManager( MIL_Automate& automate )
-    : pAutomate_                  ( &automate )
-    , bStockSupplyNeeded_         ( false )
-    , supplyRequestBuilder_       ( new logistic::SupplyStockRequestBuilder( automate, *this ) )
-    , autoSupplyRequest_          ( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) )
-    , nTickRcStockSupplyQuerySent_( 0 )
+    : pAutomate_           ( &automate )
+    , bSupplyNeeded_       ( false )
+    , supplyRequestBuilder_( new logistic::SupplyStockRequestBuilder( automate, *this ) )
+    , autoSupplyRequest_   ( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) )
 {
     // NOTHING
 }
@@ -53,9 +52,8 @@ MIL_StockSupplyManager::MIL_StockSupplyManager( MIL_Automate& automate )
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 MIL_StockSupplyManager::MIL_StockSupplyManager()
-    : pAutomate_                  ( 0 )
-    , bStockSupplyNeeded_         ( false )
-    , nTickRcStockSupplyQuerySent_( 0 )
+    : pAutomate_    ( 0 )
+    , bSupplyNeeded_( false )
 {
     // NOTHING
 }
@@ -76,8 +74,7 @@ MIL_StockSupplyManager::~MIL_StockSupplyManager()
 void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> pAutomate_
-         >> bStockSupplyNeeded_
-         >> nTickRcStockSupplyQuerySent_;
+         >> bSupplyNeeded_;
     assert( pAutomate_ );
     supplyRequestBuilder_.reset( new logistic::SupplyStockRequestBuilder( *pAutomate_, *this ) );
     autoSupplyRequest_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
@@ -90,8 +87,7 @@ void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned
 void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << pAutomate_
-         << bStockSupplyNeeded_
-         << nTickRcStockSupplyQuerySent_;
+         << bSupplyNeeded_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,13 +99,13 @@ void MIL_StockSupplyManager::Update()
     autoSupplyRequest_->Update();
     for( auto it = manualSupplyRequests_.begin(); it != manualSupplyRequests_.end(); )
         (*it)->Update() ? it = manualSupplyRequests_.erase( it ) : ++it;
-    if( !bStockSupplyNeeded_ )
+    if( !bSupplyNeeded_ )
         return;
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
     if( logisticManager )
     {
         logistic::SupplyRequestHierarchyDispatcher dispatcher( logisticManager->GetLogisticHierarchy() );
-        bStockSupplyNeeded_ = !autoSupplyRequest_->Execute( dispatcher );
+        bSupplyNeeded_ = !autoSupplyRequest_->Execute( dispatcher );
     }
 }
 
@@ -125,6 +121,19 @@ void MIL_StockSupplyManager::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::NotifyStockSupplyNeeded
+// Created: NLD 2005-01-31
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
+{
+    if( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
+        return;
+    bSupplyNeeded_ = true;
+    if( SendSupplyNeededReport() )
+        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementStocks );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::IsSupplyInProgress
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
@@ -133,22 +142,6 @@ bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dot
     return boost::find_if( scheduledSupplies_,
             boost::bind( &logistic::SupplyConsign_ABC::IsSupplying, _1, boost::cref( dotationCategory ), boost::cref( *this ) ) )
         != scheduledSupplies_.end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::NotifyStockSupplyNeeded
-// Created: NLD 2005-01-31
-// -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
-{
-    if( bStockSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
-        return;
-    bStockSupplyNeeded_ = true;
-    // Pas de RC si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 )
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementStocks );
-    nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +178,7 @@ void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logisti
 void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementStockAnnule );
-    bStockSupplyNeeded_ = true;
+    bSupplyNeeded_ = true;
     scheduledSupplies_.erase( supplyConsign );
 }
 

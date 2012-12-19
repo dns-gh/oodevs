@@ -25,9 +25,16 @@ class PHY_DotationCategory;
 class MIL_SupplyManager : public logistic::SupplyRecipient_ABC
 {
 protected:
+    //! @name Constructors/Destructor
+    //@{
+             MIL_SupplyManager();
+    virtual ~MIL_SupplyManager();
+    //@}
+
     //! @name Operations
     //@{
     void Clean();
+    bool SendSupplyNeededReport();
     //@}
 
 private:
@@ -52,6 +59,7 @@ private:
     //! @name Member data
     //@{
     T_Notifications currentNotifications_, previousNotifications_;
+    unsigned int nTickRcSupplyQuerySent_;
     //@}
 };
 
