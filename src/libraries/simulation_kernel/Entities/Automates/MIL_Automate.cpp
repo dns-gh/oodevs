@@ -105,7 +105,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , automates_()
     , bEngaged_( true )
     , bAutomateModeChanged_( true )
-    , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_( 0 )
     , pLogisticHierarchy_( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
@@ -127,24 +126,23 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
-    : MIL_Entity_ABC                 ( "" )
-    , pType_                         ( &type )
-    , nID_                           ( nID )
-    , pParentFormation_              ( 0 )
-    , pParentAutomate_               ( 0 )
-    , bEngaged_                      ( true )
-    , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
-    , pPionPC_                       ( 0 )
-    , bAutomateModeChanged_          ( true )
-    , nTickRcDotationSupplyQuerySent_( 0 )
-    , pKnowledgeBlackBoard_          ( 0 )
-    , pArmySurrenderedTo_            ( 0 )
-    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
-    , pBrainLogistic_                ( 0 )
-    , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
-    , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
-    , pExtensions_                   ( 0 )
-    , pColor_                        ( 0 )
+    : MIL_Entity_ABC         ( "" )
+    , pType_                 ( &type )
+    , nID_                   ( nID )
+    , pParentFormation_      ( 0 )
+    , pParentAutomate_       ( 0 )
+    , bEngaged_              ( true )
+    , pOrderManager_         ( new MIL_AutomateOrderManager( *this ) )
+    , pPionPC_               ( 0 )
+    , bAutomateModeChanged_  ( true )
+    , pKnowledgeBlackBoard_  ( 0 )
+    , pArmySurrenderedTo_    ( 0 )
+    , pLogisticHierarchy_    ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
+    , pBrainLogistic_        ( 0 )
+    , pDotationSupplyManager_( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_   ( new MIL_StockSupplyManager( *this ) )
+    , pExtensions_           ( 0 )
+    , pColor_                ( 0 )
 {
     // NOTHING
 }
@@ -163,13 +161,9 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , bEngaged_                      ( true )
     , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                       ( 0 )
-    , pions_                         ()
-    , recycledPions_                 ()
-    , automates_                     ()
     , bAutomateModeChanged_          ( true )
     , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
     , pBrainLogistic_                ( 0 )
-    , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_            ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
@@ -274,7 +268,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bAutomateModeChanged_
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
-         >> nTickRcDotationSupplyQuerySent_
          >> pExtensions
          >> pColor
          >> symbol_
@@ -315,7 +308,6 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << bAutomateModeChanged_
          << pKnowledgeBlackBoard_
          << pArmySurrenderedTo_
-         << nTickRcDotationSupplyQuerySent_
          << pExtensions
          << pColor
          << symbol_

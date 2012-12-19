@@ -13,12 +13,11 @@
 #define __MIL_DotationSupplyManager_h_
 
 #include "MIL.h"
-#include "Entities/Agents/Roles/Logistic/SupplyRecipient_ABC.h"
+#include "MIL_SupplyManager.h"
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class MIL_Automate;
-class PHY_DotationCategory;
 
 namespace logistic 
 {
@@ -30,13 +29,15 @@ namespace logistic
 // @class  MIL_Automate
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_DotationSupplyManager : public logistic::SupplyRecipient_ABC
-                                , private boost::noncopyable
+class MIL_DotationSupplyManager : public MIL_SupplyManager
 {
 public:
-             MIL_DotationSupplyManager( MIL_Automate& automate );
+    //! @name Constructors/Destructor
+    //@{
+    explicit MIL_DotationSupplyManager( MIL_Automate& automate );
              MIL_DotationSupplyManager();
     virtual ~MIL_DotationSupplyManager();
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -67,7 +68,6 @@ public:
     virtual void OnSupplyDone          ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
     virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 
@@ -78,7 +78,7 @@ public:
     //@}
 
 private:
-    //! @name Types
+    //! @name Helpers
     //@{
     bool IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const;
     //@}
@@ -87,23 +87,20 @@ private:
     //! @name Types
     //@{
     typedef std::set< boost::shared_ptr< const logistic::SupplyConsign_ABC > > T_Supplies;
-    typedef std::map< const PHY_DotationCategory*, T_Requesters > T_Notifications;
     //@}
 
 private:
     //! @name Member data
     //@{
     MIL_Automate* pAutomate_;
-    bool                     bDotationSupplyNeeded_;
+    bool                     bSupplyNeeded_;
     bool                     bDotationSupplyExplicitlyRequested_;
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
     std::auto_ptr< logistic::SupplyRequestContainer > supplyRequests_;
-    unsigned int                     nTickRcDotationSupplyQuerySent_;
     T_Supplies scheduledSupplies_;
-    T_Notifications currentNotifications_, previousNotifications_;
     //@}
 };
 
-BOOST_CLASS_EXPORT_KEY2( MIL_DotationSupplyManager, "MIL_DotationSupplyManager" )
+BOOST_CLASS_EXPORT_KEY( MIL_DotationSupplyManager )
 
 #endif // MIL_DotationSupplyManager

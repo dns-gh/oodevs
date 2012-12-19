@@ -12,19 +12,20 @@
 
 #include "SupplyRequest_ABC.h"
 
-namespace logistic {
+namespace logistic
+{
     class SupplySupplier_ABC;
 
 // =============================================================================
-/** @class  SupplyRequestContainer
-    @brief  SupplyRequestContainer
+/** @class  SupplyRequest
+    @brief  SupplyRequest
 */
 // Created: NLD 2011-01-10
 // =============================================================================
 class SupplyRequest : public SupplyRequest_ABC
 {
 public:
-    //! @name Constructors/_
+    //! @name Constructors/Destructor
     //@{
              SupplyRequest( const PHY_DotationCategory& dotationCategory );
     virtual ~SupplyRequest();
@@ -34,7 +35,7 @@ public:
     //@{
     virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity );
     virtual bool   AffectSupplier( SupplySupplier_ABC& supplier );
-    virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier );
+    virtual bool   AffectSupplier( SupplyRecipient_ABC& recipient, boost::shared_ptr< LogisticLink_ABC > supplier );
 
     virtual double Supply          ();
     virtual double Convoy          ( double quantity ); // Return the quantity convoyed
@@ -89,6 +90,6 @@ private:
     //@}
 };
 
-} // end namespace logistic
+}
 
 #endif // __SupplyRequest_ABC_h_

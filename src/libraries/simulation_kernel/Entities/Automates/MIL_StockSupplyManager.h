@@ -13,13 +13,11 @@
 #define __MIL_StockSupplyManager_h_
 
 #include "MIL.h"
-#include "Entities/Agents/Roles/Logistic/SupplyRecipient_ABC.h"
+#include "MIL_SupplyManager.h"
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
-class PHY_DotationCategory;
 class MIL_Automate;
-template < typename T > class PHY_ActionLogistic;
 
 namespace logistic 
 {
@@ -37,13 +35,12 @@ namespace sword
 // @class  MIL_StockSupplyManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_StockSupplyManager : public logistic::SupplyRecipient_ABC
-                             , private boost::noncopyable
+class MIL_StockSupplyManager : public MIL_SupplyManager
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_StockSupplyManager( MIL_Automate& automate );
+    explicit MIL_StockSupplyManager( MIL_Automate& automate );
              MIL_StockSupplyManager();
     virtual ~MIL_StockSupplyManager();
     //@}
@@ -79,7 +76,6 @@ public:
     virtual void OnSupplyDone          ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
     virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 
@@ -105,16 +101,14 @@ private:
     //! @name Member data
     //@{
     MIL_Automate*         pAutomate_;
-    bool                  bStockSupplyNeeded_;
+    bool                  bSupplyNeeded_;
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
     std::auto_ptr< logistic::SupplyRequestContainer > autoSupplyRequest_;
     T_SupplyRequests manualSupplyRequests_;
-    unsigned int          nTickRcStockSupplyQuerySent_;
     T_Supplies scheduledSupplies_;
-    T_Notifications currentNotifications_, previousNotifications_;
     //@}
 };
 
-BOOST_CLASS_EXPORT_KEY2( MIL_StockSupplyManager, "MIL_StockSupplyManager" )
+BOOST_CLASS_EXPORT_KEY( MIL_StockSupplyManager )
 
 #endif // __MIL_StockSupplyManager_h_

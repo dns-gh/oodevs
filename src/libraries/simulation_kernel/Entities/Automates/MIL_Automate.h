@@ -257,6 +257,9 @@ private:
     //! @name Tools
     //@{
     void Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult );
+
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
     //@}
 
     //! @name Helpers
@@ -280,7 +283,6 @@ private:
     T_AutomateVector                                           automates_;
     bool                                                       bEngaged_;
     bool                                                       bAutomateModeChanged_;
-    unsigned int                                               nTickRcDotationSupplyQuerySent_;
     // Knowledge
     DEC_KnowledgeBlackBoard_Automate*                          pKnowledgeBlackBoard_;
     // Surrendered / prisoner
@@ -295,10 +297,6 @@ private:
     std::auto_ptr< MIL_Color >                                 pColor_;
     std::string                                                symbol_;
     //@}
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_Automate )

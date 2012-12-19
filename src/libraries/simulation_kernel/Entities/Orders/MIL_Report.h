@@ -163,6 +163,7 @@ public:
         eRC_LogQuotaExceededForAgent = 452,
         eRC_TransportedUnitCannotReceiveOrder = 453,
         eRC_LogNoSuperior = 454,
+        eRC_LogNoStock = 455,
     };
     //@}
 

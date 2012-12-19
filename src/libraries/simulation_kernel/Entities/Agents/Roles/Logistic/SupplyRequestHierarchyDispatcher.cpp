@@ -59,7 +59,7 @@ void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRecipient_ABC& recipient,
         ++nbComplementaryRequests_;
     while( it.HasMoreElements() )
     {
-        if( request.AffectSupplier( it.NextElement() ) )
+        if( request.AffectSupplier( recipient, it.NextElement() ) )
         {
             if( ! request.IsComplementary() )
                 ++nbMandatoryRequestsSatisfied_;

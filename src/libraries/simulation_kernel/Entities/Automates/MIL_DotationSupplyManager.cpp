@@ -33,9 +33,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
 // -----------------------------------------------------------------------------
 MIL_DotationSupplyManager::MIL_DotationSupplyManager( MIL_Automate& automate )
     : pAutomate_                         ( &automate )
-    , bDotationSupplyNeeded_             ( false )
+    , bSupplyNeeded_                     ( false )
     , bDotationSupplyExplicitlyRequested_( false )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
     , supplyRequestBuilder_              ( new logistic::SupplyDotationRequestBuilder( automate, *this ) )
     , supplyRequests_                    ( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) )
 {
@@ -48,13 +47,11 @@ MIL_DotationSupplyManager::MIL_DotationSupplyManager( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 MIL_DotationSupplyManager::MIL_DotationSupplyManager()
     : pAutomate_                         ( 0 )
-    , bDotationSupplyNeeded_             ( false )
+    , bSupplyNeeded_                     ( false )
     , bDotationSupplyExplicitlyRequested_( false )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager destructor
@@ -72,9 +69,8 @@ MIL_DotationSupplyManager::~MIL_DotationSupplyManager()
 void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> pAutomate_
-         >> bDotationSupplyNeeded_
-         >> bDotationSupplyExplicitlyRequested_
-         >> nTickRcDotationSupplyQuerySent_;
+         >> bSupplyNeeded_
+         >> bDotationSupplyExplicitlyRequested_;
 
     // $$ TMP
     assert( pAutomate_ );
@@ -89,9 +85,8 @@ void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsig
 void MIL_DotationSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << pAutomate_
-         << bDotationSupplyNeeded_
-         << bDotationSupplyExplicitlyRequested_
-         << nTickRcDotationSupplyQuerySent_;
+         << bSupplyNeeded_
+         << bDotationSupplyExplicitlyRequested_;
 }
 
 // =============================================================================
@@ -105,10 +100,10 @@ void MIL_DotationSupplyManager::save( MIL_CheckPointOutArchive& file, const unsi
 void MIL_DotationSupplyManager::Update()
 {
     supplyRequests_->Update();
-    if( bDotationSupplyNeeded_ )
+    if( bSupplyNeeded_ )
     {
         logistic::SupplyRequestHierarchyDispatcher dispatcher( pAutomate_->GetLogisticHierarchy(), bDotationSupplyExplicitlyRequested_ );
-        bDotationSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
+        bSupplyNeeded_ = !supplyRequests_->Execute( dispatcher );
     }
 }
 
@@ -120,8 +115,7 @@ void MIL_DotationSupplyManager::Clean()
 {
     bDotationSupplyExplicitlyRequested_ = false;
     supplyRequests_->Clean();
-    previousNotifications_ = currentNotifications_;
-    currentNotifications_.clear();
+    MIL_SupplyManager::Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -130,15 +124,11 @@ void MIL_DotationSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bDotationSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
+    if( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
         return;
-    bDotationSupplyNeeded_ = true;
-
-    // Pas de RC si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
+    bSupplyNeeded_ = true;
+    if( SendSupplyNeededReport() )
         MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementDotations );
-    nTickRcDotationSupplyQuerySent_ = nCurrentTick;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +137,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::RequestDotationSupply()
 {
-    bDotationSupplyNeeded_              = true;
+    bSupplyNeeded_              = true;
     bDotationSupplyExplicitlyRequested_ = true;
 }
 
@@ -201,7 +191,7 @@ void MIL_DotationSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logi
 void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementDotationsAnnule );
-    bDotationSupplyNeeded_ = true;
+    bSupplyNeeded_ = true;
     scheduledSupplies_.erase( supplyConsign );
 }
 
@@ -238,21 +228,6 @@ void MIL_DotationSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_DotationSupplyManager::NotifySuperiorNotAvailable
-// Created: MCO 2012-12-11
-// -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
-{
-    const T_Requesters& previous = previousNotifications_[ &dotationCategory ];
-    BOOST_FOREACH( T_Requesters::value_type pion, requesters )
-    {
-        if( std::find( previous.begin(), previous.end(), pion ) == previous.end() )
-            MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogNoSuperior, dotationCategory );
-        currentNotifications_[ &dotationCategory ].push_back( pion );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::Serialize
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
@@ -270,10 +245,6 @@ bool MIL_DotationSupplyManager::BelongsToLogisticBase( const MIL_AutomateLOG& lo
     const MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
     return logisticManager && logisticManager == &logisticBase;
 }
-
-// =============================================================================
-// Network
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::SendChangedState
