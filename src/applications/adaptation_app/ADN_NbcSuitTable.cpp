@@ -28,7 +28,7 @@ ADN_NbcSuitTable::ADN_NbcSuitTable( const QString& objectName, ADN_Connector_ABC
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddDoubleSpinBoxOnColumn( 1, 0., std::numeric_limits< double >::max() );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0., std::numeric_limits< double >::max(), 1, 3 );
 }
 
 // -----------------------------------------------------------------------------
