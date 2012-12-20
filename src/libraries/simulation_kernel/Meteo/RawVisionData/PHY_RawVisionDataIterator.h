@@ -94,6 +94,7 @@ protected:
     int nNextCellCol_;
     int nNextCellRow_;
     MT_Vector3D vOutPoint_; // X, Y dans l'espace de l'algorithme, Z non transformée
+    const double originalEndAltitude_;
 
     // Informations sur l'environnement précedent
     double rGroundCoeff_;

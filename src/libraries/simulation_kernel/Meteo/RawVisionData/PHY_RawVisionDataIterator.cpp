@@ -108,6 +108,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     , nNextCellCol_  ( 0 )
     , nNextCellRow_  ( 0 )
     , vOutPoint_     ( vBeginPos )
+    , originalEndAltitude_( vEndPos.rZ_ )
     , pCurrentCell_  ( 0 )
 {
     double rDx = vEndPos.rX_ - vOutPoint_.rX_;
@@ -267,6 +268,9 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
 
     // calcul de la hauteur de LOS en point de sortie
     vOutPoint_.rZ_ += rLength_ * rDz_;
+    vOutPoint_.rZ_ = ( rDz_ > 0. )
+        ? std::min( vOutPoint_.rZ_, originalEndAltitude_ )
+        : std::max( vOutPoint_.rZ_, originalEndAltitude_ );
 
     // calcul de la hauteur du SOL en point de sortie
     int nRealCellCol = nNextCellCol_ + nCellColOffset_;
