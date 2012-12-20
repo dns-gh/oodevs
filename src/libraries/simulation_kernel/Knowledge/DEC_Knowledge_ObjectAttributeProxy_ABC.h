@@ -27,6 +27,12 @@ public:
     const T* GetAttribute() const { return pAttribute_; }
     //@}
 
+    //! @name Accessors
+    //@{
+    template< typename Source >
+    bool ForceUpdateAttributeFromObject( const Source& source );
+    //@}
+
     //! @name Network
     //@{
     virtual void SendChangedState( sword::ObjectAttributes& asn ) const;
@@ -35,7 +41,8 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive& ar, const unsigned int )
+    template< typename Archive >
+    void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< DEC_Knowledge_IObjectAttributeProxy >( *this )
            & pAttribute_;
@@ -47,7 +54,8 @@ public:
 protected:
     //! @name Tools
     //@{
-    template< typename Source > bool UpdateAttributeFromSource( const Source& source );
+    template< typename Source >
+    bool UpdateAttributeFromSource( const Source& source );
     //@}
 
 private:
@@ -87,6 +95,23 @@ template< typename Source >
 bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::UpdateAttributeFromSource( const Source& source )
 {
     const T* pNewData = source.GetAttribute< T >();
+    if( !pNewData )
+        return false;
+
+    if( !pAttribute_ )
+        pAttribute_ = new T();
+    return pAttribute_->Update( *pNewData );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_ObjectAttributeProxy_ABC::ForceUpdateAttributeFromObject
+// Created: NPT 2012-18-12
+// -----------------------------------------------------------------------------
+template< typename T >
+template< typename Source >
+bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::ForceUpdateAttributeFromObject( const Source& source )
+{
+    const T* pNewData = source.RetrieveAttribute< T >();
     if( !pNewData )
         return false;
 

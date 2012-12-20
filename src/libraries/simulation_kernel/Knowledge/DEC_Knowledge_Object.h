@@ -167,6 +167,7 @@ private:
 
     //! @name Internal network senders
     //@{
+    void SendUpdateOnNetwork();
     void BuildMsgRealObject( sword::ObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgPerceptionSources( sword::ObjectKnowledgeUpdate& asnMsg ) const;
     void BuildMsgRelevance( sword::ObjectKnowledgeUpdate& asnMsg ) const;
