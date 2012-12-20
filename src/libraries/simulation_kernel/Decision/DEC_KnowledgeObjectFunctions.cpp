@@ -39,6 +39,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
@@ -88,6 +89,17 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& caller
         pCapacity->QueueForDecontamination( callerAgent );
         return static_cast< int >( eQueryValid );
     }
+    return static_cast< int >( eQueryInvalid );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination
+// Created: LGY 2012-12-20
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, boost::shared_ptr< DEC_Knowledge_Object > pObject )
+{
+    if( pAgent && pAgent->IsValid() )
+        return QueueForDecontamination( pAgent->GetAgentKnown(), pObject );
     return static_cast< int >( eQueryInvalid );
 }
 
