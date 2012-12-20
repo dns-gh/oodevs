@@ -53,6 +53,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -959,6 +960,8 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_
 {
     if( !CanPerceive() )
         return PHY_PerceptionLevel::notSeen_;
+    if( knowledge.GetLocalisation().IsInside( owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
+        return PHY_PerceptionLevel::identified_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
     for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
     {
