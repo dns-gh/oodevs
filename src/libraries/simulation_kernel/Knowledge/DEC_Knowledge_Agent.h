@@ -99,6 +99,7 @@ public:
     //@{
     bool IsRefugee() const;
     bool IsMilitia() const;
+    bool IsCivilian() const;
     bool IsTerrorist() const;
     bool IsSurrendered() const;
     bool IsPrisoner() const;

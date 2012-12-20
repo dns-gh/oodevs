@@ -307,6 +307,30 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone( T_ConstKnow
     }
 }
 
+namespace
+{
+    void GetCivilians( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone, const T_KnowledgeAgentVector& units )
+    {
+        for( auto it = units.begin(); it != units.end(); ++it )
+        {
+            boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
+            if( knowledge->IsCivilian() && zone.IsInside( knowledge->GetPosition() ) )
+                container.push_back( knowledge );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetCiviliansInZone
+// Created: LGY 2012-12-20
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetCiviliansInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
+{
+    container.clear();
+    GetCivilians( container, zone, GetEnemies() );
+    GetCivilians( container, zone, GetFriends() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInZone
 // Created: NLD 2006-04-13

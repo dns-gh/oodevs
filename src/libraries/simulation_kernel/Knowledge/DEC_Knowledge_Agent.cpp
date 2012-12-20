@@ -797,6 +797,15 @@ bool DEC_Knowledge_Agent::IsMilitia() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsCivilian
+// Created: LGY 2012-12-20
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsCivilian() const
+{
+    return pAgentKnown_->IsCivilian();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::IsTerrorist
 // Created: NLD 2006-02-23
 // -----------------------------------------------------------------------------
