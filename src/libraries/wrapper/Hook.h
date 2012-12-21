@@ -18,9 +18,7 @@
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/function_arity.hpp>
-#include <boost/tuple/tuple_comparison.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/optional.hpp>
 #include <boost/mpl/at.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
@@ -28,7 +26,6 @@
 #include <algorithm>
 #include <vector>
 #include <string>
-#include <map>
 
 namespace sword
 {
@@ -114,10 +111,6 @@ namespace wrapper
             sword::wrapper::Hooks::Use( this ); \
         } \
         typedef result (*Function) parameters; \
-        operator Function const() \
-        { \
-            return current_; \
-        } \
         Function current_; \
     private: \
         virtual void Apply( bool /*profiling*/ ) \
@@ -147,44 +140,6 @@ namespace detail
 }
 }
 
-#define HOOK_ELEM(z, n, d) \
-    BOOST_PP_COMMA_IF(n) d, n >::type
-#define HOOK_ELEMS(n, S) \
-    BOOST_PP_REPEAT( n, HOOK_ELEM, sword::wrapper::detail::parameter< S )
-
-#define DECLARE_CACHED_HOOK( Hook, arity, result, parameters ) \
-    static struct Hook ## _CachedDeclarationWrapper : private sword::wrapper::Hook_ABC \
-    { \
-        typedef result result_type; \
-        Hook ## _CachedDeclarationWrapper() \
-        { \
-            BOOST_MPL_ASSERT_RELATION( arity, ==, \
-                boost::function_types::function_arity< result parameters >::value ); \
-            sword::wrapper::Hooks::Use( this ); \
-        } \
-        virtual void Reset() \
-        { \
-            data_.clear(); \
-        } \
-        typedef result (*Function) parameters; \
-        result operator() HOOK_DECL( arity, result parameters ) \
-        { \
-            boost::optional< result >& r = data_[ boost::make_tuple( BOOST_PP_ENUM_PARAMS( arity, p ) ) ]; \
-            if( ! r ) \
-                r = current_( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
-            return *r; \
-        } \
-        Function current_; \
-    private: \
-        virtual void Apply( bool /*profiling*/ ) \
-        { \
-            SWORD_UseHook( reinterpret_cast< SWORD_Hook* >( &current_ ), \
-                           #Hook, #result #parameters ); \
-        } \
-        typedef boost::tuple< HOOK_ELEMS( arity, result parameters ) > T_Key; \
-        std::map< T_Key, boost::optional< result > > data_; \
-    } Hook;
-
 #define HOOK_PARAM(z, n, d) \
     BOOST_PP_COMMA_IF(n) d, n >::type p##n
 #define HOOK_PARAMS(n, S) \
@@ -203,10 +158,6 @@ namespace detail
             sword::wrapper::Hooks::Register( this ); \
         } \
         typedef result (*Function) parameters; \
-        operator Function const() \
-        { \
-            return current_; \
-        } \
         Function current_; \
         Function previous_; \
         static result Implement parameters; \
@@ -261,7 +212,7 @@ namespace detail
     DEFINE_HOOK_WITH_DEFAULT_RESULT( Hook, arity, result, parameters, \
         boost::function_types::result_type< result parameters >::type() )
 
-#define GET_HOOK( Hook ) Hook
+#define GET_HOOK( Hook ) Hook.current_
 
 #define GET_PREVIOUS_HOOK( Hook ) Hook.previous_
 

@@ -19,8 +19,8 @@
 #include <wrapper/View.h>
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/optional.hpp>
 #include <boost/bind.hpp>
-#include <unordered_map>
 #include <cassert>
 
 DEFINE_HOOK( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDuration ) )
