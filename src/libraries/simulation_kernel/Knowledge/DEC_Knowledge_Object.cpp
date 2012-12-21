@@ -686,7 +686,7 @@ const std::string& DEC_Knowledge_Object::GetName() const
 void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
 {
     reconByAgentTypes_.insert( &agent.GetType() );
-    if( !IsValid() || !pObjectKnown_ || &agent.GetArmy() != &GetArmy() )
+    if( !IsValid() || !pObjectKnown_ || agent.GetArmy().GetID() != GetArmy()->GetID() )
         return;
     if( DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute >* proxy = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute > >() )
         if( proxy->ForceUpdateAttributeFromObject( *pObjectKnown_ ) )
