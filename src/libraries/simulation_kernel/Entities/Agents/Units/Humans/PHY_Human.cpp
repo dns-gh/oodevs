@@ -351,7 +351,11 @@ bool PHY_Human::SetRank( const PHY_HumanRank& newRank )
 bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
 {
     if( newWound == *pWound_ )
+    {
+        if( IsDead() && pMedicalState_ )
+            CancelMedicalLogisticRequest();
         return false;
+    }
     PHY_Human oldHumanState( *this );
     pWound_ = &newWound;
     if( *pWound_ == PHY_HumanWound::killed_ )
@@ -366,7 +370,7 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
         nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTick() + pWound_->GetLifeExpectancy() );
     NotifyHumanChanged( oldHumanState );
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
-    if( !NeedMedical() )
+    if( !IsDead() && !NeedMedical() )
         CancelMedicalLogisticRequest();
     return true;
 }
