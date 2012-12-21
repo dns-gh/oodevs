@@ -40,7 +40,6 @@ namespace
     parse_options( argc, argv );
     if( temp_directory.empty() )
         throw MASA_EXCEPTION( "Test --temp_directory option was not supplied" );
-
     return 0;
 }
 

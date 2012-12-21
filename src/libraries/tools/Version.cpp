@@ -13,10 +13,9 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/regex.hpp>
 #include <algorithm>
 #include <vector>
-#include <boost/lexical_cast.hpp>
-#include <boost/tokenizer.hpp>
 
 #ifndef APP_MAJOR_VERSION
 #   define APP_MAJOR_VERSION 5.2.0
@@ -78,17 +77,11 @@ const char* tools::AppProjectVersion()
 const std::vector< int > tools::SplitVersion( const std::string& version )
 {
     std::vector< int > result;
-    typedef boost::tokenizer< boost::char_separator< char > > T_Tokenizer;
-    const T_Tokenizer tok( version, boost::char_separator< char >( "." ) );
-    for( T_Tokenizer::const_iterator it = tok.begin(); it != tok.end(); ++it )
-        try
-        {
-            result.push_back( boost::lexical_cast< int >( *it ) );
-        }
-        catch( const boost::bad_lexical_cast& )
-        {
-            return std::vector< int >();
-        }
+    std::transform(
+        boost::sregex_token_iterator( version.begin(), version.end(), boost::regex( "(\\d+)" ) ),
+        boost::sregex_token_iterator(),
+        std::back_inserter( result ),
+        &boost::lexical_cast< int, std::string > );
     return result;
 }
 
