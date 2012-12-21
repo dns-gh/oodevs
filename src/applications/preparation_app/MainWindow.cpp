@@ -588,7 +588,10 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
         if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Exercise )
         {
             if( checkConsistency )
+            {
+                ClearLoadingErrors();
                 emit CheckConsistency();
+            }
             model_.SaveExercise( config_ );
             if( !config_.IsTerrainSamePhysicalRef() )
             {
