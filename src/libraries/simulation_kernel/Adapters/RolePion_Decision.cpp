@@ -12,6 +12,7 @@
 #include "Hook.h"
 #include "Sink.h"
 #include "Action.h"
+#include "Helpers.h"
 #include "PathAdapter.h"
 #include "KnowledgeCache.h"
 #include "PathPointAdapter.h"
@@ -837,7 +838,7 @@ namespace
 {
     bool CanFire( const SWORD_Model* component )
     {
-        return (*core::Convert( component ))[ "data" ].GetUserData< PHY_ComposantePion >().CanFire();
+        return GET_DATA( component, PHY_ComposantePion ).CanFire();
     }
     bool IsMajor( const SWORD_Model* component )
     {
@@ -897,7 +898,7 @@ namespace
     }
     bool CanFireWhenUnloaded( const SWORD_Model* component )
     {
-        return (*core::Convert( component ))[ "data" ].GetUserData< PHY_ComposantePion >().CanFireWhenUnloaded();
+        return GET_DATA( component, PHY_ComposantePion ).CanFireWhenUnloaded();
     }
     double GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
     {
@@ -1126,7 +1127,7 @@ namespace
     }
     bool IsInUrbanBlock( const SWORD_Model* knowledge, void* userData )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        boost::shared_ptr< DEC_Knowledge_Agent > agent = GET_DATA( knowledge, boost::shared_ptr< DEC_Knowledge_Agent > );
         MIL_UrbanObject_ABC* pUrbanObject = static_cast< MIL_UrbanObject_ABC* >( userData );
         return pUrbanObject && agent->IsInUrbanBlock( *pUrbanObject );
     }
@@ -1180,7 +1181,7 @@ namespace
     }
     void Populate( const SWORD_Model* knowledge, void* userData )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        boost::shared_ptr< DEC_Knowledge_Agent > agent = GET_DATA( knowledge, boost::shared_ptr< DEC_Knowledge_Agent > );
         static_cast< T_ConstKnowledgeAgentVector* >( userData )->push_back( agent );
     }
     T_ConstKnowledgeAgentVector GetDangerousEnemies( const MIL_AgentPion& agent, const core::Model& model )

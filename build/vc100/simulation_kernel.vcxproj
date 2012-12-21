@@ -894,6 +894,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FlyingShellPerceptionEventListener.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Helpers.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Hook.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\KnowledgeCache.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\NullRoleAdapter.h" />

@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MovementHooks.h"
 #include "Hook.h"
+#include "Helpers.h"
 #include "PathAdapter.h"
 #include "PathPointAdapter.h"
 #include "KnowledgeCache.h"
@@ -68,18 +69,6 @@
 #include <boost/foreach.hpp>
 
 using namespace sword;
-
-namespace sword
-{
-namespace movement
-{
-    class PathPoint;
-}
-}
-
-#define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
-#define GET_PION( node ) GET_DATA( node, MIL_AgentPion )
-#define GET_ROLE( node, role ) GET_PION( node ).GetRole< role >()
 
 namespace
 {

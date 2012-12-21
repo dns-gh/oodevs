@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "FireHooks.h"
 #include "Hook.h"
+#include "Helpers.h"
 #include "MIL_AgentServer.h"
 #include "DotationComputer_ABC.h"
 #include "AlgorithmsFactories.h"
@@ -48,10 +49,6 @@
 #include <module_api/Model.h>
 
 using namespace sword;
-
-#define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
-#define GET_PION( node ) GET_DATA( node, MIL_AgentPion )
-#define GET_ROLE( node, role ) GET_PION( node ).GetRole< role >()
 
 namespace
 {

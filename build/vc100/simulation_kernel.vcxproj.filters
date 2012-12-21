@@ -5459,5 +5459,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory_ABC.h">
       <Filter>Source Files\Entities\Agents\Actions\Moving</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Helpers.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

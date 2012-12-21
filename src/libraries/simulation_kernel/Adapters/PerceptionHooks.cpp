@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PerceptionHooks.h"
 #include "Hook.h"
+#include "Helpers.h"
 #include "RolePion_Perceiver.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -83,10 +84,6 @@
 using namespace sword;
 using namespace dotation;
 using namespace transport;
-
-#define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
-#define GET_PION( node ) GET_DATA( node, MIL_AgentPion )
-#define GET_ROLE( node, role ) GET_PION( node ).GetRole< role >()
 
 namespace
 {

@@ -7,18 +7,18 @@
 //
 // *****************************************************************************
 
-#ifndef SWORD_HOOK_TOOLS_H
-#define SWORD_HOOK_TOOLS_H
+#ifndef SWORD_HOOK_H
+#define SWORD_HOOK_H
 
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_ProfilerGuard.h"
 #include <core/Facade.h>
-#include <boost/bind.hpp>
-#include <boost/preprocessor.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/function_arity.hpp>
+#include <boost/preprocessor.hpp>
 #include <boost/mpl/at.hpp>
+#include <boost/bind.hpp>
 #include <algorithm>
 #include <vector>
 
@@ -176,4 +176,4 @@ namespace detail
 
 #define GET_PREVIOUS_HOOK( Hook ) Hook##_.previous_
 
-#endif // SWORD_HOOK_TOOLS_H
+#endif // SWORD_HOOK_H
