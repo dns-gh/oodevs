@@ -61,12 +61,13 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
         miningPercentage_.Set( static_cast< double >( attributes.list( 1 ).quantity() )/100. );
     else if( attributes.list_size() == 5 )
     {
-        dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
-        if( !dotation_ )
+        int dotationId = attributes.list( 1 ).identifier();
+        dotation_ = PHY_DotationType::FindDotationCategory( dotationId );
+        if( !dotation_ && 0 != dotationId )
             throw MASA_EXCEPTION( "Unknown 'Dotation Type' for mine attribute" );
         nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
         nFullNbrDotation_ = static_cast< unsigned int >( attributes.list( 3 ).areal() );
-        miningPercentage_.Set( attributes.list( 4 ).quantity() );
+        miningPercentage_.Set( attributes.list( 4 ).quantity() * 0.01 );
     }
 }
 
