@@ -256,6 +256,14 @@ message ClientObjectDestructionRequest {
     required ClientObjectId object = 1;
 }
 
+/** @struct LogHistoryRequestForReplayWithSession  
+    @brief A message to pass replay ack information from launcher to dispatcher.
+*/
+message LogHistoryRequestForReplayWithSession {
+    required string session = 1;
+    required string exercise = 2;
+}
+
 /** @struct ClientToMessenger
     @brief Wraps available messages going from client to messenger.
 
@@ -284,6 +292,7 @@ message ClientToMessenger {
         optional ClientObjectUpdateRequest      client_object_update_request      = 18; //!< @copybrief ClientObjectUpdateRequest @see ClientObjectUpdateRequest
         optional ClientObjectDestructionRequest client_object_destruction_request = 19; //!< @copybrief ClientObjectDestructionRequest @see ClientObjectDestructionRequest
         optional LogHistoryRequestForPlayAck    log_history_request_for_play_ack  = 20; //!< @copybrief LogHistoryRequestForPlayAck @see LogHistoryRequestForPlayAck
+        optional LogHistoryRequestForReplayWithSession log_history_request_for_replay = 21; //!< @copybrief LogHistoryRequestForReplayWithSession @see LogHistoryRequestForReplayWithSession
     }
     /** @property context
         @brief Identifies the request matching the response.

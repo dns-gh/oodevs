@@ -721,6 +721,8 @@ message MessengerToClient {
         optional MarkerUpdateRequestAck            marker_update_request_ack            = 36; //!< @copybrief MarkerUpdateRequestAck @see MarkerUpdateRequestAck
         optional MarkerDestructionRequestAck       marker_destruction_request_ack       = 37; //!< @copybrief MarkerDestructionRequestAck @see MarkerDestructionRequestAck
         optional LogHistoryRequestForPlay          log_history_request_for_play         = 38; //!< @copybrief LogHistoryRequestForPlay @see LogHistoryRequestForPlay
+        optional LogHistoryRequestForPlayAck       log_history_request_for_play_ack     = 39; //!< @copybrief LogHistoryRequestForPlayAck @see LogHistoryRequestForPlayAck
+        optional LogHistoryRequestForReplayAck     log_history_request_for_replay_ack   = 40; //!< @copybrief LogHistoryRequestForReplayAck @see LogHistoryRequestForReplayAck
     }
     /** @property context
         @brief Identifies the request matching the response.

@@ -737,6 +737,13 @@ void ProcessService::SendSessionNotification( const sword::SessionNotificationRe
             answer.mutable_message()->mutable_log_history_request_for_play_ack()->mutable_date_time()->set_data( message.notification().log_history_request_for_play_ack().date_time().data() );
             client->Send( answer );
         }
+        if( message.notification().has_log_history_request_for_replay() )
+        {
+            sword::ClientToMessenger answer;
+            answer.mutable_message()->mutable_log_history_request_for_replay()->set_exercise( message.exercise() );
+            answer.mutable_message()->mutable_log_history_request_for_replay()->set_session( message.session() );
+            client->Send( answer );
+        }
     }
 }
 

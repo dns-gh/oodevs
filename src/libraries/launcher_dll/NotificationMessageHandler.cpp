@@ -121,5 +121,14 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::MessengerToClien
         notification->mutable_notification()->mutable_log_history_request_for_play()->mutable_date_time()->set_data( request.date_time().data() );
         SendWithContext( adminMessage, 0 );
     }
+    if( message.message().has_log_history_request_for_replay_ack() )
+    {
+        sword::LauncherToAdmin adminMessage;
+        auto notification = adminMessage.mutable_message()->mutable_session_notification();
+        notification->mutable_notification()->mutable_log_history_request_for_replay_ack();
+        notification->set_exercise( message.message().log_history_request_for_replay_ack().exercise() );
+        notification->set_session( message.message().log_history_request_for_replay_ack().session() );
+        SendWithContext( adminMessage, 0 );
+    }
     return false;
 }

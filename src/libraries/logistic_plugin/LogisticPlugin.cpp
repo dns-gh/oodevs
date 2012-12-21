@@ -160,6 +160,16 @@ void LogisticPlugin::OnReceiveClientToMessenger( const sword::ClientToMessenger&
         redirectedMessage->mutable_date_time()->set_data( request.date_time().data() );
         clients_.Send( answer );
     }
+    if( message.message().has_log_history_request_for_replay() )
+    {
+        auto request = message.message().log_history_request_for_replay();
+        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
+            (*r)->ForceNewFile();
+        sword::MessengerToClient answer;
+        answer.mutable_message()->mutable_log_history_request_for_replay_ack()->set_exercise( request.exercise() );
+        answer.mutable_message()->mutable_log_history_request_for_replay_ack()->set_session( request.session() );
+        clients_.Send( answer );        
+    }
 }
 
 // -----------------------------------------------------------------------------
