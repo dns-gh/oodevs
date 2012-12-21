@@ -18,9 +18,9 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Déplacement vers la position pour mise en place du dispositif de filtrage" permanent="true">
+        <stage label="Déplacement vers la position pour mise en place du dispositif de filtrage" disable-when-done="true">
             <skills>
-                <skill name="sword.military.platoon.stabilisation.skills.Filter">
+                <skill name="sword.military.platoon.stabilisation.skills.Filter" main="true">
                     <parameter name="blockingStrength">
                         <value>
                             <parameter>blockingStrength</parameter>

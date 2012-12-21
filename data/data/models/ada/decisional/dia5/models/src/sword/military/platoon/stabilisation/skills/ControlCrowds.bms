@@ -5,6 +5,7 @@
 rootnode
 {
     connections = { skill.links.control },
+    feedbacks = { "failed" },
 
     done = function( self ) end,
 
@@ -15,6 +16,8 @@ rootnode
         self.nextTargetIndex = self.nextTargetIndex + 1 -- try on next crowd
         if self.nextTargetIndex > #self.params.crowds then
             self.nextTargetIndex = #self.params.crowds
+        else
+            Feedback( self.feedbacks.failed )
         end
     end,
 

@@ -4,16 +4,16 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.nodes.AdoptFiltrationPosture, skill.links.moveToward, skill.links.dismount },
+    connections = { skill.nodes.AdoptFiltrationPosture, skill.links.moveToward, skill.links.dismount, skill.links.controlCrowds },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks
     -- --------------------------------------------------------------------------------
-    filtered = function( self )
-        Feedback( self.feedbacks.done ) -- main effect is done once the posture to filter is installed
-    end,
     done = function( self ) -- done from moveToward
         self.arrived = true
+    end,
+    failed = function( self ) -- done from controlCrowds
+        Feedback( self.feedbacks.done )
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -42,6 +42,16 @@ rootnode
                             { position           = self.params.position,
                               blockingStrength   = self.blockingStrength, 
                               bodySearchStrength = self.params.bodySearchStrength } )
+                local crowds = integration.getCrowds()
+                local crowdsNearUnit = {}
+                for i = 1, #crowds do
+                    local crowd = CreateKnowledge( integration.ontology.types.population, crowds[i])
+                    if integration.distance( meKnowledge , crowd ) then
+                        crowdsNearUnit[#crowdsNearUnit + 1 ] = crowd
+                    end
+                end
+                Activate( skill.links.controlCrowds, 1, {crowds = crowdsNearUnit} )
+
             else -- Objective not reached, don't build checkpoint
                 meKnowledge:RC( eRC_ImpossibleAtteindreObjectif )
                 Feedback( self.feedbacks.failed )

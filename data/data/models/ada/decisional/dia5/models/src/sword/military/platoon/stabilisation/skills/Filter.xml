@@ -29,5 +29,6 @@
     <links>
         <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
         <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+        <link name="controlCrowds" skill="sword.military.platoon.stabilisation.skills.ControlCrowds"/>
     </links>
 </skill>
