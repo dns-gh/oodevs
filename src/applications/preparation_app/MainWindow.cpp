@@ -581,7 +581,10 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
     {
         assert( controllers_.modes_ );
         if( checkConsistency )
+        {
+            ClearLoadingErrors();
             emit CheckConsistency();
+        }
         model_.SaveExercise( config_ );
         SetWindowTitle( false );
     }

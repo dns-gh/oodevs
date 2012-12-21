@@ -256,6 +256,8 @@ void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Ent
             if( hierarchies )
                 hierarchies->Load( xis, &superior );
         }
+        else
+            model.AppendLoadingError( eBadLogisticSubordinate, superior.GetName().toStdString(), &superior );
     }
     catch( const std::exception& e )
     {
