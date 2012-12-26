@@ -20,7 +20,6 @@
     <property name="svn.revision" value="0"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
     <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
-    <property name="masalife.version" value="2011-1.1.x/current"/>
 
     <condition property="failonwarning">
         <not>
@@ -1562,8 +1561,8 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="iconv"/>
         <update name="log4cxx"/>
-        <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
-        <update name="masalife/brain" version="${masalife.version}"/>
+        <update name="masalife/brain" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
+        <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
