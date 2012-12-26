@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalTreeView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableCrew.cpp" />

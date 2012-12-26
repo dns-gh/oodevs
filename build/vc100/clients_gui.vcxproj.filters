@@ -883,6 +883,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.cpp">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">

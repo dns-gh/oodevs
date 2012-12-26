@@ -7,56 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef CLIENT_GUI_TOOLS_H
-#define CLIENT_GUI_TOOLS_H
+#ifndef CLIENTS_GUI_TOOLS_H
+#define CLIENTS_GUI_TOOLS_H
 
 #include "clients_kernel/Tools.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
 
 namespace gui
 {
-    template< typename Validator >
-    QStringList ListDirectories( const std::string& base, Validator v )
-    {
-        QStringList result;
-        const bfs::path root = bfs::path( base );
-        if( ! bfs::exists( root ) )
-            return result;
 
-        bfs::recursive_directory_iterator end;
-        for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
-        {
-            const bfs::path child = *it;
-            if( v( child ) )
-            {
-                QStringList entry;
-                bfs::path p( child );
-                for( int i = it.level(); i >= 0; --i )
-                {
-                    entry.push_front( p.filename().string().c_str() );
-                    p = p.parent_path();
-                }
-                result.append( entry.join( "/" ) );
-                it.no_push();
-            }
-        }
-        return result;
-    }
+typedef bool (*ListDirValidator)( const bfs::path& );
 
-    inline bool IsPropagationDir( const bfs::path& dir )
-    {
-        return bfs::is_directory( dir )
-            && bfs::exists( dir / "propagation.xml" );
-    }
+// Make a recursive traversal of "base" subtree and return the list of
+// paths matched by the validation function. Returned path a relative to
+// base and their components separate by slashes.
+QStringList ListDirectories( const std::string& base, ListDirValidator v );
 
-    inline std::string BuildPropagationDir( const std::string& root, const std::string& path )
-    {
-        return ( bfs::path( root ) / path ).string();
-    }
+bool IsPropagationDir( const bfs::path& dir );
+
+std::string BuildPropagationDir( const std::string& root, const std::string& path );
 
 }  // namespace gui
 
-#endif  // CLIENT_GUI_TOOLS_H
+#endif  // CLIENTS_GUI_TOOLS_H
