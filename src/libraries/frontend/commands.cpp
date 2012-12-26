@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "commands.h"
 #include "tools/GeneralConfig.h"
+#include "clients_gui/Tools.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 4245 4996 )
 #include <boost/filesystem/operations.hpp>
@@ -39,34 +40,6 @@ namespace frontend
     namespace commands
     {
         template< typename Validator >
-        QStringList ListDirectories( const std::string& base, Validator v )
-        {
-            QStringList result;
-            const bfs::path root = bfs::path( base );
-            if( ! bfs::exists( root ) )
-                return result;
-
-            bfs::recursive_directory_iterator end;
-            for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
-            {
-                const bfs::path child = *it;
-                if( v( child ) )
-                {
-                    QStringList entry;
-                    bfs::path p( child );
-                    for( int i = it.level(); i >= 0; --i )
-                    {
-                        entry.push_front( p.filename().string().c_str() );
-                        p = p.parent_path();
-                    }
-                    result.append( entry.join( "/" ) );
-                    it.no_push();
-                }
-            }
-            return result;
-        }
-
-        template< typename Validator >
         QStringList ListDirectoriesNoRecursive( const std::string& base, Validator v )
         {
             QStringList result;
@@ -92,7 +65,7 @@ namespace frontend
 
         QStringList ListTerrains( const tools::GeneralConfig& config )
         {
-            return ListDirectories( config.GetTerrainsDir(), &IsValidTerrain );
+            return gui::ListDirectories( config.GetTerrainsDir(), &IsValidTerrain );
         }
 
         bool IsValidExercise( const bfs::path& dir )
@@ -105,7 +78,7 @@ namespace frontend
         {
             const std::string baseDirectory = config.GetExercisesDir();
             if( !baseDirectory.empty() )
-                return ListDirectories( config.GetExercisesDir() + "/" + subDirs, &IsValidExercise );
+                return gui::ListDirectories( config.GetExercisesDir() + "/" + subDirs, &IsValidExercise );
             return QStringList();
         }
 
@@ -127,7 +100,7 @@ namespace frontend
 
         QStringList ListSessions( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            return ListDirectories( config.GetSessionsDir( exercise ), &IsValidReplay );
+            return gui::ListDirectories( config.GetSessionsDir( exercise ), &IsValidReplay );
         }
 
         bool HasCheckpoints( const bfs::path& session )
@@ -138,7 +111,7 @@ namespace frontend
 
         QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            return ListDirectories( config.GetSessionsDir( exercise ), &HasCheckpoints );
+            return gui::ListDirectories( config.GetSessionsDir( exercise ), &HasCheckpoints );
         }
 
         bool IsValidCheckpoint( const bfs::path& record )
@@ -148,7 +121,7 @@ namespace frontend
 
         QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
         {
-            return ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
+            return gui::ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
         }
 
         std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
@@ -175,7 +148,7 @@ namespace frontend
 
         QStringList ListModels( const tools::GeneralConfig& config )
         {
-            return ListDirectories( config.GetModelsDir(), &IsValidModel );
+            return gui::ListDirectories( config.GetModelsDir(), &IsValidModel );
         }
 
         bool IsValidPhysicalModel( const bfs::path& record )
@@ -186,7 +159,7 @@ namespace frontend
 
         QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model )
         {
-            return ListDirectories( config.GetPhysicalsDir( model ), &IsValidPhysicalModel );
+            return gui::ListDirectories( config.GetPhysicalsDir( model ), &IsValidPhysicalModel );
         }
 
         bool IsValidScript( const bfs::path& child )
@@ -198,7 +171,7 @@ namespace frontend
         QStringList ListScripts( const tools::GeneralConfig& config, const std::string& exercise )
         {
             std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ) ) / "scripts" ).string() );
-            return ListDirectories( dir, &IsValidScript );
+            return gui::ListDirectories( dir, &IsValidScript );
         }
 
         bool IsValidOrder( const bfs::path& child )
@@ -211,7 +184,7 @@ namespace frontend
         QStringList ListOrders( const tools::GeneralConfig& config, const std::string& exercise )
         {
             std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ) ) / "orders" ).string() );
-            return ListDirectories( dir, &IsValidOrder );
+            return gui::ListDirectories( dir, &IsValidOrder );
         }
 
         bool IsValidPropagation( const bfs::path& child )
@@ -224,7 +197,7 @@ namespace frontend
         QStringList ListPropagations( const tools::GeneralConfig& config )
         {
             std::string  dir( ( bfs::path( config.GetRootDir() ) / "data/propagations" ).string() );
-            return ListDirectories( dir, &IsValidPropagation );
+            return gui::ListDirectories( dir, &IsValidPropagation );
         }
 
         bool IsOther( const bfs::path& child )
