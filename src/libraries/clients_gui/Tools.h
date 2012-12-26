@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Gui_Tools_h_
-#define __Gui_Tools_h_
+#ifndef CLIENT_GUI_TOOLS_H
+#define CLIENT_GUI_TOOLS_H
 
 #include "clients_kernel/Tools.h"
 #include <boost/filesystem/path.hpp>
@@ -16,7 +16,7 @@
 
 namespace bfs = boost::filesystem;
 
-namespace
+namespace gui
 {
     template< typename Validator >
     QStringList ListDirectories( const std::string& base, Validator v )
@@ -46,16 +46,17 @@ namespace
         return result;
     }
 
-    bool IsPropagationDir( const bfs::path& dir )
+    inline bool IsPropagationDir( const bfs::path& dir )
     {
         return bfs::is_directory( dir )
             && bfs::exists( dir / "propagation.xml" );
     }
 
-    std::string BuildPropagationDir( const std::string& root, const std::string& path )
+    inline std::string BuildPropagationDir( const std::string& root, const std::string& path )
     {
         return ( bfs::path( root ) / path ).string();
     }
-}
 
-#endif // __Gui_Tools_h_
+}  // namespace gui
+
+#endif  // CLIENT_GUI_TOOLS_H

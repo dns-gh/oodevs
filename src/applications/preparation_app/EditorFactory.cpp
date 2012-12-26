@@ -376,8 +376,8 @@ namespace
                 DisasterEditor( QWidget* parent, const tools::GeneralConfig& config )
             : gui::ValuedComboBox< std::string >( parent )
         {
-            QStringList result( ListDirectories( BuildPropagationDir( config.GetRootDir(), "data/propagations" ),
-                                                 &IsPropagationDir ) );
+            QStringList result( gui::ListDirectories( gui::BuildPropagationDir( config.GetRootDir(), "data/propagations" ),
+                                                 &gui::IsPropagationDir ) );
 
             for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
                 AddItem( *it, (*it).toStdString() );
