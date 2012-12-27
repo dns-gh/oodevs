@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.queries.enemies.getDetectedUnits" source-version="1.0.0">
+	<target>
+		<type>
+			<class name="sword.military.world.Platoon"/>
+		</type>
+	</target>
+</query>
