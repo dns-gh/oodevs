@@ -310,9 +310,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\AutomatPositions.cpp">
       <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttritube.cpp">
-      <Filter>Source Files\Model\Automat\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\AgentTemplateElement.cpp">
       <Filter>Source Files\Model\Templates</Filter>
     </ClCompile>
@@ -559,6 +556,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\DisasterAttribute.cpp">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttribute.cpp">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -763,9 +763,6 @@
       <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\AutomatPositions.h">
-      <Filter>Source Files\Model\Automat\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttritube.h">
       <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\AgentTemplateElement.h">
@@ -1046,6 +1043,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\DisasterAttribute.h">
       <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttribute.h">
+      <Filter>Source Files\Model\Automat\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

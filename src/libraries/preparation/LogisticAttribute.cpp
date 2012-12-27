@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "LogisticAttribute.h"
 #include "clients_kernel/Tools.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -131,7 +131,7 @@ bool LogisticAttribute::HasValidLogisticBase() const
 {
     if( !logisticBase_ )
         return false;
-    const LogisticLevelAttritube& attribute = logisticBase_->Get< LogisticLevelAttritube >();
+    const LogisticLevelAttribute& attribute = logisticBase_->Get< LogisticLevelAttribute >();
     return attribute.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_;
 }
 

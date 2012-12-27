@@ -12,7 +12,7 @@
 #include "FormationHierarchies.h"
 #include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -166,7 +166,7 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 {
-    return Get< LogisticLevelAttritube >().GetLogisticLevel();
+    return Get< LogisticLevelAttribute >().GetLogisticLevel();
 }
 
 // -----------------------------------------------------------------------------

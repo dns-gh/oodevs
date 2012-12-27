@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "LinkGenerator.h"
 #include "LogisticHierarchiesBase.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -194,7 +194,7 @@ void LinkGenerator::CreateLink( const kernel::Entity_ABC& entity, const kernel::
 // -----------------------------------------------------------------------------
 bool LinkGenerator::IsLogisticBase( const kernel::Entity_ABC& entity ) const
 {
-    if( const LogisticLevelAttritube* pAttribute = entity.Retrieve< LogisticLevelAttritube >() )
+    if( const LogisticLevelAttribute* pAttribute = entity.Retrieve< LogisticLevelAttribute >() )
         if( pAttribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
             return true;
     return false;

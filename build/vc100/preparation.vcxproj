@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\GhostModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LinkGenerator.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\MoveableProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\PerformanceIndicator.cpp" />
@@ -196,7 +197,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\AutomatDecisions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AutomatHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AutomatPositions.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttritube.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AgentTemplateElement.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AutomatTemplateElement.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\FormationTemplateElement.cpp" />
@@ -272,6 +272,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModelConsistencyChecker.h" />
     <ClInclude Include="..\..\src\libraries\preparation\MoveableProxy.h" />
@@ -368,7 +369,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\AutomatDecisions.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AutomatHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AutomatPositions.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttritube.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AgentTemplateElement.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AutomatTemplateElement.h" />
     <ClInclude Include="..\..\src\libraries\preparation\FormationTemplateElement.h" />

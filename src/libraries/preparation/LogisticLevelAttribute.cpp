@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "LogisticBaseStates.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -17,10 +17,10 @@
 #include <QtGui/qmessagebox.h>
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube constructor
+// Name: LogisticLevelAttribute constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
     : controller_   ( controller )
     , entity_       ( entity )
     , logisticLevel_( active ? &kernel::LogisticLevel::logistic_base_ : &kernel::LogisticLevel::none_ ) // Logistic brain is enabled by default for type "tc2"
@@ -29,10 +29,10 @@ LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube constructor
+// Name: LogisticLevelAttribute constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
+LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
     : controller_   ( controller )
     , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
@@ -41,10 +41,10 @@ LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube constructor
+// Name: LogisticLevelAttribute constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
     : controller_   ( controller )
     , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
@@ -56,29 +56,29 @@ LogisticLevelAttritube::LogisticLevelAttritube( kernel::Controller& controller, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube::CreateDictionary
+// Name: LogisticLevelAttribute::CreateDictionary
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-void LogisticLevelAttritube::CreateDictionary( kernel::PropertiesDictionary& dictionary, bool active )
+void LogisticLevelAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, bool active )
 {
     if( active )
-        dictionary.Register( entity_, tools::translate( "LogisticLevelAttritube", "Info/LogisticLevel" ), logisticLevel_, *this, &LogisticLevelAttritube::SetLogisticLevel );
+        dictionary.Register( entity_, tools::translate( "LogisticLevelAttribute", "Info/LogisticLevel" ), logisticLevel_, *this, &LogisticLevelAttribute::SetLogisticLevel );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube destructor
+// Name: LogisticLevelAttribute destructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttritube::~LogisticLevelAttritube()
+LogisticLevelAttribute::~LogisticLevelAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube::SetLogisticLevel
+// Name: LogisticLevelAttribute::SetLogisticLevel
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel& logisticLevel )
+void LogisticLevelAttribute::SetLogisticLevel( const kernel::EntityLogisticLevel& logisticLevel )
 {
     if( (*logisticLevel) == kernel::LogisticLevel::none_ )
     {
@@ -88,8 +88,8 @@ void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel
             tools::Iterator< const kernel::Entity_ABC& > children = logHierarchy->CreateSubordinateIterator();
             if( children.HasMoreElements() )
             {
-                int result = QMessageBox::question( 0, tools::translate( "LogisticLevelAttritube", "SWORD" )
-                                                     , tools::translate( "LogisticLevelAttritube", "By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?" )                                                    , QMessageBox::Yes, QMessageBox::Cancel );
+                int result = QMessageBox::question( 0, tools::translate( "LogisticLevelAttribute", "SWORD" )
+                                                     , tools::translate( "LogisticLevelAttribute", "By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?" )                                                    , QMessageBox::Yes, QMessageBox::Cancel );
                 if( result == QMessageBox::Cancel )
                     return;
 
@@ -107,29 +107,29 @@ void LogisticLevelAttritube::SetLogisticLevel( const kernel::EntityLogisticLevel
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube::SerializeAttributes
+// Name: LogisticLevelAttribute::SerializeAttributes
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-void LogisticLevelAttritube::SerializeAttributes( xml::xostream& xos ) const
+void LogisticLevelAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     if( *logisticLevel_ != kernel::LogisticLevel::none_ )
         xos << xml::attribute( "logistic-level", logisticLevel_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube::GetLogisticLevel
+// Name: LogisticLevelAttribute::GetLogisticLevel
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-const kernel::LogisticLevel& LogisticLevelAttritube::GetLogisticLevel() const
+const kernel::LogisticLevel& LogisticLevelAttribute::GetLogisticLevel() const
 {
     return *logisticLevel_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLevelAttritube::GetEntity
+// Name: LogisticLevelAttribute::GetEntity
 // Created: ABR 2011-09-15
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& LogisticLevelAttritube::GetEntity() const
+const kernel::Entity_ABC& LogisticLevelAttribute::GetEntity() const
 {
     return entity_;
 }

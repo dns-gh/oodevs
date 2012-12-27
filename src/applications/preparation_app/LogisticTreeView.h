@@ -13,7 +13,7 @@
 #include "clients_gui/LogisticTreeView.h"
 
 class LogisticBaseStates;
-class LogisticLevelAttritube;
+class LogisticLevelAttribute;
 
 // =============================================================================
 /** @class  LogisticTreeView
@@ -23,7 +23,7 @@ class LogisticLevelAttritube;
 // =============================================================================
 class LogisticTreeView : public gui::LogisticTreeView
                        , public tools::ElementObserver_ABC< LogisticBaseStates >
-                       , public tools::ElementObserver_ABC< LogisticLevelAttritube >
+                       , public tools::ElementObserver_ABC< LogisticLevelAttribute >
 {
 
 public:
@@ -45,7 +45,7 @@ private:
     //! @name Observers
     //@{
     virtual void NotifyUpdated( const LogisticBaseStates& hierarchy );
-    virtual void NotifyUpdated( const LogisticLevelAttritube& hierarchy );
+    virtual void NotifyUpdated( const LogisticLevelAttribute& hierarchy );
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 };

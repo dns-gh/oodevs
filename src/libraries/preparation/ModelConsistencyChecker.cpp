@@ -16,7 +16,7 @@
 #include "LimitsModel.h"
 #include "LogisticAttribute.h"
 #include "LogisticBaseStates.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ProfilesModel.h"
@@ -370,7 +370,7 @@ void ModelConsistencyChecker::CheckMissingStock()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        const LogisticLevelAttritube* attribute = automat.Retrieve< LogisticLevelAttritube >();
+        const LogisticLevelAttribute* attribute = automat.Retrieve< LogisticLevelAttribute >();
         if( attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
         {
             std::vector< std::string > missingStocks;

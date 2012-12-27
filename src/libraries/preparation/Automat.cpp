@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Automat.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "tools/IdManager.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
@@ -94,7 +94,7 @@ void Automat::InitializeSymbol() const
 // -----------------------------------------------------------------------------
 const LogisticLevel& Automat::GetLogisticLevel() const
 {
-    return Get< LogisticLevelAttritube >().GetLogisticLevel();
+    return Get< LogisticLevelAttribute >().GetLogisticLevel();
 }
 
 // -----------------------------------------------------------------------------

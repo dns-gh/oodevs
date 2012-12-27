@@ -21,7 +21,7 @@
 #include "GhostPositions.h"
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "Symbol.h"
@@ -82,7 +82,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
         assert( prototype.ghostType_ == eGhostType_Automat );
         kernel::Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, dictionary ) );
+        result->Attach( *new LogisticLevelAttribute( controllers_.controller_, *result, dictionary ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, false ) );
     }
     result->Polish();
@@ -111,7 +111,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     {
         assert( result->GetGhostType() == eGhostType_Automat );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dictionary ) );
+        result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, true, dictionary ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
     }
     result->Polish();
@@ -142,7 +142,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
         const geometry::Point2f position = model_.ClipPosition( ComputeAutomatPosition( xis ), result );
         result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dictionary ) );
+        result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, true, dictionary ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, result->GetLogisticLevel() != kernel::LogisticLevel::none_ ) );
     }
     result->Polish();

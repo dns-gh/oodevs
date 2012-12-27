@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LogisticLevelAttritube_h_
-#define __LogisticLevelAttritube_h_
+#ifndef __LogisticLevelAttribute_h_
+#define __LogisticLevelAttribute_h_
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -26,21 +26,21 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  LogisticLevelAttritube
+/** @class  LogisticLevelAttribute
     @brief  Logistic level attritube
 */
 // Created: LGY 2011-07-20
 // =============================================================================
-class LogisticLevelAttritube: public kernel::Extension_ABC
+class LogisticLevelAttribute: public kernel::Extension_ABC
                             , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
-             LogisticLevelAttritube( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
-             LogisticLevelAttritube( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
-    virtual ~LogisticLevelAttritube();
+             LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
+             LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
+             LogisticLevelAttribute( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
+    virtual ~LogisticLevelAttribute();
     //@}
 
     //! @name Operations
@@ -53,8 +53,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    LogisticLevelAttritube( const LogisticLevelAttritube& );            //!< Copy constructor
-    LogisticLevelAttritube& operator=( const LogisticLevelAttritube& ); //!< Assignment operator
+    LogisticLevelAttribute( const LogisticLevelAttribute& );            //!< Copy constructor
+    LogisticLevelAttribute& operator=( const LogisticLevelAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -72,4 +72,4 @@ private:
     //@}
 };
 
-#endif // __LogisticLevelAttritube_h_
+#endif // __LogisticLevelAttribute_h_

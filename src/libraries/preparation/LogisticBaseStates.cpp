@@ -12,7 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "Dotation.h"
 #include "DotationsItem.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
@@ -183,7 +183,7 @@ bool LogisticBaseStates::HasMissingLogisticLinks() const
 {
     if( entity_.GetTypeName() == kernel::Automat_ABC::typeName_ && ! superior_ )
         return true;
-    if( const LogisticLevelAttritube* attribute = entity_.Retrieve< LogisticLevelAttritube >() )
+    if( const LogisticLevelAttribute* attribute = entity_.Retrieve< LogisticLevelAttribute >() )
         return attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ && ! superior_;
     return false;
 }

@@ -12,7 +12,7 @@
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_kernel/StrongType.h"
 #include "preparation/LogisticBaseStates.h"
-#include "preparation/LogisticLevelAttritube.h"
+#include "preparation/LogisticLevelAttribute.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticTreeView constructor
@@ -67,7 +67,7 @@ void LogisticTreeView::NotifyUpdated( const LogisticBaseStates& hierarchy )
 // Name: LogisticTreeView::NotifyUpdated
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-void LogisticTreeView::NotifyUpdated( const LogisticLevelAttritube& hierarchy )
+void LogisticTreeView::NotifyUpdated( const LogisticLevelAttribute& hierarchy )
 {
     CreateOrReplace( hierarchy.GetEntity() );
 }

@@ -13,7 +13,7 @@
 #include "tools/IdManager.h"
 #include "LogisticBaseStates.h"
 #include "LogisticHierarchiesBase.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "AgentsModel.h"
 #include "GhostModel.h"
 #include "Model.h"
@@ -497,6 +497,6 @@ void Ghost::UpdateSymbol( const std::string& level, const std::string& nature, c
 // -----------------------------------------------------------------------------
 const LogisticLevel& Ghost::GetLogisticLevel() const
 {
-    const LogisticLevelAttritube* logAttribut = Retrieve< LogisticLevelAttritube >();
+    const LogisticLevelAttribute* logAttribut = Retrieve< LogisticLevelAttribute >();
     return logAttribut ? logAttribut->GetLogisticLevel() : LogisticLevel::none_;
 }

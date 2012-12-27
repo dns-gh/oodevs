@@ -26,7 +26,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
 #include "Model.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "Inhabitant.h"
 #include "Affinities.h"
 #include "PeopleAffinities.h"
@@ -132,7 +132,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = type.IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dictionary ) );
+    result->Attach( *new LogisticLevelAttribute( controllers_.controller_, *result, isTC2, dictionary ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
@@ -268,7 +268,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
 
     bool isTC2 = type->IsTC2(); //$$ NAZE
-    result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, isTC2, dictionary ) );
+    result->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *result, isTC2, dictionary ) );
     result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new TacticalLines() );
@@ -394,7 +394,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
         const LogisticHierarchiesBase& ghostHierarchy = ghost.Get< LogisticHierarchiesBase >();
         // $$$$ ABR 2012-06-27: TODO: Warn if dropping a non log base to a log base ghost.
         bool isTC2 = type.IsTC2(); //$$ NAZE
-        result->Attach( *new LogisticLevelAttritube( controllers_.controller_, *result, isTC2, dictionary ) );
+        result->Attach( *new LogisticLevelAttribute( controllers_.controller_, *result, isTC2, dictionary ) );
         LogisticBaseStates* logBaseStates = new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 );
         result->Attach< LogisticHierarchiesBase >( *logBaseStates );
         logBaseStates->SetLogisticSuperior( ghostHierarchy.GetSuperior() );

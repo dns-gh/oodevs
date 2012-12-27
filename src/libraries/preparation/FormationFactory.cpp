@@ -14,7 +14,7 @@
 #include "FormationHierarchies.h"
 #include "FormationPositions.h"
 #include "LogisticBaseStates.h"
-#include "LogisticLevelAttritube.h"
+#include "LogisticLevelAttribute.h"
 #include "FormationPositions.h"
 #include "StaticModel.h"
 #include "Symbol.h"
@@ -68,7 +68,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, E_N
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
-    formation->Attach( *new LogisticLevelAttritube( controllers_.controller_, *formation, dico ) );
+    formation->Attach( *new LogisticLevelAttribute( controllers_.controller_, *formation, dico ) );
     formation->Polish();
     return formation;
 }
@@ -89,7 +89,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
     formation->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
-    formation->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *formation, true, dico ) );
+    formation->Attach( *new LogisticLevelAttribute( controllers_.controller_, xis, *formation, true, dico ) );
     formation->Polish();
     return formation;
 }

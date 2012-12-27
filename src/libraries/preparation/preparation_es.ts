@@ -289,7 +289,7 @@
     </message>
 </context>
 <context>
-    <name>LogisticLevelAttritube</name>
+    <name>LogisticLevelAttribute</name>
     <message>
         <source>Info/LogisticLevel</source>
         <translation type="unfinished"></translation>
