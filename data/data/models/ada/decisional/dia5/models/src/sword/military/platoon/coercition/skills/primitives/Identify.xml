@@ -10,17 +10,6 @@
                 </list>
             </type>
         </parameter>
-        <parameter name="positions" nullable="true">
-            <description>Positions possibles d'indentification.</description>
-            <type>
-                <list>
-                    <class name="sword.military.knowledge.decisional.Identifying"/>
-                </list>
-            </type>
-            <default>
-                <nil/>
-            </default>
-        </parameter>
     </parameters>
     <goal>
         <description>Identifier les entités.</description>

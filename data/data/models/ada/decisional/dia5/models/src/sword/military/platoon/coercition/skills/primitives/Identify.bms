@@ -12,20 +12,9 @@ rootnode
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionalParams )
         if additionalParams.reason == "identified" then
-            self.targets[ additionalParams.element ] = nil
-            if not next( self.targets ) then
+            if not next( self.params.entities ) then
                 Feedback( self.feedbacks.done ) -- the job is done, all targets are identified
             end
-        end
-    end,
-
-    -- --------------------------------------------------------------------------------
-    -- Store targets in a table for feedbacks informations
-    -- --------------------------------------------------------------------------------
-    create = function( self )
-        self.targets = {}
-        for _, entity in pairs( self.params.entities ) do
-            self.targets[ entity ] = true
         end
     end,
 
@@ -35,7 +24,7 @@ rootnode
     activate = function( self )
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.IdentifyElement, entity:identificationPriority(),
-                 { entity = entity, positions = self.params.positions } )
+                 { entity = entity } )
         end
     end
 }
@@ -73,10 +62,7 @@ node "IdentifyElement"
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
         -- Moving toward identifying positions
-        for _, position in pairs ( self.params.positions ) do
-            Activate( skill.links.moveAndTakePosition,
-                position:identificationEfficiency( self.params.entity ), { entity = position } )
-        end
+        Activate( skill.links.moveAndTakePosition,1 , { entity = self.params.entity:getMyPosition() } )
     end
 }
 -- ****************************************************************************

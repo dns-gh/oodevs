@@ -2,8 +2,8 @@
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.Scout" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.ReconnoiterRoute">
     <description>Mission de reconnaissance des entité de combat. Cette mission n'a explicitement pas de caractère offensif. Dans cette mission, l'agent ne décidera jamais d'engager un ennemi.</description>
     <parameters>
-        <parameter name="objectives">
-            <description>Les objectifs à reconnaitre.</description>
+    <parameter name="objectives">
+        <description>Les objectifs à reconnaitre.</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
@@ -12,11 +12,16 @@
             </type>
         </parameter>
     </parameters>
+    <let name="ennemies">
+        <value>
+            <call method="sword.military.queries.enemies.getDetectedUnits"/>
+        </value>
+    </let>
     <stages>
         <stage label="Eclairage" disable-when-done="true">
             <skills>
                 <skill name="france.military.platoon.skills.Eclairer" main="true" priority="1.0">
-                    <parameter name="entities">
+                    <parameter name="objectives">
                         <value>
                             <parameter>objectives</parameter>
                         </value>
@@ -24,6 +29,13 @@
                     <parameter name="positions">
                         <value>
                             <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.coercition.skills.primitives.Identify">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>ennemies</parameter>
                         </value>
                     </parameter>
                 </skill>

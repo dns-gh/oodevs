@@ -1,6 +1,6 @@
 -- ****************************************************************************
 -- Reconnoiter elements.
--- self.params.entities: the reconnoitrable elements
+-- self.params.objectives: the reconnoitrable elements
 -- self.params.positions: the reconnoitring elements
 -- ****************************************************************************
 rootnode
@@ -13,7 +13,7 @@ rootnode
     
     scouted = function( self, params, additionalParams )
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.entities then
+        if self.nextTargetIndex > #self.params.objectives then
             Feedback( self.feedbacks.done )
         end
     end,
@@ -23,8 +23,8 @@ rootnode
     end,
 
     activate = function( self )
-        Activate( skill.nodes.ScoutElement, 1, { entity  = self.params.entities[ self.nextTargetIndex ],
-                                                 positions = self.params.entities[ self.nextTargetIndex ]:getPositionsToReconnoiter(), NBCmove = self.params.NBCmove } )
+        Activate( skill.nodes.ScoutElement, 1, { entity  = self.params.objectives[ self.nextTargetIndex ],
+                                                 positions = self.params.objectives[ self.nextTargetIndex ]:getPositionsToReconnoiter(), NBCmove = self.params.NBCmove } )
     end
 }
 
