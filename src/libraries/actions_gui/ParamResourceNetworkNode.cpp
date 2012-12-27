@@ -16,7 +16,7 @@
 #include "actions/String.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "clients_gui/RichLabel.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"

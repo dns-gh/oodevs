@@ -14,7 +14,7 @@
 #include "ExerciseList.h"
 #include "ExportWidget.h"
 #include "ProgressPage.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/Config.h"
 #include "frontend/EditExercise.h"

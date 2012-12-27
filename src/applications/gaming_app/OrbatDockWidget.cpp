@@ -17,7 +17,7 @@
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
 #include "clients_gui/SearchTreeView.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/ProfileFilter.h"
 
 // -----------------------------------------------------------------------------

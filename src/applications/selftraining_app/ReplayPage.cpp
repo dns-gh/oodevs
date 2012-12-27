@@ -20,7 +20,7 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
 #include "frontend/JoinAnalysis.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------

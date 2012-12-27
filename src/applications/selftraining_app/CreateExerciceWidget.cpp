@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "CreateExerciceWidget.h"
 #include "moc_CreateExerciceWidget.cpp"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "frontend/CheckpointList.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"

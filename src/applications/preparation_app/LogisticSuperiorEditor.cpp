@@ -19,7 +19,7 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 

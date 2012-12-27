@@ -11,7 +11,7 @@
 #include "SessionList.h"
 #include "moc_SessionList.cpp"
 #include "frontend/commands.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/filesystem/operations.hpp>

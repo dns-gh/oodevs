@@ -15,7 +15,7 @@
 #include "DataWidget.h"
 #include "ImportWidget.h"
 #include "ExportWidget.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "Config.h"
 #include "Launcher.h"
 #include <boost/foreach.hpp>

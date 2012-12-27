@@ -11,7 +11,7 @@
 #include "ExerciseProperties.h"
 #include "moc_ExerciseProperties.cpp"
 #include "MessageDialog.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "frontend/Exercise_ABC.h"

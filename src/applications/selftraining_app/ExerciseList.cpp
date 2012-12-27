@@ -15,7 +15,7 @@
 #include "ExerciseListView.h"
 #include "frontend/LocalExerciseFilter.h"
 #include "frontend/Profile.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 
 namespace

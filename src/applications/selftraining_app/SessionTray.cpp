@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "SessionTray.h"
 #include "TrayMenu.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <QtGui/qsystemtrayicon.h>
 

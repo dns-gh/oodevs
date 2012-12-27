@@ -14,9 +14,9 @@
 #include "actions/Action_ABC.h"
 #include "actions/Parameter_ABC.h"
 #include "clients_gui/LinkItemDelegate.h"
-#include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionsListView constructor

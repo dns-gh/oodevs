@@ -11,7 +11,7 @@
 #include "QuitPage.h"
 #include "moc_QuitPage.cpp"
 #include "MenuButton.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: QuitPage constructor

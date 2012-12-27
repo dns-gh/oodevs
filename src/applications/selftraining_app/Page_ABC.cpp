@@ -12,7 +12,7 @@
 #include "moc_Page_ABC.cpp"
 #include "MenuButton.h"
 #include "QuitPage.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 QuitPage* Page_ABC::quitPage_ = 0;
 

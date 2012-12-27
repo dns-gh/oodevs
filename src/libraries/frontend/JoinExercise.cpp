@@ -9,7 +9,7 @@
 
 #include "frontend_pch.h"
 #include "JoinExercise.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>

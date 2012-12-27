@@ -12,7 +12,7 @@
 #include "StartDispatcher.h"
 #include "ConfigurationManipulator.h"
 #include "SimulationMonitor.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/thread.hpp>
 
 using namespace frontend;

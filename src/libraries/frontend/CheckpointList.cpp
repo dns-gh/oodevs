@@ -11,7 +11,7 @@
 #include "CheckpointList.h"
 #include "moc_CheckpointList.cpp"
 #include "commands.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <boost/filesystem/operations.hpp>
 #include <QtGui/qlabel.h>

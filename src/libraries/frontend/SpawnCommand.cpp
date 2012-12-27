@@ -9,7 +9,7 @@
 
 #include "frontend_pch.h"
 #include "SpawnCommand.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <windows.h>
 #include <tlhelp32.h>

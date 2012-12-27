@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "LauncherClientPage.h"
 #include "frontend/LauncherClient.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: LauncherClientPage constructor

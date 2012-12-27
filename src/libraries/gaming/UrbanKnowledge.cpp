@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "UrbanKnowledge.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;

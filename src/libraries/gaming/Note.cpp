@@ -11,7 +11,7 @@
 #include "Note.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 // -----------------------------------------------------------------------------

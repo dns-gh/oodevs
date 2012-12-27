@@ -12,7 +12,7 @@
 #include "LogisticBaseStates.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
 

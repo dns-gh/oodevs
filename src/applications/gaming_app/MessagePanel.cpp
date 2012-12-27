@@ -15,7 +15,7 @@
 #include "gaming/CommandPublisher.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <string>
 
 // -----------------------------------------------------------------------------

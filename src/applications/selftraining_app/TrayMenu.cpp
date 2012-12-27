@@ -11,7 +11,7 @@
 #include "TrayMenu.h"
 #include "Application.h"
 #include "moc_TrayMenu.cpp"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <QtGui/QMainWindow>
 
 // -----------------------------------------------------------------------------

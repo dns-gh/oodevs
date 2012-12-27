@@ -12,7 +12,7 @@
 #include "moc_ConnectDialog.cpp"
 #include "gaming/Network.h"
 #include "clients_kernel/Logger_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/RichSpinBox.h"
 #include "clients_kernel/ContextMenu.h"
 

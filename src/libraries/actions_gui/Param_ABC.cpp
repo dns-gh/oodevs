@@ -13,7 +13,7 @@
 #include "moc_Param_ABC.cpp"
 #include "ListParameter.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace actions::gui;
 

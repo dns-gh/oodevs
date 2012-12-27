@@ -12,7 +12,7 @@
 #include "moc_ReplayerToolbar.cpp"
 #include "TimeTableRequestDialog.h"
 #include "icons.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/ServerPublisher_ABC.h"

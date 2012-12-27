@@ -22,7 +22,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalLine_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace actions::gui;
 

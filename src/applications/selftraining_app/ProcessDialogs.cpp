@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "ProcessDialogs.h"
 #include "MessageDialog.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "frontend/ProcessList.h"
 
 namespace

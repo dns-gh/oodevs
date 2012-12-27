@@ -13,7 +13,7 @@
 #include "Config.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/CreateTerrain.h"
 #include "frontend/commands.h"

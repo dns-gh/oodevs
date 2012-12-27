@@ -17,7 +17,7 @@
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanTemplateType.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/Dotation.h"
 #include "preparation/DotationsItem.h"
 

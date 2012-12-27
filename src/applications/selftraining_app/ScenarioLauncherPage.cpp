@@ -30,7 +30,7 @@
 #include "frontend/StartReplay.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/Loader_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/path.hpp>

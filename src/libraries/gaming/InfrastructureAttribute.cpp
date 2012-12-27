@@ -18,7 +18,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "Tools.h"
 #include "protocol/Protocol.h"
 

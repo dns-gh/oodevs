@@ -16,7 +16,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/InternalLinks.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;

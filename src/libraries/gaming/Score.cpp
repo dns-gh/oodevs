@@ -13,7 +13,7 @@
 #include "Services.h"
 #include "ScoreDefinition.h"
 #include "ScoreDefinitions.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"

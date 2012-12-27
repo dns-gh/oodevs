@@ -10,7 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "ImportWidget.h"
 #include "moc_ImportWidget.cpp"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "tools/GeneralConfig.h"

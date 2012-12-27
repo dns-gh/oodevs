@@ -17,7 +17,7 @@
 #include "SessionTray.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/resources.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 

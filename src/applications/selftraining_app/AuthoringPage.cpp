@@ -15,7 +15,7 @@
 #include "MenuButton.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/StartAuthoring.h"

@@ -13,7 +13,7 @@
 #include "Config.h"
 #include "MenuButton.h"
 #include "ScenarioLauncherPage.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "moc_SelfTrainingPage.cpp"
 
 // -----------------------------------------------------------------------------

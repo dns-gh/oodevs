@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ModelConsistencyDialog.h"
 #include "clients_gui/FilterProxyModel.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"

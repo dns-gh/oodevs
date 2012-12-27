@@ -12,7 +12,7 @@
 #include "moc_DataWidget.cpp"
 #include "Config.h"
 #include "MessageDialog.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include <boost/filesystem/convenience.hpp>
 

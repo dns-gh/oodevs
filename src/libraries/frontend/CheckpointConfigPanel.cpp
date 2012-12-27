@@ -14,7 +14,7 @@
 #include "commands.h"
 #include "CreateSession.h"
 #include "Exercise_ABC.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Tools.h"
 #include <QtGui/qlabel.h>
 #include <QtGui/qspinbox.h>
 #include <QtCore/qsettings.h>
