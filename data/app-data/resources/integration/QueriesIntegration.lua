@@ -142,3 +142,7 @@ function integration.getCollidingObjectsFromType( type)
     end
     return res
 end
+
+integration.unitesDetecteesDansFuseau = function()
+    return DEC_Connaissances_UnitesDetecteesDansFuseau()
+end
