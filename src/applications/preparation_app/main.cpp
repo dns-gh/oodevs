@@ -60,6 +60,9 @@ int main( int argc, char** argv )
     return EXIT_FAILURE;
 }
 
+namespace
+{
+
 int mainWrapper( int argc, char** argv )
 {
     __try
@@ -71,6 +74,8 @@ int mainWrapper( int argc, char** argv )
         return EXIT_FAILURE;
     }
 }
+
+}  // namespace
 
 int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
 {
