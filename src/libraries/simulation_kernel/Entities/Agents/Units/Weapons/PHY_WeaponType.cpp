@@ -67,7 +67,8 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time )
     const PHY_WeaponType*& pWeaponType = weaponTypes_[ std::make_pair( strLauncher, strAmmunition ) ];
     if( pWeaponType )
         xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
-    pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition, xis );
+    pWeaponType = new PHY_WeaponType( time, strLauncher, strAmmunition,
+        weaponTypes_.size() - 1, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,16 +82,11 @@ void PHY_WeaponType::Terminate()
     weaponTypes_.clear();
 }
 
-namespace
-{
-    std::size_t identifier = 0;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_WeaponType constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis )
+PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, size_t identifier, xml::xistream& xis )
     : time_               ( time )
     , pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
     , pDotationCategory_  ( PHY_DotationType::FindDotationCategory( strAmmunition ) )
@@ -100,7 +96,7 @@ PHY_WeaponType::PHY_WeaponType( const MIL_Time_ABC& time, const std::string& str
     , rReloadingDuration_ ( 1. )
     , pDirectFireData_    ( 0 )
     , pIndirectFireData_  ( 0 )
-    , identifier_         ( identifier++ )
+    , identifier_         ( identifier )
 {
     if( !pLauncherType_ )
         xis.error( "Unknown launcher type '" + strLauncher + "'" );

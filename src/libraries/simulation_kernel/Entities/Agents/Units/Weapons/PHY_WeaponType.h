@@ -107,7 +107,7 @@ private:
     //@}
 
 private:
-     PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, xml::xistream& xis );
+     PHY_WeaponType( const MIL_Time_ABC& time, const std::string& strLauncher, const std::string& strAmmunition, size_t identifier, xml::xistream& xis );
     ~PHY_WeaponType();
 
     //! @name Initialization
