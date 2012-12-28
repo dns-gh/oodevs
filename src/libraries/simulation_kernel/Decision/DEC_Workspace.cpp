@@ -79,7 +79,8 @@ DEC_Workspace::~DEC_Workspace()
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1 ) );
+    const unsigned int tickDuration = config.GetTimeStep();
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -87,7 +88,8 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
 // Name: DEC_Workspace::LoadDecisional
 // Created: LDC 2010-12-01
 // -----------------------------------------------------------------------------
-void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
+void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional,
+        unsigned int tickDuration )
 {
     unsigned int nTmp;
 
@@ -138,7 +140,7 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
     if( PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ + PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
         throw MASA_EXCEPTION( "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1" ); // $$$$ ABL 2007-07-25: error context
 
-    DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional );
+    DEC_Knowledge_RapFor_ABC::Initialize( xisDecisional, tickDuration );
 
     xisDecisional >> xml::end;
 }

@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_RapFor_ABC.h"
-#include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
 
 const double DEC_Knowledge_RapFor_ABC::rRapForBoundMin_                        = 0.2;
@@ -22,13 +21,14 @@ const double DEC_Knowledge_RapFor_ABC::rRapForBoundMax_                        =
 // Name: DEC_Knowledge_RapFor_ABC::Initialize
 // Created: NLD 2004-11-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis )
+void DEC_Knowledge_RapFor_ABC::Initialize( xml::xistream& xis,
+        unsigned int tickDuration )
 {
     // Rapport de force
     xis >> xml::start( "force-ratio" );
     double rTmp;
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
-    rRapForTimeStepDefaultValue_ = MIL_Tools::ConvertSecondsToSim( rTmp );
+    rRapForTimeStepDefaultValue_ = rTmp / tickDuration;
     xis >> xml::end;
 }
 

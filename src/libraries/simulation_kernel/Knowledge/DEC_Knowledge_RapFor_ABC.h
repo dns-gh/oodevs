@@ -43,7 +43,7 @@ public:
 
     //! @name Tools
     //@{
-    static void Initialize( xml::xistream& xis );
+    static void Initialize( xml::xistream& xis, unsigned int tickDuration );
     //@}
 
 protected:
