@@ -5,12 +5,12 @@ includedFiles["sources/glaise/glaise_common/automates/Functions.bms"] = true
 ]]include "Common/Moteur/Functions/Automates.bms"
 
 
---[[//FonctioGlaise\glaise_ns DIA génériques aux pions et automates SCIPIO
+--[[//FonctioGlaise\glaise_ns DIA génériques aux pions et automates
 ]]include "Common/Fonctions.bms"
 
 
 
---[[// Fonctions DIA des automates SCIPIO
+--[[// Fonctions DIA des automates
 ]]include "Glaise/glaise_Common/Automates/Functions/Functions.bms"
 
 include "Glaise/glaise_Common/Automates/Functions/Functions - Echelons.bms"

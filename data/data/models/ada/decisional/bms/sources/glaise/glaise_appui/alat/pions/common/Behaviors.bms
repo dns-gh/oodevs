@@ -6,7 +6,7 @@ local emptyTable = emptyTable
 include "bit.lua"
 
 
---[[//génériques pions scipio
+--[[//génériques pions
 ]]include "glaise/glaise_Common/Pions/Behaviors.bms"
 
 --[[//inclusion des actions communes aux pions alat

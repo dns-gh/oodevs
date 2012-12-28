@@ -3,7 +3,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/Behaviors.bms"]
 
 local emptyTable = emptyTable
 
---[[//génériques automates scipio
+--[[//génériques automates
 ]]include "glaise/glaise_Common/Automates/Behaviors.bms"
 
 --[[//inclusion des actions communes aux automates alat

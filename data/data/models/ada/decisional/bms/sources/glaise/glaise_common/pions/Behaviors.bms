@@ -3,15 +3,15 @@ includedFiles["sources/glaise/glaise_common/pions/Behaviors.bms"] = true
 
 local emptyTable = emptyTable
 
---[[//actions génériques aux pions scipio
+--[[//actions génériques aux pions
 ]]include "Glaise/Glaise_Common/Pions/Actions.bms"
 
 
---[[//inclusion des action et des behaviors communs aux pions et automates SCIPIO
+--[[//inclusion des action et des behaviors communs aux pions et automates
 ]]include "Glaise/Glaise_Common/behaviors.bms"
 
 
---[[//behaviors génériques aux pions scipio
+--[[//behaviors génériques aux pions
 ]]include "Glaise/Glaise_Common/Pions/Behaviors/behaviors - Ambiances.bms"
 
 include "Glaise/Glaise_Common/Pions/Behaviors/behaviors - Dep.bms"

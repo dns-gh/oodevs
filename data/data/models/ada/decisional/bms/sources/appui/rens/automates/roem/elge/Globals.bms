@@ -12,7 +12,7 @@ includedFiles["sources/appui/rens/automates/roem/elge/Globals.bms"] = true
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]
---[[// Commun SCIPIO
+--[[// Commun
 ]]include "Common/Automates/Globals.bms"
 
 

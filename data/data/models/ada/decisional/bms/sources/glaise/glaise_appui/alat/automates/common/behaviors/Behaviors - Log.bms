@@ -106,7 +106,7 @@ do
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Gestion de la coordination des ravitaillements :
 ]]--[[//
-]]--[[// Grand principe SCIPIO ALAT. L'automate plannifie les ravitaillements pour que
+]]--[[// Grand principe ALAT. L'automate plannifie les ravitaillements pour que
 ]]--[[// toutes les sections n'aillent pas se ravitailler en meme temps.
 ]]--[[// -----------------------------------------------------------------------------
 ]]}

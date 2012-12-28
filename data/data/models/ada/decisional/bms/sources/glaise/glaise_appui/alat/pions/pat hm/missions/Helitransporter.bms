@@ -22,7 +22,7 @@ include "bit.lua"
 ]]
 --[[//coût de l'adaptativité : quand on kill un héliportage, on va débarquer les 
 ]]--[[//pions en soute. Il vient que si un pion est scindé, on ne le débarque pas 
-]]--[[//(il n'existe pas dans SCIPIO des moitiés de pions.)
+]]--[[//(il n'existe pas des moitiés de pions.)
 ]]--[[//Ce phénomene représente un danger d'oscillation si l'ennemi est toujours à 
 ]]--[[//proximité du point d'embarquement ou de débarquement. Ceci dit, si 
 ]]--[[//l'héliportage est compromis, on doit annuler la mission (ANIBAS).

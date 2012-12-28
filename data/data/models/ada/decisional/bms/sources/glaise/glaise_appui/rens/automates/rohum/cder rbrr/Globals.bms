@@ -11,7 +11,7 @@ includedFiles["sources/glaise/glaise_appui/rens/automates/rohum/cder rbrr/Global
 ]]--[[// $Workfile: Globals.hal $
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]--[[// Commun SCIPIO
+]]--[[// Commun
 ]]include "Glaise/Glaise_Common/Automates/Globals.bms"
 
 

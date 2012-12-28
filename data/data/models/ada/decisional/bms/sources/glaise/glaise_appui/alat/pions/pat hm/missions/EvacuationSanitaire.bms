@@ -14,7 +14,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/missions/Evacuation
 ]]--[[//
 ]]--[[// Les moyens de l'ALAT permettent d'accelerer le transfert des blessés dans la
 ]]--[[// cahine log, mais on ne joura pas les deplacement, les ravitaillements sur les
-]]--[[// plots...etc, à la mode log dans SCIPIO.
+]]--[[// plots...etc, à la mode log.
 ]]--[[//
 ]]--[[// Cependant, la brigade aura quand meme préparée son plan log en placant aux 
 ]]--[[// endroits stratégiques les moyens en carburant => entrainement ok.

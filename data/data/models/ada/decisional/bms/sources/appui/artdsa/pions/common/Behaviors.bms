@@ -3,7 +3,7 @@ includedFiles["sources/appui/artdsa/pions/common/Behaviors.bms"] = true
 
 local emptyTable = emptyTable
 
---[[//génériques pions scipio
+--[[//génériques pions
 ]]include "Common/Pions/Behaviors.bms"
 
 --[[// Embarquement (apres heliportage)
@@ -22,7 +22,7 @@ include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Manoeuvre.bms"
 include "Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
 
 
---[[//Missions génériques des pions SCIPIO
+--[[//Missions génériques des pions
 ]]include "Common/Pions/MissionsGeneriques.bms"
 
 

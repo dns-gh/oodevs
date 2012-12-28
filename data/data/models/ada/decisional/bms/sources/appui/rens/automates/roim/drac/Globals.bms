@@ -1,7 +1,7 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/roim/drac/Globals.bms"] = true
 
---[[// Commun SCIPIO
+--[[// Commun
 ]]include "Common/Automates/Globals.bms"
 
 

@@ -21,7 +21,7 @@ include "bit.lua"
 ]]--[[// Cette mission consiste à accompagner une unité aéromobile ou terrestre 
 ]]--[[// (plus rare) afin de la protéger en cas d'une éventuelle renontre avec 
 ]]--[[// l'ennemi
-]]--[[// Compte tenu de l'implémentation des deplacements dans SCIPIO, il est 
+]]--[[// Compte tenu de l'implémentation des deplacements, il est 
 ]]--[[// necessaire de commencer l'escorte loin dans la zone amie afin que le pion hap
 ]]--[[// ait le temps de passer devant le pion escorté (le pion escorté n'attend pas 
 ]]--[[// le pion d'appuis)

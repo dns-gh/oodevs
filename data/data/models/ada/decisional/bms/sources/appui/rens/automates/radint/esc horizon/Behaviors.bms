@@ -12,7 +12,7 @@ max_instances = 200
 max_activations = 200
 
 
---[[// Commun SCIPIO
+--[[// Commun
 ]]include "Common/Automates/Behaviors.bms"
 
 

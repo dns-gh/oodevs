@@ -12,7 +12,7 @@ includedFiles["sources/glaise/glaise_appui/rens/automates/rohum/urh/Globals.bms"
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]
---[[// Commun SCIPIO
+--[[// Commun
 ]]include "glaise/glaise_Common/Automates/Globals.bms"
 
 

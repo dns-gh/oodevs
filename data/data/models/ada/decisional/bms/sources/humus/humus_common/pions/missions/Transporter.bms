@@ -57,7 +57,7 @@ include "bit.lua"
         if( DIA_IsListEmpty( self.listePionsATransporter ) ) then
             do
                 DEC_Trace( "Il n'y a pas de pion transportable dans la liste passée en argument" )
-                --[[//DEC_Warning( eRC_TransportImpossiblePasDeMoyens ); $$$$GGR : a ajouter SCIPIO
+                --[[//DEC_Warning( eRC_TransportImpossiblePasDeMoyens ); $$$$GGR : a ajouter SWORD
 ]]                self:SendFeedback( eActionImpossible )
                 Halt( self )
                 do return end

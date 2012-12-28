@@ -5,12 +5,12 @@ includedFiles["sources/humus/humus_common/automates/Functions.bms"] = true
 ]]include "Common/Moteur/Functions/Automates.bms"
 
 
---[[//Fonctions DIA génériques aux pions et automates SCIPIO
+--[[//Fonctions DIA génériques aux pions et automates
 ]]include "Common/Fonctions.bms"
 
 
 
---[[// Fonctions DIA des automates SCIPIO
+--[[// Fonctions DIA des automates
 ]]include "Common/Automates/Functions/Functions.bms"
 
 include "Common/Automates/Functions/Functions - Echelons.bms"

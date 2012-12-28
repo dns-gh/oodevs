@@ -274,13 +274,13 @@ return
         return self:getDestructionState()
     end,
     destructionPriority = function( self )
-        return 0 -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis dans SCIPIO
+        return 0 -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis
     end,
     canDestroyIt = function( self )
-        return false -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis dans SCIPIO
+        return false -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis
     end,
     destroyIt = function( self )
-        return false -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis dans SCIPIO
+        return false -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis
     end,
     operationalLevel = function( self )
         return self:getOperationalCapacity()
@@ -289,13 +289,13 @@ return
         return self:getOperationalCapacity() < 95
     end,
     neutralizationPriority = function() 
-        return 0 -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis dans SCIPIO
+        return 0 -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis
     end,
     canNeutralizeIt = function( self )
-        return false -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis dans SCIPIO
+        return false -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis
     end,
     neutralizeIt = function( self )
-        return false -- $$$ Pour le moment pas appelé car on ne neutralise pas d'amis dans SCIPIO
+        return false -- $$$ Pour le moment pas appelé car on ne neutralise pas d'amis
     end,
     supportPriority = function( self )
         return (self:proximityLevel() / 50 + 1 - meKnowledge:getForceRatioAgent( self ))/1.02 

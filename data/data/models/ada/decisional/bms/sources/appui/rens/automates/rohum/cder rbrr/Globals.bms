@@ -11,7 +11,7 @@ includedFiles["sources/appui/rens/automates/rohum/cder rbrr/Globals.bms"] = true
 ]]--[[// $Workfile: Globals.hal $
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]--[[// Commun SCIPIO
+]]--[[// Commun
 ]]include "Common/Automates/Globals.bms"
 
 

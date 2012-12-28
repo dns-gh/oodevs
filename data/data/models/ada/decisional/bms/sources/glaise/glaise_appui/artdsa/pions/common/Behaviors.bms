@@ -4,7 +4,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/Behaviors.bms"] =
 local emptyTable = emptyTable
 
 
---[[//génériques pions scipio
+--[[//génériques pions
 ]]include "Glaise/Glaise_Common/Pions/Behaviors.bms"
 
 --[[// Embarquement (apres heliportage)
@@ -25,7 +25,7 @@ include "Glaise/Glaise_Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Manoeuvre
 include "Glaise/Glaise_Appui/ArtDsa/Pions/Common/Behaviors/Behaviors - Mot.bms"
 
 
---[[//Missions génériques des pions SCIPIO
+--[[//Missions génériques des pions
 ]]include "Glaise/Glaise_Common/Pions/MissionsGeneriques.bms"
 
 

@@ -12,7 +12,7 @@ includedFiles["sources/appui/rens/automates/roem/stations mrod_elodee/Globals.bm
 ]]--[[//
 ]]--[[// *****************************************************************************
 ]]
---[[// Commun SCIPIO
+--[[// Commun
 ]]include "Common/Automates/Globals.bms"
 
 

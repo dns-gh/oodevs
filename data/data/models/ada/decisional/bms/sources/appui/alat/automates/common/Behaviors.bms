@@ -3,7 +3,7 @@ includedFiles["sources/appui/alat/automates/common/Behaviors.bms"] = true
 
 local emptyTable = emptyTable
 
---[[//génériques automates scipio
+--[[//génériques automates
 ]]include "Common/Automates/Behaviors.bms"
 
 --[[//inclusion des actions communes aux automates alat

@@ -3,7 +3,7 @@ includedFiles["sources/air/pions/common/Behaviors.bms"] = true
 
 local emptyTable = emptyTable
 
---[[//génériques pions scipio
+--[[//génériques pions
 ]]include "Common/Pions/Behaviors.bms"
 
 --[[//inclusion des actions communes aux pions air

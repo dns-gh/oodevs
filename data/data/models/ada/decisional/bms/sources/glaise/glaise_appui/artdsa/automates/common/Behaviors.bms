@@ -3,7 +3,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/common/Behaviors.bms
 
 local emptyTable = emptyTable
 
---[[//génériques automates scipio
+--[[//génériques automates
 ]]include "Glaise/Glaise_Common/Automates/Behaviors.bms"
 include "Glaise/Glaise_Common/Automates/Behaviors/Medo/Behaviors - Medo - ASA.bms"
 

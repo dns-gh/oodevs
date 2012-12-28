@@ -3,7 +3,7 @@ includedFiles["sources/marine/common/Behaviors.bms"] = true
 
 local emptyTable = emptyTable
 
---[[//génériques pions SCIPIO
+--[[//génériques pions
 ]]include "Common/Pions/Behaviors.bms"
 
 --[[//inclusion des actions communes aux pions de la Marine
@@ -18,7 +18,7 @@ include "Marine/Pions/Common/Behaviors/Behaviors - Mot.bms"
 include "Marine/Pions/Common/Behaviors/Behaviors - Eni.bms"
 
 
---[[//Missions génériques des pions SCIPIO
+--[[//Missions génériques des pions
 ]]include "Common/Pions/MissionsGeneriques.bms"
 
 
