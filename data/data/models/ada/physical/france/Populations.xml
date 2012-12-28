@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Crowds.xsd">
+<populations model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.1/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="0.25"/>
-  <time-between-nbc-applications decontaminationDelay="300s" delay="1h"/>
+  <time-between-nbc-applications delay="1h"/>
   <population armed-individuals="0" concentration-density="0.05" decisional-model="Masalife.Foule" id="0" moving-base-density="0.1" moving-speed="6" name="Foule standard">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
@@ -31,10 +31,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -73,10 +69,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -115,10 +107,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -157,10 +145,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0.01" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -210,6 +194,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.3" decisional-model="Masalife.Foule" id="1" moving-base-density="0.4" moving-speed="6" name="Refugies a pied">
     <slowing-effects>
@@ -240,10 +225,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.3">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -282,10 +263,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.3">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -324,10 +301,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.3">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -366,10 +339,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.3">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -419,6 +388,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.25" decisional-model="Masalife.Foule" id="2" moving-base-density="0.5" moving-speed="20" name="Refugies en VHL">
     <slowing-effects>
@@ -449,10 +419,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -491,10 +457,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -533,10 +495,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -575,10 +533,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -628,6 +582,7 @@
       <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="1" decisional-model="Masalife.Foule" id="3" moving-base-density="1" moving-speed="3" name="Manifestants">
     <slowing-effects>
@@ -658,10 +613,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -700,10 +651,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -742,10 +689,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -784,10 +727,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -837,6 +776,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0.5" concentration-density="1" decisional-model="Masalife.Foule" id="4" moving-base-density="1" moving-speed="3" name="Manifestants armes">
     <slowing-effects>
@@ -867,10 +807,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -909,10 +845,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -951,10 +883,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -993,10 +921,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.5">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1046,6 +970,7 @@
       <urban-destruction-effect attitude="agressive" density="0.002" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.05" decisional-model="Masalife.Foule" id="5" moving-base-density="0.1" moving-speed="5" name="Foule de femmes et d'enfants">
     <slowing-effects>
@@ -1076,10 +1001,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1118,10 +1039,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1160,10 +1077,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1202,10 +1115,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1255,6 +1164,7 @@
       <urban-destruction-effect attitude="agressive" density="0.0001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0.3" female="0.7" male="0"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0" concentration-density="0.05" decisional-model="Masalife.Foule" id="6" moving-base-density="0.1" moving-speed="5" name="Foule mixte">
     <slowing-effects>
@@ -1285,10 +1195,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1327,10 +1233,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1369,10 +1271,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1411,10 +1309,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1464,6 +1358,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="550m"/>
     </urban-destruction-effects>
     <repartition children="0.1" female="0.45" male="0.45"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0.5" concentration-density="0.05" decisional-model="Masalife.Foule" id="7" moving-base-density="0.1" moving-speed="6" name="Foule armée">
     <slowing-effects>
@@ -1494,10 +1389,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="0.2" population-attitude="calme" population-density="0.002">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1536,10 +1427,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="0.1" population-attitude="agitee" population-density="0.002">
-        <protection name="Foule">
-          <unarmed destruction="0.01" repairable-with-evacuation="0.03" repairable-without-evacuation="0.07"/>
-          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1578,10 +1465,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="0.2" population-attitude="excitee" population-density="0.002">
-        <protection name="Foule">
-          <unarmed destruction="0.01" repairable-with-evacuation="0.03" repairable-without-evacuation="0.07"/>
-          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1620,10 +1503,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="0.3" population-attitude="agressive" population-density="0.002">
-        <protection name="Foule">
-          <unarmed destruction="0.01" repairable-with-evacuation="0.03" repairable-without-evacuation="0.07"/>
-          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1673,6 +1552,7 @@
       <urban-destruction-effect attitude="agressive" density="0.002" time="250m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0.35" male="0.65"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
   <population armed-individuals="0.25" concentration-density="0.08" decisional-model="Masalife.Foule" id="8" moving-base-density="0.2" moving-speed="6" name="Foule manipulée">
     <slowing-effects>
@@ -1703,10 +1583,6 @@
     </slowing-effects>
     <attrition-effects>
       <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1745,10 +1621,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1787,10 +1659,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1829,10 +1697,6 @@
         </protection>
       </attrition-effect>
       <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
-        <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-        </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1882,6 +1746,7 @@
       <urban-destruction-effect attitude="agressive" density="0.001" time="250m"/>
     </urban-destruction-effects>
     <repartition children="0.1" female="0.45" male="0.45"/>
+    <nbc decontaminationDelay="300s"/>
   </population>
 </populations>
-<!-- signature="1390557264" -->
+<!-- signature="3497333819" -->

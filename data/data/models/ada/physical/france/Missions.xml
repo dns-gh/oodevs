@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<missions model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Missions.xsd">
+<missions model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.1/physical/Missions.xsd">
   <units>
     <mission dia-behavior="MIS_Pion_ALAT_AllerSeRecompleter" dia-type="T_Mission_Pion_ALAT_AllerSeRecompleter" id="1" name="PION ALAT Aller Se Recompleter" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -621,7 +621,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.stabilisation.tasks.Boucler" dia-type="france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="PION MELEE Boucler" package="control">
@@ -649,7 +704,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Interdire" dia-type="france.military.platoon.tasks.Interdire" id="2083" name="PION MELEE Interdire" package="defence" symbol="IdInterdire_Point">
@@ -670,7 +780,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="threats" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="LocationComposite">
         <choice>
@@ -692,7 +857,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.ContreAttaquer" dia-type="france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="PION MELEE Contre Attaquer" package="attack" symbol="IdContreAttaquer_Poly-ligne">
@@ -773,7 +993,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Intercepter" dia-type="france.military.platoon.combat.tasks.Intercepter" id="2128" name="PION MELEE Intercepter" package="attack">
@@ -794,7 +1069,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Relever" dia-type="france.military.platoon.combat.tasks.Relever" id="2105" name="PION MELEE Relever" package="support">
@@ -873,7 +1203,62 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
@@ -882,7 +1267,62 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
@@ -1181,7 +1621,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.ReparerReseau" dia-type="france.military.platoon.tasks.ReparerReseau" id="2144" name="PION GENIE Retablir Point Du Reseau" package="none">
@@ -1189,7 +1629,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.terrorism.tasks.SInfiltrer" dia-type="france.military.platoon.tasks.ASYSInfiltrer" id="28747" name="PION ASYMETRIQUE S'Infiltrer" package="move">
@@ -1233,7 +1673,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Reconnaitre" dia-type="france.military.platoon.combat.support.engineer.tasks.Reconnaitre" id="2150" name="PION GENIE Reconnaitre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2268,7 +2708,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="threats" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="LocationComposite">
         <choice>
@@ -2355,7 +2850,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="true" type="Point"/>
     </mission>
@@ -2411,7 +2961,62 @@
         </choice>
       </parameter>
       <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="Point"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
@@ -2428,7 +3033,62 @@
         </choice>
       </parameter>
       <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="Point"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
@@ -2495,7 +3155,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
@@ -2512,7 +3227,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
@@ -2576,7 +3346,62 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
@@ -2586,7 +3411,62 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
@@ -2596,7 +3476,62 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
@@ -2701,7 +3636,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.ReparerReseau" dia-type="france.military.company.tasks.ReparerReseau" id="1048" mrt-dia-behavior="france.military.company.tasks.ReparerReseau" name="AUTOMATE GENIE Retablir Point Du Reseau" package="none">
@@ -2709,7 +3644,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.PrendreOtage" dia-type="france.military.company.tasks.PrendreOtage" id="1049" mrt-dia-behavior="france.military.company.tasks.PrendreOtage" name="AUTOMATE ASYMETRIQUE Prendre en Otage" package="none">
@@ -2759,7 +3694,62 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
@@ -2775,7 +3765,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" dia-type="france.military.company.combat.support.engineer.tasks.Reparer" id="1054" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" name="AUTOMATE GENIE Reparer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2816,7 +3806,62 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Recueillir" dia-type="france.military.company.combat.tasks.Recueillir" id="1060" mrt-dia-behavior="france.military.company.combat.tasks.Recueillir" name="AUTOMATE MELEE Recueillir" package="intelligence">
@@ -2825,7 +3870,62 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reconnaitre" dia-type="france.military.company.combat.support.engineer.tasks.Reconnaitre" id="1061" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reconnaitre" name="AUTOMATE GENIE Reconnaitre" package="intelligence">
@@ -2869,7 +3969,62 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork">
+        <objects>
+          <parameter type="bouchon mines"/>
+          <parameter type="zone minee lineaire"/>
+          <parameter type="zone minee par dispersion"/>
+          <parameter type="fosse anti char"/>
+          <parameter type="abattis"/>
+          <parameter type="barricade"/>
+          <parameter type="eboulement"/>
+          <parameter type="destruction route"/>
+          <parameter type="destruction pont"/>
+          <parameter type="pont flottant continu"/>
+          <parameter type="poste tir"/>
+          <parameter type="zone protegee"/>
+          <parameter type="zone implantation canon"/>
+          <parameter type="zone implantation cobra"/>
+          <parameter type="zone implantation lrm"/>
+          <parameter type="site franchissement"/>
+          <parameter type="nuage nbc"/>
+          <parameter type="plot ravitaillement"/>
+          <parameter type="site decontamination"/>
+          <parameter type="rota"/>
+          <parameter type="zone nbc"/>
+          <parameter type="zone brouillage"/>
+          <parameter type="aire poser"/>
+          <parameter type="piste"/>
+          <parameter type="plate-forme"/>
+          <parameter type="zone mobilite amelioree"/>
+          <parameter type="zone poser helicoptere"/>
+          <parameter type="aire logistique"/>
+          <parameter type="camp prisonniers"/>
+          <parameter type="camp refugies"/>
+          <parameter type="poste controle"/>
+          <parameter type="terrain largage"/>
+          <parameter type="zone interdite mouvement"/>
+          <parameter type="zone interdite tir"/>
+          <parameter type="zone implantation mortier"/>
+          <parameter type="pont flottant discontinu"/>
+          <parameter type="installation"/>
+          <parameter type="bloc urbain"/>
+          <parameter type="zone bouclee"/>
+          <parameter type="incendie"/>
+          <parameter type="mouvement population"/>
+          <parameter type="station de metro"/>
+          <parameter type="noeud de reseau de ressource"/>
+          <parameter type="souterrain egout"/>
+          <parameter type="autoroute"/>
+          <parameter type="chemin"/>
+          <parameter type="route departementale"/>
+          <parameter type="route nationale"/>
+          <parameter type="terrain mouille"/>
+          <parameter type="terrain enneige"/>
+          <parameter type="terrain gele"/>
+          <parameter type="frontiere"/>
+        </objects>
+      </parameter>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
@@ -3528,4 +4683,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1008593030" -->
+<!-- signature="1963981139" -->

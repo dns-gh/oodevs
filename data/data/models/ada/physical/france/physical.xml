@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<physical model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Physical.xsd">
+<physical model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.1/physical/Physical.xsd">
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
   <protections file="Protections.xml"/>
   <active-protections file="ActiveProtections.xml"/>
   <human-protections file="HumanProtections.xml"/>
   <resource-natures file="DotationNatures.xml"/>
+  <logistic-supply-classes file="LogisticSupplyClasses.xml"/>
   <objects file="Objets.xml"/>
   <resources file="Dotations.xml"/>
   <launchers file="Lanceurs.xml"/>
@@ -23,6 +24,7 @@
   <knowledge-groups file="GroupesConnaissance.xml"/>
   <maintenance file="Maintenance.xml"/>
   <supply file="Ravitaillement.xml"/>
+  <funeral file="Funeral.xml"/>
   <communications file="Communications.xml"/>
   <pathfinder file="Pathfind.xml"/>
   <populations file="Populations.xml"/>
@@ -39,5 +41,9 @@
   <symbols file="symbols.xml"/>
   <filters file="Filters/Filters.xml"/>
   <urban-templates file="UrbanTemplates.xml"/>
+  <units-mission-sheets-directory path="Mission sheets/units"/>
+  <automata-mission-sheets-directory path="Mission sheets/automata"/>
+  <crowds-mission-sheets-directory path="Mission sheets/crowds"/>
+  <fragorders-mission-sheets-directory path="Mission sheets/fragmentary orders"/>
 </physical>
-<!-- signature="2502770702" -->
+<!-- signature="1555555984" -->
