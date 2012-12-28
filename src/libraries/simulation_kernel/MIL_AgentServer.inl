@@ -188,31 +188,6 @@ MIL_AgentServer& MIL_AgentServer::GetWorkspace()
     return *pTheAgentServer_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::CreateWorkspace
-// Created: NLD 2002-09-09
-//-----------------------------------------------------------------------------
-inline
-void MIL_AgentServer::CreateWorkspace( MIL_Config& config )
-{
-    assert( pTheAgentServer_ == 0 );
-    pTheAgentServer_ = new MIL_AgentServer( config );
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::DestroyWorkspace
-// Created: NLD 2002-09-09
-//-----------------------------------------------------------------------------
-inline
-void MIL_AgentServer::DestroyWorkspace()
-{
-    if( pTheAgentServer_ )
-    {
-        delete pTheAgentServer_;
-        pTheAgentServer_ = 0;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::IsInitialized
 // Created: JSR 2010-11-22

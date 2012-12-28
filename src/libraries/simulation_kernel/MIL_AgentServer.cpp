@@ -575,3 +575,27 @@ MIL_ObjectFactory& MIL_AgentServer::GetObjectFactory() const
 {
     return *pObjectFactory_;
 }
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::CreateWorkspace
+// Created: NLD 2002-09-09
+//-----------------------------------------------------------------------------
+void MIL_AgentServer::CreateWorkspace( MIL_Config& config )
+{
+    assert( pTheAgentServer_ == 0 );
+    pTheAgentServer_ = new MIL_AgentServer( config );
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_AgentServer::DestroyWorkspace
+// Created: NLD 2002-09-09
+//-----------------------------------------------------------------------------
+void MIL_AgentServer::DestroyWorkspace()
+{
+    if( pTheAgentServer_ )
+    {
+        delete pTheAgentServer_;
+        pTheAgentServer_ = 0;
+    }
+}
+
