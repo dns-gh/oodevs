@@ -71,8 +71,14 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pObjectFactory_       ( new MIL_ObjectFactory( config.IsLegacy() ) )
 {
     loopTimer_.Start();
+
+    // These two lines are incredibly stupid but necessary as
+    // MIL_AgentServer instantiate objects accessing to itself via its
+    // singleton API. That is what you get with singletons and
+    // lazyness...
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
+
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
@@ -583,7 +589,16 @@ MIL_ObjectFactory& MIL_AgentServer::GetObjectFactory() const
 void MIL_AgentServer::CreateWorkspace( MIL_Config& config )
 {
     assert( pTheAgentServer_ == 0 );
-    pTheAgentServer_ = new MIL_AgentServer( config );
+    try
+    {
+        new MIL_AgentServer( config );
+    }
+    catch(...)
+    {
+        // MIL_AgentServer constructor sets pTheAgentServer_ to this
+        pTheAgentServer_ = 0;
+        throw;
+    }
 }
 
 //-----------------------------------------------------------------------------
