@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReferentielSHIELD VersionFormatReferentielSHIELD="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schema/shield/ReferentielSHIELD.xsd">
+	<ReferentielEDT>
+		<app6-translations>
+			<app6-translation nature-app6="?" orbat-app6="?" symbole-reco="1.X.3.1.1" app6-symbol="1.X.3.1.1">
+				<!-- Valeur par défaut -->
+			</app6-translation>
+			<app6-translation nature-app6="combat" orbat-app6="s*gpuc----*****" symbole-reco="1.X.3.1.1" app6-symbol="1.X.3.1.1"/>
+			<app6-translation nature-app6="combat/air defense" orbat-app6="s*gpucd---*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1"/>
+			<app6-translation nature-app6="combat/air defense/short range" orbat-app6="s*gpucds--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.1"/>
+			<app6-translation nature-app6="combat/air defense/short range/chaparral" orbat-app6="s*gpucdsc-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.1.1"/>
+			<app6-translation nature-app6="combat/air defense/short range/stinger" orbat-app6="s*gpucdss-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.1.2"/>
+			<app6-translation nature-app6="combat/air defense/short range/vulcan" orbat-app6="s*gpucdsv-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.1.3"/>
+			<app6-translation nature-app6="combat/air defense/missile" orbat-app6="s*gpucdm--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2"/>
+			<app6-translation nature-app6="combat/air defense/missile/light" orbat-app6="s*gpucdml-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.1"/>
+			<app6-translation nature-app6="combat/air defense/missile/light/motorized avenger" orbat-app6="s*gpucdmla*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.1.1"/>
+			<app6-translation nature-app6="combat/air defense/missile/medium" orbat-app6="s*gpucdmm-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.2"/>
+			<app6-translation nature-app6="combat/air defense/missile/heavy" orbat-app6="s*gpucdmh-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.3"/>
+			<app6-translation nature-app6="combat/air defense/h_mad" orbat-app6="s*gpucdh--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.4"/>
+			<app6-translation nature-app6="combat/air defense/h_mad/hawk" orbat-app6="s*gpucdhh-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.4.1"/>
+			<app6-translation nature-app6="combat/air defense/h_mad/patriot" orbat-app6="s*gpucdhp-*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.2.4.2"/>
+			<app6-translation nature-app6="combat/air defense/gun unit" orbat-app6="s*gpucdg--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.3"/>
+			<app6-translation nature-app6="combat/air defense/composite" orbat-app6="s*gpucdc--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.4"/>
+			<app6-translation nature-app6="combat/air defense/targeting unit" orbat-app6="s*gpucdt--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.5"/>
+			<app6-translation nature-app6="combat/air defense/theater missile defense unit" orbat-app6="s*gpucdc--*****" symbole-reco="1.X.3.1.1.1" app6-symbol="1.X.3.1.1.1.6"/>
+			<app6-translation nature-app6="combat/armor" orbat-app6="s*gpuca---*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2"/>
+			<app6-translation nature-app6="combat/armor/track" orbat-app6="s*gpucat--*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1"/>
+			<app6-translation nature-app6="combat/armor/track/airborne" orbat-app6="s*gpucata-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.1"/>
+			<app6-translation nature-app6="combat/armor/track/amphibious" orbat-app6="s*gpucatw-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.2"/>
+			<app6-translation nature-app6="combat/armor/track/amphibious/recovery" orbat-app6="s*gpucatwr*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.2.1"/>
+			<app6-translation nature-app6="combat/armor/track/light" orbat-app6="s*gpucatl-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.3"/>
+			<app6-translation nature-app6="combat/armor/track/medium" orbat-app6="s*gpucatm-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.4"/>
+			<app6-translation nature-app6="combat/armor/track/heavy" orbat-app6="s*gpucath-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.5"/>
+			<app6-translation nature-app6="combat/armor/track/recovery" orbat-app6="s*gpucatr-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.1.6"/>
+			<app6-translation nature-app6="combat/armor/wheeled" orbat-app6="s*gpucaw--*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2"/>
+			<app6-translation nature-app6="combat/armor/wheeled/air_assault" orbat-app6="s*gpucaws-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.1"/>
+			<app6-translation nature-app6="combat/armor/wheeled/airborne" orbat-app6="s*gpucawa-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.2"/>
+			<app6-translation nature-app6="combat/armor/wheeled/amphibious" orbat-app6="s*gpucaww-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.3"/>
+			<app6-translation nature-app6="combat/armor/wheeled/amphibious/recovery" orbat-app6="s*gpucawwr*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.3.1"/>
+			<app6-translation nature-app6="combat/armor/wheeled/light" orbat-app6="s*gpucawl-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.4"/>
+			<app6-translation nature-app6="combat/armor/wheeled/medium" orbat-app6="s*gpucawm-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.5"/>
+			<app6-translation nature-app6="combat/armor/wheeled/heavy" orbat-app6="s*gpucawh-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.6"/>
+			<app6-translation nature-app6="combat/armor/wheeled/recovery" orbat-app6="s*gpucawr-*****" symbole-reco="1.X.3.1.1.2" app6-symbol="1.X.3.1.1.2.2.7"/>
+			<app6-translation nature-app6="combat/anti armor" orbat-app6="s*gpucaa--*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3"/>
+			<app6-translation nature-app6="combat/anti armor/dismounted" orbat-app6="s*gpucaad-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.1"/>
+			<app6-translation nature-app6="combat/anti armor/light" orbat-app6="s*gpucaal-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.2"/>
+			<app6-translation nature-app6="combat/anti armor/airborne" orbat-app6="s*gpucaam-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.3"/>
+			<app6-translation nature-app6="combat/anti armor/air assault" orbat-app6="s*gpucaas-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.4"/>
+			<app6-translation nature-app6="combat/anti armor/mountain" orbat-app6="s*gpucaau-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.5"/>
+			<app6-translation nature-app6="combat/anti armor/arctic" orbat-app6="s*gpucaac-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.6"/>
+			<app6-translation nature-app6="combat/anti armor/armored" orbat-app6="s*gpucaaa-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.7"/>
+			<app6-translation nature-app6="combat/anti armor/armored/tracked" orbat-app6="s*gpucaaat*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.7.1"/>
+			<app6-translation nature-app6="combat/anti armor/armored/wheeled" orbat-app6="s*gpucaaaw*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.7.2"/>
+			<app6-translation nature-app6="combat/anti armor/armored/air assault" orbat-app6="s*gpucaaas*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.7.3"/>
+			<app6-translation nature-app6="combat/anti armor/motorized" orbat-app6="s*gpucaao-*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.8"/>
+			<app6-translation nature-app6="combat/anti armor/motorized/air assault" orbat-app6="s*gpucaaos*****" symbole-reco="1.X.3.1.1.3" app6-symbol="1.X.3.1.1.3.8.1"/>
+			<app6-translation nature-app6="combat/aviation" orbat-app6="s*gpucv---*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4"/>
+			<app6-translation nature-app6="combat/aviation/fixed wing" orbat-app6="s*gpucvf--*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.1"/>
+			<app6-translation nature-app6="combat/aviation/fixed wing/utility" orbat-app6="s*gpucvfu-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.1.1"/>
+			<app6-translation nature-app6="combat/aviation/fixed wing/attack" orbat-app6="s*gpucvfa-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.1.2"/>
+			<app6-translation nature-app6="combat/aviation/fixed wing/recon" orbat-app6="s*gpucvfr-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.1.3"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing" orbat-app6="s*gpucvr--*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/attack" orbat-app6="s*gpucvra-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.1"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/scout" orbat-app6="s*gpucvrs-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.2"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/antisubmarine warfare" orbat-app6="s*gpucvrw-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.3"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/utility" orbat-app6="s*gpucvru-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.4"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/utility/light" orbat-app6="s*gpucvrul*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.4.1"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/utility/medium" orbat-app6="s*gpucvrum*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.4.2"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/utility/heavy" orbat-app6="s*gpucvruh*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.4.3"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/c2" orbat-app6="s*gpucvruc*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.5"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/medevac" orbat-app6="s*gpucvrue*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.6"/>
+			<app6-translation nature-app6="combat/aviation/rotary wing/mine countermeasure" orbat-app6="s*gpucvrm-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.2.7"/>
+			<app6-translation nature-app6="combat/aviation/search and rescue" orbat-app6="s*gpucvs--*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.3"/>
+			<app6-translation nature-app6="combat/aviation/composite" orbat-app6="s*gpucvc--*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.4"/>
+			<app6-translation nature-app6="combat/aviation/vertical short takeoff and landing" orbat-app6="s*gpucvv--*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.5"/>
+			<app6-translation nature-app6="combat/aviation/unmanned aerial vehicle" orbat-app6="s*gpucvu--*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.6"/>
+			<app6-translation nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing" orbat-app6="s*gpucvuf-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.6.1"/>
+			<app6-translation nature-app6="combat/aviation/unmanned aerial vehicle/rotary_wing" orbat-app6="s*gpucvur-*****" symbole-reco="1.X.3.1.1.4" app6-symbol="1.X.3.1.1.4.6.2"/>
+			<app6-translation nature-app6="combat/infantry" orbat-app6="s*gpuci---*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5"/>
+			<app6-translation nature-app6="combat/infantry/light" orbat-app6="s*gpucil--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.1"/>
+			<app6-translation nature-app6="combat/infantry/motorized" orbat-app6="s*gpucim--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.2"/>
+			<app6-translation nature-app6="combat/infantry/mountain" orbat-app6="s*gpucio--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.3"/>
+			<app6-translation nature-app6="combat/infantry/airborne" orbat-app6="s*gpucia--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.4"/>
+			<app6-translation nature-app6="combat/infantry/air assault" orbat-app6="s*gpucis--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.5"/>
+			<app6-translation nature-app6="combat/infantry/mechanized" orbat-app6="s*gpuciz--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.6"/>
+			<app6-translation nature-app6="combat/infantry/naval" orbat-app6="s*gpucin--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.7"/>
+			<app6-translation nature-app6="combat/infantry/infantry fighting vehicle" orbat-app6="s*gpucii--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.8"/>
+			<app6-translation nature-app6="combat/infantry/arctic" orbat-app6="s*gpucic--*****" symbole-reco="1.X.3.1.1.5" app6-symbol="1.X.3.1.1.5.9"/>
+			<app6-translation nature-app6="combat/engineer" orbat-app6="s*gpuce---*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6"/>
+			<app6-translation nature-app6="combat/engineer/combat" orbat-app6="s*gpucec--*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1"/>
+			<app6-translation nature-app6="combat/engineer/combat/air assault" orbat-app6="s*gpucecs-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.1"/>
+			<app6-translation nature-app6="combat/engineer/combat/recon" orbat-app6="s*gpucecr-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.10"/>
+			<app6-translation nature-app6="combat/engineer/combat/airborne" orbat-app6="s*gpuceca-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.2"/>
+			<app6-translation nature-app6="combat/engineer/combat/arctic" orbat-app6="s*gpucecc-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.3"/>
+			<app6-translation nature-app6="combat/engineer/combat/light" orbat-app6="s*gpucecl-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.4"/>
+			<app6-translation nature-app6="combat/engineer/combat/medium" orbat-app6="s*gpucecm-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.5"/>
+			<app6-translation nature-app6="combat/engineer/combat/heavy" orbat-app6="s*gpucech-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.6"/>
+			<app6-translation nature-app6="combat/engineer/combat/mechanized" orbat-app6="s*gpucect-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.7"/>
+			<app6-translation nature-app6="combat/engineer/combat/motorized" orbat-app6="s*gpucecw-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.8"/>
+			<app6-translation nature-app6="combat/engineer/combat/mountain" orbat-app6="s*gpuceco-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.9"/>
+			<app6-translation nature-app6="combat/engineer/capacity" orbat-app6="s*gpucen--*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.2"/>
+			<app6-translation nature-app6="combat/engineer/capacity/naval" orbat-app6="s*gpucenn-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.2.1"/>
+			<app6-translation nature-app6="combat/engineer/combat/cross" orbat-app6="s*gpucecx-*****" symbole-reco="1.X.3.1.1.6" app6-symbol="1.X.3.1.1.6.1.11"/>
+			<app6-translation nature-app6="combat/field artillery" orbat-app6="s*gpucf---*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun" orbat-app6="s*gpucfh--*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/self-propelled" orbat-app6="s*gpucfhe-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.1"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/air assault" orbat-app6="s*gpucfhs-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.2"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/airborne" orbat-app6="s*gpucfha-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.3"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/arctic" orbat-app6="s*gpucfhc-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.4"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/mountain" orbat-app6="s*gpucfho-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.5"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/light" orbat-app6="s*gpucfhl-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.6"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/medium" orbat-app6="s*gpucfhm-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.7"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/heavy" orbat-app6="s*gpucfhh-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.8"/>
+			<app6-translation nature-app6="combat/field artillery/howiltzer gun/amphibious" orbat-app6="s*gpucfhx-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.1.9"/>
+			<app6-translation nature-app6="combat/field artillery/rocket" orbat-app6="s*gpucfr--*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/single rocket launcher" orbat-app6="s*gpucfrs-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.1"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/single rocket launcher/self-propelled" orbat-app6="s*gpucfrss*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.1.1"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/single rocket launcher/truck" orbat-app6="s*gpucfrsr*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.1.2"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/single rocket launcher/towed" orbat-app6="s*gpucfrst*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.1.3"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/multi rocket launcher" orbat-app6="s*gpucfrm-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.2"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/multi rocket launcher/self-propelled" orbat-app6="s*gpucfrms*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.2.1"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/multi rocket launcher/truck" orbat-app6="s*gpucfrmr*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.2.2"/>
+			<app6-translation nature-app6="combat/field artillery/rocket/multi rocket launcher/towed" orbat-app6="s*gpucfrmt*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.2.2.3"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition" orbat-app6="s*gpucft--*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/radar" orbat-app6="s*gpucftr-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.1"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/sound" orbat-app6="s*gpucfts-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.2"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/flash" orbat-app6="s*gpucftf-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.3"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/colt fist" orbat-app6="s*gpucftc-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.4"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/colt fist/dismounted" orbat-app6="s*gpucftcd*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.4.1"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/colt fist/tracked" orbat-app6="s*gpucftcm*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.4.2"/>
+			<app6-translation nature-app6="combat/field artillery/target acquisition/anglico" orbat-app6="s*gpucfta-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.3.5"/>
+			<app6-translation nature-app6="combat/field artillery/mortar" orbat-app6="s*gpucfm--*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/self-propelled tracked" orbat-app6="s*gpucfms-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.1"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/self-propelled wheeled" orbat-app6="s*gpucfmw-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.2"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/towed" orbat-app6="s*gpucfmt-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.3"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/towed/airborne" orbat-app6="s*gpucfmta*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.3.1"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/towed/air assault" orbat-app6="s*gpucfmts*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.3.2"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/towed/arctic" orbat-app6="s*gpucfmtc*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.3.3"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/towed/mountain" orbat-app6="s*gpucfmto*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.3.4"/>
+			<app6-translation nature-app6="combat/field artillery/mortar/amphibious" orbat-app6="s*gpucfml-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.4.4"/>
+			<app6-translation nature-app6="combat/field artillery/artillery survey" orbat-app6="s*gpucfs--*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.5"/>
+			<app6-translation nature-app6="combat/field artillery/artillery survey/air assault" orbat-app6="s*gpucfss-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.5.1"/>
+			<app6-translation nature-app6="combat/field artillery/artillery survey/airborne" orbat-app6="s*gpucfsa-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.5.2"/>
+			<app6-translation nature-app6="combat/field artillery/artillery survey/light" orbat-app6="s*gpucfsl-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.5.3"/>
+			<app6-translation nature-app6="combat/field artillery/artillery survey/mountain" orbat-app6="s*gpucfso-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.5.4"/>
+			<app6-translation nature-app6="combat/field artillery/meteorological" orbat-app6="s*gpucfo--*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.6"/>
+			<app6-translation nature-app6="combat/field artillery/meteorological/air assault" orbat-app6="s*gpucfos-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.6.1"/>
+			<app6-translation nature-app6="combat/field artillery/meteorological/airborne" orbat-app6="s*gpucfoa-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.6.2"/>
+			<app6-translation nature-app6="combat/field artillery/meteorological/light" orbat-app6="s*gpucfol-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.6.3"/>
+			<app6-translation nature-app6="combat/field artillery/meteorological/mountain" orbat-app6="s*gpucfoo-*****" symbole-reco="1.X.3.1.1.7" app6-symbol="1.X.3.1.1.7.6.4"/>
+			<app6-translation nature-app6="combat/reconnaissance" orbat-app6="s*gpucr---*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8"/>
+			<app6-translation nature-app6="combat/reconnaissance/horse" orbat-app6="s*gpucrh--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.1"/>
+			<app6-translation nature-app6="combat/reconnaissance/cavalry" orbat-app6="s*gpucrv--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.2"/>
+			<app6-translation nature-app6="combat/reconnaissance/cavalry/armored" orbat-app6="s*gpucrva-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.2.1"/>
+			<app6-translation nature-app6="combat/reconnaissance/cavalry/motorized" orbat-app6="s*gpucrvm-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.2.2"/>
+			<app6-translation nature-app6="combat/reconnaissance/cavalry/ground" orbat-app6="s*gpucrvg-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.2.3"/>
+			<app6-translation nature-app6="combat/reconnaissance/cavalry/air" orbat-app6="s*gpucrvo-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.2.4"/>
+			<app6-translation nature-app6="combat/reconnaissance/arctic" orbat-app6="s*gpucrc--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.3"/>
+			<app6-translation nature-app6="combat/reconnaissance/air assault" orbat-app6="s*gpucrs--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.4"/>
+			<app6-translation nature-app6="combat/reconnaissance/airborne" orbat-app6="s*gpucra--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.5"/>
+			<app6-translation nature-app6="combat/reconnaissance/mountain" orbat-app6="s*gpucro--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.6"/>
+			<app6-translation nature-app6="combat/reconnaissance/light" orbat-app6="s*gpucrl--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.7"/>
+			<app6-translation nature-app6="combat/reconnaissance/marine" orbat-app6="s*gpucrr--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.8"/>
+			<app6-translation nature-app6="combat/reconnaissance/marine/division" orbat-app6="s*gpucrrd-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.8.1"/>
+			<app6-translation nature-app6="combat/reconnaissance/marine/force" orbat-app6="s*gpucrrf-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.8.2"/>
+			<app6-translation nature-app6="combat/reconnaissance/marine/light armored reconnaissance" orbat-app6="s*gpucrrl-*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.8.3"/>
+			<app6-translation nature-app6="combat/reconnaissance/long range surveillance" orbat-app6="s*gpucrx--*****" symbole-reco="1.X.3.1.1.8" app6-symbol="1.X.3.1.1.8.9"/>
+			<app6-translation nature-app6="combat/missile" orbat-app6="s*gpucm---*****" symbole-reco="1.X.3.1.1.9" app6-symbol="1.X.3.1.1.9"/>
+			<app6-translation nature-app6="combat/missile/tactical" orbat-app6="s*gpucmt--*****" symbole-reco="1.X.3.1.1.9" app6-symbol="1.X.3.1.1.9.1"/>
+			<app6-translation nature-app6="combat/missile/strategic" orbat-app6="s*gpucms--*****" symbole-reco="1.X.3.1.1.9" app6-symbol="1.X.3.1.1.9.2"/>
+			<app6-translation nature-app6="combat/internal security forces" orbat-app6="s*gpucs---*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10"/>
+			<app6-translation nature-app6="combat/internal security forces/riverine" orbat-app6="s*gpucsw--*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.1"/>
+			<app6-translation nature-app6="combat/internal security forces/ground" orbat-app6="s*gpucsg--*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.2"/>
+			<app6-translation nature-app6="combat/internal security forces/ground/dismounted" orbat-app6="s*gpucsgd-*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.2.1"/>
+			<app6-translation nature-app6="combat/internal security forces/ground/motorized" orbat-app6="s*gpucsgm-*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.2.2"/>
+			<app6-translation nature-app6="combat/internal security forces/ground/mechanized" orbat-app6="s*gpucsga-*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.2.3"/>
+			<app6-translation nature-app6="combat/internal security forces/wheeled mechanized" orbat-app6="s*gpucsm--*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.3"/>
+			<app6-translation nature-app6="combat/internal security forces/railroad" orbat-app6="s*gpucsr--*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.4"/>
+			<app6-translation nature-app6="combat/internal security forces/aviation" orbat-app6="s*gpucsa--*****" symbole-reco="1.X.3.1.1.10" app6-symbol="1.X.3.1.1.10.5"/>
+			<app6-translation nature-app6="combat support" orbat-app6="s*gpuu----*****" symbole-reco="1.X.3.1.2" app6-symbol="1.X.3.1.2"/>
+			<app6-translation nature-app6="combat support/nbc" orbat-app6="s*gpuua---*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1"/>
+			<app6-translation nature-app6="combat support/nbc/chemical" orbat-app6="s*gpuuac--*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/smoke decon" orbat-app6="s*gpuuacc-*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.1"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/smoke decon/mechanized" orbat-app6="s*gpuuacck*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.1.1"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/smoke decon/motorized" orbat-app6="s*gpuuaccm*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.1.2"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/smoke" orbat-app6="s*gpuuacs-*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.2"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/smoke/motorized" orbat-app6="s*gpuuacsm*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.2.1"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/smoke/armor" orbat-app6="s*gpuuacsa*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.2.2"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/recon" orbat-app6="s*gpuuacr-*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.3"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/recon/wheeled armored vehicle" orbat-app6="s*gpuuacrw*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.3.1"/>
+			<app6-translation nature-app6="combat support/nbc/chemical/recon/wheeled armored vehicle surveillance" orbat-app6="s*gpuuacrs*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.1.3.2"/>
+			<app6-translation nature-app6="combat support/nbc/nuclear" orbat-app6="s*gpuuan--*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.2"/>
+			<app6-translation nature-app6="combat support/nbc/biological" orbat-app6="s*gpuuab--*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.3"/>
+			<app6-translation nature-app6="combat support/nbc/biological/recon equipped" orbat-app6="s*gpuuabr-*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.3.1"/>
+			<app6-translation nature-app6="combat support/nbc/decontamination" orbat-app6="s*gpuuad--*****" symbole-reco="1.X.3.1.2.1" app6-symbol="1.X.3.1.2.1.4"/>
+			<app6-translation nature-app6="combat support/military intelligence" orbat-app6="s*gpuum---*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2"/>
+			<app6-translation nature-app6="combat support/military intelligence/aerial exploitation" orbat-app6="s*gpuuma--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.1"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence" orbat-app6="s*gpuums--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare" orbat-app6="s*gpuumse-*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/armored wheeled vehicle" orbat-app6="s*gpuumsea*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1.1"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding" orbat-app6="s*gpuumsed*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1.2"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/intercept" orbat-app6="s*gpuumsei*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1.3"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/jamming" orbat-app6="s*gpuumsej*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1.4"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/theater" orbat-app6="s*gpuumset*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1.5"/>
+			<app6-translation nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/corps" orbat-app6="s*gpuumsec*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.2.1.6"/>
+			<app6-translation nature-app6="combat support/military intelligence/counter intelligence" orbat-app6="s*gpuumc--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.3"/>
+			<app6-translation nature-app6="combat support/military intelligence/surveillance" orbat-app6="s*gpuumr--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.4"/>
+			<app6-translation nature-app6="combat support/military intelligence/surveillance/ground surveillance radar" orbat-app6="s*gpuumrg-*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.4.1"/>
+			<app6-translation nature-app6="combat support/military intelligence/surveillance/sensor" orbat-app6="s*gpuumrs-*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.4.2"/>
+			<app6-translation nature-app6="combat support/military intelligence/surveillance/sensor/scm" orbat-app6="s*gpuumrss*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.4.2.1"/>
+			<app6-translation nature-app6="combat support/military intelligence/surveillance/ground station module" orbat-app6="s*gpuumrx-*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.4.3"/>
+			<app6-translation nature-app6="combat support/military intelligence/surveillance/meteorological" orbat-app6="s*gpuumro-*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.4.4"/>
+			<app6-translation nature-app6="combat support/military intelligence/operations" orbat-app6="s*gpuumo--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.5"/>
+			<app6-translation nature-app6="combat support/military intelligence/tactical exploit" orbat-app6="s*gpuumt--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.6"/>
+			<app6-translation nature-app6="combat support/military intelligence/interrogation" orbat-app6="s*gpuumq--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.7"/>
+			<app6-translation nature-app6="combat support/military intelligence/joint intelligence center" orbat-app6="s*gpuumj--*****" symbole-reco="1.X.3.1.2.2" app6-symbol="1.X.3.1.2.2.8"/>
+			<app6-translation nature-app6="combat support/law enforcement unit" orbat-app6="s*gpuul---*****" symbole-reco="1.X.3.1.2.3" app6-symbol="1.X.3.1.2.3"/>
+			<app6-translation nature-app6="combat support/law enforcement unit/shore patrol" orbat-app6="s*gpuuls--*****" symbole-reco="1.X.3.1.2.3" app6-symbol="1.X.3.1.2.3.1"/>
+			<app6-translation nature-app6="combat support/law enforcement unit/military police" orbat-app6="s*gpuulm--*****" symbole-reco="1.X.3.1.2.3" app6-symbol="1.X.3.1.2.3.2"/>
+			<app6-translation nature-app6="combat support/law enforcement unit/civilian law enforcement" orbat-app6="s*gpuulc--*****" symbole-reco="1.X.3.1.2.3" app6-symbol="1.X.3.1.2.3.3"/>
+			<app6-translation nature-app6="combat support/law enforcement unit/security police" orbat-app6="s*gpuulf--*****" symbole-reco="1.X.3.1.2.3" app6-symbol="1.X.3.1.2.3.4"/>
+			<app6-translation nature-app6="combat support/law enforcement unit/central intelligence division" orbat-app6="s*gpuuld--*****" symbole-reco="1.X.3.1.2.3" app6-symbol="1.X.3.1.2.3.5"/>
+			<app6-translation nature-app6="combat support/signal unit" orbat-app6="s*gpuus---*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4"/>
+			<app6-translation nature-app6="combat support/signal unit/area" orbat-app6="s*gpuusa--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.1"/>
+			<app6-translation nature-app6="combat support/signal unit/communication configured package" orbat-app6="s*gpuusc--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.2"/>
+			<app6-translation nature-app6="combat support/signal unit/communication configured package/large communication configured package" orbat-app6="s*gpuuscl-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.2.1"/>
+			<app6-translation nature-app6="combat support/signal unit/command operations" orbat-app6="s*gpuuso--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.3"/>
+			<app6-translation nature-app6="combat support/signal unit/forward communications" orbat-app6="s*gpuusf--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.4"/>
+			<app6-translation nature-app6="combat support/signal unit/multiple subscriber element" orbat-app6="s*gpuusm--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.5"/>
+			<app6-translation nature-app6="combat support/signal unit/multiple subscriber element/small extension node" orbat-app6="s*gpuusms-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.5.1"/>
+			<app6-translation nature-app6="combat support/signal unit/multiple subscriber element/large extension node" orbat-app6="s*gpuusml-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.5.2"/>
+			<app6-translation nature-app6="combat support/signal unit/multiple subscriber element/node center" orbat-app6="s*gpuusmn-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.5.3"/>
+			<app6-translation nature-app6="combat support/signal unit/radio unit" orbat-app6="s*gpuusr--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.6"/>
+			<app6-translation nature-app6="combat support/signal unit/radio unit/tactical satellite" orbat-app6="s*gpuusrs-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.6.1"/>
+			<app6-translation nature-app6="combat support/signal unit/radio unit/teletype center" orbat-app6="s*gpuusrt-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.6.2"/>
+			<app6-translation nature-app6="combat support/signal unit/radio unit/relay" orbat-app6="s*gpuusrw-*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.6.3"/>
+			<app6-translation nature-app6="combat support/signal unit/signal support" orbat-app6="s*gpuuss--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.7"/>
+			<app6-translation nature-app6="combat support/signal unit/telephone switch" orbat-app6="s*gpuusw--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.8"/>
+			<app6-translation nature-app6="combat support/signal unit/electronic ranging" orbat-app6="s*gpuusx--*****" symbole-reco="1.X.3.1.2.4" app6-symbol="1.X.3.1.2.4.9"/>
+			<app6-translation nature-app6="combat support/information warfare unit" orbat-app6="s*gpuui---*****" symbole-reco="1.X.3.1.2.5" app6-symbol="1.X.3.1.2.5"/>
+			<app6-translation nature-app6="combat support/landing support" orbat-app6="s*gpuup---*****" symbole-reco="1.X.3.1.2.6" app6-symbol="1.X.3.1.2.6"/>
+			<app6-translation nature-app6="combat support/explosive ordinance disposal" orbat-app6="s*gpuue---*****" symbole-reco="1.X.3.1.2.7" app6-symbol="1.X.3.1.2.7"/>
+			<app6-translation nature-app6="combat service support" orbat-app6="s*gpus----*****" symbole-reco="1.X.3.1.3" app6-symbol="1.X.3.1.3"/>
+			<app6-translation nature-app6="combat service support/administrative" orbat-app6="s*gpusa---*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1"/>
+			<app6-translation nature-app6="combat service support/administrative/theater" orbat-app6="s*gpusat--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.1"/>
+			<app6-translation nature-app6="combat service support/administrative/corps" orbat-app6="s*gpusac--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.2"/>
+			<app6-translation nature-app6="combat service support/administrative/judge advocate general" orbat-app6="s*gpusaj--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.3"/>
+			<app6-translation nature-app6="combat service support/administrative/judge advocate general/theater" orbat-app6="s*gpusajt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.3.1"/>
+			<app6-translation nature-app6="combat service support/administrative/judge advocate general/corps" orbat-app6="s*gpusajc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.3.2"/>
+			<app6-translation nature-app6="combat service support/administrative/postal" orbat-app6="s*gpusao--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.4"/>
+			<app6-translation nature-app6="combat service support/administrative/postal/theater" orbat-app6="s*gpusaot-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.4.1"/>
+			<app6-translation nature-app6="combat service support/administrative/postal/corps" orbat-app6="s*gpusaoc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.4.2"/>
+			<app6-translation nature-app6="combat service support/administrative/finance" orbat-app6="s*gpusaf--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.5"/>
+			<app6-translation nature-app6="combat service support/administrative/finance/theater" orbat-app6="s*gpusaft-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.5.1"/>
+			<app6-translation nature-app6="combat service support/administrative/finance/corps" orbat-app6="s*gpusafc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.5.2"/>
+			<app6-translation nature-app6="combat service support/administrative/personnel services" orbat-app6="s*gpusas--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.6"/>
+			<app6-translation nature-app6="combat service support/administrative/personnel services/theater" orbat-app6="s*gpusast-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.6.1"/>
+			<app6-translation nature-app6="combat service support/administrative/personnel services/corps" orbat-app6="s*gpusasc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.6.2"/>
+			<app6-translation nature-app6="combat service support/administrative/mortuary graves registry" orbat-app6="s*gpusam--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.7"/>
+			<app6-translation nature-app6="combat service support/administrative/mortuary graves registry/theater" orbat-app6="s*gpusamt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.7.1"/>
+			<app6-translation nature-app6="combat service support/administrative/mortuary graves registry/corps" orbat-app6="s*gpusamc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.7.2"/>
+			<app6-translation nature-app6="combat service support/administrative/religious chaplain" orbat-app6="s*gpusar--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.8"/>
+			<app6-translation nature-app6="combat service support/administrative/religious chaplain/theater" orbat-app6="s*gpusart-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.8.1"/>
+			<app6-translation nature-app6="combat service support/administrative/religious chaplain/corps" orbat-app6="s*gpusarc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.8.2"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs" orbat-app6="s*gpusap--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/theater" orbat-app6="s*gpusapt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.1"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/corps" orbat-app6="s*gpusapc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.2"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/broadcast" orbat-app6="s*gpusapb-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.3"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/broadcast/theater" orbat-app6="s*gpusapbt*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.3.1"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/broadcast/corps" orbat-app6="s*gpusapbc*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.3.2"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/joint information bureau" orbat-app6="s*gpusapb-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.4"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/joint information bureau/theater" orbat-app6="s*gpusapbt*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.4.1"/>
+			<app6-translation nature-app6="combat service support/administrative/public affairs/joint information bureau/corps" orbat-app6="s*gpusapbc*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.9.4.2"/>
+			<app6-translation nature-app6="combat service support/administrative/replacement holding unit" orbat-app6="s*gpusax--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.10"/>
+			<app6-translation nature-app6="combat service support/administrative/replacement holding unit/theater" orbat-app6="s*gpusaxt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.10.1"/>
+			<app6-translation nature-app6="combat service support/administrative/replacement holding unit/corps" orbat-app6="s*gpusaxc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.10.2"/>
+			<app6-translation nature-app6="combat service support/administrative/labor" orbat-app6="s*gpusal--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.11"/>
+			<app6-translation nature-app6="combat service support/administrative/labor/theater" orbat-app6="s*gpusalt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.11.1"/>
+			<app6-translation nature-app6="combat service support/administrative/labor/corps" orbat-app6="s*gpusalc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.11.2"/>
+			<app6-translation nature-app6="combat service support/administrative/morale welfare recreation" orbat-app6="s*gpusaw--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.12"/>
+			<app6-translation nature-app6="combat service support/administrative/morale welfare recreation/theater" orbat-app6="s*gpusawt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.12.1"/>
+			<app6-translation nature-app6="combat service support/administrative/morale welfare recreation/corps" orbat-app6="s*gpusawc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.12.2"/>
+			<app6-translation nature-app6="combat service support/administrative/quartermaster" orbat-app6="s*gpusaq--*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.13"/>
+			<app6-translation nature-app6="combat service support/administrative/quartermaster/theater" orbat-app6="s*gpusaqt-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.13.1"/>
+			<app6-translation nature-app6="combat service support/administrative/quartermaster/corps" orbat-app6="s*gpusaqc-*****" symbole-reco="1.X.3.1.3.1" app6-symbol="1.X.3.1.3.1.13.2"/>
+			<app6-translation nature-app6="combat service support/medical" orbat-app6="s*gpusm---*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2"/>
+			<app6-translation nature-app6="combat service support/medical/theater" orbat-app6="s*gpusmt--*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.1"/>
+			<app6-translation nature-app6="combat service support/medical/corps" orbat-app6="s*gpusmc--*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.2"/>
+			<app6-translation nature-app6="combat service support/medical/medical treatment facility" orbat-app6="s*gpusmm--*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.3"/>
+			<app6-translation nature-app6="combat service support/medical/medical treatment facility/theater" orbat-app6="s*gpusmmt-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.3.1"/>
+			<app6-translation nature-app6="combat service support/medical/medical treatment facility/corps" orbat-app6="s*gpusmmc-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.3.2"/>
+			<app6-translation nature-app6="combat service support/medical/veterinary" orbat-app6="s*gpusmv--*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.4"/>
+			<app6-translation nature-app6="combat service support/medical/veterinary/theater" orbat-app6="s*gpusmvt-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.4.1"/>
+			<app6-translation nature-app6="combat service support/medical/veterinary/corps" orbat-app6="s*gpusmvc-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.4.2"/>
+			<app6-translation nature-app6="combat service support/medical/dental" orbat-app6="s*gpusmd--*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.5"/>
+			<app6-translation nature-app6="combat service support/medical/dental/theater" orbat-app6="s*gpusmdt-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.5.1"/>
+			<app6-translation nature-app6="combat service support/medical/dental/corps" orbat-app6="s*gpusmdc-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.5.2"/>
+			<app6-translation nature-app6="combat service support/medical/psychological" orbat-app6="s*gpusmp--*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.6"/>
+			<app6-translation nature-app6="combat service support/medical/psychological/theater" orbat-app6="s*gpusmpt-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.6.1"/>
+			<app6-translation nature-app6="combat service support/medical/psychological/corps" orbat-app6="s*gpusmpc-*****" symbole-reco="1.X.3.1.3.2" app6-symbol="1.X.3.1.3.2.6.2"/>
+			<app6-translation nature-app6="combat service support/supply" orbat-app6="s*gpuss---*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3"/>
+			<app6-translation nature-app6="combat service support/supply/theater" orbat-app6="s*gpusst--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.1"/>
+			<app6-translation nature-app6="combat service support/supply/corps" orbat-app6="s*gpussc--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.2"/>
+			<app6-translation nature-app6="combat service support/supply/class i" orbat-app6="s*gpuss1--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.3"/>
+			<app6-translation nature-app6="combat service support/supply/class i/theater" orbat-app6="s*gpuss1t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.3.1"/>
+			<app6-translation nature-app6="combat service support/supply/class i/corps" orbat-app6="s*gpuss1c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.3.2"/>
+			<app6-translation nature-app6="combat service support/supply/class ii" orbat-app6="s*gpuss2--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.4"/>
+			<app6-translation nature-app6="combat service support/supply/class ii/theater" orbat-app6="s*gpuss2t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.4.1"/>
+			<app6-translation nature-app6="combat service support/supply/class ii/corps" orbat-app6="s*gpuss2c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.4.2"/>
+			<app6-translation nature-app6="combat service support/supply/class iii" orbat-app6="s*gpuss3--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.5"/>
+			<app6-translation nature-app6="combat service support/supply/class iii/theater" orbat-app6="s*gpuss3t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.5.1"/>
+			<app6-translation nature-app6="combat service support/supply/class iii/corps" orbat-app6="s*gpuss3c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.5.2"/>
+			<app6-translation nature-app6="combat service support/supply/class iii/aviation" orbat-app6="s*gpuss3a-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.5.3"/>
+			<app6-translation nature-app6="combat service support/supply/class iii/aviation/theater" orbat-app6="s*gpuss3at*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.5.3.1"/>
+			<app6-translation nature-app6="combat service support/supply/class iii/aviation/corps" orbat-app6="s*gpuss3ac*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.5.3.2"/>
+			<app6-translation nature-app6="combat service support/supply/class iv" orbat-app6="s*gpuss4--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.6"/>
+			<app6-translation nature-app6="combat service support/supply/class iv/theater" orbat-app6="s*gpuss4t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.6.1"/>
+			<app6-translation nature-app6="combat service support/supply/class iv/corps" orbat-app6="s*gpuss4c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.6.2"/>
+			<app6-translation nature-app6="combat service support/supply/class v" orbat-app6="s*gpuss5--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.7"/>
+			<app6-translation nature-app6="combat service support/supply/class v/theater" orbat-app6="s*gpuss5t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.7.1"/>
+			<app6-translation nature-app6="combat service support/supply/class v/corps" orbat-app6="s*gpuss5c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.7.2"/>
+			<app6-translation nature-app6="combat service support/supply/class vi" orbat-app6="s*gpuss6--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.8"/>
+			<app6-translation nature-app6="combat service support/supply/class vi/theater" orbat-app6="s*gpuss6t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.8.1"/>
+			<app6-translation nature-app6="combat service support/supply/class vi/corps" orbat-app6="s*gpuss6c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.8.2"/>
+			<app6-translation nature-app6="combat service support/supply/class vii" orbat-app6="s*gpuss7--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.9"/>
+			<app6-translation nature-app6="combat service support/supply/class vii/theater" orbat-app6="s*gpuss7t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.9.1"/>
+			<app6-translation nature-app6="combat service support/supply/class vii/corps" orbat-app6="s*gpuss7c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.9.2"/>
+			<app6-translation nature-app6="combat service support/supply/class viii" orbat-app6="s*gpuss8--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.10"/>
+			<app6-translation nature-app6="combat service support/supply/class viii/theater" orbat-app6="s*gpuss8t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.10.1"/>
+			<app6-translation nature-app6="combat service support/supply/class viii/corps" orbat-app6="s*gpuss8c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.10.2"/>
+			<app6-translation nature-app6="combat service support/supply/class ix" orbat-app6="s*gpuss9--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.11"/>
+			<app6-translation nature-app6="combat service support/supply/class ix/theater" orbat-app6="s*gpuss9t-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.11.1"/>
+			<app6-translation nature-app6="combat service support/supply/class ix/corps" orbat-app6="s*gpuss9c-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.11.2"/>
+			<app6-translation nature-app6="combat service support/supply/class x" orbat-app6="s*gpussx--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.12"/>
+			<app6-translation nature-app6="combat service support/supply/class x/theater" orbat-app6="s*gpussxt-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.12.1"/>
+			<app6-translation nature-app6="combat service support/supply/class x/corps" orbat-app6="s*gpussxc-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.12.2"/>
+			<app6-translation nature-app6="combat service support/supply/laundry bath" orbat-app6="s*gpussl--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.13"/>
+			<app6-translation nature-app6="combat service support/supply/laundry bath/theater" orbat-app6="s*gpusslt-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.13.1"/>
+			<app6-translation nature-app6="combat service support/supply/laundry bath/corps" orbat-app6="s*gpusslc-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.13.2"/>
+			<app6-translation nature-app6="combat service support/supply/water" orbat-app6="s*gpussw--*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.14"/>
+			<app6-translation nature-app6="combat service support/supply/water/theater" orbat-app6="s*gpusswt-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.14.1"/>
+			<app6-translation nature-app6="combat service support/supply/water/corps" orbat-app6="s*gpusswc-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.14.2"/>
+			<app6-translation nature-app6="combat service support/supply/water/purification" orbat-app6="s*gpusswp-*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.14.3"/>
+			<app6-translation nature-app6="combat service support/supply/water/purification/theater" orbat-app6="s*gpusswpt*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.14.3.1"/>
+			<app6-translation nature-app6="combat service support/supply/water/purification/corps" orbat-app6="s*gpusswpc*****" symbole-reco="1.X.3.1.3.3" app6-symbol="1.X.3.1.3.3.14.3.2"/>
+			<app6-translation nature-app6="combat service support/transportation" orbat-app6="s*gpust---*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4"/>
+			<app6-translation nature-app6="combat service support/transportation/theater" orbat-app6="s*gpustt--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.1"/>
+			<app6-translation nature-app6="combat service support/transportation/corps" orbat-app6="s*gpustc--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.2"/>
+			<app6-translation nature-app6="combat service support/transportation/movement control center" orbat-app6="s*gpustm--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.3"/>
+			<app6-translation nature-app6="combat service support/transportation/movement control center/theater" orbat-app6="s*gpustmt-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.3.1"/>
+			<app6-translation nature-app6="combat service support/transportation/movement control center/corps" orbat-app6="s*gpustmc-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.3.2"/>
+			<app6-translation nature-app6="combat service support/transportation/railhead" orbat-app6="s*gpustr--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.4"/>
+			<app6-translation nature-app6="combat service support/transportation/railhead/theater" orbat-app6="s*gpustrt-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.4.1"/>
+			<app6-translation nature-app6="combat service support/transportation/railhead/corps" orbat-app6="s*gpustrc-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.4.2"/>
+			<app6-translation nature-app6="combat service support/transportation/spod spoe" orbat-app6="s*gpusts--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.5"/>
+			<app6-translation nature-app6="combat service support/transportation/spod spoe/theater" orbat-app6="s*gpustst-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.5.1"/>
+			<app6-translation nature-app6="combat service support/transportation/spod spoe/corps" orbat-app6="s*gpustsc-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.5.2"/>
+			<app6-translation nature-app6="combat service support/transportation/apod apoe" orbat-app6="s*gpusta--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.6"/>
+			<app6-translation nature-app6="combat service support/transportation/apod apoe/theater" orbat-app6="s*gpustat-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.6.1"/>
+			<app6-translation nature-app6="combat service support/transportation/apod apoe/corps" orbat-app6="s*gpustac-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.6.2"/>
+			<app6-translation nature-app6="combat service support/transportation/missile" orbat-app6="s*gpusti--*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.7"/>
+			<app6-translation nature-app6="combat service support/transportation/missile/theater" orbat-app6="s*gpustit-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.7.1"/>
+			<app6-translation nature-app6="combat service support/transportation/missile/corps" orbat-app6="s*gpustic-*****" symbole-reco="1.X.3.1.3.4" app6-symbol="1.X.3.1.3.4.7.2"/>
+			<app6-translation nature-app6="combat service support/maintenance" orbat-app6="s*gpusx---*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5"/>
+			<app6-translation nature-app6="combat service support/maintenance/theater" orbat-app6="s*gpusxt--*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.1"/>
+			<app6-translation nature-app6="combat service support/maintenance/corps" orbat-app6="s*gpusxc--*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.2"/>
+			<app6-translation nature-app6="combat service support/maintenance/heavy" orbat-app6="s*gpusxh--*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.3"/>
+			<app6-translation nature-app6="combat service support/maintenance/heavy/theater" orbat-app6="s*gpusxht-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.3.1"/>
+			<app6-translation nature-app6="combat service support/maintenance/heavy/corps" orbat-app6="s*gpusxhc-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.3.2"/>
+			<app6-translation nature-app6="combat service support/maintenance/recovery" orbat-app6="s*gpusxr--*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.4"/>
+			<app6-translation nature-app6="combat service support/maintenance/recovery/theater" orbat-app6="s*gpusxrt-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.4.1"/>
+			<app6-translation nature-app6="combat service support/maintenance/recovery/corps" orbat-app6="s*gpusxrc-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.4.2"/>
+			<app6-translation nature-app6="combat service support/maintenance/ordnance" orbat-app6="s*gpusxo--*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.5"/>
+			<app6-translation nature-app6="combat service support/maintenance/ordnance/theater" orbat-app6="s*gpusxot-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.5.1"/>
+			<app6-translation nature-app6="combat service support/maintenance/ordnance/corps" orbat-app6="s*gpusxoc-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.5.2"/>
+			<app6-translation nature-app6="combat service support/maintenance/ordnance/missile" orbat-app6="s*gpusxom-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.5.3"/>
+			<app6-translation nature-app6="combat service support/maintenance/ordnance/missile/theater" orbat-app6="s*gpusxomt*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.5.3.1"/>
+			<app6-translation nature-app6="combat service support/maintenance/ordnance/missile/corps" orbat-app6="s*gpusxomc*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.5.3.2"/>
+			<app6-translation nature-app6="combat service support/maintenance/electro-optical" orbat-app6="s*gpusxe--*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.6"/>
+			<app6-translation nature-app6="combat service support/maintenance/electro-optical/theater" orbat-app6="s*gpusxet-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.6.1"/>
+			<app6-translation nature-app6="combat service support/maintenance/electro-optical/corps" orbat-app6="s*gpusxec-*****" symbole-reco="1.X.3.1.3.5" app6-symbol="1.X.3.1.3.5.6.2"/>
+			<app6-translation nature-app6="combat service support/traffic control" orbat-app6="s*gpusz---*****" symbole-reco="1.X.3.1.3" app6-symbol="1.X.3.1.3.7"/>
+			<app6-translation nature-app6="special c2 headquarters component" orbat-app6="s*gpuh----*****" symbole-reco="1.X.3.1.4" app6-symbol="1.X.3.1.4"/>
+			<app6-translation nature-app6="special operation forces/unit ground/military intelligence" orbat-app6="s*gpujpb--*****" symbole-reco="1.X.6.3.5" app6-symbol="1.X.6.3.5"/>
+			<app6-translation nature-app6="mootw" orbat-app6="s*gpum----*****" symbole-reco="2.X.3.4.1" app6-symbol="2.X.3.4.1"/>
+			<app6-translation nature-app6="mootw/refugees" orbat-app6="s*gpumr---*****" symbole-reco="2.X.3.4.1" app6-symbol="2.X.3.4.1.1"/>
+			<app6-translation nature-app6="mootw/ong" orbat-app6="s*gpumo---*****" symbole-reco="2.X.3.4.1" app6-symbol="2.X.3.4.1.2"/>
+			<app6-translation nature-app6="mootw/individual" orbat-app6="s*gpumi---*****" symbole-reco="2.X.3.4.1" app6-symbol="2.X.3.4.1.3"/>
+		</app6-translations>
+		<mission-translations>
+			<!-- Sample to be continued -->
+			<mission-translation symbol="G*MPOS----****X" id-symbol="IdAppuyer_Poly-ligne"/>
+			<mission-translation symbol="IdAppuyer_Poly-ligne" id-symbol="IdAppuyer_Poly-ligne"/>
+			<mission-translation symbol="IdAttaquer_Poly-ligne" id-symbol="IdAttaquer_Poly-ligne"/>
+			<mission-translation symbol="Id_Point" id-symbol="Id_Point"/>
+			<mission-translation symbol="IdControler_Point" id-symbol="IdControler_Point"/>
+			<mission-translation symbol="IdCouvrir_Point" id-symbol="IdCouvrir_Point"/>
+			<mission-translation symbol="IdSurveiller_Point" id-symbol="IdSurveiller_Point"/>
+			<mission-translation symbol="IdInterdire_Point" id-symbol="IdInterdire_Point"/>
+			<mission-translation symbol="Id_Poly-ligne" id-symbol="Id_Poly-ligne"/>
+			<mission-translation symbol="IdFleche_Poly-ligne" id-symbol="IdFleche_Poly-ligne"/>
+			<mission-translation symbol="IdContreAttaquer_Poly-ligne" id-symbol="IdContreAttaquer_Poly-ligne"/>
+			<mission-translation symbol="IdPPContact_Poly-ligne" id-symbol="IdPPContact_Poly-ligne"/>
+			<mission-translation symbol="IdBarrer_Poly-ligne" id-symbol="IdBarrer_Poly-ligne"/>
+			<mission-translation symbol="IdDefUsure_Poly-ligne" id-symbol="IdDefUsure_Poly-ligne"/>
+			<mission-translation symbol="IdEclairer_Poly-ligne" id-symbol="IdEclairer_Poly-ligne"/>
+			<mission-translation symbol="IdRaid_Poly-ligne" id-symbol="IdRaid_Poly-ligne"/>
+			<mission-translation symbol="IdFixer_Poly-ligne" id-symbol="IdFixer_Poly-ligne"/>
+			<mission-translation symbol="IdFreiner_Poly-ligne" id-symbol="IdFreiner_Poly-ligne"/>
+			<mission-translation symbol="IdJalonner_Poly-ligne" id-symbol="IdJalonner_Poly-ligne"/>
+			<mission-translation symbol="IdReconnaitre_Poly-ligne" id-symbol="IdReconnaitre_Poly-ligne"/>
+			<mission-translation symbol="IdRelever_Poly-ligne" id-symbol="IdRelever_Poly-ligne"/>
+			<mission-translation symbol="IdRenseigner_Poly-ligne" id-symbol="IdRenseigner_Poly-ligne"/>
+			<mission-translation symbol="IdSoutenir_Poly-ligne" id-symbol="IdSoutenir_Poly-ligne"/>
+			<mission-translation symbol="IdDefendre_Poly-ligne" id-symbol="IdDefendre_Poly-ligne"/>
+			<mission-translation symbol="Id_Polygone" id-symbol="Id_Polygone"/>
+			<mission-translation symbol="IdControler_Polygone" id-symbol="IdControler_Polygone"/>
+			<mission-translation symbol="IdSurveiller_Polygone" id-symbol="IdSurveiller_Polygone"/>
+			<mission-translation symbol="IdDetruire_Polygone" id-symbol="IdDetruire_Polygone"/>
+			<mission-translation symbol="IdDefendre_Polygone" id-symbol="IdDefendre_Polygone"/>
+			<mission-translation symbol="Id_Cercle" id-symbol="Id_Cercle"/>
+			<mission-translation symbol="Id_Ellipse" id-symbol="Id_Ellipse"/>
+		</mission-translations>
+		<mission-location-algos>
+			<!-- source="Point unité exécutante - Aucun paramètres" -->
+			<!-- usage="C'est l'algo utilisé pour les localisation de type point -->
+			<mission-location-algo id-algo="IdExec_Point"/>
+			<!--source="Point unité exécutante vers point qui est le barycentre de la ou des cibles (unité, connaissance, AT, objet graphique ...)"/-->
+			<!-- usage="C'est l'algo utilisé pour autres localisation si la mission a un attribut anchor end -->
+			<mission-location-algo id-algo="IdExec_Poly-ligne">
+				<needed-anchor anchor="end"/>
+			</mission-location-algo>
+			<!--source="Point unité exécutante vers fin du fuseau (2 limites passées en paramètre)"/-->
+			<!-- usage="C'est l'algo utilisé par défaut -->
+			<mission-location-algo id-algo="IdLimiteGD_Poly-ligne"/>
+		</mission-location-algos>
+		<reports>
+			<report id="168" message="premier coup parti" edt-special-function="FirstFireStarted"/>
+			<report id="169" message="tir execute" edt-special-function="ExecutedFire"/>
+			<report id="170" message="tir hors de portee" edt-special-function="OutOfRangeFire"/>
+			<report id="171" message="tir impossible plus de munitions" edt-special-function="NoAmoLeftFire"/>
+			<report id="172" message="tir annule" edt-special-function="CanceledFire"/>
+			<report id="177" message="observation tir indirect id tir : %1" edt-special-function="IndirectFireObservation"/>
+			<report id="12" message="fin mission" edt-special-function="MissionEndAlert"/>
+			<report id="36" message="pris a partie par tir direct" edt-special-function="FiredAlert"/>
+			<report id="37" message="pris sous tir artillerie" edt-special-function="FiredAlert"/>
+			<report id="226" message="prise a partie par population" edt-special-function="FiredAlert"/>
+			<report id="250" message="agression par population" edt-special-function="FiredAlert"/>
+			<report id="148" message="contamine nbc" edt-special-function="NBCAlert"/>
+			<report id="152" message="alerte nbc niveau4" edt-special-function="NBCAlert"/>
+			<report id="225" message="population detectee" edt-special-function="CrowAlert"/>
+			<report id="249" message="agression de population" edt-special-function="CrowAlert"/>
+		</reports>
+	</ReferentielEDT>
+	<ReferentielSIC>
+		<equipments>
+			<equipment name="Char AUF1" IdLanceur_ATLAS="8"/>
+			<equipment name="120 RTF1" IdLanceur_ATLAS="19"/>
+			<equipment name="CAESAR 155" IdLanceur_ATLAS="21"/>
+			<equipment name="Canon TRF1" IdLanceur_ATLAS="23"/>
+			<equipment name="BREM 1" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="MAZ 537" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="TRM 700 100" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="Kraz 255B-atelier" CategorieMoyenEvacuation="EVACLEG"/>
+			<equipment name="Lot 7" CategorieMoyenEvacuation="EVACLEG"/>
+			<equipment name="X30 DEPANNAGE AP M1" CategorieMoyenEvacuation="EVACMOY"/>
+			<equipment name="XL DEPAN VERS AF A1" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="TRM 10000 CLD" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="TBU15 CLD" CategorieMoyenEvacuation="EVACLEG"/>
+			<equipment name="Kraz 255B-citerne" CategorieMoyenEvacuation="EVACLEG"/>
+			<equipment name="MAZ 543" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="PEB" CategorieMoyenEvacuation="EVACLOU"/>
+			<equipment name="Eqp UMR MOB CHAR glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep EA BLD" SpecialiteReparation="ARME"/>
+			<equipment name="Eqp Rep MOB FEU BLD" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp NTI1 TCT" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep EA BLD glaise" SpecialiteReparation="ARME"/>
+			<equipment name="Eqp Rep EA BLT" SpecialiteReparation="ARME"/>
+			<equipment name="Eqp Rep MOB FEU BLT" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep MOB FEU BLD glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp UMR SOL AIR" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep EA BLT Glaise" SpecialiteReparation="ARME"/>
+			<equipment name="Eqp UMR TCT CHAR glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep MOB FEU BLT Glaiseeq" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep BLIAT" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp NTI1 EA" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp UMR MOB LECLERC" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp UMR TCT LECLERC" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp UMR ALAT GLAISE" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp NTI1 MOB" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp NTI1 EA glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep MOB BLD glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep MOB BLT" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp NTI1 MOB glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp UMR ALAT" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep MOB BLD" SpecialiteReparation="AEB"/>
+			<equipment name="Eqp Rep MOB BLT glaise" SpecialiteReparation="AEB"/>
+			<equipment name="Champ Operatoire" EstEquipeChirugicale="true"/>
+			<equipment name="Eqp GTSA" EstEquipeChirugicale="true"/>
+			<equipment name="Eqp Triage Medical" EstSectionTriage="true"/>
+			<equipment name="VSB" PeutFaireDuRamassage="true" PeutFaireDeLaReleve="true"/>
+			<equipment name="VAB SAN" PeutFaireDuRamassage="true" PeutFaireDeLaReleve="true"/>
+			<equipment name="SA330 EVASAN" PeutFaireDuRamassage="true"/>
+			<equipment name="CELLULE SANITAIRE 2" PeutFaireDuRamassage="true" PeutFaireDeLaReleve="true"/>
+			<equipment name="Ambulance J5" PeutFaireDuRamassage="true"/>
+			<equipment name="UAZ 469 SAN" PeutFaireDuRamassage="true" PeutFaireDeLaReleve="true"/>
+			<equipment name="BRDM 2 SAN" PeutFaireDuRamassage="true" PeutFaireDeLaReleve="true"/>
+			<equipment name="MI 8 EVASAN" PeutFaireDuRamassage="true"/>
+			<!--
+			<RefSIM2NCi RefSIM-Categorie="VUT = Véhicule utilitaire" NCi-Categorie="VUT" />
+			<RefSIM2NCi RefSIM-Categorie="VTT = Véhicule blindé transport de troupes" NCi-Categorie="VTT" />
+			<RefSIM2NCi RefSIM-Categorie="VNBLIN = Véhicule non blindé" NCi-Categorie="VNBLIN" />
+			<RefSIM2NCi RefSIM-Categorie="VCIMEC = Véhicule de combat d'infanterie mécanisée" NCi-Categorie="VCIMEC" />
+			<RefSIM2NCi RefSIM-Categorie="VCD = Véhicule de Commandement" NCi-Categorie="VCD" />
+			<RefSIM2NCi RefSIM-Categorie="VATM = Véhicule avec ATM" NCi-Categorie="VATM" />
+			<RefSIM2NCi RefSIM-Categorie="RSM = Roquette à sous-munitions" NCi-Categorie="RSM" />
+			<RefSIM2NCi RefSIM-Categorie="MORT = Mortier" NCi-Categorie="MORT" />
+			<RefSIM2NCi RefSIM-Categorie="MISSS = Missile sol-sol" NCi-Categorie="MISSS" />
+			<RefSIM2NCi RefSIM-Categorie="MISSA = Missile sol-air" NCi-Categorie="MISSA" />
+			<RefSIM2NCi RefSIM-Categorie="MISGAC = Missile guidé antichar" NCi-Categorie="MISGAC" />
+			<RefSIM2NCi RefSIM-Categorie="MISAS = Missile air-sol" NCi-Categorie="MISAS" />
+			<RefSIM2NCi RefSIM-Categorie="MECA = Infanterie Mécanisée" NCi-Categorie="MECA" />
+			<RefSIM2NCi RefSIM-Categorie="HTTU = Hélicoptère de Transport" NCi-Categorie="HTTU" />
+			<RefSIM2NCi RefSIM-Categorie="HT = Hélicoptère de Transport" NCi-Categorie="HT" />
+			<RefSIM2NCi RefSIM-Categorie="HMT = Hélicoptère Moyen de Transport" NCi-Categorie="HMT" />
+			<RefSIM2NCi RefSIM-Categorie="HLT = Hélicoptère Lourd de Transport" NCi-Categorie="HLT" />
+			<RefSIM2NCi RefSIM-Categorie="HLO = Hélicoptère Léger d'observation" NCi-Categorie="HLO" />
+			<RefSIM2NCi RefSIM-Categorie="HARM = Hélicoptère Antichar/d'assaut/d'arme" NCi-Categorie="HARM" />
+			<RefSIM2NCi RefSIM-Categorie="EQFCHT = Equipement de Franchissment" NCi-Categorie="EQFCHT" />
+			<RefSIM2NCi RefSIM-Categorie="EQCHIM = Equipement Chimique" NCi-Categorie="EQCHIM" />
+			<RefSIM2NCi RefSIM-Categorie="CHALEG = Char Léger" NCi-Categorie="CHALEG" />
+			<RefSIM2NCi RefSIM-Categorie="CHABAT = Char de Bataille" NCi-Categorie="CHABAT" />
+			<RefSIM2NCi RefSIM-Categorie="CANAC = Canon Anti Char" NCi-Categorie="CANAC" />
+			<RefSIM2NCi RefSIM-Categorie="CAN = Canon" NCi-Categorie="CAN" />
+			<RefSIM2NCi RefSIM-Categorie="BLIND = Blindé" NCi-Categorie="BLIND" />
+			<RefSIM2NCi RefSIM-Categorie="AVVF = Aviation à Voilure Fixe" NCi-Categorie="AVVF" />
+			<RefSIM2NCi RefSIM-Categorie="ASA = Artillerie Sol/Air" NCi-Categorie="ASA" />
+			<RefSIM2NCi RefSIM-Categorie="ANT = Antenne" NCi-Categorie="ANT" />
+			<RefSIM2NCi RefSIM-Categorie="ALT = Aérodyne léger télépiloté" NCi-Categorie="ALT" />
+			<RefSIM2NCi RefSIM-Categorie="ACQOBJ = Acquisiton d'objectif" NCi-Categorie="ACQOBJ" />
+			<RefSIM2NCi RefSIM-Categorie="HM" NCi-Categorie="HMT" />
+			<RefSIM2NCi RefSIM-Categorie="AVION" NCi-Categorie="AVVF" />
+			<RefSIM2NCi RefSIM-Categorie="HAC" NCi-Categorie="HARM" />
+			<RefSIM2NCi RefSIM-Categorie="HR" NCi-Categorie="HLO" />
+			<RefSIM2NCi RefSIM-Categorie="HAM" NCi-Categorie="HMT" />
+			<RefSIM2NCi RefSIM-Categorie="HAH" NCi-Categorie="HARM" /> 
+			<RefSIM2NCi RefSIM-Categorie="VCI" NCi-Categorie="VCIMEC" />
+			<RefSIM2NCi RefSIM-Categorie="Char" NCi-Categorie="CHABAT" />
+			<RefSIM2NCi RefSIM-Categorie="Mortier" NCi-Categorie="MORT" />
+			<RefSIM2NCi RefSIM-Categorie="Artillerie" NCi-Categorie="CAN" />
+			<RefSIM2NCi RefSIM-Categorie="Hommes" NCi-Categorie="ARMPOR" />
+			<RefSIM2NCi RefSIM-Categorie="Armes Légères" NCi-Categorie="ARMPOR" />
+			<RefSIM2NCi RefSIM-Categorie="Matériel Franchissement" NCi-Categorie="EQFCHT" />
+			<RefSIM2NCi RefSIM-Categorie="Autres" NCi-Categorie="ARMPOR" /> -->
+			<RefSIM2NCi RefSIM-Categorie="VUT" NCi-Categorie="VUT"/>
+			<RefSIM2NCi RefSIM-Categorie="VTT" NCi-Categorie="VTT"/>
+			<RefSIM2NCi RefSIM-Categorie="VNBLIN" NCi-Categorie="VNBLIN"/>
+			<RefSIM2NCi RefSIM-Categorie="VCIMEC" NCi-Categorie="VCIMEC"/>
+			<RefSIM2NCi RefSIM-Categorie="VCD" NCi-Categorie="VCD"/>
+			<RefSIM2NCi RefSIM-Categorie="VATM" NCi-Categorie="VATM"/>
+			<RefSIM2NCi RefSIM-Categorie="RSM" NCi-Categorie="RSM"/>
+			<RefSIM2NCi RefSIM-Categorie="MORT" NCi-Categorie="MORT"/>
+			<RefSIM2NCi RefSIM-Categorie="MISSS" NCi-Categorie="MISSS"/>
+			<RefSIM2NCi RefSIM-Categorie="MISSA" NCi-Categorie="MISSA"/>
+			<RefSIM2NCi RefSIM-Categorie="MISGAC" NCi-Categorie="MISGAC"/>
+			<RefSIM2NCi RefSIM-Categorie="MISAS" NCi-Categorie="MISAS"/>
+			<RefSIM2NCi RefSIM-Categorie="MECA" NCi-Categorie="MECA"/>
+			<RefSIM2NCi RefSIM-Categorie="HTTU" NCi-Categorie="HTTU"/>
+			<RefSIM2NCi RefSIM-Categorie="HT" NCi-Categorie="HT"/>
+			<RefSIM2NCi RefSIM-Categorie="HMT" NCi-Categorie="HMT"/>
+			<RefSIM2NCi RefSIM-Categorie="HLT" NCi-Categorie="HLT"/>
+			<RefSIM2NCi RefSIM-Categorie="HLO" NCi-Categorie="HLO"/>
+			<RefSIM2NCi RefSIM-Categorie="HARM" NCi-Categorie="HARM"/>
+			<RefSIM2NCi RefSIM-Categorie="EQFCHT" NCi-Categorie="EQFCHT"/>
+			<RefSIM2NCi RefSIM-Categorie="EQCHIM" NCi-Categorie="EQCHIM"/>
+			<RefSIM2NCi RefSIM-Categorie="CHALEG" NCi-Categorie="CHALEG"/>
+			<RefSIM2NCi RefSIM-Categorie="CHABAT" NCi-Categorie="CHABAT"/>
+			<RefSIM2NCi RefSIM-Categorie="CANAC" NCi-Categorie="CANAC"/>
+			<RefSIM2NCi RefSIM-Categorie="CAN" NCi-Categorie="CAN"/>
+			<RefSIM2NCi RefSIM-Categorie="BLIND" NCi-Categorie="BLIND"/>
+			<RefSIM2NCi RefSIM-Categorie="AVVF" NCi-Categorie="AVVF"/>
+			<RefSIM2NCi RefSIM-Categorie="ASA" NCi-Categorie="ASA"/>
+			<RefSIM2NCi RefSIM-Categorie="ANT" NCi-Categorie="ANT"/>
+			<RefSIM2NCi RefSIM-Categorie="ALT" NCi-Categorie="ALT"/>
+			<RefSIM2NCi RefSIM-Categorie="ACQOBJ" NCi-Categorie="ACQOBJ"/>
+			<RefSIM2NCi RefSIM-Categorie="HM" NCi-Categorie="HMT"/>
+			<RefSIM2NCi RefSIM-Categorie="AVION" NCi-Categorie="AVVF"/>
+			<RefSIM2NCi RefSIM-Categorie="HAC" NCi-Categorie="HARM"/>
+			<RefSIM2NCi RefSIM-Categorie="HR" NCi-Categorie="HLO"/>
+			<RefSIM2NCi RefSIM-Categorie="HAM" NCi-Categorie="HMT"/>
+			<RefSIM2NCi RefSIM-Categorie="HAH" NCi-Categorie="HARM"/>
+			<RefSIM2NCi RefSIM-Categorie="VCI" NCi-Categorie="VCIMEC"/>
+			<RefSIM2NCi RefSIM-Categorie="Char" NCi-Categorie="CHABAT"/>
+			<RefSIM2NCi RefSIM-Categorie="Mortier" NCi-Categorie="MORT"/>
+			<RefSIM2NCi RefSIM-Categorie="Artillerie" NCi-Categorie="CAN"/>
+			<RefSIM2NCi RefSIM-Categorie="Hommes" NCi-Categorie="ARMPOR"/>
+			<RefSIM2NCi RefSIM-Categorie="Armes Légères" NCi-Categorie="ARMPOR"/>
+			<RefSIM2NCi RefSIM-Categorie="Matériel Franchissement" NCi-Categorie="EQFCHT"/>
+			<RefSIM2NCi RefSIM-Categorie="Autres" NCi-Categorie="ARMPOR"/>
+		</equipments>
+		<ressources>
+			<ressource name="CPLT 120 OE PRY F2">
+				<Munition_ATLAS IdMunition_ATLAS="80" IdModeleDeFusee_ATLAS="17" IdPreReglageFusee_ATLAS="3" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="1"/>
+			</ressource>
+			<ressource name="CPLT 120 OECL PRY F1">
+				<Munition_ATLAS IdMunition_ATLAS="63" IdModeleDeFusee_ATLAS="16" IdPreReglageFusee_ATLAS="1" Masse_ATLAS="40" IdTypeDeChargement_ATLAS="4"/>
+			</ressource>
+			<ressource name="CPLT 120 OFUM PH F1">
+				<Munition_ATLAS IdMunition_ATLAS="62" IdModeleDeFusee_ATLAS="3" IdPreReglageFusee_ATLAS="3" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="2"/>
+			</ressource>
+			<ressource name="CPLT FUM PH 155">
+				<Munition_ATLAS IdMunition_ATLAS="23" IdModeleDeFusee_ATLAS="7" IdPreReglageFusee_ATLAS="3" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="2"/>
+			</ressource>
+			<ressource name="O 155 F1 AC EF DR">
+				<Munition_ATLAS IdMunition_ATLAS="45" IdModeleDeFusee_ATLAS="15" IdPreReglageFusee_ATLAS="1" Masse_ATLAS="40" IdTypeDeChargement_ATLAS="7"/>
+			</ressource>
+			<ressource name="O ECL 155 F1">
+				<Munition_ATLAS IdMunition_ATLAS="24" IdModeleDeFusee_ATLAS="12" IdPreReglageFusee_ATLAS="3" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="4"/>
+			</ressource>
+			<ressource name="O GR 155 F1">
+				<Munition_ATLAS IdMunition_ATLAS="40" IdModeleDeFusee_ATLAS="15" IdPreReglageFusee_ATLAS="1" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="6"/>
+			</ressource>
+			<ressource name="OE CCR 155 MLE F1">
+				<Munition_ATLAS IdMunition_ATLAS="30" IdModeleDeFusee_ATLAS="7" IdPreReglageFusee_ATLAS="3" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="1"/>
+			</ressource>
+			<ressource name="OE JUPU 155 F2">
+				<Munition_ATLAS IdMunition_ATLAS="31" IdModeleDeFusee_ATLAS="7" IdPreReglageFusee_ATLAS="2" Masse_ATLAS="20" IdTypeDeChargement_ATLAS="1"/>
+			</ressource>
+			<ressource name="CPLT 120 EXPL F1"/>
+			<ressource name="Obus 122 ACED"/>
+			<ressource name="Obus 122 OE MPA"/>
+			<ressource name="Obus 122 OE"/>
+			<ressource name="Obus 122 OFUM"/>
+			<ressource name="Obus 130  Fum"/>
+			<ressource name="Obus 130 OE"/>
+			<ressource name="Obus 152 ACED"/>
+			<ressource name="Obus 152 FUM"/>
+			<ressource name="Obus 152 OE MPA"/>
+			<ressource name="Obus 152 OE"/>
+			<ressource name="Obus 203 OE MPA"/>
+			<ressource name="Obus 203"/>
+			<ressource name="ROQ EXPL 298 M26"/>
+			<ressource name="Roquette BM21"/>
+			<ressource name="Roquette BM22"/>
+			<ressource name="Roquette BM30"/>
+		</ressources>
+		<info-ATLAS>
+			<!-- Lanceurs -->
+			<Lanceur_ATLAS Id_ATLAS="8" Nom_ATLAS="AU F1" EtatMunition="Assemble"/>
+			<Lanceur_ATLAS Id_ATLAS="19" Nom_ATLAS="TR F1" EtatMunition="EnVrac"/>
+			<Lanceur_ATLAS Id_ATLAS="21" Nom_ATLAS="CAESAR" EtatMunition="EnVrac"/>
+			<Lanceur_ATLAS Id_ATLAS="23" Nom_ATLAS="RTF1" EtatMunition="EnVrac"/>
+			<!-- Munitions -->
+			<Munition_ATLAS Id_ATLAS="23" Nom_ATLAS="OFUMF1A"/>
+			<Munition_ATLAS Id_ATLAS="24" Nom_ATLAS="OECLF1"/>
+			<Munition_ATLAS Id_ATLAS="30" Nom_ATLAS="OEF1"/>
+			<Munition_ATLAS Id_ATLAS="31" Nom_ATLAS="OEF2"/>
+			<Munition_ATLAS Id_ATLAS="40" Nom_ATLAS="OGRF1"/>
+			<Munition_ATLAS Id_ATLAS="45" Nom_ATLAS="OACEDF1"/>
+			<Munition_ATLAS Id_ATLAS="62" Nom_ATLAS="OFUMF1M"/>
+			<Munition_ATLAS Id_ATLAS="63" Nom_ATLAS="OECLF1M"/>
+			<Munition_ATLAS Id_ATLAS="80" Nom_ATLAS="OEF2M"/>
+			<!-- Lots de poudre -->
+			<LotDePoudre_ATLAS Id_ATLAS="0" Nom_ATLAS="F3"/>
+			<LotDePoudre_ATLAS Id_ATLAS="1" Nom_ATLAS="F31"/>
+			<LotDePoudre_ATLAS Id_ATLAS="2" Nom_ATLAS="F32"/>
+			<LotDePoudre_ATLAS Id_ATLAS="3" Nom_ATLAS="F3F1A"/>
+			<LotDePoudre_ATLAS Id_ATLAS="4" Nom_ATLAS="F31F1A"/>
+			<LotDePoudre_ATLAS Id_ATLAS="5" Nom_ATLAS="F32F1A"/>
+			<LotDePoudre_ATLAS Id_ATLAS="6" Nom_ATLAS="SAP"/>
+			<LotDePoudre_ATLAS Id_ATLAS="7" Nom_ATLAS="AP"/>
+			<LotDePoudre_ATLAS Id_ATLAS="8" Nom_ATLAS="DM82"/>
+			<LotDePoudre_ATLAS Id_ATLAS="9" Nom_ATLAS="DM72"/>
+			<LotDePoudre_ATLAS Id_ATLAS="10" Nom_ATLAS="MNV"/>
+			<LotDePoudre_ATLAS Id_ATLAS="11" Nom_ATLAS="MNL"/>
+			<!-- Forces de charge -->
+			<ForceDeCharge_ATLAS Id_ATLAS="1" Nom_ATLAS="VIVE"/>
+			<ForceDeCharge_ATLAS Id_ATLAS="2" Nom_ATLAS="LENTE"/>
+			<ForceDeCharge_ATLAS Id_ATLAS="3" Nom_ATLAS="AUTRE"/>
+			<!-- Trajectoires -->
+			<Trajectoire_ATLAS Id_ATLAS="1" Nom_ATLAS="PLONGEANT"/>
+			<Trajectoire_ATLAS Id_ATLAS="2" Nom_ATLAS="VERTICAL"/>
+			<!-- ModeleDeFusee -->
+			<ModeleDeFusee_ATLAS Id_ATLAS="3" Nom_ATLAS="PDM557"/>
+			<ModeleDeFusee_ATLAS Id_ATLAS="7" Nom_ATLAS="RALECDEF3"/>
+			<ModeleDeFusee_ATLAS Id_ATLAS="12" Nom_ATLAS="DEF2"/>
+			<ModeleDeFusee_ATLAS Id_ATLAS="15" Nom_ATLAS="FUSHIA"/>
+			<ModeleDeFusee_ATLAS Id_ATLAS="16" Nom_ATLAS="RALEC120F4"/>
+			<ModeleDeFusee_ATLAS Id_ATLAS="17" Nom_ATLAS="FR55B"/>
+			<!-- Pre réglage fusée -->
+			<PreReglageFusee_ATLAS Id_ATLAS="1" Nom_ATLAS="FUS"/>
+			<PreReglageFusee_ATLAS Id_ATLAS="2" Nom_ATLAS="PROX"/>
+			<PreReglageFusee_ATLAS Id_ATLAS="3" Nom_ATLAS="INST"/>
+			<!-- TypeDeChargement -->
+			<TypeDeChargement_ATLAS Id_ATLAS="1" Nom_ATLAS="OE"/>
+			<TypeDeChargement_ATLAS Id_ATLAS="2" Nom_ATLAS="OFUM"/>
+			<TypeDeChargement_ATLAS Id_ATLAS="4" Nom_ATLAS="OECL"/>
+			<TypeDeChargement_ATLAS Id_ATLAS="6" Nom_ATLAS="OGRE"/>
+			<TypeDeChargement_ATLAS Id_ATLAS="7" Nom_ATLAS="OACED"/>
+			<!-- Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge -->
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="46" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="46" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="46" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="46" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="46" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="46" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="8" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="0" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="1" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="23" IdLotDePoudre_ATLAS="2" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="4" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="5" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="19" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="3" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="45" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="24" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="30" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="31" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="9" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="2"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="21" IdMunition_ATLAS="40" IdLotDePoudre_ATLAS="8" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="1"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="63" IdLotDePoudre_ATLAS="6" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="63" IdLotDePoudre_ATLAS="6" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="80" IdLotDePoudre_ATLAS="7" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="80" IdLotDePoudre_ATLAS="6" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="80" IdLotDePoudre_ATLAS="7" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="80" IdLotDePoudre_ATLAS="6" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="62" IdLotDePoudre_ATLAS="6" IdTrajectoire_ATLAS="1" IdForceDeCharge_ATLAS="3"/>
+			<Lanceur-Munition-LotDePoudre-Trajectoire-ForceDeCharge_ATLAS IdLanceur_ATLAS="23" IdMunition_ATLAS="62" IdLotDePoudre_ATLAS="6" IdTrajectoire_ATLAS="2" IdForceDeCharge_ATLAS="3"/>
+		</info-ATLAS>
+	</ReferentielSIC>
+</ReferentielSHIELD>
+<!-- signature="1920410700" -->
+<!-- signature="2215151376" -->

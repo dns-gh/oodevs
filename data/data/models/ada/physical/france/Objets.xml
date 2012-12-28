@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<objects model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
+  <object geometry="point" name="bouchon mines" point-size="50" symbol="G*MPOMC---****X" type="mines">
+    <activable/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
+    <avoidable distance="250"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="10" name="mine classique"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <heuristic>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="2"/>
+      <terrain type="main road" value="5"/>
+      <terrain type="bridge" value="8"/>
+      <terrain type="suburb" value="7"/>
+    </heuristic>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
+    <time-limited/>
+  </object>
+  <object geometry="polygon" name="zone minee lineaire" symbol="G*MPOFA---****X" type="mined area (linear)">
+    <activable/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
+      <buildable>
+        <resources>
+          <resource count="1" name="mine classique"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <interact-with-enemy enemy="true"/>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
+    <time-limited/>
+  </object>
+  <object geometry="polygon" name="zone minee par dispersion" symbol="G*MPOFA---****X" type="mined area (scattered)">
+    <activable/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
+      <buildable>
+        <resources>
+          <resource count="1" name="mine classique"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <interact-with-enemy enemy="true"/>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
+    <time-limited/>
+  </object>
+  <object geometry="line" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <improvable>
+        <resources>
+          <resource count="10" name="mine classique"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <heuristic>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="2"/>
+      <terrain type="main road" value="5"/>
+    </heuristic>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
+  </object>
+  <object geometry="point" name="abattis" point-size="75" symbol="G*MPOS----****X" type="abattis">
+    <activable/>
+    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <avoidable distance="1000"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="50" name="PETD 500 G T ID M 1"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <resource count="10" name="mine classique"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <heuristic>
+      <terrain type="forest edge" value="5"/>
+      <terrain type="forest" value="2"/>
+      <terrain type="country road" value="3"/>
+      <terrain type="secondary road" value="1"/>
+    </heuristic>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
+  </object>
+  <object geometry="point" name="barricade" point-size="75" symbol="G*MPORC---****X" type="barricade">
+    <avoidable distance="500"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="10" name="barbele classique"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <resource count="10" name="mine classique"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <heuristic>
+      <terrain type="secondary road" value="7"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="5"/>
+      <terrain type="main road" value="6"/>
+      <terrain type="suburb" value="1"/>
+      <terrain type="urban area" value="2"/>
+    </heuristic>
+    <interact-with-enemy enemy="true" friend="true" neutral="true"/>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
+  </object>
+  <object geometry="polygon" name="eboulement" symbol="G*EBOUL---****X" type="landslide">
+    <activable/>
+    <avoidable distance="500"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="200" name="PETD 500 G T ID M 1"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <resource count="17" name="mine classique"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <heuristic>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="2"/>
+      <terrain type="main road" value="5"/>
+    </heuristic>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
+    <trafficability default="true" max-weight="0.1"/>
+  </object>
+  <object geometry="point" name="destruction route" point-size="75" symbol="G*MPORC---****X" type="road destruction">
+    <activable/>
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="300" name="PETD 500 G T ID M 1"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <resource count="7" name="mine classique"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <heuristic>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="main road" value="5"/>
+      <terrain type="highway" value="1"/>
+    </heuristic>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.5"/>
+  </object>
+  <object geometry="point" name="destruction pont" point-size="75" symbol="G*MPORC---****X" type="bridge destruction">
+    <activable/>
+    <avoidable distance="100"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="300" name="PETD 500 G T ID M 1"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <resource count="7" name="mine classique"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <heuristic>
+      <terrain type="bridge" value="10"/>
+    </heuristic>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0"/>
+  </object>
+  <object geometry="line" name="pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
+    <bridging type="bridge"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <trafficability default="true" max-weight="100"/>
+  </object>
+  <object geometry="point" name="poste tir" point-size="50" symbol="G*FPAP----****X" type="firing post">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <protection geniePrepared="true" max-size="1"/>
+  </object>
+  <object geometry="polygon" name="zone protegee" symbol="G*MPSF----****X" type="safe zone">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interact-with-enemy enemy="true"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <protection geniePrepared="true" max-size="3"/>
+  </object>
+  <object geometry="point" name="zone implantation canon" point-size="10" symbol="G*FPAP----****X" type="gun artillery deployment area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <protection geniePrepared="false" max-size="1"/>
+    <workable max-animator="1"/>
+  </object>
+  <object geometry="point" name="zone implantation cobra" point-size="10" symbol="G*FPAP----****X" type="cobra deployment area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <protection geniePrepared="false" max-size="1"/>
+    <workable max-animator="1"/>
+  </object>
+  <object geometry="point" name="zone implantation lrm" point-size="10" symbol="G*FPAP----****X" type="mrls deployment area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <protection geniePrepared="false" max-size="1"/>
+    <workable max-animator="1"/>
+  </object>
+  <object geometry="line" name="site franchissement" symbol="G*MPBCL---****X" type="crossing site">
+    <bridging type=""/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+  </object>
+  <object geometry="point" name="nuage nbc" symbol="G*MPNL----****X" type="nbc cloud">
+    <avoidable distance="100"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <contamination max-toxic="1"/>
+    <interaction-height height="100"/>
+    <intoxication max-toxic="1"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <propagation model="cloud"/>
+  </object>
+  <object geometry="point" name="plot ravitaillement" point-size="10" symbol="G*SPPR----****X" type="logistic support area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <supply/>
+  </object>
+  <object geometry="point" name="site decontamination" point-size="50" symbol="G*MPNDP---****X" type="decontamination site">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <decontamination/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <workable max-animator="3"/>
+  </object>
+  <object geometry="point" name="rota" symbol="G*ROTA*********" type="rota area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <contamination max-toxic="-1"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+  </object>
+  <object geometry="circle" name="zone nbc" symbol="G*MPNR----****X" type="nbc zone">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <contamination max-toxic="1"/>
+    <interaction-height height="1"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <spawn action-range="0" nbc="true" object="nbc cloud"/>
+  </object>
+  <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interact-with-enemy enemy="true"/>
+    <interaction-height height="100"/>
+    <interference/>
+  </object>
+  <object geometry="polygon" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+  </object>
+  <object geometry="polygon" name="piste" symbol="G*GPGAZ---****X" type="trail">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
+  </object>
+  <object geometry="polygon" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+  </object>
+  <object geometry="polygon" name="zone mobilite amelioree" symbol="G*MPSP----****X" type="mobility enhanced area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
+  </object>
+  <object geometry="polygon" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+  </object>
+  <object geometry="polygon" name="aire logistique" symbol="G*SPAR----****X" type="logistic area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+  </object>
+  <object geometry="polygon" name="camp prisonniers" symbol="G*SPAD----****X" type="prisoners camp">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <lodging/>
+    <logistic/>
+  </object>
+  <object geometry="polygon" name="camp refugies" symbol="G*SPAH----****X" type="refugees camp">
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
+      <buildable/>
+    </constructor>
+    <lodging/>
+    <logistic/>
+  </object>
+  <object geometry="point" name="poste controle" point-size="75" symbol="G*GPGPPK--****X" type="checkpoint">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <detection>
+      <acquisition-times/>
+    </detection>
+    <heuristic>
+      <terrain type="secondary road" value="2"/>
+      <terrain type="main road" value="3"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="bridge" value="8"/>
+      <terrain type="railroad" value="5"/>
+    </heuristic>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <population-filter density="0.1"/>
+    <workable max-animator="3"/>
+  </object>
+  <object geometry="polygon" name="terrain largage" symbol="G*GPGAD---****X" type="dropping area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interaction-height height="2"/>
+  </object>
+  <object geometry="polygon" name="zone interdite mouvement" symbol="G*MPOGZ---****X" type="movement forbidden area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interact-with-enemy friend="true"/>
+    <interaction-height height="6000"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+  </object>
+  <object geometry="polygon" name="zone interdite tir" symbol="G*FPAN----****X" type="firing forbidden area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <fire-forbidden/>
+    <interaction-height height="6000"/>
+  </object>
+  <object geometry="point" name="zone implantation mortier" point-size="10" symbol="G*FPAP----****X" type="mortar deployment area">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <protection geniePrepared="false" max-size="1"/>
+    <workable max-animator="1"/>
+  </object>
+  <object geometry="line" name="pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
+    <bridging type="bridge"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <trafficability default="true" max-weight="100"/>
+  </object>
+  <object geometry="point" name="installation" point-size="10" symbol="S*GPI-----*****" type="installation">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interaction-height height="2"/>
+  </object>
+  <object geometry="polygon" name="bloc urbain" symbol="G*MPOGZ---****X" type="urban block">
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
+      <buildable/>
+    </constructor>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
+    <resources/>
+    <structural value="100"/>
+  </object>
+  <object geometry="line" name="zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
+    <avoidable distance="10"/>
+    <interact-with-enemy enemy="true"/>
+    <interaction-height height="2"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0"/>
+    <workable max-animator="10"/>
+  </object>
+  <object geometry="point" name="incendie" point-size="75" symbol="O*VPA-----*****" type="fire">
+    <avoidable distance="20"/>
+    <burn/>
+    <interaction-height height="100"/>
+  </object>
+  <object geometry="polygon" name="mouvement population" symbol="" type="population moving">
+    <interaction-height height="2"/>
+  </object>
+  <object geometry="point" name="station de metro" point-size="10" symbol="G*EXIT*********" type="metro station">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <underground-network/>
+    <universal/>
+  </object>
+  <object geometry="point" name="noeud de reseau de ressource" point-size="10" symbol="G*SPPR----****X" type="ressource network element">
+    <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
+    <resources/>
+    <universal/>
+    <workable max-animator="3"/>
+  </object>
+  <object geometry="point" name="souterrain egout" point-size="10" symbol="G*EXIT*********" type="sewer entry">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <underground-network/>
+    <universal/>
+  </object>
+  <object geometry="line" name="autoroute" symbol="Route" type="motorway">
+    <bridging type="highway"/>
+    <universal/>
+  </object>
+  <object geometry="line" name="chemin" symbol="Route" type="small road">
+    <bridging type="country road"/>
+    <universal/>
+  </object>
+  <object geometry="line" name="route departementale" symbol="Route" type="medium road">
+    <bridging type="secondary road"/>
+    <universal/>
+  </object>
+  <object geometry="line" name="route nationale" symbol="Route" type="large road">
+    <bridging type="main road"/>
+    <universal/>
+  </object>
+  <object geometry="polygon" name="terrain mouille" symbol="G*MPOGZ---****X" type="wet terrain">
+    <interaction-height height="2"/>
+    <mobility default-speed="80" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <universal/>
+  </object>
+  <object geometry="polygon" name="terrain enneige" symbol="G*MPOGZ---****X" type="snowed terrain">
+    <interaction-height height="2"/>
+    <mobility default-speed="50" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <universal/>
+  </object>
+  <object geometry="polygon" name="terrain gele" symbol="G*MPOGZ---****X" type="iced terrain">
+    <interaction-height height="2"/>
+    <mobility default-speed="30" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <universal/>
+  </object>
+  <object geometry="line" name="frontiere" symbol="Route" type="border">
+    <border/>
+    <universal/>
+  </object>
+</objects>
+<!-- signature="2924865350" -->

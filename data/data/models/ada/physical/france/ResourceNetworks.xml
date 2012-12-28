@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<resource-networks model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/ResourceNetworks.xsd">
+  <resource-network name="electricite">
+    <resource id="142"/>
+    <color rgb="0xffff7f"/>
+    <defaults production="0"/>
+  </resource-network>
+  <resource-network name="eau courante">
+    <resource id="143"/>
+    <color rgb="0x00aaff"/>
+    <defaults production="0"/>
+  </resource-network>
+  <resource-network name="nourriture">
+    <resource id="145"/>
+    <color rgb="0x00aa00"/>
+    <defaults production="0"/>
+  </resource-network>
+  <resource-network name="carburant">
+    <resource id="144"/>
+    <color rgb="0xaa007f"/>
+    <defaults production="0"/>
+  </resource-network>
+</resource-networks>
+<!-- signature="2494670391" -->
