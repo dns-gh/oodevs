@@ -98,13 +98,10 @@ local function manageAddedAndDeletedUnits( self )
 end
 
 local function managePositionsToScreen( self )
-        -- Pour la mission jalonner on force le décrochage juste devant la LCAR si elle est présente comme position de début de mission
-        if self.params.companyTask == "france.military.company.tasks.Jalonner" then
-            local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsMain )
-            if #pointsOnLimas > 0 then
-                self.screenPosition  = true
-            end
-        end	
+    -- Pour la mission jalonner on force le décrochage juste devant la LCAR ou sur la position de l'unité ayant la mission jalonner la plus loin du début du fuseau
+    if self.params.companyTask == "france.military.company.tasks.Jalonner" then
+            self.screenPosition  = true
+    end	
 end
 
 rootnode {

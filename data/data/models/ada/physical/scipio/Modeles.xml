@@ -4901,6 +4901,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Ratisser"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
@@ -5484,6 +5485,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
@@ -5554,6 +5556,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
@@ -5687,6 +5690,7 @@
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
@@ -5825,6 +5829,7 @@
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Ratisser"/>
@@ -5880,6 +5885,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Reconnaitre"/>
         <mission name="AUTOMATE MELEE S'emparer"/>
@@ -6768,6 +6774,7 @@
         </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
         <mission name="AUTOMATE MELEE Organiser accueil colonne refugies"/>
@@ -7550,4 +7557,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3230559190" -->
+<!-- signature="2420144351" -->
