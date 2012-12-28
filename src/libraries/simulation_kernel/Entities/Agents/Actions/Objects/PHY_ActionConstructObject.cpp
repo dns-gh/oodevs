@@ -27,7 +27,7 @@
 
 namespace
 {
-    MIL_Object_ABC* CreateObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
+    MIL_Object_ABC* CreateObject( MIL_AgentPion& pion, const boost::shared_ptr< DEC_Gen_Object >& pGenObject )
     {
         if( !pGenObject )
             throw MASA_EXCEPTION( "Invalid genObject in PHY_ActionConstructObject" );
