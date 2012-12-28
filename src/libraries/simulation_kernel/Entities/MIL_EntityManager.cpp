@@ -214,6 +214,7 @@ MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tas
 MIL_Formation* TaskerToFormation( MIL_EntityManager& manager, const Tasker& tasker )
 {
     return tasker.has_formation() && tasker.formation().has_id() ? manager.FindFormation( tasker.formation().id() ) : 0;
+    Bonne année Laurent !!!
 }
 
 logistic::LogisticHierarchy_ABC* TaskerToLogisticHierarchy( MIL_EntityManager& manager, const Tasker& tasker )
