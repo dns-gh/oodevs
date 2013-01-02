@@ -47,7 +47,7 @@ PathResult::PathResult( const PathType& pathType )
 //-----------------------------------------------------------------------------
 PathResult::~PathResult()
 {
-    resultList_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,16 +58,12 @@ PathResult::CIT_PathPointList PathResult::GetCurrentKeyOnPath() const
 {
     if( itCurrentPathPoint_ == resultList_.end() )
         return itCurrentPathPoint_;
-    CIT_PathPointList itStart = itCurrentPathPoint_;
-    CIT_PathPointList itEnd = itCurrentPathPoint_;
+    auto itStart = itCurrentPathPoint_;
+    auto itEnd = itCurrentPathPoint_;
     ++itEnd;
     for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
-    {
-        if( (*itStart)->GetPos() == (*itEnd)->GetPos() )
-            continue;
-        else
+        if( (*itStart)->GetPos() != (*itEnd)->GetPos() )
             return itStart;
-    }
     return itStart;
 }
 
