@@ -17,10 +17,6 @@ class MT_Vector2D;
 
 namespace sword
 {
-namespace movement
-{
-    class PathPoint;
-}
 // =============================================================================
 /** @class  PathPointAdapter
     @brief  Path point adapter
@@ -32,7 +28,7 @@ class PathPointAdapter : boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
-             PathPointAdapter( unsigned int entity, boost::shared_ptr< movement::PathPoint > point );
+             PathPointAdapter( unsigned int entity, std::size_t point );
     virtual ~PathPointAdapter();
     //@}
 
@@ -54,16 +50,11 @@ public:
 private:
     //! @name Member data
     //@{
-    unsigned int entity_;
-    boost::shared_ptr< movement::PathPoint > point_;
+    const unsigned int entity_;
+    const std::size_t point_;
     mutable std::string type_;
     //@}
 };
-
-inline boost::shared_ptr< PathPointAdapter > AdaptPoint( unsigned int entity, boost::shared_ptr< movement::PathPoint > point )
-{
-    return boost::shared_ptr< PathPointAdapter >( new PathPointAdapter( entity, point ) );
-}
 
 }
 

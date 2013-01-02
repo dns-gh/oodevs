@@ -98,7 +98,7 @@ DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* enti
 DECLARE_HOOK( CreatePath, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
 DECLARE_HOOK( CreatePathList, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
 DECLARE_HOOK( GetAgentFuturePosition, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
-DECLARE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( const boost::shared_ptr< sword::movement::PathPoint >& point, void* userData ), void* userData ) )
+DECLARE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) )
 DECLARE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( const boost::shared_ptr< sword::movement::Path_ABC >& pPath ) )
 
@@ -500,27 +500,20 @@ void RolePion_Decision::RegisterPath()
         boost::function< int ( DEC_Path_ABC* ) >( boost::bind( &GetPathState, _1 ) ) );
 }
 
-namespace sword
-{
-    namespace movement
-    {
-        class PathPoint;
-    }
-}
 namespace
 {
-    void ApplyFunction( const boost::shared_ptr< movement::PathPoint >& point, void* userData )
+    void ApplyFunction( std::size_t point, void* userData )
     {
-        (*static_cast< boost::function< void( boost::shared_ptr< movement::PathPoint > ) >* >( userData ))( point );
+        (*static_cast< boost::function< void( std::size_t point ) >* >( userData ))( point );
     }
-    void FillPoints( std::vector< boost::shared_ptr< PathPointAdapter > >& path, unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point )
+    void FillPoints( std::vector< boost::shared_ptr< PathPointAdapter > >& path, unsigned int entity, std::size_t point )
     {
-        path.push_back( AdaptPoint( entity, point ) );
+        path.push_back( boost::make_shared< PathPointAdapter >( entity, point ) );
     }
     std::vector< boost::shared_ptr< PathPointAdapter > > GetPointsCategory( MIL_AgentPion& agent )
     {
         std::vector< boost::shared_ptr< PathPointAdapter > > result;
-        boost::function< void( boost::shared_ptr< movement::PathPoint > ) > callback =
+        boost::function< void( std::size_t ) > callback =
             boost::bind( &FillPoints, boost::ref( result ), agent.GetID(), _1 );
         GET_HOOK( GetPathPoints )( agent.GetID(), &ApplyFunction, &callback );
         return result;

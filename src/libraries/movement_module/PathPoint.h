@@ -83,8 +83,6 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA( unsigned int entity, boost::shared_ptr< PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< PathPoint > self );
     const std::string& GetDIAType() const;
     //@}
 

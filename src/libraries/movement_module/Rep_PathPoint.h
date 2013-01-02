@@ -14,7 +14,6 @@
 
 #include "PathPoint.h"
 #include "wrapper/View.h"
-#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -37,17 +36,10 @@ public:
     virtual const TerrainData& GetTypeTerrain() const;
     //@}
 
-    //! @name DIA
-    //@{
-    virtual void SendToDIA( unsigned int entity, boost::shared_ptr< PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< PathPoint > self );
-    //@}
-
 private:
     //! @name Member data
     //@{
     TerrainData nTypeTerrain_;
-    mutable boost::optional< unsigned int > entity_;
     //@}
 };
 

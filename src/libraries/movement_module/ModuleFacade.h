@@ -11,6 +11,7 @@
 #define movement_module_ModuleFacade_h
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <wrapper/Module.h>
 #include <vector>
 #include <map>
@@ -50,16 +51,21 @@ public:
     MT_Vector2D GetFuturePosition( const wrapper::View& entity, double rTime, bool bBoundOnPath ) const;
     bool IsMovingOnPath( unsigned int entity, const boost::shared_ptr< Path_ABC >& path ) const;
 
-    void GetPoints( unsigned int entity, void(*callback)( const boost::shared_ptr< movement::PathPoint >& point, void* userData ), void* userData ) const;
-    void AddPoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point );
-    void RemovePoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point );
+    std::vector< std::size_t > GetPoints( unsigned int entity ) const;
+    const movement::PathPoint& GetPoint( std::size_t point ) const;
+    void AddPathPoint( unsigned int entity, const boost::weak_ptr< movement::PathPoint >& point );
+    void RemovePathPoint( unsigned int entity, std::size_t point );
+    void RemovePathPoints( unsigned int entity );
+    void RegisterPoint( const boost::weak_ptr< movement::PathPoint >& point );
+    void UnregisterPoint( const boost::weak_ptr< movement::PathPoint >& point );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::map< unsigned int, PathWalker* > paths_;
-    std::map< unsigned int, std::vector< boost::shared_ptr< movement::PathPoint > > > points_;
+    std::map< unsigned int, std::vector< std::size_t > > pathPoints_;
+    std::map< std::size_t, boost::weak_ptr< movement::PathPoint > > points_;
     //@}
 };
 

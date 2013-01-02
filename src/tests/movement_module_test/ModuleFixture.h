@@ -56,9 +56,9 @@ namespace movement
     APPLY( CreatePathList, 3, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
     APPLY( ExecutePathfind, 2, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TER_Pathfinder_ABC& pathfind ) ) \
     APPLY( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) ) \
-    APPLY( GetPathDestPoint, 1, const boost::shared_ptr< sword::movement::PathPoint >*, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
-    APPLY( GetPathDIAType, 1, const char*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
-    APPLY( GetPathLimaPoint, 1, unsigned int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
+    APPLY( GetPathDestPoint, 1, std::size_t, ( std::size_t point ) ) \
+    APPLY( GetPathDIAType, 1, const char*, ( std::size_t point ) ) \
+    APPLY( GetPathLimaPoint, 1, unsigned int, ( std::size_t point ) ) \
     APPLY( AvoidEnemies, 1, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( GetEnemyCostAtSecurityRange, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( GetEnemyCostOnContact, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
@@ -70,15 +70,16 @@ namespace movement
     APPLY( GetPopulationSecurityRange, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( GetCostOutsideOfPopulation, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( GetPopulationAttitudeCost, 2, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) ) \
-    APPLY( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( const boost::shared_ptr< sword::movement::PathPoint >& point, void* userData ), void* userData ) ) \
-    APPLY( GetPathPos, 1, const MT_Vector2D*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
-    APPLY( GetPathTypeLimaPoint, 1, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
-    APPLY( GetPathTypePoint, 1, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
+    APPLY( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) ) \
+    APPLY( GetPathPos, 1, const MT_Vector2D*, ( std::size_t point ) ) \
+    APPLY( GetPathTypeLimaPoint, 1, int, ( std::size_t point ) ) \
+    APPLY( GetPathTypePoint, 1, int, ( std::size_t point ) ) \
     APPLY( InitializePathClass, 3, void, ( const char* xml, const unsigned int* first, size_t size ) ) \
     APPLY( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( const boost::shared_ptr< sword::movement::Path_ABC >& pPath ) ) \
     APPLY( PathGetLength, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( PathGetState, 1, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
+    APPLY( RemovePathPoint, 2, void, ( unsigned int entity, std::size_t point ) ) \
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetDistanceAvantLima, 1, double, ( const SWORD_Model* entity ) ) \
@@ -126,8 +127,6 @@ namespace movement
     APPLY( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
-    APPLY( AddPathPoint, 2, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
-    APPLY( RemovePathPoint, 2, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
     APPLY( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )
 
 HOOK_FIXTURE( HOOKS )

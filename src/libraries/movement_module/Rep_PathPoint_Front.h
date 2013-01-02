@@ -14,7 +14,6 @@
 
 #include "PathPoint.h"
 #include "wrapper/View.h"
-#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -25,7 +24,7 @@ namespace movement
 //*****************************************************************************
 // Created: JDY 03-05-05
 //*****************************************************************************
-class Rep_PathPoint_Front  : public PathPoint
+class Rep_PathPoint_Front : public PathPoint
 {
 public:
     //! @name Constructors/Destructor
@@ -36,14 +35,11 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA( unsigned int entity, boost::shared_ptr< PathPoint > point ) const;
-    virtual void RemoveFromDIA( boost::shared_ptr< PathPoint > self );
     virtual const boost::shared_ptr< PathPoint >& GetDestPoint() const;
     //@}
 
 private:
     boost::shared_ptr< PathPoint > destPoint_;
-    mutable boost::optional< unsigned int > entity_;
 };
 
 }

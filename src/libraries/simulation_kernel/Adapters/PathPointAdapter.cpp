@@ -11,22 +11,23 @@
 #include "PathPointAdapter.h"
 #include "Hook.h"
 #include "Decision/DEC_PathPoint.h"
+#include <boost/make_shared.hpp>
 
 using namespace sword;
 
-DECLARE_HOOK( GetPathDestPoint, const boost::shared_ptr< sword::movement::PathPoint >*, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
-DECLARE_HOOK( GetPathDIAType, const char*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
-DECLARE_HOOK( GetPathLimaPoint, unsigned int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
-DECLARE_HOOK( GetPathPos, const MT_Vector2D*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
-DECLARE_HOOK( GetPathTypeLimaPoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
-DECLARE_HOOK( GetPathTypePoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
-DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+DECLARE_HOOK( GetPathDestPoint, std::size_t, ( std::size_t point ) )
+DECLARE_HOOK( GetPathDIAType, const char*, ( std::size_t point ) )
+DECLARE_HOOK( GetPathLimaPoint, unsigned int, ( std::size_t point ) )
+DECLARE_HOOK( GetPathPos, const MT_Vector2D*, ( std::size_t point ) )
+DECLARE_HOOK( GetPathTypeLimaPoint, int, ( std::size_t point ) )
+DECLARE_HOOK( GetPathTypePoint, int, ( std::size_t point ) )
+DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, std::size_t point ) )
 
 //-----------------------------------------------------------------------------
 // Name: PathPointAdapter constructor
 // Created: MCO 2012-02-03
 //-----------------------------------------------------------------------------
-PathPointAdapter::PathPointAdapter( unsigned int entity, boost::shared_ptr< movement::PathPoint > point )
+PathPointAdapter::PathPointAdapter( unsigned int entity, std::size_t point )
     : entity_( entity )
     , point_ ( point )
 {
@@ -93,11 +94,11 @@ bool PathPointAdapter::IsPoint() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< PathPointAdapter > PathPointAdapter::GetDestPoint() const
 {
-    return AdaptPoint( entity_, *GET_HOOK( GetPathDestPoint )( point_ ) );
+    return boost::make_shared< PathPointAdapter >( entity_, GET_HOOK( GetPathDestPoint )( point_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathPointAdapter::GetDestPoint
+// Name: PathPointAdapter::GetTypeLimaPoint
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
 int PathPointAdapter::GetTypeLimaPoint() const
@@ -106,7 +107,7 @@ int PathPointAdapter::GetTypeLimaPoint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathPointAdapter::GetDestPoint
+// Name: PathPointAdapter::GetLimaPoint
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
 unsigned int PathPointAdapter::GetLimaPoint() const
@@ -125,7 +126,7 @@ const std::string& PathPointAdapter::GetDIAType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PathPointAdapter::GetDestPoint
+// Name: PathPointAdapter::GetPos
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PathPointAdapter::GetPos() const

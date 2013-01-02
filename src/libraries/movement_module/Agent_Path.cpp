@@ -15,6 +15,7 @@
 #include "Rep_PathPoint_Front.h"
 #include "Rep_PathPoint_Special.h"
 #include "Rep_PathPoint_Lima.h"
+#include "ModuleFacade.h"
 #include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
 #include "MT_Tools/MT_Line.h"
 #include <tools/Exception.h>
@@ -45,12 +46,13 @@ DECLARE_HOOK( CanMoveOn, bool, ( const SWORD_Model* entity, const MT_Vector2D& p
 // Name: Agent_Path constructor
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-Agent_Path::Agent_Path( const wrapper::View& entity, const T_PointVector& points, const PathType& pathType )
+Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const T_PointVector& points, const PathType& pathType )
     : PathResult( pathType )
-    , entity_                  ( entity )
-    , unitSpeeds_              ( entity )
-    , pathClass_               ( Agent_PathClass::GetPathClass( pathType, entity ) )
-    , bDecPointsInserted_      ( false )
+    , module_            ( module )
+    , entity_            ( entity )
+    , unitSpeeds_        ( entity )
+    , pathClass_         ( Agent_PathClass::GetPathClass( pathType, entity ) )
+    , bDecPointsInserted_( false )
 {
     initialWaypoints_.reserve( 1 + points.size() );
     nextWaypoints_.reserve( points.size() );
@@ -64,12 +66,13 @@ Agent_Path::Agent_Path( const wrapper::View& entity, const T_PointVector& points
 // Name: Agent_Path constructor
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
-Agent_Path::Agent_Path( const wrapper::View& entity, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const PathType& pathType )
+Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const PathType& pathType )
     : PathResult               ( pathType )
-    , entity_                  ( entity )
-    , unitSpeeds_              ( entity )
-    , pathClass_               ( Agent_PathClass::GetPathClass( pathType, entity ) )
-    , bDecPointsInserted_      ( false )
+    , module_            ( module )
+    , entity_            ( entity )
+    , unitSpeeds_        ( entity )
+    , pathClass_         ( Agent_PathClass::GetPathClass( pathType, entity ) )
+    , bDecPointsInserted_( false )
 {
     initialWaypoints_.reserve( 1 + points.size() );
     nextWaypoints_.reserve( points.size() );
@@ -86,8 +89,9 @@ Agent_Path::Agent_Path( const wrapper::View& entity, std::vector< boost::shared_
 // Name: Agent_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-Agent_Path::Agent_Path( const wrapper::View& entity, const MT_Vector2D& vPosEnd, const PathType& pathType )
+Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const MT_Vector2D& vPosEnd, const PathType& pathType )
     : PathResult         ( pathType )
+    , module_            ( module )
     , entity_            ( entity )
     , unitSpeeds_        ( entity )
     , pathClass_         ( Agent_PathClass::GetPathClass( pathType, entity ) )
@@ -108,9 +112,10 @@ Agent_Path::Agent_Path( const wrapper::View& entity, const MT_Vector2D& vPosEnd,
 //-----------------------------------------------------------------------------
 Agent_Path::~Agent_Path()
 {
-    for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
-        if( ( *it )->GetType() != PathPoint::eTypePointPath )
-            ( *it )->RemoveFromDIA( *it );
+    const unsigned int entity = entity_[ "identifier" ];
+    for( auto it = resultList_.begin(); it!= resultList_.end(); it++ )
+        module_.UnregisterPoint( *it );
+    module_.RemovePathPoints( entity );
 }
 
  // -----------------------------------------------------------------------------
@@ -247,7 +252,7 @@ void Agent_Path::InsertPointAvant( const boost::shared_ptr< PathPoint > spottedW
 // Name: Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void Agent_Path::InsertPointAvant( const boost::shared_ptr< PathPoint > spottedWaypoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant )
+void Agent_Path::InsertPointAvant( boost::shared_ptr< PathPoint > spottedWaypoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant )
 {
     static const double rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )

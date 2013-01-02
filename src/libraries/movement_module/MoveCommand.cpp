@@ -10,11 +10,12 @@
 #include "MoveCommand.h"
 #include "Agent_Path.h"
 #include "PathPoint.h"
-#include <tools/Exception.h>
+#include "ModuleFacade.h"
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
 #include "wrapper/Hook.h"
 #include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
+#include <tools/Exception.h>
 
 using namespace sword;
 using namespace sword::movement;
@@ -41,7 +42,8 @@ namespace
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/ )
-    : action_            ( parameters[ "action" ] )
+    : module_            ( module )
+    , action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
     , pMainPath_         ( boost::dynamic_pointer_cast< Agent_Path >( *static_cast< boost::shared_ptr< Path_ABC >* >( parameters[ "path/data" ].GetUserData() ) ) )
     , executionSuspended_( false )
@@ -77,7 +79,7 @@ void MoveCommand::CreateNewPath( const wrapper::View& entity ) const
     assert( pMainPath_->GetState() != Path_ABC::eComputing );
     const T_PointVector& nextWaypoints = pMainPath_->GetNextWaypoints();
     const PathType& pathType = pMainPath_->GetPathType();
-    boost::shared_ptr< Agent_Path > pNewPath( new Agent_Path( entity, nextWaypoints, pathType ) );
+    boost::shared_ptr< Agent_Path > pNewPath( new Agent_Path( module_, entity, nextWaypoints, pathType ) );
     pNewPath->ComputePath( pNewPath );
     pathWalker_->MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();

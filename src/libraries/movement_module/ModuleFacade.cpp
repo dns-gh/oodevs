@@ -20,6 +20,7 @@
 #include "simulation_kernel/Decision/DEC_Path_ABC.h" // $$$$ MCO : for enums
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <algorithm>
 
 using namespace sword;
@@ -48,7 +49,7 @@ namespace
     {
         const PathType* pPathType = PathType::Find( pathType );
         assert( pPathType );
-        boost::shared_ptr< Path_ABC > path( new Agent_Path( model, vPosEnd, *pPathType ) );
+        boost::shared_ptr< Path_ABC > path( new Agent_Path( *facade, model, vPosEnd, *pPathType ) );
         path->ComputePath( path ); // $$$$ MCO 2012-10-04: use shared_from_this
         return path;
     }
@@ -56,7 +57,7 @@ namespace
     {
         const PathType* pPathType = PathType::Find( pathType );
         assert( pPathType );
-        boost::shared_ptr< Path_ABC > path( new Agent_Path( model, points, *pPathType ) );
+        boost::shared_ptr< Path_ABC > path( new Agent_Path( *facade, model, points, *pPathType ) );
         path->ComputePath( path ); // $$$$ MCO 2012-10-04: use shared_from_this
         return path;
     }
@@ -129,44 +130,42 @@ namespace
     {
         return path->GetClass().GetPopulationAttitudeCost( type );
     }
-    DEFINE_HOOK( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( const boost::shared_ptr< sword::movement::PathPoint >& point, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) )
     {
         assert( facade );
-        facade->GetPoints( entity, callback, userData );
+        auto points = facade->GetPoints( entity );
+        BOOST_FOREACH( std::size_t point, points )
+            callback( point, userData );
     }
-    DEFINE_HOOK( AddPathPoint, 2, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+    DEFINE_HOOK( RemovePathPoint, 2, void, ( unsigned int entity, std::size_t point ) )
     {
-        assert( facade );
-        facade->AddPoints( entity, point );
+        facade->RemovePathPoint( entity, point );
     }
-    DEFINE_HOOK( RemovePathPoint, 2, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+    DEFINE_HOOK( GetPathTypePoint, 1, int, ( std::size_t point ) )
     {
-        assert( facade );
-        facade->RemovePoints( entity, point );
+        return facade->GetPoint( point ).GetTypePoint();
     }
-    DEFINE_HOOK( GetPathTypePoint, 1, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
+    DEFINE_HOOK( GetPathDestPoint, 1, std::size_t, ( std::size_t point ) )
     {
-        return pPoint->GetTypePoint();
+        auto destPoint = facade->GetPoint( point ).GetDestPoint();
+        facade->RegisterPoint( destPoint );
+        return destPoint->GetID();
     }
-    DEFINE_HOOK( GetPathDestPoint, 1, const boost::shared_ptr< sword::movement::PathPoint >*, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
+    DEFINE_HOOK( GetPathTypeLimaPoint, 1, int, ( std::size_t point ) )
     {
-        return &pPoint->GetDestPoint();
+        return facade->GetPoint( point ).GetTypeLima();
     }
-    DEFINE_HOOK( GetPathTypeLimaPoint, 1, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
+    DEFINE_HOOK( GetPathLimaPoint, 1, unsigned int, ( std::size_t point ) )
     {
-        return pPoint->GetTypeLima();
+        return facade->GetPoint( point ).GetLimaID();
     }
-    DEFINE_HOOK( GetPathLimaPoint, 1, unsigned int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
+    DEFINE_HOOK( GetPathDIAType, 1, const char*, ( std::size_t point ) )
     {
-        return pPoint->GetLimaID();
+        return facade->GetPoint( point ).GetDIAType().c_str();
     }
-    DEFINE_HOOK( GetPathDIAType, 1, const char*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+    DEFINE_HOOK( GetPathPos, 1, const MT_Vector2D*, ( std::size_t point ) )
     {
-        return point->GetDIAType().c_str();
-    }
-    DEFINE_HOOK( GetPathPos, 1, const MT_Vector2D*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
-    {
-        return &point->GetPos();
+        return &facade->GetPoint( point ).GetPos();
     }
     DEFINE_HOOK( InitializePathClass, 3, void, ( const char* xml, const unsigned int* first, size_t size ) )
     {
@@ -258,28 +257,69 @@ bool ModuleFacade::IsMovingOnPath( unsigned int entity, const boost::shared_ptr<
 // Name: ModuleFacade::GetPoints
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-void ModuleFacade::GetPoints( unsigned int entity, void(*callback)( const boost::shared_ptr< movement::PathPoint >& point, void* userData ), void* userData ) const
+std::vector< std::size_t > ModuleFacade::GetPoints( unsigned int entity ) const
 {
-    std::map< unsigned int, std::vector< boost::shared_ptr< movement::PathPoint > > >::const_iterator it = points_.find( entity );
-    if( it != points_.end() )
-        std::for_each( it->second.begin(), it->second.end(), boost::bind( callback, _1, userData ) );
+    auto it = pathPoints_.find( entity );
+    if( it != pathPoints_.end() )
+        return it->second;
+    return std::vector< std::size_t >();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleFacade::AddPoints
-// Created: MCO 2012-02-03
+// Name: ModuleFacade::GetPoint
+// Created: SLI 2012-12-13
 // -----------------------------------------------------------------------------
-void ModuleFacade::AddPoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point )
+const movement::PathPoint& ModuleFacade::GetPoint( std::size_t point ) const
 {
-    points_[ entity ].push_back( point );
+    auto it = points_.find( point );
+    if( it == points_.end() )
+        throw MASA_EXCEPTION( "Could not retrieve decisionnal point" );
+    return *it->second.lock();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleFacade::RemovePoints
-// Created: MCO 2012-02-03
+// Name: ModuleFacade::AddPathPoint
+// Created: SLI 2012-12-18
 // -----------------------------------------------------------------------------
-void ModuleFacade::RemovePoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point )
+void ModuleFacade::AddPathPoint( unsigned int entity, const boost::weak_ptr< movement::PathPoint >& point )
 {
-    std::vector< boost::shared_ptr< movement::PathPoint > >& points = points_[ entity ];
-    points.erase( std::remove( points.begin(), points.end(), point ), points.end() );
+    RegisterPoint( point );
+    pathPoints_[ entity ].push_back( point.lock()->GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::RemovePathPoint
+// Created: SLI 2012-12-18
+// -----------------------------------------------------------------------------
+void ModuleFacade::RemovePathPoint( unsigned int entity, std::size_t point )
+{
+    auto path = pathPoints_[ entity ];
+    path.erase( std::remove( path.begin(), path.end(), point ), path.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::RemovePathPoints
+// Created: SLI 2012-12-18
+// -----------------------------------------------------------------------------
+void ModuleFacade::RemovePathPoints( unsigned int entity )
+{
+    pathPoints_.erase( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::RegisterPoint
+// Created: SLI 2012-12-18
+// -----------------------------------------------------------------------------
+void ModuleFacade::RegisterPoint( const boost::weak_ptr< movement::PathPoint >& point )
+{
+    points_[ point.lock()->GetID() ] = point;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::UnregisterPoint
+// Created: SLI 2012-12-18
+// -----------------------------------------------------------------------------
+void ModuleFacade::UnregisterPoint( const boost::weak_ptr< movement::PathPoint >& point )
+{
+    points_.erase( point.lock()->GetID() );
 }

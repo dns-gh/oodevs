@@ -60,6 +60,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ModuleFacade& module_;
     const size_t action_;
     unsigned int identifier_;
     mutable boost::shared_ptr< Agent_Path > pMainPath_;

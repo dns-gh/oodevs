@@ -236,7 +236,7 @@ bool PathWalker::GoToNextNavPoint( PathResult& path, const wrapper::View& entity
     // points particuliers -> EVT vers DEC
     do
     {
-        (*itNextPathPoint_)->SendToDIA( entity_, *itNextPathPoint_ );
+        module_.AddPathPoint( entity_, *itNextPathPoint_ );
         SetCurrentPathPoint( path );
         CheckPathNotification( entity );
     }

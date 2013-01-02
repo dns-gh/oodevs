@@ -10,13 +10,9 @@
 //*****************************************************************************
 
 #include "Rep_PathPoint_Front.h"
-#include "wrapper/Hook.h"
 
 using namespace sword;
 using namespace sword::movement;
-
-DECLARE_HOOK( AddPathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
-DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
 
 //-----------------------------------------------------------------------------
 // Name: Rep_PathPoint_Front constructor
@@ -26,7 +22,6 @@ Rep_PathPoint_Front::Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared
     : PathPoint( vPos, eTypePointFront, eTypePointNormal, "Rep_AvantPoint" )
     , destPoint_( dest )
 {
-
     // NOTHING
 }
 
@@ -37,29 +32,6 @@ Rep_PathPoint_Front::Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared
 Rep_PathPoint_Front::~Rep_PathPoint_Front()
 {
     // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: Rep_PathPoint_Front::SendToDIA
-// Created: JVT 02-12-09
-// Last modified: JVT 02-12-16
-//-----------------------------------------------------------------------------
-void Rep_PathPoint_Front::SendToDIA( unsigned int entity, boost::shared_ptr< PathPoint > point ) const
-{
-    if( entity_ )
-        return;
-    GET_HOOK( AddPathPoint )( entity, point );
-    entity_ = entity;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Rep_PathPoint_Front::SendToDIA
-// Created: MGD 10-03-11
-//-----------------------------------------------------------------------------
-void Rep_PathPoint_Front::RemoveFromDIA( boost::shared_ptr< PathPoint > self )
-{
-    if( entity_ )
-        GET_HOOK( RemovePathPoint )( *entity_, self );
 }
 
 // -----------------------------------------------------------------------------

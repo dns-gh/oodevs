@@ -22,6 +22,7 @@ namespace sword
 namespace movement
 {
     class Agent_PathClass;
+    class ModuleFacade;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -32,9 +33,9 @@ class Agent_Path : public PathResult
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent_Path( const wrapper::View& entity, const MT_Vector2D& vPosEnd, const PathType& pathType );
-             Agent_Path( const wrapper::View& entity, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const PathType& pathType );
-             Agent_Path( const wrapper::View& entity, const T_PointVector& points , const PathType& pathType );
+             Agent_Path( ModuleFacade& module, const wrapper::View& entity, const MT_Vector2D& vPosEnd, const PathType& pathType );
+             Agent_Path( ModuleFacade& module, const wrapper::View& entity, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const PathType& pathType );
+             Agent_Path( ModuleFacade& module, const wrapper::View& entity, const T_PointVector& points , const PathType& pathType );
     virtual ~Agent_Path();
     //@}
 
@@ -93,6 +94,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ModuleFacade& module_;
     const wrapper::View entity_;
     // Path calculation parameters
     const Agent_PathClass& pathClass_;
