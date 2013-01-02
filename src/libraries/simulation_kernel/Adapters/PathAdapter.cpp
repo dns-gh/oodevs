@@ -39,80 +39,102 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <core/Convert.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace sword;
 
-DECLARE_HOOK( CleanPathAfterComputation, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TER_Pathfinder_ABC& pathfind ) )
-DECLARE_HOOK( PathGetLength, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( CleanPathAfterComputation, void, ( std::size_t path ) )
+DECLARE_HOOK( ExecutePathfind, void, ( std::size_t path, TerrainPathfinder_ABC& pathfind ) )
+DECLARE_HOOK( PathGetLength, double, ( std::size_t path ) )
+DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( std::size_t path ) )
 
-DECLARE_HOOK( AvoidEnemies, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( GetEnemyCostOnContact, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( AvoidEnemies, bool, ( std::size_t path ) )
+DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( std::size_t path ) )
+DECLARE_HOOK( GetEnemyCostOnContact, double, ( std::size_t path ) )
 
-DECLARE_HOOK( AvoidObjects, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( GetFirstPoint, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
-DECLARE_HOOK( GetThreshold, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( AvoidObjects, bool, ( std::size_t path ) )
+DECLARE_HOOK( GetFirstPoint, void, ( std::size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectCost, double, ( std::size_t path, unsigned int type ) )
+DECLARE_HOOK( GetThreshold, double, ( std::size_t path ) )
 
-DECLARE_HOOK( HandlePopulations, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( GetPopulationSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( GetPopulationAttitudeCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
+DECLARE_HOOK( HandlePopulations, bool, ( std::size_t path ) )
+DECLARE_HOOK( GetPopulationSecurityRange, double, ( std::size_t path ) )
+DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( std::size_t path ) )
+DECLARE_HOOK( GetPopulationAttitudeCost, double, ( std::size_t path, unsigned int type ) )
 
-DEFINE_HOOK( GetFuseauxCost, 11, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
+DEFINE_HOOK( NotifyPathCreation, 0, std::size_t, () )
+{
+    return sword::PathAdapter::Add();
+}
+
+DEFINE_HOOK( InitializePath, 2, void, ( std::size_t path, const SWORD_Model* entity ) )
+{
+    sword::PathAdapter::Get( path )->Initialize( *core::Convert( entity ) );
+}
+
+DEFINE_HOOK( GetFuseauxCost, 10, double, ( std::size_t path,
                                            const MT_Vector2D& from, const MT_Vector2D& to,
                                            double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
                                            double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
                                            double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) )
 {
-    return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetFuseauxCost( from, to, rMaximumFuseauDistance, rMaximumFuseauDistanceWithAutomata, rFuseauCostPerMeterOut, rComfortFuseauDistance, rFuseauCostPerMeterIn, rMaximumAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut );
+    return sword::PathAdapter::Get( path )->GetFuseauxCost( from, to, rMaximumFuseauDistance, rMaximumFuseauDistanceWithAutomata, rFuseauCostPerMeterOut, rComfortFuseauDistance, rFuseauCostPerMeterIn, rMaximumAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut );
 }
 
-DEFINE_HOOK( GetObjectsCost, 6, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
+DEFINE_HOOK( GetObjectsCost, 5, double, ( std::size_t path,
                                           const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
 {
-    return PathAdapter::Add( *core::Convert( entity ), path )->GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
+    return PathAdapter::Get( path )->GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
 }
 
-DEFINE_HOOK( GetUrbanBlockCost, 4, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to ) )
+DEFINE_HOOK( GetUrbanBlockCost, 3, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to ) )
 {
-    return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetUrbanBlockCost( from, to );
+    return sword::PathAdapter::Get( path )->GetUrbanBlockCost( from, to );
 }
 
-DEFINE_HOOK( GetEnemiesCost, 7, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
+DEFINE_HOOK( GetEnemiesCost, 6, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to,
                                           const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) )
 {
-    return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost );
+    return sword::PathAdapter::Get( path )->GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost );
 }
 
-DEFINE_HOOK( GetPopulationsCost, 7, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
+DEFINE_HOOK( GetPopulationsCost, 6, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to,
                                               const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
 {
-    return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType, rPopulationMaximumCost );
+    return sword::PathAdapter::Get( path )->GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType, rPopulationMaximumCost );
 }
 
-DEFINE_HOOK( GetAltitudeCost, 5, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
+DEFINE_HOOK( GetAltitudeCost, 4, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
 {
-    return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
+    return sword::PathAdapter::Get( path )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
 }
 
 namespace
 {
-    typedef std::map< boost::shared_ptr< movement::Path_ABC >, boost::shared_ptr< PathAdapter > > T_Paths;
+    typedef std::map< std::size_t, boost::shared_ptr< PathAdapter > > T_Paths;
     T_Paths paths;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathAdapter::Add
+// Created: SLI 2012-12-12
+// -----------------------------------------------------------------------------
+std::size_t PathAdapter::Add()
+{
+    boost::shared_ptr< PathAdapter > path( new PathAdapter() );
+    paths[ path->GetID() ] = path;
+    return path->GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathAdapter::Get
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< PathAdapter >& PathAdapter::Add( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
+const boost::shared_ptr< PathAdapter >& PathAdapter::Get( std::size_t path )
 {
     boost::shared_ptr< PathAdapter >& result = paths[ path ];
     if( ! result )
-        result.reset( new PathAdapter( entity, path ) );
+        throw MASA_EXCEPTION( "Could not retrieve path '" + boost::lexical_cast< std::string >( path ) + "'" );
     return result;
 }
 
@@ -120,7 +142,7 @@ const boost::shared_ptr< PathAdapter >& PathAdapter::Add( const core::Model& ent
 // Name: PathAdapter::Remove
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< PathAdapter > PathAdapter::Remove( const boost::shared_ptr< movement::Path_ABC >& path )
+boost::shared_ptr< PathAdapter > PathAdapter::Remove( std::size_t path )
 {
     boost::shared_ptr< PathAdapter > result;
     T_Paths::iterator it = paths.find( path );
@@ -132,33 +154,14 @@ boost::shared_ptr< PathAdapter > PathAdapter::Remove( const boost::shared_ptr< m
     return result;
 }
 
-namespace
-{
-    double Square( double x )
-    {
-        return x * x;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PathAdapter constructor
 // Created: MCO 2012-01-26
 // -----------------------------------------------------------------------------
-PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
-    : path_       ( path )
-    , id_         ( entity[ "identifier" ] )
-    , data_       ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , weight_     ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
-    , squareSlope_( Square( entity[ "movement/max-slope" ] ) )
-    , height_     ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
+PathAdapter::PathAdapter()
+    : data_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
 {
-    MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
-    fuseau_= pion.GetOrderManager().GetFuseau();
-    automateFuseau_ = pion.GetAutomate().GetOrderManager().GetFuseau();
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itPion = reinforcements.begin(); itPion != reinforcements.end(); ++itPion )
-        weight_ = std::max( weight_, ( *itPion )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
-    InitializePathKnowledges( entity, pion );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -170,13 +173,31 @@ PathAdapter::~PathAdapter()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: PathAdapter::Get
-// Created: MCO 2012-01-26
-// -----------------------------------------------------------------------------
-const boost::shared_ptr< movement::Path_ABC >& PathAdapter::Get() const
+namespace
 {
-    return path_;
+    double Square( double x )
+    {
+        return x * x;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathAdapter::Initialize
+// Created: SLI 2012-12-14
+// -----------------------------------------------------------------------------
+void PathAdapter::Initialize( const core::Model& entity )
+{
+    id_ = entity[ "identifier" ];
+    weight_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight(); // $$$$ MCO 2012-05-23: read from model
+    squareSlope_ = Square( entity[ "movement/max-slope" ] );
+    height_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight(); // $$$$ MCO 2012-05-23: read from model
+    MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
+    fuseau_= pion.GetOrderManager().GetFuseau();
+    automateFuseau_ = pion.GetAutomate().GetOrderManager().GetFuseau();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itPion = reinforcements.begin(); itPion != reinforcements.end(); ++itPion )
+        weight_ = std::max( weight_, ( *itPion )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
+    InitializePathKnowledges( entity, pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +207,7 @@ const boost::shared_ptr< movement::Path_ABC >& PathAdapter::Get() const
 void PathAdapter::Execute( TER_Pathfinder_ABC& pathfind )
 {
     pathfind.SetId( id_ );
-    GET_HOOK( ExecutePathfind )( path_, pathfind );
+    GET_HOOK( ExecutePathfind )( GetID(), pathfind );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +216,7 @@ void PathAdapter::Execute( TER_Pathfinder_ABC& pathfind )
 // -----------------------------------------------------------------------------
 void PathAdapter::CleanAfterComputation()
 {
-    GET_HOOK( CleanPathAfterComputation )( path_ );
+    GET_HOOK( CleanPathAfterComputation )( GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +225,7 @@ void PathAdapter::CleanAfterComputation()
 // -----------------------------------------------------------------------------
 double PathAdapter::GetLength() const
 {
-    return GET_HOOK( PathGetLength )( path_ );
+    return GET_HOOK( PathGetLength )( GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +234,7 @@ double PathAdapter::GetLength() const
 // -----------------------------------------------------------------------------
 DEC_Path_ABC::E_State PathAdapter::GetState() const
 {
-    return GET_HOOK( PathGetState )( path_ );
+    return GET_HOOK( PathGetState )( GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,30 +283,30 @@ namespace
 void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL_AgentPion& pion )
 {
     // Enemies
-    if( GET_HOOK( AvoidEnemies )( path_ ) )
+    if( GET_HOOK( AvoidEnemies )( GetID() ) )
     {
         const T_KnowledgeAgentVector& enemies = pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-        for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+        for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
             {
-                const double factor = GET_HOOK( GetEnemyCostOnContact )( path_ );
+                const double factor = GET_HOOK( GetEnemyCostOnContact )( GetID() );
                 if( factor > 0 )
                     pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
-                        GET_HOOK( GetEnemyCostAtSecurityRange )( path_ ), factor, knowledge.GetMaxRangeToFireOn( pion, 0 ) ) );
+                        GET_HOOK( GetEnemyCostAtSecurityRange )( GetID() ), factor, knowledge.GetMaxRangeToFireOn( pion, 0 ) ) );
             }
         }
     }
     // Objects
-    if( GET_HOOK( AvoidObjects )( path_ ) )
+    if( GET_HOOK( AvoidObjects )( GetID() ) )
     {
         T_KnowledgeObjectVector knowledgesObject;
         MIL_DangerousObjectFilter filter;
         pion.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, pion, filter );
         T_PointVector firstPointVector;
-        GET_HOOK( GetFirstPoint )( path_, &AddPoint, &firstPointVector );
-        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        GET_HOOK( GetFirstPoint )( GetID(), &AddPoint, &firstPointVector );
+        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             if( knowledge.CanCollideWith( pion ) )
@@ -310,9 +331,9 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
                     pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) ) );
                 else
                 {
-                    const double cost = GET_HOOK( GetObjectCost )( path_, knowledge.GetType().GetID() );
+                    const double cost = GET_HOOK( GetObjectCost )( GetID(), knowledge.GetType().GetID() );
                     if( cost != 0 && knowledge.GetLocalisation().GetType() != TER_Localisation::eNone )
-                        pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( knowledge, cost, GET_HOOK( GetThreshold )( path_ ) ) ) );
+                        pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( knowledge, cost, GET_HOOK( GetThreshold )( GetID() ) ) ) );
                 }
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
                     rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
@@ -320,7 +341,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
         }
     }
     // Populations
-    if( GET_HOOK( HandlePopulations )( path_ ) )
+    if( GET_HOOK( HandlePopulations )( GetID() ) )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
         pion.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
@@ -336,7 +357,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
 // -----------------------------------------------------------------------------
 double PathAdapter::GetPopulationSecurityRange() const
 {
-    return GET_HOOK( GetPopulationSecurityRange )( path_ );
+    return GET_HOOK( GetPopulationSecurityRange )( GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +366,7 @@ double PathAdapter::GetPopulationSecurityRange() const
 // -----------------------------------------------------------------------------
 double PathAdapter::GetCostOutsideOfPopulation() const
 {
-    return GET_HOOK( GetCostOutsideOfPopulation )( path_ );
+    return GET_HOOK( GetCostOutsideOfPopulation )( GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,7 +375,7 @@ double PathAdapter::GetCostOutsideOfPopulation() const
 // -----------------------------------------------------------------------------
 double PathAdapter::GetPopulationAttitudeCost( unsigned int attitudeID ) const
 {
-    return GET_HOOK( GetPopulationAttitudeCost )( path_, attitudeID );
+    return GET_HOOK( GetPopulationAttitudeCost )( GetID(), attitudeID );
 }
 
 namespace

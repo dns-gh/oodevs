@@ -12,8 +12,8 @@
 
 #include "PathResult.h"
 #include "Speeds.h"
-#include "MT_Tools/MT_Profiler.h"
 #include "wrapper/View.h"
+#include "MT_Tools/MT_Profiler.h"
 
 class MIL_LimaOrder;
 
@@ -21,8 +21,8 @@ namespace sword
 {
 namespace movement
 {
-    class Agent_PathClass;
     class ModuleFacade;
+    class Agent_PathClass;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -44,7 +44,7 @@ public:
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;
-    virtual void ComputePath( const boost::shared_ptr< Path_ABC >& pPath );
+    void Initialize();
     //@}
 
     //! @name Accessors
@@ -70,7 +70,7 @@ public:
 private:
     //! @name Init
     //@{
-    void Initialize( const T_PointVector& pathPoints );
+    void ComputePath();
     //@}
 
     //! @name Points insertion Tools

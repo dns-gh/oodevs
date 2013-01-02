@@ -14,8 +14,6 @@
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
 #include <string>
 #include <vector>
 
@@ -34,7 +32,7 @@ namespace movement
 // @class  Path_ABC
 // Created: NLD 2005-02-22
 // =============================================================================
-class Path_ABC : public boost::enable_shared_from_this< Path_ABC >, private boost::noncopyable
+class Path_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -54,13 +52,10 @@ public:
     //! @name Operations
     //@{
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
-    virtual void ComputePath( const boost::shared_ptr< Path_ABC >& pPath ) = 0;
     void Cancel();
     virtual void CleanAfterComputation();
 
     double GetLength() const;
-    void AddRef();
-    void DecRef();
 
     virtual bool NeedRefine() const = 0;
     virtual bool UseStrictClosest() const = 0;
@@ -69,7 +64,7 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const;
+    std::size_t GetID() const;
     E_State GetState() const;
     const MT_Vector2D& GetLastWaypoint() const;
 
@@ -86,7 +81,7 @@ public:
 protected:
     //! @name Constructor / Destructor
     //@{
-             Path_ABC();
+    explicit Path_ABC( std::size_t identifier );
     virtual ~Path_ABC();
     //@}
 
@@ -111,7 +106,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const unsigned int nID_;
+    const std::size_t identifier_;
     T_PathSectionVector pathSections_;
     T_PointVector computedWaypoints_;
     E_State nState_;
@@ -119,9 +114,6 @@ private:
     MT_Vector2D lastWaypoint_;
     unsigned int nNbrRefs_;              // nb of references on path
     //@}
-
-private:
-    static unsigned int nIDIdx_;
 };
 
 }

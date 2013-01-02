@@ -95,12 +95,12 @@ using namespace sword;
 
 // movement
 DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
-DECLARE_HOOK( CreatePath, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
-DECLARE_HOOK( CreatePathList, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
+DECLARE_HOOK( CreatePath, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
+DECLARE_HOOK( CreatePathList, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
 DECLARE_HOOK( GetAgentFuturePosition, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
 DECLARE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) )
-DECLARE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( const boost::shared_ptr< sword::movement::Path_ABC >& pPath ) )
+DECLARE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, std::size_t path ) )
+DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( std::size_t path ) )
 
 // perception
 DECLARE_HOOK( GetPerceptionId, int, () )
@@ -255,37 +255,6 @@ void RolePion_Decision::RegisterControlActions()
         boost::function< void( unsigned int ) >( boost::bind( &ResumeAction, boost::ref( GetPion() ), _1 ) ) );
 }
 
-namespace core
-{
-    template<>
-    class UserData< boost::shared_ptr< DEC_Path_ABC > > : public UserData_ABC
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-        UserData( const boost::shared_ptr< DEC_Path_ABC >& userData )
-            : userData_( boost::dynamic_pointer_cast< PathAdapter >( userData )->Get() )
-        {}
-        virtual ~UserData()
-        {}
-        //@}
-
-        //! @name Operations
-        //@{
-        virtual void* Get() const
-        {
-            return static_cast< void* >( const_cast< boost::shared_ptr< movement::Path_ABC >* >( &userData_ ) );
-        }
-        //@}
-
-    private:
-        //! @name Member data
-        //@{
-        boost::shared_ptr< movement::Path_ABC > userData_;
-        //@}
-    };
-}
-
 namespace
 {
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > NextObjectOnPath( const MIL_ObjectFilter& filter, const MIL_Agent_ABC& agent, const core::Model& model )
@@ -362,22 +331,19 @@ namespace
     }
     bool IsMovingOnPath( const MIL_AgentPion& agent, const DEC_Path_ABC* pPath )
     {
-        const PathAdapter* adapter = dynamic_cast< const PathAdapter* >( pPath );
-        if( ! adapter )
-            return false;
-        return GET_HOOK( IsAgentMovingOnPath )( agent.GetID(), adapter->Get() );
+        return pPath ? GET_HOOK( IsAgentMovingOnPath )( agent.GetID(), pPath->GetID() ) : false;
     }
     boost::shared_ptr< DEC_Path_ABC > CreatePathToPoint( MIL_AgentPion& agent, const core::Model& model, MT_Vector2D* pEnd, int pathType )
     {
         assert( pEnd );
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        return PathAdapter::Add( entity, GET_HOOK( CreatePath )( core::Convert( &entity ), *pEnd, pathType ) );
+        return PathAdapter::Get( GET_HOOK( CreatePath )( core::Convert( &entity ), *pEnd, pathType ) );
     }
     boost::shared_ptr< DEC_Path_ABC > CreatePathToPointList( MIL_AgentPion& agent, const core::Model& model, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType  )
     {
         assert( !listPt.empty() );
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        return PathAdapter::Add( entity, GET_HOOK( CreatePathList )( core::Convert( &entity ), listPt, pathType ) );
+        return PathAdapter::Get( GET_HOOK( CreatePathList )( core::Convert( &entity ), listPt, pathType ) );
     }
     boost::shared_ptr< DEC_Path_ABC > CreatePathToPointBM( MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< MT_Vector2D > end, int pathType )
     {
@@ -406,16 +372,13 @@ namespace
     }
     boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const DEC_Path_ABC* pPath )
     {
-        const PathAdapter* adapter = dynamic_cast< const PathAdapter* >( pPath );
-        if( ! adapter )
-            return boost::shared_ptr< MT_Vector2D >();
-        return GET_HOOK( PathGetLastPointOfPath )( adapter->Get() );
+        return GET_HOOK( PathGetLastPointOfPath )( pPath->GetID() );
     }
     unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
-        parameters[ "path/data" ].SetUserData( path );
+        parameters[ "path" ] = path->GetID();
         return StartCommand( sink, pion, "move", parameters );
     }
     void Orientate( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D > direction )

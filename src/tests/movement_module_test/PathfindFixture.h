@@ -35,6 +35,7 @@ namespace movement
     {
         PathfindFixture()
             : identifier( 12u )
+            , pathId    ( 47u )
             , entity    ( model[ "entities" ][ identifier ] )
         {
             const std::string xml( "<pathfind>"
@@ -84,9 +85,9 @@ namespace movement
             MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
             MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
             MOCK_EXPECT( ComputePathfind ).once().returns( false );
-            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
+            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _1, boost::ref( pathfind ) ) );
         }
-        boost::shared_ptr< sword::movement::Path_ABC > CreatePathParameter( const geometry::Point2f& objective )
+        std::size_t CreatePathParameter( const geometry::Point2f& objective )
         {
             entity[ "identifier" ] = identifier; // $$$$ _RC_ SLI 2012-03-09: smell?
             entity[ "data" ] = "data";
@@ -107,9 +108,11 @@ namespace movement
             MOCK_EXPECT( GetTheoricMaxSpeedWithReinforcement ).once().returns( maxSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).once().returns( baseSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).exactly( TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes ).returns( terrainSpeed );
+            MOCK_EXPECT( NotifyPathCreation ).once().returns( pathId );
+            MOCK_EXPECT( InitializePath ).once();
             return CreatePath( core::Convert( &entity ), vPosEnd, movementPathType );
         }
-        boost::shared_ptr< sword::movement::Path_ABC > CreateSimplePath()
+        std::size_t CreateSimplePath()
         {
             const T_Points points = boost::assign::map_list_of( geometry::Point2f( 0, 0 ), TerrainData() )
                                                               ( geometry::Point2f( 0, 10 ), TerrainData() );
@@ -118,6 +121,7 @@ namespace movement
         }
         TER_Pathfinder_ABC pathfind;
         const unsigned int identifier;
+        const std::size_t pathId;
         core::Model& entity;
     };
 }

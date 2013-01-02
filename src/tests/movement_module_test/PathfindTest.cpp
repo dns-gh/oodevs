@@ -50,6 +50,6 @@ BOOST_FIXTURE_TEST_CASE( path_too_long_to_compute_sends_timeout_log, PathfindFix
     MOCK_EXPECT( IsNullAutomateFuseau ).once().returns( true );
     MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Pathfind computation aborted - timeout" );
     MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &CheckShouldEndComputation, bp::arg_names::arg12, bp::arg_names::arg13 ) );
-    MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
+    MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _1, boost::ref( pathfind ) ) );
     CreateSimplePath();
 }

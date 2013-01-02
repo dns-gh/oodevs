@@ -38,16 +38,18 @@ DECLARE_HOOK( IsDestinationTrafficable, bool, ( const SWORD_Model* entity, const
 DECLARE_HOOK( IsNullAutomateFuseau, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( LimaIntersect2D, bool, ( const MIL_LimaOrder& lima, const MT_Line& line, MT_Vector2D& intersection ) )
 DECLARE_HOOK( UsePathDebug, bool, () )
-DECLARE_HOOK( StartComputePathfind, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+DECLARE_HOOK( StartComputePathfind, void, ( std::size_t path ) )
 DECLARE_HOOK( VisitKnowledgeObjects, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) )
 DECLARE_HOOK( CanMoveOn, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
+DECLARE_HOOK( NotifyPathCreation, std::size_t, () )
+DECLARE_HOOK( InitializePath, void, ( std::size_t path, const SWORD_Model* entity ) )
 
 //-----------------------------------------------------------------------------
 // Name: Agent_Path constructor
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const T_PointVector& points, const PathType& pathType )
-    : PathResult( pathType )
+    : PathResult         ( GET_HOOK( NotifyPathCreation )(), pathType )
     , module_            ( module )
     , entity_            ( entity )
     , unitSpeeds_        ( entity )
@@ -59,7 +61,6 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const
     initialWaypoints_.push_back( MT_Vector2D( entity[ "movement/position/x" ], entity[ "movement/position/y" ] ) );
     std::copy( points.begin(), points.end(), std::back_inserter( initialWaypoints_ ) );
     std::copy( points.begin(), points.end(), std::back_inserter( nextWaypoints_ ) );
-    Initialize( initialWaypoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +68,7 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
 Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const PathType& pathType )
-    : PathResult               ( pathType )
+    : PathResult         ( GET_HOOK( NotifyPathCreation )(), pathType )
     , module_            ( module )
     , entity_            ( entity )
     , unitSpeeds_        ( entity )
@@ -82,7 +83,6 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, std::
         initialWaypoints_.push_back( **it );
         nextWaypoints_.push_back( **it );
     }
-    Initialize( initialWaypoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, std::
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const MT_Vector2D& vPosEnd, const PathType& pathType )
-    : PathResult         ( pathType )
+    : PathResult         ( GET_HOOK( NotifyPathCreation )(), pathType )
     , module_            ( module )
     , entity_            ( entity )
     , unitSpeeds_        ( entity )
@@ -102,7 +102,6 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const
     initialWaypoints_.push_back( MT_Vector2D( entity[ "movement/position/x" ], entity[ "movement/position/y" ] ) );
     initialWaypoints_.push_back( vPosEnd );
     nextWaypoints_.push_back( vPosEnd );
-    Initialize( initialWaypoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -122,8 +121,9 @@ Agent_Path::~Agent_Path()
 // Name: Agent_Path::Initialize
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void Agent_Path::Initialize( const T_PointVector& points )
+void Agent_Path::Initialize()
 {
+    const T_PointVector& points = initialWaypoints_;
     if( points.empty() )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Initializing empty agent path" );
     const MT_Vector2D* pLastPoint = 0;
@@ -136,6 +136,8 @@ void Agent_Path::Initialize( const T_PointVector& points )
         }
         pLastPoint = &( *itPoint );
     }
+    GET_HOOK( InitializePath )( GetID(), entity_ );
+    ComputePath();
 }
 
 //-----------------------------------------------------------------------------
@@ -548,7 +550,7 @@ bool Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
 // Name: Agent_Path::ComputePath
 // Created: LDC 2012-03-23
 // -----------------------------------------------------------------------------
-void Agent_Path::ComputePath( const boost::shared_ptr< Path_ABC >& pPath )
+void Agent_Path::ComputePath()
 {
     if( ! GET_HOOK( IsDestinationTrafficable )( entity_, nextWaypoints_.empty() ? 0 : &nextWaypoints_[0], nextWaypoints_.size() ) )
     {
@@ -556,7 +558,7 @@ void Agent_Path::ComputePath( const boost::shared_ptr< Path_ABC >& pPath )
         Cancel();
     }
     else
-        GET_HOOK( StartComputePathfind )( entity_, pPath );
+        GET_HOOK( StartComputePathfind )( GetID() );
 }
 
 // -----------------------------------------------------------------------------

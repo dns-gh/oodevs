@@ -33,8 +33,9 @@ DECLARE_HOOK( ComputeObjectCollision, void,
 // Name: PathResult constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-PathResult::PathResult( const PathType& pathType )
-    : pathType_         ( pathType )
+PathResult::PathResult( std::size_t identifier, const PathType& pathType )
+    : Path_ABC( identifier )
+    , pathType_         ( pathType )
     , bSectionJustEnded_( false )
 {
     itCurrentPathPoint_ = resultList_.end();

@@ -25,7 +25,7 @@ namespace sword
 namespace movement
 {
     class PathWalker;
-    class Path_ABC;
+    class Agent_Path;
     class PathPoint;
 
 // =============================================================================
@@ -44,12 +44,13 @@ public:
 
     //! @name Operations
     //@{
-    void Register( unsigned int entity, PathWalker& walker );
-    void Unregister( unsigned int entity );
+    void RegisterPathWalker( unsigned int entity, PathWalker& walker );
+    void UnregisterPathWalker( unsigned int entity );
+    PathWalker* GetPathWalker( unsigned int entity );
 
-    bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
-    MT_Vector2D GetFuturePosition( const wrapper::View& entity, double rTime, bool bBoundOnPath ) const;
-    bool IsMovingOnPath( unsigned int entity, const boost::shared_ptr< Path_ABC >& path ) const;
+    void RegisterPath( boost::shared_ptr< Agent_Path > path );
+    void UnregisterPath( std::size_t identifier );
+    boost::weak_ptr< Agent_Path > GetPath( std::size_t identifier );
 
     std::vector< std::size_t > GetPoints( unsigned int entity ) const;
     const movement::PathPoint& GetPoint( std::size_t point ) const;
@@ -63,9 +64,10 @@ public:
 private:
     //! @name Member data
     //@{
-    std::map< unsigned int, PathWalker* > paths_;
+    std::map< unsigned int, PathWalker* > pathWalkers_;
     std::map< unsigned int, std::vector< std::size_t > > pathPoints_;
     std::map< std::size_t, boost::weak_ptr< movement::PathPoint > > points_;
+    std::map< std::size_t, boost::shared_ptr< Agent_Path > > paths_;
     //@}
 };
 

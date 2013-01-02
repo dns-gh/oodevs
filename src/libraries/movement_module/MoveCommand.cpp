@@ -45,15 +45,14 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
     : module_            ( module )
     , action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
-    , pMainPath_         ( boost::dynamic_pointer_cast< Agent_Path >( *static_cast< boost::shared_ptr< Path_ABC >* >( parameters[ "path/data" ].GetUserData() ) ) )
+    , mainPath_          ( module.GetPath( parameters[ "path" ] ) )
     , executionSuspended_( false )
     , isBlockedByObject_ ( false )
     , blockedTickCounter_( 0 )
     , pathWalker_        ( new PathWalker( module, identifier_ ) )
 {
-    if( ! pMainPath_ )
+    if( mainPath_.expired() )
         throw MASA_EXCEPTION( "Path pointer is of wrong type." );
-    pMainPath_->AddRef();
 }
 
 // -----------------------------------------------------------------------------
@@ -64,8 +63,7 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     pathWalker_->MoveStopped( entity );
-    if( pMainPath_ )
-        pMainPath_->DecRef();
+    module_.UnregisterPath( mainPath_.lock()->GetID() );
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 
@@ -75,17 +73,16 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
 // -----------------------------------------------------------------------------
 void MoveCommand::CreateNewPath( const wrapper::View& entity ) const
 {
-    assert( pMainPath_.get() );
-    assert( pMainPath_->GetState() != Path_ABC::eComputing );
-    const T_PointVector& nextWaypoints = pMainPath_->GetNextWaypoints();
-    const PathType& pathType = pMainPath_->GetPathType();
+    assert( mainPath_.lock()->GetState() != Path_ABC::eComputing );
+    const T_PointVector& nextWaypoints = mainPath_.lock()->GetNextWaypoints();
+    const PathType& pathType = mainPath_.lock()->GetPathType();
     boost::shared_ptr< Agent_Path > pNewPath( new Agent_Path( module_, entity, nextWaypoints, pathType ) );
-    pNewPath->ComputePath( pNewPath );
-    pathWalker_->MoveCanceled( pMainPath_ );
-    pMainPath_->Cancel();
-    pMainPath_->DecRef();
-    pMainPath_ = pNewPath;
-    pMainPath_->AddRef();
+    module_.RegisterPath( pNewPath );
+    pNewPath->Initialize();
+    pathWalker_->MoveCanceled( mainPath_ );
+    mainPath_.lock()->Cancel();
+    module_.UnregisterPath( mainPath_.lock()->GetID() );
+    mainPath_ = pNewPath;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +104,7 @@ void MoveCommand::PostCallback( sword::movement::PathWalker::E_ReturnCode code )
 // -----------------------------------------------------------------------------
 bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D& /*position*/ ) const
 {
-    if( !pMainPath_ || pMainPath_->GetState() == Path_ABC::eComputing )
+    if( mainPath_.lock()->GetState() == Path_ABC::eComputing )
         return false;
 
     if( !GET_HOOK( UpdateObjectsToAvoid )( cache_, entity ) )
@@ -121,7 +118,7 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
     double rDistanceCollision = 0.;
-    if( !pMainPath_->ComputeFutureObjectCollision( entity, *cache_, rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
+    if( !mainPath_.lock()->ComputeFutureObjectCollision( entity, *cache_, rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
         return false;
     obstacleId_ = GET_HOOK( GetObjectKnownId )( pObjectColliding );
     PostReport( entity, MIL_Report::eRC_DifficultMovementProgression, GET_HOOK( GetKnowledgeObjectRealName )( pObjectColliding ) );
@@ -143,19 +140,19 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     if( entity[ "is-deployed" ] ) // $$$$ ABR 2011-12-19: not IsUndeployed == IsDeployed || IsDeploying || IsUndeploying -> Can't move, no call back.
         return;
 
-    if( !pMainPath_ )
+    if( mainPath_.expired() )
         return PostCallback( PathWalker::eNotAllowed );
 
     if( ( AvoidObstacles( entity, position ) && GET_HOOK( EntityManagerFindObject )( obstacleId_ ) ) ||
-        ( executionSuspended_ && pMainPath_->GetState() != Path_ABC::eComputing &&
-        ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end() || position != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) ) )
+        ( executionSuspended_ && mainPath_.lock()->GetState() != Path_ABC::eComputing &&
+        ( mainPath_.lock()->GetCurrentKeyOnPath() == mainPath_.lock()->GetResult().end() || position != (*mainPath_.lock()->GetCurrentKeyOnPath())->GetPos() ) ) )
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath( entity );
     }
     executionSuspended_ = false;
     isBlockedByObject_ = false;
-    PathWalker::E_ReturnCode nReturn = pathWalker_->Move( pMainPath_, model, entity );
+    PathWalker::E_ReturnCode nReturn = pathWalker_->Move( mainPath_, model, entity );
     if( nReturn == PathWalker::eRunning )
     { // NOTHING. Pathfind is computing. Just don't try to do anything in this state.
     }
@@ -165,7 +162,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     else if( nReturn == PathWalker::eItineraireMustBeJoined )
     {
         CreateNewPath( entity );
-        nReturn = pathWalker_->Move( pMainPath_, model, entity );
+        nReturn = pathWalker_->Move( mainPath_, model, entity );
     }
     else if( nReturn == PathWalker::ePartialPath )
     { // NOTHING. Unit will move to the nearest point of the target.
@@ -183,10 +180,10 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
 // -----------------------------------------------------------------------------
 void MoveCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
-    if( pMainPath_.get() )
+    if( mainPath_.lock() )
     {
         const wrapper::View& entity = model[ "entities" ][ identifier_ ];
-        pathWalker_->MoveSuspended( pMainPath_, entity );
+        pathWalker_->MoveSuspended( mainPath_, entity );
         executionSuspended_ = true;
     }
     PostCallback( PathWalker::ePaused );

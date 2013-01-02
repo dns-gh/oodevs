@@ -14,6 +14,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/noncopyable.hpp>
+#include <boost/weak_ptr.hpp>
 
 class KnowledgeCache;
 class MT_Line;
@@ -63,10 +64,10 @@ public:
 
     //! @name Operations
     //@{
-    E_ReturnCode Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const;
-    void MoveSuspended( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& entity ) const;
+    E_ReturnCode Move( boost::weak_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const;
+    void MoveSuspended( boost::weak_ptr< PathResult >, const wrapper::View& entity ) const;
     void MoveStopped( const wrapper::View& entity ) const;
-    void MoveCanceled( const boost::shared_ptr< PathResult >& pPath ) const;
+    void MoveCanceled( boost::weak_ptr< PathResult > ) const;
     void Clean();
     //@}
 
@@ -74,7 +75,7 @@ public:
     //@{
     bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const;
     MT_Vector2D ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const;
-    bool IsMovingOn( const Path_ABC& path ) const;
+    bool IsMovingOn( boost::weak_ptr< Path_ABC > path ) const;
     //@}
 
 private:
@@ -121,13 +122,13 @@ private:
     //! @name Tools
     //@{
     bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove, const wrapper::View& entity ) const;
-    bool TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const;
+    bool TryToMoveTo( boost::weak_ptr< PathResult > path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const;
     void ComputeObjectsCollision( const wrapper::View& model, const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet ) const;
     void ComputeCurrentSpeed( const wrapper::View& entity ) const;
-    void InitializeEnvironment( const PathResult& path, const wrapper::View& entity ) const;
-    bool GoToNextNavPoint( PathResult& path, const wrapper::View& entity ) const;
-    E_ReturnCode SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const;
-    void SetCurrentPathPoint( PathResult& path ) const;
+    void InitializeEnvironment( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const;
+    bool GoToNextNavPoint( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const;
+    E_ReturnCode SetCurrentPath( boost::weak_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const;
+    void SetCurrentPathPoint( boost::weak_ptr< PathResult > path ) const;
     void CheckPathNotification( const wrapper::View& entity ) const;
     void SetEnvironmentType( const TerrainData& environment, const wrapper::View& entity ) const;
     void PostMovement( const wrapper::View& entity ) const;
@@ -160,7 +161,7 @@ private:
     mutable bool bForcePathCheck_;
     mutable bool bHasMoved_;
     mutable bool bFuelReportSent_;
-    mutable boost::shared_ptr< PathResult > path_;
+    mutable boost::weak_ptr< PathResult > path_;
     mutable E_ReturnCode pathSet_;
     //@}
 };

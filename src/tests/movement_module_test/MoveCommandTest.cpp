@@ -24,11 +24,11 @@ namespace
         size_t StartMoveCommand( const T_Points& points )
         {
             ConfigurePathfind( points );
-            boost::shared_ptr< sword::movement::Path_ABC > path = CreatePathParameter( points.back().first );
+            const std::size_t path = CreatePathParameter( points.back().first );
             return StartCommand( "move",
                 core::MakeModel( "action", action )
                                ( "identifier", identifier )
-                               ( "path/data", core::MakeUserData( path ) ) );
+                               ( "path", path ) );
         }
         void ConfigurePathfind( const T_Points& points )
         {
@@ -37,7 +37,7 @@ namespace
             MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
             MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
             MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &PathfindFixture::AddPoints, this, boost::ref( points ), bp::arg_names::arg10, bp::arg_names::arg11 ) );
-            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
+            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _1, boost::ref( pathfind ) ) );
         }
         void Step( double speed, bool hasResources, bool canMove )
         {
@@ -101,7 +101,7 @@ namespace
     {
         ~UnfinishedMovementFixture()
         {
-            MOCK_EXPECT( CancelPathFindJob );
+            MOCK_EXPECT( CancelPathFindJob ).once();
             ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
             StopCommand( command );
         }
@@ -138,11 +138,11 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
 {
     MOCK_EXPECT( IsDestinationTrafficable ).returns( false );
     ExpectEvent( "movement report" );
-    boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
+    const std::size_t path = CreateSimplePath();
     command = StartCommand( "move",
         core::MakeModel( "action", action )
-            ( "identifier", identifier )
-            ( "path/data", core::MakeUserData( path ) ) );
+                       ( "identifier", identifier )
+                       ( "path", path ) );
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
@@ -153,11 +153,11 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
 {
     ConfigureImpossiblePathfind();
     ExpectEvent( "movement report" );
-    boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
+    const std::size_t path = CreateSimplePath();
     command = StartCommand( "move",
         core::MakeModel( "action", action )
-            ( "identifier", identifier )
-            ( "path/data", core::MakeUserData( path ) ) );
+                       ( "identifier", identifier )
+                       ( "path", path ) );
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
@@ -196,7 +196,7 @@ BOOST_FIXTURE_TEST_CASE( first_movement_command_posts_path_effect_and_running_co
                                                               ( "position/x", 0 )
                                                               ( "position/y", speed )
                                                               ( "speed", speed ) );
-    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )
+    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", pathId )
         ( "points", sword::test::MakeModel()[ sword::test::MakeModel( "x", 0 )( "y", 0 ) ]
                                             [ sword::test::MakeModel( "x", 0 )( "y", 10 ) ] ) );
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
@@ -337,7 +337,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_posts_truncated_path_when_too_long, Lo
     sword::test::ModelBuilder builder = sword::test::MakeModel();
     for( float y = 0; y < threshold; ++y )
         builder[ sword::test::MakeModel( "x", 0 )( "y", y ) ];
-    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
+    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", pathId )( "points", builder ) );
     Advance( 0.5, sword::movement::PathWalker::eRunning );
 }
 
@@ -359,7 +359,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_posts_updated_truncated_path_when_thre
     sword::test::ModelBuilder builder = sword::test::MakeModel();
     for( float y = threshold; y < 2 * threshold; ++y )
         builder[ sword::test::MakeModel( "x", 0 )( "y", y ) ];
-    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
+    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", pathId )( "points", builder ) );
     ExpectEffect( entity[ "movement" ] );
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
     const double speed = 0.5;

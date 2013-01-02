@@ -12,7 +12,6 @@
 #include "Hook.h"
 #include "Helpers.h"
 #include "PathAdapter.h"
-#include "PathPointAdapter.h"
 #include "KnowledgeCache.h"
 #include "MIL_AgentServer.h"
 #include "RoleAction_Moving.h"
@@ -72,9 +71,9 @@ using namespace sword;
 
 namespace
 {
-    DEFINE_HOOK( StartComputePathfind, 2, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( StartComputePathfind, 1, void, ( std::size_t path) )
     {
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( PathAdapter::Add( *core::Convert( entity ), path ) );
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( PathAdapter::Get( path ) );
     }
     DEFINE_HOOK( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
     {
@@ -201,7 +200,7 @@ namespace
     {
         return MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
     }
-    DEFINE_HOOK( CancelPathFindJob, 1, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( CancelPathFindJob, 1, void, ( std::size_t path) )
     {
         boost::shared_ptr< PathAdapter > removed = PathAdapter::Remove( path );
         if( removed )

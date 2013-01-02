@@ -53,7 +53,6 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PathResult( const PathType& pathType );
     virtual ~PathResult();
     //@}
 
@@ -72,6 +71,12 @@ public:
     virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
+    //@}
+
+protected:
+    //! @name Constructors/Destructor
+    //@{
+    PathResult( std::size_t identifier, const PathType& pathType );
     //@}
 
 private:

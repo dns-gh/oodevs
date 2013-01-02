@@ -22,16 +22,13 @@
 using namespace sword::movement;
 
 DECLARE_HOOK( GetMaxPathFindComputationDuration, unsigned int, () )
-DECLARE_HOOK( CancelPathFindJob, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-
-unsigned int Path_ABC::nIDIdx_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: Path_ABC constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-Path_ABC::Path_ABC()
-    : nID_         ( ++ nIDIdx_ )
+Path_ABC::Path_ABC( std::size_t identifier )
+    : identifier_  ( identifier )
     , nNbrRefs_    ( 0 )
     , nState_      ( eComputing )
     , bJobCanceled_( false )
@@ -46,25 +43,6 @@ Path_ABC::Path_ABC()
 Path_ABC::~Path_ABC()
 {
     CleanAfterComputation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path_ABC::AddRef
-// Created: LDC 2012-05-15
-// -----------------------------------------------------------------------------
-void Path_ABC::AddRef()
-{
-    ++nNbrRefs_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path_ABC::DecRef
-// Created: LDC 2012-05-15
-// -----------------------------------------------------------------------------
-void Path_ABC::DecRef()
-{
-    if( --nNbrRefs_ <= 0 )
-        GET_HOOK( CancelPathFindJob )( shared_from_this() );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,9 +229,9 @@ const T_PointVector& Path_ABC::GetComputedWaypoints() const
 // Name: Path_ABC::GetID
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-unsigned int Path_ABC::GetID() const
+std::size_t Path_ABC::GetID() const
 {
-    return nID_;
+    return identifier_;
 }
 
 // -----------------------------------------------------------------------------
@@ -280,7 +258,7 @@ void Path_ABC::RegisterPathSection( PathSection_ABC& section )
 // -----------------------------------------------------------------------------
 bool Path_ABC::operator==( const Path_ABC& rhs ) const
 {
-    return nID_ == rhs.nID_;
+    return identifier_ == rhs.identifier_;
 }
 
 // -----------------------------------------------------------------------------
@@ -289,5 +267,5 @@ bool Path_ABC::operator==( const Path_ABC& rhs ) const
 // -----------------------------------------------------------------------------
 bool Path_ABC::operator!=( const Path_ABC& rhs ) const
 {
-    return nID_ != rhs.nID_;
+    return identifier_ != rhs.identifier_;
 }

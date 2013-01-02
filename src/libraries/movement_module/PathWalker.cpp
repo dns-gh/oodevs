@@ -70,7 +70,7 @@ PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
     , bFuelReportSent_( false )
     , pathSet_        ( eFinished )
 {
-    module.Register( entity_, *this );
+    module.RegisterPathWalker( entity_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
 // -----------------------------------------------------------------------------
 PathWalker::~PathWalker()
 {
-    module_.Unregister( entity_ );
+    module_.UnregisterPathWalker( entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,18 +88,18 @@ PathWalker::~PathWalker()
 // -----------------------------------------------------------------------------
 bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const
 {
-    if( !path_ )
+    if( path_.expired() )
         return false;
-    return path_->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, blockedByObject, applyScale );
+    return path_.lock()->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathWalker::IsMovingOn
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-bool PathWalker::IsMovingOn( const Path_ABC& path ) const
+bool PathWalker::IsMovingOn( boost::weak_ptr< Path_ABC > path ) const
 {
-    return path_ && path == *path_;
+    return *path.lock() == *path_.lock();
 }
 
 //-----------------------------------------------------------------------------
@@ -109,11 +109,11 @@ bool PathWalker::IsMovingOn( const Path_ABC& path ) const
 MT_Vector2D PathWalker::ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const
 {
     const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
-    if( !path_ )
+    if( path_.expired() )
         return position;
     try
     {
-        return path_->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
+        return path_.lock()->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
     }
     catch( const std::exception& e )
     {
@@ -138,12 +138,12 @@ void PathWalker::ComputeCurrentSpeed( const wrapper::View& entity ) const
 // Name: PathWalker::InitializeEnvironment
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PathWalker::InitializeEnvironment( const PathResult& path, const wrapper::View& entity ) const
+void PathWalker::InitializeEnvironment( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const
 {
     PathResult::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
-    while( itPathPointTmp != path.GetResult().end() && ( *itPathPointTmp )->GetType() != PathPoint::eTypePointPath )
+    while( itPathPointTmp != path.lock()->GetResult().end() && ( *itPathPointTmp )->GetType() != PathPoint::eTypePointPath )
         ++itPathPointTmp;
-    if( itPathPointTmp == path.GetResult().end() )
+    if( itPathPointTmp == path.lock()->GetResult().end() )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Path point is invalid" );
     SetEnvironmentType( ( *itPathPointTmp )->GetObjectTypesToNextPoint(), entity );
 }
@@ -173,29 +173,29 @@ namespace
 // Name: PathWalker::SetCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
+PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::weak_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const
 {
-    if( path_ && pPath == path_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
+    if( !path_.expired() && path.lock() == path_.lock() && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
 
     pointsPassed_ = 0;
     PathWalker::E_ReturnCode rc = eRunning;
-    bool bCanSendTerrainReport = pPath != path_;
-    path_ = pPath;
-    pPath->InsertDecPoints(); // $$$ HIDEUX
+    bool bCanSendTerrainReport = path.lock() != path_.lock();
+    path_ = path;
+    path_.lock()->InsertDecPoints(); // $$$ HIDEUX
     PostPath( entity );
     bForcePathCheck_ = false;
-    if( pPath->GetResult().empty() )
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "List of path points resulting from pathfind is empty" );
-    itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath();
-    if( itCurrentPathPoint_ == pPath->GetResult().end() )
+    if( path_.lock()->GetResult().empty() )
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "List of path_ points resulting from pathfind is empty" );
+    itCurrentPathPoint_ = path_.lock()->GetCurrentKeyOnPath();
+    if( itCurrentPathPoint_ == path_.lock()->GetResult().end() )
         return eItineraireMustBeJoined;
     if( *itCurrentPathPoint_ )
-        pPath->NotifyPointReached( itCurrentPathPoint_ );
-    if( ( pPath->GetState() == PathResult::ePartial ) && bCanSendTerrainReport )
+        path_.lock()->NotifyPointReached( itCurrentPathPoint_ );
+    if( ( path_.lock()->GetState() == PathResult::ePartial ) && bCanSendTerrainReport )
     {
         bool isInsideObject = false;
-        const MT_Vector2D& lastWaypoint = pPath->GetLastWaypoint();
+        const MT_Vector2D& lastWaypoint = path_.lock()->GetLastWaypoint();
         typedef std::vector< wrapper::View > T_Objects;
         T_Objects objects;
         GET_HOOK( GetObjectListWithinCircle )( model, lastWaypoint, 100, &AddObject, &objects );
@@ -214,7 +214,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
     }
     itNextPathPoint_ = itCurrentPathPoint_;
     ++itNextPathPoint_;
-    InitializeEnvironment( *pPath, entity );
+    InitializeEnvironment( path_, entity );
     return rc;
 }
 
@@ -223,7 +223,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
 // Created: JVT 02-12-06
 // Last modified: JVT 03-02-04
 //-----------------------------------------------------------------------------
-bool PathWalker::GoToNextNavPoint( PathResult& path, const wrapper::View& entity ) const
+bool PathWalker::GoToNextNavPoint( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const
 {
     if( ( *itNextPathPoint_ )->GetType() == PathPoint::eTypePointPath )
     {
@@ -240,7 +240,7 @@ bool PathWalker::GoToNextNavPoint( PathResult& path, const wrapper::View& entity
         SetCurrentPathPoint( path );
         CheckPathNotification( entity );
     }
-    while( ++itNextPathPoint_ != path.GetResult().end() &&
+    while( ++itNextPathPoint_ != path.lock()->GetResult().end() &&
          ( *itNextPathPoint_ )->GetType() != PathPoint::eTypePointPath && ( *itNextPathPoint_ )->GetPos() == vNewPos_ );
     return true;
 }
@@ -265,11 +265,11 @@ void PathWalker::CheckPathNotification( const wrapper::View& entity ) const
 // Name: PathWalker::SetCurrentPathPoint
 // Created: LDC 2012-01-18
 //-----------------------------------------------------------------------------
-void PathWalker::SetCurrentPathPoint( PathResult& path ) const
+void PathWalker::SetCurrentPathPoint( boost::weak_ptr< PathResult > path ) const
 {
     itCurrentPathPoint_ = itNextPathPoint_;
-    if( itCurrentPathPoint_ != path.GetResult().end() && *itCurrentPathPoint_ )
-        path.NotifyPointReached( itCurrentPathPoint_ );
+    if( itCurrentPathPoint_ != path.lock()->GetResult().end() && *itCurrentPathPoint_ )
+        path.lock()->NotifyPointReached( itCurrentPathPoint_ );
 }
 
 namespace
@@ -442,7 +442,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
 // Name: PathWalker::TryToMoveTo
 // Created: NLD 2002-12-17
 //-----------------------------------------------------------------------------
-bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const
+bool PathWalker::TryToMoveTo( boost::weak_ptr< PathResult > path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const
 {
     // Deplacement de vNewPos_ vers vNewPosTmp
     if( vNewPosTmp == vNewPos_ )
@@ -455,10 +455,10 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
     }
 
     MT_Vector2D vNewPos( vNewPos_ );
-    bool bFirstMove = ( static_cast< float >( vNewPos_.rX_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rX_ ) &&
-                        static_cast< float >( vNewPos_.rY_ ) == static_cast< float >( ( *path.GetResult().begin() )->GetPos().rY_ ) );
+    bool bFirstMove = ( static_cast< float >( vNewPos_.rX_ ) == static_cast< float >( ( *path.lock()->GetResult().begin() )->GetPos().rX_ ) &&
+                        static_cast< float >( vNewPos_.rY_ ) == static_cast< float >( ( *path.lock()->GetResult().begin() )->GetPos().rY_ ) );
     if( bFirstMove )
-        vNewPos = (*path.GetResult().begin())->GetPos();
+        vNewPos = (*path.lock()->GetResult().begin())->GetPos();
 
     sMoveStepCmp cmp( vNewPos );
     T_MoveStepSet moveStepSet( cmp );
@@ -488,12 +488,12 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
 // Created: NLD 2004-09-22
 // Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
+PathWalker::E_ReturnCode PathWalker::Move( boost::weak_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const
 {
     if( bHasMoved_ )
         return eAlreadyMoving;
 
-    PathResult::E_State nPathState = pPath->GetState();
+    PathResult::E_State nPathState = path.lock()->GetState();
     if( nPathState == Path_ABC::eInvalid || nPathState == Path_ABC::eImpossible || nPathState == Path_ABC::eCanceled )
         return eNotAllowed;
 
@@ -503,7 +503,7 @@ PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >
         return eRunning;
     }
 
-    pathSet_ = SetCurrentPath( pPath, model, entity );
+    pathSet_ = SetCurrentPath( path, model, entity );
     if( pathSet_ == eItineraireMustBeJoined )
         return eItineraireMustBeJoined;
 
@@ -519,7 +519,7 @@ PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >
         return eNotAllowed;
     }
 
-    if( itNextPathPoint_ == pPath->GetResult().end() )
+    if( itNextPathPoint_ == path.lock()->GetResult().end() )
     {
         speed_ = 0;
         PostMovement( entity );
@@ -547,7 +547,7 @@ PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >
     while( rTimeRemaining > 0 )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
-        const bool moveTryResult = TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining, model, entity );  // $$$$ VPR 2012-01-06: Modifies vNewPos_
+        const bool moveTryResult = TryToMoveTo( path, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining, model, entity );  // $$$$ VPR 2012-01-06: Modifies vNewPos_
         distance_ += vPosBeforeMove.Distance( vNewPos_ );
 
         if( !moveTryResult )
@@ -556,13 +556,13 @@ PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >
             return pathSet_;
         }
 
-        if( GoToNextNavPoint( *pPath, entity ) )
+        if( GoToNextNavPoint( path, entity ) )
         {
             PostMovement( entity );
             return pathSet_;
         }
 
-        if( itNextPathPoint_ == pPath->GetResult().end() )
+        if( itNextPathPoint_ == path.lock()->GetResult().end() )
         {
             speed_ = 0;
             PostMovement( entity );
@@ -582,11 +582,11 @@ PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >
 // Name: PathWalker::MoveSuspended
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& entity ) const
+void PathWalker::MoveSuspended( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const
 {
-    if( !path_ && !bForcePathCheck_ )
+    if( path_.expired() && !bForcePathCheck_ )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move cannot be suspended" );
-    if( path_ && path_ == pPath )
+    if( !path_.expired() && path_.lock() == path.lock() )
         bForcePathCheck_ = true;
     speed_ = 0;
     MoveStopped( entity );
@@ -607,9 +607,9 @@ void PathWalker::MoveStopped( const wrapper::View& entity ) const
 // Name: PathWalker::MoveCanceled
 // Created: NLD 2005-03-16
 // -----------------------------------------------------------------------------
-void PathWalker::MoveCanceled( const boost::shared_ptr< PathResult >& pPath ) const
+void PathWalker::MoveCanceled( boost::weak_ptr< PathResult > path ) const
 {
-    if( path_ == pPath )
+    if( path_.lock() == path.lock() )
     {
         path_.reset();
         bForcePathCheck_ = true;
@@ -643,8 +643,8 @@ void PathWalker::PostPath( const wrapper::View& entity ) const
 {
     wrapper::Effect effect( entity[ "movement/path" ] );
     wrapper::Node points = effect[ "points" ];
-    effect[ "identifier" ] = path_->GetID();
-    const PathResult::T_PathPointList& pts = path_->GetResult();
+    effect[ "identifier" ] = path_.lock()->GetID();
+    const PathResult::T_PathPointList& pts = path_.lock()->GetResult();
     PathResult::CIT_PathPointList it = pts.begin();
     std::advance( it, pointsPassed_ );
     for( std::size_t index = 0; it != pts.end() && index < pathSizeThreshold; ++it, ++index )

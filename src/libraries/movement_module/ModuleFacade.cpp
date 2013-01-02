@@ -29,106 +29,116 @@ using namespace sword::movement;
 namespace
 {
     ModuleFacade* facade = 0; // $$$$ MCO : need a means to bind additional data to a hook
+    DECLARE_HOOK( CancelPathFindJob, void, ( std::size_t path ) )
 
     DEFINE_HOOK( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) )
     {
         assert( facade );
-        return facade->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject );
+        PathWalker* pathWalker = facade->GetPathWalker( wrapper::View( entity )[ "identifier" ] );
+        if( !pathWalker )
+            return false;
+        return pathWalker->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, false, false );
     }
     DEFINE_HOOK( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
     {
         assert( facade );
-        return facade->GetFuturePosition( entity, rTime, bBoundOnPath );
+        PathWalker* pathWalker = facade->GetPathWalker( wrapper::View( entity )[ "identifier" ] );
+        if( !pathWalker )
+            return MT_Vector2D();
+        return pathWalker->ExtrapolatePosition( entity, rTime, bBoundOnPath );
     }
-    DEFINE_HOOK( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, std::size_t path ) )
     {
         assert( facade );
-        return facade->IsMovingOnPath( entity, path );
+        PathWalker* pathWalker = facade->GetPathWalker( entity );
+        if( !pathWalker )
+            return false;
+        return pathWalker->IsMovingOn( facade->GetPath( path ) );
     }
-    DEFINE_HOOK( CreatePath, 3, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
+    DEFINE_HOOK( CreatePath, 3, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
+    {
+        assert( facade );
+        const PathType* pPathType = PathType::Find( pathType );
+        assert( pPathType );
+        boost::shared_ptr< Agent_Path > path( new Agent_Path( *facade, model, vPosEnd, *pPathType ) );
+        facade->RegisterPath( path );
+        path->Initialize();
+        return path->GetID();
+    }
+    DEFINE_HOOK( CreatePathList, 3, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
     {
         const PathType* pPathType = PathType::Find( pathType );
         assert( pPathType );
-        boost::shared_ptr< Path_ABC > path( new Agent_Path( *facade, model, vPosEnd, *pPathType ) );
-        path->ComputePath( path ); // $$$$ MCO 2012-10-04: use shared_from_this
-        return path;
+        boost::shared_ptr< Agent_Path > path( new Agent_Path( *facade, model, points, *pPathType ) );
+        facade->RegisterPath( path );
+        path->Initialize();
+        return path->GetID();
     }
-    DEFINE_HOOK( CreatePathList, 3, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
+    DEFINE_HOOK( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( std::size_t path ) )
     {
-        const PathType* pPathType = PathType::Find( pathType );
-        assert( pPathType );
-        boost::shared_ptr< Path_ABC > path( new Agent_Path( *facade, model, points, *pPathType ) );
-        path->ComputePath( path ); // $$$$ MCO 2012-10-04: use shared_from_this
-        return path;
+        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( facade->GetPath( path ).lock()->GetResult().back()->GetPos() ) );
     }
-    DEFINE_HOOK( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( const boost::shared_ptr< sword::movement::Path_ABC >& pPath ) )
+    DEFINE_HOOK( ExecutePathfind, 2, void, ( std::size_t path, TerrainPathfinder_ABC& pathfind ) )
     {
-        const PathResult* path = dynamic_cast< const PathResult* > ( pPath.get() );
-        if( !path || path->GetResult().empty() || !path->GetResult().back() )
-            return boost::shared_ptr< MT_Vector2D >();
-        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( path->GetResult().back()->GetPos() ) );
+        facade->GetPath( path ).lock()->Execute( pathfind );
     }
-    DEFINE_HOOK( ExecutePathfind, 2, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TER_Pathfinder_ABC& pathfind ) )
+    DEFINE_HOOK( CleanPathAfterComputation, 1, void, ( std::size_t path ) )
     {
-        path->Execute( pathfind );
+        facade->GetPath( path ).lock()->CleanAfterComputation();
     }
-    DEFINE_HOOK( CleanPathAfterComputation, 1, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( PathGetLength, 1, double, ( std::size_t path ) )
     {
-        path->CleanAfterComputation();
+        return facade->GetPath( path ).lock()->GetLength();
     }
-    DEFINE_HOOK( PathGetLength, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( PathGetState, 1, DEC_Path_ABC::E_State, ( std::size_t path ) )
     {
-        return path->GetLength();
+        return static_cast< DEC_Path_ABC::E_State >( facade->GetPath( path ).lock()->GetState() ); // $$$$ MCO : static_assert bijection
     }
-    DEFINE_HOOK( PathGetState, 1, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( AvoidEnemies, 1, bool, ( std::size_t path ) )
     {
-        return static_cast< DEC_Path_ABC::E_State >( path->GetState() ); // $$$$ MCO : static_assert bijection
+        return facade->GetPath( path ).lock()->GetClass().AvoidEnemies();
     }
-    DEFINE_HOOK( AvoidEnemies, 1, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( GetEnemyCostAtSecurityRange, 1, double, ( std::size_t path ) )
     {
-        return path->GetClass().AvoidEnemies();
+        return facade->GetPath( path ).lock()->GetClass().GetEnemyCostAtSecurityRange();
     }
-    DEFINE_HOOK( GetEnemyCostAtSecurityRange, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( GetEnemyCostOnContact, 1, double, ( std::size_t path ) )
     {
-        return path->GetClass().GetEnemyCostAtSecurityRange();
+        return facade->GetPath( path ).lock()->GetClass().GetEnemyCostOnContact();
     }
-    DEFINE_HOOK( GetEnemyCostOnContact, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( AvoidObjects, 1, bool, ( std::size_t path ) )
     {
-        return path->GetClass().GetEnemyCostOnContact();
+        return facade->GetPath( path ).lock()->GetClass().AvoidObjects();
     }
-    DEFINE_HOOK( AvoidObjects, 1, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( GetFirstPoint, 3, void, ( std::size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
     {
-        return path->GetClass().AvoidObjects();
-    }
-    DEFINE_HOOK( GetFirstPoint, 3, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
-    {
-        const MT_Vector2D* first = path->GetFirstPoint();
+        const MT_Vector2D* first = facade->GetPath( path ).lock()->GetFirstPoint();
         if( first )
             callback( *first, userData );
     }
-    DEFINE_HOOK( GetObjectCost, 2, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
+    DEFINE_HOOK( GetObjectCost, 2, double, ( std::size_t path, unsigned int type ) )
     {
-        return path->GetClass().GetObjectCost( type );
+        return facade->GetPath( path ).lock()->GetClass().GetObjectCost( type );
     }
-    DEFINE_HOOK( GetThreshold, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( GetThreshold, 1, double, ( std::size_t path ) )
     {
-        return path->GetClass().GetThreshold();
+        return facade->GetPath( path ).lock()->GetClass().GetThreshold();
     }
-    DEFINE_HOOK( HandlePopulations, 1, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( HandlePopulations, 1, bool, ( std::size_t path ) )
     {
-        return path->GetClass().HandlePopulations();
+        return facade->GetPath( path ).lock()->GetClass().HandlePopulations();
     }
-    DEFINE_HOOK( GetPopulationSecurityRange, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( GetPopulationSecurityRange, 1, double, ( std::size_t path ) )
     {
-        return path->GetClass().GetPopulationSecurityRange();
+        return facade->GetPath( path ).lock()->GetClass().GetPopulationSecurityRange();
     }
-    DEFINE_HOOK( GetCostOutsideOfPopulation, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( GetCostOutsideOfPopulation, 1, double, ( std::size_t path ) )
     {
-        return path->GetClass().GetCostOutsideOfPopulation();
+        return facade->GetPath( path ).lock()->GetClass().GetCostOutsideOfPopulation();
     }
-    DEFINE_HOOK( GetPopulationAttitudeCost, 2, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
+    DEFINE_HOOK( GetPopulationAttitudeCost, 2, double, ( std::size_t path, unsigned int type ) )
     {
-        return path->GetClass().GetPopulationAttitudeCost( type );
+        return facade->GetPath( path ).lock()->GetClass().GetPopulationAttitudeCost( type );
     }
     DEFINE_HOOK( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) )
     {
@@ -198,59 +208,64 @@ ModuleFacade::ModuleFacade( const wrapper::View& model )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleFacade::Register
+// Name: ModuleFacade::RegisterPathWalker
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-void ModuleFacade::Register( unsigned int entity, PathWalker& walker )
+void ModuleFacade::RegisterPathWalker( unsigned int entity, PathWalker& walker )
 {
-    paths_[ entity ] = &walker;
+    pathWalkers_[ entity ] = &walker;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleFacade::Unregister
+// Name: ModuleFacade::UnregisterPathWalker
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-void ModuleFacade::Unregister( unsigned int entity )
+void ModuleFacade::UnregisterPathWalker( unsigned int entity )
 {
-    paths_.erase( entity );
+    pathWalkers_.erase( entity );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModuleFacade::ComputeFutureObjectCollision
-// Created: MCO 2012-02-03
+// Name: ModuleFacade::GetPathWalker
+// Created: SLI 2012-12-13
 // -----------------------------------------------------------------------------
-bool ModuleFacade::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+PathWalker* ModuleFacade::GetPathWalker( unsigned int entity )
 {
-    std::map< unsigned int, PathWalker* >::const_iterator it = paths_.find( entity[ "identifier" ] );
+    auto it = pathWalkers_.find( entity );
+    if( it == pathWalkers_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::RegisterPath
+// Created: SLI 2012-12-13
+// -----------------------------------------------------------------------------
+void ModuleFacade::RegisterPath( boost::shared_ptr< Agent_Path > path )
+{
+    paths_[ path->GetID() ] = path;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::UnregisterPath
+// Created: SLI 2012-12-13
+// -----------------------------------------------------------------------------
+void ModuleFacade::UnregisterPath( std::size_t identifier )
+{
+    GET_HOOK( CancelPathFindJob )( identifier );
+    paths_.erase( identifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::GetPath
+// Created: SLI 2012-12-13
+// -----------------------------------------------------------------------------
+boost::weak_ptr< Agent_Path > ModuleFacade::GetPath( std::size_t identifier )
+{
+    auto it = paths_.find( identifier );
     if( it == paths_.end() )
-        return false;
-    return it->second->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, false, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModuleFacade::GetFuturePosition
-// Created: MCO 2012-02-03
-// -----------------------------------------------------------------------------
-MT_Vector2D ModuleFacade::GetFuturePosition( const wrapper::View& entity, double rTime, bool bBoundOnPath ) const
-{
-    std::map< unsigned int, PathWalker* >::const_iterator it = paths_.find( entity );
-    if( it == paths_.end() )
-        return MT_Vector2D();
-    return it->second->ExtrapolatePosition( entity, rTime, bBoundOnPath );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModuleFacade::IsMovingOnPath
-// Created: MCO 2012-02-03
-// -----------------------------------------------------------------------------
-bool ModuleFacade::IsMovingOnPath( unsigned int entity, const boost::shared_ptr< Path_ABC >& path ) const
-{
-    if( ! path )
-        return false;
-    std::map< unsigned int, PathWalker* >::const_iterator it = paths_.find( entity );
-    if( it == paths_.end() )
-        return false;
-    return it->second->IsMovingOn( *path );
+        throw MASA_EXCEPTION( "Could not retrieve path '" + boost::lexical_cast< std::string >( identifier ) + "'" );
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------

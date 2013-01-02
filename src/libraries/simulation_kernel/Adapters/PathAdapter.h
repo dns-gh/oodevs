@@ -31,10 +31,6 @@ namespace core
 
 namespace sword
 {
-namespace movement
-{
-    class Path_ABC;
-}
 // =============================================================================
 /** @class  PathAdapter
     @brief  Path adapter
@@ -53,15 +49,11 @@ public:
     virtual ~PathAdapter();
     //@}
 
-    //! @name Accessors
-    //@{
-    const boost::shared_ptr< movement::Path_ABC >& Get() const; // $$$$ MCO : to get rid of this we need to bind PathAdapter directly to DEC functions
-    //@}
-
     //! @name Operations
     //@{
-    static const boost::shared_ptr< PathAdapter >& Add( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path );
-    static boost::shared_ptr< PathAdapter > Remove( const boost::shared_ptr< movement::Path_ABC >& path );
+    static std::size_t Add();
+    static const boost::shared_ptr< PathAdapter >& Get( std::size_t path );
+    static boost::shared_ptr< PathAdapter > Remove( std::size_t path );
 
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();
@@ -78,12 +70,14 @@ public:
     double GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     double GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) const;
     double GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) const;
+
+    void Initialize( const core::Model& entity );
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-    PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path );
+    PathAdapter();
     //@}
 
     //! @name Helpers
@@ -111,7 +105,6 @@ private:
     //! @name Member data
     //@{
     const size_t id_;
-    boost::shared_ptr< movement::Path_ABC > path_;
     const PHY_RawVisionData& data_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;

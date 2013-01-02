@@ -63,7 +63,7 @@ private:
     ModuleFacade& module_;
     const size_t action_;
     unsigned int identifier_;
-    mutable boost::shared_ptr< Agent_Path > pMainPath_;
+    mutable boost::weak_ptr< Agent_Path > mainPath_;
     mutable boost::shared_ptr< KnowledgeCache > cache_;
     mutable bool executionSuspended_;
     mutable bool isBlockedByObject_;
