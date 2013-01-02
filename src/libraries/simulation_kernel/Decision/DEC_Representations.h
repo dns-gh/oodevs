@@ -39,7 +39,7 @@ public:
     const std::vector< boost::shared_ptr< MIL_FragOrder > >& GetOrdersCategory();
     void AddToOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject );
     void RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject );
-    void DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject );
+    void DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject ); // $$$$ _RC_ SLI 2012-12-13: same as RemoveFromOrdersCategory, delete it?
 
     const std::vector< boost::shared_ptr< DEC_PathPoint > >& GetPointsCategory();
     void AddToPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject );
@@ -65,9 +65,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< MIL_FragOrder > > T_OrdersRepresentationVector;
-    typedef T_OrdersRepresentationVector::iterator IT_OrdersRepresentationVector;
     typedef std::vector< boost::shared_ptr< DEC_PathPoint > > T_PointsRepresentationVector;
-    typedef T_PointsRepresentationVector::iterator IT_PointsRepresentationVector;
     //@}
 
 private:

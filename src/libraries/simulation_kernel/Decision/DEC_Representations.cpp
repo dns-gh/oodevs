@@ -74,29 +74,16 @@ void DEC_Representations::AddToPointsCategory( boost::shared_ptr< DEC_PathPoint 
 // -----------------------------------------------------------------------------
 void DEC_Representations::RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject )
 {
-    for( IT_OrdersRepresentationVector it = orderRepresentations_.begin(); it != orderRepresentations_.end(); ++it )
-    {
-        if( *it == pObject )
-        {
-            orderRepresentations_.erase( it );
-            break;
-        }
-    }
+    orderRepresentations_.erase( std::remove( orderRepresentations_.begin(), orderRepresentations_.end(), pObject ), orderRepresentations_.end() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Representations::RemoveFromPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
 void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject )
 {
-    for( IT_PointsRepresentationVector it = pointRepresentations_.begin(); it != pointRepresentations_.end(); ++it )
-    {
-        if( *it == pObject )
-        {
-            pointRepresentations_.erase( it );
-            break;
-        }
-    }
+    pointRepresentations_.erase( std::remove( pointRepresentations_.begin(), pointRepresentations_.end(), pObject ), pointRepresentations_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,12 +92,5 @@ void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathP
 // -----------------------------------------------------------------------------
 void DEC_Representations::DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject )
 {
-    for( IT_OrdersRepresentationVector oit = orderRepresentations_.begin(); oit != orderRepresentations_.end(); ++oit )
-    {
-        if( *oit == pObject )
-        {
-            orderRepresentations_.erase( oit );
-            return;
-        }
-    }
+    orderRepresentations_.erase( std::remove( orderRepresentations_.begin(), orderRepresentations_.end(), pObject ), orderRepresentations_.end() );
 }
