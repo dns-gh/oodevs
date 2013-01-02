@@ -303,6 +303,7 @@ namespace core
             models_.clear();
             module.Deinitialize();
         }
+        core::Model model;
         core::Module module;
     };
     struct ApiFixture : public LoadFixture, core::Logger_ABC
@@ -357,7 +358,6 @@ namespace core
         {
             commands.Execute( "default" );
         }
-        core::Model model;
         core::Commands commands;
         core::Hooks hooks;
     };
