@@ -12,7 +12,7 @@
 #include "Object.h"
 #include "DisasterAttribute.h"
 #include "MIL_DisasterType.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -135,7 +135,7 @@ void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC
     float dose = GetDose( object, agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     if( dose > 0.f )
     {
-        int step = MIL_AgentServer::GetWorkspace().GetTickDuration();
+        int step = MIL_Time_ABC::GetTime().GetTickDuration();
         const float protection = disasterType_->GetProtectionCoefficient(
             agent.GetType().GetUnitType().GetNbcSuit() );
         dose = std::pow( dose * protection, disasterType_->GetToxicityExponent() ) * step;

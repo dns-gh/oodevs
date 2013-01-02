@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Tiredness.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
 #include "protocol/Protocol.h"
@@ -58,7 +58,7 @@ void PHY_Tiredness::Initialize( xml::xistream& xis )
                 >> xml::end
             >> xml::end
         >> xml::end;
-    double timeFactor = MIL_AgentServer::GetWorkspace().GetTickDuration() / 3600.;
+    double timeFactor = MIL_Time_ABC::GetTime().GetTickDuration() / 3600.;
     evolution_.engineRunning_ *= timeFactor;
     evolution_.engineStopped_ *= timeFactor;
     evolution_.moving_ *= timeFactor;

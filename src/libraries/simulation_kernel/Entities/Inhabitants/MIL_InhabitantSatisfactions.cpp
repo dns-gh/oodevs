@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_InhabitantSatisfactions.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/PHY_ResourceNetworkType.h"
@@ -258,7 +258,7 @@ void MIL_InhabitantSatisfactions::SetResourceSatisfaction( const PHY_ResourceNet
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::IncreaseSafety( float gainPerHour )
 {
-    safety_ = std::min( 1.f, safety_ + MIL_AgentServer::GetWorkspace().GetTickDuration() * gainPerHour / 3600 );
+    safety_ = std::min( 1.f, safety_ + MIL_Time_ABC::GetTime().GetTickDuration() * gainPerHour / 3600 );
 }
 
 // -----------------------------------------------------------------------------

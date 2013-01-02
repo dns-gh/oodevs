@@ -14,7 +14,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
@@ -149,7 +149,7 @@ double PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
         return 1.;
     if( rTimeTmp == std::numeric_limits< double >::max() )
         return std::numeric_limits< double >::max();
-    return MIL_AgentServer::GetWorkspace().GetTickDuration() / rTimeTmp;
+    return MIL_Time_ABC::GetTime().GetTickDuration() / rTimeTmp;
 }
 
 // -----------------------------------------------------------------------------

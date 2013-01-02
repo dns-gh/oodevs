@@ -157,13 +157,13 @@ namespace
     {
         xml::xostringstream xos;
         xos << xis;
-        GET_HOOK( InitializeWeaponSystems )( xos.str().c_str(), MIL_AgentServer::GetWorkspace().GetTickDuration() ) ;
+        GET_HOOK( InitializeWeaponSystems )( xos.str().c_str(), MIL_Time_ABC::GetTime().GetTickDuration() ) ;
     }
     void InitializeDecisional( xml::xistream& xis )
     {
         xml::xostringstream xos;
         xos << xis;
-        GET_HOOK( InitializeDecisional )( xos.str().c_str(), MIL_AgentServer::GetWorkspace().GetTickDuration() ) ;
+        GET_HOOK( InitializeDecisional )( xos.str().c_str(), MIL_Time_ABC::GetTime().GetTickDuration() ) ;
     }
     // $$$$ _RC_ SLI 2012-09-11: hard coded
     const std::string configuration = "<core>"

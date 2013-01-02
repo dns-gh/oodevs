@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Schedule.h"
 #include "MIL_LivingArea_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/Codec.h"
 #include <boost/foreach.hpp>
@@ -100,8 +100,8 @@ void MIL_Schedule::ReadEvent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Schedule::AddEvent( const std::string& motivation, int transfertTimeInSecond /*= 0*/ )
 {
-    bpt::ptime pdate( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) );
-    unsigned int duration = MIL_AgentServer::GetWorkspace().GetTickDuration();
+    bpt::ptime pdate( bpt::from_time_t( MIL_Time_ABC::GetTime().GetRealTime() ) );
+    unsigned int duration = MIL_Time_ABC::GetTime().GetTickDuration();
     int transfertTime = ( transfertTimeInSecond ) ? transfertTimeInSecond : transferTime_;
 
     Event event;
