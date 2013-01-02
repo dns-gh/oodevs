@@ -41,7 +41,6 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
 // end of dependencies
 
 #define REGISTERED_HOOKS( APPLY ) \
-    APPLY( CleanPathAfterComputation, 1, void, ( std::size_t path ) ) \
     APPLY( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
     APPLY( CreatePath, 3, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) ) \
     APPLY( CreatePathList, 3, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
