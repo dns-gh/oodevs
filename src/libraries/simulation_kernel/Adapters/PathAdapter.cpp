@@ -43,7 +43,6 @@
 
 using namespace sword;
 
-DECLARE_HOOK( CleanPathAfterComputation, void, ( std::size_t path ) )
 DECLARE_HOOK( ExecutePathfind, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) )
 DECLARE_HOOK( PathGetLength, double, ( std::size_t path ) )
 DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( std::size_t path ) )
@@ -216,7 +215,7 @@ void PathAdapter::Execute( TER_Pathfinder_ABC& pathfind )
 // -----------------------------------------------------------------------------
 void PathAdapter::CleanAfterComputation()
 {
-    GET_HOOK( CleanPathAfterComputation )( GetID() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -82,10 +82,6 @@ namespace
     {
         facade->GetPath( path ).lock()->Execute( pathfind );
     }
-    DEFINE_HOOK( CleanPathAfterComputation, 1, void, ( std::size_t path ) )
-    {
-        facade->GetPath( path ).lock()->CleanAfterComputation();
-    }
     DEFINE_HOOK( PathGetLength, 1, double, ( std::size_t path ) )
     {
         return facade->GetPath( path ).lock()->GetLength();

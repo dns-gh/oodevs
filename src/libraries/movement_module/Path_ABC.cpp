@@ -42,18 +42,7 @@ Path_ABC::Path_ABC( std::size_t identifier )
 // -----------------------------------------------------------------------------
 Path_ABC::~Path_ABC()
 {
-    CleanAfterComputation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path_ABC::CleanAfterComputation
-// Created: NLD 2006-01-23
-// -----------------------------------------------------------------------------
-void Path_ABC::CleanAfterComputation()
-{
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        delete *itPathSection;
-    pathSections_.clear();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +53,7 @@ void Path_ABC::Cancel()
 {
     bJobCanceled_ = true;
     nState_ = eCanceled;
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
+    for( auto itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
         ( *itPathSection )->Cancel();
 }
 
@@ -75,7 +64,7 @@ void Path_ABC::Cancel()
 double Path_ABC::GetLength() const
 {
     double rLength = 0.;
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
+    for( auto itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
         rLength += ( *itPathSection )->GetLength();
     return rLength;
 }
@@ -193,7 +182,7 @@ std::string Path_ABC::GetPathAsString() const
 {
     std::stringstream strTmp;
     strTmp << "   Path points : " << pathSections_.front()->GetPosStart();
-    for( CIT_PathSectionVector itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
+    for( auto itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
         strTmp << " -> " << ( *itSection )->GetPosEnd();
     return strTmp.str();
 }
@@ -247,9 +236,9 @@ const MT_Vector2D& Path_ABC::GetLastWaypoint() const
 // Name: Path_ABC::RegisterPathSection
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-void Path_ABC::RegisterPathSection( PathSection_ABC& section )
+void Path_ABC::RegisterPathSection( boost::shared_ptr< PathSection_ABC > section )
 {
-    pathSections_.push_back( &section );
+    pathSections_.push_back( section );
 }
 
 // -----------------------------------------------------------------------------

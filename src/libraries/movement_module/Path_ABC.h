@@ -13,6 +13,7 @@
 #define movement_module_Path_ABC_h_
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
+#include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <string>
 #include <vector>
@@ -53,7 +54,6 @@ public:
     //@{
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     void Cancel();
-    virtual void CleanAfterComputation();
 
     double GetLength() const;
 
@@ -87,7 +87,7 @@ protected:
 
     //! @name Tools
     //@{
-    void RegisterPathSection( PathSection_ABC& section );
+    void RegisterPathSection( boost::shared_ptr< PathSection_ABC > section );
     std::string GetStateAsString() const;
     std::string GetPathAsString() const;
     const T_PointVector& GetComputedWaypoints() const;
@@ -99,8 +99,7 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::vector< PathSection_ABC* >       T_PathSectionVector;
-    typedef T_PathSectionVector::const_iterator CIT_PathSectionVector;
+    typedef std::vector< boost::shared_ptr< PathSection_ABC > > T_PathSectionVector;
     //@}
 
 private:

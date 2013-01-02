@@ -130,10 +130,7 @@ void Agent_Path::Initialize()
     for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
         if( pLastPoint )
-        {
-            Agent_PathSection* pSection = new Agent_PathSection( entity_, *this, *pLastPoint, *itPoint );
-            RegisterPathSection( *pSection );
-        }
+            RegisterPathSection( boost::shared_ptr< PathSection_ABC >( new Agent_PathSection( entity_, *this, *pLastPoint, *itPoint ) ) );
         pLastPoint = &( *itPoint );
     }
     GET_HOOK( InitializePath )( GetID(), entity_ );
