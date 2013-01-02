@@ -45,7 +45,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
     APPLY( CreatePath, 3, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) ) \
     APPLY( CreatePathList, 3, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
-    APPLY( ExecutePathfind, 2, void, ( std::size_t path, TerrainPathfinder_ABC& pathfind ) ) \
+    APPLY( ExecutePathfind, 2, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) ) \
     APPLY( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) ) \
     APPLY( GetPathDestPoint, 1, std::size_t, ( std::size_t point ) ) \
     APPLY( GetPathDIAType, 1, const char*, ( std::size_t point ) ) \

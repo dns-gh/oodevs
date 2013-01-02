@@ -78,7 +78,7 @@ namespace
     {
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( facade->GetPath( path ).lock()->GetResult().back()->GetPos() ) );
     }
-    DEFINE_HOOK( ExecutePathfind, 2, void, ( std::size_t path, TerrainPathfinder_ABC& pathfind ) )
+    DEFINE_HOOK( ExecutePathfind, 2, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) )
     {
         facade->GetPath( path ).lock()->Execute( pathfind );
     }

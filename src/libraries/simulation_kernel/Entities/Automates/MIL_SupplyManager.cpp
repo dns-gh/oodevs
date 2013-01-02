@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_SupplyManager.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
 
@@ -82,7 +82,7 @@ void MIL_SupplyManager::Clean()
 bool MIL_SupplyManager::SendSupplyNeededReport()
 {
     // Pas de RC si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     bool result = ( nCurrentTick > ( nTickRcSupplyQuerySent_ + 1 ) || nTickRcSupplyQuerySent_ == 0 );
     nTickRcSupplyQuerySent_ = nCurrentTick;
     return result;

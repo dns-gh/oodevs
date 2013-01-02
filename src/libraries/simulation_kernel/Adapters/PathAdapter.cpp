@@ -44,7 +44,7 @@
 using namespace sword;
 
 DECLARE_HOOK( CleanPathAfterComputation, void, ( std::size_t path ) )
-DECLARE_HOOK( ExecutePathfind, void, ( std::size_t path, TerrainPathfinder_ABC& pathfind ) )
+DECLARE_HOOK( ExecutePathfind, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) )
 DECLARE_HOOK( PathGetLength, double, ( std::size_t path ) )
 DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( std::size_t path ) )
 
@@ -187,7 +187,7 @@ namespace
 // -----------------------------------------------------------------------------
 void PathAdapter::Initialize( const core::Model& entity )
 {
-    id_ = entity[ "identifier" ];
+    entity_ = entity[ "identifier" ];
     weight_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight(); // $$$$ MCO 2012-05-23: read from model
     squareSlope_ = Square( entity[ "movement/max-slope" ] );
     height_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight(); // $$$$ MCO 2012-05-23: read from model
@@ -206,7 +206,7 @@ void PathAdapter::Initialize( const core::Model& entity )
 // -----------------------------------------------------------------------------
 void PathAdapter::Execute( TER_Pathfinder_ABC& pathfind )
 {
-    pathfind.SetId( id_ );
+    pathfind.SetId( entity_ );
     GET_HOOK( ExecutePathfind )( GetID(), pathfind );
 }
 

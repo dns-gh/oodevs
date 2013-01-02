@@ -104,7 +104,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const size_t id_;
+    size_t entity_;
     const PHY_RawVisionData& data_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
