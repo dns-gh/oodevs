@@ -224,11 +224,11 @@ double PathAdapter::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& 
 {
     // default cost : outside all objects
     double rObjectCost = rCostOutsideOfAllObjects_;
-    for( CIT_PathKnowledgeObjectByTypesVector itType = pathKnowledgeObjects_.begin(); itType != pathKnowledgeObjects_.end(); ++itType )
+    for( auto itType = pathKnowledgeObjects_.begin(); itType != pathKnowledgeObjects_.end(); ++itType )
     {
         bool bInsideObjectType = false;
         const T_PathKnowledgeObjectVector& knowledges = *itType;
-        for( CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
+        for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
             double rCurrentObjectCost = (*itKnowledge)->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, weight_ );
             if( rCurrentObjectCost != std::numeric_limits< double >::min() )
@@ -326,7 +326,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
         pion.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, *this, !pion.GetType().IsTerrorist() ) );
+            pathKnowledgePopulations_.push_back( boost::shared_ptr< DEC_Path_KnowledgePopulation >( new DEC_Path_KnowledgePopulation( **it, *this, !pion.GetType().IsTerrorist() ) ) );
     }
 }
 
@@ -472,13 +472,13 @@ double PathAdapter::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& 
 // Name: PathAdapter::GetPopulationsCost
 // Created: MCO 2012-05-23
 // -----------------------------------------------------------------------------
-double PathAdapter::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to,
-    const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) const
+double PathAdapter::GetPopulationsCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to,
+    const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/, double rPopulationMaximumCost ) const
 {
     double rCost = 0.;
     for( auto it = pathKnowledgePopulations_.begin(); it != pathKnowledgePopulations_.end(); ++it )
     {
-        double rCurrentCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentCost = (*it)->ComputeCost( to );
         if( rCurrentCost < 0. ) // Impossible move
             return rCurrentCost;
         rCost += rCurrentCost;

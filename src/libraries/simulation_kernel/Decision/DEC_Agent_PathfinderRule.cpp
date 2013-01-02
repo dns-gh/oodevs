@@ -157,11 +157,11 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
     // default cost : outside all objects
     double rObjectCost = path_.GetCostOutsideOfAllObjects();
     const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
-    for( DEC_Agent_Path::CIT_PathKnowledgeObjectByTypesVector itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
+    for( auto itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
         bool bInsideObjectType = false;
         const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
-        for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
+        for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
             double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, path_.GetUnitMajorWeight() );
             if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
@@ -191,7 +191,7 @@ double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const 
     double rEnemyCost = 0.;
     const MT_Line lineLink( from, to );
     const DEC_Path_KnowledgeAgent::BoundingBox box( from, to );
-    for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
+    for( auto it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
     {
         double rCurrentEnemyCost = it->ComputeCost( lineLink, box );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
@@ -207,13 +207,13 @@ double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const 
 // Name: DEC_Agent_PathfinderRule::GetPopulationsCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-double DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& to ) const
 {
     assert( path_.GetPathClass().HandlePopulations() || path_.GetPathKnowledgePopulations().empty() );
     double rCost = 0.;
-    for( DEC_Agent_Path::CIT_PathKnowledgePopulationVector it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
+    for( auto it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
     {
-        double rCurrentCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentCost = (*it)->ComputeCost( to );
         if( rCurrentCost < 0. ) // Impossible move
             return rCurrentCost;
         rCost += rCurrentCost;
@@ -334,7 +334,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     rDynamicCost += rEnemiesCost;
 
     // populations
-    const double rPopulationsCost = GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType );
+    const double rPopulationsCost = GetPopulationsCost( to );
     if( rPopulationsCost < 0 )
         return IMPOSSIBLE_WAY( "Populations" );
     rDynamicCost += rPopulationsCost;

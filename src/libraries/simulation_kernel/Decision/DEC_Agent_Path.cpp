@@ -46,6 +46,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
 //-----------------------------------------------------------------------------
@@ -295,7 +296,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, pathClass_, !queryMaker_.GetType().IsTerrorist() ) );
+            pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( boost::cref( **it ), boost::cref( pathClass_ ), !queryMaker_.GetType().IsTerrorist() ) );
     }
 }
 

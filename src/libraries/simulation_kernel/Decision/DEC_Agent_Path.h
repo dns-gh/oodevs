@@ -33,17 +33,10 @@ class DEC_Agent_Path : public DEC_PathResult
 public:
     //! @name Types
     //@{
-    typedef std::vector< DEC_Path_KnowledgeAgent >       T_PathKnowledgeAgentVector;
-    typedef T_PathKnowledgeAgentVector::const_iterator CIT_PathKnowledgeAgentVector;
-
+    typedef std::vector< DEC_Path_KnowledgeAgent >T_PathKnowledgeAgentVector;
     typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > >  T_PathKnowledgeObjectVector;
-    typedef T_PathKnowledgeObjectVector::const_iterator CIT_PathKnowledgeObjectVector;
-
-    typedef std::vector< T_PathKnowledgeObjectVector >           T_PathKnowledgeObjectByTypesVector;
-    typedef T_PathKnowledgeObjectByTypesVector::const_iterator CIT_PathKnowledgeObjectByTypesVector;
-
-    typedef std::vector< DEC_Path_KnowledgePopulation >       T_PathKnowledgePopulationVector;
-    typedef T_PathKnowledgePopulationVector::const_iterator CIT_PathKnowledgePopulationVector;
+    typedef std::vector< T_PathKnowledgeObjectVector > T_PathKnowledgeObjectByTypesVector;
+    typedef std::vector< boost::shared_ptr< DEC_Path_KnowledgePopulation > > T_PathKnowledgePopulationVector;
     //@}
 
 public:

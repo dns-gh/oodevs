@@ -14,6 +14,7 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include <boost/foreach.hpp>
 
 namespace
 {
@@ -31,6 +32,14 @@ namespace
     private:
         DEC_Path_KnowledgePopulation& container_;
     };
+    std::vector< double > GetAttitudeCosts( const DEC_Agent_PathClass_ABC& pathClass )
+    {
+        const MIL_PopulationAttitude::T_AttitudeMap& attitudes = MIL_PopulationAttitude::GetAttitudes();
+        std::vector< double > result( attitudes.size() );
+        BOOST_FOREACH( auto attitude, attitudes )
+            result[ attitude.second->GetID() ] = pathClass.GetPopulationAttitudeCost( attitude.second->GetID() );
+        return result;
+    }
 };
 
 // -----------------------------------------------------------------------------
@@ -38,8 +47,10 @@ namespace
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgePopulation::DEC_Path_KnowledgePopulation( const DEC_Knowledge_Population& knowledge, const DEC_Agent_PathClass_ABC& pathClass, bool avoidPolicy )
-    : pPathClass_  ( &pathClass )
-    , bAvoidPolicy_( avoidPolicy )
+    : rMaxRange_               ( pathClass.GetPopulationSecurityRange() )
+    , rCostOutsideOfPopulation_( pathClass.GetCostOutsideOfPopulation() )
+    , populationAttitudeCosts_ ( GetAttitudeCosts( pathClass ) )
+    , bAvoidPolicy_            ( avoidPolicy )
 {
     elements_.reserve( 10 );
     PopulationPathInserter pathInserter( *this );
@@ -68,22 +79,21 @@ void DEC_Path_KnowledgePopulation::AddElement( const MIL_PopulationElement_ABC& 
 // Name: DEC_Path_KnowledgePopulation::ComputeCost
 // Created: SBO 2006-02-23
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
+double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& to ) const
 {
-    const double rMaxRange = pPathClass_->GetPopulationSecurityRange();
     const sPopulationElement* pClosestElement = 0;
-    const double rDistance = ComputeClosestElementInRange( to, rMaxRange, pClosestElement );
+    const double rDistance = ComputeClosestElementInRange( to, rMaxRange_, pClosestElement );
     if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)
     {
         if( !pClosestElement )
             return 0;
-        const double rElementCost = pPathClass_->GetPopulationAttitudeCost( pClosestElement->pAttitude_->GetID() ) * pClosestElement->rDensity_;
-        return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
+        const double rElementCost = populationAttitudeCosts_[ pClosestElement->pAttitude_->GetID() ] * pClosestElement->rDensity_;
+        return rElementCost * ( rMaxRange_ - rDistance ) / rMaxRange_;
     }
     else // "loving" policy (terrorist)
     {
         if( !pClosestElement )
-            return pPathClass_->GetCostOutsideOfPopulation();
+            return rCostOutsideOfPopulation_;
         return 0;
     }
 }

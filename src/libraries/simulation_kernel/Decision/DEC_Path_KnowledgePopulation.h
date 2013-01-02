@@ -12,11 +12,11 @@
 
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <boost/noncopyable.hpp>
 
 class DEC_Knowledge_Population;
 class DEC_Agent_PathClass_ABC;
 class MIL_PopulationAttitude;
-class TerrainData;
 
 // =============================================================================
 /** @class  DEC_Path_KnowledgePopulation
@@ -24,7 +24,7 @@ class TerrainData;
 */
 // Created: SBO 2006-02-23
 // =============================================================================
-class DEC_Path_KnowledgePopulation
+class DEC_Path_KnowledgePopulation : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double ComputeCost( const MT_Vector2D& to ) const;
     void AddElement( const MIL_PopulationElement_ABC& element );
     //@}
 
@@ -65,9 +65,14 @@ private:
     //@}
 
 private:
+    //! @name 
+    //@{
     T_PopulationElements elements_;
-    bool bAvoidPolicy_;
-    const DEC_Agent_PathClass_ABC* pPathClass_;
+    const double rMaxRange_;
+    const double rCostOutsideOfPopulation_;
+    const std::vector< double > populationAttitudeCosts_;
+    const bool bAvoidPolicy_;
+    //@}
 };
 
 #endif // __DEC_Path_KnowledgePopulation_h_
