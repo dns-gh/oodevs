@@ -23,7 +23,7 @@ namespace sword
 {
 namespace movement
 {
-    class Path_ABC;
+    class PathResult;
 
 // =============================================================================
 // @class  DEC_Tools
@@ -46,7 +46,7 @@ public:
     bool                IsImpossible() const;
     const MT_Vector2D&  GetPosStart () const;
     const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
-    const Path_ABC& GetPath     () const;
+    const PathResult& GetPath     () const;
     void                SetPosStart ( const MT_Vector2D& point );
     //@}
 
@@ -54,7 +54,7 @@ public:
     bool ShouldEndComputation( float rCostToCurrentNode, float rCostToGoalNode );
 
 protected:
-    PathSection_ABC( Path_ABC& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
+    PathSection_ABC( PathResult& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
 
     //! @name Accessors
     //@{
@@ -62,7 +62,7 @@ protected:
     //@}
 
 private:
-    Path_ABC& path_;
+    PathResult& path_;
     MT_Vector2D startPoint_;
     MT_Vector2D endPoint_;
     unsigned int nComputationEndTime_;

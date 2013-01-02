@@ -117,7 +117,7 @@ void Path_ABC::DoExecute( TER_Pathfinder_ABC& pathfind )
 
     if( pathSections_.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
-    const PathResult::T_PathPointList& pathPoints = dynamic_cast< const PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
+    const PathResult::T_PathPointList& pathPoints = pathSections_.front()->GetPath().GetResult( false );
 
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
     computedWaypoints_.clear();

@@ -10,7 +10,7 @@
 //*****************************************************************************
 
 #include "PathSection_ABC.h"
-#include "Path_ABC.h"
+#include "PathResult.h"
 #include "pathfind/TerrainRule_ABC.h"
 #include "geometry/Types.h"
 #include "wrapper/Hook.h"
@@ -35,7 +35,7 @@ DECLARE_HOOK( ComputePathfind, bool, ( TER_Pathfinder_ABC& pathfind, bool needRe
 // Name: PathSection_ABC constructor
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
-PathSection_ABC::PathSection_ABC( Path_ABC& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
+PathSection_ABC::PathSection_ABC( PathResult& path, const MT_Vector2D& startPoint, const MT_Vector2D& endPoint )
     : startPoint_         ( startPoint )
     , endPoint_           ( endPoint   )
     , path_               ( path  )
@@ -166,7 +166,7 @@ double PathSection_ABC::GetLength() const
 // Name: PathSection_ABC::GetPath
 // Created: CMA 2011-04-18
 // -----------------------------------------------------------------------------
-const Path_ABC& PathSection_ABC::GetPath() const
+const PathResult& PathSection_ABC::GetPath() const
 {
     return path_;
 }

@@ -71,13 +71,13 @@ public:
     virtual void InsertDecPoints() = 0;
     virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifySectionEnded();
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, double rDist, bool bBoundOnPath ) const;
     //@}
 
