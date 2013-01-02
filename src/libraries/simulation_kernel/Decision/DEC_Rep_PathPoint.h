@@ -46,6 +46,4 @@ private:
     mutable DEC_Representations* pSentToDiaAgent_;
 };
 
-#include "DEC_Rep_PathPoint.inl"
-
 #endif // __DEC_Rep_PathPoint_h_

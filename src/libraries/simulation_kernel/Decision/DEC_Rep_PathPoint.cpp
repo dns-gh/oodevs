@@ -70,3 +70,12 @@ void DEC_Rep_PathPoint::Dump() const
               << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << std::endl;
 }
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint::GetTypeTerrain
+// Created: AGN 03-03-25
+//-----------------------------------------------------------------------------
+const TerrainData& DEC_Rep_PathPoint::GetTypeTerrain() const
+{
+    return nTypeTerrain_;
+}

@@ -5203,9 +5203,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathPoint.inl">
       <Filter>Source Files\Decision\Path\Pathpoints</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Rep_PathPoint.inl">
-      <Filter>Source Files\Decision\Path\Pathpoints</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_Path.inl">
       <Filter>Source Files\Decision\Path\Population</Filter>
     </None>
