@@ -72,6 +72,7 @@ public:
     virtual int GetTypeLima() const;
     virtual unsigned int GetLimaID() const;
     virtual const TerrainData& GetTypeTerrain() const;
+    std::size_t GetID() const;
     //@}
 
     //! @name Main
@@ -90,6 +91,7 @@ public:
 protected:
     //! @name Member data
     //@{
+    const std::size_t identifier_;
     MT_Vector2D vPos_;
     E_Type nType_;
     E_TypePoint nPointType_;

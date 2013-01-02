@@ -13,12 +13,18 @@
 using namespace sword;
 using namespace sword::movement;
 
+namespace
+{
+    std::size_t identifiers_ = 0;
+}
+
 //-----------------------------------------------------------------------------
 // Name: PathPoint constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 PathPoint::PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType )
-    : vPos_      ( vPos )
+    : identifier_( ++identifiers_ )
+    , vPos_      ( vPos )
     , nType_     ( type )
     , nPointType_( nPointType )
     , diaType_   ( szDIARepType )
@@ -31,7 +37,8 @@ PathPoint::PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointTy
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 PathPoint::PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint )
-    : vPos_                   ( vPos )
+    : identifier_             ( ++identifiers_ )
+    , vPos_                   ( vPos )
     , nType_                  ( eTypePointPath )
     , nPointType_             ( eTypePointNormal )
     , nObjectTypes_           ( nObjectTypes )
@@ -174,4 +181,13 @@ const TerrainData& PathPoint::GetObjectTypes() const
 const TerrainData& PathPoint::GetObjectTypesToNextPoint() const
 {
     return nObjectTypesToNextPoint_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathPoint::GetID
+// Created: SLI 2012-12-18
+// -----------------------------------------------------------------------------
+std::size_t PathPoint::GetID() const
+{
+    return identifier_;
 }
