@@ -29,6 +29,10 @@ namespace tools
 class MT_ConsoleLogger;
 class MT_FileLogger;
 
+extern "C" __declspec(dllexport) void* CreateDispatcherFacade( int argc, char** argv, int maxConnections );
+extern "C" __declspec(dllexport) void  UpdateDispatcherFacade( void* dispatchFacade );
+extern "C" __declspec(dllexport) void  DestroyDispatcherFacade( void* dispatchFacade );
+
 // =============================================================================
 /** @class  DispatcherFacade
     @brief  Dispatcher facade
