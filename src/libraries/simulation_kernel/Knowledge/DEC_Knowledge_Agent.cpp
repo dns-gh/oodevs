@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_AgentComposante.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -1177,7 +1177,7 @@ void DEC_Knowledge_Agent::HackPerceptionLevel( const PHY_PerceptionLevel* pPerce
         bPerceptionDistanceHacked_ = true;
         pCurrentPerceptionLevel_ = pPerceptionLevel;
         bCurrentPerceptionLevelUpdated_ = ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ );
-        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     }
 }
 

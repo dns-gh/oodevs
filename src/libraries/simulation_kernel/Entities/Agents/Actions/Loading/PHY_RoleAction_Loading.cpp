@@ -19,7 +19,7 @@
 #include "NetworkNotificationHandler_ABC.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "LoadingChangeNotificationHandler_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "protocol/ClientSenders.h"
@@ -144,14 +144,14 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarriers;
         else if( rLoadingTime == 0. )
             return eErrorNoCarried;
-        nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         nState_       = eLoading;
         MIL_Report::PostEvent( owner_, MIL_Report::eRC_EmbarkmentStarted );
     }
 
     if( nState_ == eLoading )
     {
-        if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
+        if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
             MIL_Report::PostEvent( owner_, MIL_Report::eRC_EmbarkmentFinished );
@@ -186,14 +186,14 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarriers;
         else if( rUnloadingTime == 0. )
             return eErrorNoCarried;
-        nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         nState_       = eUnloading;
         MIL_Report::PostEvent( owner_, MIL_Report::eRC_DisembarkmentStarted );
     }
 
     if( nState_ == eUnloading )
     {
-        if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
+        if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
             MIL_Report::PostEvent( owner_, MIL_Report::eRC_DisembarkmentFinished );            SetUnloadedState();

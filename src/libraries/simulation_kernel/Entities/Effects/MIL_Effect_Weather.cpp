@@ -25,7 +25,7 @@
 // -----------------------------------------------------------------------------
 MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, double rDeploymentDuration )
     : MIL_Effect_Fire_ABC ( surface, ammoCategory )
-    , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (unsigned int)rDeploymentDuration )
+    , nDeploymentTimeStep_( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + (unsigned int)rDeploymentDuration )
     , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (unsigned int)rLifeDuration )
     , bIsDeployed_        ( false )
 {
@@ -47,7 +47,7 @@ MIL_Effect_Weather::~MIL_Effect_Weather()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_Weather::Execute()
 {
-    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( !bIsDeployed_ && nDeploymentTimeStep_ <= nCurrentTimeStep )
     {
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().RegisterWeatherEffect( surface_, ammoCategory_ );

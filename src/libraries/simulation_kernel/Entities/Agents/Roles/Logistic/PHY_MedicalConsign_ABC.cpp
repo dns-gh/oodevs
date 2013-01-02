@@ -17,7 +17,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ void PHY_MedicalConsign_ABC::SendExternalTimerValue( int timer )
 {
     unsigned tmp = std::numeric_limits< unsigned >::max();
     if( timer > 0 )
-        tmp = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + timer;
+        tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timer;
     if( tmp != currentStateEndTimeStep_ )
     {
         currentStateEndTimeStep_ = tmp;

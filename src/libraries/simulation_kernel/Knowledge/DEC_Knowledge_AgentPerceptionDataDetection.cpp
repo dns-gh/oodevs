@@ -23,7 +23,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataDetection )
 
@@ -156,7 +156,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
 {
     if( perceptionLevel < PHY_PerceptionLevel::detected_ )
         return;
-    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;

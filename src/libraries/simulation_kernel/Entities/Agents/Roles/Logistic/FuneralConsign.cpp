@@ -17,7 +17,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <tools/iterator.h>
@@ -30,12 +30,13 @@ LogisticVirtualAction::LogisticVirtualAction()
     : currentActionId_( std::numeric_limits< unsigned >::max() )
     , timeRemainingForCurrentAction_( std::numeric_limits< unsigned >::max() )
 {
+    // NOTHING
 }
 
 LogisticVirtualAction::~LogisticVirtualAction()
 {
+    // NOTHING
 }
-
 
 unsigned LogisticVirtualAction::GetTimeRemaining( unsigned actionId, unsigned duration )
 {
@@ -63,7 +64,7 @@ MIL_IDManager FuneralConsign::idManager_;
 // -----------------------------------------------------------------------------
 FuneralConsign::FuneralConsign( boost::shared_ptr< FuneralRequest_ABC > request )
     : id_                     ( idManager_.GetFreeId() )
-    , creationTick_           ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) //$$$ Huge shit
+    , creationTick_           ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , request_                ( request )
     , handler_                ( 0 )
     , position_               ( request->GetPosition() )
@@ -100,7 +101,7 @@ void FuneralConsign::UpdateTimer( unsigned timeRemaining )
 {
     unsigned tmp = std::numeric_limits< unsigned >::max();
     if( timeRemaining != std::numeric_limits< unsigned >::max() )
-        tmp = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + timeRemaining;
+        tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timeRemaining;
 
     if( tmp != currentStateEndTimeStep_ )
     {
@@ -138,7 +139,7 @@ void FuneralConsign::SetState( E_State newState )
 bool FuneralConsign::IsActionDone( unsigned timeRemaining )
 {
     UpdateTimer( timeRemaining );
-    return currentStateEndTimeStep_ != std::numeric_limits< unsigned >::max() && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= currentStateEndTimeStep_;
+    return currentStateEndTimeStep_ != std::numeric_limits< unsigned >::max() && MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= currentStateEndTimeStep_;
 }
 
 // -----------------------------------------------------------------------------

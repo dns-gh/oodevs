@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Composantes.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -953,7 +953,7 @@ void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarg
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Neutralize()
 {
-    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + ( **it ).GetNeutralizationTime() );
     bNeutralized_ = true;
@@ -1313,7 +1313,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     if( !pTC2 )
         return 0;
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMaintenanceQuerySent_ + 1 ) || nTickRcMaintenanceQuerySent_ == 0 )
         MIL_Report::PostEvent( *owner_, MIL_Report::eRC_DemandeEvacuationMateriel );
     nTickRcMaintenanceQuerySent_ = nCurrentTick;
@@ -1442,7 +1442,7 @@ void PHY_RolePion_Composantes::NotifySurrenderCanceled()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::IsNeutralized() const
 {
-    return nNeutralizationEndTimeStep_ && nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    return nNeutralizationEndTimeStep_ && nNeutralizationEndTimeStep_ >= MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 }
 
 // -----------------------------------------------------------------------------

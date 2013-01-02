@@ -413,7 +413,7 @@ void PHY_RolePionLOG_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate&
     if( pWorkRate_->GetDelayBeforeWarningRC() == std::numeric_limits< unsigned int >::max() )
         nWorkRateWarningRCTick_ = 0;
     else
-        nWorkRateWarningRCTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWorkRate_->GetDelayBeforeWarningRC();
+        nWorkRateWarningRCTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + pWorkRate_->GetDelayBeforeWarningRC();
 }
 
 // -----------------------------------------------------------------------------
@@ -623,7 +623,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_Mainte
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 {
-    if( nWorkRateWarningRCTick_ != 0 && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() > nWorkRateWarningRCTick_ )
+    if( nWorkRateWarningRCTick_ != 0 && MIL_Time_ABC::GetTime().GetCurrentTimeStep() > nWorkRateWarningRCTick_ )
     {
         nWorkRateWarningRCTick_ = 0;
         MIL_Report::PostEvent< MIL_Agent_ABC >( owner_, MIL_Report::eRC_RegimeMaintenanceDelaiDepasse );

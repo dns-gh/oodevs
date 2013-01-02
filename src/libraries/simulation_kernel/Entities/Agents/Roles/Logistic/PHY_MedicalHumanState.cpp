@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MedicalHumanState.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "PHY_MedicalConsign_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -32,7 +32,7 @@ MIL_IDManager PHY_MedicalHumanState::idManager_;
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& human, bool bEvacuatedByThirdParty )
     : nID_                   ( idManager_.GetFreeId() )
-    , nCreationTick_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , nCreationTick_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
     , pConsign_              ( 0 )

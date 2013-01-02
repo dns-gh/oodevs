@@ -358,7 +358,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
         return;
     }
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
         MIL_Report::PostEvent( owner_, MIL_Report::eRC_DemandeEvacuationSanitaire );
     nTickRcMedicalQuerySent_ = nCurrentTick;

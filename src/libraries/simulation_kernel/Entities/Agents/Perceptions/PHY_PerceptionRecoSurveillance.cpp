@@ -39,7 +39,7 @@ namespace
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoSurveillanceReco::PHY_PerceptionRecoSurveillanceReco( const TER_Localisation& localisation )
     : localisation_             ( localisation )
-    , nForestDetectionTimeStep_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , nForestDetectionTimeStep_ ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , nUrbanDetectionTimeStep_  ( nForestDetectionTimeStep_ )
     , nEmptyDetectionTimeStep_  ( nForestDetectionTimeStep_ )
 {
@@ -111,7 +111,7 @@ bool PHY_PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) c
     if( !localisation_.IsInside( vPoint ) )
         return false;
 
-    const unsigned int                       nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int                       nCurrentTime = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     const PHY_RawVisionData::envBits env          = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( vPoint );
 
     if( env == PHY_RawVisionData::eVisionEmpty )

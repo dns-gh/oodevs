@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_PopulationFlowPart.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
@@ -112,7 +112,7 @@ void DEC_Knowledge_PopulationFlowPart::Prepare()
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlowPerception& perception )
 {
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 
     if( perception.GetCurrentPerceptionLevel() != PHY_PerceptionLevel::notSeen_ )
     {
@@ -132,7 +132,7 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationFlo
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCollision& collision  )
 {
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( bPerceived_ )
         return false;
     T_PointVector shape( 1, collision.GetPosition() );
@@ -159,15 +159,15 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const double rMaxLifeTim
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
     if( rMaxLifeTime == 0. )
     {
-        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         return ChangeRelevance( 0. );
     }
     else
     {
         // Degradation : effacement au bout de X minutes
-        const double rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
+        const double rTimeRelevanceDegradation = ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
         const double rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
-        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         return ChangeRelevance( rRelevance );
     }
 }

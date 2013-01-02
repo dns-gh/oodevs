@@ -15,7 +15,7 @@
 #include "SupplyRecipient_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
 #include "SupplySupplier_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -30,7 +30,7 @@ MIL_IDManager SupplyConsign::idManager_;
 // -----------------------------------------------------------------------------
 SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
     : id_                       ( idManager_.GetFreeId() )
-    , creationTick_             ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) //$$$ Huge shit
+    , creationTick_             ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( supplier )
     , state_                    ( eConvoyWaitingForTransporters )
     , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
@@ -111,7 +111,7 @@ void SupplyConsign::UpdateTimer( unsigned timeRemaining )
 {
     unsigned tmp = std::numeric_limits< unsigned >::max();
     if( timeRemaining != std::numeric_limits< unsigned >::max() )
-        tmp = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + timeRemaining;
+        tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timeRemaining;
 
     if( tmp != currentStateEndTimeStep_ )
     {
@@ -201,7 +201,7 @@ void SupplyConsign::SetState( E_State newState )
 bool SupplyConsign::IsActionDone( unsigned timeRemaining )
 {
     UpdateTimer( timeRemaining );
-    return currentStateEndTimeStep_ != std::numeric_limits< unsigned >::max() && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= currentStateEndTimeStep_;
+    return currentStateEndTimeStep_ != std::numeric_limits< unsigned >::max() && MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= currentStateEndTimeStep_;
 }
 
 // -----------------------------------------------------------------------------

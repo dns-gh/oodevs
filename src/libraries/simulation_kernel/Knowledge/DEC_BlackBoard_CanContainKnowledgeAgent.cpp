@@ -13,7 +13,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Agent.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Checkpoints/SerializationTools.h"
@@ -171,10 +171,10 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowled
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
 {
-    if( nLastCacheUpdateTick_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    if( nLastCacheUpdateTick_ >= MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
         return;
 
-    nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nLastCacheUpdateTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 
     detectedContainer_         .clear();
     friendsContainer_          .clear();

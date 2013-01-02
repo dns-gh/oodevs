@@ -996,7 +996,7 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const MT_V
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::UpdatePeriphericalVisionState()
 {
-    const unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTime = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( nNextPeriphericalVisionStep_ <= nCurrentTime )
     {
         while( nNextPeriphericalVisionStep_ <= nCurrentTime )

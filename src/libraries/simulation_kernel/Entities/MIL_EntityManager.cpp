@@ -816,7 +816,7 @@ void MIL_EntityManager::UpdateKnowledges()
     Profiler profiler( rKnowledgesTime_ );
     try
     {
-        int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        int currentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         {
             Profiler profiler( profilers_[ "update model" ] );
             sink_->UpdateModel( time_.GetCurrentTimeStep(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );

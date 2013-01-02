@@ -15,7 +15,7 @@
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_RapForLocal )
 
@@ -68,9 +68,9 @@ void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_RapForLocal::Update()
 {
-    if( nLastCacheUpdateTick_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    if( nLastCacheUpdateTick_ >= MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
         return;
-    nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nLastCacheUpdateTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     assert( pPion_ );
     const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup()->GetKnowledge().GetEnemies();
     const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup()->GetKnowledge().GetFriends();

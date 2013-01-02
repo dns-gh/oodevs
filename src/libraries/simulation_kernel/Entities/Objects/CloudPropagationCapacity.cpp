@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "CloudPropagationCapacity.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "MIL_Object_ABC.h"
 #include "NBCAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -80,7 +80,7 @@ void CloudPropagationCapacity::Register( MIL_Object_ABC& object )
 void CloudPropagationCapacity::Finalize( MIL_Object_ABC& object )
 {
     origin_ = object.GetLocalisation().ComputeBarycenter();
-    time_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    time_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     rCurrentCircleRadius_ = object.GetLocalisation().GetCircleRadius();
 }
 

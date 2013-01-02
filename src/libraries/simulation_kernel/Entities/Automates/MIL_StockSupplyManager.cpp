@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_StockSupplyManager.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

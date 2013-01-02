@@ -11,7 +11,7 @@
 #include "MIL_Object_ABC.h"
 #include "BuildableCapacity.h"
 #include "FloodAttribute.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "MIL_ObjectType_ABC.h"
 #include "ObstacleAttribute.h"
 #include "ResourceNetworkCapacity.h"
@@ -300,7 +300,7 @@ void MIL_Object_ABC::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::ProcessEvents()
 {
-    Update( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
+    Update( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     interaction_.ProcessInteractionEvents( *this );
 }
 

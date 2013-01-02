@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ProfilerManager.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "MIL_Config.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -52,7 +52,7 @@ void MIL_ProfilerManager::NotifyDecisionUpdated( const MIL_AgentPion& pion, doub
 {
     if( !bEnabled_ )
         return;
-    decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " P " << pion.GetID() << " \"" << pion.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
+    decisionUpdateFile_ << MIL_Time_ABC::GetTime().GetCurrentTimeStep() << " P " << pion.GetID() << " \"" << pion.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void MIL_ProfilerManager::NotifyDecisionUpdated( const MIL_Automate& automate, d
 {
     if( !bEnabled_ )
         return;
-    decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"" << automate.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
+    decisionUpdateFile_ << MIL_Time_ABC::GetTime().GetCurrentTimeStep() << " A " << automate.GetID() << " \"" << automate.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,5 +74,5 @@ void MIL_ProfilerManager::NotifyDecisionUpdated( const MIL_Population& populatio
 {
     if( !bEnabled_ )
         return;
-    decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"" << population.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
+    decisionUpdateFile_ << MIL_Time_ABC::GetTime().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"" << population.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
 }

@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_PopulationConcentration.h"
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -213,7 +213,7 @@ void DEC_Knowledge_PopulationConcentration::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationConcentrationPerception& perception )
 {
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
     assert( pPopulationKnowledge_ );
     if( pPopulationKnowledge_->IsRecon() )
@@ -243,7 +243,7 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_PopulationCollision& /*collision*/ )
 {
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -264,10 +264,10 @@ void DEC_Knowledge_PopulationConcentration::UpdateRelevance()
     if( pConcentrationKnown_ && pConcentrationKnown_->GetPopulation().HasDoneMagicMove() )
         ChangeRelevance( 0. );
     // Degradation : effacement au bout de X minutes
-    const double rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroupType().GetKnowledgePopulationMaxLifeTime();
+    const double rTimeRelevanceDegradation = ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() - nTimeLastUpdate_ ) / pPopulationKnowledge_->GetKnowledgeGroupType().GetKnowledgePopulationMaxLifeTime();
     const double rRelevance = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );
     ChangeRelevance( rRelevance );
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     // L'objet réel va être détruit
     if( pConcentrationKnown_ && !pConcentrationKnown_->IsValid() )
     {
@@ -416,6 +416,6 @@ void DEC_Knowledge_PopulationConcentration::HackPerceptionLevel( const PHY_Perce
     {
         rRelevance_ = 1.0;
         pCurrentPerceptionLevel_ = pPerceptionLevel;
-        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     }
 }

@@ -109,12 +109,12 @@ void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, co
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::Update()
 {
-    if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() < nNextCheckPointTick_ )
+    if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() < nNextCheckPointTick_ )
         return;
     const std::string name = BuildCheckPointName();
     if( SaveCheckPoint( name ) )
         RotateCheckPoints( name );
-    nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nLastCheckPointTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
 }
 
@@ -125,8 +125,8 @@ void MIL_CheckPointManager::Update()
 void MIL_CheckPointManager::UpdateNextCheckPointTick()
 {
     unsigned int nTick = nLastCheckPointTick_ + (unsigned int)MIL_Tools::ConvertSecondsToSim( nCheckPointsFrequency_ );
-    if( nTick < MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-        nNextCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    if( nTick < MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
+        nNextCheckPointTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     else
         nNextCheckPointTick_ = nTick;
     MT_LOG_INFO_MSG( MT_FormatString( "Next automatic checkpoint at tick #%d", nNextCheckPointTick_ ) );
@@ -415,7 +415,7 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned 
          >> nMaxCheckPointNbr_;
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
-    nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    nLastCheckPointTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
 }
 

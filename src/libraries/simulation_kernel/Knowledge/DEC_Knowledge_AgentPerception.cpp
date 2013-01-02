@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerception.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
     : DEC_Knowledge_ABC()
-    , nCreationTimeStep_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , nCreationTimeStep_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pAgentPerceiving_          ( &agentPerceiving )
     , pAgentPerceived_           ( &agentPerceived )
     , pCurrentPerceptionLevel_   ( &PHY_PerceptionLevel::notSeen_ )

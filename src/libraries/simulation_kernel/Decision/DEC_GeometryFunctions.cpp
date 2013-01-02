@@ -1971,7 +1971,7 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
         //                    = 1 : en retard
         //              entre les 2 : marge de sécurité
 
-        const double rDelay = nSchedule - ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + rTimeToGoToElement );
+        const double rDelay = nSchedule - ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() + rTimeToGoToElement );
         if( rDelay < 0 )
             return 1.f;
         return static_cast< float >( 1.f - std::min( 1., rDelay / rTimeLeeway ) );

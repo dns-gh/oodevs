@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_FrontAndBackLinesComputer.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -55,7 +55,7 @@ DEC_FrontAndBackLinesComputer::~DEC_FrontAndBackLinesComputer()
 // -----------------------------------------------------------------------------
 void DEC_FrontAndBackLinesComputer::Compute()
 {
-    const unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTime = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     assert( nLastTimeComputed_ <= nCurrentTime );
     if( nLastTimeComputed_ == nCurrentTime )
         return;

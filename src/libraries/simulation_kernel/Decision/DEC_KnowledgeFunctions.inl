@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -48,7 +48,7 @@ void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_
 {
     if( !receiver )
         throw MASA_EXCEPTION( "invalid parameter." );
-    const unsigned int sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
+    const unsigned int sharingTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
     boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
     receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, sharingTimeStep );
 }
@@ -63,7 +63,7 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Dec
     if( !receiver )
         throw MASA_EXCEPTION( "invalid parameter." );
     boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller.GetKnowledgeGroup();
-    receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
+    receiver->GetAutomate().GetKnowledgeGroup()->GetKnowledge().GetKsSharing().ShareFromSource( callerKnowledgeGroup, MIL_Time_ABC::GetTime().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
 
 // -----------------------------------------------------------------------------

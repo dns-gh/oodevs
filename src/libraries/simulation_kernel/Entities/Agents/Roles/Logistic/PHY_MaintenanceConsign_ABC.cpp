@@ -16,7 +16,7 @@
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void PHY_MaintenanceConsign_ABC::ResetTimer( int timer )
     nTimer_ = timer;
     unsigned tmp = std::numeric_limits< unsigned >::max();
     if( timer > 0 )
-        tmp = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + timer;
+        tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timer;
     if( tmp != currentStateEndTimeStep_ )
     {
         currentStateEndTimeStep_ = tmp;

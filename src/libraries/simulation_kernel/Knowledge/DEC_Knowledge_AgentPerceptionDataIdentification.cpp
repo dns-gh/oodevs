@@ -14,7 +14,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataIdentification )
 
@@ -69,7 +69,7 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::Update( const MIL_Agent_AB
 {
     if( perceptionLevel < PHY_PerceptionLevel::identified_ )
         return;
-    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;

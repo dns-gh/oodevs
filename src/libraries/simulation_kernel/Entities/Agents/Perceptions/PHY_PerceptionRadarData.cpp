@@ -28,7 +28,7 @@
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
 PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData()
-    : nFirstTimeStepPerceived_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : nFirstTimeStepPerceived_( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , bUpdated_               ( true )
 {
     // NOTHING

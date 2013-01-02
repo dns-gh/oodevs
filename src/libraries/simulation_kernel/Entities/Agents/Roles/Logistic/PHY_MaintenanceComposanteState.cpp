@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceComposanteState.h"
 #include "PHY_MaintenanceConsign_ABC.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -30,7 +30,7 @@ MIL_IDManager PHY_MaintenanceComposanteState::idManager_;
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
     : nID_                ( idManager_.GetFreeId() )
-    , nCreationTick_      ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    , nCreationTick_      ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
     , pConsign_           ( 0 )
