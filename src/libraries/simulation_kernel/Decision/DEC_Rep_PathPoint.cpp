@@ -31,6 +31,7 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -45,7 +46,6 @@ void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent, boost::shared_ptr
     agent.AddToPointsCategory( point );
     pSentToDiaAgent_ = &agent;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::SendToDIA

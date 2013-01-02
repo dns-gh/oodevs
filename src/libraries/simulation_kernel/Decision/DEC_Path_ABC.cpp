@@ -21,8 +21,8 @@ unsigned int DEC_Path_ABC::nIDIdx_ = 0;
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 DEC_Path_ABC::DEC_Path_ABC()
-    : nID_( ++ nIDIdx_ )
-    , nNbrRefs_    ( 0 )
+    : nID_     ( ++nIDIdx_ )
+    , nNbrRefs_( 0 )
 {
     // NOTHING
 }
@@ -43,7 +43,7 @@ void DEC_Path_ABC::AddRef()
 {
     ++nNbrRefs_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC::DecRef
 // Created: LDC 2012-05-15
@@ -53,4 +53,3 @@ void DEC_Path_ABC::DecRef()
     if( --nNbrRefs_ <= 0 )
         MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( this );
 }
-

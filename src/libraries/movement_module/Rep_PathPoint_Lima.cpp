@@ -38,7 +38,7 @@ Rep_PathPoint_Lima::~Rep_PathPoint_Lima()
 // Name: Rep_PathPoint_Lima::GetTypeLima
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-int Rep_PathPoint_Lima::GetTypeLima()
+int Rep_PathPoint_Lima::GetTypeLima() const
 {
     return typeLima_;
 }
@@ -47,7 +47,7 @@ int Rep_PathPoint_Lima::GetTypeLima()
 // Name: Rep_PathPoint_Lima::GetLimaID
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-unsigned int Rep_PathPoint_Lima::GetLimaID()
+unsigned int Rep_PathPoint_Lima::GetLimaID() const
 {
     return limaID_;
 }

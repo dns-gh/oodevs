@@ -24,18 +24,18 @@ namespace movement
 class Rep_PathPoint_Lima : public Rep_PathPoint
 {
 public:
-    Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, unsigned int nLimaID, int typeLima );
+             Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, unsigned int nLimaID, int typeLima );
     virtual ~Rep_PathPoint_Lima();
 
     //! @name Accessors
     //@{
-    int GetTypeLima();
-    unsigned int GetLimaID();
+    int GetTypeLima() const;
+    unsigned int GetLimaID() const;
     //@}
 
 private:
-    int typeLima_;
-    unsigned int limaID_;
+    const int typeLima_;
+    const unsigned int limaID_;
 };
 
 }
