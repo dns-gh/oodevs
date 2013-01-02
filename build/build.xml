@@ -778,6 +778,7 @@
         <flexlm name="sword-terrain-generation" feature="sword-terrain-generation" vendor="bkmasa"/>
         <flexlm name="sword-runtime" feature="sword-runtime" vendor="bkmasa"/>
         <flexlm name="sword-replayer" feature="sword-replayer" vendor="bkmasa"/>
+        <flexlm name="brain.tools" feature="brain.tools" vendor="bkmasa"/>
         <!-- Since the applications are not being installed on the build servers,
              Flex has no way to guess the license files should be picked from
              the run directory, and even if it happens it is apparently after
