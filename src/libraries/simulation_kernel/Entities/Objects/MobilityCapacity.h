@@ -40,6 +40,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     double GetDefaultSpeed() const;
     double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, double structural ) const;
+    bool IsMaxSpeed() const;
     //@}
 
 private:

@@ -33,6 +33,7 @@
 #include "Entities/Objects/InteractionHeightAttribute.h"
 #include "Entities/Objects/InteractWithSideCapacity.h"
 #include "Entities/Objects/MineAttribute.h"
+#include "Entities/Objects/MobilityCapacity.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Entities/Objects/TrafficabilityAttribute.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
@@ -1083,6 +1084,16 @@ double DEC_Knowledge_Object::GetMaxTrafficability() const
             return pTrafficability->GetMaxValue();
     }
     return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::HasAgentMaxSpeedMultiplier
+// Created: LDC 2013-01-02
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::HasAgentMaxSpeedMultiplier() const
+{
+    const MobilityCapacity* mobility = GetType().GetCapacity< MobilityCapacity >();
+    return mobility && mobility->IsMaxSpeed();
 }
 
 // -----------------------------------------------------------------------------

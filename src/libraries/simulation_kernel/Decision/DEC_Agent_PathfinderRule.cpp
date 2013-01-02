@@ -149,7 +149,7 @@ double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, con
 // Name: DEC_Agent_PathfinderRule::GetObjectsCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& /*rSpeed*/ ) const
+double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& rSpeed ) const
 {
     if( path_.GetPathClass().IsFlying() )
         return 0.;
@@ -174,6 +174,8 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
                 if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
                     return rCurrentObjectCost;
                 rObjectCost += rCurrentObjectCost;
+                if( ( *itKnowledge )->HasAgentMaxSpeedMultiplier() )
+                    rSpeed = path_.GetUnitSpeeds().GetMaxSpeed() * ( *itKnowledge )->GetAgentMaxSpeedMultiplier();
             }
         }
     }

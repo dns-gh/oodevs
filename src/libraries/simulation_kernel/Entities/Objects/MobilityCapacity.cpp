@@ -151,6 +151,15 @@ double MobilityCapacity::ApplySpeedPolicy( double rAgentSpeedWithinObject, doubl
 }
 
 // -----------------------------------------------------------------------------
+// Name: MobilityCapacity::IsMaxSpeed
+// Created: LDC 2013-01-02
+// -----------------------------------------------------------------------------
+bool MobilityCapacity::IsMaxSpeed() const
+{
+    return eSpeedPolicy_AgentMaxSpeed == nSpeedPolicy_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MobilityCapacity::ComputeFactor
 // Created: SLG 2010-06-29
 // -----------------------------------------------------------------------------

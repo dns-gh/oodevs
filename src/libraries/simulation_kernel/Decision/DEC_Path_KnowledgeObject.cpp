@@ -12,7 +12,9 @@
 #include "DEC_Population_PathClass.h"
 #include "MIL_Time_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MobilityCapacity.h"
 #include "MT_Tools/MT_Logger.h"
 #include <map>
 
@@ -134,3 +136,25 @@ double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
 {
     return rMaxTrafficability_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::HasAgentMaxSpeedMultiplier
+// Created: LDC 2013-01-02
+// -----------------------------------------------------------------------------
+bool DEC_Path_KnowledgeObject::HasAgentMaxSpeedMultiplier() const
+{
+    const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >();
+    return mobility && mobility->IsMaxSpeed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObject::GetAgentMaxSpeedMultiplier
+// Created: LDC 2013-01-02
+// -----------------------------------------------------------------------------
+double DEC_Path_KnowledgeObject::GetAgentMaxSpeedMultiplier() const
+{
+    if( const MobilityCapacity* mobility = objectType_.GetCapacity< MobilityCapacity >() )
+        return mobility->ApplySpeedPolicy( 1., 1., 1., 1. );
+    return 1.;
+}
+
