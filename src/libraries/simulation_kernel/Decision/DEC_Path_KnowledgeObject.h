@@ -54,6 +54,7 @@ private:
     TER_Localisation localisation_;
     TER_Localisation scaledLocalisation_;
     TER_Localisation realLocalisation_;
+    const MIL_ObjectType_ABC& objectType_;
     double rMaxTrafficability_;
     double rThreshold_;
     double rCost_;
