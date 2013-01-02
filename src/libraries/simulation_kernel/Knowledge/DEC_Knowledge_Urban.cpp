@@ -225,7 +225,7 @@ void DEC_Knowledge_Urban::SendChangedState()
     }
     if( bMustSend )
     {
-        nTimeLastUpdate_ = GetCurrentTimeStep();
+        nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         message().mutable_knowledge()->set_id( GetID() );
         message().mutable_party()->set_id( armyId_ );
         message().mutable_object()->set_id( GetObjectKnown()->GetID() );

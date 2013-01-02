@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ABC.h"
-#include "MIL_Time_ABC.h"
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ABC )
@@ -30,13 +29,4 @@ DEC_Knowledge_ABC::DEC_Knowledge_ABC()
 DEC_Knowledge_ABC::~DEC_Knowledge_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ABC::GetCurrentTimeStep
-// Created: NLD 2004-03-16
-// -----------------------------------------------------------------------------
-unsigned int DEC_Knowledge_ABC::GetCurrentTimeStep() const
-{
-    return MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 }

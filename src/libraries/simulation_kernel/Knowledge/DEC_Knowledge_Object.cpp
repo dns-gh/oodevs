@@ -406,7 +406,7 @@ bool DEC_Knowledge_Object::UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& 
 void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionLevel )
 {
     assert( currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ );
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
     UpdateMaxPerceptionLevel( currentPerceptionLevel );
     // $$$$ NLD 2007-02-07: currentPerceptionLevel peut valoir notSeen_ ?
@@ -421,7 +421,7 @@ void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionL
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& perception )
 {
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     const PHY_PerceptionLevel& currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
     UpdateMaxPerceptionLevel( currentPerceptionLevel );
@@ -459,7 +459,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     if( !collision.IsValid() )
         return;
     assert( pObjectKnown_ );
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
     UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ );
     //$$$ TMP BULLSHIT
@@ -503,7 +503,7 @@ void DEC_Knowledge_Object::UpdateRelevance()
     }
     if( bPerceptionDistanceHacked_ )
         UpdateLocalisations();
-    nTimeLastUpdate_ = GetCurrentTimeStep();
+    nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
 }
 
 // -----------------------------------------------------------------------------

@@ -34,13 +34,6 @@ public:
         // NOTHING
     }
     //@}
-
-protected:
-    //! @name Tools
-    //@{
-    unsigned int GetCurrentTimeStep() const;
-    //@}
-
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ABC )
