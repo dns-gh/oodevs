@@ -219,7 +219,7 @@ float Agent_PathfinderRule::EvaluateCost( const geometry::Point2f& from, const g
     const float rDistance = from.Distance( to );
     if( rMaxSpeed_ != 0 )
         return bShort_ ? rDistance : ( rDistance / rMaxSpeed_ );
-    return FLT_MAX;
+    return std::numeric_limits< float >::max();
 }
 
 // -----------------------------------------------------------------------------
