@@ -255,7 +255,7 @@ void MIL_Inhabitant::UpdateState()
 {
     try
     {
-        pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_Time_ABC::GetTime().GetTickDuration() );
+        pSchedule_->Update( MIL_Time_ABC::GetTime().GetRealTime(), MIL_Time_ABC::GetTime().GetTickDuration() );
         // $$$$ _RC_ JSR 2011-03-23: L'objet doit être créé dans le livingarea, dans startmoving, et détruit dans finishmoving!!!
         if( pSchedule_->IsMoving() && !movingObjectId_ )
             CreateInhabitantMovingObject();

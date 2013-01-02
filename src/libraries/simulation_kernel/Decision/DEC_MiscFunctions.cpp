@@ -44,7 +44,6 @@ void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, doub
     callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetMaxSpeedModificator( rFactor );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::GetMaxSpeedModificator
 // Created: LMT 2011-07-06
@@ -250,7 +249,7 @@ std::string DEC_MiscFunctions::GetPointXY( boost::shared_ptr< MT_Vector2D > poin
 // -----------------------------------------------------------------------------
 unsigned int DEC_MiscFunctions::GetTimeInSeconds()
 {
-    return MIL_AgentServer::GetWorkspace().GetRealTime();
+    return MIL_Time_ABC::GetTime().GetRealTime();
 }
 
 // -----------------------------------------------------------------------------

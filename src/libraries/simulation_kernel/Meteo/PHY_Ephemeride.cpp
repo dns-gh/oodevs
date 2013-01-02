@@ -77,7 +77,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
     }
     if( sunriseTime_ >= sunsetTime_  )
         xis.error( "Sunrise time should be before sunset time" );
-    UpdateNight( MIL_AgentServer::GetWorkspace().GetRealTime() );
+    UpdateNight( MIL_Time_ABC::GetTime().GetRealTime() );
 }
 
 // -----------------------------------------------------------------------------

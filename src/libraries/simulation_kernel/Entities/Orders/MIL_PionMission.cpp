@@ -136,7 +136,7 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
     asn().mutable_tasker()->set_id( pion.GetID() );
     asn().mutable_type()->set_id( 0 );
     asn().mutable_parameters();
-    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
+    NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -150,7 +150,7 @@ void MIL_PionMission::Send() const
     asn().mutable_tasker()->set_id( pion_.GetID() );
     asn().mutable_type()->set_id( GetType().GetID() );
     Serialize( *asn().mutable_parameters() );
-    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
+    NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

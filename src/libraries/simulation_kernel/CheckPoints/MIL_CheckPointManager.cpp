@@ -162,7 +162,7 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
 {
     try
     {
-        const bpt::ptime realTime( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+        const bpt::ptime realTime( bpt::from_time_t( MIL_Time_ABC::GetTime().GetRealTime() ) );
         xml::xofstream xos( strFileName );
         xos << xml::start( "checkpoint" )
                 << xml::content( "name", name )

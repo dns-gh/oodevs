@@ -597,7 +597,7 @@ void MIL_FragOrder::Send( client::FragOrder& message ) const
 {
     message().mutable_type()->set_id( type_.GetID() );
     Serialize( *message().mutable_parameters() );
-    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *message().mutable_start_time() );
+    NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_start_time() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

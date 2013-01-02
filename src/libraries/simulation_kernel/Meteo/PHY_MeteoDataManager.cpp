@@ -234,7 +234,7 @@ void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos ) const
     xos << xml::start( "weather" );
     schemaWriter.WriteSchema( xos, "exercise", "weather" );
     xos << xml::start( "exercise-date" )
-            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) ) )
+            << xml::attribute( "value", bpt::to_iso_string( bpt::from_time_t( MIL_Time_ABC::GetTime().GetRealTime() ) ) )
         << xml::end
         << xml::start( "ephemerides" );
             pEphemeride_->WriteUrban( xos );

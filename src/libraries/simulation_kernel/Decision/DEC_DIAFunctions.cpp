@@ -201,7 +201,7 @@ float DEC_DIAFunctions::GetSimTime()
 // -----------------------------------------------------------------------------
 float DEC_DIAFunctions::GetRealTime()
 {
-    return static_cast< float >( MIL_AgentServer::GetWorkspace().GetRealTime() );
+    return static_cast< float >( MIL_Time_ABC::GetTime().GetRealTime() );
 }
 
 //-----------------------------------------------------------------------------

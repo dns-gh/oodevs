@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionInterrogate.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( caller )
-    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
+    , rBaseTime_   ( MIL_Time_ABC::GetTime().GetRealTime() )
     , rTimeToWait_ ( 0 )
     , pKnowledge_  ( pKnowledge )
     , caller_      ( caller )
@@ -51,7 +51,7 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowledgeCrowdId )
     : PHY_DecisionCallbackAction_ABC( caller )
-    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
+    , rBaseTime_   ( MIL_Time_ABC::GetTime().GetRealTime() )
     , rTimeToWait_ ( 0 )
     , caller_      ( caller )
 {
@@ -95,7 +95,7 @@ void PHY_ActionInterrogate::Execute()
          Callback( static_cast< int >( eFailed ) );
     else
     {
-        if( MIL_AgentServer::GetWorkspace().GetRealTime() - rBaseTime_ < rTimeToWait_ )
+        if( MIL_Time_ABC::GetTime().GetRealTime() - rBaseTime_ < rTimeToWait_ )
              Callback( static_cast< int >( eRunning ) );
         else
              Callback( static_cast< int >( eFinished ) );
