@@ -43,8 +43,10 @@ integration.equipNBCOutfitSecu = function()
     if RNBCLevel and RNBCLevel ~= 0 then
         meKnowledge:sendReport( eRC_TenueProtectionNiveauNRBC, RNBCLevel )
         DEC_Agent_MettreTenueProtectionNBC()
+        return true
     else
         meKnowledge:sendReport( eRC_PasTenueNBC )
+        return false
     end
 end
 
