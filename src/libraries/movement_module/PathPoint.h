@@ -69,8 +69,8 @@ public:
     const TerrainData& GetObjectTypes() const;
     const TerrainData& GetObjectTypesToNextPoint() const;
     virtual const boost::shared_ptr< PathPoint >& GetDestPoint() const;
-    virtual int GetTypeLima();
-    virtual unsigned int GetLimaID();
+    virtual int GetTypeLima() const;
+    virtual unsigned int GetLimaID() const;
     virtual const TerrainData& GetTypeTerrain() const;
     //@}
 

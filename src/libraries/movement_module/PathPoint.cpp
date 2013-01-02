@@ -117,7 +117,7 @@ const boost::shared_ptr< PathPoint >& PathPoint::GetDestPoint() const
 // Name: PathPoint::GetTypeLima
 // Created: MGD 2010-03-10
 // -----------------------------------------------------------------------------
-int PathPoint::GetTypeLima()
+int PathPoint::GetTypeLima() const
 {
     throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
 }
@@ -126,9 +126,9 @@ int PathPoint::GetTypeLima()
 // Name: PathPoint::GetLimaID
 // Created: MGD 2010-03-10
 // -----------------------------------------------------------------------------
-unsigned int PathPoint::GetLimaID()
+unsigned int PathPoint::GetLimaID() const
 {
-    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetLimaID cannot be called for this Point class" );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ unsigned int PathPoint::GetLimaID()
 // -----------------------------------------------------------------------------
 const TerrainData& PathPoint::GetTypeTerrain() const
 {
-    throw MASA_EXCEPTION( "GetTypeLima cannot be called for this Point class" );
+    throw MASA_EXCEPTION( "GetTypeTerrain cannot be called for this Point class" );
 }
 
 //-----------------------------------------------------------------------------
