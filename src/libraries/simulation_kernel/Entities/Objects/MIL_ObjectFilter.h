@@ -48,6 +48,13 @@ private:
 
 class MIL_DangerousObjectFilter : public MIL_ObjectFilter
 {
+public:
+    virtual bool Test( const MIL_ObjectType_ABC& type ) const;
+};
+
+class MIL_PathObjectFilter : public MIL_DangerousObjectFilter
+{
+public:
     virtual bool Test( const MIL_ObjectType_ABC& type ) const;
 };
 

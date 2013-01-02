@@ -16,6 +16,7 @@
 #include "AvoidanceCapacity.h"
 #include "ContaminationCapacity.h"
 #include "InterferenceCapacity.h"
+#include "MobilityCapacity.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFilter constructor
@@ -82,4 +83,14 @@ bool MIL_DangerousObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
            type.GetCapacity< ContaminationCapacity >() != 0 ||
            type.GetCapacity< InterferenceCapacity >() != 0 ||
            type.GetCapacity< AvoidanceCapacity >() != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PathObjectFilter::Test
+// Created: LDC 2013-01-02
+// Any object that has an incidence on movement should be tested to true.
+// -----------------------------------------------------------------------------
+bool MIL_PathObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
+{
+    return type.GetCapacity< MobilityCapacity >() != 0 || MIL_DangerousObjectFilter::Test( type );
 }

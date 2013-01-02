@@ -103,3 +103,21 @@ double DEC_Path_KnowledgeObjectFlood::GetMaxTrafficability() const
 {
     return maxTrafficability_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectFlood::GetAgentMaxSpeedMultiplier
+// Created: JSR 2013-01-02
+// -----------------------------------------------------------------------------
+double DEC_Path_KnowledgeObjectFlood::GetAgentMaxSpeedMultiplier() const
+{
+    return 1.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path_KnowledgeObjectFlood::HasAgentMaxSpeedMultiplier
+// Created: JSR 2013-01-02
+// -----------------------------------------------------------------------------
+bool DEC_Path_KnowledgeObjectFlood::HasAgentMaxSpeedMultiplier() const
+{
+    return false;
+}
