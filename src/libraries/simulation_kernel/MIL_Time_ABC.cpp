@@ -22,7 +22,7 @@ namespace
 // -----------------------------------------------------------------------------
 const MIL_Time_ABC& MIL_Time_ABC::GetTime()
 {
-    return pTime_ ? *pTime_ : MIL_AgentServer::GetWorkspace();
+    return *pTime_;
 }
 
 // -----------------------------------------------------------------------------

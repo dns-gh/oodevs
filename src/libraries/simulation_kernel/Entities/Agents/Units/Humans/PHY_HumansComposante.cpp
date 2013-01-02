@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_HumansComposante.h"
-#include "MIL_AgentServer.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
@@ -522,7 +522,7 @@ void PHY_HumansComposante::ChangeHumanSize( unsigned int newHumanSize )
         }
     else
         while( humans_.size() < newHumanSize )
-            humans_.push_back( new PHY_Human( MIL_AgentServer::GetWorkspace(), *this ) );
+            humans_.push_back( new PHY_Human( MIL_Time_ABC::GetTime(), *this ) );
 }
 
 // -----------------------------------------------------------------------------

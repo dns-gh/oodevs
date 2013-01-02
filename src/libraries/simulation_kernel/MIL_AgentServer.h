@@ -50,9 +50,9 @@ class MIL_ObjectFactory;
 // Created: DFT 02-02-28
 // Last modified: JVT 03-12-15
 //*****************************************************************************
-class MIL_AgentServer : private MT_Timer_ABC
-                      , public NET_Simulation_ABC
-                      , public MIL_Time_ABC
+class MIL_AgentServer : public NET_Simulation_ABC
+                      , private MT_Timer_ABC
+                      , private MIL_Time_ABC
 {
 public:
     //! @name Type
@@ -138,13 +138,16 @@ public:
     unsigned int GetSimTime () const; // Durée en secondes depuis le début de la SIM
     unsigned int RealTimeToTick( unsigned int rt   ) const;
     unsigned int TickToRealTime( unsigned int tick ) const;
+    //@}
 
+private:
+    //! @name Time management
+    //@{
     virtual unsigned int GetTickDuration() const;
     virtual unsigned int GetCurrentTimeStep() const;
     virtual unsigned int GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
     //@}
 
-private:
     //! @name
     //@{
     void ReadStaticData();

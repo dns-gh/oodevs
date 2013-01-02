@@ -70,6 +70,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , pObjectFactory_       ( new MIL_ObjectFactory( config.IsLegacy() ) )
 {
+    MIL_Time_ABC::RegisterTime( *this );
     loopTimer_.Start();
 
     // These two lines are incredibly stupid but necessary as
@@ -131,6 +132,7 @@ MIL_AgentServer::~MIL_AgentServer()
     delete settings_;
     //    MT_LOG_INFO_MSG( "Terminating Terrain" );
 //    TER_World::DestroyWorld();
+    MIL_Time_ABC::UnregisterTime( *this );
 }
 
 // -----------------------------------------------------------------------------
