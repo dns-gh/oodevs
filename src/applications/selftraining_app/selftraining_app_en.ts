@@ -251,7 +251,7 @@ Do really you want to replace it ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start authoring, terrain generation or terrain workshop</source>
+        <source>Start authoring, terrain generation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

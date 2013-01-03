@@ -67,7 +67,7 @@ void HomePage::OnLanguageChanged()
     const bool preparation = config_.HasFeature( FEATURE_PREPARATION );
     const bool replayer = config_.HasFeature( FEATURE_REPLAYER );
     SetTextAndSubtitle( adapt_, tools::translate( "HomePage", "Adapt" ),
-        tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ), false );
+        tools::translate( "HomePage", "Start authoring, terrain generation" ), false );
     SetTextAndSubtitle( prepare_, tools::translate( "HomePage", "Prepare" ),
         preparation
         ? tools::translate( "HomePage", "Edit scenario" )

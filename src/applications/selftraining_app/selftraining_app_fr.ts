@@ -275,8 +275,8 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Rejouer un exercice</translation>
     </message>
     <message>
-        <source>Start authoring, terrain generation or terrain workshop</source>
-        <translation>Démarrer l&apos;adaptation, la génération de terrain ou l&apos;atelier terrain</translation>
+        <source>Start authoring, terrain generation</source>
+        <translation>Démarrer l&apos;adaptation, la génération de terrain</translation>
     </message>
     <message>
         <source>Start single player or multiplayer training session</source>

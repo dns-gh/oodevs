@@ -253,8 +253,8 @@ Do really you want to replace it ?</source>
         <translation type="unfinished">التكيف</translation>
     </message>
     <message>
-        <source>Start authoring, terrain generation or terrain workshop</source>
-        <translation type="unfinished">بدء التأليف، وتوليد التضاريس أو ورشة عمل التضاريس</translation>
+        <source>Start authoring, terrain generation</source>
+        <translation type="unfinished">بدء التأليف، وتوليد التضاريس</translation>
     </message>
     <message>
         <source>Prepare</source>
