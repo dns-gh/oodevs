@@ -138,121 +138,6 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GEN . PC RG - AV 3 + 1"/>
     <unit max-occurs="1" min-occurs="1" type="GEN . PC RG - MR 3 + 1"/>
   </automat>
-  <automat decisional-model="GLAISE ALFT Esc A et Reco" id="649" name="GLAISE - ALFT - Escadrille Atk" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
-    <unit type="GLAISE - ALFT - A 2 x OH58D"/>
-    <unit type="GLAISE - ALFT - A 2 x Cobra"/>
-    <unit type="GLAISE - ALFT - A 2 x Gazelle"/>
-  </automat>
-  <automat decisional-model="GLAISE ALFT esc UH et UM" id="650" name="GLAISE - ALFT - Escadrille HM" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
-    <unit type="GLAISE - ALFT - UH 5 x CH47"/>
-    <unit type="GLAISE - ALFT - UH 5 x CH53"/>
-  </automat>
-  <automat decisional-model="GLAISE ALFT esc UH et UM" id="651" name="GLAISE - ALFT - Escadrillle Reco" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
-    <unit type="GLAISE - ALFT - UH 5 x MI8"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="652" name="GLAISE - ASA . Batterie SA 11" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
-    <unit type="GLAISE - ASA . Section SA 11"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="653" name="GLAISE - ASA . Batterie SA 13" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
-    <unit type="GLAISE - ASA . Section SA 13"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="654" name="GLAISE - ASA . Batterie SA 6" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
-    <unit type="GLAISE - ASA . Section SA 6"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="655" name="GLAISE - ASA . Batterie SA 9" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
-    <unit type="GLAISE - ASA . Section SA 9"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="656" name="GLAISE - ASA . Section SA 14" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC SA"/>
-    <unit type="GLAISE - ASA . Groupe SA 14"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="657" name="GLAISE - ASA . Section SA 16" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC SA"/>
-    <unit type="GLAISE - ASA . Groupe SA 16"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="658" name="GLAISE - ASA . Section SA 7" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC Section"/>
-    <unit type="GLAISE - ASA . Groupe SA 7"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="659" name="GLAISE - ASA . Section ZSU 23 4" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC Section"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - ASA . Groupe ZSU 23 4"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="660" name="GLAISE - ASS . Batterie 122D30" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - ASS . Section 122D30"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="661" name="GLAISE - ASS . Batterie 130M46" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - ASS . Section 130M46"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="662" name="GLAISE - ASS . Batterie 2A36" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - ASS . Section 2 A 36"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="663" name="GLAISE - ASS . Batterie 2S 5" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit type="GLAISE - ASS . Section 2S 5"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="664" name="GLAISE - ASS . Batterie 2S 7" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit type="GLAISE - ASS . Section 2S 7"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="665" name="GLAISE - ASS . Batterie 2S1" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit type="GLAISE - ASS . Section 2S1"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="666" name="GLAISE - ASS . Batterie 2S3" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit type="GLAISE - ASS . Section 2S3"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="667" name="GLAISE - ASS . Batterie BM 21" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC BM"/>
-    <unit type="GLAISE - ASS . Section BM 21"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="668" name="GLAISE - ASS . Batterie BM 22" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC BM"/>
-    <unit type="GLAISE - ASS . Section BM22"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="669" name="GLAISE - ASS . Batterie BM 30" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC BM"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - ASS . Section BM30"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.DLO" id="670" name="GLAISE - ASS . DLO" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
-    <unit type="GLAISE - ASS . EO"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Reco" id="671" name="GLAISE - ASS . RECO" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . RECO PC"/>
-    <unit type="GLAISE - ASS . RECO"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="672" name="GLAISE - ASS . SML" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC SML"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - ASS . SML"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.AIR.Assaut" id="673" name="GLAISE - AIR . Groupement CAS SU 25" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - AIR . PC SU 25"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - ALFT . Patrouille SU 25"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="674" name="GLAISE - TRANS . PC BAT" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BAT PRINCIPAL"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BAT AVANCE"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="675" name="GLAISE - TRANS . PC BGDE" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BGDE PRINCIPAL"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC BGDE AVANCE"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="676" name="GLAISE - TRANS . PC DIV" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC DIV PRINCIPAL"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - TRANS . PC DIV AVANCE"/>
-  </automat>
   <automat decisional-model="Masalife.Automate.JOINT.Groupe Chalands Marine" id="677" name="JOINT . Groupe Chalands Marine" type="Automate JOINT">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT . PC Marine"/>
     <unit max-occurs="4" min-occurs="4" type="JOINT . CDIC + 2 CTM"/>
@@ -541,10 +426,6 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC Commando"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Groupe Commando"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Commando" id="743" name="GLAISE - INF . Section commandos" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Commando"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Groupe commando"/>
-  </automat>
   <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="744" name="ABC . Escadron Blinde AMX 10 RC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . PLT AMX 10 RC CDP OFF"/>
@@ -801,13 +682,11 @@
   <automat decisional-model="Masalife.Automate.LOG" id="798" name="LOG . Secteur appro (CAP)" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD secteur appro"/>
     <unit type="LOG . Section Magasin CAP"/>
-    <unit type="GLAISE - LOG . Section Magasin CAP"/>
     <unit type="LOG . Section Magasin CAP BLIAT"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="799" name="LOG . Secteur approvisionnement (SH)" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
     <unit type="LOG . Groupe Appro Vivre Eau"/>
-    <unit type="GLAISE - LOG . Groupe Appro Vivre Eau"/>
     <unit type="LOG . Groupe Appro Vivre Eau BLIAT"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="800" name="LOG . Secteur distribution stockage (SEA)" type="Automate LOG BLD Ravitaillement">
@@ -815,9 +694,6 @@
     <unit type="LOG . Escouade Trspt CARB 35m3"/>
     <unit type="LOG . Escouade Trspt CARB 60m3"/>
     <unit type="LOG . Escouade Trspt CARB180m3"/>
-    <unit type="GLAISE - LOG . Escouade Trspt CARB 35 m3"/>
-    <unit type="GLAISE - LOG . Escouade Trspt CARB 60 m3"/>
-    <unit type="GLAISE - LOG . Escouade Trspt CARB 180 m3"/>
     <unit type="LOG . Escouade Trspt CARB BLIAT"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="801" name="LOG . Secteur munitions" type="Automate LOG BLD Ravitaillement">
@@ -826,22 +702,13 @@
     <unit type="LOG . Groupe Munitions OFF TT - D"/>
     <unit type="LOG . Groupe Munitions OFF TD"/>
     <unit type="LOG . Groupe Munitions SOFF TD"/>
-    <unit type="GLAISE - LOG . Groupe Munitions SOFF TT - D"/>
-    <unit type="GLAISE - LOG . Groupe Munitions OFF TT - D"/>
-    <unit type="GLAISE - LOG . Groupe Munitions OFF TD"/>
-    <unit type="GLAISE - LOG . Groupe Munitions SOFF TD"/>
     <unit type="LOG . Groupe Munitions BLIAT"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="802" name="LOG . Compagnie Maintenance Mobilite" type="Automate LOG BLT Maintenance">
     <unit type="LOG . Section Reparation Mob NTI2"/>
     <unit type="LOG . Section Reparation Mob Feu NTI2"/>
-    <unit type="GLAISE - LOG . Section CDT CMM (EVA)"/>
-    <unit type="GLAISE - LOG . Section Reparation Mob BLD"/>
-    <unit type="GLAISE - LOG . Section Reparation MOB FEU BLD"/>
     <unit type="LOG . Section Reparation Mob NTI3"/>
     <unit type="LOG . Section Reparation Mob Feu NTI3"/>
-    <unit type="GLAISE - LOG . Section Reparation Mob BLT MOB"/>
-    <unit type="GLAISE - LOG . Section Reparation Mob Feu BLT SRMF"/>
     <unit type="LOG . Section Reparation Mob NTI3 BLIAT"/>
     <unit type="LOG . Section Reparation Mob Feu NTI3 BLIAT"/>
     <unit type="LOG . Section Evacuation BLIAT"/>
@@ -856,26 +723,19 @@
     <unit type="LOG . Section Reparation TSI NTI2"/>
     <unit type="LOG . Section Reparation TSI NTI3"/>
     <unit type="LOG . Section Reparation TSI NTI3 BLIAT"/>
-    <unit type="GLAISE - LOG . Section Reparation EA BLD"/>
-    <unit type="GLAISE - LOG . Section Reparation EA BLT SREAT"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="804" name="LOG . Secteur transport" type="Automate LOG BLD Ravitaillement">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Transport"/>
     <unit type="LOG . Peloton Transport VTLR (PT)"/>
     <unit type="LOG . Peloton Ravitaillement (PR)"/>
     <unit type="LOG . Peloton Transport TRM 10000"/>
-    <unit type="GLAISE - LOG . Peloton transport Kamaz 5320"/>
     <unit type="LOG . Peloton Transport BLIAT"/>
-    <unit type="GLAISE - LOG . Peloton Ravitaillement"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="805" name="LOG . Secteur EVASAN" type="Automate LOG BLD Sante">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Sante"/>
     <unit type="LOG . Groupe VS J5"/>
     <unit type="LOG . Groupe VS VAB"/>
     <unit type="LOG . Equipe HM EVASAN"/>
-    <unit type="GLAISE - LOG . Equipe HM EVASAN"/>
-    <unit type="GLAISE - LOG . Groupe VS 469 SAN"/>
-    <unit type="GLAISE - LOG . Groupe VS SAN"/>
     <unit type="LOG . Groupe VS J5 BLIAT"/>
     <unit type="LOG . Equipe HM EVASAN BLIAT"/>
   </automat>
@@ -886,11 +746,6 @@
     <unit type="LOG . Antenne Chirurgicale"/>
     <unit type="LOG . Section Chirurgicale Modulaire"/>
     <unit type="LOG . Hopital Mobile de Campagne"/>
-    <unit type="GLAISE - LOG . Section Deconta Medicale NBC"/>
-    <unit type="GLAISE - LOG . Section Medico PSY"/>
-    <unit type="GLAISE - LOG . Antenne Chirurgicale"/>
-    <unit type="GLAISE - LOG . Section Chirurgicale Modulaire"/>
-    <unit type="GLAISE - LOG . Section Chirurgicale HMC"/>
     <unit type="LOG . SAN GTSA 240"/>
     <unit type="LOG . Section Medico Psychologique BLIAT"/>
     <unit type="LOG . Section Chirurgicale HMC BLIAT"/>
@@ -898,16 +753,6 @@
   <automat decisional-model="Masalife.Automate.LOG" id="807" name="LOG . Secteur triage" type="Automate LOG BLD Sante">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG BLD Secteur Sante"/>
     <unit type="LOG . Section Triage modulaire"/>
-    <unit type="GLAISE - LOG . Section Triage Modulaire"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="808" name="GLAISE - LOG . TC2" type="Automate LOG TC2">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="809" name="GLAISE - LOG . TC2 ALAT" type="Automate LOG TC2">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ALAT"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="810" name="GLAISE - LOG . TC2 ART" type="Automate LOG TC2">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 ART"/>
   </automat>
   <automat decisional-model="Masalife.Automate.MonoPion" id="811" name="CIV . Journalistes" type="Automate Journalist">
     <unit command-post="true" min-occurs="1" type="Journalistes"/>
@@ -1218,181 +1063,6 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Batterie MISTRAL"/>
     <unit max-occurs="3" min-occurs="3" type="ASA . Section MISTRAL"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="886" name="GLAISE - LOG . TC2 char" type="Automate LOG TC2">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 char"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="887" name="GLAISE - NRBC . Groupe Reco" type="Automate NBC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - NRBC . PC Reco RKh"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - NRBC . Equipe Reco RKh"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="888" name="GLAISE - CIRCU . PL" type="Automate CIRCULATION">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - CIRCU . PC MAZ 500"/>
-    <unit type="GLAISE - CIRCU . PL FAP 2026B"/>
-    <unit type="GLAISE - CIRCU . PL KAMAZ 4310"/>
-    <unit type="GLAISE - CIRCU . PL KAMAZ 5320"/>
-    <unit type="GLAISE - CIRCU . PL MAZ 500"/>
-    <unit type="GLAISE - CIRCU . PL OURAL 4320"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="889" name="GLAISE - ABC . Escadron CHIEFTAIN" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Escadron CHIEFTAIN"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - ABC . Section CHIEFTAIN"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="890" name="GLAISE - ABC . Escadron T62" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Escadron T62"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - ABC . Section T62"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="891" name="GLAISE - ABC . Escadron T72" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Escadron T72"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - ABC . Section T72"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="892" name="GLAISE - ABC . Escadron Reco" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Escadron RECO"/>
-    <unit type="GLAISE - ABC . Patrouille EI BMP 2"/>
-    <unit type="GLAISE - ABC . Patrouille EI BMP 1"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - ABC . Peloton SCORPION"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.AMX-ERC" id="893" name="GLAISE - ABC . Escadron T72 BM" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Escadron T72 BM"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - ABC . Section T72 BM"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="894" name="GLAISE - ABC . Peloton EI" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Peloton EI BRDM2"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - ABC . Patrouille EI BRDM2"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF.AC" id="895" name="GLAISE - INF . Section AC" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . Section CDT CAC"/>
-    <unit type="GLAISE - INF . Groupe AC 106 SR"/>
-    <unit type="GLAISE - INF . Groupe AC BRDM2 AT5"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="896" name="GLAISE - GEN . Cie Combat genie de DB" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . PC Cie Genie"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Section combat"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="897" name="GLAISE - GEN . Cie Combat genie de DI" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . PC Cie Genie"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Section combat"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="898" name="GLAISE - GEN . Cie Combat genie de DM" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . PC Cie Genie"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Section combat"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="899" name="GLAISE - GEN . Cie Franchissement de DB" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . Section CDT genie franchissement"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe MTU 72"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe GSP"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - GEN . Groupe PMP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="900" name="GLAISE - GEN . Cie Franchissement de DI" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . Section CDT genie franchissement"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Groupe TMM"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Groupe PTS"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="901" name="GLAISE - GEN . Cie Franchissement de DM" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . Section CDT genie franchissement"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Groupe TMM"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="902" name="GLAISE - GEN . Cie Organisation terrain de DB" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . Section CDT genie organisation terrain"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe GMZ 3"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe MDK2"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="903" name="GLAISE - GEN . Cie Organisation terrain de DI" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . Section CDT genie organisation terrain"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Groupe PMR-3"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Groupe PZM"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="904" name="GLAISE - GEN . Cie Organisation terrain de DM" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . Section CDT genie organisation terrain"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe PMR-3"/>
-    <unit max-occurs="6" min-occurs="6" type="GLAISE - GEN . Groupe PZM"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="905" name="GLAISE - GEN . Compagnie de BI" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . PC Cie Genie"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Section combat"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe PMR-3"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe TMM"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe PZM"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe PTS"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="906" name="GLAISE - GEN . Compagnie de BM" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . PC Cie Genie"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Section combat"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe PMR-3"/>
-    <unit max-occurs="9" min-occurs="9" type="GLAISE - GEN . Groupe TMM"/>
-    <unit max-occurs="12" min-occurs="12" type="GLAISE - GEN . Groupe PZM"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.GEN" id="907" name="GLAISE - GEN . Compagnie de DB" type="Automate GEN">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - GEN . PC Cie Genie"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Section combat"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe MTU 72"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe GSP"/>
-    <unit max-occurs="5" min-occurs="5" type="GLAISE - GEN . Groupe BTM"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - GEN . Groupe MDK2"/>
-    <unit max-occurs="4" min-occurs="4" type="GLAISE - GEN . Groupe GMZ 3"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.CIRCU.Escadron Transport Blindes" id="908" name="GLAISE - CIRCU . Humanitaire" type="Automate CIRCULATION">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - CIRCU . PL humanitaire"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF.AC" id="909" name="GLAISE - INF . CAC" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . Cie CDT CAC"/>
-    <unit max-occurs="2" min-occurs="2" type="GLAISE - AC . Section toyota 106 SR"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - AC . Section BRDM2 AT 5"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="910" name="GLAISE - INF . Compagnie Mecanisee BMP1" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Cie BMP 1"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Section BMP 1"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="911" name="GLAISE - INF . Compagnie Mecanisee BMP1 sans AT" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Cie BMP 1"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Section BMP 1 sans AT"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="912" name="GLAISE - INF . Compagnie Mecanisee BMP2" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Cie BMP 2"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Section BMP 2"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="913" name="GLAISE - INF . Compagnie Mecanisee BMP2 sans AT" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Cie BMP 2"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Section BMP 2 sans AT"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="914" name="GLAISE - INF . Compagnie Motorisee BTR70" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Cie BTR70"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Section BTR70"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - INF . Groupe Mortier 81"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF.AC" id="915" name="GLAISE - INF . Section AC BRDM2 AT5" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . Section CDT BRDM 2 AT5"/>
-    <unit max-occurs="3" min-occurs="3" type="GLAISE - INF . Groupe AC BRDM2 AT5"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="916" name="GLAISE - ABC . Peloton RECO" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ABC . PC Peloton EI BRDM2"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - ABC . Patrouille EI BRDM2"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - NRBC . Equipe Reco RKh"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="917" name="ABC . HUMUS Peloton Reco" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="HUMUS - ABC . PC"/>
-    <unit type="HUMUS - ABC . Patrouille BRDM2"/>
-    <unit type="HUMUS - ABC . Patrouille PickUp"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="918" name="HUMUS - INF . Compagnie" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="HUMUS - INF . PC"/>
-    <unit type="HUMUS - INF . Grp mortier 82"/>
-    <unit type="HUMUS - INF . Section BTR60"/>
-    <unit type="HUMUS - INF . Section BMP1"/>
-    <unit type="HUMUS - ABC . Peloton T55"/>
-    <unit type="HUMUS - INF . Groupe AC"/>
-    <unit type="HUMUS - INF . Section GAZ66"/>
-    <unit type="HUMUS - INF . Section ZIL 131"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF.Commando" id="919" name="HUMUS - INF . Compagnie Commando" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="HUMUS - INF . PC"/>
-    <unit type="HUMUS - INF . Section Cdo BTR60"/>
-    <unit type="HUMUS - INF . Section Cdo Toyota"/>
-    <unit type="HUMUS - INF . Grp mortier 60"/>
-    <unit type="HUMUS - ABC . Peloton T55"/>
-    <unit type="HUMUS - INF . Section Cdo BMP1"/>
-    <unit type="HUMUS - ASY .  Activiste"/>
-    <unit type="HUMUS - RENS . Societe Militaire Privee"/>
-  </automat>
   <automat decisional-model="Masalife.Automate.RENS.ELGE" id="920" name="RENS . ELGE" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Groupe ELGE"/>
   </automat>
@@ -1449,10 +1119,6 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Equipe URH OFF"/>
     <unit max-occurs="4" min-occurs="4" type="RENS . Equipe URH S/OFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.RENS.URH" id="935" name="GLAISE - RENS . URH" type="Automate RENS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - RENS . PC URH"/>
-    <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
-  </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="936" name="LOG . TC2 LOG Stock" type="Automate LOG TC2">
     <unit command-post="true" min-occurs="1" type="LOG . TC2 Stock"/>
   </automat>
@@ -1470,4 +1136,4 @@
     <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL"/>
   </automat>
 </automats>
-<!-- signature="3455782746" -->
+<!-- signature="0711919035" -->

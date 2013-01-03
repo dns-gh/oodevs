@@ -104,11 +104,11 @@
     <breakdown average-repairing-time="4h" id="34" name="Panne ALAT 4" type="EA" variance="30m">
       <part quantity="1" resource="Rechange ALAT"/>
     </breakdown>
-    <breakdown average-repairing-time="2h" id="35" name="Panne Glaise NTI" type="EA" variance="1h">
-      <part quantity="1" resource="Rechange NTI1 glaise"/>
+    <breakdown average-repairing-time="2h" id="35" name="Panne  NTI" type="EA" variance="1h">
+      <part quantity="1" resource="Rechange NTI1"/>
     </breakdown>
-    <breakdown average-repairing-time="2h" id="36" name="Panne Glaise NTI1 Evac" type="M" variance="1h">
-      <part quantity="1" resource="Rechange NTI1 glaise"/>
+    <breakdown average-repairing-time="2h" id="36" name="Panne  NTI1 Evac" type="M" variance="1h">
+      <part quantity="1" resource="Rechange NTI1"/>
     </breakdown>
   </category>
   <category name="NTI2">
@@ -214,14 +214,14 @@
     <breakdown average-repairing-time="8h" id="70" name="Panne ALAT 8" type="EA" variance="30m">
       <part quantity="4" resource="Rechange ALAT"/>
     </breakdown>
-    <breakdown average-repairing-time="6h" id="71" name="Panne Glaise NTI 2" type="EA" variance="2h">
-      <part quantity="1" resource="Rechange NTI2 glaise"/>
+    <breakdown average-repairing-time="6h" id="71" name="Panne  NTI 2" type="EA" variance="2h">
+      <part quantity="1" resource="Rechange NTI2"/>
     </breakdown>
-    <breakdown average-repairing-time="6h" id="72" name="Panne Glaise NTI2 Evac" type="M" variance="2h">
-      <part quantity="1" resource="Rechange NTI2 glaise"/>
+    <breakdown average-repairing-time="6h" id="72" name="Panne  NTI2 Evac" type="M" variance="2h">
+      <part quantity="1" resource="Rechange NTI2"/>
     </breakdown>
-    <breakdown average-repairing-time="48h" id="73" name="Panne Glaise NTI3 Evac" type="M" variance="24h">
-      <part quantity="1" resource="Rechange NTI2 glaise"/>
+    <breakdown average-repairing-time="48h" id="73" name="Panne  NTI3 Evac" type="M" variance="24h">
+      <part quantity="1" resource="Rechange NTI2"/>
     </breakdown>
   </category>
   <category name="NTI3">
@@ -312,9 +312,9 @@
     <breakdown average-repairing-time="160h" id="102" name="Panne ALAT NTI3" type="EA" variance="0m">
       <part quantity="1" resource="Rechange NTI3"/>
     </breakdown>
-    <breakdown average-repairing-time="48h" id="103" name="Panne Glaise NTI 3" type="EA" variance="24h">
-      <part quantity="1" resource="Rechange NTI3 glaise"/>
+    <breakdown average-repairing-time="48h" id="103" name="Panne  NTI 3" type="EA" variance="24h">
+      <part quantity="1" resource="Rechange NTI3 2"/>
     </breakdown>
   </category>
 </breakdowns>
-<!-- signature="0837337667" -->
+<!-- signature="2461887359" -->

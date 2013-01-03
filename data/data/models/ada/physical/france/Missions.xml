@@ -4481,8 +4481,8 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AttendreSePoster" id="342" name="Attendre Se Poster"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Attendre" id="398" name="Attendre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_SArreter" id="346" name="S'arreter"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_EffectuerMouvementDeSauvegarde" id="464" name="Effectuer Mouvement De Sauvegarde">
       <parameter dia-name="destination_point_" name="Destination" optional="false" type="Point"/>
     </fragorder>
@@ -4683,4 +4683,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1963981139" -->
+<!-- signature="1354053836" -->
