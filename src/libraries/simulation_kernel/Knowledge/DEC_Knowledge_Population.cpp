@@ -449,13 +449,15 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
 void DEC_Knowledge_Population::SendStateToNewClient() const
 {
     SendMsgCreation();
-    if( bReconAttributesValid_ )
+    if( bReconAttributesValid_ || !criticalIntelligence_.empty() )
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
-        asnMsg().set_domination( static_cast< unsigned int>( rDominationState_ * 100. ) );
-        asnMsg().set_critical_intelligence( criticalIntelligence_ );
+        if( bReconAttributesValid_)
+            asnMsg().set_domination( static_cast< unsigned int>( rDominationState_ * 100. ) );
+        if( !criticalIntelligence_.empty() )
+            asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
