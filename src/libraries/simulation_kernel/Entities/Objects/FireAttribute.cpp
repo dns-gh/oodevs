@@ -101,6 +101,22 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireAttribute::WriteODB
+// Created: LDC 2013-01-03
+// -----------------------------------------------------------------------------
+void FireAttribute::WriteODB( xml::xostream& xos ) const
+{
+    if( !pClass_ )
+    {
+        MT_LOG_ERROR_MSG( "No 'Fire class' to save for fire object attribute" );
+    }
+    xos << xml::start( "fire" )
+            << xml::attribute( "class", pClass_ ? pClass_->GetName()  : "" )
+            << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireAttribute::Register
 // Created: JSR 2010-03-12
 // -----------------------------------------------------------------------------

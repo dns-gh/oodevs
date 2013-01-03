@@ -47,6 +47,7 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC
