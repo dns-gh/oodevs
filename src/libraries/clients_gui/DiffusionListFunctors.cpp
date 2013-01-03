@@ -69,10 +69,9 @@ bool DiffusionListFunctor_ABC::IsFromCurrentTeam( const kernel::Entity_ABC& agen
 // Name: DiffusionListReceiversExtractor::DiffusionListReceiversExtractor
 // Created: ABR 2012-02-28
 // -----------------------------------------------------------------------------
-DiffusionListReceiversExtractor::DiffusionListReceiversExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, std::vector< const kernel::Entity_ABC* >& targets, QStringList& targetsNames )
+DiffusionListReceiversExtractor::DiffusionListReceiversExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, DiffusionListData::T_Entities& targets )
     : DiffusionListFunctor_ABC( name, currentTeam )
     , targets_     ( targets )
-    , targetsNames_( targetsNames )
 {
     // NOTHING
 }
@@ -101,9 +100,10 @@ void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agen
 
     if( !dico->GetValue( "TypePC" ).empty() && dico->GetValue( "TypePC" ) != "PasCorresp" )
     {
-        targets_.push_back( &agent );
-        const std::string longName = longname::GetEntityLongName( agent );
-        targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
+        QString longName = longname::GetEntityLongName( agent ).c_str();
+        longName = ( longName.isEmpty() ? agent.GetName() : longName );
+        assert( targets_.find( longName ) == targets_.end() );
+        targets_[ longName ] = &agent;
     }
 }
 
@@ -115,10 +115,9 @@ void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agen
 // Name: DiffusionListEmittersExtractor::DiffusionListEmittersExtractor
 // Created: ABR 2012-02-28
 // -----------------------------------------------------------------------------
-DiffusionListEmittersExtractor::DiffusionListEmittersExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, std::vector< const kernel::Entity_ABC* >& targets, QStringList& targetsNames )
+DiffusionListEmittersExtractor::DiffusionListEmittersExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, DiffusionListData::T_Entities& targets )
     : DiffusionListFunctor_ABC( name, currentTeam )
     , targets_     ( targets )
-    , targetsNames_( targetsNames )
 {
     // NOTHING
 }
@@ -152,9 +151,10 @@ void DiffusionListEmittersExtractor::operator()( const kernel::Entity_ABC& agent
         return;
     if( attribute->IsActive( dico->GetExtensions() ) )
     {
-        targets_.push_back( &agent );
-        const std::string longName = longname::GetEntityLongName( agent );
-        targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
+        QString longName = longname::GetEntityLongName( agent ).c_str();
+        longName = ( longName.isEmpty() ? agent.GetName() : longName );
+        assert( targets_.find( longName ) == targets_.end() );
+        targets_[ longName ] = &agent;
     }
 }
 

@@ -13,6 +13,7 @@
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/Resolver.h"
+#include "DiffusionListFunctors.h"
 
 namespace kernel
 {
@@ -61,17 +62,15 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Entity_ABC >           currentTeam_;
-    const tools::Resolver< kernel::Agent_ABC >&         agents_;
-    const tools::Resolver< kernel::Formation_ABC >&     formations_;
-    const kernel::ExtensionTypes&                       extensions_;
-    VerticalHeaderTableView                             tableView_;
-    QStandardItemModel                                  dataModel_;
-    std::vector< const kernel::Entity_ABC* >            emitters_;
-    std::vector< const kernel::Entity_ABC* >            receivers_;
-    QStringList                                         emittersHeaders_;
-    QStringList                                         receiversHeaders_;
-    std::string                                         extensionName_;
+    kernel::SafePointer< kernel::Entity_ABC >       currentTeam_;
+    const tools::Resolver< kernel::Agent_ABC >&     agents_;
+    const tools::Resolver< kernel::Formation_ABC >& formations_;
+    const kernel::ExtensionTypes&                   extensions_;
+    VerticalHeaderTableView                         tableView_;
+    QStandardItemModel                              dataModel_;
+    DiffusionListData::T_Entities                   emitters_;
+    DiffusionListData::T_Entities                   receivers_;
+    std::string                                     extensionName_;
     //@}
 };
 
