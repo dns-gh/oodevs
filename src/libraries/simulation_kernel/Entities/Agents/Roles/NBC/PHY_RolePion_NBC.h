@@ -68,10 +68,7 @@ public:
     virtual void Decontaminate( double rRatioAgentsWorking );
     void WearNbcProtectionSuit();
     void RemoveNbcProtectionSuit();
-    virtual bool IsImmune() const;
     virtual bool IsForcedImmune() const;
-    virtual void ImmunizeAgent();
-    virtual void StopImmunizeAgent();
     virtual void TemporaryImmunizeAgent( bool bImmunize );
     virtual double GetContaminationQuantity() const;
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
@@ -124,7 +121,6 @@ private:
     bool poisoned_;
     bool intoxicated_;
     bool immune_;
-    bool forcedImmuneByDecisional_;
     int currentAttritionThreshold_;
     //@}
 };

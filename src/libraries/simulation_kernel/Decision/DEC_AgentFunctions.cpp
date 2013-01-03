@@ -163,24 +163,6 @@ bool DEC_AgentFunctions::IsIntoxicated( const MIL_Agent_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::ImmunizeAgent
-// Created: JSR 2011-06-14
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::ImmunizeAgent( MIL_Agent_ABC& callerAgent )
-{
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().ImmunizeAgent();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::StopImmunizeAgent
-// Created: JSR 2011-06-14
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
-{
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().StopImmunizeAgent();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::TemporaryImmunizeAgent
 // Created: GGE 2012-05-14
 // -----------------------------------------------------------------------------

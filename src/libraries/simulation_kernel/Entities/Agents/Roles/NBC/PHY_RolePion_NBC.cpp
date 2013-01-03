@@ -91,7 +91,6 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     , poisoned_                 ( false )
     , intoxicated_              ( false )
     , immune_                   ( false )
-    , forcedImmuneByDecisional_ ( false )
     , currentAttritionThreshold_( -1 )
 {
     // NOTHING
@@ -121,7 +120,6 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
          & poisoned_
          & intoxicated_
          & immune_
-         & forcedImmuneByDecisional_
          & dose_
          & currentAttritionThreshold_;
 }
@@ -294,39 +292,12 @@ void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_NBC::IsImmune
-// Created: JSR 2011-06-14
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_NBC::IsImmune() const
-{
-    return immune_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::IsForcedImmune
 // Created: GGE 2012-05-14
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_NBC::IsForcedImmune() const
 {
-    return forcedImmuneByDecisional_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_NBC::ImmunizeAgent
-// Created: JSR 2011-06-14
-// -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::ImmunizeAgent()
-{
-    immune_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_NBC::StopImmunizeAgent
-// Created: JSR 2011-06-14
-// -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::StopImmunizeAgent()
-{
-    immune_ = false;
+    return immune_;
 }
 
 // -----------------------------------------------------------------------------
@@ -335,7 +306,7 @@ void PHY_RolePion_NBC::StopImmunizeAgent()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::TemporaryImmunizeAgent( bool bImmunize )
 {
-    forcedImmuneByDecisional_ = bImmunize;
+    immune_ = bImmunize;
 }
 
 // -----------------------------------------------------------------------------
@@ -386,7 +357,7 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        if( target.GetID() != owner_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsImmune() && !target.Get< PHY_RoleInterface_NBC >().IsForcedImmune() &&
+        if( target.GetID() != owner_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsForcedImmune() &&
             ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );
