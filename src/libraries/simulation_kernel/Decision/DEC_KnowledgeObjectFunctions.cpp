@@ -93,6 +93,17 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& caller
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination
+// Created: LGY 2013-01-03
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination( DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( agent )
+        return QueueForDecontamination( agent->GetPion(), pKnowledge );
+    return static_cast< int >( eQueryInvalid );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination
 // Created: LGY 2012-12-20
 // -----------------------------------------------------------------------------
