@@ -185,7 +185,7 @@ Section "Documentation" s_doc
 SectionEnd
 
 ; ------------------------------------------------------------------------------
-Section /o "OTPacks" s_otpacks
+Section "OTPacks" s_otpacks
     !insertmacro OT.AddOTPacks
 SectionEnd
 
