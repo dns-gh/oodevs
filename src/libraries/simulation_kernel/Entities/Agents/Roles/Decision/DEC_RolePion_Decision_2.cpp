@@ -566,6 +566,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_CollisionsObjets", boost::bind( &DEC_KnowledgeFunctions::GetObjectsColliding, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Connaissances_CollisionsDesastres", boost::bind( &DEC_KnowledgeFunctions::GetCollidingDisasters, boost::ref( GetPion() ) ) );
+    RegisterFunction( "DEC_Connaissances_Desastres", boost::bind( &DEC_KnowledgeFunctions::GetDisasters, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Connaissances_CollisionsObjetsDeType",
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsCollidingFromType, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_ObjetLePlusProche",

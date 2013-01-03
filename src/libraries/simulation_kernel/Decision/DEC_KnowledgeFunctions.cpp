@@ -479,18 +479,33 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType
 // -----------------------------------------------------------------------------
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetCollidingDisasters( const MIL_AgentPion& callerAgent )
 {
-    T_KnowledgeObjectDiaIDVector result;
-    T_KnowledgeObjectDiaIDVector objectsColliding;
-    callerAgent.GetArmy().GetKnowledge().GetObjects( objectsColliding );
-    for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+    T_KnowledgeObjectDiaIDVector results;
+    T_KnowledgeObjectDiaIDVector disasters = GetDisasters( callerAgent );
+
+    for( auto it = disasters.begin(); it != disasters.end(); ++it )
+        if( *it )
+            if( (*it)->GetLocalisation().IsInside( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
+                results.push_back( *it );
+    return results;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetDisasters
+// Created: LGY 2013-01-03
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisasters( const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgeObjectDiaIDVector disasters;
+    T_KnowledgeObjectDiaIDVector objects;
+    callerAgent.GetArmy().GetKnowledge().GetObjects( objects );
+    for( auto it = objects.begin(); it != objects.end(); ++it )
         if( *it )
         {
             const MIL_ObjectType_ABC& type = (*it)->GetType();
-            if( type.GetCapacity< DisasterCapacity >() &&
-                (*it)->GetLocalisation().IsInside( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
-                result.push_back( *it );
+            if( type.GetCapacity< DisasterCapacity >() )
+                disasters.push_back( *it );
         }
-    return result;
+        return disasters;
 }
 
 // -----------------------------------------------------------------------------

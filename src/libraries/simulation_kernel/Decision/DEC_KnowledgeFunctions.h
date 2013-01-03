@@ -83,6 +83,7 @@ public:
     static T_KnowledgeObjectDiaIDVector GetObjectsColliding( const MIL_AgentPion& callerAgent );
     static T_KnowledgeObjectDiaIDVector GetObjectsCollidingFromType( const MIL_AgentPion& callerAgent, const std::string& objectType );
     static T_KnowledgeObjectDiaIDVector GetCollidingDisasters( const MIL_AgentPion& callerAgent );
+    static T_KnowledgeObjectDiaIDVector GetDisasters( const MIL_AgentPion& callerAgent );
 
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters, bool nonActivatedObstacles );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
