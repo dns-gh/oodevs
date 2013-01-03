@@ -423,17 +423,16 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
         if( g_bRecalculItineraire ) then
             do
                 g_bRecalculItineraire = false
-                                Halt( self )
+                Halt( self )
                 do return end
-
             end
---[[//condition d'arret
-]]        end
+        end
 
+--[[//condition d'arret]]
         if( DEC_Geometrie_PositionsEgales( myself:DEC_Agent_Position(), DEC_ListePoints_GetAt( self._namedParams.listePoints, DEC_ListePoints_Size( self._namedParams.listePoints ) - 1 ) ) ) then
             do
                 self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
-                                self:SendFeedback( eActionEffectuee )
+                self:SendFeedback( eActionEffectuee )
                 Halt( self )
                 do return end
 
@@ -446,33 +445,25 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
                 assert( DEC_ListePoints_Size( self._namedParams.listePoints ) ~= nil, "liste de points vide" )
             end
---[[// calcul de l'itineraire uniquement si en vol (pour le calcul d'évitement des objets)
-]]        end
-
-        if( not self.bCalculItineraire ) then
-            do
-                self.itineraire = DEC_CreerItineraireListe( self._namedParams.listePoints, self._namedParams.ePathType )
-                self.bCalculItineraire = true
-            end
         end
 
+--[[// calcul de l'itineraire uniquement si en vol (pour le calcul d'évitement des objets) ]]
         if( not self.bCalculItineraire ) then
-            do return end
+            self.bCalculItineraire = true
+            return
         end
 
-        --[[// gestion de la progression
-]]if( self.eEtat == eActionEffectuee ) then
-            do
-                self.eEtat = eActionEnCours
-                                do
-                    self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
-                                        self:SendFeedback( eActionEffectuee )
-                    Halt( self )
-                    do return end
+        if( not self.itineraire ) then
+            self.itineraire = DEC_CreerItineraireListe( self._namedParams.listePoints, self._namedParams.ePathType )
+        end
 
-                end
-
-            end
+        --[[// gestion de la progression ]]
+        if( self.eEtat == eActionEffectuee ) then
+            self.eEtat = eActionEnCours
+            self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_ALAT_RejoindreParItineraire" )
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            return
         end
 
         Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
