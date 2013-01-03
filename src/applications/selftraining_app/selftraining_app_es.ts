@@ -345,8 +345,8 @@ Do you really want to continue ?</source>
         <translation>Reproducir escenario</translation>
     </message>
     <message>
-        <source>Start authoring, terrain generation or terrain workshop</source>
-        <translation>Iniciar modelamiento, generación de terreno o edición de terreno</translation>
+        <source>Start authoring, terrain generation</source>
+        <translation>Iniciar modelamiento, generación de terreno</translation>
     </message>
     <message>
         <source>Start single player or multiplayer training session</source>

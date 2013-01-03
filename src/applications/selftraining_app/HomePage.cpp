@@ -50,7 +50,7 @@ HomePage::~HomePage()
 // -----------------------------------------------------------------------------
 void HomePage::OnLanguageChanged()
 {
-    SetTextAndSubtitle( adapt_,   tools::translate( "HomePage", "Adapt" ),   tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
+    SetTextAndSubtitle( adapt_,   tools::translate( "HomePage", "Adapt" ),   tools::translate( "HomePage", "Start authoring, terrain generation" ) );
     SetTextAndSubtitle( prepare_, tools::translate( "HomePage", "Prepare" ), tools::translate( "HomePage", "Edit scenario" ) );
     SetTextAndSubtitle( play_,    tools::translate( "HomePage", "Play" ),    tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
     SetTextAndSubtitle( replay_,  tools::translate( "HomePage", "Replay" ),  tools::translate( "HomePage", "Replay scenario" ) );
