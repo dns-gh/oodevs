@@ -43,8 +43,6 @@ end
 -- FRAGO MANAGEMENT
 -- Activate tasks depending on frag orders value.
 -- ============================================================================
-local eAmbianceMission_Surete = 0
-local eAmbianceMission_Vitesse = 1
 
 -- CR ROE 
 integration.CR_ROE  = function( typeROE )

@@ -314,3 +314,7 @@ eObus_effect = 6
 eRandomCurious = 0
 eRandomFlee = 1
 eRandomStay = 2
+
+-- Ambiance
+eAmbianceMission_Surete = 0
+eAmbianceMission_Vitesse = 1
