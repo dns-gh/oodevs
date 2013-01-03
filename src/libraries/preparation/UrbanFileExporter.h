@@ -39,18 +39,14 @@ public:
     virtual ~UrbanFileExporter();
     //@}
 
-    //! @name Operations
-    //@{
-    void Initialize();
-    void Write();
-    void WriteObject( const kernel::UrbanObject_ABC& object, unsigned int counter );
-    //@}
-
 private:
     //! @name Helpers
     //@{
     void CreateStructure();
     void CreateField( OGRFieldDefn* field );
+    void Initialize();
+    void Write();
+    void WriteObject( const kernel::UrbanObject_ABC& object, unsigned int counter );
     //@}
 
 private:
