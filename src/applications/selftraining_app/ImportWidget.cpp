@@ -16,6 +16,7 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 #include <xeumeuleu/xml.hpp>
+#include "tools/EncodingConverter.h"
 
 #pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
@@ -117,7 +118,7 @@ void ImportWidget::InstallExercise()
 {
     if( packageContent_->count() )
     {
-        zip::izipfile archive( package_->text().toStdString().c_str() );
+        zip::izipfile archive( tools::FromUtf8ToLocalCharset( package_->text().toStdString() ) );
         if( archive.isOk() )
         {
             packageProgress_->show();
@@ -146,7 +147,7 @@ bool ImportWidget::IsButtonEnabled() const
 // -----------------------------------------------------------------------------
 bool ImportWidget::ReadPackageContentFile()
 {
-    zip::izipfile archive( package_->text().toStdString().c_str() );
+    zip::izipfile archive( tools::FromUtf8ToLocalCharset( package_->text().toStdString() ) );
     if( !archive.isOk() )
         return false;
     zip::izipstream zipStream( archive, "content.xml" );
@@ -202,7 +203,7 @@ void ImportWidget::SelectPackage( const QString& filename )
         packageVersion_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-            packageContent_->addItems( frontend::commands::ListPackageFiles( package_->text().toStdString() ) );
+            packageContent_->addItems( frontend::commands::ListPackageFiles( tools::FromUtf8ToLocalCharset( package_->text().toStdString() ) ) );
         else
             packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }

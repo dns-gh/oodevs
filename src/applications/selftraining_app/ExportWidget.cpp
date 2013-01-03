@@ -18,6 +18,7 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/Version.h"
+#include <tools/EncodingConverter.h>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.h>
@@ -507,7 +508,7 @@ bool ExportWidget::BrowseClicked()
     const QString filename = QFileDialog::getSaveFileName( this, tools::translate( "ExportWidget", "Select a package" ), package_.second.c_str(), "SWORD packages (*.otpak)" );
     if( filename.isEmpty() )
         return false;
-    const bfs::path file = bfs::path( std::string( filename.toStdString() ) );
+    const bfs::path file = bfs::path( tools::FromUtf8ToLocalCharset( filename.toStdString() ) );
     package_.first = file.parent_path().string();
     package_.second = file.filename().string();
     if( bfs::exists( file ) )
