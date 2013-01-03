@@ -41,6 +41,13 @@ namespace
         return settings.value( ( "/sword/" + key ).c_str(), QTime().addSecs( 3600 ) ).toString();
     }
 
+    bool ReadBoolRegistryValue( const std::string& key )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        bool val =  settings.value( ( "/sword/" + key ).c_str(), false ).toBool();
+        return val;
+    }
+
     void WriteIntRegistryValue( const std::string& key, int value )
     {
         QSettings settings( "MASA Group", "SWORD" );
@@ -51,6 +58,12 @@ namespace
     {
         QSettings settings( "MASA Group", "SWORD" );
         settings.setValue( ( "/sword/" + key ).c_str(), date );
+    }
+
+    void WriteBoolRegistryValue( const std::string& key, bool checked )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        settings.setValue( ( "/sword/" + key ).c_str(), checked );
     }
 }
 
@@ -68,7 +81,8 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
     {
         checkpointsGroup_ = new Q3GroupBox( 2, Qt::Vertical, vbox );
         checkpointsGroup_->setCheckable( true );
-        checkpointsGroup_->setChecked( false );
+        checkpointsGroup_->setChecked( ReadBoolRegistryValue( "CheckpointChecked" ) );
+        connect( checkpointsGroup_, SIGNAL( clicked( bool ) ), SLOT( OnCheckpointCheckedChanged( bool ) ) );
         {
             Q3HBox* frequencyBox = new Q3HBox( checkpointsGroup_ );
             frequencyLabel_ = new QLabel( frequencyBox );
@@ -152,7 +166,6 @@ void CheckpointConfigPanel::Select( const frontend::Exercise_ABC& exercise )
 void CheckpointConfigPanel::ClearSelection()
 {
     exercise_ = 0;
-    checkpointsGroup_->setChecked( false );
     checkpoints_->ClearSelection();
     sessions_->clear();
     sessions_->setSelected( 0, true );
@@ -220,4 +233,13 @@ void CheckpointConfigPanel::OnFrequencyChanged( const QTime& time )
 void CheckpointConfigPanel::OnCheckpointKeptChanged( int value )
 {
     WriteIntRegistryValue( "CheckpointKept", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckpointConfigPanel::OnCheckpointCheckedChanged
+// Created: NPT 2012-12-20
+// -----------------------------------------------------------------------------
+void CheckpointConfigPanel::OnCheckpointCheckedChanged( bool value )
+{
+    WriteBoolRegistryValue( "CheckpointChecked", value );
 }

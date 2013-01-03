@@ -71,6 +71,7 @@ private slots:
     void OnCheckpointSelected( const QString& checkpoint );
     void OnFrequencyChanged( const QTime& time );
     void OnCheckpointKeptChanged( int value );
+    void OnCheckpointCheckedChanged( bool value );
     //@}
 
 private:
