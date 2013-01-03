@@ -486,7 +486,8 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetCollidingDisasters( cons
         if( *it )
         {
             const MIL_ObjectType_ABC& type = (*it)->GetType();
-            if( type.GetCapacity< DisasterCapacity >() )
+            if( type.GetCapacity< DisasterCapacity >() &&
+                (*it)->GetLocalisation().IsInside( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
                 result.push_back( *it );
         }
     return result;
