@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Melee Automate Animer Postes De Controle</title>
+	</head>
+	<body>
+		<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:12pt; font-weight:600; color:#000000;">NIVEAU :</span><span style=" font-family:'Calibri'; color:#000000;"></span><span style=" font-family:'Calibri'; font-size:12pt; color:#000000;">Automate</span><span style=" font-family:'Calibri'; color:#000000;"></span></p>
+		<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:12pt; font-weight:600; color:#000000;">ARME :</span><span style=" font-family:'Calibri'; color:#000000;"></span><span style=" font-family:'Calibri'; font-size:12pt; color:#000000;">Melee</span><span style=" font-family:'Calibri'; color:#000000;"></span></p>
+		<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:12pt; font-weight:600; color:#000000;">MISSION :</span><span style=" font-family:'Calibri'; color:#000000;"></span><span style=" font-family:'Calibri'; font-size:12pt; color:#000000;">Animer Postes De Controle</span></p>
+		<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Calibri';" />
+		<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Calibri';" />
+		<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:x-large; font-weight:600;">Objectif principal</span><span style=" font-family:'Calibri';"></span></p><span class="normal"><effects>
+				<ol>
+					<li>Contrôler</li>
+					<li>Détruire / Neutraliser</li>
+				</ol>
+			</effects>
+		</span><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:x-large; font-weight:600;">Modalités d'exécution</span></p><span class="normal" style="font-weight: bold;"><span class="space"></span></span><ol>
+			<li>
+				<step>Rejoindre la ou les positions à armer ;</step>
+			</li>
+			<li>
+				<step>Pour chaque position, un élément construit le point de contrôle s'il n'existe pas déjà ;</step>
+			</li>
+			<li>
+				<step>Toutes les unités de mêlée se répartissent les points de contrôle et les animent ;</step>
+			</li>
+			<li>
+				<step>Les autres unités tombent en garde.</step>
+			</li>
+		</ol><br><span class="normal" style="font-weight: bold;"><span class="space"></span></span><ol>
+			<li>
+				<step>Si un terroriste passe le poste de controle alors il est identifié et capturé.</step>
+			</li>
+			<li>
+				<step>L'animateur a ensuite accès à l'ordre de conduite "déposer unité capturée" au niveau du pion pour déposer le terroriste à une position donnée.</step>
+			</li>
+		</ol><br><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:x-large; font-weight:600;">Schéma de modélisation </span></p><br><img src="../Images/IA_Automate_AnimerUnPosteDeControle/Mission.png" width="400" height="400"><br><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:x-large; font-weight:600;">Paramètres obligatoires</span></p>
+		<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-weight:600; text-decoration: underline;">Fuseau : </span><span style=" font-family:'Calibri';">Zone de responsabilité.<br></span></p><br><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-weight:600; text-decoration: underline;">Direction Dangereuse : </span><span style=" font-family:'Calibri';">Orientation privilégiée des capteurs.<br></span></p><br><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-weight:600; text-decoration: underline;">Points de contrôle : </span><span style=" font-family:'Calibri';">Positions où le SGTIA va construire et animer les points de contrôle.<br></span></p><br><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-weight:600; text-decoration: underline;">Pourcentage de foule à desarmer : </span><span style=" font-family:'Calibri';">Pourcentage de foule à désarmer (entre 0 et 100).<br></span></p><br><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Calibri'; font-size:x-large; font-weight:600;">Paramètres optionnels</span></p><span class="normal param_2">Nombre d'echelons (1 par défaut)</span><br><br><span class="normal param_2">Ligne de début et fin de mission [LDM/LFM]</span><br><br></body>
+</html>
