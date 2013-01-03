@@ -35,6 +35,8 @@ UrbanFileExporter::UrbanFileExporter( const std::string& directory, const std::s
     , name_( name )
     , projector_( projector )
     , urbanModel_( model )
+    , source_( 0 )
+    , layer_( 0 )
 {
     Initialize();
 }
@@ -45,7 +47,7 @@ UrbanFileExporter::UrbanFileExporter( const std::string& directory, const std::s
 // -----------------------------------------------------------------------------
 UrbanFileExporter::~UrbanFileExporter()
 {
-    if( source_ != NULL )
+    if( source_ )
         OGRDataSource::DestroyDataSource( source_ );
 }
 
@@ -58,19 +60,19 @@ void UrbanFileExporter::Initialize()
     OGRRegisterAll();
     const char* pszDriverName = "ESRI Shapefile";
     OGRSFDriver* poDriver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName( pszDriverName );
-    if( poDriver == NULL )
+    if( !poDriver )
         throw MASA_EXCEPTION(("%s driver not available.\n", pszDriverName ));
 
     std::string filename = name_ + ".shp";
     std::string filepath =  directory_ + "/" + filename;
     source_ = poDriver->CreateDataSource( filepath.c_str(), NULL );
-    if( source_ == NULL )
+    if( !source_ )
         throw MASA_EXCEPTION( ( "gdal_ogr : write shape failed %s",directory_.c_str() ) );
 
     OGRSpatialReference newSpatialRef;
     newSpatialRef.SetWellKnownGeogCS( "EPSG:4326" );
     layer_ = source_->CreateLayer( filepath.c_str(), &newSpatialRef, wkbPolygon, NULL );
-    if( layer_ == NULL )
+    if( !layer_ )
         throw MASA_EXCEPTION( "Layer creation failed.\n" );
 
     CreateStructure();
@@ -194,17 +196,15 @@ void UrbanFileExporter::Write()
     while( it.HasMoreElements() )
     {
         const kernel::UrbanObject_ABC& urbanObject = it.NextElement();
-        if( const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() ) )
-            if( urbanHierarchies->GetLevel() == eUrbanLevelBlock )
-            {
-                WriteObject( urbanObject, counter );
-                ++counter;
-            }
+        const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() );
+        if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+        {
+            WriteObject( urbanObject, counter );
+            ++counter;
+        }
     }
     layer_->SyncToDisk();
-    OGRDataSource::DestroyDataSource( source_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UrbanFileExporter::WriteObject
