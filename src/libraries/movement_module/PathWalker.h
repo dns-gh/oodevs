@@ -64,10 +64,10 @@ public:
 
     //! @name Operations
     //@{
-    E_ReturnCode Move( boost::weak_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const;
-    void MoveSuspended( boost::weak_ptr< PathResult >, const wrapper::View& entity ) const;
+    E_ReturnCode Move( boost::shared_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const;
+    void MoveSuspended( boost::shared_ptr< PathResult >, const wrapper::View& entity ) const;
     void MoveStopped( const wrapper::View& entity ) const;
-    void MoveCanceled( boost::weak_ptr< PathResult > ) const;
+    void MoveCanceled( boost::shared_ptr< PathResult > ) const;
     void Clean();
     //@}
 
@@ -75,7 +75,7 @@ public:
     //@{
     bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const;
     MT_Vector2D ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const;
-    bool IsMovingOn( boost::weak_ptr< Path_ABC > path ) const;
+    bool IsMovingOn( boost::shared_ptr< Path_ABC > path ) const;
     //@}
 
 private:
@@ -122,13 +122,13 @@ private:
     //! @name Tools
     //@{
     bool TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove, const wrapper::View& entity ) const;
-    bool TryToMoveTo( boost::weak_ptr< PathResult > path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const;
+    bool TryToMoveTo( boost::shared_ptr< PathResult > path, const MT_Vector2D& vNewPosTmp, double& rTimeRemaining, const wrapper::View& model, const wrapper::View& entity ) const;
     void ComputeObjectsCollision( const wrapper::View& model, const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet ) const;
     void ComputeCurrentSpeed( const wrapper::View& entity ) const;
-    void InitializeEnvironment( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const;
-    bool GoToNextNavPoint( boost::weak_ptr< PathResult > path, const wrapper::View& entity ) const;
-    E_ReturnCode SetCurrentPath( boost::weak_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const;
-    void SetCurrentPathPoint( boost::weak_ptr< PathResult > path ) const;
+    void InitializeEnvironment( boost::shared_ptr< PathResult > path, const wrapper::View& entity ) const;
+    bool GoToNextNavPoint( boost::shared_ptr< PathResult > path, const wrapper::View& entity ) const;
+    E_ReturnCode SetCurrentPath( boost::shared_ptr< PathResult > path, const wrapper::View& model, const wrapper::View& entity ) const;
+    void SetCurrentPathPoint( boost::shared_ptr< PathResult > path ) const;
     void CheckPathNotification( const wrapper::View& entity ) const;
     void SetEnvironmentType( const TerrainData& environment, const wrapper::View& entity ) const;
     void PostMovement( const wrapper::View& entity ) const;

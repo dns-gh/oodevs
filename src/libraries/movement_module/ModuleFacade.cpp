@@ -53,7 +53,7 @@ namespace
         PathWalker* pathWalker = facade->GetPathWalker( entity );
         if( !pathWalker )
             return false;
-        return pathWalker->IsMovingOn( facade->GetPath( path ) );
+        return pathWalker->IsMovingOn( facade->GetPath( path ).lock() );
     }
     DEFINE_HOOK( CreatePath, 3, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
     {
