@@ -75,7 +75,8 @@ rootnode
     end,
   
     destroy = function( self )
-      integration.sendfireAvailable(false)
+        integration.sendfireAvailable(false)
+        meKnowledge:sendConstructedObjectInitialized( integration.GetSuperiorKnowledge( meKnowledge) )
     end
 }
 

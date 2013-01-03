@@ -29,7 +29,8 @@ masalife.brain.communication.setMessageTreatment( "constructedObject",
     
 masalife.brain.communication.setMessageTreatment( "initializeConstructedObject",
     function( content, sender )
-      meKnowledge.constructedObjects ={}
+      meKnowledge.constructedObjects = nil
+      myself.numberOfConstructedObject = 0
     end )
 
 masalife.brain.communication.setMessageTreatment( "obstacleShouldBeActivated",

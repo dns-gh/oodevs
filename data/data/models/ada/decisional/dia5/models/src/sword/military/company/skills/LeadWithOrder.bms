@@ -163,7 +163,7 @@ activate = function( self )
 
     manageAddedAndDeletedUnits( self )
 
-    if myself.leadData.NombreTotalSitesAConstruire ==  myself.numberOfConstructedObject then -- On affiche le CR une fois tous les sites construits
+    if myself.leadData.NombreTotalSitesAConstruire ==  myself.numberOfConstructedObject and not myself.leadData.noASSScoutUnit then -- On affiche le CR une fois tous les sites construits
         Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivre } )
     end    
 
