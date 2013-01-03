@@ -187,7 +187,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnAcc
 // -----------------------------------------------------------------------------
 bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnRejectOfferConvoy >& interaction ) const
 {
-    const std::string name = "SCP_Service.SCP_RejectOffer.RejectOfferTransport";
+    const std::string name = "SCP_Service.SCP_RejectOffer.RejectOffer";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "Reason", &interactions::NetnRejectOfferConvoy::reason );
     return DoRegister( name, interaction, true, true );
@@ -199,7 +199,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnRej
 // -----------------------------------------------------------------------------
 bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnCancelConvoy >& interaction ) const
 {
-    const std::string name = "SCP_Service.SCP_CancelService.CancelTransport";
+    const std::string name = "SCP_Service.SCP_CancelService.Cancel";
     RegisterNetnService( interaction, name, logger_ );
     REGISTER( "Reason", &interactions::NetnCancelConvoy::reason );
     return DoRegister( name, interaction, true, true );

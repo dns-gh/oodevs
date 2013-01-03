@@ -333,7 +333,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_reject_offer_convoy_v2, FixtureV2 )
 {
-    const std::string name = "SCP_Service.SCP_RejectOffer.RejectOfferTransport";
+    const std::string name = "SCP_Service.SCP_RejectOffer.RejectOffer";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
                                                                         ( "Consumer" )
                                                                         ( "Provider" )
@@ -344,7 +344,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
 
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_cancel_convoy_v2, FixtureV2 )
 {
-    const std::string name = "SCP_Service.SCP_CancelService.CancelTransport";
+    const std::string name = "SCP_Service.SCP_CancelService.Cancel";
     const std::vector< std::string > parameters = boost::assign::list_of( "ServiceID" )
                                                                         ( "Consumer" )
                                                                         ( "Provider" )
