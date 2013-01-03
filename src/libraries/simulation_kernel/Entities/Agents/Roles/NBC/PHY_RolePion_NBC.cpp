@@ -130,6 +130,8 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
 {
+    if( pion_.GetType().GetUnitType().IsAutonomous() )
+        return;
     if( bNbcProtectionSuitWorn_ )
         return;
     if( ! intoxicated_ && ! poisoned_ )
