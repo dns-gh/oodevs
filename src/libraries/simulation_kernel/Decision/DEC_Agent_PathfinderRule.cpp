@@ -151,9 +151,6 @@ double DEC_Agent_PathfinderRule::GetUrbanBlockCost( const MT_Vector2D& from, con
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& rSpeed ) const
 {
-    if( path_.GetPathClass().IsFlying() )
-        return 0.;
-
     // default cost : outside all objects
     double rObjectCost = path_.GetCostOutsideOfAllObjects();
     const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
