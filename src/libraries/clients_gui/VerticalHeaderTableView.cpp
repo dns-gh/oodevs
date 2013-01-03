@@ -88,3 +88,81 @@ VerticalHeaderTableView::~VerticalHeaderTableView()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: VerticalHeaderTableView::event
+// Created: ABR 2013-01-03
+// -----------------------------------------------------------------------------
+bool VerticalHeaderTableView::event( QEvent *event )
+{
+    if( event->type() == QEvent::ToolTip )
+    {
+        QHelpEvent *helpEvent = static_cast< QHelpEvent* >( event );
+        if( !helpEvent )
+            return QTableView::event( event );
+
+        const int yPos = helpEvent->pos().y();
+        const int xPos = helpEvent->pos().x();
+        bool mouseOnHHeader = false;
+        bool mouseOnVHeader = false;
+        int row = 0;
+        int col = 0;
+
+        if( horizontalHeader()->isVisible() )
+        {
+            if( yPos <= horizontalHeader()->height() )
+                mouseOnHHeader = true;
+            else
+                row = rowAt( yPos - horizontalHeader()->height() + verticalScrollBar()->sliderPosition() );
+        }
+        else
+            row = rowAt( yPos + verticalScrollBar()->sliderPosition() );
+
+        if( verticalHeader()->isVisible() )
+        {
+            if( xPos <= verticalHeader()->width() )
+                mouseOnVHeader = true;
+            else
+                col = columnAt( xPos - verticalHeader()->width() + horizontalScrollBar()->sliderPosition() );
+        }
+        else
+            col = columnAt( xPos + horizontalScrollBar()->sliderPosition() );
+
+        // Outside, or on both header.
+        if( row == -1 || col == -1 || ( mouseOnHHeader && mouseOnVHeader ) )
+        {
+            QToolTip::hideText();
+            event->ignore();
+        }
+        else
+        {
+            QStandardItemModel* dataModel = static_cast< QStandardItemModel* >( model() );
+            if( !dataModel )
+                return false;
+            QString toolTips;
+            if( mouseOnHHeader )
+            {
+                QStandardItem* item = dataModel->horizontalHeaderItem( col );
+                if( item )
+                    toolTips = item->text();
+            }
+            else if( mouseOnVHeader )
+            {
+                QStandardItem* item = dataModel->verticalHeaderItem( row );
+                if( item )
+                    toolTips = item->text();
+            }
+            else
+            {
+                assert( row >= 0 && row < dataModel->rowCount() && col >= 0 && col < dataModel->columnCount() );
+                if( QStandardItem* item = dataModel->item( row, col ) )
+                    toolTips = item->text();
+            }
+
+            if( !toolTips.isEmpty() )
+                QToolTip::showText( helpEvent->globalPos(), toolTips );
+        }
+        return true;
+    }
+    return QTableView::event( event );
+}

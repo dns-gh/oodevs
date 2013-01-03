@@ -19,6 +19,34 @@ namespace kernel
 
 namespace gui
 {
+    struct LongNameComparator
+    {
+        bool operator() ( const QString& lhs, const QString& rhs )
+        {
+            const QStringList leftTokens = lhs.split( '.', QString::SkipEmptyParts );
+            const QStringList rightTokens = rhs.split( '.', QString::SkipEmptyParts );
+            const int minSize = std::min< int >( leftTokens.count(), rightTokens.count() );
+            for( int i = 0; i < minSize; ++i )
+            {
+                const QString left = leftTokens.at( leftTokens.count() - 1 - i );
+                const QString right = rightTokens.at( rightTokens.count() - 1 - i );
+
+                if( i == minSize - 1 && leftTokens.count() != rightTokens.count() )
+                    return leftTokens.count() < rightTokens.count();
+
+                if( left.compare( right ) != 0 )
+                {
+                    bool okLeft = false;
+                    bool okRight = false;
+                    const int intLeft = left.toInt( &okLeft );
+                    const int intRight = right.toInt( &okRight );
+                    return ( okLeft && okRight ) ? intLeft < intRight : left < right;
+                }
+            }
+            return leftTokens.count() < rightTokens.count();
+        }
+    };
+
 // =============================================================================
 /** @class  DiffusionListData
     @brief  DiffusionListData
@@ -32,6 +60,14 @@ public:
     //@{
     static const QString separator_;
     static const QRegExp regexp_;
+    //@}
+
+public:
+    //! @name Types
+    //@{
+    typedef std::map< QString, const kernel::Entity_ABC*, LongNameComparator >   T_Entities;
+    typedef T_Entities::iterator                                                IT_Entities;
+    typedef T_Entities::const_iterator                                         CIT_Entities;
     //@}
 };
 
@@ -80,7 +116,7 @@ class DiffusionListReceiversExtractor : public DiffusionListFunctor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListReceiversExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, std::vector< const kernel::Entity_ABC* >& targets, QStringList& targetsNames );
+             DiffusionListReceiversExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, DiffusionListData::T_Entities& targets );
     virtual ~DiffusionListReceiversExtractor();
     //@}
 
@@ -92,8 +128,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< const kernel::Entity_ABC* >& targets_;
-    QStringList&                              targetsNames_;
+    DiffusionListData::T_Entities& targets_;
     //@}
 };
 
@@ -108,7 +143,7 @@ class DiffusionListEmittersExtractor : public DiffusionListFunctor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListEmittersExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, std::vector< const kernel::Entity_ABC* >& targets, QStringList& targetsNames );
+             DiffusionListEmittersExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, DiffusionListData::T_Entities& targets );
     virtual ~DiffusionListEmittersExtractor();
     //@}
 
@@ -120,8 +155,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< const kernel::Entity_ABC* >& targets_;
-    QStringList&                              targetsNames_;
+    DiffusionListData::T_Entities& targets_;
     //@}
 };
 

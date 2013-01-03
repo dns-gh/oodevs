@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "DiffusionListEditor.h"
 #include "moc_DiffusionListEditor.cpp"
-#include "DiffusionListFunctors.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AttributeType.h"
 #include "clients_kernel/DictionaryExtensions.h"
@@ -99,12 +98,12 @@ DiffusionListEditor::~DiffusionListEditor()
 void DiffusionListEditor::OnGeometriesChanged()
 {
     unsigned int emittersMaxLength = 0;
-    for( QStringList::const_iterator it = emittersHeaders_.begin(); it != emittersHeaders_.end(); ++it )
-        emittersMaxLength = std::max< unsigned int >( emittersMaxLength, it->size() );
+    for( DiffusionListData::CIT_Entities it = emitters_.begin(); it != emitters_.end(); ++it )
+        emittersMaxLength = std::max< unsigned int >( emittersMaxLength, it->first.size() );
 
     unsigned int receiversMaxLength = 0;
-    for( QStringList::const_iterator it = receiversHeaders_.begin(); it != receiversHeaders_.end(); ++it )
-        receiversMaxLength = std::max< unsigned int >( receiversMaxLength, it->size() );
+    for( DiffusionListData::CIT_Entities it = receivers_.begin(); it != receivers_.end(); ++it )
+        receiversMaxLength = std::max< unsigned int >( receiversMaxLength, it->first.size() );
 
     QHeaderView* verticalHV = tableView_.verticalHeader();
     QHeaderView* horizontalHV = tableView_.horizontalHeader();
@@ -119,9 +118,7 @@ void DiffusionListEditor::OnGeometriesChanged()
 void DiffusionListEditor::Purge()
 {
     emitters_.clear();
-    emittersHeaders_.clear();
     receivers_.clear();
-    receiversHeaders_.clear();
     dataModel_.clear();
 }
 
@@ -136,41 +133,48 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
     assert( !extensionName_.empty() );
     // Find emitters
     {
-        const DiffusionListEmittersExtractor functor( extensionName_, *currentTeam_, emitters_, emittersHeaders_ );
+        const DiffusionListEmittersExtractor functor( extensionName_, *currentTeam_, emitters_ );
         if( currentAgent != 0 )
             functor( *currentAgent );
         else
             agents_.Apply( functor );
-        assert( emittersHeaders_.count() == emitters_.size() );
     }
     // Find receiver
     {
-        const DiffusionListReceiversExtractor functor( extensionName_, *currentTeam_, receivers_, receiversHeaders_ );
+        const DiffusionListReceiversExtractor functor( extensionName_, *currentTeam_, receivers_ );
         agents_.Apply( functor );
         formations_.Apply( functor );
-        assert( receiversHeaders_.count() == receivers_.size() );
     }
     // Fill data
     {
-        dataModel_.setColumnCount( receiversHeaders_.count() );
-        dataModel_.setHorizontalHeaderLabels( receiversHeaders_ );
+        QStringList headerLabels;
+        for( DiffusionListData::CIT_Entities it = emitters_.begin(); it != emitters_.end(); ++it )
+            headerLabels << it->first;
+        dataModel_.setRowCount( static_cast< int >( emitters_.size() ) );
+        dataModel_.setVerticalHeaderLabels( headerLabels );
 
-        dataModel_.setRowCount( emittersHeaders_.count() );
-        dataModel_.setVerticalHeaderLabels( emittersHeaders_ );
+        headerLabels.clear();
+        for( DiffusionListData::CIT_Entities it = receivers_.begin(); it != receivers_.end(); ++it )
+            headerLabels << it->first;
+        dataModel_.setColumnCount( static_cast< int >( receivers_.size() ) );
+        dataModel_.setHorizontalHeaderLabels( headerLabels );
 
-        for( unsigned int row = 0; row < emitters_.size(); ++row )
+        int row = 0;
+        for( DiffusionListData::CIT_Entities itEmitter = emitters_.begin(); itEmitter != emitters_.end(); ++itEmitter, ++row )
         {
-            kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( emitters_[ row ]->Retrieve< kernel::DictionaryExtensions >() );
+            assert( itEmitter->second != 0 );
+            kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( itEmitter->second->Retrieve< kernel::DictionaryExtensions >() );
             if( !dico )
                 return;
-            assert( emitters_[ row ] != 0 );
-            unsigned long emitterRowId = emitters_[ row ]->GetId();
+            unsigned long emitterRowId = itEmitter->second->GetId();
             QStringList diffusionList = QStringList::split( DiffusionListData::separator_, dico->GetValue( extensionName_ ).c_str(), false );
-            for( unsigned int col = 0; col < receivers_.size(); ++col )
+
+            int column = 0;
+            for( DiffusionListData::CIT_Entities itReceiver = receivers_.begin(); itReceiver != receivers_.end(); ++itReceiver, ++column )
             {
-                assert( receivers_[ col ] != 0 );
+                assert( itReceiver->second != 0 );
                 QStandardItem* item = new QStandardItem();
-                if( emitterRowId == receivers_[ col ]->GetId() )
+                if( emitterRowId == itReceiver->second->GetId() )
                 {
                     item->setFlags( Qt::ItemIsEnabled );
                     item->setBackground( QBrush( QColor( 200, 200, 200) ) );
@@ -178,9 +182,9 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
                 else
                 {
                     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
-                    item->setCheckState( diffusionList.contains( boost::lexical_cast< std::string >( receivers_[ col ]->GetId() ).c_str() ) ? Qt::Checked : Qt::Unchecked );
+                    item->setCheckState( diffusionList.contains( boost::lexical_cast< std::string >( itReceiver->second->GetId() ).c_str() ) ? Qt::Checked : Qt::Unchecked );
                 }
-                dataModel_.setItem( row, col, item );
+                dataModel_.setItem( row, column, item );
             }
         }
     }
@@ -194,15 +198,18 @@ void DiffusionListEditor::OnClear()
 {
     if( !currentTeam_ )
         return;
-    for( unsigned int row = 0; row < emitters_.size(); ++row )
+
+    int row = 0;
+    for( DiffusionListData::CIT_Entities itEmitter = emitters_.begin(); itEmitter != emitters_.end(); ++itEmitter, ++row )
     {
-        for( unsigned int col = 0; col < receivers_.size(); ++col )
+        assert( itEmitter->second != 0 );
+        int column = 0;
+        for( DiffusionListData::CIT_Entities itReceiver = receivers_.begin(); itReceiver != receivers_.end(); ++itReceiver, ++column )
         {
-            if( emitters_[ row ]->GetId() != receivers_[ col ]->GetId() )
-            {
-                QStandardItem* item = dataModel_.item( row, col );
-                item->setCheckState( Qt::Unchecked );
-            }
+            assert( itReceiver->second != 0 );
+            if( itEmitter->second->GetId() != itReceiver->second->GetId() )
+                if( QStandardItem* item = dataModel_.item( row, column ) )
+                    item->setCheckState( Qt::Unchecked );
         }
     }
 }
@@ -215,17 +222,23 @@ void DiffusionListEditor::OnGenerate()
 {
     if( !currentTeam_ )
         return;
-    for( unsigned int row = 0; row < emitters_.size(); ++row )
+    int row = 0;
+    for( DiffusionListData::CIT_Entities itEmitter = emitters_.begin(); itEmitter != emitters_.end(); ++itEmitter, ++row )
     {
+        assert( itEmitter->second != 0 );
+
         QStringList generatedDiffusionList;
         const DiffusionListGenerator functor( extensionName_, *currentTeam_, generatedDiffusionList );
-        functor( *emitters_[ row ] );
-        for( unsigned int col = 0; col < receivers_.size(); ++col )
+        functor( *itEmitter->second );
+
+        int column = 0;
+        for( DiffusionListData::CIT_Entities itReceiver = receivers_.begin(); itReceiver != receivers_.end(); ++itReceiver, ++column )
         {
-            if( emitters_[ row ]->GetId() != receivers_[ col ]->GetId() )
+            assert( itReceiver->second != 0 );
+            if( itEmitter->second->GetId() != itReceiver->second->GetId() )
             {
-                QStandardItem* item = dataModel_.item( row, col );
-                item->setCheckState( generatedDiffusionList.contains( boost::lexical_cast< std::string >( receivers_[ col ]->GetId() ).c_str() ) ? Qt::Checked : Qt::Unchecked );
+                QStandardItem* item = dataModel_.item( row, column );
+                item->setCheckState( generatedDiffusionList.contains( boost::lexical_cast< std::string >( itReceiver->second->GetId() ).c_str() ) ? Qt::Checked : Qt::Unchecked );
             }
         }
     }
@@ -239,22 +252,27 @@ void DiffusionListEditor::Commit()
 {
     if( !currentTeam_ )
         return;
-    for( unsigned int row = 0; row < emitters_.size(); ++row )
+
+    int row = 0;
+    for( DiffusionListData::CIT_Entities itEmitter = emitters_.begin(); itEmitter != emitters_.end(); ++itEmitter, ++row )
     {
+        assert( itEmitter->second != 0 );
         std::string diffusionList = "";
-        for( unsigned int col = 0; col < receivers_.size(); ++col )
+        int column = 0;
+        for( DiffusionListData::CIT_Entities itReceiver = receivers_.begin(); itReceiver != receivers_.end(); ++itReceiver, ++column )
         {
-            if( emitters_[ row ]->GetId() != receivers_[ col ]->GetId() )
+            assert( itReceiver->second != 0 );
+            if( itEmitter->second->GetId() != itReceiver->second->GetId() )
             {
-                QStandardItem* item = dataModel_.item( row, col );
+                QStandardItem* item = dataModel_.item( row, column );
                 if( item->checkState() == Qt::Checked )
                 {
                     diffusionList += ( diffusionList.empty() ) ? "" : DiffusionListData::separator_;
-                    diffusionList += boost::lexical_cast< std::string >( receivers_[ col ]->GetId() );
+                    diffusionList += boost::lexical_cast< std::string >( itReceiver->second->GetId() );
                 }
             }
         }
-        kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( emitters_[ row ]->Retrieve< kernel::DictionaryExtensions >() );
+        kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( itEmitter->second->Retrieve< kernel::DictionaryExtensions >() );
         if( !dico )
             continue;
         dico->SetValue( extensionName_, diffusionList );

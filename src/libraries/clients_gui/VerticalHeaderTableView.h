@@ -52,6 +52,11 @@ public:
              VerticalHeaderTableView( QWidget* parent );
     virtual ~VerticalHeaderTableView();
     //@}
+
+    //! @name Operations
+    //@{
+    virtual bool event( QEvent* event );
+    //@}
 };
 
 }
