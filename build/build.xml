@@ -1463,10 +1463,10 @@
                     <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
+					<include name="data/models/ada/physical/france/**"/>
                 </zipfileset>
                 <fileset dir="${out.dir}" includes="content.xml"/>
-                <zipfileset dir="${data.dir}/data/models/ada/physical/scipio" prefix="data/models/ada/physical/france"/>
-            </zip>
+             </zip>
             <delete file="${out.dir}/content.xml"/>
         </safe-move>
     </target>
