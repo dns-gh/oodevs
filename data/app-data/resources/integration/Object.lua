@@ -116,3 +116,11 @@ end
 integration.isValidKnowledgeObject = function( object )
     return DEC_IsValidKnowledgeObject( object )
 end
+
+integration.addKnowledgeToDecontaminationList = function( unit, object )
+    DEC_Agent_DecontamineConnaissance(unit.source, object.source)
+end
+
+integration.addToDecontaminationList = function( unit, object )
+    DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion(unit.source, object.source)
+end
