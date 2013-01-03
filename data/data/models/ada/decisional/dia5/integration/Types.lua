@@ -309,3 +309,7 @@ eObus_Fumigenes = 3
 eObus_Eclairant = 4
 eObus_Mine = 5
 eObus_effect = 6
+
+-- Ambiance
+eAmbianceMission_Surete = 0
+eAmbianceMission_Vitesse = 1

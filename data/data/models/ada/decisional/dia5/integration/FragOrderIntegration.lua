@@ -38,9 +38,6 @@ integration.setCompanyROE = function( etatROE )
    integration.CR_ROE ( etatROE )
 end
 
-local eAmbianceMission_Surete = 0
-local eAmbianceMission_Vitesse = 1
-
 integration.getFireParameters = function( self )
     local params = {}
     local uggly = function() params.entities = { CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledgeParameter( self ) ) } end
