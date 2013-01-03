@@ -140,6 +140,7 @@ private:
     T_FlowMap flows_;
     double rDominationState_;
     bool bIsRecon_;
+    bool bIsReconChanged_;
     bool bReconAttributesValid_;
     bool bDecStateUpdated_;
     bool bCriticalIntelligenceUpdated_;
