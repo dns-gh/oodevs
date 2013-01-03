@@ -40,7 +40,7 @@ namespace
 ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
     : fileLoader_           ( new Loader( *this, observer ) )
     , pWorldParameters_     ( 0 )
-    , maxTicksNotResponding_( 60 )
+    , maxTicksNotResponding_( 30 )
     , queueMaxSize_         ( 200000 )
 {
     logisticLogSettings_.SetMaxFiles( logisticDefaultLogFiles );
