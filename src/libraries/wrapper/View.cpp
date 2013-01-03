@@ -85,18 +85,6 @@ View::operator std::string() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: View::GetUserData
-// Created: SLI 2012-01-02
-// -----------------------------------------------------------------------------
-void* View::GetUserData() const
-{
-    void* result = 0;
-    if( ! ::SWORD_GetUserData( model_, &result ) )
-        throw MASA_EXCEPTION( "Could not retrieve user data" );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
 // Name: View::operator[]
 // Created: SLI 2011-12-21
 // -----------------------------------------------------------------------------

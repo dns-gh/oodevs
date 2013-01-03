@@ -57,8 +57,6 @@ public:
 
     operator const SWORD_Model*() const;
 
-    void* GetUserData() const;
-
     template< typename T >
     void VisitNamedChildren( T visitor ) const
     {

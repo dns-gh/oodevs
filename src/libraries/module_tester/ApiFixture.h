@@ -259,16 +259,6 @@ namespace core
             CATCH
             return 0;
         }
-        static int SWORD_GetUserData( const SWORD_Model* node, void** value )
-        {
-            TRY
-                BOOST_REQUIRE( node );
-                BOOST_REQUIRE( value );
-                (*value) = core::Convert( node )->GetData()->Get();
-                return true;
-            CATCH
-            return false;
-        }
         static int SWORD_CopyModel( const SWORD_Model* source, SWORD_Model* target )
         {
             TRY
