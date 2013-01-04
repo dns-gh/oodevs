@@ -137,13 +137,7 @@
                     </value>
                 </parameter>
             </skill>
-            <skill name="sword.military.platoon.skills.ReactToCoordinationLine">
-                <parameter name="limas">
-                    <value>
-                        <call method="sword.military.queries.miscellaneous.getLimaOnPath"/>
-                    </value>
-                </parameter>
-            </skill>
+            <skill name="sword.military.platoon.skills.ReactToCoordinationLine"/>
             <skill name="sword.military.platoon.coercition.skills.SelfProtect"/>
             <skill name="sword.military.platoon.stabilisation.skills.ReactToCrowds">
                 <parameter name="crowds">

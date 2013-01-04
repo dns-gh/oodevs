@@ -3,11 +3,6 @@
 -- Decide to stop on ligne issued as parameters and to sent message
 -- $$$ MIA TODO A revoir
 -- ****************************************************************************
-local limaReportAssociation =
-{
-    [ eTypeLima_LD ] = eRC_AttenteOrdreDeboucher,
-    [ eTypeLima_LC ] = eRC_AttenteOrdrePoursuivre,
-}
 
 rootnode
 {
@@ -20,13 +15,22 @@ rootnode
     },
 
     done = function( self ) end,
+    
+    create = function( self )
+        self.limas = {}
+        self.limasFromQuery = {}
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Wait on ligne 
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        for _, lima in pairs( self.params.limas ) do
+        
+        self.limasFromQuery = sword.military.queries.miscellaneous.getLimaOnPath[ "execute" ]()
+        self.limas = fusionList( self.limasFromQuery, self.limas )
+
+        for _, lima in pairs( self.limas ) do
             Activate( skill.nodes.CR_OnLima, 1, { lima = lima } )
             Activate( skill.nodes.ActionOnLima, 1, { lima = lima } )
             if lima:isCoordinationLigne() and not lima:isCoordinationFinish() then
@@ -35,6 +39,7 @@ rootnode
             else
                 Activate( skill.nodes.CR_LeaveLima, 1, { lima = lima } )
                 lima:clean()
+                removeFromList( lima, self.limas )
             end
             if lima:getLimaType() == eTypeLima_LCA then
                 local fragOrder = CreateFragOrder("Rep_OrderConduite_ChangerAmbiance")
@@ -86,9 +91,7 @@ node "CR_LeaveLima"
 node "CR_WaitOrder"
 {
     create = function( self )
-        local lima = self.params.lima:getLimaType()
-        meKnowledge:RC( lima )
-        meKnowledge:sendReport( integration.GetSuperiorKnowledge( meKnowledge ), lima, true )
+        meKnowledge:sendReport( integration.GetSuperiorKnowledge( meKnowledge ), self.params.lima:getLimaType(), true )
     end,
     
     destroy = function( self )

@@ -1,45 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.air.roles.Pion" source-version="1.0.0" extends="france.military.platoon.roles.Pion">
-	<skills>
-		<skill name="france.military.platoon.combat.support.air.skills.Atterrir"/>
-		<skill name="sword.military.platoon.coercition.skills.SwitchToSafety"/>
-		<skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
-		<skill name="france.military.platoon.combat.support.air.skills.Decoller"/>
-		<skill name="france.military.platoon.combat.support.air.skills.ModifierAltitude"/>
-		<skill name="france.military.platoon.combat.support.rens.skills.RADINT_RenseignerSur"/>
-		<skill name="france.military.platoon.combat.support.rens.skills.ROIM_RenseignerSur"/>
-		<skill name="france.military.platoon.combat.support.air.skills.Defaut"/>
-		<skill name="france.military.platoon.combat.support.air.skills.MoveAlong"/>
-	</skills>
-	<default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
-		<description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>
-		<goal>
-			<description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
-		</goal>
-		<let name="fragOrdersToManage">
-			<value>
-				<call method="sword.military.queries.miscellaneous.getFragOrders"/>
-			</value>
-		</let>
-		<skills>
-			<skill name="sword.military.platoon.skills.miscellaneous.Default"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
-				<parameter name="fragOrders">
-					<value>
-						<parameter>fragOrdersToManage</parameter>
-					</value>
-				</parameter>
-			</skill>
-			<skill name="sword.military.platoon.skills.ReactToCoordinationLine">
-				<parameter name="limas">
-					<value>
-						<call method="sword.military.queries.miscellaneous.getLimaOnPath"/>
-					</value>
-				</parameter>
-			</skill>
-			<skill name="france.military.platoon.combat.support.air.skills.Defaut"/>
-		</skills>
-	</default-task>
+    <skills>
+        <skill name="france.military.platoon.combat.support.air.skills.Atterrir"/>
+        <skill name="sword.military.platoon.coercition.skills.SwitchToSafety"/>
+        <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
+        <skill name="france.military.platoon.combat.support.air.skills.Decoller"/>
+        <skill name="france.military.platoon.combat.support.air.skills.ModifierAltitude"/>
+        <skill name="france.military.platoon.combat.support.rens.skills.RADINT_RenseignerSur"/>
+        <skill name="france.military.platoon.combat.support.rens.skills.ROIM_RenseignerSur"/>
+        <skill name="france.military.platoon.combat.support.air.skills.Defaut"/>
+        <skill name="france.military.platoon.combat.support.air.skills.MoveAlong"/>
+    </skills>
+    <default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
+        <description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>
+        <goal>
+            <description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
+        </goal>
+        <let name="fragOrdersToManage">
+            <value>
+                <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+            </value>
+        </let>
+        <skills>
+            <skill name="sword.military.platoon.skills.miscellaneous.Default"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+                <parameter name="fragOrders">
+                    <value>
+                        <parameter>fragOrdersToManage</parameter>
+                    </value>
+                </parameter>
+            </skill>
+            <skill name="sword.military.platoon.skills.ReactToCoordinationLine"/>
+            <skill name="france.military.platoon.combat.support.air.skills.Defaut"/>
+        </skills>
+    </default-task>
 </role>

@@ -1,53 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.rens.roles.LanceurDrone" source-version="1.0.0" extends="france.military.platoon.roles.Pion">
-	<skills>
-		<skill name="france.military.platoon.combat.support.rens.skills.primitives.GererDrones"/>
-	</skills>
-	<resources/>
-	<default-task permanent="true">
-		<description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>
-		<goal>
-			<description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
-		</goal>
-		<let name="fragOrdersToManage">
-			<value>
-				<call method="sword.military.queries.miscellaneous.getFragOrders"/>
-			</value>
-		</let>
-		<let name="attackingCrowds">
-			<value>
-				<call method="sword.military.queries.crowds.getAttackingCrowds"/>
-			</value>
-		</let>
-		<skills>
-			<skill name="france.military.platoon.combat.support.rens.skills.primitives.GererDrones"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.Default"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
-			<skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
-				<parameter name="fragOrders">
-					<value>
-						<parameter>fragOrdersToManage</parameter>
-					</value>
-				</parameter>
-			</skill>
-			<skill name="sword.military.platoon.skills.ReactToCoordinationLine">
-				<parameter name="limas">
-					<value>
-						<call method="sword.military.queries.miscellaneous.getLimaOnPath"/>
-					</value>
-				</parameter>
-			</skill>
-			<skill name="sword.military.platoon.coercition.skills.SelfProtect"/>
-			<skill name="sword.military.platoon.stabilisation.skills.ReactToCrowds">
-				<parameter name="crowds">
-					<value>
-						<parameter>attackingCrowds</parameter>
-					</value>
-				</parameter>
-			</skill>
-			<skill name="sword.military.platoon.skills.ReactToNBC"/>
-			<skill name="sword.military.platoon.skills.ReactToFireArea"/>
-		</skills>
-	</default-task>
+    <skills>
+        <skill name="france.military.platoon.combat.support.rens.skills.primitives.GererDrones"/>
+    </skills>
+    <resources/>
+    <default-task permanent="true">
+        <description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>
+        <goal>
+            <description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
+        </goal>
+        <let name="fragOrdersToManage">
+            <value>
+                <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+            </value>
+        </let>
+        <let name="attackingCrowds">
+            <value>
+                <call method="sword.military.queries.crowds.getAttackingCrowds"/>
+            </value>
+        </let>
+        <skills>
+            <skill name="france.military.platoon.combat.support.rens.skills.primitives.GererDrones"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.Default"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
+            <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+                <parameter name="fragOrders">
+                    <value>
+                        <parameter>fragOrdersToManage</parameter>
+                    </value>
+                </parameter>
+            </skill>
+            <skill name="sword.military.platoon.skills.ReactToCoordinationLine"/>
+            <skill name="sword.military.platoon.coercition.skills.SelfProtect"/>
+            <skill name="sword.military.platoon.stabilisation.skills.ReactToCrowds">
+                <parameter name="crowds">
+                    <value>
+                        <parameter>attackingCrowds</parameter>
+                    </value>
+                </parameter>
+            </skill>
+            <skill name="sword.military.platoon.skills.ReactToNBC"/>
+            <skill name="sword.military.platoon.skills.ReactToFireArea"/>
+        </skills>
+    </default-task>
 </role>
