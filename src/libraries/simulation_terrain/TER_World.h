@@ -124,6 +124,4 @@ private:
     //@}
 };
 
-#include "TER_World.inl"
-
 #endif // __TER_World_h_

@@ -216,9 +216,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\simulation_terrain\TER_World.inl">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_terrain\TER_Localisation.inl">
       <Filter>Source Files\Tools</Filter>
     </None>

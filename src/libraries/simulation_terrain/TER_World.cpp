@@ -194,3 +194,70 @@ MT_Vector2D TER_World::ClipPointInsideWorld( const MT_Vector2D& pos ) const
     return v;
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetWorld
+// Created: AGE 2005-01-31
+// -----------------------------------------------------------------------------
+TER_World& TER_World::GetWorld()
+{
+    return *pInstance_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetWeldValue
+// Created: AGE 2005-01-31
+// -----------------------------------------------------------------------------
+double TER_World::GetWeldValue() const
+{
+    return pCoordinateManager_->GetWeldValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetPathFindManager
+// Created: AGE 2005-02-01
+// -----------------------------------------------------------------------------
+TER_PathFindManager& TER_World::GetPathFindManager() const
+{
+    assert( pPathfindManager_ );
+    return *pPathfindManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetAnalyzerManager
+// Created: CMA 2011-08-16
+// -----------------------------------------------------------------------------
+TER_AnalyzerManager& TER_World::GetAnalyzerManager() const
+{
+    assert( pAnalyzerManager_ );
+    return *pAnalyzerManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetAgentManager
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+TER_AgentManager& TER_World::GetAgentManager() const
+{
+    assert( pAgentManager_ );
+    return *pAgentManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetObjectManager
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+TER_ObjectManager& TER_World::GetObjectManager() const
+{
+    assert( pObjectManager_ );
+    return *pObjectManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_World::GetPopulationManager
+// Created: NLD 2005-10-07
+// -----------------------------------------------------------------------------
+TER_PopulationManager& TER_World::GetPopulationManager() const
+{
+    assert( pPopulationManager_ );
+    return *pPopulationManager_;
+}
