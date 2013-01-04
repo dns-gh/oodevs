@@ -350,6 +350,11 @@
       </automat-zone>
       <danger-direction base-cost-beyond="0" cost-per-meter="0"/>
       <enemies cost-at-security-range="0" cost-on-contact="0"/>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="nbc cloud" value="0"/>
+        <object-cost type="rota" value="0"/>
+        <object-cost type="jamming area" value="0"/>
+      </object-costs>
     </rule>
     <rule autonomous="false" flying="true" inherits="base" type="criminal"/>
     <rule autonomous="true" flying="false" inherits="base" type="movement"/>
