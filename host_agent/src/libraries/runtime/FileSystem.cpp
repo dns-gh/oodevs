@@ -415,7 +415,6 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
     }
-    archive_read_close( src );
 }
 
 struct Unpacker : public Unpacker_ABC
@@ -463,7 +462,6 @@ struct Unpacker : public Unpacker_ABC
         archive_write_disk_set_options( dst.get(), flags );
         archive_write_disk_set_standard_lookup( dst.get() );
         TransferArchive( log_, dst.get(), src.get(), output_, Packer_ABC::T_Predicate(), false, dst_ );
-        archive_write_close( dst.get() );
     }
 
     cpplog::BaseLogger& log_;
@@ -514,7 +512,7 @@ struct Packer : public Packer_ABC
 
     ~Packer()
     {
-        archive_write_close( dst_.get() );
+        // NOTHING
     }
 
     static int Dummy( Archive* /*arc*/, void* /*userdata*/ )
