@@ -957,6 +957,7 @@ void TER_Localisation::Scale( double rDist )
             pointVector_.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ - rNewRectSize, vPos.rY_ + rNewRectSize )) );
             pointVector_.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( vPos.rX_ - rNewRectSize, vPos.rY_ - rNewRectSize )) );
             polygon_.Reset( pointVector_ );
+            nType_ = ePolygon;
             boundingBox_.Set( pointVector_[0], pointVector_[2] );
     }
     else

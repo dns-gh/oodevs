@@ -34,6 +34,25 @@ integration.getObjectNearestPositionOnBorder = function( object )
 end
 
 
+integration.getObjectPositionsForWork = function( object, distance )
+    if distance == nil then
+        distance = 20 -- meters
+    end
+
+    object.getObjectPositionsForWork = object.getObjectPositionsForWork or {}
+    if not next( object.getObjectPositionsForWork ) then
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , distance )
+        local roadsIntersections = integration.findRoadIntersectionWithZone( localisation )
+        if not next( roadsIntersections ) then -- no road around the object
+            object.getObjectPositionsForWork = { DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation ) }
+        else
+            object.getObjectPositionsForWork = roadsIntersections
+        end
+    end
+    return object.getObjectPositionsForWork
+end
+
+
 integration.getPlannedObjectNearestBorderPosition = function( object, distance )
     if distance == nil then
         distance = 20 -- meters
