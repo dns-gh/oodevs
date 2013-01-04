@@ -1404,9 +1404,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.cpp">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
@@ -1759,9 +1756,6 @@
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.cpp">
-      <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.cpp">
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.cpp">
@@ -3839,9 +3833,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.h">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
@@ -4221,9 +4212,6 @@
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.h">
-      <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.h">
       <Filter>Source Files\Entities\Orders\Tactical lines</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.h">

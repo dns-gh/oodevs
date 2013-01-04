@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Fuseau.h"
 #include "MIL_LimaOrder.h"
-#include "TER_LimitData.h"
 #include "Decision/DEC_Objective.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
@@ -20,6 +19,7 @@
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Polyline.h"
 #include "MT_Tools/MT_Droite.h"
+#include "simulation_terrain/TER_LimitData.h"
 
 unsigned int MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER
 

@@ -542,7 +542,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\IntoxicationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.cpp" />
@@ -675,7 +674,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaFunction.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaListParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrderType.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionType_ABC.cpp" />
@@ -1408,7 +1406,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\IntoxicationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MedicalCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_BurningCells.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DynamicPathDataHandler.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.h" />
@@ -1537,7 +1534,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaFunction.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaListParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_LimaOrder.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\TER_LimitData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_AutomateMissionType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_FragOrderType.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_MissionType_ABC.h" />

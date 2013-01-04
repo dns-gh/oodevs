@@ -111,6 +111,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_StaticData.cpp">
       <Filter>Source Files\SpatialContainer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_DynamicPathDataHandler.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitData.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h">
@@ -198,6 +204,12 @@
       <Filter>Source Files\SpatialContainer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Pathfinder_ABC.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_DynamicPathDataHandler.h">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitData.h">
       <Filter>Source Files\Pathfinder</Filter>
     </ClInclude>
   </ItemGroup>

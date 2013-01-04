@@ -102,7 +102,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_DynamicPathDataHandler.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_StaticData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_World.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.cpp" />
@@ -129,7 +131,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Analyzer.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_AnalyzerManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_DynamicPathDataHandler.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Pathfinder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />

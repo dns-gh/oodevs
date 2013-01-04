@@ -7,9 +7,9 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
+#include "simulation_terrain_pch.h"
 #include "TER_LimitData.h"
-#include "simulation_terrain/TER_DynamicData.h"
+#include "TER_DynamicData.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::DistanceData constructor

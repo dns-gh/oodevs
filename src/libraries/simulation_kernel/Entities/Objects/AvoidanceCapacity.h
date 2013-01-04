@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
-#include "MIL_DynamicPathDataHandler.h"
+#include "simulation_terrain/TER_DynamicPathDataHandler.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class TER_Localisation;
@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     TER_Localisation           avoid_;
-    MIL_DynamicPathDataHandler handler_;
+    TER_DynamicPathDataHandler handler_;
     double                     distance_;
     //@}
 };

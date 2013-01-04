@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
-#include "MIL_DynamicPathDataHandler.h"
+#include "simulation_terrain/TER_DynamicPathDataHandler.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include <spatialcontainer/TerrainData.h>
 
@@ -78,7 +78,7 @@ private:
     //@{
     std::string type_;
     T_PointVector bridge_;
-    MIL_DynamicPathDataHandler handler_;
+    TER_DynamicPathDataHandler handler_;
     //@}
 };
 

@@ -7,24 +7,18 @@
 //
 // *****************************************************************************
 
-#ifndef __MIL_DynamicPathDataHandler_h_
-#define __MIL_DynamicPathDataHandler_h_
+#ifndef TER_DYNAMICPATHDATAHANDLER_H
+#define TER_DYNAMICPATHDATAHANDLER_H
 
 class TER_DynamicData;
 
-// =============================================================================
-/** @class  MIL_DynamicPathDataHandler
-    @brief  Handle Pahthind dynamic data
-*/
-// Created: JCR 2008-06-02
-// =============================================================================
-class MIL_DynamicPathDataHandler
+class TER_DynamicPathDataHandler
 {
 public:
     //! @name Constructor/destructor
     //@{
-    MIL_DynamicPathDataHandler();
-    ~MIL_DynamicPathDataHandler();
+    TER_DynamicPathDataHandler();
+    ~TER_DynamicPathDataHandler();
     //@}
 
     //! @name Operations
@@ -44,4 +38,4 @@ private:
     //@}
 };
 
-#endif // __MIL_DynamicPathDataHandler_h_
+#endif // TER_DYNAMICPATHDATAHANDLER_H
