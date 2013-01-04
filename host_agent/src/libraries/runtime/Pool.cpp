@@ -83,6 +83,10 @@ Pool::Future Pool::Post( const Task& task )
     return Future( handler.package_->get_future() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Pool::Go
+// Created: BAX 2012-04-16
+// -----------------------------------------------------------------------------
 Pool::Future Pool::Go( const Task& task )
 {
     TaskHandler handler( task );
