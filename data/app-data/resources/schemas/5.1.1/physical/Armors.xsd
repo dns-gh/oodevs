@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="protections" abstract="false" nillable="false">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">TODO</xs:documentation>
+			<xs:documentation xml:lang="fr">Une « Protection » correspond au blindage d’une composante. Ces données sont utilisées principalement lors de l’application des attritions.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:sequence>
+				<xs:element name="protection" nillable="false" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">TODO</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit un type de protection</xs:documentation>
+					</xs:annotation>
+					<xs:complexType mixed="false">
+						<xs:sequence>
+							<xs:element name="neutralization" nillable="false">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">TODO</xs:documentation>
+									<xs:documentation xml:lang="fr">Définit le calcul de la durée de neutralisation</xs:documentation>
+								</xs:annotation>
+								<xs:complexType mixed="false">
+									<xs:attribute name="variance" type="T_Time" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Variance de la gaussienne de durée de neutralisation</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="average-time" type="T_Time" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Durée de neutralisation moyenne</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="random-breakdown-probability" nillable="false" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">TODO</xs:documentation>
+									<xs:documentation xml:lang="fr">Définit les probabilités de survenue d'une panne aléatoire</xs:documentation>
+								</xs:annotation>
+								<xs:complexType mixed="false">
+									<xs:attribute name="neva" type="xs:nonNegativeInteger" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Probabilité de panne aléatoire NEVA par jour</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="eva" type="xs:nonNegativeInteger" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Probabilité de panne aléatoire EVA par jour</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="attrition-effects" nillable="false" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">TODO</xs:documentation>
+									<xs:documentation xml:lang="fr">Effets appliqués aux hommes contenus dans une composante de cette protection lors d’une attrition</xs:documentation>
+								</xs:annotation>
+								<xs:complexType mixed="false">
+									<xs:sequence>
+										<xs:element name="attrition-effect" nillable="false" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation xml:lang="en">TODO</xs:documentation>
+												<xs:documentation xml:lang="fr">Effets appliquée aux hommes pour un type d'attrition donné</xs:documentation>
+											</xs:annotation>
+											<xs:complexType mixed="false">
+												<xs:attribute name="dead-percentage" type="xs:nonNegativeInteger" use="required">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Pourcentage d’hommes morts quand une composante passe à l’état « equipment-state »</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="injured-percentage" type="xs:nonNegativeInteger" use="required">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">Pourcentage d’hommes blessés quand une composante passe à l’état « equipment-state »</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+												<xs:attribute name="equipment-state" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation xml:lang="en">TODO</xs:documentation>
+														<xs:documentation xml:lang="fr">État de l’équipement : disponible, réparable avec évacuation, réparable sur place, détruit</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="type" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Type de protection (à savoir protection humaine ou pour matérielle)</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Nom de la protection</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+	        <xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -167,10 +167,12 @@
     <upgrade schema="schemas/5.0.0/physical/Physical.xsd" apply="schemas/5.1.0/xsl/Physical_5.0.0-5.1.0.xsl"/>
     <upgrade schema="schemas/5.0.0/physical/Objects.xsd" apply="schemas/5.1.0/xsl/objects_5.0.0-5.1.0.xsl"/>
   </migration>
-  <migration from="5.1.0" to="5.2.0">
-    <upgrade schema="schemas/5.1.0/physical/Physical.xsd" apply="schemas/5.2.0/xsl/physical_5.1.0-5.2.0.xsl"/>
-    <upgrade schema="schemas/5.1.0/physical/Resources.xsd" apply="schemas/5.2.0/xsl/resources_5.1.0-5.2.0.xsl"/>
-    <upgrade schema="schemas/5.1.0/physical/Units.xsd" apply="schemas/5.2.0/xsl/units_5.1.0-5.2.0.xsl"/>
-    <upgrade schema="schemas/5.1.0/physical/UrbanTypes.xsd" apply="schemas/5.2.0/xsl/urban_types_5.1.0-5.2.0.xsl"/>
+  <migration from="5.1.0" to="5.1.1">
+  </migration>
+  <migration from="5.1.1" to="5.2.0">
+    <upgrade schema="schemas/5.1.1/physical/Physical.xsd" apply="schemas/5.2.0/xsl/physical_5.1.1-5.2.0.xsl"/>
+    <upgrade schema="schemas/5.1.1/physical/Resources.xsd" apply="schemas/5.2.0/xsl/resources_5.1.1-5.2.0.xsl"/>
+    <upgrade schema="schemas/5.1.1/physical/Units.xsd" apply="schemas/5.2.0/xsl/units_5.1.1-5.2.0.xsl"/>
+    <upgrade schema="schemas/5.1.1/physical/UrbanTypes.xsd" apply="schemas/5.2.0/xsl/urban_types_5.1.1-5.2.0.xsl"/>
   </migration>
 </migrations>
