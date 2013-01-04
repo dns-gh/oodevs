@@ -119,6 +119,7 @@ public:
     const T_KnowledgeAgentVector& GetEnemies() const;
     void GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const;
     void GetLivingEnemiesInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
+    void GetWoundedUnitsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     void GetCiviliansInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
     void GetLivingEnemiesInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;
     void GetWoundedOrDeadUnitsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const;

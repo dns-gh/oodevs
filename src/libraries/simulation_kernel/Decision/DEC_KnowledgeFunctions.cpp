@@ -202,6 +202,21 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInZone( cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetWoundedUnitsInZone
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetWoundedUnitsInZone( const MIL_AgentPion& callerAgent, TER_Localisation* pZone )
+{
+    if( !pZone )
+        throw MASA_EXCEPTION( "invalid parameter." );
+
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetWoundedUnitsInZone( knowledges, *pZone );
+
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetCiviliansInZone
 // Created: LGY 2012-12-20
 // -----------------------------------------------------------------------------

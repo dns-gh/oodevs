@@ -530,6 +530,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesDansZone",
         boost::function< T_ConstKnowledgeAgentVector( TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesInZone, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_Connaissances_UnitesBlesseesDansZone",
+        boost::function< T_ConstKnowledgeAgentVector( TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetWoundedUnitsInZone, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesCivilesDansZone",
         boost::function< T_ConstKnowledgeAgentVector( TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetCiviliansInZone, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesDansCercle",

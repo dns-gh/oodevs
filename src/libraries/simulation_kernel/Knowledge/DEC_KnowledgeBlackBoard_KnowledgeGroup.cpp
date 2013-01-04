@@ -387,6 +387,30 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedOrDeadUnitsInCircle( T_Co
     GetWoundedOrDeadUnits( container, center, rRadius, GetFriends() );
 }
 
+namespace
+{
+    void GetWoundedUnits( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone, const T_KnowledgeAgentVector& units )
+    {
+        for( auto it = units.begin(); it != units.end(); ++it )
+        {
+            boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
+            if( knowledge->IsWounded() && zone.IsInside( knowledge->GetPosition() ) )
+                container.push_back( knowledge );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedUnitsInZone
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedUnitsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
+{
+    container.clear();
+    GetWoundedUnits( container, zone, GetEnemies() );
+    GetWoundedUnits( container, zone, GetFriends() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::EnemyPresenceInCircle
 // Created: NLD 2006-04-14
