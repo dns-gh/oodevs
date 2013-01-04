@@ -393,6 +393,13 @@ target_link_libraries( simulation_terrain
     ${SPATIALCONTAINER_LIBRARIES}
 )
 
+# simulation_terrain_test
+add_target( simulation_terrain_test tests "tests/simulation_terrain_test" OPTIONS test )
+target_link_libraries( simulation_terrain_test
+    simulation_terrain
+    simulation_kernel
+)
+
 # simulation_kernel
 # fixme not working in shared mode
 add_target( simulation_kernel server "libraries/simulation_kernel" OPTIONS recurse protocol )
