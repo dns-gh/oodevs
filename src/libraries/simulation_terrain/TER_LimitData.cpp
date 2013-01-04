@@ -23,6 +23,11 @@ TER_LimitData::DistanceData::DistanceData( const MT_Vector2D& from, const MT_Vec
     // NOTHING
 }
 
+double TER_LimitData::DistanceData::SquareLength() const
+{
+    return rSquareLength_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::DistanceData::SquareDistance
 // Created: AGE 2005-05-12
@@ -45,7 +50,12 @@ double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 // -----------------------------------------------------------------------------
 TER_LimitData::TER_LimitData( const T_PointVector& points )
 {
-    InitializeDistancesData( points );
+    if( points.size() > 1 )
+    {
+        distancesData_.reserve( points.size() - 1 );
+        for( size_t i = 0; i != points.size() - 1; ++i )
+            distancesData_.push_back( DistanceData( points[i], points[i+1] ));
+    }
     data_ = CreateAndRegisterDynamicData( points, "" );
 }
 
@@ -56,22 +66,6 @@ TER_LimitData::TER_LimitData( const T_PointVector& points )
 TER_LimitData::~TER_LimitData()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_LimitData::InitializeDistanceData
-// Created: NLD 2005-10-06
-// -----------------------------------------------------------------------------
-void TER_LimitData::InitializeDistancesData( const T_PointVector& points )
-{
-    distancesData_.clear();
-    distancesData_.reserve( points.size() );
-    CIT_PointVector itCur  = points.begin();
-    CIT_PointVector itNext = itCur;
-    ++ itNext;
-    distancesData_.reserve( points.end() - itNext );
-    for( ; itNext != points.end(); ++itCur, ++itNext )
-        distancesData_.push_back( DistanceData( *itCur, *itNext ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +101,11 @@ double TER_LimitData::Distance( const MT_Vector2D& p ) const
 const T_PointVector& TER_LimitData::GetPoints() const
 {
     return data_->GetPoints();
+}
+
+const TER_LimitData::T_DistancesData& TER_LimitData::GetDistances() const
+{
+    return distancesData_;
 }
 
 //-----------------------------------------------------------------------------

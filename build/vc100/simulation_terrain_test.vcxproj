@@ -172,6 +172,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_terrain_test\TER_LimitDataManagerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_terrain_test\TER_LimitDataTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\simulation_terrain_test\simulation_terrain_test_pch.h" />
