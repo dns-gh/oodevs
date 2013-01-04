@@ -8,7 +8,7 @@ return
     {
         dependencies = "none",
         method = function( self )
-                    return false
+                    return true
                  end
     },
     
