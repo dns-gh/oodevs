@@ -21,6 +21,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
+#include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -64,11 +65,19 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     T_KnowledgeObjectVector knowledges;
     MIL_PathObjectFilter filter;
     pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion_, filter );
+    for( auto it = knowledges.begin(); it != knowledges.end(); )
+    {
+        double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );
+        if( 0. == cost )
+            knowledges.erase( it );
+        else
+            ++it;
+    }
     if( knowledges != objectsToAvoid_ )
     {
         objectsToAvoid_ = knowledges;
         geometrySignatures_.clear();
-        for( T_KnowledgeObjectVector::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
+        for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
             geometrySignatures_.push_back( (*it)->GetLocalisation() );
         return true;
     }
