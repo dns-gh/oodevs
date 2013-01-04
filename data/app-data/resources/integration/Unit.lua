@@ -160,3 +160,7 @@ end
 integration.getCiviliansInArea = function( area )
     return DEC_Connaissances_UnitesCivilesDansZone( area.source )
 end
+
+integration.getWoundedInArea = function( area )
+    return DEC_Connaissances_UnitesBlesseesDansZone( area.source )
+end
