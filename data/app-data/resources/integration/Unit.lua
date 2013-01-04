@@ -156,3 +156,7 @@ integration.getWoundedOrDeadUnitsInCircle = function( position, radius )
     woundedUnitsInCircle = DEC_Connaissances_UnitesBlesseesOuTueesDansCercle( position, radius )
     return woundedUnitsInCircle
 end
+
+integration.getCiviliansInArea = function( area )
+    return DEC_Connaissances_UnitesCivilesDansZone( area.source )
+end
