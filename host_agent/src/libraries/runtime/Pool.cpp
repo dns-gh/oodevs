@@ -49,8 +49,7 @@ struct TaskHandler
 // Created: BAX 2012-04-16
 // -----------------------------------------------------------------------------
 Pool::Pool( size_t numThreads )
-    : service_( numThreads )
-    , work_   ( service_ )
+    : work_( service_ )
 {
     for( size_t i = 0; i < numThreads; ++i )
         threads_.create_thread( boost::bind( &boost::asio::io_service::run, &service_ ) );
