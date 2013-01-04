@@ -403,6 +403,7 @@ void Context::OpenDownload( QNetworkReply* rpy )
     const size_t id = static_cast< size_t >( rpy->request().attribute( id_attribute ).toULongLong() );
     T_Download down = MakeDownload( id, rpy, fs_, root_ / tmp_dir );
     connect( down.get(), SIGNAL( Progress( size_t, size_t, int ) ), this, SLOT( OnDownloadProgress( size_t, size_t, int ) ) );
+    connect( down.get(), SIGNAL( Error( size_t, const QString& ) ), this, SLOT( OnDownloadError( size_t, const QString& ) ) );
     connect( down.get(), SIGNAL( End( size_t ) ), this, SLOT( OnCloseDownload( size_t ) ) );
     QWriteLocker lock( &access_ );
     downloads_.insert( id, down );
@@ -423,9 +424,11 @@ QVariant GetValue( const QModelIndex& idx, int col )
 // Name: SetValue
 // Created: BAX 2012-09-25
 // -----------------------------------------------------------------------------
-void SetValue( ItemModel& model, const QModelIndex& idx, int col, const QVariant& value )
+void SetValue( ItemModel& model,
+               const QModelIndex& idx, int col, const QVariant& value,
+               int role = Qt::UserRole )
 {
-    model.setData( idx.sibling( idx.row(), col ), value, Qt::UserRole );
+    model.setData( idx.sibling( idx.row(), col ), value, role );
 }
 }
 
@@ -441,6 +444,19 @@ void Context::OnDownloadProgress( size_t id, size_t current, int progress )
         return;
     SetValue( items_, idx, ITEM_COL_SIZE, current );
     SetValue( items_, idx, ITEM_COL_STATUS, progress );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Context::OnDownloadError
+// Created: BAX 2013-01-03
+// -----------------------------------------------------------------------------
+void Context::OnDownloadError( size_t id, const QString& error )
+{
+    QWriteLocker write( &access_ );
+    QModelIndex idx = items_.Find( id );
+    if( !idx.isValid() )
+        return;
+    SetValue( items_, idx, 0, error, ErrorRole );
 }
 
 // -----------------------------------------------------------------------------

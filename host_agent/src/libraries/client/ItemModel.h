@@ -36,6 +36,8 @@ enum ItemColumn
     ITEM_COL_COUNT,
 };
 
+const int ErrorRole = Qt::UserRole + 1;
+
 struct Item : public boost::noncopyable
 {
     //! @name Constructors/Destructor

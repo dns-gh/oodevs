@@ -178,6 +178,9 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
         {
             FileSystem_ABC::T_Unpacker unpacker = fs_.Unpack( root_, *this, this );
             unpacker->Unpack();
+            const Path signature = root_ / "signature";
+            if( !fs_.IsFile( signature ) )
+                throw std::runtime_error( "Missing archive signature" );
         }
         catch( const std::exception& err )
         {

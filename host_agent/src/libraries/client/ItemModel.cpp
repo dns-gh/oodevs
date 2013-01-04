@@ -216,6 +216,10 @@ bool Item::SetData( int col, const QVariant& value, int role )
                     return true;
             }
             break;
+
+        case ErrorRole:
+            error_ = value.toString();
+            return true;
     }
     return false;
 }
