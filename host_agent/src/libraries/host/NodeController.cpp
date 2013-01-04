@@ -358,7 +358,15 @@ void NodeController::DownloadClient( web::Chunker_ABC& dst ) const
     Package_ABC::T_Item item = client_->Find( 0, false );
     if( !item )
         throw web::HttpException( web::NOT_FOUND );
-    client_->Download( dst, *item );
+    try
+    {
+        client_->Download( dst, *item );
+    }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log_ ) << "[" << type_ << "] " << err.what();
+        LOG_ERROR( log_ ) << "[" << type_ << "] Unable to download client";
+    }
 }
 
 // -----------------------------------------------------------------------------
