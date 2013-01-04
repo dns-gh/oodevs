@@ -467,6 +467,7 @@ struct Item : Package_ABC::Item_ABC
         io::Writer_ABC& io = dst.OpenWriter();
         FileSystem_ABC::T_Packer packer = fs.Pack( io, runtime::ARCHIVE_FMT_TAR_GZ );
         packer->Pack( root_, IsItemFile( GetSuffix() ) );
+        packer->PackEntry( "signature", 0, 0 );
     }
 
 protected:

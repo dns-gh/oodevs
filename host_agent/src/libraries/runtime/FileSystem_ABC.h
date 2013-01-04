@@ -79,6 +79,7 @@ struct Packer_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual void Pack( const Path& input, const T_Predicate& predicate ) = 0;
+    virtual void PackEntry( const Path& file, const void* data, size_t size ) = 0;
     //@}
 };
 

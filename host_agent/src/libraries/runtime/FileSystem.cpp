@@ -538,6 +538,31 @@ struct Packer : public Packer_ABC
         TransferArchive( log_, dst_.get(), src.get(), input, predicate, true, 0 );
     }
 
+    void Copy( const void* fdata, size_t fsize )
+    {
+        const char* data = reinterpret_cast< const char* >( fdata );
+        const __LA_SSIZE_T size = static_cast< __LA_SSIZE_T >( fsize );
+        __LA_SSIZE_T fill = 0;
+        while( fill < size )
+        {
+            const __LA_SSIZE_T len = archive_write_data( dst_.get(), data + fill, size - fill );
+            if( len <= 0 )
+                AbortArchive( log_, dst_.get() );
+            fill += len;
+        }
+    }
+
+    void PackEntry( const Path& file, const void* data, size_t size )
+    {
+        boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
+        ArchiveEntry* entry = ptr.get();
+        archive_entry_copy_pathname_w( entry, file.wstring().c_str() );
+        archive_entry_set_filetype( entry, AE_IFREG );
+        archive_write_header( dst_.get(), entry );
+        Copy( data, size );
+        archive_write_finish_entry( dst_.get() );
+    }
+
     cpplog::BaseLogger& log_;
     io::Writer_ABC& writer_;
     boost::shared_ptr< Archive > dst_;

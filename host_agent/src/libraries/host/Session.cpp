@@ -849,6 +849,15 @@ bool Session::Restore()
     return ModifyStatus( lock, STATUS_STOPPED );
 }
 
+namespace
+{
+    void PackDir( const FileSystem_ABC& fs, runtime::Packer_ABC& packer, const Path& path )
+    {
+        if( fs.IsDirectory( path ) )
+            packer.Pack( path, runtime::Packer_ABC::T_Predicate() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::Download
 // Created: BAX 2012-08-06
@@ -860,12 +869,10 @@ bool Session::Download( web::Chunker_ABC& dst ) const
     dst.SetHeader( "Content-Type", "application/zip" );
     io::Writer_ABC& sink = dst.OpenWriter();
     FileSystem_ABC::T_Packer packer = deps_.fs.Pack( sink, runtime::ARCHIVE_FMT_ZIP );
-    packer->Pack( paths_.root, runtime::Packer_ABC::T_Predicate() );
-    if( IsReplay() )
-        return true;
-    const Path output = GetOutput();
-    if( deps_.fs.IsDirectory( output ) )
-        packer->Pack( output, runtime::Packer_ABC::T_Predicate() );
+    PackDir( deps_.fs, *packer, paths_.root );
+    if( !IsReplay() )
+        PackDir( deps_.fs, *packer, GetOutput() );
+    packer->PackEntry( "signature", 0, 0 );
     return true;
 }
 
