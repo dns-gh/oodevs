@@ -447,7 +447,7 @@ struct Unpacker : public Unpacker_ABC
         boost::shared_ptr< Archive > src( archive_read_new(), archive_read_free );
         archive_read_support_format_zip( src.get() );
         archive_read_support_format_gnutar( src.get() );
-        archive_read_support_compression_gzip( src.get() );
+        archive_read_support_filter_gzip( src.get() );
         archive_read_set_read_callback( src.get(), &Unpacker::Read );
         archive_read_set_callback_data( src.get(), this );
         int err = archive_read_open1( src.get() );
@@ -501,7 +501,7 @@ struct Packer : public Packer_ABC
 
             case runtime::ARCHIVE_FMT_TAR_GZ:
                 archive_write_set_format_gnutar( dst_.get() );
-                archive_write_set_compression_gzip( dst_.get() );
+                archive_write_add_filter_gzip( dst_.get() );
                 break;
         }
         archive_write_set_bytes_in_last_block( dst_.get(), 1 );
