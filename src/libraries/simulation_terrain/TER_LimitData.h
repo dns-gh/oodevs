@@ -11,7 +11,7 @@
 #define __TER_LimitData_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
-#include "TER_DynamicPathDataHandler.h"
+#include <boost/shared_ptr.hpp>
 
 class TER_DynamicData;
 class TER_LimitDataManager;
@@ -67,7 +67,7 @@ private:
 private:
     const T_PointVector    points_;
           T_DistancesData  distancesData_;
-    TER_DynamicPathDataHandler handler_;
+    boost::shared_ptr< TER_DynamicData > data_;
 };
 
 #endif // __TER_LimitData_h_

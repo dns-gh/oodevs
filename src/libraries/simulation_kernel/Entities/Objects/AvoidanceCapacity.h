@@ -12,8 +12,8 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
-#include "simulation_terrain/TER_DynamicPathDataHandler.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include <boost/shared_ptr.hpp>
 
 class TER_Localisation;
 class TER_DynamicData;
@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     TER_Localisation           avoid_;
-    TER_DynamicPathDataHandler handler_;
+    boost::shared_ptr< TER_DynamicData > data_;
     double                     distance_;
     //@}
 };

@@ -126,7 +126,7 @@ void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BridgingCapacity::CreatePathData()
 {
-    handler_.Reset( new TER_DynamicData( bridge_, type_ ) );
+    data_ = CreateAndRegisterDynamicData( bridge_, type_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ bool BridgingCapacity::IsBridgeType() const
 // -----------------------------------------------------------------------------
 bool BridgingCapacity::IsPathData() const
 {
-    return handler_.IsPathfindData();
+    return data_.get() != 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -66,4 +66,10 @@ private:
     boost::mutex mutex_;
 };
 
+// Create a new TER_DynamicData from the input geometry and type, and if the
+// singletons are available, register it. If type is the empty string, use
+// the default type defined in terrain analyzer.
+boost::shared_ptr< TER_DynamicData > CreateAndRegisterDynamicData(
+        const T_PointVector& points, const std::string& type );
+
 #endif // __TER_DynamicData_h_

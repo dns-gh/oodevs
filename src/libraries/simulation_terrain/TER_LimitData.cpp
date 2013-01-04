@@ -47,7 +47,7 @@ TER_LimitData::TER_LimitData( const T_PointVector& points )
     : points_( points )
 {
     InitializeDistancesData();
-    handler_.Reset( new TER_DynamicData( points_ ) );
+    data_ = CreateAndRegisterDynamicData( points_, "" );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,9 +12,9 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
-#include "simulation_terrain/TER_DynamicPathDataHandler.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include <spatialcontainer/TerrainData.h>
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -78,7 +78,7 @@ private:
     //@{
     std::string type_;
     T_PointVector bridge_;
-    TER_DynamicPathDataHandler handler_;
+    boost::shared_ptr< TER_DynamicData > data_;
     //@}
 };
 

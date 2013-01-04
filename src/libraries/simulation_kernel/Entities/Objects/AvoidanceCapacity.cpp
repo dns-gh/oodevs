@@ -69,7 +69,7 @@ void AvoidanceCapacity::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> distance_;
     const T_PointVector& points = avoid_.GetPoints();
     if( points.size() > 3 )
-        handler_.Reset( new TER_DynamicData( points ) );
+        data_ = CreateAndRegisterDynamicData( points, "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,5 +152,5 @@ void AvoidanceCapacity::ResetDynamicData( MIL_Object_ABC& object )
     const T_PointVector& points = avoid_.GetPoints();
     assert( points.size() > 3 );
 
-    handler_.Reset( new TER_DynamicData( points ) );
+    data_ = CreateAndRegisterDynamicData( points, "" );
 }

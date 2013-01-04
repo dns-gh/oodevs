@@ -10,26 +10,19 @@
 #include "simulation_terrain_pch.h"
 #include "TER_DynamicData.h"
 #include "TER_PathFinderThread.h"
+#include "TER_PathFindManager.h"
+#include "TER_World.h"
 #include "TER_AnalyzerManager.h"
 #include "MT_Tools/MT_Logger.h"
 #include <pathfind/TerrainRetractationHandle.h>
-
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData constructor
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-TER_DynamicData::TER_DynamicData( const T_PointVector& points )
-    : nNbrRefs_   ( 0 )
-    , points_     ( points )
-    , terrainData_( TER_AnalyzerManager::DefaultTerrainData() )
-{
-    // NOTHING
-}
+#include <memory>
 
 namespace
 {
     TerrainData Convert( const std::string& type )
     {
+        if( type.empty() )
+            return TER_AnalyzerManager::DefaultTerrainData();
         if( type == "highway" )
             return TerrainData::Motorway();
         if( type == "main road" )
@@ -40,6 +33,18 @@ namespace
             return TerrainData::SmallRoad();
         return TerrainData::Bridge();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_DynamicData constructor
+// Created: NLD 2005-10-10
+// -----------------------------------------------------------------------------
+TER_DynamicData::TER_DynamicData( const T_PointVector& points )
+    : nNbrRefs_   ( 0 )
+    , points_     ( points )
+    , terrainData_( Convert( "" ))
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -124,4 +129,38 @@ void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
     }
     if( bMustBeDeleted )
         delete this;
+}
+
+namespace
+{
+
+struct DynamicDataDeleter
+{
+    DynamicDataDeleter( TER_PathFindManager* m ): manager_(m) {}
+
+    void operator()( TER_DynamicData* p )
+    {
+        if( p && manager_ )
+        {
+            manager_->RemoveDynamicData( *p );
+        }
+    }
+
+private:
+    TER_PathFindManager* manager_;
+};
+
+}  // namespace
+
+boost::shared_ptr< TER_DynamicData > CreateAndRegisterDynamicData(
+        const T_PointVector& points, const std::string& type )
+{
+    // This is ugly but let us run tests creating TER_LimitData
+    // without having to instanciante all the TER_World machinery.
+    TER_World* w = &TER_World::GetWorld();
+    TER_PathFindManager* m = w ? &w->GetPathFindManager() : 0;
+    auto p = new TER_DynamicData( points, type );
+    if( m )
+        m->AddDynamicData( *p );
+    return boost::shared_ptr< TER_DynamicData >( p, DynamicDataDeleter( m ));
 }
