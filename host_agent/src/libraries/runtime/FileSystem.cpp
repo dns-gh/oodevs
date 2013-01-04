@@ -436,10 +436,22 @@ struct Unpacker : public Unpacker_ABC
 
     static __LA_SSIZE_T Read( Archive* /*arc*/, void* userdata, const void** buffer )
     {
-        Unpacker* it = reinterpret_cast< Unpacker* >( userdata );
-        void* dst = &it->buffer_[0];
-        *buffer = dst;
-        return it->src_.Read( dst, it->buffer_.size() );
+        Unpacker& it = *reinterpret_cast< Unpacker* >( userdata );
+        try
+        {
+            void* dst = &it.buffer_[0];
+            *buffer = dst;
+            return it.src_.Read( dst, it.buffer_.size() );
+        }
+        catch( const std::exception& err )
+        {
+            LOG_ERROR( it.log_ ) << "[archive] " << err.what();
+        }
+        catch( ... )
+        {
+            LOG_ERROR( it.log_ ) << "[archive] unexpected error during read";
+        }
+        return -1;
     }
 
     void Unpack()
@@ -523,8 +535,19 @@ struct Packer : public Packer_ABC
     static __LA_SSIZE_T Write( Archive* /*arc*/, void* userdata, const void* data, size_t size )
     {
         Packer& it = *reinterpret_cast< Packer* >( userdata );
-        const char* src = reinterpret_cast< const char* >( data );
-        return it.writer_.Write( src, size );
+        try
+        {
+            return it.writer_.Write( data, size );
+        }
+        catch( const std::exception& err )
+        {
+            LOG_ERROR( it.log_ ) << "[archive] " << err.what();
+        }
+        catch( ... )
+        {
+            LOG_ERROR( it.log_ ) << "[archive] unexpected error during write";
+        }
+        return -1;
     }
 
     void Pack( const Path& input, const T_Predicate& predicate )
