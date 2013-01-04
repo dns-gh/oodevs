@@ -14,8 +14,11 @@
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
 #include "Reply_ABC.h"
+#include "runtime/Async.h"
 #include "runtime/Io.h"
+#include "runtime/Pool_ABC.h"
 #include "runtime/PropertyTree.h"
+#include "runtime/Scoper.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -24,6 +27,7 @@
 #include <mongoose/mongoose.h>
 
 using namespace web;
+using runtime::Async;
 using runtime::Pool_ABC;
 
 namespace
@@ -353,7 +357,8 @@ struct Server::Private : public boost::noncopyable
         : port_    ( boost::lexical_cast< std::string >( port ) )
         , pool_    ( pool )
         , observer_( observer )
-        , context_ ()
+        , context_ ( 0 )
+        , async_   ( pool )
     {
         // NOTHING
     }
@@ -364,7 +369,10 @@ struct Server::Private : public boost::noncopyable
     // -----------------------------------------------------------------------------
     ~Private()
     {
-        // NOTHING
+        if( !context_ )
+            return;
+        mg_stop( context_ );
+        async_.Join();
     }
 
     // -----------------------------------------------------------------------------
@@ -382,7 +390,33 @@ struct Server::Private : public boost::noncopyable
         mg_context* ptr = mg_start( &Private::OnHttpRequest, this, &options[0] );
         if( !ptr )
             throw std::runtime_error( "unable to start web server" );
-        context_.reset( ptr, mg_stop );
+        context_ = ptr;
+        async_.Go( boost::bind( &Private::Run, context_, boost::ref( async_ ) ) );
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: Private::Run
+    // Created: BAX 2013-01-04
+    // -----------------------------------------------------------------------------
+    static void Run( mg_context* ctx, Async& async )
+    {
+        mg_ref_thread( ctx );
+        auto unref_thread = runtime::Scoper( boost::bind( &mg_unref_thread, ctx ) );
+        boost::shared_ptr< struct mg_socket > socket( mg_socket_create(), free );
+        while( mg_consume_socket( ctx, socket.get() ) )
+        {
+            boost::shared_ptr< struct mg_connection > link( mg_connection_create( ctx, socket.get() ), free );
+            async.Go( boost::bind( &Private::Process, ctx, link ) );
+        }
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: Private::Process
+    // Created: BAX 2013-01-04
+    // -----------------------------------------------------------------------------
+    static void Process( mg_context* ctx, boost::shared_ptr< struct mg_connection > link )
+    {
+        mg_connection_process( ctx, link.get() );
     }
 
     // -----------------------------------------------------------------------------
@@ -438,7 +472,8 @@ private:
     const std::string port_;
     Pool_ABC& pool_;
     Observer_ABC& observer_;
-    boost::shared_ptr< mg_context > context_;
+    mg_context* context_;
+    Async async_;
 };
 
 // -----------------------------------------------------------------------------
