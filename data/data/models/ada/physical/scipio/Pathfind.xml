@@ -352,7 +352,6 @@
       <enemies cost-at-security-range="0" cost-on-contact="0"/>
       <object-costs avoid="true" threshold="10000">
         <object-cost type="nbc cloud" value="0"/>
-        <object-cost type="rota" value="0"/>
         <object-cost type="jamming area" value="0"/>
       </object-costs>
     </rule>
@@ -382,4 +381,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2411330592" -->
+<!-- signature="1237466763" -->
