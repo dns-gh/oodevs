@@ -40,3 +40,22 @@ BOOST_AUTO_TEST_CASE( TER_LimitData_Distances )
     }
     BOOST_CHECK_EQUAL( length, p2->GetLength() );
 }
+
+
+BOOST_AUTO_TEST_CASE( TER_LimitData_GetDistance )
+{
+    TER_LimitDataManager m;
+
+    T_PointVector v1;
+    v1.push_back( MT_Vector2D( 0.0, 0.0 ));
+    v1.push_back( MT_Vector2D( 3.0, 0.0 ));
+    v1.push_back( MT_Vector2D( 3.0, 2.0 ));
+    auto p1 = m.CreateLimit( v1 );
+
+    // Point projection is before all segments first point
+    BOOST_CHECK_EQUAL( 1.0, p1->Distance( MT_Vector2D( -1.0, 0.0 )));
+    // Point projection is on a segment
+    BOOST_CHECK_EQUAL( 0.5, p1->Distance( MT_Vector2D( 1.5, 0.5 )));
+    // Point projection is after all segment second point
+    BOOST_CHECK_EQUAL( 1.0, p1->Distance( MT_Vector2D( 3.0, 3.0 )));
+}
