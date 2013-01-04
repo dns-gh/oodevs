@@ -3251,10 +3251,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>InteractWithSide</source>
-        <translation>Interactuar con los campos siguientes</translation>
-    </message>
-    <message>
         <source>Friend</source>
         <translation>Amigo</translation>
     </message>
@@ -3288,6 +3284,14 @@ The spawn capacity will be disabled.</source>
     </message>
     <message>
         <source>Detection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Has an effect on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Civilian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

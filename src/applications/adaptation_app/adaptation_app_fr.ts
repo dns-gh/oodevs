@@ -3253,10 +3253,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <translation>Infos</translation>
     </message>
     <message>
-        <source>InteractWithSide</source>
-        <translation>Gêne uniquement les camps suivants</translation>
-    </message>
-    <message>
         <source>Friend</source>
         <translation>Ami</translation>
     </message>
@@ -3291,6 +3287,14 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     <message>
         <source>Detection</source>
         <translation>Détection</translation>
+    </message>
+    <message>
+        <source>Has an effect on</source>
+        <translation>Agit sur</translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation>Civil</translation>
     </message>
 </context>
 <context>

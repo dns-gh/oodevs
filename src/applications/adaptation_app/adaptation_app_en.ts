@@ -2958,10 +2958,6 @@ The spawn capacity will be disabled.</translation>
         <translation>Border</translation>
     </message>
     <message>
-        <source>InteractWithSide</source>
-        <translation>InteractWithSide</translation>
-    </message>
-    <message>
         <source>Friend</source>
         <translation>Friend</translation>
     </message>
@@ -3288,6 +3284,14 @@ The spawn capacity will be disabled.</translation>
     <message>
         <source>Detection</source>
         <translation>Detection</translation>
+    </message>
+    <message>
+        <source>Has an effect on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation type="unfinished">Civilian</translation>
     </message>
 </context>
 <context>

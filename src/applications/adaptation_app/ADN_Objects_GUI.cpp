@@ -156,10 +156,11 @@ void ADN_Objects_GUI::Build()
 
     QGridLayout* grid = new QGridLayout();
     {
-        ADN_GroupBox* interactWithSide = CreateCapacityGroupBox( 3, tr( "InteractWithSide" ), vInfosConnectors[ eInteractWithSideCapacityPresent] );
+        ADN_GroupBox* interactWithSide = CreateCapacityGroupBox( 3, tr( "Has an effect on" ), vInfosConnectors[ eInteractWithSideCapacityPresent] );
         builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Friend" ), vInfosConnectors[ eInteractWithSideCapacity_Friend ] );
         builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Enemy" ), vInfosConnectors[ eInteractWithSideCapacity_Enemy ] );
         builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Neutral" ), vInfosConnectors[ eInteractWithSideCapacity_Neutral ] );
+        builder.AddField< ADN_CheckBox >( interactWithSide, tr( "Civilian" ), vInfosConnectors[ eInteractWithSideCapacity_Civilian ] );
 
         ADN_GroupBox* constructor = CreateCapacityGroupBox( 1, tr( "Constructor" ), vInfosConnectors[ eConstructorCapacityPresent] );
 

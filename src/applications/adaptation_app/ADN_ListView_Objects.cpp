@@ -226,6 +226,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( InteractWithSide, Friend, bFriendSide_ );
     CONNECT_HELPER( InteractWithSide, Enemy, bEnemySide_ );
     CONNECT_HELPER( InteractWithSide, Neutral, bNeutralSide_ );
+    CONNECT_HELPER( InteractWithSide, Civilian, bCivilian_ );
 
     BUILDER_HELPER( Supply );
 

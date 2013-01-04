@@ -1160,6 +1160,7 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ADN_CapacityInfos_Interact
     : bFriendSide_ ( false )
     , bEnemySide_  ( false )
     , bNeutralSide_( false )
+    , bCivilian_   ( false )
 {
     // NOTHING
 }
@@ -1171,17 +1172,20 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ADN_CapacityInfos_Interact
 void ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    std::string friends, enemy, neutral;
+    std::string friends, enemy, neutral, civilian;
     input >> xml::optional
           >> xml::attribute( "friend", friends )
           >> xml::optional
           >> xml::attribute( "enemy", enemy )
           >> xml::optional
-          >> xml::attribute( "neutral", neutral );
+          >> xml::attribute( "neutral", neutral )
+          >> xml::optional
+          >> xml::attribute( "civilian", civilian );
 
     bFriendSide_  = ( friends.compare( "true" ) == 0 );
     bEnemySide_   = ( enemy.compare( "true" ) == 0 );
     bNeutralSide_ = ( neutral.compare( "true" ) == 0 );
+    bCivilian_    = ( civilian.compare( "true" ) == 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1196,6 +1200,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::WriteArchive( xml::xo
         output << xml::attribute( "enemy", "true" );
     if( bNeutralSide_.GetData() )
         output << xml::attribute( "neutral", "true" );
+    if( bCivilian_.GetData() )
+        output << xml::attribute( "civilian", "true" );
 }
 
 // -----------------------------------------------------------------------------

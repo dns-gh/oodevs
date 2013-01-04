@@ -101,6 +101,7 @@ public:
         eInteractWithSideCapacity_Friend,
         eInteractWithSideCapacity_Enemy,
         eInteractWithSideCapacity_Neutral,
+        eInteractWithSideCapacity_Civilian,
         eInteractWithSideCapacityPresent,
         eInterferenceCapacityPresent,
         eIntoxicationCapacity_MaxToxic,

@@ -520,6 +520,7 @@ public:
         ADN_Type_Bool bFriendSide_;
         ADN_Type_Bool bEnemySide_;
         ADN_Type_Bool bNeutralSide_;
+        ADN_Type_Bool bCivilian_;
     };
 
 //*****************************************************************************

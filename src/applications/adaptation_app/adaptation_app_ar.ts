@@ -2945,10 +2945,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished">الحدود</translation>
     </message>
     <message>
-        <source>InteractWithSide</source>
-        <translation type="unfinished">إينتيراكتويثسيدي</translation>
-    </message>
-    <message>
         <source>Friend</source>
         <translation type="unfinished">صديق</translation>
     </message>
@@ -3275,6 +3271,14 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Detection</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Has an effect on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation type="unfinished">المدنيين</translation>
     </message>
 </context>
 <context>
