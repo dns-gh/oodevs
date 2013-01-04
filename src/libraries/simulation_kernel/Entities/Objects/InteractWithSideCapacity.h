@@ -18,6 +18,7 @@ namespace xml
 }
 
 class MIL_Army_ABC;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  InteractWithSideCapacity
@@ -40,6 +41,7 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
+    bool IsPossible( const MIL_Army_ABC& army1, const MIL_Agent_ABC& agent ) const;
     bool IsPossible( const MIL_Army_ABC& army1, const MIL_Army_ABC& army2 ) const;
     //@}
 
@@ -55,6 +57,7 @@ private:
     bool friendSide_;
     bool enemySide_;
     bool neutralSide_;
+    bool civilian_;
     //@}
 };
 

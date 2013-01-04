@@ -750,11 +750,22 @@ void MIL_UrbanObject::AddLivingArea( MIL_LivingArea& livingArea )
 // Name: MIL_UrbanObject::CanInteractWith
 // Created: LDC 2012-11-07
 // -----------------------------------------------------------------------------
-bool MIL_UrbanObject::CanInteractWith( const MIL_Entity_ABC& agent ) const
+bool MIL_UrbanObject::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
     if( !IsBlock() )
         return false;
     return MIL_UrbanObject_ABC::CanInteractWith( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::CanInteractWith
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+bool MIL_UrbanObject::CanInteractWith( const MIL_Population& population ) const
+{
+    if( !IsBlock() )
+        return false;
+    return MIL_UrbanObject_ABC::CanInteractWith( population );
 }
 
 // -----------------------------------------------------------------------------

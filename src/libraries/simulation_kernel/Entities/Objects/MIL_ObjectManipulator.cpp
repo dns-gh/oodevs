@@ -38,6 +38,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Objects/BridgingCapacity.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -401,27 +402,45 @@ bool MIL_ObjectManipulator::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
     return false;
 }
 
+namespace
+{
+    double GetSpeed( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed,
+                     bool canInteractWith, const MIL_Entity_ABC& entity, MIL_Object_ABC& object )
+    {
+        double speed = std::numeric_limits< double >::max();
+        const PHY_RoleAction_InterfaceFlying* flying = entity.RetrieveRole< PHY_RoleAction_InterfaceFlying >();
+        if( ( !flying || !flying->IsFlying() ) && canInteractWith )
+        {
+            const MobilityCapacity* capacity = object.Retrieve< MobilityCapacity >();
+            if( capacity )
+            {
+                const StructuralCapacity* structuralcapacity = object.Retrieve< StructuralCapacity >();
+                speed = std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
+            }
+            const CrowdCapacity* crowdcapacity = object.Retrieve< CrowdCapacity >();
+            if( crowdcapacity )
+                speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( entity ) );
+        }
+        return speed;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::ApplySpeedPolicy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Entity_ABC& agent ) const
+double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Agent_ABC& agent ) const
 {
-    double speed = std::numeric_limits< double >::max();
-    const PHY_RoleAction_InterfaceFlying* flying = agent.RetrieveRole< PHY_RoleAction_InterfaceFlying >();
-    if( ( !flying || !flying->IsFlying() ) && object_.CanInteractWith( agent ) )
-    {
-    const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
-    if( capacity )
-    {
-            const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
-            speed = std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
-    }
-    const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
-    if( crowdcapacity )
-        speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
-    }
-    return speed;
+    return GetSpeed( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, object_.CanInteractWith( agent ), agent, object_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManipulator::ApplySpeedPolicy
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Population& population ) const
+{
+    return GetSpeed( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, object_.CanInteractWith( population ), population, object_ );
 }
 
 // -----------------------------------------------------------------------------

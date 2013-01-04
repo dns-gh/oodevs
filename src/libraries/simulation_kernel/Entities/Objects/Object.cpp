@@ -133,7 +133,7 @@ void Object::Update( unsigned int time )
 // Name: Object::CanInteractWith
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
-bool Object::CanInteractWith( const MIL_Entity_ABC& agent ) const
+bool Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
     return MIL_Object::CanInteractWith( agent );
 }

@@ -68,7 +68,7 @@ public:
     //@{
     bool CanCollideWith( const MIL_Agent_ABC& agent ) const;
     bool CanCollideWithEntity() const;
-    bool CanInteractWith( const MIL_Entity_ABC& agent ) const;
+    bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
     bool CanInteractWithEntity() const;
     //@}
 

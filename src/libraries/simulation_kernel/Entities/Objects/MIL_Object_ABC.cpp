@@ -31,6 +31,7 @@
 #include "Entities/Objects/TimeLimitedAttribute.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -207,11 +208,23 @@ bool MIL_Object_ABC::CanCollideWithEntity() const
 // Name: MIL_Object_ABC::CanInteractWith
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanInteractWith( const MIL_Entity_ABC& agent ) const
+bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
     const InteractWithSideCapacity* pSideInteraction = Retrieve< InteractWithSideCapacity >();
     if( pSideInteraction && pArmy_ )
-        return pSideInteraction->IsPossible( *pArmy_, agent.GetArmy() ) && CanCollideWithEntity();
+        return pSideInteraction->IsPossible( *pArmy_, agent ) && CanCollideWithEntity();
+    return CanCollideWithEntity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::CanInteractWith
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::CanInteractWith( const MIL_Population& population ) const
+{
+    const InteractWithSideCapacity* pSideInteraction = Retrieve< InteractWithSideCapacity >();
+    if( pSideInteraction && pArmy_ )
+        return pSideInteraction->IsPossible( *pArmy_, population.GetArmy() ) && CanCollideWithEntity();
     return CanCollideWithEntity();
 }
 

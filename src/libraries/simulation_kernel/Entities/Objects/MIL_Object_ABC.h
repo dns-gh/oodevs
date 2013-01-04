@@ -50,6 +50,7 @@ class MIL_PopulationElement_ABC;
 class TER_Localisation;
 class PHY_DotationCategory;
 class PHY_UrbanAttritionData;
+class MIL_Population;
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -96,7 +97,8 @@ public:
 
     //! @name Interactions
     //@{
-    virtual bool CanInteractWith      ( const MIL_Entity_ABC& agent ) const;
+    virtual bool CanInteractWith      ( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWith      ( const MIL_Population& population ) const;
     virtual bool CanInteractWithEntity() const;
     virtual bool CanBeSeen() const = 0;
     //@}

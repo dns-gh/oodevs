@@ -167,18 +167,23 @@ void MIL_Object::Finalize()
 // Name: MIL_Object::CanInteractWith
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
-bool MIL_Object::CanInteractWith( const MIL_Entity_ABC& entity ) const
+bool MIL_Object::CanInteractWith( const MIL_Agent_ABC& entity ) const
 {
     if( !MIL_Object_ABC::CanInteractWith( entity ) )
         return false;
     bool canInteract = true;
-    const MIL_Agent_ABC* agent = dynamic_cast< const MIL_Agent_ABC* >( &entity );
-    if( agent )
-    {
-        for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
-            (*it)->CanInteractWith( *this, *agent, canInteract );
-    }
+    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
+        (*it)->CanInteractWith( *this, entity, canInteract );
     return canInteract;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::CanInteractWith
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+bool MIL_Object::CanInteractWith( const MIL_Population& population ) const
+{
+    return MIL_Object_ABC::CanInteractWith( population );
 }
 
 // -----------------------------------------------------------------------------
