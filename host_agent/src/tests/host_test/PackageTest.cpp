@@ -10,9 +10,11 @@
 #include "host_test.h"
 
 #include "host/Package.h"
+#include "runtime/Async.h"
 #include "runtime/FileSystem.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Async.h"
+#include "runtime/Scoper.h"
+#include "web/Chunker_ABC.h"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/path.hpp>
@@ -396,4 +398,77 @@ BOOST_AUTO_TEST_CASE( package_checksum_skip_unwanted_data )
     const std::vector< std::string > tokens = boost::assign::list_of( "items" );
     bool sentinel = false;
     Walk( tree, tokens.begin(), tokens.end(), boost::bind( &CheckEgypt, boost::ref( sentinel ), _1, size ) );
+}
+
+namespace
+{
+    struct VirtualDevice : public io::Writer_ABC
+                         , public io::Reader_ABC
+    {
+        VirtualDevice()
+        {
+            // NOTHING
+        }
+
+        int Write( const void* data, size_t size )
+        {
+            const size_t previous = buffer_.size();
+            buffer_.resize( previous + size, 0 );
+            memcpy( &buffer_[previous], data, size );
+            return static_cast< int >( size );
+        }
+
+        int Read( void* data, size_t size )
+        {
+            const size_t next = std::min( size, buffer_.size() );
+            if( next )
+                memcpy( data, &buffer_[0], next );
+            buffer_.erase( buffer_.begin(), buffer_.begin() + next );
+            return static_cast< int >( next );
+        }
+
+        std::vector< char > buffer_;
+    };
+
+    MOCK_BASE_CLASS( MockChunker, web::Chunker_ABC )
+    {
+        MOCK_METHOD( SetHeader, 2 );
+        MOCK_METHOD( SetName, 1 );
+        MOCK_METHOD( OpenWriter, 0 );
+    };
+}
+
+BOOST_AUTO_TEST_CASE( package_pack_unpack )
+{
+    MockPool pool;
+    MockLog log;
+    runtime::FileSystem fs( log );
+    const Path root = BOOST_RESOLVE( "packages" );
+    Package pkg( pool, fs, root, true );
+    pkg.Parse();
+
+    // compress package to virtual device
+    auto item = pkg.Find( 0, false );
+    BOOST_REQUIRE( item );
+    VirtualDevice buffer;
+    MockChunker chunker;
+    MOCK_EXPECT( chunker.OpenWriter ).returns( boost::ref( buffer ) );
+    MOCK_EXPECT( chunker.SetName );
+    MOCK_EXPECT( chunker.SetHeader );
+    pkg.Download( chunker, *item );
+
+    // uncompress package to random dir, and check it against source
+    const Path output = fs.MakeAnyPath( BOOST_RESOLVE( "." ) );
+    const auto erase = runtime::Scoper( boost::bind( &runtime::FileSystem_ABC::Remove, &fs, output ) );
+    const Path pkgdir = output / "0";
+    auto unpacker = fs.Unpack( pkgdir, buffer, 0 );
+    unpacker->Unpack();
+    BOOST_CHECK( fs.IsFile( pkgdir / "signature" ) );
+    fs.Remove( pkgdir / "metadata.tag" ); // erase target package checksum
+    Package dst( pool, fs, output, true );
+    dst.Parse();
+    BOOST_CHECK_EQUAL( dst.GetSize(), pkg.GetSize() );
+    auto target = dst.Find( 0, false );
+    BOOST_REQUIRE( target );
+    BOOST_CHECK_EQUAL( ToJson( pkg.GetPropertiesFrom( *item ) ), ToJson( dst.GetPropertiesFrom( *target ) ) );
 }
