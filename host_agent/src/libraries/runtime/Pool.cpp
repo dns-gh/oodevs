@@ -19,13 +19,12 @@ using namespace runtime;
 
 namespace
 {
-template< typename T = void >
 struct TaskHandler
 {
-    typedef boost::packaged_task< T > Package;
+    typedef boost::packaged_task< void > Package;
 
-    template< typename U >
-    explicit TaskHandler( const U& task )
+    template< typename T >
+    explicit TaskHandler( const T& task )
         : package_( boost::make_shared< Package >( task ) )
     {
         // NOTHING
@@ -80,14 +79,14 @@ void DetachThread( const Pool::Task& task )
 // -----------------------------------------------------------------------------
 Pool::Future Pool::Post( const Task& task )
 {
-    TaskHandler< void > handler( task );
+    TaskHandler handler( task );
     service_.post( handler );
     return Future( handler.package_->get_future() );
 }
 
 Pool::Future Pool::Go( const Task& task )
 {
-    TaskHandler< void > handler( task );
+    TaskHandler handler( task );
     service_.post( boost::bind( &DetachThread, handler ) );
     return Future( handler.package_->get_future() );
 }
