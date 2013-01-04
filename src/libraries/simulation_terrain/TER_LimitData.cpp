@@ -44,10 +44,9 @@ double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
 TER_LimitData::TER_LimitData( const T_PointVector& points )
-    : points_( points )
 {
-    InitializeDistancesData();
-    data_ = CreateAndRegisterDynamicData( points_, "" );
+    InitializeDistancesData( points );
+    data_ = CreateAndRegisterDynamicData( points, "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,15 +62,15 @@ TER_LimitData::~TER_LimitData()
 // Name: TER_LimitData::InitializeDistanceData
 // Created: NLD 2005-10-06
 // -----------------------------------------------------------------------------
-void TER_LimitData::InitializeDistancesData()
+void TER_LimitData::InitializeDistancesData( const T_PointVector& points )
 {
     distancesData_.clear();
-    distancesData_.reserve( points_.size() );
-    CIT_PointVector itCur  = points_.begin();
+    distancesData_.reserve( points.size() );
+    CIT_PointVector itCur  = points.begin();
     CIT_PointVector itNext = itCur;
     ++ itNext;
-    distancesData_.reserve( points_.end() - itNext );
-    for( ; itNext != points_.end(); ++itCur, ++itNext )
+    distancesData_.reserve( points.end() - itNext );
+    for( ; itNext != points.end(); ++itCur, ++itNext )
         distancesData_.push_back( DistanceData( *itCur, *itNext ) );
 }
 
@@ -107,7 +106,7 @@ double TER_LimitData::Distance( const MT_Vector2D& p ) const
 // -----------------------------------------------------------------------------
 const T_PointVector& TER_LimitData::GetPoints() const
 {
-    return points_;
+    return data_->GetPoints();
 }
 
 //-----------------------------------------------------------------------------
@@ -118,7 +117,8 @@ double TER_LimitData::GetLength() const
 {
     double rLength = 0.;
     const MT_Vector2D* pPrevPoint = 0;
-    for( CIT_PointVector itPoint = points_.begin(); itPoint != points_.end(); ++itPoint )
+    const T_PointVector& points = data_->GetPoints();
+    for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
         const MT_Vector2D& curPoint = *itPoint;
 

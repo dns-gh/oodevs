@@ -29,6 +29,8 @@ public:
     explicit TER_DynamicData( const T_PointVector& points );
              TER_DynamicData( const T_PointVector& points, const std::string& type );
 
+    const T_PointVector& GetPoints() const;
+
     //! @name Notifications
     //@{
     void NotifyNotUsed        (); // MIL

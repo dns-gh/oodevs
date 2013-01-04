@@ -131,6 +131,11 @@ void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
         delete this;
 }
 
+const T_PointVector& TER_DynamicData::GetPoints() const
+{
+    return points_;
+}
+
 namespace
 {
 

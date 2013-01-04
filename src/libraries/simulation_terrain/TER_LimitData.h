@@ -60,13 +60,12 @@ private:
 private:
     //! @name Tools
     //@{
-    void     InitializeDistancesData();
+    void     InitializeDistancesData( const T_PointVector& points );
     double SquareDistance         ( const MT_Vector2D& p ) const;
     //@}
 
 private:
-    const T_PointVector    points_;
-          T_DistancesData  distancesData_;
+    T_DistancesData  distancesData_;
     boost::shared_ptr< TER_DynamicData > data_;
 };
 
