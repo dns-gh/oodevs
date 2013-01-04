@@ -373,9 +373,12 @@ struct Server::Private : public boost::noncopyable
     // -----------------------------------------------------------------------------
     void Listen()
     {
+        const std::string timeout_ms = boost::lexical_cast< std::string >( 1*60*1000 );
         std::vector< const char* > options = boost::assign::list_of
             ( "enable_directory_listing" )( "false" )
-            ( "listening_ports" )( port_.c_str() )( 0 );
+            ( "listening_ports" )( port_.c_str() )
+            ( "request_timeout" )( timeout_ms.c_str() )
+            ( 0 );
         mg_context* ptr = mg_start( &Private::OnHttpRequest, this, &options[0] );
         if( !ptr )
             throw std::runtime_error( "unable to start web server" );
