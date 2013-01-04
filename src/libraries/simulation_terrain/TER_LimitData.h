@@ -24,26 +24,6 @@ class TER_LimitData : private boost::noncopyable
 {
     friend class TER_LimitDataManager;
 
-public:
-    //! @name
-    //@{
-    class DistanceData
-    {
-    public:
-        DistanceData( const MT_Vector2D& from, const MT_Vector2D& to );
-
-        double SquareDistance( const MT_Vector2D& p, bool last ) const;
-        double SquareLength() const;
-
-    private:
-        MT_Vector2D origin_;
-        MT_Vector2D direction_;
-        double rSquareLength_;
-    };
-    typedef std::vector< DistanceData >     T_DistancesData;
-    typedef T_DistancesData::const_iterator CIT_DistancesData;
-    //@}
-
 private:
              TER_LimitData( const T_PointVector& points );
 public:
@@ -52,7 +32,7 @@ public:
     //! @name Accessors
     //@{
     const T_PointVector& GetPoints() const;
-    const T_DistancesData& GetDistances() const;
+    const std::vector< double >& GetDistances() const;
     //@}
 
     //! @name Geometry - $$$ A GICLER
@@ -69,7 +49,7 @@ private:
     //@}
 
 private:
-    T_DistancesData  distancesData_;
+    std::vector< double > distancesData_;
     boost::shared_ptr< TER_DynamicData > data_;
 };
 

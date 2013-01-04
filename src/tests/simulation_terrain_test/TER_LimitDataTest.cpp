@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( TER_LimitData_Distances )
     BOOST_REQUIRE_EQUAL( expectedLen, p2->GetDistances().size() );
     for( size_t i = 0; i != expectedLen; ++i )
     {
-        BOOST_CHECK_EQUAL( expected[i], p2->GetDistances()[i].SquareLength() );
+        BOOST_CHECK_EQUAL( expected[i], p2->GetDistances()[i] );
         length += std::sqrt( expected[i] );
     }
     BOOST_CHECK_EQUAL( length, p2->GetLength() );
