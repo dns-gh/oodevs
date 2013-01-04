@@ -78,7 +78,8 @@ AttritionCapacity::~AttritionCapacity()
 // -----------------------------------------------------------------------------
 void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+       >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
     ar >> category_
        >> population_.surface_
        >> population_.ph_;
@@ -93,7 +94,8 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 // -----------------------------------------------------------------------------
 void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+       << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
     ar << category_
        << population_.surface_
        << population_.ph_;
@@ -106,6 +108,7 @@ void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int )
 void AttritionCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,6 +119,7 @@ void AttritionCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     AttritionCapacity* capacity = new AttritionCapacity( *this );
     object.AddCapacity( capacity );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
 // -----------------------------------------------------------------------------
