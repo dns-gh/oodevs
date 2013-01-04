@@ -114,16 +114,8 @@ const TER_LimitData::T_DistancesData& TER_LimitData::GetDistances() const
 //-----------------------------------------------------------------------------
 double TER_LimitData::GetLength() const
 {
-    double rLength = 0.;
-    const MT_Vector2D* pPrevPoint = 0;
-    const T_PointVector& points = data_->GetPoints();
-    for( CIT_PointVector itPoint = points.begin(); itPoint != points.end(); ++itPoint )
-    {
-        const MT_Vector2D& curPoint = *itPoint;
-
-        if( pPrevPoint )
-            rLength += pPrevPoint->Distance( curPoint );
-        pPrevPoint = &curPoint;
-    }
-    return rLength;
+    double length = 0.;
+    for( auto i = distancesData_.cbegin(); i != distancesData_.cend(); ++i )
+        length += std::sqrt( i->SquareLength() );
+    return length;
 }

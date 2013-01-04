@@ -19,6 +19,7 @@ BOOST_AUTO_TEST_CASE( TER_LimitData_Distances )
     T_PointVector v1;
     auto p1 = m.CreateLimit( v1 );
     BOOST_CHECK_EQUAL( 0U , p1->GetDistances().size() );
+    BOOST_CHECK_EQUAL( 0.0 , p1->GetLength() );
 
     // Test simple line
     T_PointVector v2;
@@ -30,9 +31,12 @@ BOOST_AUTO_TEST_CASE( TER_LimitData_Distances )
 
     const double expected[] = { 1.0, 4.0, 36.0 };
     const size_t expectedLen = sizeof( expected )/sizeof( *expected );
+    double length = 0;
     BOOST_REQUIRE_EQUAL( expectedLen, p2->GetDistances().size() );
     for( size_t i = 0; i != expectedLen; ++i )
     {
         BOOST_CHECK_EQUAL( expected[i], p2->GetDistances()[i].SquareLength() );
+        length += std::sqrt( expected[i] );
     }
+    BOOST_CHECK_EQUAL( length, p2->GetLength() );
 }
