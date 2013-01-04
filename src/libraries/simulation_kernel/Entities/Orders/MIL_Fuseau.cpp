@@ -20,6 +20,18 @@
 #include "MT_Tools/MT_Polyline.h"
 #include "MT_Tools/MT_Droite.h"
 #include "simulation_terrain/TER_LimitData.h"
+#include "simulation_terrain/TER_LimitDataManager.h"
+#include "simulation_terrain/TER_World.h"
+
+namespace
+{
+
+boost::shared_ptr< TER_LimitData > CreateLimit( const T_PointVector& points )
+{
+    return TER_World::GetWorld().GetLimitManager()->CreateLimit( points );
+}
+
+}  // namespace
 
 unsigned int MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER
 
@@ -399,7 +411,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
         middle.push_back( leftPointVectorTmp[j] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
 
     assert( !pMiddleLimit_ );
-    pMiddleLimit_.reset( new TER_LimitData( middle ) );
+    pMiddleLimit_ = CreateLimit( middle );
 }
 
 //-----------------------------------------------------------------------------
@@ -421,8 +433,8 @@ void MIL_Fuseau::Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVect
 
     TruncateAndReorientLimits( vOrientationRefPos, leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
 
-    pLeftLimit_.reset( new TER_LimitData( leftLimitTmp ) );
-    pRightLimit_.reset( new TER_LimitData( rightLimitTmp ) );
+    pLeftLimit_ = CreateLimit( leftLimitTmp );
+    pRightLimit_ = CreateLimit( rightLimitTmp );
 
     InitializeMiddleLimit();
     InitializePolygon    ();
@@ -1296,8 +1308,8 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
     globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
     if( !pLeftLimit.empty() && !pRightLimit.empty() )
     {
-        pLeftLimit_.reset( new TER_LimitData( pLeftLimit ) );
-        pRightLimit_.reset( new TER_LimitData( pRightLimit ) );
+        pLeftLimit_ = CreateLimit( pLeftLimit );
+        pRightLimit_ = CreateLimit( pRightLimit );
         InitializeMiddleLimit();
         InitializePolygon();
     }

@@ -21,6 +21,7 @@
 
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_CoordinateManager.h"
+#include <boost/scoped_ptr.hpp>
 
 class TerrainData;
 class MT_Ellipse;
@@ -37,6 +38,7 @@ class TER_CoordinateManager;
 class TER_GraphManager;
 class TER_PathFindManager;
 class TER_AnalyzerManager;
+class TER_LimitDataManager;
 class MT_Rect;
 
 namespace tools
@@ -99,6 +101,7 @@ public:
     TER_AgentManager&      GetAgentManager     () const;
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
+    TER_LimitDataManager* GetLimitManager() const;
     //@}
 
 private:
@@ -121,6 +124,7 @@ private:
     TER_PathFindManager*   pPathfindManager_;
     TER_AnalyzerManager*   pAnalyzerManager_;
     TER_PopulationManager* pPopulationManager_;
+    boost::scoped_ptr< TER_LimitDataManager > limitManager_;
     //@}
 };
 

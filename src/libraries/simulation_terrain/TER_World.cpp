@@ -25,6 +25,7 @@
 #include "TER_GraphManager.h"
 #include "TER_PathFindManager.h"
 #include "TER_AnalyzerManager.h"
+#include "TER_LimitDataManager.h"
 #include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
 #include "tools/ExerciseConfig.h"
@@ -85,6 +86,7 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
     pGraphManager_      = new TER_GraphManager     ( config.GetPathfindGraphFile(), config.GetPathfindNodesFile(), config.GetPathfindLinksFile(), 1e-4f );
     pPathfindManager_   = new TER_PathFindManager  ( *pGraphManager_ );
     pAnalyzerManager_   = new TER_AnalyzerManager  ( *pGraphManager_ );
+    limitManager_.reset( new TER_LimitDataManager() );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,4 +262,9 @@ TER_PopulationManager& TER_World::GetPopulationManager() const
 {
     assert( pPopulationManager_ );
     return *pPopulationManager_;
+}
+
+TER_LimitDataManager* TER_World::GetLimitManager() const
+{
+    return limitManager_.get();
 }

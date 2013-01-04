@@ -14,6 +14,7 @@
 #include "TER_DynamicPathDataHandler.h"
 
 class TER_DynamicData;
+class TER_LimitDataManager;
 
 //=============================================================================
 // Created: NLD 2002-08-06
@@ -21,8 +22,10 @@ class TER_DynamicData;
 //=============================================================================
 class TER_LimitData : private boost::noncopyable
 {
-public:
+    friend class TER_LimitDataManager;
+private:
              TER_LimitData( const T_PointVector& points );
+public:
     virtual ~TER_LimitData();
 
     //! @name Accessors
