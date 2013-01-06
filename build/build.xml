@@ -1108,18 +1108,13 @@
         </build-test>
     </target>
 
-    <target name="simulation_terrain_test" depends="simulation_kernel,simulation_terrain" description="build simulation terrain test executable">
+    <target name="simulation_terrain_test" depends="simulation_terrain" description="build simulation terrain test executable">
         <build-test name="simulation_terrain"
-                    libs="core,masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
+                    libs="core,masalloc,tools,
                          gdal_i,gdal_ogr,log4cxx,geodata,analysis,
                          lib${ant.project.name}_tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
-                         lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
-                         lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
-                         lib${ant.project.name}_meteo-${platform}-mt@{suffix},
-                         lib${ant.project.name}_propagation-${platform}-mt@{suffix},
-                         lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix},
-                         lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
+                         lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}"
                     depends="xerces,xalan,terrain,boost,protobuf"
                     failonwarning="${failonwarning}">
         </build-test>

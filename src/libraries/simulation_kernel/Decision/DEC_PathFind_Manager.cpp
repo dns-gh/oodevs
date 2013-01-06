@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFind_Manager.h"
 #include "DEC_Path_ABC.h"
+#include "DEC_PathFindRequest.h"
 #include "DEC_PathType.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Population_PathClass.h"
@@ -24,6 +25,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
@@ -111,7 +113,7 @@ void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
     T_Requests& requests = ( pPath->GetLength() > rDistanceThreshold_ ) ? longRequests_ : shortRequests_;
     for( T_Requests::iterator it = requests.begin(); it != requests.end(); ++it )
     {
-        if( it->get() == pPath )
+        if( (*it)->GetPath().get() == pPath )
         {
             requests.erase( it );
             break;
@@ -154,11 +156,12 @@ unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 // -----------------------------------------------------------------------------
 void DEC_PathFind_Manager::AddPendingJob( const boost::shared_ptr< DEC_Path_ABC >& pPath )
 {
+    auto p = boost::make_shared< DEC_PathFindRequest >( this, pPath );
     boost::mutex::scoped_lock locker( mutex_ );
     if( pPath->GetLength() > rDistanceThreshold_ )
-        longRequests_.push_back( pPath );
+        longRequests_.push_back( p );
     else
-        shortRequests_.push_back( pPath );
+        shortRequests_.push_back( p );
     condition_.notify_all();
 }
 
@@ -261,7 +264,7 @@ int DEC_PathFind_Manager::GetCurrentThread() const
 // Name: DEC_PathFind_Manager::CleanPathAfterComputation
 // Created: NLD 2006-01-23
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath )
+void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC>& pPath )
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     requestsToCleanAfterComputation_.push_back( pPath );
@@ -276,7 +279,7 @@ void DEC_PathFind_Manager::Update()
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     while( ! requestsToCleanAfterComputation_.empty() )
     {
-        const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest = requestsToCleanAfterComputation_.back();
+        boost::shared_ptr< DEC_Path_ABC >& pRequest = requestsToCleanAfterComputation_.back();
         pRequest->CleanAfterComputation();
         requestsToCleanAfterComputation_.pop_back();
     }

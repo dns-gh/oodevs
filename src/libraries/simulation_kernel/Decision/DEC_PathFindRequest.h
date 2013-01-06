@@ -1,0 +1,43 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef DEC_PATHFINDREQUEST_H
+#define DEC_PATHFINDREQUEST_H
+
+#include "simulation_terrain/TER_PathFindRequest_ABC.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
+
+class DEC_Path_ABC;
+class DEC_PathFind_Manager;
+
+// DEC_PathFindRequest insulates DEC_Path_ABC cleanup logic from
+// TER_PathFinderThread. While the cleanup code itself belongs to DEC_Path_ABC,
+// the deferred cleanup logic is only required by the threaded implementation
+// of the path finder and has nothing to do in DEC_Path_ABC. We need both a
+// request and an executor class.
+class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
+                           private boost::noncopyable
+{
+public:
+             DEC_PathFindRequest( DEC_PathFind_Manager* m,
+                     const boost::shared_ptr< DEC_Path_ABC > p);
+    virtual ~DEC_PathFindRequest();
+
+    virtual void FindPath( TER_Pathfinder_ABC& pathfind );
+    virtual void CleanAfterComputation();
+    const boost::shared_ptr< DEC_Path_ABC >& GetPath() const;
+
+private:
+    DEC_PathFind_Manager* const manager_;
+    const boost::shared_ptr< DEC_Path_ABC > path_;
+};
+
+#endif // DEC_PATHFINDREQUEST_H
+

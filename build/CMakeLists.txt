@@ -383,7 +383,6 @@ add_target( resource_network server "libraries/resource_network" OPTIONS protoco
 target_link_libraries( resource_network ${XERCES_LIBRARIES} )
 
 # simulation_terrain
-# fixme simulation_terrain has a dependency on simulation_kernel
 add_target( simulation_terrain server "libraries/simulation_terrain" )
 target_link_libraries( simulation_terrain
     sword_tools
@@ -395,10 +394,7 @@ target_link_libraries( simulation_terrain
 
 # simulation_terrain_test
 add_target( simulation_terrain_test tests "tests/simulation_terrain_test" OPTIONS test )
-target_link_libraries( simulation_terrain_test
-    simulation_terrain
-    simulation_kernel
-)
+target_link_libraries( simulation_terrain_test simulation_terrain )
 
 # simulation_kernel
 # fixme not working in shared mode

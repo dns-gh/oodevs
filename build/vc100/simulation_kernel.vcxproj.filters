@@ -2661,6 +2661,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp">
       <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFindRequest.cpp">
+      <Filter>Source Files\Decision\Path</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5446,6 +5449,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Helpers.h">
       <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFindRequest.h">
+      <Filter>Source Files\Decision\Path</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

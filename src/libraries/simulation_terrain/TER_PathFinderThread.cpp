@@ -12,9 +12,7 @@
 #include "TER_PathFindRequest_ABC.h"
 #include "TER_DynamicData.h"
 #include "TER_StaticData.h"
-#include "simulation_kernel/MIL_AgentServer.h"
 #include "MT_Tools/MT_Profiler.h"
-#include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
 #include "TER_Pathfinder_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
@@ -188,8 +186,8 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
         if( pRequest.get() )
         {
             PathfinderProxy proxy( dump_, filter_, *pPathfinder_ );
-            pRequest->Execute( proxy );
-            MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( pRequest );
+            pRequest->FindPath( proxy );
+            pRequest->CleanAfterComputation();
         }
     }
     catch( const std::exception& e )

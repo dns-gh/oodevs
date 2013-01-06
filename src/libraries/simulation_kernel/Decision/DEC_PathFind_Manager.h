@@ -21,6 +21,7 @@
 #include <vector>
 
 class DEC_Path_ABC;
+class DEC_PathFindRequest;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
 class MIL_Config;
@@ -47,7 +48,7 @@ public:
     void UpdateInSimulationThread();
     void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath );
     void CancelJob( DEC_Path_ABC* pPath );
-    void CleanPathAfterComputation( const boost::shared_ptr< TER_PathFindRequest_ABC >& pPath );
+    void CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath );
     //@}
 
     //! @name Accessors
@@ -66,7 +67,8 @@ private:
     typedef T_PathFindThreadPtrVector::iterator        IT_PathFindThreadPtrVector;
     typedef T_PathFindThreadPtrVector::const_iterator CIT_PathFindThreadPtrVector;
 
-    typedef std::deque< boost::shared_ptr< TER_PathFindRequest_ABC > > T_Requests;
+    typedef std::deque< boost::shared_ptr< DEC_PathFindRequest > > T_Requests;
+    typedef std::deque< boost::shared_ptr< DEC_Path_ABC > > T_Paths;
     //@}
 
 private:
@@ -92,7 +94,7 @@ private:
     unsigned int treatedRequests_;
     T_PathFindThreadPtrVector pathFindThreads_;
     boost::mutex cleanAndDestroyMutex_;
-    T_Requests requestsToCleanAfterComputation_;
+    T_Paths requestsToCleanAfterComputation_;
     bool bUseInSameThread_;
     //@}
 };

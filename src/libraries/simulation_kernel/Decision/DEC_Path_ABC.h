@@ -12,17 +12,15 @@
 #ifndef __DEC_Path_ABC_h_
 #define __DEC_Path_ABC_h_
 
-#include "simulation_terrain/TER_PathFindRequest_ABC.h"
-
 class TerrainData;
 class MT_Vector2D;
+class TER_Pathfinder_ABC;
 
 // =============================================================================
 // @class  DEC_Path_ABC
 // Created: NLD 2005-02-22
 // =============================================================================
-class DEC_Path_ABC : public TER_PathFindRequest_ABC
-                   , private boost::noncopyable
+class DEC_Path_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -41,6 +39,8 @@ public:
 public:
     //! @name Operations
     //@{
+    virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
+    virtual void CleanAfterComputation() = 0;
     virtual double GetLength() const = 0;
     void AddRef();
     void DecRef();
