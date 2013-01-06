@@ -35,15 +35,18 @@ TER_LimitData::DistanceData::DistanceData( const MT_Vector2D& from, const MT_Vec
 // Name: TER_LimitData::DistanceData::SquareDistance
 // Created: AGE 2005-05-12
 // -----------------------------------------------------------------------------
-double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
+double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p, bool last ) const
 {
-    // $$$$ AGE 2007-07-04: buggued since 1992
     const MT_Vector2D v( p - origin_ );
     const double rDotProduct = DotProduct( direction_, v );
     if( rDotProduct <= 0 )
         return p.SquareDistance( origin_ );
     if( rDotProduct >= rSquareLength_ )
+    {
+        if( last )
+            return p.SquareDistance( origin_ + direction_ );
         return std::numeric_limits< double >::max();
+    }
     return v.SquareMagnitude() - rDotProduct * rDotProduct / rSquareLength_;
 }
 
@@ -96,10 +99,10 @@ void TER_LimitData::InitializeDistancesData()
 double TER_LimitData::SquareDistance( const MT_Vector2D& p ) const
 {
     double rResult = std::numeric_limits< double >::max();
-    for( auto it = distancesData_.begin(); it != distancesData_.end(); ++it )
+    for( size_t i = 0; i != distancesData_.size(); ++i )
     {
-        const DistanceData& data = *it;
-        const double rSquareDistance = data.SquareDistance( p );
+        const double rSquareDistance = distancesData_[i].SquareDistance(
+               p, i + 1 == distancesData_.size() );
         if( rResult > rSquareDistance )
             rResult = rSquareDistance;
     }

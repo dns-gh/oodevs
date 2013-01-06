@@ -50,7 +50,7 @@ private:
     {
     public:
         DistanceData( const MT_Vector2D& from, const MT_Vector2D& to );
-        double SquareDistance( const MT_Vector2D& p ) const;
+        double SquareDistance( const MT_Vector2D& p, bool last ) const;
     private:
         MT_Vector2D origin_;
         MT_Vector2D direction_;
