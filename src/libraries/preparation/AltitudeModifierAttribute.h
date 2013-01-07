@@ -81,7 +81,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dictionary );
-    void ModifyAltitude( int heightOffset );
     //@}
 
 private:
@@ -91,8 +90,7 @@ private:
     kernel::DetectionMap& detection_;
     const kernel::Object_ABC& object_;
     kernel::UnitedValue< unsigned int > height_;
-    unsigned int oldHeight_;
-    mutable geometry::Polygon2f dragLocation_;
+    mutable T_PointVector dragLocation_;
     //@}
 };
 

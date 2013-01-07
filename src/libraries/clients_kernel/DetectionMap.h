@@ -11,6 +11,7 @@
 #define __DetectionMap_h_
 
 #include <graphics/ElevationMap.h>
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -26,7 +27,7 @@ namespace kernel
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class DetectionMap
+class DetectionMap : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -68,8 +69,8 @@ public:
     std::pair< unsigned int, unsigned int > Unmap( const geometry::Point2f& point ) const;
     const short* Data( unsigned int x, unsigned int y ) const;
     unsigned int Unmap( float distance ) const;
-    short ElevationAt( const geometry::Point2f& point ) const;
-    void ModifyAltitude( const geometry::Polygon2f& polygon, short heightOffset );
+    short ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell = false ) const;
+    void SetAltitudeOffset( unsigned int id, const geometry::Polygon2f::T_Vertices& points, bool isPolygon, short offset );
     //@}
 
     //! @name Accessors
@@ -80,13 +81,6 @@ public:
     unsigned int Height() const;
     geometry::Rectangle2f Extent() const;
     const ElevationMap& GetMap() const;// $$$$ AGE 2006-04-28: prolly tmp
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DetectionMap( const DetectionMap& );            //!< Copy constructor
-    DetectionMap& operator=( const DetectionMap& ); //!< Assignment operator
     //@}
 
 private:
@@ -129,16 +123,16 @@ unsigned int DetectionMap::Unmap( float distance ) const
 }
 
 inline
-short DetectionMap::ElevationAt( const geometry::Point2f& point ) const
+short DetectionMap::ElevationAt( const geometry::Point2f& point, bool applyOffsetOnCell /*= false*/ ) const
 {
-    return map_ ? map_->ElevationAt( point ) : 0;
+    return map_ ? map_->ElevationAt( point, applyOffsetOnCell ) : 0;
 }
 
 inline
-void DetectionMap::ModifyAltitude( const geometry::Polygon2f& polygon, short heightOffset )
+void DetectionMap::SetAltitudeOffset( unsigned int id, const geometry::Polygon2f::T_Vertices& points, bool isPolygon, short offset )
 {
     if( map_ )
-        map_->ModifyAltitude( polygon, heightOffset );
+        map_->SetAltitudeOffset( id, points, isPolygon, offset );
 }
 
 inline

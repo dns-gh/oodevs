@@ -9,13 +9,14 @@
 
 #include "gaming_pch.h"
 #include "AltitudeModifierAttribute.h"
+#include "LocationPositions.h"
 #include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
@@ -29,8 +30,7 @@ class LocationVisitor : public LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    LocationVisitor( geometry::Polygon2f& polygon )
-        : polygon_( polygon )
+    LocationVisitor() : isPolygon_( false )
     {
         // NOTHING
     }
@@ -42,18 +42,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual void VisitLines    ( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
-    virtual void VisitRectangle( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
-    virtual void VisitPolygon  ( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
+    virtual void VisitLines    ( const T_PointVector& points ) { points_ = points; isPolygon_ = false; }
+    virtual void VisitRectangle( const T_PointVector& points ) { points_ = points; isPolygon_ = true;  }
+    virtual void VisitPolygon  ( const T_PointVector& points ) { points_ = points; isPolygon_ = true;  }
     virtual void VisitCircle   ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint    ( const geometry::Point2f& ) {}
     virtual void VisitPath     ( const geometry::Point2f&, const T_PointVector& ) {}
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
-    geometry::Polygon2f& polygon_;
+    T_PointVector points_;
+    bool isPolygon_;
     //@}
 };
 }
@@ -115,7 +116,7 @@ void AltitudeModifierAttribute::DisplayInSummary( Displayer_ABC& displayer ) con
 void AltitudeModifierAttribute::NotifyDeleted( const kernel::Object_ABC& entity )
 {
     if( static_cast< const Entity_ABC* >( &entity ) == &entity_ )
-        ModifyAltitude( -height_ );
+        ModifyAltitude( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,11 +130,11 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectUpdate& message )
     const sword::ObjectAttributes& attributes = message.attributes();
     if( attributes.has_altitude_modifier() )
     {
-        int height = attributes.altitude_modifier().height();
+        const int height = attributes.altitude_modifier().height();
         if( height != height_ )
         {
-            ModifyAltitude( height - height_ );
             height_ = height;
+            ModifyAltitude( height_ );
             controller_.Update( *static_cast< AltitudeModifierAttribute_ABC* >( this ) );
         }
     }
@@ -150,7 +151,7 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& me
     const sword::ObjectAttributes& attributes = message.attributes();
     if( attributes.has_altitude_modifier() )
     {
-        int height = attributes.altitude_modifier().height();
+        const int height = attributes.altitude_modifier().height();
         if( height != height_ )
         {
             height_ = height;
@@ -165,12 +166,15 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& me
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::ModifyAltitude( int heightOffset )
 {
-    geometry::Polygon2f polygon;
-    LocationVisitor visitor( polygon );
-    entity_.Get< Positions >().Accept( visitor );
-    if( !polygon.IsEmpty() )
+    LocationVisitor visitor;
+    const Location_ABC* location = static_cast< const LocationPositions& >( entity_.Get< Positions >() ).GetLocation();
+    if( location )
     {
-        detection_.ModifyAltitude( polygon, static_cast< short >( heightOffset ) );
-        controller_.Update( AltitudeModified( polygon ) );
+        location->Accept( visitor );
+        if( !visitor.points_.empty() )
+        {
+            detection_.SetAltitudeOffset( entity_.GetId(), visitor.points_, visitor.isPolygon_, static_cast< short >( heightOffset ) );
+            controller_.Update( AltitudeModified( visitor.points_ ) );
+        }
     }
 }

@@ -182,6 +182,10 @@ namespace
     {
         return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( x, y );
     }
+    DEFINE_HOOK( GetModifiedAltitude, 2, double, ( double x, double y ) )
+    {
+        return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( x, y, true );
+    }
     DEFINE_HOOK( GetSignificantVolume, 2, const PHY_Volume*, ( const SWORD_Model* entity, const double* volumeFactors ) )
     {
         struct SensorTypeAgentAdapter : public PHY_SensorTypeAgent_ABC

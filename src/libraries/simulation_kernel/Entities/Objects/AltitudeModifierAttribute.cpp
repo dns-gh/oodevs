@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Alt
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute()
-    : height_     ( 0 )
+    : height_( 0 )
 {
     // NOTHING
 }
@@ -35,7 +35,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute()
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( const xml::xistream& xis )
-    : height_     ( xis.attribute< int >( "height" ) )
+    : height_( xis.attribute< int >( "height" ) )
 {
     if( height_ < 0 )
         xis.error( "height_ is not greater than or equal to 0" );
@@ -45,10 +45,10 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( const xml::xistream& xis )
 // Name: AltitudeModifierAttribute constructor
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation )
-    : height_     ( attributes.list( 1 ).quantity() )
+AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation, unsigned int objectId )
+    : height_( attributes.list( 1 ).quantity() )
 {
-    ModifyAltitude( localisation );
+    ModifyAltitude( localisation, objectId );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,18 +159,18 @@ namespace
 // Name: AltitudeModifierAttribute::ModifyAltitude
 // Created: JSR 2011-05-19
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::ModifyAltitude( const TER_Localisation& localisation ) const
+void AltitudeModifierAttribute::ModifyAltitude( const TER_Localisation& localisation, unsigned int objectId ) const
 {
-    GetRawVisionData().ModifyAltitude( localisation, static_cast< short >( height_ ) );
+    GetRawVisionData().ModifyAltitude( localisation, static_cast< short >( height_ ), objectId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute::ResetAltitude
 // Created: JSR 2011-10-07
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::ResetAltitude( const TER_Localisation& localisation ) const
+void AltitudeModifierAttribute::ResetAltitude( const TER_Localisation& localisation, unsigned int objectId ) const
 {
-    GetRawVisionData().ModifyAltitude( localisation, - static_cast< short >( height_ ) );
+    GetRawVisionData().ModifyAltitude( localisation, 0, objectId );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ public:
     //@{
              AltitudeModifierAttribute();
     explicit AltitudeModifierAttribute( const xml::xistream& xis );
-    explicit AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation );
+    explicit AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation, unsigned int objectId );
     virtual ~AltitudeModifierAttribute();
     //@}
 
@@ -69,8 +69,8 @@ public:
 
     //! @name Operations
     //@{
-    void ModifyAltitude( const TER_Localisation& localisation ) const;
-    void ResetAltitude( const TER_Localisation& localisation ) const;
+    void ModifyAltitude( const TER_Localisation& localisation, unsigned int objectId ) const;
+    void ResetAltitude( const TER_Localisation& localisation, unsigned int objectId ) const;
     void SetHeight( unsigned int height );
     //@}
 

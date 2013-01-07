@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::ObjectAttributes& msg )
-    : height_     ( 0 )
+    : height_( 0 )
 {
     Update( msg );
 }

@@ -137,7 +137,7 @@ void MIL_ObjectManager::UpdateStates( const propagation::FloodModel_ABC& floodMo
                 if( const AltitudeModifierAttribute* altitude = object.RetrieveAttribute< AltitudeModifierAttribute >() )
                 {
                     const TER_Localisation& localisation = object.GetLocalisation();
-                    altitude->ResetAltitude( localisation );
+                    altitude->ResetAltitude( localisation, object.GetID() );
                     for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
                         if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
                             if( localisation.IsIntersecting( flood->GetLocalisation() ) )
@@ -380,7 +380,7 @@ void MIL_ObjectManager::FinalizeObjects( const propagation::FloodModel_ABC& floo
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >() )
-            altitude->ModifyAltitude( it->second->GetLocalisation() );
+            altitude->ModifyAltitude( it->second->GetLocalisation(), it->second->GetID() );
         if( LogisticAttribute* logistic = it->second->RetrieveAttribute< LogisticAttribute >() )
             logistic->Finalize();
     }

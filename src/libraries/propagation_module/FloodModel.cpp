@@ -17,7 +17,7 @@
 using namespace geometry;
 using namespace sword::propagation;
 
-DECLARE_HOOK( GetAltitude, double, ( double x, double y ) )
+DECLARE_HOOK( GetModifiedAltitude, double, ( double x, double y ) )
 
 const int FloodModel::cellWidth_ = 100;
 
@@ -51,7 +51,7 @@ void FloodModel::Generate( const geometry::Point2f& center, sword::wrapper::Even
     for( int x = 0; x < width; ++x )
         ppCells[ x ] = new sCell[ width ];
     // propagate from center
-    Propagate( static_cast< int >( GET_HOOK( GetAltitude )( center.X(), center.Y() ) ) + depth, halfWidth, center, ppCells, refDist );
+    Propagate( static_cast< int >( GET_HOOK( GetModifiedAltitude )( center.X(), center.Y() ) ) + depth, halfWidth, center, ppCells, refDist );
     // mark cells
     int nCurrentPolIndex = 0;
     int unmarkedX, unmarkedY;
@@ -87,7 +87,7 @@ void FloodModel::Propagate( int floodElevation, unsigned short halfWidth, const 
         sCell& cell = ppCells[ x ][ y ];
         if( !cell.visited_ )
         {
-            int elevation = static_cast< int >( GET_HOOK( GetAltitude )( cellCenter.X(), cellCenter.Y() ) );
+            int elevation = static_cast< int >( GET_HOOK( GetModifiedAltitude )( cellCenter.X(), cellCenter.Y() ) );
             cell.visited_ = true;
             if( cellCenter.SquareDistance( center ) < refDist * refDist && elevation <= floodElevation )
             {

@@ -15,7 +15,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
-#include "simulation_terrain/TER_Localisation.h"
 #include "tools/InputBinaryStream.h"
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
@@ -241,27 +240,15 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 // Name: PHY_RawVisionData::ModifyAltitude
 // Created: JSR 2011-05-19
 // -----------------------------------------------------------------------------
-void PHY_RawVisionData::ModifyAltitude( const TER_Localisation& localisation, short heightOffset )
+void PHY_RawVisionData::ModifyAltitude( const TER_Localisation& localisation, short heightOffset, unsigned int objectId )
 {
-    const MT_Rect boundingBox = localisation.GetBoundingBox();
-    unsigned int startCol = GetCol( boundingBox.GetLeft() );
-    unsigned int endCol = GetCol( boundingBox.GetRight() );
-    unsigned int startRow = GetCol( boundingBox.GetBottom() );
-    unsigned int endRow = GetCol( boundingBox.GetTop() );
-    for( unsigned int y = startRow; y < endRow + 1 && y < nNbrRow_; ++y )
-        for( unsigned int x = startCol; x < endCol + 1 && x < nNbrCol_; ++x )
-        {
-            if( localisation.IsInside( MT_Vector2D( x         * rCellSize_, y         * rCellSize_ ) )
-             || localisation.IsInside( MT_Vector2D( ( x + 1 ) * rCellSize_, y         * rCellSize_ ) )
-             || localisation.IsInside( MT_Vector2D( x         * rCellSize_, ( y + 1 ) * rCellSize_ ) )
-             || localisation.IsInside( MT_Vector2D( ( x + 1 ) * rCellSize_, ( y + 1 ) * rCellSize_ ) )
-             || localisation.Intersect2DWithCircle( MT_Vector2D( ( x + 0.5 ) * rCellSize_, ( y + 0.5 ) * rCellSize_ ), 0.5 * rCellSize_ ) )
-            {
-                int newHeight = static_cast< int >( ppCells_[ x ][ y ].h ) + heightOffset;
-                static const int maxShort = static_cast< int >( std::numeric_limits< short >::max() );
-                ppCells_[ x ][ y ].h = static_cast< short >( std::min( newHeight, maxShort ) );
-            }
-        }
+    if( heightOffset == 0 )
+        elevationOffsets_.erase( objectId );
+    else
+    {
+        elevationOffsets_[ objectId ].localisation_ = localisation;
+        elevationOffsets_[ objectId ].offset_ = heightOffset;
+    }
 }
 
 //-----------------------------------------------------------------------------

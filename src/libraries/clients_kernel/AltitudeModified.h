@@ -27,7 +27,7 @@ class AltitudeModified : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    AltitudeModified( const geometry::Polygon2f& polygon )
+    AltitudeModified( const T_PointVector& polygon )
         : polygon_( polygon)
     {
         // NOTHING
@@ -41,7 +41,7 @@ public:
 public:
     //! @name Member data
     //@{
-    const geometry::Polygon2f& polygon_;
+    const geometry::Polygon2f polygon_;
     //@}
 };
 

@@ -12,16 +12,11 @@
 
 #include "meteo/Meteo.h"
 #include "meteo/PHY_RawVisionData_ABC.h"
-
-namespace tools
-{
-    class WorldParameters;
-}
+#include "simulation_terrain/TER_Localisation.h"
 
 class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
-class TER_Localisation;
 
 //*****************************************************************************
 // Created: JVT 02-11-05
@@ -98,15 +93,15 @@ public:
 
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
 
-    double GetAltitude( const MT_Vector2D& pos ) const;
-    double GetAltitude( double rX_, double rY_ ) const;
+    double GetAltitude( const MT_Vector2D& pos, bool applyOnCell = false ) const;
+    double GetAltitude( double rX_, double rY_, bool applyOnCell = false ) const;
 
     envBits GetVisionObject( const MT_Vector2D& pos ) const;
     envBits GetVisionObject( double rX_, double rY_ ) const;
 
     const weather::Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
 
-    void ModifyAltitude( const TER_Localisation& localisation, short heightOffset );
+    void ModifyAltitude( const TER_Localisation& localisation, short heightOffset, unsigned int objectId );
     double GetMinAltitude() const;
     double GetMaxAltitude() const;
     void CalcMinMaxAltitude();
@@ -132,6 +127,12 @@ public:
     //@}
 
 private:
+    struct ElevationOffset
+    {
+        TER_Localisation localisation_;
+        short offset_;
+    };
+
     friend class PHY_RawVisionDataIterator;
 
     // Convertisseurs de coordonnées SIM en coordonnées du tableau
@@ -149,6 +150,8 @@ private:
 
     double rMinAltitude_;
     double rMaxAltitude_;
+
+    std::map< unsigned int, ElevationOffset > elevationOffsets_;
 
     static sCell emptyCell_;
 };

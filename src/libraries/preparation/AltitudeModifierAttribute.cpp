@@ -29,8 +29,7 @@ class LocationVisitor : public LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    LocationVisitor( geometry::Polygon2f& polygon )
-        : polygon_( polygon )
+    LocationVisitor() : isPolygon_( false )
     {
         // NOTHING
     }
@@ -42,18 +41,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual void VisitLines    ( const T_PointVector& ) {}
-    virtual void VisitRectangle( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
-    virtual void VisitPolygon  ( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
+    virtual void VisitLines    ( const T_PointVector& points ) { points_ = points; isPolygon_ = false; }
+    virtual void VisitRectangle( const T_PointVector& points ) { points_ = points; isPolygon_ = true;  }
+    virtual void VisitPolygon  ( const T_PointVector& points ) { points_ = points; isPolygon_ = true;  }
     virtual void VisitCircle   ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint    ( const geometry::Point2f& ) {}
     virtual void VisitPath     ( const geometry::Point2f&, const T_PointVector& ) {}
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
-    geometry::Polygon2f& polygon_;
+    T_PointVector points_;
+    bool isPolygon_;
     //@}
 };
 }
@@ -68,7 +68,6 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictiona
     , object_     ( object )
     , controllers_( controllers )
     , height_     ( 0, Units::meters )
-    , oldHeight_  ( 0 )
 {
     CreateDictionary( dictionary );
     controllers_.Register( *this );
@@ -84,7 +83,6 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel
     , object_     ( object )
     , controllers_( controllers )
     , height_     ( 0, Units::meters )
-    , oldHeight_  ( 0 )
 {
     CreateDictionary( dictionary );
     controllers_.Register( *this );
@@ -127,10 +125,15 @@ void AltitudeModifierAttribute::SerializeObjectAttributes( xml::xostream& xos ) 
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::NotifyUpdated( const AltitudeModifierAttribute& attribute )
 {
-    if( &attribute == this && oldHeight_ != height_.value_ )
+    if( &attribute == this )
     {
-        ModifyAltitude( height_.value_ - oldHeight_ );
-        oldHeight_ = height_.value_;
+        LocationVisitor visitor;
+        object_.Get< Positions >().Accept( visitor );
+        if( !visitor.points_.empty() )
+        {
+            detection_.SetAltitudeOffset( object_.GetId(), visitor.points_, visitor.isPolygon_, static_cast< short >( height_.value_ ) );
+            controllers_.controller_.Update( AltitudeModified( visitor.points_ ) );
+        }
     }
 }
 
@@ -160,10 +163,11 @@ void AltitudeModifierAttribute::SetHeight( unsigned int height )
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::BeginDrag() const
 {
-    if( !dragLocation_.IsEmpty() )
+    if( !dragLocation_.empty() )
         return;
-    LocationVisitor visitor( dragLocation_ );
+    LocationVisitor visitor;
     object_.Get< Positions >().Accept( visitor );
+    dragLocation_ = visitor.points_;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,17 +176,15 @@ void AltitudeModifierAttribute::BeginDrag() const
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::EndDrag() const
 {
-    geometry::Polygon2f polygon;
-    LocationVisitor visitor( polygon );
+    LocationVisitor visitor;
     object_.Get< Positions >().Accept( visitor );
-    if( !dragLocation_.IsEmpty() && !polygon.IsEmpty() && dragLocation_ != polygon )
+    if( !dragLocation_.empty() && !visitor.points_.empty() && dragLocation_ != visitor.points_ )
     {
-        detection_.ModifyAltitude( dragLocation_, -static_cast< short >( height_.value_ ) );
+        detection_.SetAltitudeOffset( object_.GetId(), visitor.points_, visitor.isPolygon_, static_cast< short >( height_.value_ ) );
         controllers_.controller_.Update( AltitudeModified( dragLocation_ ) );
-        detection_.ModifyAltitude( polygon, static_cast< short >( height_.value_ ) );
-        controllers_.controller_.Update( AltitudeModified( polygon ) );
+        controllers_.controller_.Update( AltitudeModified( visitor.points_ ) );
     }
-    dragLocation_ = geometry::Polygon2f();
+    dragLocation_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -192,20 +194,4 @@ void AltitudeModifierAttribute::EndDrag() const
 void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dictionary )
 {
     dictionary.Register( *this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::ModifyAltitude
-// Created: JSR 2011-05-18
-// -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::ModifyAltitude( int heightOffset )
-{
-    geometry::Polygon2f polygon;
-    LocationVisitor visitor( polygon );
-    object_.Get< Positions >().Accept( visitor );
-    if( !polygon.IsEmpty() )
-    {
-        detection_.ModifyAltitude( polygon, static_cast< short >( heightOffset ) );
-        controllers_.controller_.Update( AltitudeModified( polygon ) );
-    }
 }

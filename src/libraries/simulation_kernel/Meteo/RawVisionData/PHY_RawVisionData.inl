@@ -66,12 +66,58 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_
 // Created: JVT 03-02-24
 //-----------------------------------------------------------------------------
 inline
-double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
+double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*= false*/ ) const
 {
     unsigned int nCol = GetCol( rX );
     unsigned int nRow = GetRow( rY );
 
     double rScaledX = rX / rCellSize_;
+
+    short maxOffset = 0;
+    for( auto it = elevationOffsets_.begin(); it != elevationOffsets_.end(); ++it )
+    {
+        if( it->second.offset_ > maxOffset )
+        {
+            MT_Vector2D point( rX, rY );
+            if( applyOnCell )
+            {
+                static const double halfCellSize_ = 0.5 * rCellSize_;
+                static const MT_Vector2D vTR(  halfCellSize_,  halfCellSize_ );
+                static const MT_Vector2D vTL( -halfCellSize_,  halfCellSize_ );
+                static const MT_Vector2D vBL( -halfCellSize_, -halfCellSize_ );
+                static const MT_Vector2D vBR(  halfCellSize_, -halfCellSize_ );
+                if( it->second.localisation_.GetType() == TER_Localisation::ePolygon )
+                {
+                    //geometry::Polygon2f polygon( it->second.points_ );
+                    if( it->second.localisation_.Intersect2DWithCircle( point, 1.414f * halfCellSize_ ) )
+                        maxOffset = it->second.offset_;
+                }
+                else
+                {
+                    T_PointVector cellVector;
+                    cellVector.push_back( point + vTR );
+                    cellVector.push_back( point + vTL );
+                    cellVector.push_back( point + vBL );
+                    cellVector.push_back( point + vBR );
+                    TER_Localisation cell( TER_Localisation::ePolygon, cellVector );
+                    const T_PointVector linePoints = it->second.localisation_.GetPoints();
+                    for( int i = 0; i < linePoints.size() - 1; ++i )
+                    {
+                        if( cell.Intersect2D( MT_Line( linePoints[ i ], linePoints[ i + 1 ] ) ) )
+                        {
+                            maxOffset = it->second.offset_;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if( it->second.localisation_.GetType() == TER_Localisation::ePolygon && it->second.localisation_.IsInside( point ) )
+                    maxOffset = it->second.offset_;
+            }
+        }
+    }
 
     return Interpolate(
                  nRow,
@@ -88,7 +134,7 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
                     nCol + 1,
                     operator()( nCol + 1, nRow + 1 ).GetAltitude(),
                     rScaledX ),
-                 rY / rCellSize_ );
+                 rY / rCellSize_ ) + maxOffset;
 }
 
 //-----------------------------------------------------------------------------
@@ -97,9 +143,9 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
 // Last modified: JVT 03-02-24
 //-----------------------------------------------------------------------------
 inline
-double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos ) const
+double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos, bool applyOnCell /*= false*/ ) const
 {
-    return GetAltitude( pos.rX_, pos.rY_ );
+    return GetAltitude( pos.rX_, pos.rY_, applyOnCell );
 }
 
 //-----------------------------------------------------------------------------
