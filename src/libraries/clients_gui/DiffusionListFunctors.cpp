@@ -20,6 +20,31 @@
 using namespace gui;
 using namespace kernel;
 
+bool LongNameComparator::operator() ( const QString& lhs, const QString& rhs ) const
+{
+    const QStringList leftTokens = lhs.split( '.', QString::SkipEmptyParts );
+    const QStringList rightTokens = rhs.split( '.', QString::SkipEmptyParts );
+    const int minSize = std::min< int >( leftTokens.count(), rightTokens.count() );
+    for( int i = 0; i < minSize; ++i )
+    {
+        const QString left = leftTokens.at( leftTokens.count() - 1 - i );
+        const QString right = rightTokens.at( rightTokens.count() - 1 - i );
+
+        if( i == minSize - 1 && leftTokens.count() != rightTokens.count() )
+            return leftTokens.count() < rightTokens.count();
+
+        if( left.compare( right ) != 0 )
+        {
+            bool okLeft = false;
+            bool okRight = false;
+            const int intLeft = left.toInt( &okLeft );
+            const int intRight = right.toInt( &okRight );
+            return ( okLeft && okRight ) ? intLeft < intRight : left < right;
+        }
+    }
+    return leftTokens.count() < rightTokens.count();
+}
+
 // -----------------------------------------------------------------------------
 // DiffusionListData
 // -----------------------------------------------------------------------------
