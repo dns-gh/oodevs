@@ -34,16 +34,6 @@ NullFileLoaderObserver::~NullFileLoaderObserver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NullFileLoaderObserver::NotifySignatureError
-// Created: NLD 2011-02-28
-// -----------------------------------------------------------------------------
-bool NullFileLoaderObserver::NotifySignatureError( const std::string& fileName, const tools::EXmlCrc32SignatureError& error )
-{
-    std::cout << boost::format( "Signature error %d on file %s" ) % error % fileName << std::endl;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: NullFileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------

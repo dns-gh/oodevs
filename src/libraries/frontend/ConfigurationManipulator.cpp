@@ -12,7 +12,6 @@
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
 #include <boost/filesystem.hpp>
-#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -77,10 +76,8 @@ void ConfigurationManipulator::Commit()
             {
                 {
                     xml::xofstream xos( outputPath_ );
-                    //tools::SchemaWriter().WriteExerciseSchema( xos, "session" );
                     document_->Serialize( xos );
                 }
-                tools::WriteXmlCrc32Signature( outputPath_ );
                 ok = true;
             }
             catch( const std::exception& e )

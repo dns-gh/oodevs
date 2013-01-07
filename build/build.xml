@@ -738,14 +738,6 @@
         </zip>
     </target>
 
-    <target name="generate-signatures" description="generate signatures">
-        <exec executable="${bin.dir}/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
-            <arg value="${data.dir}/data/models/ada/physical"/>
-            <arg value="${data.dir}/data/terrains"/>
-            <arg value="${data.dir}/exercises"/>
-        </exec>
-    </target>
-
     <target name="deploy-application-data" description="deploy applications data to run directory">
         <copy todir="${run.dir}">
             <fileset dir="${data.dir}/app-data"/>
@@ -1524,7 +1516,6 @@
             <arg value="--exclude=module_tester"/>
             <!-- cmake targets are not used by "all" -->
             <arg value="--optional-target=*cmake*"/>
-            <arg value="--optional-target=generate-signatures"/>
             <arg value="--optional-target=client_sample_app"/>
         </exec>
     </target>

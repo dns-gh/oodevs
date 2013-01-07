@@ -12,12 +12,11 @@
 #include "ListViewHelper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
-#include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
+#include <algorithm>
 
 namespace bfs = boost::filesystem;
 
@@ -126,14 +125,12 @@ namespace frontend
         bfs::create_directories( dir );
         const std::string filename( ( bfs::path( dir ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, false );
-        tools::WriteXmlCrc32Signature( filename );
     }
 
     void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
     {
         const std::string filename( ( bfs::path( config.GetExerciseDir( name ) ) / "exercise.xml" ).string() );
         CreateExerciseXml( filename, terrain, model, physical, true );
-        tools::WriteXmlCrc32Signature( filename );
     }
 
     void CreateExerciseFileCopy( const bfs::path& dirFrom, const bfs::path& dirTo, const ExerciseCopyParameters& params )
@@ -155,7 +152,6 @@ namespace frontend
             << xml::start( "model" ) << xml::attribute( "dataset", params.model_ ) << xml::attribute( "physical", params.physical_ ) << xml::end;
         xis >> xml::end;
         xos << xml::end;
-        tools::WriteXmlCrc32Signature( filenameTo );
     }
     void CopyCheckedPath( const bfs::path& dirFrom, const bfs::path& dirTo, const ExerciseCopyParameters& params, QStandardItem* parent = 0 )
     {

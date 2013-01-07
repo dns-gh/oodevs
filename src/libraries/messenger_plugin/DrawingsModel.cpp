@@ -17,11 +17,10 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/IdManager.h"
 #include <directia/brain/Brain.h>
+#include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
-#include <tools/XmlCrc32Signature.h>
-#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
 namespace bfs = boost::filesystem;
@@ -70,21 +69,14 @@ void DrawingsModel::Load( const dispatcher::Config& config )
         const std::string filename = BuildDrawingsFile( config );
         if( bfs::exists( filename ) )
         {
-            {
-                xml::xifstream xis( filename );
-                xis >> xml::start( "shapes" );
-                const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-                xis >> xml::end();
-                if( schema.empty() )
-                    ReadShapes( xis );
-                else
-                    ReadShapes( xml::xifstream( filename, xml::external_grammar( config.BuildResourceChildFile( schema ) ) ) );
-            }
-            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
-            if( error == tools::eXmlCrc32SignatureError_Invalid )
-                MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename ).filename() << " is invalid." )
-            else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-                MT_LOG_WARNING_MSG( "The file " << bfs::path( filename ).filename() << " is not signed." )
+            xml::xifstream xis( filename );
+            xis >> xml::start( "shapes" );
+            const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+            xis >> xml::end;
+            if( schema.empty() )
+                ReadShapes( xis );
+            else
+                ReadShapes( xml::xifstream( filename, xml::external_grammar( config.BuildResourceChildFile( schema ) ) ) );
         }
     }
     catch( const std::exception& )
@@ -201,7 +193,6 @@ void DrawingsModel::Save( const std::string& directory ) const
         SerializeDrawingsMap( xos, automatMap, "automat" );
         SerializeDrawings( xos, notDiffused );
     }
-    tools::WriteXmlCrc32Signature( filename );
 }
 
 // -----------------------------------------------------------------------------

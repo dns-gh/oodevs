@@ -8,6 +8,7 @@
 // $Workfile: ADN_Categories_Data.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Project_Data.h"
@@ -15,7 +16,6 @@
 #include "ADN_Tr.h"
 #include "ADN_Workspace.h"
 #include "tools/Loader_ABC.h"
-#include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
 
 using namespace helpers;
@@ -132,7 +132,6 @@ void ADN_Urban_Data::Save()
             if( *it == "UrbanTemplates.xml" )
                 WriteTemplates( output );
         }
-        tools::WriteXmlCrc32Signature( strFile );
     }
 }
 

@@ -780,7 +780,7 @@ void ModelConsistencyChecker::CheckUrban()
                 for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
                     unknownNetworks.insert( *itResource );
     }
-    for( std::set< std::string >::const_iterator itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
+    for( auto itNetwork = unknownNetworks.begin(); itNetwork != unknownNetworks.end(); ++ itNetwork )
         AddError( eUnknownResourceNetwork, 0, *itNetwork );
     if( model_.urban_.TakeLinkErrors() )
     {
@@ -795,13 +795,6 @@ void ModelConsistencyChecker::CheckUrban()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckFiles()
 {
-    std::vector< std::string > filesSignatureErrors;
-    fileLoaderObserver_.GetSignatureErrors( filesSignatureErrors );
-    for( unsigned int i = 0; i < filesSignatureErrors.size(); ++i )
-        AddError( eSignature, 0, filesSignatureErrors[ i ] );
-    if( !filesSignatureErrors.empty() )
-        model_.SetConsistencyErrorsOnLoad();
-
     std::vector< std::string > filesXsdErrors;
     fileLoaderObserver_.GetXsdErrors( filesXsdErrors );
     for( unsigned int i = 0; i < filesXsdErrors.size(); ++i )

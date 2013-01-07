@@ -47,7 +47,7 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis, const MIL_Time_AB
 
     xis >> xml::start( "medical-treatments" )
             >> xml::list( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::ReadMedicalTreatment, _1, boost::cref( time ), boost::ref( ids ) ) )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

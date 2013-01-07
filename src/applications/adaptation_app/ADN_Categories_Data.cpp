@@ -8,6 +8,7 @@
 // $Workfile: ADN_Categories_Data.cpp $
 //
 //*****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_ConsistencyChecker.h"
@@ -16,25 +17,15 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "tools/Loader_ABC.h"
-#include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
 
 tools::IdManager ADN_Categories_Data::idManager_;
-
-// =============================================================================
-// AttritionEffectOnHuman
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data constructor
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
 ADN_Categories_Data::ADN_Categories_Data()
-    : ADN_Data_ABC()
-    , vArmors_()
-    , vSizes_()
-    , vDotationNatures_()
-    , vLogisticSupplyClasses_()
 {
     // NOTHING
 }
@@ -109,8 +100,6 @@ void ADN_Categories_Data::Save()
         xml::xofstream output( szArmorFile );
         WriteArmors( output );
     }
-    tools::WriteXmlCrc32Signature( szArmorFile );
-
     std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
     {
@@ -118,8 +107,6 @@ void ADN_Categories_Data::Save()
         xml::xofstream output( szSizesFile );
         WriteSizes( output );
     }
-    tools::WriteXmlCrc32Signature( szSizesFile );
-
     std::string szNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     {
@@ -127,8 +114,6 @@ void ADN_Categories_Data::Save()
         xml::xofstream output( szNaturesFile );
         WriteDotationNatures( output );
     }
-    tools::WriteXmlCrc32Signature( szNaturesFile );
-
     std::string szLogisticSupplyClassesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData();
     {
@@ -136,7 +121,6 @@ void ADN_Categories_Data::Save()
         xml::xofstream output( szLogisticSupplyClassesFile );
         WriteLogisticSupplyClasses( output );
     }
-    tools::WriteXmlCrc32Signature( szLogisticSupplyClassesFile );
 }
 
 class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >

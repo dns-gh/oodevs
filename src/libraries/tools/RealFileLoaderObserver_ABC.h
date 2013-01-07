@@ -12,7 +12,6 @@
 
 #include <string>
 #include <vector>
-#include <tools/XmlCrc32Signature.h>
 
 namespace xml
 {
@@ -38,11 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NotifySignatureError      ( const std::string& file, const EXmlCrc32SignatureError& error ) = 0;
     virtual bool NotifyInvalidXml          ( const std::string& file, const xml::exception& e ) = 0;
     virtual void NotifyNoXmlSchemaSpecified( const std::string& file ) = 0;
     virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion ) = 0;
-    virtual void GetSignatureErrors( std::vector< std::string >& /* errors */ ) const { /* NOTHING */ }
     virtual void GetXsdErrors( std::vector< std::string >& /* errors */ ) const { /* NOTHING */ }
     virtual void Purge() { /* NOTHING */ };
     //@}

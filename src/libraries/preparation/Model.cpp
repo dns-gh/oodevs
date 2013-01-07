@@ -50,11 +50,10 @@
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
-#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/bind.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -277,7 +276,6 @@ namespace
             return true;
         }
         model.Serialize( fileName, schemaWriter );
-        tools::WriteXmlCrc32Signature( fileName );
         return false;
     }
 }
@@ -328,16 +326,6 @@ void Model::Load( const tools::ExerciseConfig& config )
     SetLoaded( true );
 }
 
-namespace
-{
-    template< class T >
-    void SerializeAndSign( const std::string& path, T& model, const tools::SchemaWriter_ABC& schemaWriter )
-    {
-        model.Serialize( path, schemaWriter );
-        tools::WriteXmlCrc32Signature( path );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Model::SaveExercise
 // Created: SBO 2006-11-21
@@ -347,9 +335,8 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
     if( !loaded_ )
         return;
     const tools::SchemaWriter schemaWriter;
-
-    exercise_.SerializeAndSign( config, schemaWriter );
-    SerializeAndSign( config.GetSettingsFile(), exercise_.GetSettings(), schemaWriter );
+    exercise_.Serialize( config, schemaWriter );
+    exercise_.GetSettings().Serialize( config.GetSettingsFile(), schemaWriter );
     {
         xml::xofstream xos( config.GetOrbatFile() );
         xos << xml::start( "orbat" );
@@ -357,14 +344,13 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
         teams_.Serialize( xos );
         xos << xml::end;
     }
-    tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
-    config.SerializeAndSignTerrainFiles( schemaWriter );
+    config.SerializeTerrainFiles( schemaWriter );
     if( urban_.Count() > 0 )
-        SerializeAndSign( config.GetUrbanFile(), urban_, schemaWriter );
-    SerializeAndSign( config.GetWeatherFile(), weather_, schemaWriter );
-    SerializeAndSign( config.GetProfilesFile(), profiles_, schemaWriter );
-    SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );
-    SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
+        urban_.Serialize( config.GetUrbanFile(), schemaWriter );
+    weather_.Serialize( config.GetWeatherFile(), schemaWriter );
+    profiles_.Serialize( config.GetProfilesFile(), schemaWriter );
+    scores_.Serialize( config.GetScoresFile(), schemaWriter );
+    successFactors_.Serialize( config.GetSuccessFactorsFile(), schemaWriter );
     successFactors_.SerializeScript( config );
     UpdateName( config.GetOrbatFile() );
 }

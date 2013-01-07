@@ -110,7 +110,7 @@ public:
 
     bool IsTerrainSamePhysicalRef() const;
 
-    void SerializeAndSignTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const;  //$$$ Rien à foutre la ...
+    void SerializeTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const;  //$$$ Rien à foutre la ...
     //@}
 
     //! @name Operations

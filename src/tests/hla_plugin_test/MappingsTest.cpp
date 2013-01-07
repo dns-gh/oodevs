@@ -8,25 +8,19 @@
 // *****************************************************************************
 
 #include "hla_plugin_test_pch.h"
-
 #include "tools/SessionConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/Resolver.h"
-
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
-
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
-
-//using namespace plugins::hla;
 
 namespace
 {
     struct VoidRealFileLoaderObserver : tools::RealFileLoaderObserver_ABC
     {
-        virtual bool NotifySignatureError      ( const std::string& , const tools::EXmlCrc32SignatureError& ) { return true; }
         virtual bool NotifyInvalidXml          ( const std::string& , const xml::exception&  ) { return true; }
         virtual void NotifyNoXmlSchemaSpecified( const std::string& ) {}
         virtual void NotifyFileMigrated        ( const std::string&  , const std::string& , const std::string& ) {}
@@ -41,8 +35,7 @@ namespace
     {
     public:
         Fixture()
-            : fileObserver_()
-            , config_(fileObserver_)
+            : config_( fileObserver_ )
         {
             config_.Parse( sizeof(CMD_LINE)/sizeof(CMD_LINE[0]), CMD_LINE );
             pluginRoot_ = config_.BuildPluginDirectory( "hla" );
@@ -52,9 +45,7 @@ namespace
                         >> xml::content("aggregate", aggregateMapping_)
                         >> xml::content("surface-vessel", surfaceMapping_)
                         >> xml::content("component", componentMapping_)
-                        >> xml::content("munition", munitionMapping_)
-                    >> xml::end
-                >> xml::end;
+                        >> xml::content("munition", munitionMapping_);
             staticModel_.Load( config_ );
         }
         ~Fixture()
@@ -107,7 +98,7 @@ namespace
             >> xml::attribute("default-name", defName);
         ftor(defName);
         xis >> xml::list("entry", boost::bind( &parseEntry<F>, _1, boost::cref(ftor) ) );
-        xis >> xml::end();
+        xis >> xml::end;
     }
 
     template <typename T>
@@ -116,8 +107,7 @@ namespace
         CheckEntry(const tools::Resolver_ABC<T, std::string>& resolver, const std::string& file)
             : resolver_( resolver )
             , file_( file )
-        {
-        }
+        {}
         void operator()(const std::string& name) const
         {
             T* obj = resolver_.Find( name ) ;

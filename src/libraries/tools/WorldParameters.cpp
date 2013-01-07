@@ -60,7 +60,7 @@ void WorldParameters::Serialize( const std::string& filename, const tools::Schem
                 << xml::start( "center" )
                     << xml::attribute( "latitude", latitude_ )
                     << xml::attribute( "longitude", longitude_ )
-                << xml::end()
+                << xml::end
                 << xml::start( "dimension" )
                     << xml::attribute( "width", width_ )
                     << xml::attribute( "height", height_ )

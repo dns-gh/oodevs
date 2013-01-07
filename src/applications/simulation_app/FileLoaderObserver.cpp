@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_app_pch.h"
-
 #include "FileLoaderObserver.h"
 #include "MT_Tools/MT_Logger.h"
 #include "xeumeuleu/xml.hpp"
@@ -29,19 +28,6 @@ FileLoaderObserver::FileLoaderObserver()
 FileLoaderObserver::~FileLoaderObserver()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FileLoaderObserver::NotifySignatureError
-// Created: NLD 2011-02-28
-// -----------------------------------------------------------------------------
-bool FileLoaderObserver::NotifySignatureError( const std::string& fileName, const tools::EXmlCrc32SignatureError& error )
-{
-    if( error == tools::eXmlCrc32SignatureError_Invalid )
-        MT_LOG_WARNING_MSG( "The signature for the file " << fileName << " is invalid." )
-    else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-        MT_LOG_WARNING_MSG( "The file " << fileName << " is not signed." )
-    return true;
 }
 
 // -----------------------------------------------------------------------------

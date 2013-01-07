@@ -12,7 +12,6 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "tools/Loader_ABC.h"
-#include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -74,7 +73,6 @@ void ADN_Data_ABC::Save()
             xml::xofstream output( strFile );
             WriteArchive( output );
         }
-        tools::WriteXmlCrc32Signature( strFile );
     }
 }
 

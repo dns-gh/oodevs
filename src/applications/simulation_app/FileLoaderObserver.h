@@ -29,7 +29,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NotifySignatureError      ( const std::string& file, const tools::EXmlCrc32SignatureError& error );
     virtual bool NotifyInvalidXml          ( const std::string& file, const xml::exception& e );
     virtual void NotifyNoXmlSchemaSpecified( const std::string& file );
     virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion );

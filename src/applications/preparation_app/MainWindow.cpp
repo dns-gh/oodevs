@@ -104,8 +104,6 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "ENT/ENT_Tr_Gen.h"
-#include <iostream>
-#include <tools/XmlCrc32Signature.h>
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
@@ -540,10 +538,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
             model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );
             const tools::SchemaWriter schemaWriter;
             if( model_.scores_.CheckValidity( schemaWriter ) )
-            {
                 model_.scores_.Serialize( config_.GetScoresFile(), schemaWriter );
-                tools::WriteXmlCrc32Signature( config_.GetScoresFile() );
-            }
             return;
         }
         loading_ = false;

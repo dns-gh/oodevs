@@ -16,10 +16,9 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
-#include <fstream>
 #include <boost/filesystem/path.hpp>
+#include <fstream>
 #include <sys/timeb.h>
-#include <tools/XmlCrc32Signature.h>
 
 namespace bfs = boost::filesystem;
 
@@ -72,19 +71,6 @@ boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const std::string& fileNam
     file.close();
 
     return CRC.checksum();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Tools::CheckXmlCrc32Signature
-// Created: JSR 2010-11-25
-// -----------------------------------------------------------------------------
-void MIL_Tools::CheckXmlCrc32Signature( const std::string& filename )
-{
-    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
-    if( error == tools::eXmlCrc32SignatureError_Invalid )
-        MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename ).filename() << " is invalid." )
-    else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-        MT_LOG_WARNING_MSG( "The file " << bfs::path( filename ).filename() << " is not signed." )
 }
 
 //-----------------------------------------------------------------------------

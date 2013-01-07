@@ -236,7 +236,7 @@ void ResourceNetworkAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
                     xos << xml::attribute( "kind", "terrain-object" );
                 xos << xml::attribute( "target", node.links_[ i ].id_ )
                     << xml::attribute( "capacity", node.links_[ i ].capacity_ )
-                    << xml::end();
+                    << xml::end;
             }
             xos << xml::end;
         }

@@ -11,6 +11,7 @@
 #include "ExerciseConfig.h"
 #include "Loader.h"
 #include "WorldParameters.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
@@ -19,9 +20,6 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
-#include "MT_TOOLS/MT_Logger.h"
-#include "MT_TOOLS/MT_Logger_ABC.h"
-#include "tools/XmlCrc32Signature.h"
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
@@ -60,8 +58,7 @@ void ExerciseConfig::Parse( int argc, char** argv )
     tools::GeneralConfig::Parse( argc, argv );
     if( !GetExerciseName().empty() )
         LoadExercise( GetExerciseFile() );
-
-    std::string debugSettingFile = BuildExerciseChildFile( "debug.xml" );
+    const std::string debugSettingFile = BuildExerciseChildFile( "debug.xml" );
     try
     {
         if( boost::filesystem::exists( debugSettingFile ) )
@@ -895,13 +892,12 @@ bool ExerciseConfig::IsTerrainSamePhysicalRef() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::SerializeAndSignTerrainFiles
+// Name: ExerciseConfig::SerializeTerrainFiles
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-void ExerciseConfig::SerializeAndSignTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const
+void ExerciseConfig::SerializeTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const
 {
     pWorldParameters_->Serialize( GetTerrainFile(), schemaWriter );
-    tools::WriteXmlCrc32Signature( GetTerrainFile() );
 }
 
 // -----------------------------------------------------------------------------

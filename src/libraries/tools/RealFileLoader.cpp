@@ -15,7 +15,6 @@
 #include "FileMatcherFactory.h"
 #include "FileMatcher_ABC.h"
 #include "SchemaVersionExtractor_ABC.h"
-#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -57,10 +56,6 @@ RealFileLoader::~RealFileLoader()
 {
     // NOTHING
 }
-
-// =============================================================================
-// Tools
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: RealFileLoader::ReadFileMatcher
@@ -118,10 +113,8 @@ namespace
 bool RealFileLoader::AssignDefaultSchema( const std::string& inputFileName, xml::xistream& xis, std::string& newSchema ) const
 {
     BOOST_FOREACH( boost::shared_ptr< FileMatcher_ABC > fileMatcher, defaultSchemasAssignment_ )
-    {
         if( fileMatcher->MatchAndReturnNewSchema( inputFileName, xis, newSchema ) )
             return true;
-    }
     return false;
 }
 
@@ -133,22 +126,17 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const std::
 {
     std::string schema( initialSchema );
     bool applyMigration = false;
-    for( T_Migrations::const_iterator it = migrations_.begin(); it != migrations_.end(); ++it )
+    for( auto it = migrations_.begin(); it != migrations_.end(); ++it )
     {
         const FileMigration_ABC& migration = **it;
         if( !applyMigration && initialVersion == migration.GetFromVersion() )
             applyMigration = true;
-
         if( applyMigration )
         {
             xis = migration.UpgradeFile( xis, schema );
             observer.NotifyFileMigrated( inputFileName, migration.GetFromVersion(), migration.GetToVersion() );
         }
-        std::stringstream from;
-        from << "/" << migration.GetFromVersion(); // $$$$ LDCDon't replace 4.3.0 because it has 3.0 inside. Otherwise: 4.3.0 -> 4.4.2.0 or somesuch...
-        std::stringstream to;
-        to << "/" << migration.GetToVersion();
-        boost::algorithm::replace_first( schema, from.str(), to.str() );
+        boost::algorithm::replace_first( schema, "/" + migration.GetFromVersion(), "/" + migration.GetToVersion() );
     }
     return xis;
 }
@@ -165,22 +153,12 @@ const std::string& RealFileLoader::CheckIfAddedFile( const std::string& initialI
         BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
         {
             const std::string& match = addedFile.first;
-            if(  genericInputFileName.size() >= match.size()
+            if( genericInputFileName.size() >= match.size()
                 && genericInputFileName.compare( genericInputFileName.size() - match.size(), match.size(), match ) == 0 )
                     return addedFile.second;
         }
     }
     return initialInputFileName;
-}
-
-namespace
-{
-    void CheckSignature( const std::string& inputFile, RealFileLoaderObserver_ABC& observer )
-    {
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( inputFile );
-        if( error && !observer.NotifySignatureError( inputFile, error ) )
-            throw MASA_EXCEPTION( boost::str( boost::format( "Check before upgrade failed : File %s SignatureException %d " ) % inputFile % error ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -222,6 +200,5 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
                 throw;
         }
     }
-    CheckSignature( inputFileName, observer );
     return UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
 }

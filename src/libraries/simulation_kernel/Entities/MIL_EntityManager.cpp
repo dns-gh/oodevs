@@ -417,7 +417,6 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
 
             std::string directoryPath = bfs::path( oldUrbanMode ? config.GetTerrainFile() : config.GetExerciseFile() ).branch_path().string();
             MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) );
-            MIL_Tools::CheckXmlCrc32Signature( oldUrbanMode ? config.GetUrbanTerrainFile() : config.GetUrbanFile() );
 
             config.GetLoader().LoadFile( fullPath.string(), boost::bind( &MIL_EntityManager::ReadUrban, this, _1, boost::ref( cities_ ) ) );
             if( cities_.empty() )

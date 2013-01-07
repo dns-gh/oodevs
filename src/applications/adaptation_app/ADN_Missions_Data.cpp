@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Data.h"
-
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -18,9 +17,7 @@
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
 #include "tools/Loader_ABC.h"
-#include <tools/XmlCrc32Signature.h>
 #include <xeuseuleu/xsl.hpp>
-
 #include <boost/bind.hpp>
 
 tools::IdManager ADN_Missions_Data::idManager_;

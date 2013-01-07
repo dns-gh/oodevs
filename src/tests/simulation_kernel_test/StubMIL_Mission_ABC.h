@@ -34,7 +34,7 @@ public:
         xml::xistringstream xisParam("<parameter dia-name='pointAReconnaitre_' name='Point a reconnaitre' optional='false' type='string'/>");
         xisParam >> xml::start( "parameter" );
         MIL_OrderTypeParameter orderType( xisParam );
-        xisParam >> xml::end();
+        xisParam >> xml::end;
         StubMIL_MissionParameter_ABC param( param_ );
         parameterVisitor.Accept( "parameter", orderType, param );
     }

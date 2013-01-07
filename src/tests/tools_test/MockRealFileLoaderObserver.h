@@ -20,7 +20,6 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockRealFileLoaderObserver, tools::RealFileLoaderObserver_ABC )
 {
-    MOCK_METHOD( NotifySignatureError, 2 );
     MOCK_METHOD( NotifyInvalidXml, 2 );
     MOCK_METHOD( NotifyNoXmlSchemaSpecified, 1 );
     MOCK_METHOD( NotifyFileMigrated, 3 );

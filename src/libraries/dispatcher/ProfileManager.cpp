@@ -21,16 +21,15 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "tools/SchemaWriter.h"
-#include "tools/XmlCrc32Signature.h"
 #include "tools/Loader_ABC.h"
 #include "directia/brain/Brain.h"
 #include "protocol/Protocol.h"
 #include "protocol/AuthenticationSenders.h"
-#include <boost/foreach.hpp>
-#include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -104,8 +103,6 @@ void ProfileManager::Save( const std::string& path )
     pSchemaWriter_->WriteExerciseSchema( xos, "profiles" );
     BOOST_FOREACH( const T_ProfileMap::value_type& profile, profiles_ )
         profile.second->SerializeProfile( xos );
-    xos << xml::end;
-    tools::WriteXmlCrc32Signature( filename );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +113,7 @@ void ProfileManager::ReadProfiles( xml::xistream& xis )
 {
     xis >> xml::start( "profiles" )
             >> xml::list( "profile", *this, & ProfileManager::ReadProfile )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

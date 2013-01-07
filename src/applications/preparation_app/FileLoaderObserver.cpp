@@ -21,6 +21,7 @@ namespace bfs = boost::filesystem;
 // -----------------------------------------------------------------------------
 FileLoaderObserver::FileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -29,19 +30,7 @@ FileLoaderObserver::FileLoaderObserver()
 // -----------------------------------------------------------------------------
 FileLoaderObserver::~FileLoaderObserver()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: FileLoaderObserver::NotifySignatureError
-// Created: NLD 2011-02-28
-// -----------------------------------------------------------------------------
-bool FileLoaderObserver::NotifySignatureError( const std::string& file, const tools::EXmlCrc32SignatureError& error )
-{
-    if( error == tools::eXmlCrc32SignatureError_Invalid )
-        invalidSignatureFiles_.push_back( bfs::path( file ).filename().string() );
-    else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-        missingSignatureFiles_.push_back( bfs::path( file ).filename().string() );
-    return true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -117,22 +106,6 @@ void FileLoaderObserver::GetXsdErrors( std::vector< std::string >& errors ) cons
     if( !malformedFiles_.empty() )
         for( auto it = malformedFiles_.begin(); it != malformedFiles_.end(); ++it )
             errors.push_back( tools::translate( "Application", "The following files do not match their xsd : " ).append( it->c_str() ).toAscii().constData() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FileLoaderObserver::GetSignatureErrors
-// Created: MMC 2012-06-01
-// -----------------------------------------------------------------------------
-void FileLoaderObserver::GetSignatureErrors( std::vector< std::string >& errors ) const
-{
-    if( !invalidSignatureFiles_.empty() || !missingSignatureFiles_.empty() )
-    {
-        QString invalidSignatureDisplay( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ) + "\n" );
-        for( auto it = invalidSignatureFiles_.begin(); it != invalidSignatureFiles_.end(); ++it )
-            errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toStdString() );
-        for( auto it = missingSignatureFiles_.begin(); it != missingSignatureFiles_.end(); ++it )
-            errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toStdString() );
-    }
 }
 
 // -----------------------------------------------------------------------------

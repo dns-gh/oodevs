@@ -91,57 +91,6 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_no_version_in_schema, Fixture )
     loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
 }
 
-BOOST_FIXTURE_TEST_CASE( test_invalid_xml_signature_throws, Fixture )
-{
-    const std::string inputFile( "testFileMigration/input_invalid_signature.xml" );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
-    MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( false );
-    BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
-}
-
-BOOST_FIXTURE_TEST_CASE( test_invalid_xml_signature_nothrows, Fixture )
-{
-    const std::string inputFile( "testFileMigration/input_invalid_signature.xml" );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
-    MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( false );
-    BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
-}
-
-BOOST_FIXTURE_TEST_CASE( test_missing_xml_signature_throws, Fixture )
-{
-    const std::string inputFile( "testFileMigration/input_missing_signature.xml" );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
-    MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_NotSigned ).returns( false );
-    BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
-}
-
-BOOST_FIXTURE_TEST_CASE( test_missing_xml_signature_nothrows, Fixture )
-{
-    const std::string inputFile( "testFileMigration/input_missing_signature.xml" );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
-    MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_NotSigned ).returns( false );
-    BOOST_CHECK_THROW( loader.LoadFile( BOOST_RESOLVE( inputFile ), observer ), std::exception );
-}
-
-BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_and_signature_nothrows, Fixture )
-{
-    const std::string inputFile( "testFileMigration/input_invalid_schema_and_signature.xml" );
-    tools::SchemaVersionExtractor ve;
-    tools::RealFileLoader loader( emptyMigrations_, ve );
-    MockRealFileLoaderObserver observer;
-    MOCK_EXPECT( observer.NotifyInvalidXml ).once().with( BOOST_RESOLVE( inputFile ), mock::any ).returns( true );
-    MOCK_EXPECT( observer.NotifySignatureError ).once().with( BOOST_RESOLVE( inputFile ), tools::eXmlCrc32SignatureError_Invalid ).returns( true );
-    loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
-}
-
 BOOST_FIXTURE_TEST_CASE( test_valid_xml_schema_migration, Fixture )
 {
     xml::xifstream migrations( BOOST_RESOLVE( "testFileMigration/migrations.xml" ) );

@@ -32,17 +32,6 @@ ADN_FileLoaderObserver::~ADN_FileLoaderObserver()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FileLoaderObserver::NotifySignatureError
-// Created: NLD 2011-02-28
-// -----------------------------------------------------------------------------
-bool ADN_FileLoaderObserver::NotifySignatureError( const std::string& fileName, const tools::EXmlCrc32SignatureError& error )
-{
-    std::cout << boost::format( "Signature error %d on file %s" ) % error % fileName << std::endl;
-    invalidSignedFiles_ += fileName + "\n"; ///$$$ NLD 2011-03-07 - Encore une belle merde ... je me défausse : je calque le comportement idiot de la version précédente
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_FileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------

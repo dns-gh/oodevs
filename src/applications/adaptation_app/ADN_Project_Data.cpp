@@ -15,8 +15,6 @@
 #include "ADN_Objects_Data.h"
 #include "XmlResources.cpp"
 #include "tools/Loader_ABC.h"
-#include <boost/bind.hpp>
-#include <tools/XmlCrc32Signature.h>
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
 #include <process.h>
@@ -467,7 +465,7 @@ namespace
         rootNode = nodeName;
     }
 
-    void ChangeSchemaAndSignature( const std::string& inputFile, const std::string& schemaName )
+    void ChangeSchema( const std::string& inputFile, const std::string& schemaName )
     {
         if( !bfs::exists( inputFile ) || bfs::is_directory( inputFile ) )
             return;
@@ -476,14 +474,11 @@ namespace
         xml::xifstream xis( inputFile );
         xis >> xml::list( boost::bind( &ExtractRootNode, _2, _3, boost::ref( rootNode ) ) );
         xis >> xml::start( rootNode );
-
         xml::xofstream xos( inputFile );
         xos << xml::start( rootNode );
         xos << xis;
         ADN_Tools::AddSchema( xos, schemaName );
         xos << xml::end;
-
-        tools::WriteXmlCrc32Signature( inputFile );
     }
 }
 
@@ -514,28 +509,15 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
         xml::xofstream output( szFile );
         dataInfos_.WriteArchive( output );
     }
-    tools::WriteXmlCrc32Signature( szFile );
     // Update pathfind.xml
     std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
     if( bfs::exists( bfs::path( path ) ) )
-    {
         fileLoader.LoadFile( path, boost::bind( &ADN_Project_Data::WritePathfind, this, _1, boost::cref( path ) ) );
-        tools::WriteXmlCrc32Signature( path );
-    }
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
-    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData(), "ObjectNames" );
-    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
-    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
-    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData(), "Extensions" );
-
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szFilters_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData(), "ObjectNames" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData(), "Extensions" );
 }

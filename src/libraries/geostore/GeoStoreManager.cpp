@@ -121,8 +121,8 @@ void GeoStoreManager::InitProjector( const bfs::path& terrainFile )
                             >> xml::attribute( "height", height )
                         >> xml::end
                     >> xml::end
-                >> xml::end()
-            >> xml::end();
+                >> xml::end
+            >> xml::end;
     proj_.reset( new PlanarCartesianProjector( latitude, longitude ) );
     trans_.reset( new Translator( *proj_, geometry::Vector2d( 0.5 * width, 0.5 * height ) ) );
 }

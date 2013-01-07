@@ -22,7 +22,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include "tools/IdManager.h"
-#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <direct.h>
@@ -118,8 +117,6 @@ void Model::Save( const std::string& name ) const
         clientObjects_.Write( xos );
         xos << xml::end;
     }
-    tools::WriteXmlCrc32Signature( GetCheckPointFileName( directory ) );
-
     drawings_.Save( directory );
     notes_.SaveNotes();
 }

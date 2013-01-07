@@ -12,10 +12,9 @@
 #include "clients_kernel/Controller.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
-#include "tools/XmlCrc32Signature.h"
-#include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -27,7 +26,6 @@ namespace bfs = boost::filesystem;
 Exercise::Exercise( kernel::Controller& controller )
     : controller_    ( controller )
     , actionPlanning_( "" )
-    , settings_      ()
     , isValid_       ( true )
 {
     // NOTHING
@@ -137,29 +135,33 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::SerializeAndSign
+// Name: Exercise::Serialize
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
-void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tools::SchemaWriter_ABC& schemaWriter ) const
+void Exercise::Serialize( const tools::ExerciseConfig& config, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     std::string file = config.GetExerciseFile();
     xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
     xos << xml::start( "exercise" );
     schemaWriter.WriteExerciseSchema( xos, "exercise" );
-    xos << xml::attribute( "valid", isValid_ );
-    xos << xml::start( "meta" );
+    xos << xml::attribute( "valid", isValid_ )
+        << xml::start( "meta" );
     SerializeBriefings( xos );
     SerializeResources( xos );
     SerializeOrderFiles( xos );
     xos     << xml::end;
     CopyFromFile( file, xos );
-    xos << xml::start( "urban" ) << xml::attribute( "file", config.GetUrbanFileName() ) << xml::end;
-    xos << xml::start( "settings" ) << xml::attribute( "file", config.GetSettingsFileName() ) << xml::end;
-    xos << xml::start( "terrain" ) << xml::attribute( "name", config.GetTerrainName() ) << xml::end;
+    xos << xml::start( "urban" )
+            << xml::attribute( "file", config.GetUrbanFileName() )
+        << xml::end
+        << xml::start( "settings" )
+            << xml::attribute( "file", config.GetSettingsFileName() )
+        << xml::end
+        << xml::start( "terrain" )
+            << xml::attribute( "name", config.GetTerrainName() )
+        << xml::end;
     if( !actionPlanning_.empty() )
         xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
-    xos << xml::end;
-    tools::WriteXmlCrc32Signature( file );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +171,7 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
 void Exercise::SerializeBriefings( xml::xostream& xos ) const
 {
     xos << xml::start( "briefing" );
-    for( T_Resources::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
+    for( auto it = briefings_.begin(); it != briefings_.end(); ++it )
         if( !it->second.isEmpty() )
             xos << xml::start( "text" )
                     << xml::attribute( "lang", it->first.toStdString() )
@@ -185,7 +187,7 @@ void Exercise::SerializeBriefings( xml::xostream& xos ) const
 void Exercise::SerializeResources( xml::xostream& xos ) const
 {
     xos << xml::start( "resources" );
-    for( T_Resources::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         xos << xml::start( "resource" )
                 << xml::attribute( "name", it->first.toStdString() )
                 << xml::attribute( "file", it->second.toStdString() )
@@ -202,7 +204,7 @@ void Exercise::SerializeOrderFiles( xml::xostream& xos ) const
     if( orderFiles_.empty() )
         return;
     xos << xml::start( "orders" );
-    for( T_OrderFiles::const_iterator it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
+    for( auto it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
         xos << xml::start( "order" )
                 << xml::attribute( "file", it->toUtf8().constData() )
             << xml::end;
