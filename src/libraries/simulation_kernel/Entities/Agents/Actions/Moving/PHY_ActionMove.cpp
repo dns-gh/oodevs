@@ -69,7 +69,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
     {
         double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );
         if( 0. == cost )
-            knowledges.erase( it );
+            it = knowledges.erase( it );
         else
             ++it;
     }
