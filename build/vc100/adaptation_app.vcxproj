@@ -1603,6 +1603,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Wizard.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h" />

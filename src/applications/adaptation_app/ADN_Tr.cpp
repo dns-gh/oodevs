@@ -324,6 +324,16 @@ ADN_Tr::T_ConverterDays ADN_Tr::daysConverter_[] =
     T_ConverterDays( "", "", (E_Days)-1 )
 };
 
+ADN_Tr::T_ConverterContextParameters ADN_Tr::contextParametersConverter_[] =
+{
+    T_ConverterContextParameters( "dangerDirection_",   QT_TRANSLATE_NOOP( "ADN_Tr", "Danger direction" ),  eContextParameters_Heading ),
+    T_ConverterContextParameters( "phaseLines_",        QT_TRANSLATE_NOOP( "ADN_Tr", "Phase lines" ),       eContextParameters_Limas ),
+    T_ConverterContextParameters( "boundaryLimit1_",    QT_TRANSLATE_NOOP( "ADN_Tr", "Limit 1" ),           eContextParameters_Limit1 ),
+    T_ConverterContextParameters( "boundaryLimit2_",    QT_TRANSLATE_NOOP( "ADN_Tr", "Limit 2" ),           eContextParameters_Limit2 ),
+
+    T_ConverterContextParameters( "", "", (E_ContextParameters)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromConsumptionType
 // Created: APE 2005-02-18
@@ -520,6 +530,15 @@ const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nVal
 const std::string& ADN_Tr::ConvertFromDays( E_Days nValue, E_Conversion nConverterType )
 {
     return ADN_Tr::InverseFindInConverter( daysConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromContextParameters
+// Created: ABR 2012-07-24
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromContextParameters( E_ContextParameters nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( contextParametersConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -721,6 +740,15 @@ E_Days ADN_Tr::ConvertToDays( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToContextParameters
+// Created: ABR 2012-07-24
+// -----------------------------------------------------------------------------
+E_ContextParameters ADN_Tr::ConvertToContextParameters( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( contextParametersConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -748,4 +776,5 @@ void ADN_Tr::InitTranslations()
     InitTr( propagationModelConverter_, "ADN_Tr" );
     InitTr( workspaceElementsConverter_, "ADN_Tr" );
     InitTr( daysConverter_, "ADN_Tr" );
+    InitTr( contextParametersConverter_, "ADN_Tr" );
 }

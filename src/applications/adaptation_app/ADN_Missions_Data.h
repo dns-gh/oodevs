@@ -95,21 +95,16 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, std::size_t contextLength, E_EntityType modelType );
-    void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
-    void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, E_EntityType modelType );
     void WriteArchive( xml::xostream& output );
     void MoveMissionSheetsToObsolete( std::string file );
 
 public:
-    T_MissionParameter_Vector   unitContext_;
-    T_Mission_Vector            unitMissions_;
-    T_MissionParameter_Vector   automatContext_;
-    T_Mission_Vector            automatMissions_;
-    T_MissionParameter_Vector   populationContext_;
-    T_Mission_Vector            populationMissions_;
-    T_FragOrder_Vector          fragOrders_;
-    T_StringList toDeleteMissionSheets_;
+    T_Mission_Vector    unitMissions_;
+    T_Mission_Vector    automatMissions_;
+    T_Mission_Vector    populationMissions_;
+    T_FragOrder_Vector  fragOrders_;
+    T_StringList        toDeleteMissionSheets_;
 
 public:
     static tools::IdManager idManager_;

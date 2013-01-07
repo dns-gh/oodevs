@@ -433,4 +433,13 @@ enum E_Days
     eNbrDays        = 7
 };
 
+enum E_ContextParameters
+{
+    eContextParameters_Heading = 0,
+    eContextParameters_Limas   = 1,
+    eContextParameters_Limit1  = 2,
+    eContextParameters_Limit2  = 3,
+    eNbrContextParameters      = 4
+};
+
 #endif // __ADN_Enums_h_

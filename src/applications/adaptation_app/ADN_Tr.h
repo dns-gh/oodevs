@@ -47,6 +47,7 @@ public:
     static const std::string& ConvertFromPropagationModel( E_PropagationModel, E_Conversion = eToSim );
     static const std::string& ConvertFromWorkspaceElement( E_WorkspaceElements, E_Conversion = eToTr );
     static const std::string& ConvertFromDays( E_Days, E_Conversion = eToTr );
+    static const std::string& ConvertFromContextParameters( E_ContextParameters, E_Conversion = eToTr );
     //@}
 
     //! @name Convert To functions
@@ -73,6 +74,7 @@ public:
     static E_PropagationModel        ConvertToPropagationModel( const std::string& );
     static E_WorkspaceElements       ConvertToWorkspaceElements( const std::string& );
     static E_Days                    ConvertToDays( const std::string& );
+    static E_ContextParameters       ConvertToContextParameters( const std::string& );
     //@}
 
     //! @name Initializer
@@ -106,6 +108,7 @@ public:
     typedef converter< E_PropagationModel >         T_ConverterPropagationModel;
     typedef converter< E_WorkspaceElements >        T_ConverterWorkspaceElements;
     typedef converter< E_Days >                     T_ConverterDays;
+    typedef converter< E_ContextParameters >        T_ConverterContextParameters;
     //@}
 
     //! @name Converters
@@ -132,6 +135,7 @@ public:
     static T_ConverterPropagationModel  propagationModelConverter_[];
     static T_ConverterWorkspaceElements workspaceElementsConverter_[];
     static T_ConverterDays              daysConverter_[];
+    static T_ConverterContextParameters contextParametersConverter_[];
     //@}
 };
 

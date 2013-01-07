@@ -383,6 +383,9 @@
     <Filter Include="Source Files\Workspace\Urban\Urban GUI">
       <UniqueIdentifier>{b74a65f7-9a8b-4b34-8b3a-199855789f2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Missions\Missions GUI\Missions Wizard">
+      <UniqueIdentifier>{8b66110f-17e8-4ab3-ba1d-cfbba8926b6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1838,6 +1841,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_DisastersListView.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Wizard.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Missions Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_WizardPage.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI\Missions Wizard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

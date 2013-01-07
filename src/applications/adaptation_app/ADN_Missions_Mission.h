@@ -33,14 +33,18 @@ public:
     std::string GetItemName();
     ADN_Missions_Mission* CreateCopy();
 
-    void ReadArchive ( xml::xistream& input, std::size_t contextLength, ADN_Drawings_Data& drawings,
-        const std::string& baseDir, const std::string& missionDir );
-    void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
-    void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
+    void FillContextParameters( E_EntityType entityType );
 
-    void ReadMissionSheet ( const std::string& baseDir, const std::string& missionDir );
-    void RemoveDifferentNamedMissionSheet ( const std::string& baseDir, const std::string& missionDir );
-    void WriteMissionSheet ( const std::string& baseDir, const std::string& missionDir );
+    void ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const std::string& baseDir, const std::string& missionDir );
+    void ReadParameter( xml::xistream& input );
+    void WriteArchive( xml::xostream& output, const std::string& type );
+
+    void ReadMissionSheet( const std::string& baseDir, const std::string& missionDir );
+    void RemoveDifferentNamedMissionSheet( const std::string& baseDir, const std::string& missionDir );
+    void WriteMissionSheet( const std::string& baseDir, const std::string& missionDir );
+
+private:
+    void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );
 
 public:
     ADN_Type_Int id_;

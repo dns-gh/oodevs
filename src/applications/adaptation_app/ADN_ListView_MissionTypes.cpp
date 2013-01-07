@@ -15,7 +15,7 @@
 #include "ADN_Models_Data.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Tr.h"
-#include "ADN_Wizard.h"
+#include "ADN_Missions_Wizard.h"
 #include "ADN_enums.h"
 
 typedef ADN_Missions_Mission Mission;
@@ -83,7 +83,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
     else
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
 
-    ADN_Wizard< Mission > wizard( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
+    ADN_Missions_Wizard wizard( eEntityType_, ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
         FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )

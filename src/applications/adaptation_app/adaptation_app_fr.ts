@@ -5141,6 +5141,22 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Disasters</source>
         <translation>Désastre</translation>
     </message>
+    <message>
+        <source>Danger direction</source>
+        <translation>Direction dangereuse</translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
+        <translation>Limas</translation>
+    </message>
+    <message>
+        <source>Limit 1</source>
+        <translation>Limite 1</translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
+        <translation>Limite 2</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

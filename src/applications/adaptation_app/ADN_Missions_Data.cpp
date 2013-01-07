@@ -152,35 +152,15 @@ void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_EntityT
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 {
-    // MGD 2010-10-03 : Hack to hide context @TODO remove with context deletion
-    xml::xistringstream unitContextFlow(
-        "<context>"
-        "  <parameter dia-name='dangerDirection_' name='Direction dangereuse' optional='false' type='Heading'/>"
-        "  <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
-        "  <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='true' type='Limit'/>"
-        "  <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='true' type='Limit'/>"
-        "</context>" );
-    xml::xistringstream automatContextFlow(
-        "<context>"
-        "  <parameter dia-name='dangerDirection_' name='Direction dangereuse' optional='false' type='Heading'/>"
-        "  <parameter dia-name='phaseLines_' max-occurs='unbounded' min-occurs='1' name='Limas' optional='true' type='PhaseLine'/>"
-        "  <parameter dia-name='boundaryLimit1_' name='Limit 1' optional='false' type='Limit'/>"
-        "  <parameter dia-name='boundaryLimit2_' name='Limit 2' optional='false' type='Limit'/>"
-        "</context>" );
-    xml::xistringstream crowContextFlow( "<context></context>" );
-    ReadContext( unitContextFlow, unitContext_ );
-    ReadContext( automatContextFlow, automatContext_ );
-    ReadContext( crowContextFlow, populationContext_ );
-
     input >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), unitContext_.size(), eEntityType_Pawn ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), eEntityType_Pawn ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), automatContext_.size(), eEntityType_Automat ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), eEntityType_Automat ) )
             >> xml::end
             >> xml::start( "populations" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), populationContext_.size(), eEntityType_Population ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), eEntityType_Population ) )
             >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
@@ -204,46 +184,23 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, std::size_t contextLength, E_EntityType modelType )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, E_EntityType modelType )
 {
     std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
     const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
     ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    spNew->ReadArchive( xis, contextLength, drawings, baseDir, GetMissionDir( modelType ) );
+    spNew->ReadArchive( xis, drawings, baseDir, GetMissionDir( modelType ) );
     missions.AddItem( spNew.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::ReadContext
-// Created: AGE 2008-03-13
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadContext( xml::xistream& input, T_MissionParameter_Vector& context )
-{
-    input >> xml::start("context")
-            >> xml::list( "parameter", *this, &ADN_Missions_Data::ReadContextParameter, context )
-          >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::ReadContextParameter
-// Created: AGE 2008-03-13
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context )
-{
-    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
-    spNew->ReadArchive( input );
-    context.AddItem( spNew.release() );
 }
 
 namespace
 {
-    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type,
-        const ADN_Missions_Data::T_MissionParameter_Vector& context, const ADN_Missions_Data::T_Mission_Vector& missions )
+    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         //xml datas saving
         output << xml::start( name );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteArchive( output, name, context );
+            missions[i]->WriteArchive( output, name );
 
         //mission sheets saving
         const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
@@ -264,9 +221,9 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "missions" );
     ADN_Tools::AddSchema( output, "Missions" );
-    WriteMissions( output, "units", eEntityType_Pawn, unitContext_, unitMissions_ );
-    WriteMissions( output, "automats", eEntityType_Automat, automatContext_, automatMissions_ );
-    WriteMissions( output, "populations", eEntityType_Population, populationContext_, populationMissions_ );
+    WriteMissions( output, "units", eEntityType_Pawn, unitMissions_ );
+    WriteMissions( output, "automats", eEntityType_Automat, automatMissions_ );
+    WriteMissions( output, "populations", eEntityType_Population, populationMissions_ );
 
     //frag orders datas saving
     output << xml::start( "fragorders" );

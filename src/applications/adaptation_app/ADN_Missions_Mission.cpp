@@ -84,11 +84,9 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 // Name: ADN_Missions_Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contextLength,
-    ADN_Drawings_Data& drawings, const std::string& baseDir, const std::string& missionDir )
+void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const std::string& baseDir, const std::string& missionDir )
 {
     std::string missionSheetDesc, symbol;
-    std::size_t index = 0;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
         >> xml::optional >> xml::attribute( "symbol", symbol )
@@ -96,7 +94,7 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contex
         >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "package", strPackage_ )
-        >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
+        >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
     const std::string code = symbol.empty() ? " - " : symbol;
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawings.GetDrawing( code ) );
@@ -107,15 +105,11 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contex
 // Name: ADN_Missions_Mission::ReadParameter
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength )
+void ADN_Missions_Mission::ReadParameter( xml::xistream& input )
 {
-    index++;
-    if( index > contextLength )
-    {
-        std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
-        spNew->ReadArchive( input );
-        parameters_.AddItem( spNew.release() );
-    }
+    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
+    spNew->ReadArchive( input );
+    parameters_.AddItem( spNew.release() );
 }
 
 namespace
@@ -134,7 +128,7 @@ namespace
 // Name: ADN_Missions_Mission::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context )
+void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::string& type )
 {
     output << xml::start( "mission" );
     bool isAutomat = type == "automats";
@@ -168,11 +162,6 @@ void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::strin
             mrtDiaBehavior_ = QString( "MIS_%1_MRT_%2" ).arg( typeName ).arg( diaName ).toStdString();
         output << xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
                << xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ );
-    }
-    if( ! context.empty() )
-    {
-        for( unsigned i = 0; i < context.size(); ++i )
-            context[i]->WriteArchive( output );
     }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
@@ -225,4 +214,51 @@ void ADN_Missions_Mission::WriteMissionSheet( const std::string& baseDir, const 
     fileStream << missionSheetContent_.GetData();
     fileStream.close();
     missionSheetPath_ = fileName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::AddContextParameter
+// Created: ABR 2013-01-07
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs /* = 1 */, int maxOccurs /* = 1 */ )
+{
+    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
+
+    spNew->strName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr_ABC::eToTr );
+    spNew->diaName_ = ADN_Tr::ConvertFromContextParameters( contextType, ENT_Tr_ABC::eToSim );
+    spNew->type_ = parameterType;
+    spNew->isOptional_ = optional;
+    spNew->isContext_ = true;
+
+    if( minOccurs != 1 )
+        spNew->minOccurs_ = minOccurs;
+    if( maxOccurs != 1 )
+        spNew->maxOccurs_ = maxOccurs;
+
+    parameters_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::FillContextParameters
+// Created: ABR 2013-01-07
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::FillContextParameters( E_EntityType entityType )
+{
+    switch( entityType )
+    {
+    case eEntityType_Pawn:
+        AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, false );
+        AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, true, 1, std::numeric_limits< int >::max() );
+        AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     true );
+        AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     true );
+        break;
+    case eEntityType_Automat:
+        AddContextParameter( eContextParameters_Heading,    eMissionParameterTypeDirection, false );
+        AddContextParameter( eContextParameters_Limas,      eMissionParameterTypePhaseLine, true, 1, std::numeric_limits< int >::max() );
+        AddContextParameter( eContextParameters_Limit1,     eMissionParameterTypeLimit,     false );
+        AddContextParameter( eContextParameters_Limit2,     eMissionParameterTypeLimit,     false );
+        break;
+    default:
+        break;
+    }
 }

@@ -5134,6 +5134,22 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Disasters</source>
         <translation>Disasters</translation>
     </message>
+    <message>
+        <source>Danger direction</source>
+        <translation>Danger direction</translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
+        <translation>Phase lines</translation>
+    </message>
+    <message>
+        <source>Limit 1</source>
+        <translation>Limit 1</translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
+        <translation>Limit 2</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

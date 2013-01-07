@@ -368,20 +368,28 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
 // -----------------------------------------------------------------------------
 void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
-     Qt::ItemFlags flags = index.flags();
-     if( ( flags & Qt::ItemIsUserCheckable ) && ( flags & Qt::ItemIsEnabled ) )
-     {
-         QStyleOptionViewItemV4 viewItemOption( option );
-         const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
-         QRect newRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
-                                              QSize( option.decorationSize.width() + 5, option.decorationSize.height() ),
-                                              QRect( option.rect.x() + textMargin, option.rect.y(),
-                                                     option.rect.width() - ( 2 * textMargin ), option.rect.height() ) );
-         viewItemOption.rect = newRect;
-         QItemDelegate::paint( painter, viewItemOption, index );
-     }
-     else
-         QItemDelegate::paint( painter, option, index );
+    Qt::ItemFlags flags = index.flags();
+    if( ( flags & Qt::ItemIsUserCheckable ) )
+    {
+        // Draw background
+        painter->save();
+        drawBackground(painter, option, index);
+        painter->restore();
+
+        // Draw content
+        QStyleOptionViewItemV4 viewItemOption( option );
+        const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+        viewItemOption.decorationAlignment = Qt::AlignCenter;
+        QRect newRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
+                                             QSize( option.decorationSize.width() + 5, option.decorationSize.height() ),
+                                             QRect( option.rect.x(), option.rect.y(), option.rect.width() - ( 2 * textMargin ), option.rect.height() ) );
+
+        // Print original
+        viewItemOption.rect = newRect;
+        QItemDelegate::paint( painter, viewItemOption, index );
+    }
+    else
+        QItemDelegate::paint( painter, option, index );
 
     QPen oldPen = painter->pen();
     painter->setPen( gridPen_ );

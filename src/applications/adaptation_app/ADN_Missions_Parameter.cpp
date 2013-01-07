@@ -23,6 +23,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter()
     , minValue_  ( std::numeric_limits< int >::min() )
     , maxValue_  ( std::numeric_limits< int >::max() )
     , genObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
+    , isContext_( false )
 {
     FillChoices();
 }
@@ -48,6 +49,7 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
     newParam->minValue_   = minValue_.GetData();
     newParam->maxValue_   = maxValue_.GetData();
     newParam->diaName_    = diaName_.GetData();
+    newParam->isContext_  = isContext_;
     newParam->values_.reserve( values_.size() );
     for( IT_MissionParameterValue_Vector it = values_.begin(); it != values_.end(); ++it )
     {
@@ -81,7 +83,8 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
             >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
             >> xml::optional >> xml::attribute( "max-occurs", max )
             >> xml::optional >> xml::attribute( "min-value", minValue_ )
-            >> xml::optional >> xml::attribute( "max-value", maxValue_ );
+            >> xml::optional >> xml::attribute( "max-value", maxValue_ )
+            >> xml::optional >> xml::attribute( "is-context", isContext_ );
     if( max == "unbounded" )
         maxOccurs_ = std::numeric_limits< int >::max();
     else
@@ -191,6 +194,8 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
             << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) )
             << xml::attribute( "optional", isOptional_ )
             << xml::attribute( "dia-name", diaName );
+    if( isContext_ )
+        output << xml::attribute( "is-context", isContext_ );
     if( maxOccurs_ != 1 )
     {
         output << xml::attribute( "min-occurs", minOccurs_ );

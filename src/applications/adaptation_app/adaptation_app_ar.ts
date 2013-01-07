@@ -5121,6 +5121,22 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Disasters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Danger direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
