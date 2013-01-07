@@ -31,13 +31,13 @@ BOOST_FIXTURE_TEST_CASE( simple_flood_propagation, sword::propagation::ModuleFix
                                                         ] )
                                                       ( "low-areas", mock::any ) );
     // flood elevation
-    MOCK_EXPECT( GetAltitude ).once().with( 0.f, 0.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0.f, 0.f ).returns( 0 );
 
     // step
     for( int i = -2; i <= 2; ++i )
         for( int j = -2; j <= 2; ++j )
             if( std::abs( i ) != 2 || std::abs( j ) != 2 )
-                MOCK_EXPECT( GetAltitude ).once().with( i * 100.f, j * 100.f ).returns( 0 );
+                MOCK_EXPECT( GetModifiedAltitude ).once().with( i * 100.f, j * 100.f ).returns( 0 );
 
     PostCommand( "flood command", core::MakeModel( "center", core::MakeModel( "x", 0.f )
                                                                               ( "y", 0.f ) )
@@ -70,28 +70,28 @@ BOOST_FIXTURE_TEST_CASE( flood_propagation, sword::propagation::ModuleFixture )
                                                         ] )
                                                       ( "low-areas", mock::any ) );
     // flood elevation
-    MOCK_EXPECT( GetAltitude ).once().with( 0.f, 0.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0.f, 0.f ).returns( 0 );
 
     // elevation
-    MOCK_EXPECT( GetAltitude ).once().with( -100.f, -100.f ).returns( 100 );
-    MOCK_EXPECT( GetAltitude ).once().with( -100.f, 0.f ).returns( 100 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( -100.f, -100.f ).returns( 100 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( -100.f, 0.f ).returns( 100 );
     // step
-    MOCK_EXPECT( GetAltitude ).once().with( 0.f, 0.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 100.f, 0.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 0.f, -100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 0.f, 100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 200.f, 0.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 100.f, -100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 100.f, 100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 0.f, -200.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( -100.f, 100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 0, 200.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 200, -100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 100, -200.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 200, 100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( 100, 200.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( -200, 100.f ).returns( 0 );
-    MOCK_EXPECT( GetAltitude ).once().with( -100, 200.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0.f, 0.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 100.f, 0.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0.f, -100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0.f, 100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 200.f, 0.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 100.f, -100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 100.f, 100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0.f, -200.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( -100.f, 100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 0, 200.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 200, -100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 100, -200.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 200, 100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( 100, 200.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( -200, 100.f ).returns( 0 );
+    MOCK_EXPECT( GetModifiedAltitude ).once().with( -100, 200.f ).returns( 0 );
 
     PostCommand( "flood command", core::MakeModel( "center", core::MakeModel( "x", 0.f )
                                                                               ( "y", 0.f ) )

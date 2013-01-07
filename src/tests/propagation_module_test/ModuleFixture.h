@@ -15,7 +15,7 @@
 #define REGISTERED_HOOKS( APPLY ) \
 
 #define USED_HOOKS( APPLY ) \
-    APPLY( GetAltitude, 2, double, ( double x, double y ) )
+    APPLY( GetModifiedAltitude, 2, double, ( double x, double y ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
 
