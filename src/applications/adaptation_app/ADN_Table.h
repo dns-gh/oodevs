@@ -42,7 +42,6 @@ public:
     void RemoveItem( void* item );
 
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
-    void ActivateRatioColor() {}
     void Sort( int column, Qt::SortOrder order );
 
     QStandardItem* GetItem( int row, int col ) const;
