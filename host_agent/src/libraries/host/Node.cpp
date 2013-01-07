@@ -344,7 +344,7 @@ void Cleanup( Node::T_Process process, const FileSystem_ABC& fs, const Path& pat
 void Node::Remove( Async& async )
 {
     std::pair< T_Process, bool > pair = StopProcess( true );
-    async.Go( boost::bind( ::Cleanup, pair.first, boost::cref( deps_.fs ), GetRoot() ) );
+    async.Post( boost::bind( ::Cleanup, pair.first, boost::cref( deps_.fs ), GetRoot() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -394,7 +394,7 @@ void Node::UploadCache( io::Reader_ABC& src )
     }
     catch( ... )
     {
-        async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
+        async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
         throw;
     }
 
@@ -405,7 +405,7 @@ void Node::UploadCache( io::Reader_ABC& src )
     next.swap( cache_ );
     cache_size_ = cache_->GetSize();
     if( next )
-        async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
+        async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -472,7 +472,7 @@ Tree Node::DeleteCache()
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
     next.swap( cache_ );
-    async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, next->GetPath() ) );
     cache_size_ = 0;
     return next->GetProperties();
 }

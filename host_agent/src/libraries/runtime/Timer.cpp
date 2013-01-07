@@ -26,7 +26,7 @@ struct PrivateTimer : public Timer_ABC
         : timeout_( timeout )
         , task_   ( task )
     {
-        future_ = pool.Go( boost::bind( &PrivateTimer::Run, this ) );
+        future_ = pool.Post( boost::bind( &PrivateTimer::Run, this ) );
     }
 
     ~PrivateTimer()

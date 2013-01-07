@@ -300,7 +300,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     sqlite3_config( SQLITE_CONFIG_SINGLETHREAD );
     sqlite3_initialize();
     Scoper sqliteShutdown( &sqlite3_shutdown );
-    Pool pool( 8 );
+    Pool pool( 32, 256 );
     UuidFactory uuids;
     web::Client client;
     const proxy::Ssl ssl( cfg.ssl.enabled, cfg.ssl.certificate, cfg.ssl.key );

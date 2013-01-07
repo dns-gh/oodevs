@@ -130,7 +130,7 @@ bool NodeController::ReloadDirectory( runtime::Async& reload, const Path& dir )
 {
     const Path path = dir / ( type_ + ".id" );
     if( fs_.IsFile( path ) )
-        reload.Go( boost::bind( &NodeController::ReloadNode, this, path ) );
+        reload.Post( boost::bind( &NodeController::ReloadNode, this, path ) );
     return true;
 }
 
@@ -232,7 +232,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
     bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );
     if( !valid )
     {
-        async_.Go( boost::bind( &FileSystem_ABC::Remove, &fs_, output ) );
+        async_.Post( boost::bind( &FileSystem_ABC::Remove, &fs_, output ) );
         return T_Node();
     }
 

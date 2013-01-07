@@ -194,7 +194,7 @@ private:
             return false;
         const Path next = fs.MakeAnyPath( tomb_ );
         fs.Rename( root, next / "_" );
-        async.Go( boost::bind( &FileSystem_ABC::Remove, &fs, next ) );
+        async.Post( boost::bind( &FileSystem_ABC::Remove, &fs, next ) );
         return true;
     }
 
@@ -507,7 +507,7 @@ template< typename T >
 void AttachItem( Async& async, const FileSystem_ABC& fs, Package::T_Items& items, const T& item )
 {
     items.push_back( item );
-    async.Go( boost::bind( &Item::MakeChecksum, item, boost::cref( fs ) ) );
+    async.Post( boost::bind( &Item::MakeChecksum, item, boost::cref( fs ) ) );
 }
 
 template< typename T >
@@ -924,7 +924,7 @@ void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, 
     std::vector< Path > paths;
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
-        async.Go( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
+        async.Post( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
                   tomb, path_, boost::cref( *this ), boost::cref( install ), op, move ) );
     async.Join();
 
@@ -977,7 +977,7 @@ void Package::Uninstall( Async& io, const Path& tomb, const std::vector< size_t 
     Async async( pool_ );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
         if( IsItemIn( ids, item, false ) )
-            async.Go( boost::bind( &Item_ABC::Uninstall, item, boost::ref( io ), boost::cref( fs_ ), tomb ) );
+            async.Post( boost::bind( &Item_ABC::Uninstall, item, boost::ref( io ), boost::cref( fs_ ), tomb ) );
     async.Join();
     RemoveItems( items_, boost::bind( &IsItemIn, boost::cref( ids ), _1, true ) );
     Identify( *this );

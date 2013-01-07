@@ -62,7 +62,7 @@ namespace
 {
 void AsyncStop( Async& async, SessionController::T_Session session )
 {
-    async.Go( boost::bind( &Session_ABC::Stop, session ) );
+    async.Post( boost::bind( &Session_ABC::Stop, session ) );
 }
 }
 
@@ -98,7 +98,7 @@ void SessionController::RefreshSession( T_Session session )
 {
     Apply( session, boost::bind( &Session_ABC::Refresh, _1 ) );
     const T_Operand operand = boost::bind( &Session_ABC::Poll, _1 );
-    async_.Go( boost::bind( &SessionController::Apply, this, session, operand ) );
+    async_.Post( boost::bind( &SessionController::Apply, this, session, operand ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ bool SessionController::ReloadDirectory( runtime::Async& reload, const Path& dir
 {
     const Path path = dir / "session.id";
     if( fs_.IsFile( path ) )
-        reload.Go( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
+        reload.Post( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
     return true;
 }
 
@@ -275,7 +275,7 @@ SessionController::T_Session SessionController::Delete( const Uuid& node, const 
     if( !session )
         return session;
     LOG_INFO( log_ ) << "[session] Removed " << session->GetId() << " " << session->GetName() << " :" << session->GetPort();
-    async_.Go( boost::bind( &Session_ABC::Remove, session ) );
+    async_.Post( boost::bind( &Session_ABC::Remove, session ) );
     sessions_.Foreach( boost::bind( &Session_ABC::DetachReplay, _1, boost::ref( *session ) ) );
     return session;
 }

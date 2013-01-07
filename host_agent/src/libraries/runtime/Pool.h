@@ -28,21 +28,39 @@ class Pool : public Pool_ABC
 public:
     //! @name Constructors/Destructors
     //@{
-             Pool( size_t numThreads );
+             Pool( size_t cache, size_t max );
     virtual ~Pool();
     //@}
 
     //! @name Methods
     //@{
     virtual Future Post( const Task& task );
-    virtual Future Go( const Task& task );
     virtual void Stop();
+    virtual void Acquire();
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef boost::shared_ptr< boost::thread > T_Thread;
+    typedef std::vector< T_Thread > T_Threads;
     //@}
 
 private:
     //! @name Private members
     //@{
-    boost::thread_group threads_;
+    void AddThread();
+    void RunThread();
+    //@}
+
+private:
+    //! @name Private members
+    //@{
+    const uint32_t cache_; ///< max number of cached threads
+    const uint32_t max_;   ///< max number of threads
+    uint32_t load_;        ///< number of current tasks
+    uint32_t idle_;        ///< number of idle threads
+    boost::mutex access_;
+    T_Threads threads_;
     boost::asio::io_service service_;
     boost::asio::io_service::work work_;
     //@}

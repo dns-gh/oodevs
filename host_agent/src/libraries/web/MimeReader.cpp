@@ -281,7 +281,7 @@ void ParsePart( StreamBuffer& buf, const std::string& boundary, const T& part, P
 {
     boost::shared_ptr< io::Pipe_ABC > pipe = io::MakePipe();
     runtime::Async async( pool );
-    async.Go( boost::bind( &HandleRead, boost::cref( part->handler_ ), boost::ref( *pipe ) ) );
+    async.Post( boost::bind( &HandleRead, boost::cref( part->handler_ ), boost::ref( *pipe ) ) );
     ParseData( buf, boundary, pipe.get() );
     pipe->Close();
 }

@@ -24,22 +24,20 @@ struct TaskHandler
     typedef boost::packaged_task< void > Package;
 
     template< typename T >
-    explicit TaskHandler( const T& task )
-        : package_( boost::make_shared< Package >( task ) )
-    {
-        // NOTHING
-    }
-
-    ~TaskHandler()
+    TaskHandler( Pool* pool, const T& task )
+        : pool_   ( pool )
+        , package_( boost::make_shared< Package >( task ) )
     {
         // NOTHING
     }
 
     void operator()() const
     {
+        pool_->Acquire();
         (*package_)();
     }
 
+    Pool* pool_;
     boost::shared_ptr< Package > package_;
 };
 }
@@ -48,11 +46,14 @@ struct TaskHandler
 // Name: Pool::Pool
 // Created: BAX 2012-04-16
 // -----------------------------------------------------------------------------
-Pool::Pool( size_t numThreads )
-    : work_( service_ )
+Pool::Pool( size_t cache, size_t max )
+    : cache_( cache )
+    , max_  ( max )
+    , load_ ( 0 )
+    , idle_ ( 0 )
+    , work_ ( service_ )
 {
-    for( size_t i = 0; i < numThreads; ++i )
-        threads_.create_thread( boost::bind( &boost::asio::io_service::run, &service_ ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -64,12 +65,63 @@ Pool::~Pool()
     Stop();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Pool::AddThread
+// Created: BAX 2013-01-07
+// -----------------------------------------------------------------------------
+void Pool::AddThread()
+{
+    boost::lock_guard< boost::mutex > lock( access_ );
+    load_++;
+    const size_t current = threads_.size();
+    if( current >= max_ )
+        return;
+    if( load_ <= current )
+        return;
+    idle_++;
+    threads_.push_back( T_Thread( new boost::thread( boost::bind( &Pool::RunThread, this ) ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pool::Acquire
+// Created: BAX 2013-01-07
+// -----------------------------------------------------------------------------
+void Pool::Acquire()
+{
+    boost::lock_guard< boost::mutex > lock( access_ );
+    idle_--;
+}
+
 namespace
 {
-void DetachThread( const Pool::Task& task )
+bool IsThread( Pool::T_Thread thread, boost::thread::id id )
 {
-    boost::thread detached( task );
+    return thread->get_id() == id;
 }
+
+void RemoveThread( Pool::T_Threads& dst, boost::thread::id id )
+{
+    auto it = std::find_if( dst.begin(), dst.end(), boost::bind( &IsThread, _1, id ) );
+    assert( it != dst.end() );
+    dst.erase( it );
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Pool::RunThread
+// Created: BAX 2013-01-07
+// -----------------------------------------------------------------------------
+void Pool::RunThread()
+{
+    const auto id = boost::this_thread::get_id();
+    while( service_.run_one() )
+    {
+        boost::lock_guard< boost::mutex > lock( access_ );
+        load_--;
+        if( idle_ + 1 > cache_ )
+            return RemoveThread( threads_, id );
+        idle_++;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -78,19 +130,9 @@ void DetachThread( const Pool::Task& task )
 // -----------------------------------------------------------------------------
 Pool::Future Pool::Post( const Task& task )
 {
-    TaskHandler handler( task );
+    AddThread();
+    TaskHandler handler( this, task );
     service_.post( handler );
-    return Future( handler.package_->get_future() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Pool::Go
-// Created: BAX 2012-04-16
-// -----------------------------------------------------------------------------
-Pool::Future Pool::Go( const Task& task )
-{
-    TaskHandler handler( task );
-    service_.post( boost::bind( &DetachThread, handler ) );
     return Future( handler.package_->get_future() );
 }
 
@@ -101,5 +143,17 @@ Pool::Future Pool::Go( const Task& task )
 void Pool::Stop()
 {
     service_.stop();
-    threads_.join_all();
+    while( true )
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        if( threads_.empty() )
+            break;
+        const auto local = threads_;
+        threads_.clear();
+        lock.unlock();
+
+        // make sure we do not lock during join
+        for( auto it = local.begin(); it != local.end(); ++it )
+            (*it)->join();
+    }
 }

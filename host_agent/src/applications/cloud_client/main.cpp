@@ -56,7 +56,7 @@ int main( int argc, char* argv[] )
         QtLog log;
         Factory factory( log );
         FileSystem fs( log );
-        Pool pool( 8 );
+        Pool pool( 8, 256 );
         Head head( factory.GetRuntime(), fs, pool );
         return app.exec();
     }

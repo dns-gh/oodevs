@@ -887,7 +887,7 @@ void Session::ClearOutput( const Path& path )
         return;
     const Path output = deps_.fs.MakeAnyPath( paths_.trash );
     deps_.fs.Rename( path, output / "_" );
-    async_.Go( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
+    async_.Post( boost::bind( &FileSystem_ABC::Remove, &deps_.fs, output ) );
 }
 
 namespace

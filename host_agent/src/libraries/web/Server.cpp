@@ -385,13 +385,15 @@ struct Server::Private : public boost::noncopyable
         std::vector< const char* > options = boost::assign::list_of
             ( "enable_directory_listing" )( "false" )
             ( "listening_ports" )( port_.c_str() )
+            ( "num_threads" )( "0" )
             ( "request_timeout" )( timeout_ms.c_str() )
             ( 0 );
         mg_context* ptr = mg_start( &Private::OnHttpRequest, this, &options[0] );
         if( !ptr )
             throw std::runtime_error( "unable to start web server" );
         context_ = ptr;
-        async_.Go( boost::bind( &Private::Run, context_, boost::ref( async_ ) ) );
+        mg_ref_thread( context_ );
+        async_.Post( boost::bind( &Private::Run, context_, boost::ref( async_ ) ) );
     }
 
     // -----------------------------------------------------------------------------
@@ -400,13 +402,12 @@ struct Server::Private : public boost::noncopyable
     // -----------------------------------------------------------------------------
     static void Run( mg_context* ctx, Async& async )
     {
-        mg_ref_thread( ctx );
         auto unref_thread = runtime::Scoper( boost::bind( &mg_unref_thread, ctx ) );
         boost::shared_ptr< struct mg_socket > socket( mg_socket_create(), free );
         while( mg_consume_socket( ctx, socket.get() ) )
         {
             boost::shared_ptr< struct mg_connection > link( mg_connection_create( ctx, socket.get() ), free );
-            async.Go( boost::bind( &Private::Process, ctx, link ) );
+            async.Post( boost::bind( &Private::Process, ctx, link ) );
         }
     }
 

@@ -21,10 +21,8 @@ namespace mocks
         MockPool()
         {
             MOCK_EXPECT( Post ).calls( boost::bind( &MockPool::Call, this, _1 ) );
-            MOCK_EXPECT( Go ).calls( boost::bind( &MockPool::Call, this, _1 ) );
         }
         MOCK_METHOD( Post, 1 );
-        MOCK_METHOD( Go, 1 );
         MOCK_METHOD( Stop, 0 );
     private:
         typedef boost::promise< void > LazyPromise;
