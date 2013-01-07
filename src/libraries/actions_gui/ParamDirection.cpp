@@ -38,9 +38,7 @@ ParamDirection::ParamDirection( const InterfaceBuilder_ABC& builder, const kerne
     : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , value_   ( 0 )
 {
-    name_ = ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str();
-    if( name_.isEmpty() )
-        name_ = parameter_.GetName().c_str();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

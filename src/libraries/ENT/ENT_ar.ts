@@ -688,18 +688,6 @@
         <translation type="unfinished">حافة الجبل</translation>
     </message>
     <message>
-        <source>Danger direction</source>
-        <translation type="unfinished">إدارة الخطر</translation>
-    </message>
-    <message>
-        <source>Limit 1</source>
-        <translation type="unfinished">الحد الأقصى 1</translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
-        <translation type="unfinished">حد 2</translation>
-    </message>
-    <message>
         <source>unwounded</source>
         <translation type="unfinished">المعافين</translation>
     </message>

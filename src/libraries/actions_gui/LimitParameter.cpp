@@ -35,9 +35,6 @@ LimitParameter::LimitParameter( const InterfaceBuilder_ABC& builder, const kerne
     , selected_  ( 0 )
 {
     controller_.Register( *this );
-    name_ = ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str();
-    if( name_.isEmpty() )
-        name_ = parameter_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------

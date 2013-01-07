@@ -652,18 +652,6 @@
         <translation>bord de montagne</translation>
     </message>
     <message>
-        <source>Danger direction</source>
-        <translation>Direction dangereuse</translation>
-    </message>
-    <message>
-        <source>Limit 1</source>
-        <translation>Limit 1</translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
-        <translation>Limit 2</translation>
-    </message>
-    <message>
         <source>calm</source>
         <translation>calme</translation>
     </message>

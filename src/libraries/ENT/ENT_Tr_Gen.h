@@ -51,7 +51,6 @@ public:
     static const std::string& ConvertFromDemolitionTargetType( E_DemolitionTargetType, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     static const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
-    static const std::string& ConvertFromActionParameter( E_ActionParameter, E_Conversion = eToSim );
     static const std::string& ConvertFromCrossingType( E_CrossingType, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanWound( E_HumanWound, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
@@ -90,7 +89,6 @@ public:
     static E_DemolitionTargetType ConvertToDemolitionTargetType( const std::string& );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_Location ConvertToLocation( const std::string& );
-    static E_ActionParameter ConvertToActionParameter( const std::string& );
     static E_CrossingType ConvertToCrossingType( const std::string& );
     static E_HumanWound ConvertToHumanWound( const std::string& );
     static E_HumanRank ConvertToHumanRank( const std::string& );
@@ -130,7 +128,6 @@ private:
     typedef ENT_Tr::converter<E_DemolitionTargetType> T_ConverterDemolitionTargetType;
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
     typedef ENT_Tr::converter<E_Location> T_ConverterLocation;
-    typedef ENT_Tr::converter<E_ActionParameter> T_ConverterActionParameter;
     typedef ENT_Tr::converter<E_CrossingType> T_ConverterCrossingType;
     typedef ENT_Tr::converter<E_HumanWound> T_ConverterHumanWound;
     typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
@@ -169,7 +166,6 @@ private:
     static T_ConverterDemolitionTargetType DemolitionTargetTypeConverter_ [];
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
     static T_ConverterLocation LocationConverter_ [];
-    static T_ConverterActionParameter ActionParameterConverter_ [];
     static T_ConverterCrossingType CrossingTypeConverter_ [];
     static T_ConverterHumanWound HumanWoundConverter_ [];
     static T_ConverterHumanRank HumanRankConverter_ [];

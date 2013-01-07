@@ -652,18 +652,6 @@
         <translation>mountain edge</translation>
     </message>
     <message>
-        <source>Danger direction</source>
-        <translation>Danger direction</translation>
-    </message>
-    <message>
-        <source>Limit 1</source>
-        <translation>Limit 1</translation>
-    </message>
-    <message>
-        <source>Limit 2</source>
-        <translation>Limit 2</translation>
-    </message>
-    <message>
         <source>calm</source>
         <translation>calm</translation>
     </message>
