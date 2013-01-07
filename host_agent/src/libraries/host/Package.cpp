@@ -64,8 +64,9 @@ namespace
 {
 struct Metadata
 {
-    Metadata( const std::string& package, const std::string& version )
-        : package_ ( package )
+    Metadata( bool discard, const std::string& package, const std::string& version )
+        : discard_ ( discard )
+        , package_ ( package )
         , version_ ( version )
         , checksum_()
         , links_   ( 0 )
@@ -75,8 +76,9 @@ struct Metadata
     }
 
     Metadata()
-        : links_( 0 )
-        , size_ ( 0 )
+        : discard_( false )
+        , links_  ( 0 )
+        , size_   ( 0 )
     {
         // NOTHING
     }
@@ -136,7 +138,8 @@ struct Metadata
 
     void Save( const FileSystem_ABC& fs, const Path& root ) const
     {
-        fs.WriteFile( root / GetFilename(), ToJson( GetProperties() ) );
+        if( !discard_ )
+            fs.WriteFile( root / GetFilename(), ToJson( GetProperties() ) );
     }
 
     void TryUninstall( Async& async, const FileSystem_ABC& fs, const Path& root, const Path& tomb )
@@ -176,7 +179,8 @@ struct Metadata
 
 private:
     Metadata( const Tree& tree )
-        : package_ ( Get< std::string >( tree, "package" ) )
+        : discard_ ( false )
+        , package_ ( Get< std::string >( tree, "package" ) )
         , version_ ( GetVersion( tree, "version" ) )
         , checksum_( Get< std::string >( tree, "checksum" ) )
         , tomb_    ( Utf8( Get< std::string >( tree, "tomb" ) ) )
@@ -198,6 +202,7 @@ private:
         return true;
     }
 
+    const bool discard_;
     const std::string package_;
     const std::string version_;
     std::string checksum_;
@@ -821,7 +826,7 @@ bool Package::Parse()
         name_ = name;
         description_ = description;
         version_ = Metadata::GetVersion( tree, "content.version" );
-        meta.reset( new Metadata( name_, version_ ) );
+        meta.reset( new Metadata( true, name_, version_ ) );
     }
 
     items_.clear();
