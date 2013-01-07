@@ -34,7 +34,6 @@ public:
     virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion );
 
     void DisplayErrors() const;
-    virtual void GetSignatureErrors( std::vector< std::string >& errors ) const;
     virtual void GetXsdErrors( std::vector< std::string >& errors ) const;
     virtual void Purge();
     //@}
