@@ -176,7 +176,7 @@ void App::RunGUI( HINSTANCE hinstance )
         Shell_NotifyIcon( NIM_ADD,&TrayIcon_ );
 
         MSG msg;
-        while( GetMessageA( &msg, NULL, 0, 0 ) )
+        while( !quit_->IsSignaled() && GetMessageA( &msg, NULL, 0, 0 ) )
         {
             TranslateMessage( &msg );
             DispatchMessage( &msg );
