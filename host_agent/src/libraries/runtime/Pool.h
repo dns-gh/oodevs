@@ -28,7 +28,7 @@ class Pool : public Pool_ABC
 public:
     //! @name Constructors/Destructors
     //@{
-             Pool( size_t cache, size_t max );
+             Pool( uint32_t cache, uint32_t max );
     virtual ~Pool();
     //@}
 

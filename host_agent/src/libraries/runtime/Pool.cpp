@@ -46,7 +46,7 @@ struct TaskHandler
 // Name: Pool::Pool
 // Created: BAX 2012-04-16
 // -----------------------------------------------------------------------------
-Pool::Pool( size_t cache, size_t max )
+Pool::Pool( uint32_t cache, uint32_t max )
     : cache_( cache )
     , max_  ( max )
     , load_ ( 0 )
