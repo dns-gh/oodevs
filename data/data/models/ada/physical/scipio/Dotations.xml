@@ -1779,7 +1779,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="00010027" codeLFRIL="" codeNNO="1111110020027" id="81" id-nature="3" name="Obus 23 OE" nature="Solide" package-mass="0.001" package-size="50" package-volume="0.001" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010027" codeLFRIL="" codeNNO="1111110020027" id="81" id-nature="3" name="Obus 23 OE" nature="Solide" package-mass="0.001" package-size="50" package-volume="0.001" type="MissileAir">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2613,4 +2613,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="146" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="147" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="3135493304" -->
+<!-- signature="2566428544" -->
