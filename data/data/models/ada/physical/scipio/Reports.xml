@@ -37,7 +37,7 @@
   </report>
   <report category="operational" id="27" message="En cours de franchissement"/>
   <report category="operational" id="28" message="En attente d'ordre poursuivre"/>
-  <report category="operational" id="29" message="En attente d'ordre déboucher"/>
+  <report category="operational" id="29" message="En attente d'ordre déboucher / poursuivre"/>
   <report category="operational" id="30" message="Fixé"/>
   <report category="operational" id="31" message="En esquive"/>
   <report category="operational" id="32" message="Prise de contact"/>
@@ -678,4 +678,4 @@
     <parameter type="ResourceType"/>
   </report>
 </reports>
-<!-- signature="2500520245" -->
+<!-- signature="3920118980" -->
