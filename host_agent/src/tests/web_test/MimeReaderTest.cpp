@@ -26,7 +26,7 @@ namespace
     {
         Fixture()
             : reader()
-            , pool( 1 )
+            , pool( 1, 1 )
         {
             // NOTHING
         }

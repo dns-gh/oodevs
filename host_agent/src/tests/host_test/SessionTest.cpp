@@ -329,7 +329,7 @@ BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_pr
 {
     SessionPtr session = MakeSession();
     ProcessPtr process = StartSession( *session, processPid, processName );
-    Pool pool( 2 );
+    Pool pool( 2, 2 );
 
     Event waitPause, endPause;
     ExpectBlockingWebRequest( "/pause", 200, waitPause, endPause );
@@ -358,7 +358,7 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
 {
     SessionPtr session = MakeSession();
     ProcessPtr process = StartSession( *session, processPid, processName );
-    Pool pool( 1 );
+    Pool pool( 1, 1 );
 
     Event waitPause, endPause;
     ExpectBlockingWebRequest( "/pause", 200, waitPause, endPause );
