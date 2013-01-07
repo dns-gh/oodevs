@@ -163,7 +163,7 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
         for( DiffusionListData::CIT_Entities itEmitter = emitters_.begin(); itEmitter != emitters_.end(); ++itEmitter, ++row )
         {
             assert( itEmitter->second != 0 );
-            kernel::DictionaryExtensions* dico = const_cast< kernel::DictionaryExtensions* >( itEmitter->second->Retrieve< kernel::DictionaryExtensions >() );
+            const kernel::DictionaryExtensions* dico = itEmitter->second->Retrieve< kernel::DictionaryExtensions >();
             if( !dico )
                 return;
             unsigned long emitterRowId = itEmitter->second->GetId();
