@@ -407,6 +407,24 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanModel::ChangeShape
+// Created: JSR 2013-01-07
+// -----------------------------------------------------------------------------
+void UrbanModel::ChangeGeometry( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& block )
+{
+    T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
+    if( points.front() == points.back() )
+        points.pop_back();
+
+    if( points.size() < 3 || ! geostore_.get() )
+        return;
+
+    const geometry::Polygon2f polygon( points );
+    if( geostore_->CanCreateUrbanBlock( polygon ) )
+        block.Get< kernel::UrbanPositions_ABC >().ChangeGeometry( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanModel::DeleteBlock
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------

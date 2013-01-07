@@ -102,6 +102,17 @@ const geometry::Polygon2f& UrbanPositions::Polygon() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanPositions::ChangeGeometry
+// Created: JSR 2013-01-07
+// -----------------------------------------------------------------------------
+void UrbanPositions::ChangeGeometry( std::vector< geometry::Point2f >& points )
+{
+    ComputeCachedValues( points );
+    if( Entity_ABC* parent = const_cast< Entity_ABC* >( object_.Get< kernel::Hierarchies >().GetSuperior() ) )
+        parent->Get< UrbanPositions_ABC >().ResetConvexHull();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanPositions::IsInside
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------

@@ -2586,6 +2586,10 @@ This data can&apos;t be projected.</source>
         <source>Error during automatic process creation of urban blocks</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

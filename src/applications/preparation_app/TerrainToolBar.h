@@ -12,6 +12,7 @@
 
 #include "clients_gui/RichToolBar.h"
 #include "clients_gui/ShapeHandler_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
 
@@ -39,6 +40,7 @@ class UrbanModel;
 // =============================================================================
 class TerrainToolBar : public gui::RichToolBar
                      , public tools::SelectionObserver< kernel::UrbanObject_ABC >
+                     , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
                      , public gui::ShapeHandler_ABC
 {
     Q_OBJECT
@@ -53,6 +55,11 @@ public:
     //! @name SelectionObserver
     //@{
     virtual void NotifySelected( const kernel::UrbanObject_ABC* urbanObject );
+    //@}
+
+    //! @name ContextMenuObserver_ABC
+    //@{
+    virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu );
     //@}
 
     //! @name ShapeHandler_ABC
@@ -78,6 +85,7 @@ private slots:
     void OnSwitchMode();
     void OnBlockCreation();
     void OnBlockCreationAuto();
+    void OnChangeGeometry();
     //@}
 
 private:
@@ -93,6 +101,7 @@ private:
     QToolButton*                                   blockRemoveButton_;
     QDoubleSpinBox*                                roadWidthSpinBox_;
     bool                                           isAuto_;
+    bool                                           changingGeom_;
     //@}
 };
 

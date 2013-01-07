@@ -40,6 +40,7 @@ public:
     virtual float ComputeArea() const;
     virtual const std::vector< geometry::Point2f >& Vertices() const;
     virtual const geometry::Polygon2f& Polygon() const;
+    virtual void ChangeGeometry( std::vector< geometry::Point2f >& points );
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual bool IsInside( const geometry::Rectangle2f& rectangle ) const;
     virtual void SetInfrastructurePresent( bool present );

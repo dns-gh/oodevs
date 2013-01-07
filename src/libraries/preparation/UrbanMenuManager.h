@@ -13,7 +13,6 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <tools/Observer_ABC.h>
 
 namespace kernel
@@ -39,7 +38,6 @@ class UrbanMenuManager : public QObject
                        , public kernel::MultipleSelectionObserver< kernel::UrbanObject_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
                        , public kernel::ModesObserver_ABC
-                       , private boost::noncopyable
 {
     Q_OBJECT
 public:

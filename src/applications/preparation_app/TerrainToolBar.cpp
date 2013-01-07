@@ -75,6 +75,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     , urbanModel_   ( urbanModel )
     , selected_     ( controllers )
     , isAuto_       ( false )
+    , changingGeom_ ( false )
 {
     // Terrain button
     switchModeButton_ = AddButton( this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
@@ -161,6 +162,22 @@ void TerrainToolBar::NotifySelected( const kernel::UrbanObject_ABC* urbanObject 
 }
 
 // -----------------------------------------------------------------------------
+// Name: TerrainToolBar::NotifyContextMenu
+// Created: JSR 2013-01-07
+// -----------------------------------------------------------------------------
+void TerrainToolBar::NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu )
+{
+    if( GetCurrentMode() != ePreparationMode_Terrain )
+        return;
+    const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( object.Retrieve< kernel::Hierarchies >() );
+    if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+    {
+        selected_ = &object;
+        menu.InsertItem( "Urban", tr( "Change geometry" ), this, SLOT( OnChangeGeometry() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TerrainToolBar::Handle
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
@@ -168,7 +185,10 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
 {
     if( !selected_ )
         return;
-    urbanModel_.CreateUrbanBlocks( location, *selected_.ConstCast(), isAuto_, roadWidthSpinBox_->value() );
+    if( changingGeom_ )
+        urbanModel_.ChangeGeometry( location, *selected_.ConstCast() );
+    else
+        urbanModel_.CreateUrbanBlocks( location, *selected_.ConstCast(), isAuto_, roadWidthSpinBox_->value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +198,7 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
 void TerrainToolBar::OnBlockCreation()
 {
     isAuto_ = false;
+    changingGeom_ = false;
     eventStrategy_.TakeExclusiveFocus( paramLayer_ );
     paramLayer_.StartPolygon( *this );
     eventStrategy_.ReleaseExclusiveFocus();
@@ -193,6 +214,7 @@ void TerrainToolBar::OnBlockCreationAuto()
     try
     {
         isAuto_ = true;
+        changingGeom_ = false;
         eventStrategy_.TakeExclusiveFocus( paramLayer_ );
         paramLayer_.StartPolygon( *this );
         eventStrategy_.ReleaseExclusiveFocus();
@@ -204,6 +226,18 @@ void TerrainToolBar::OnBlockCreationAuto()
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainToolBar::OnChangeGeometry
+// Created: JSR 2013-01-07
+// -----------------------------------------------------------------------------
+void TerrainToolBar::OnChangeGeometry()
+{
+    changingGeom_ = true;
+    eventStrategy_.TakeExclusiveFocus( paramLayer_ );
+    paramLayer_.StartPolygon( *this );
+    eventStrategy_.ReleaseExclusiveFocus();
 }
 
 // -----------------------------------------------------------------------------
