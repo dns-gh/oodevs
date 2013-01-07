@@ -101,7 +101,7 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
                     cellVector.push_back( point + vBR );
                     TER_Localisation cell( TER_Localisation::ePolygon, cellVector );
                     const T_PointVector linePoints = it->second.localisation_.GetPoints();
-                    for( int i = 0; i < linePoints.size() - 1; ++i )
+                    for( std::size_t i = 0; i < linePoints.size() - 1; ++i )
                     {
                         if( cell.Intersect2D( MT_Line( linePoints[ i ], linePoints[ i + 1 ] ) ) )
                         {
