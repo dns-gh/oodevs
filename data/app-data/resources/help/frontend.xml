@@ -15,4 +15,3 @@
   <widget name="ScenarioLauncherPage"       page="FRONTEND_Play"/>
   <widget name="SelfTrainingPage"           page="FRONTEND_Play"/>
 </widgets>
-<!-- signature="2647812904" -->

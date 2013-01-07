@@ -1,3 +1,2 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <parameters limit="10" globalfactor="0.001" unit="2.5" urban="0.001" object="0.1" terrain="1" knowledge ="10" unitknowledge ="0.05"/>
-<!-- signature="3307496248" -->

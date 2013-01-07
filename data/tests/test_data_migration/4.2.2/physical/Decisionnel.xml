@@ -4,4 +4,3 @@
   <operational-state-weights component="0.3" crew="0.25" major-component="0.7"/>
   <force-ratio default-feedback-time="600s"/>
 </decisional>
-<!-- signature="1125604835" -->

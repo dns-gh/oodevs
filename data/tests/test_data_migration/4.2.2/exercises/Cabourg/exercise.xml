@@ -15,4 +15,3 @@
   <terrain name="Cabourg"/>
   <model dataset="@DATASET@" physical="@PHYSICAL@"/>
 </exercise>
-<!-- signature="3885974077" -->

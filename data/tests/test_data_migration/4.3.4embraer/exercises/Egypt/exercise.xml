@@ -28,4 +28,3 @@
   <terrain name="Nord egypt"/>
   <model dataset="@DATASET@" physical="@PHYSICAL@"/>
 </exercise>
-<!-- signature="0911045744" -->

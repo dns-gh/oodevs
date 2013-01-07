@@ -7,4 +7,3 @@
   <critical-intelligence-delay maximum-affinity="30m" minimum-affinity="2h" neutral-affinity="1h"/>
   <wound-effects-modificators available="1" captured="0" repairable="0.5" repairing="0.8" unavailable="0"/>
 </decisional>
-<!-- signature="3894531390" -->

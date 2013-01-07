@@ -11,4 +11,3 @@
   <terrain name="Drosoville"/>
   <model dataset="@DATASET@" physical="@PHYSICAL@"/>
 </exercise>
-<!-- signature="1308366207" -->

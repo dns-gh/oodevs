@@ -6,4 +6,3 @@
   <terrain name="Paris_Est"/>
   <model dataset="@DATASET@" physical="@PHYSICAL@"/>
 </exercise>
-<!-- signature="3578795747" -->

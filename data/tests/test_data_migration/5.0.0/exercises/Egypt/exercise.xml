@@ -29,4 +29,3 @@
   <model dataset="@DATASET@" physical="@PHYSICAL@"/>
   <settings file="settings.xml"/>
 </exercise>
-<!-- signature="3642654673" -->

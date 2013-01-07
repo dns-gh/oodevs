@@ -2393,4 +2393,3 @@
   <resource category="ration" codeEMAT6="Eau" codeEMAT8="Eau" codeLFRIL="Eau" codeNNO="Eau" id="141" id-nature="3" name="Eau" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
 </resources>
-<!-- signature="0413536065" -->

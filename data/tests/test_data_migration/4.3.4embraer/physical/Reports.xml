@@ -575,4 +575,3 @@
   <report category="operational" id="403" message="No platoon can do the main effect"/>
   <report category="operational" id="404" message="Obstacle should be activated"/>
 </reports>
-<!-- signature="1647196993" -->
