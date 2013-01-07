@@ -286,9 +286,11 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
         editor->GetConnector().Connect( static_cast< ADN_Connector_Vector_ABC* >( data ) );
         return editor;
     }
-    else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
+    else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
         ADN_EditLine_String* editor = new ADN_EditLine_String( parent );
+        if( !element->isEmpty() )
+            editor->setValidator( new QRegExpValidator( QRegExp( *element ), editor ) );
         editor->GetConnector().Connect( data );
         editor->setAlignment( qApp->isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft );
         return editor;
@@ -348,7 +350,7 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnector = &static_cast< ADN_ComboBox_Enum* >( editor )->GetConnector();
     else if( std::find( comboPtrInVectors_.begin(), comboPtrInVectors_.end(), position->id_ ) != comboPtrInVectors_.end() )
         guiConnector = &static_cast< ADN_ComboBox_Vector* >( editor )->GetConnector();
-    else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
+    else if( const QString* element = Find( lineEdits_, position->id_ ) )
         guiConnector = &static_cast< ADN_EditLine_String* >( editor )->GetConnector();
     else if( std::find( delayEdits_.begin(), delayEdits_.end(), position->id_ ) != delayEdits_.end() )
         guiConnector = &static_cast< ADN_TimeField* >( editor )->GetConnector();
@@ -360,6 +362,10 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnector->Disconnect( data );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::editorEvent
+// Created: NPT 2012-11-27
+// -----------------------------------------------------------------------------
 void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
      Qt::ItemFlags flags = index.flags();

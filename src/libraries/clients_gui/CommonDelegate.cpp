@@ -98,9 +98,12 @@ unsigned int CommonDelegate::AddComboBox( int fromRow, int toRow, int fromCol, i
 // Name: CommonDelegate::AddLineEdit
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------
-unsigned int CommonDelegate::AddLineEdit( int fromRow, int toRow, int fromCol, int toCol )
+unsigned int CommonDelegate::AddLineEdit( int fromRow, int toRow, int fromCol, int toCol, QString regExp /*= ""*/ )
 {
-    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, lineEdits_ );
+    unsigned int id = GetNewId();
+    CreatePosition( id, fromRow, toRow, fromCol, toCol );
+    lineEdits_[ id ] = regExp;
+    return id;
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +280,7 @@ QWidget* CommonDelegate::createEditor( QWidget* parent, const QStyleOptionViewIt
         editor->addItems( *element );
         return editor;
     }
-    else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
+    else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
         QLineEdit* editor = new QLineEdit( parent );
         return editor;
@@ -319,9 +322,11 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
         QComboBox* comboBox = static_cast< QComboBox* >( editor );
         comboBox->setCurrentIndex( value );
     }
-    else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
+    else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
         QLineEdit* lineEdit = static_cast< QLineEdit* >( editor );
+        if( !element->isEmpty() )
+            lineEdit->setValidator( new QRegExpValidator( QRegExp( *element ), 0 ) );
         lineEdit->setText( newIndex.model()->data( newIndex, Qt::EditRole ).toString() );
     }
     else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
@@ -361,7 +366,7 @@ void CommonDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, c
         model->setData( index, comboBox->currentIndex(), Roles::DataRole );
         model->setData( index, comboBox->currentText(), Qt::EditRole );
     }
-    else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
+    else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
         QLineEdit* editLine = static_cast< QLineEdit* >( editor );
         model->setData( index, editLine->text(), Roles::DataRole );

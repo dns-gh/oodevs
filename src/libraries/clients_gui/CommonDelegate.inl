@@ -57,9 +57,9 @@ unsigned int CommonDelegate::AddComboBoxOnRow( int row, T enumMax )
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------
 inline
-unsigned int CommonDelegate::AddLineEditOnRow( int row )
+unsigned int CommonDelegate::AddLineEditOnRow( int row, QString regExp /*= ""*/ )
 {
-    return AddLineEdit( row, row, -1, -1 );
+    return AddLineEdit( row, row, -1, -1, regExp );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,9 +122,9 @@ unsigned int CommonDelegate::AddComboBoxOnColumn( int col, T enumMax )
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------
 inline
-unsigned int CommonDelegate::AddLineEditOnColumn( int col )
+unsigned int CommonDelegate::AddLineEditOnColumn( int col, QString regExp /*= ""*/ )
 {
-    return AddLineEdit( -1, -1, col, col );
+    return AddLineEdit( -1, -1, col, col, regExp );
 }
 
 // -----------------------------------------------------------------------------

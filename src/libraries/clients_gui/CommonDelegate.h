@@ -67,7 +67,7 @@ public:
     unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol, QStringList stringList );
     template< typename T >
     unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol, T enumMax );
-    unsigned int AddLineEdit( int fromRow, int toRow, int fromCol, int toCol );
+    unsigned int AddLineEdit( int fromRow, int toRow, int fromCol, int toCol, QString regExp = "" );
     unsigned int AddCheckBox( int fromRow, int toRow, int fromCol, int toCol );
     //@}
 
@@ -78,7 +78,7 @@ public:
     unsigned int AddComboBoxOnRow( int row, QStringList stringList );
     template< typename T >
     unsigned int AddComboBoxOnRow( int row, T enumMax );
-    unsigned int AddLineEditOnRow( int row );
+    unsigned int AddLineEditOnRow( int row, QString regExp = "" );
     unsigned int AddCheckBoxOnRow( int row );
     //@}
 
@@ -89,7 +89,7 @@ public:
     unsigned int AddComboBoxOnColumn( int column, QStringList stringList );
     template< typename T >
     unsigned int AddComboBoxOnColumn( int column, T enumMax );
-    unsigned int AddLineEditOnColumn( int column );
+    unsigned int AddLineEditOnColumn( int column, QString regExp = "" );
     unsigned int AddCheckBoxOnColumn( int column );
     //@}
 
@@ -221,6 +221,7 @@ protected:
     typedef std::map< unsigned int, SpinBoxDescription< int > >    T_SpinBoxs;
     typedef std::map< unsigned int, SpinBoxDescription< double > > T_DoubleSpinBoxs;
     typedef std::map< unsigned int, QStringList >                  T_ComboBoxs;
+    typedef std::map< unsigned int, QString >                      T_LineEdits;
     typedef std::vector< unsigned int >                            T_SimpleWidget;
     //@}
 
@@ -249,7 +250,7 @@ protected:
     T_SpinBoxs       spinBoxs_;
     T_DoubleSpinBoxs doubleSpinBoxs_;
     T_ComboBoxs      comboBoxs_;
-    T_SimpleWidget   lineEdits_;
+    T_LineEdits      lineEdits_;
     T_SimpleWidget   checkBoxs_;
 
     T_Positions                                     positions_;
