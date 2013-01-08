@@ -517,12 +517,7 @@
         <hit-probability distance="3000" percentage="0.4"/>
         <hit-probability distance="4000" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="1500" percentage="0.2"/>
-        <hit-probability distance="3000" percentage="0.1"/>
-        <hit-probability distance="4000" percentage="0.01"/>
-        <hit-probability distance="0" percentage="1"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon Stabilise" munition="CART 120 OFL F1">
@@ -548,12 +543,7 @@
         <hit-probability distance="4000" percentage="0.4"/>
         <hit-probability distance="5330" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="4000" percentage="0.04"/>
-        <hit-probability distance="5330" percentage="0.01"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 105 F3 OCC F3">
@@ -579,12 +569,7 @@
         <hit-probability distance="1700" percentage="0.4"/>
         <hit-probability distance="2250" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="850" percentage="0.3"/>
-        <hit-probability distance="2250" percentage="0.01"/>
-        <hit-probability distance="1700" percentage="0.15"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 105  F3 OE F3">
@@ -641,12 +626,7 @@
         <hit-probability distance="2500" percentage="0.4"/>
         <hit-probability distance="3300" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="1250" percentage="0.2"/>
-        <hit-probability distance="2500" percentage="0.08"/>
-        <hit-probability distance="3300" percentage="0.01"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 20 AME 621">
@@ -900,12 +880,7 @@
         <hit-probability distance="2000" percentage="0.4"/>
         <hit-probability distance="2650" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="2000" percentage="0.04"/>
-        <hit-probability distance="2650" percentage="0.01"/>
-        <hit-probability distance="1000" percentage="0.1"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Fusil PGM" munition="CART 12.7  BAL PF F2">
@@ -1216,12 +1191,7 @@
         <hit-probability distance="1600" percentage="0.4"/>
         <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="1600" percentage="0.1"/>
-        <hit-probability distance="2130" percentage="0.01"/>
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.2"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon Stabilise" munition="Obus 125 OFL">
@@ -1247,12 +1217,7 @@
         <hit-probability distance="1600" percentage="0.4"/>
         <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.1"/>
-        <hit-probability distance="2130" percentage="0.01"/>
-        <hit-probability distance="1600" percentage="0.04"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Lance Missile AC" munition="Missile AT7">
@@ -1511,12 +1476,7 @@
         <hit-probability distance="4000" percentage="0.4"/>
         <hit-probability distance="5330" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="2000" percentage="0.1"/>
-        <hit-probability distance="4000" percentage="0.04"/>
-        <hit-probability distance="5330" percentage="0.01"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 90 F2 OFUM">
@@ -1550,13 +1510,7 @@
         <hit-probability distance="1400" percentage="0.2"/>
         <hit-probability distance="1600" percentage="0"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="400" percentage="0.5"/>
-        <hit-probability distance="800" percentage="0.3"/>
-        <hit-probability distance="900" percentage="0.05"/>
-        <hit-probability distance="1100" percentage="0"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon" munition="CART 105 F3 OFUM PH">
@@ -1594,12 +1548,7 @@
         <hit-probability distance="2000" percentage="0.2"/>
         <hit-probability distance="2100" percentage="0"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="100" percentage="0.5"/>
-        <hit-probability distance="1000" percentage="0"/>
-        <hit-probability distance="800" percentage="0.1"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Lance Grenade" munition="GR 51 FUM INC LGI">
@@ -2216,12 +2165,7 @@
         <hit-probability distance="1470" percentage="0.01"/>
         <hit-probability distance="550" percentage="0.6"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="550" percentage="0.3"/>
-        <hit-probability distance="1470" percentage="0.01"/>
-        <hit-probability distance="1100" percentage="0.15"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Fusil Assaut AK 47" munition="Charg 7,62">
@@ -2314,12 +2258,7 @@
         <hit-probability distance="1100" percentage="0.35"/>
         <hit-probability distance="1450" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="550" percentage="0.2"/>
-        <hit-probability distance="1100" percentage="0.1"/>
-        <hit-probability distance="1450" percentage="0.01"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Canon 115" munition="Obus 115 OFL">
@@ -2345,12 +2284,7 @@
         <hit-probability distance="1800" percentage="0.4"/>
         <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="900" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0.04"/>
-        <hit-probability distance="2400" percentage="0.01"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Mitrailleuse Coaxiale" munition="CART 7.62">
@@ -2505,12 +2439,7 @@
         <hit-probability distance="1800" percentage="0.4"/>
         <hit-probability distance="2400" percentage="0.01"/>
       </hit-probabilities>
-      <hit-probabilities target="Personnel">
-        <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="900" percentage="0.1"/>
-        <hit-probability distance="1800" percentage="0.04"/>
-        <hit-probability distance="2400" percentage="0.01"/>
-      </hit-probabilities>
+      <hit-probabilities target="Personnel"/>
     </direct-fire>
   </weapon-system>
   <weapon-system launcher="Lance Missile SOL AIR" munition="Missile SA 14">
@@ -3195,4 +3124,4 @@
     </direct-fire>
   </weapon-system>
 </weapons>
-<!-- signature="1178172908" -->
+<!-- signature="0550931533" -->
