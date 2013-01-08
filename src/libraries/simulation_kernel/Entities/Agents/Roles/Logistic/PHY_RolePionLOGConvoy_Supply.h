@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_Supply.h"
 
+class MIL_Agent_ABC;
 class MIL_AgentPion;
 
 namespace logistic
@@ -68,7 +69,7 @@ public:
 
     virtual int                            ConvoyGetCurrentAction         () const;
     virtual logistic::SupplyRecipient_ABC* ConvoyGetCurrentSupplyRecipient() const;
-    virtual logistic::SupplySupplier_ABC*  ConvoyGetSupplier              () const;
+    virtual const MIL_Agent_ABC*           ConvoyGetSupplier              () const;
     virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider  () const;
     virtual const T_PointVector*           ConvoyGetPathToNextDestination () const;
 

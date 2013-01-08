@@ -29,13 +29,14 @@ namespace logistic
     class SupplySupplier_ABC;
 }
 
-class PHY_DotationStock;
+class MIL_Agent_ABC;
+class MIL_AgentPion;
+class MIL_AgentPionLOG_ABC;
 class MIL_Automate;
+class MIL_AutomateLOG;
+class PHY_DotationStock;
 class PHY_DotationCategory;
 class PHY_ComposantePion;
-class MIL_AutomateLOG;
-class MIL_AgentPionLOG_ABC;
-class MIL_AgentPion;
 class PHY_DotationNature;
 class PHY_ComposanteTypePion;
 
@@ -129,8 +130,8 @@ public:
 
     virtual int                            ConvoyGetCurrentAction() const { return 0; };
     virtual logistic::SupplyRecipient_ABC* ConvoyGetCurrentSupplyRecipient() const { return 0; };
-    virtual logistic::SupplySupplier_ABC*  ConvoyGetSupplier              () const { return 0; };
-    virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider  () const { return 0; };
+    virtual const MIL_Agent_ABC*           ConvoyGetSupplier() const { return 0; };
+    virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider() const { return 0; };
     virtual const T_PointVector*           ConvoyGetPathToNextDestination() const { return 0; };
     //@}
 

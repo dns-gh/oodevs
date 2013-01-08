@@ -402,11 +402,14 @@ bool MIL_AutomateLOG::SupplyHasStock( const PHY_DotationCategory& dotationCatego
 // Name: MIL_AutomateLOG::SupplyGetStock
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-double MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double quantity ) const
+MIL_AutomateLOG::Stock MIL_AutomateLOG::SupplyGetStock( const PHY_DotationCategory& dotationCategory, double quantity ) const
 {
     SupplyStockReservationVisitor visitor( dotationCategory, quantity );
     Visit( visitor );
-    return quantity - visitor.remainingQuantity_;
+    Stock result;
+    result.quantity_ = quantity - visitor.remainingQuantity_;
+    result.provider_ = visitor.provider_;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

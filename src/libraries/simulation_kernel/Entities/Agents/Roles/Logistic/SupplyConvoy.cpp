@@ -36,6 +36,7 @@ SupplyConvoy::SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, Supp
     , currentAction_                ( eNone )
     , timeRemainingForCurrentAction_( 0 )
     , currentSupplyRecipient_       ( 0 )
+    , provider_                     ( 0 )
 {
 }
 
@@ -236,4 +237,13 @@ bool SupplyConvoy::CanTransport( const PHY_DotationCategory& dotationCategory ) 
         if( it->second->CanTransport( dotationCategory ) )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::SetProvider
+// Created: LDC 2013-01-08
+// -----------------------------------------------------------------------------
+void SupplyConvoy::SetProvider( const MIL_Agent_ABC* provider )
+{
+    provider_ = provider;
 }

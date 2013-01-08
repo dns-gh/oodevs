@@ -32,6 +32,7 @@ SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParamet
     : id_                       ( idManager_.GetFreeId() )
     , creationTick_             ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( supplier )
+    , provider_                 ( 0 )
     , state_                    ( eConvoyWaitingForTransporters )
     , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
     , convoy_                   ( parameters.GetConvoyFactory().Create( *this, supplier, parameters ) )
@@ -92,6 +93,8 @@ void SupplyConsign::Activate()
             boost::shared_ptr< SupplyRequest_ABC > request = requestData.second;
             request->ReserveStock();
             resources_[ &request->GetDotationCategory() ] += request->GetGrantedQuantity();
+            if( !provider_ )
+                provider_ = request->GetProvider();
         }
     BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
         data.first->OnSupplyScheduled( shared_from_this() );
@@ -239,7 +242,8 @@ void SupplyConsign::DoConvoySetup()
 {
     if( IsActionDone( convoy_->Setup() ) )
     {
-        SetState( eConvoyGoingToLoadingPoint ); 
+        SetState( eConvoyGoingToLoadingPoint );
+        convoy_->SetProvider( provider_ );
         convoy_->GetTransportersProvider().OnSupplyConvoyLeaving( shared_from_this() );
     }
 }

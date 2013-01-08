@@ -16,6 +16,7 @@
 #include <deque>
 
 class PHY_DotationCategory;
+class MIL_Agent_ABC;
 
 namespace logistic {
     class SupplyConvoy_ABC;
@@ -121,6 +122,7 @@ private:
     unsigned long id_;
     unsigned long creationTick_;
     SupplySupplier_ABC& supplier_;
+    const MIL_Agent_ABC* provider_;
     E_State state_;
     unsigned currentStateEndTimeStep_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;

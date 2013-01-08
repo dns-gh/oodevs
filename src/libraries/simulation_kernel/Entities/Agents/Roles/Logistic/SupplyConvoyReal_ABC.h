@@ -57,6 +57,7 @@ public:
     virtual SupplySupplier_ABC&  GetSupplier              () const = 0;
     virtual SupplySupplier_ABC&  GetTransportersProvider  () const = 0;
     virtual const T_PointVector* GetPathToNextDestination () const = 0;
+    virtual const MIL_Agent_ABC* GetProvider              () const = 0;
     //@}
 };
 

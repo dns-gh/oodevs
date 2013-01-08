@@ -143,9 +143,14 @@ int PHY_RolePionLOGConvoy_Supply::ConvoyGetCurrentAction() const
 // Name: PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier
 // Created: NLD 2011-08-02
 // -----------------------------------------------------------------------------
-logistic::SupplySupplier_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier() const
+const MIL_Agent_ABC* PHY_RolePionLOGConvoy_Supply::ConvoyGetSupplier() const
 {
-    return convoy_ ? &convoy_->GetSupplier() : 0;
+    if( !convoy_ )
+        return 0;
+    const MIL_Agent_ABC* result = convoy_->GetProvider();
+    if( !result )
+        result = convoy_->GetTransportersProvider().GetPC();
+    return result;
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 class PHY_DotationCategory;
 class PHY_ComposantePion;
 class PHY_ComposanteTypePion;
+class MIL_Agent_ABC;
 class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_AutomateLOG;
@@ -39,7 +40,12 @@ public:
              SupplySupplier_ABC() {}
     virtual ~SupplySupplier_ABC() {}
     //@}
-
+    
+    struct Stock
+    {
+        double quantity_;
+        const MIL_Agent_ABC* provider_;
+    };
     //! @name Operations
     //@{
     virtual const MT_Vector2D&   GetPosition          () const = 0;
@@ -47,7 +53,7 @@ public:
     virtual       bool           BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const = 0;
 
     virtual bool   SupplyHasStock                     ( const PHY_DotationCategory& dotationCategory ) const = 0;
-    virtual double SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const = 0;
+    virtual Stock  SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const = 0;
     virtual bool   SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double quantity ) const = 0;
     virtual void   SupplyHandleRequest                ( boost::shared_ptr < logistic::SupplyConsign_ABC > consign ) = 0;
     virtual bool   SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const = 0;

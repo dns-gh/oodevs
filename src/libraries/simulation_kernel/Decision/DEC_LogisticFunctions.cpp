@@ -640,13 +640,9 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const MIL_Agent_ABC&
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
     {
-        logistic::SupplySupplier_ABC* recipient = role->ConvoyGetSupplier();
-        if( recipient )
-        {
-            const MIL_AgentPion* pc = recipient->GetPC();
-            if( pc )
-                return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
-        }
+        const MIL_Agent_ABC* provider = role->ConvoyGetSupplier();
+        if( provider )
+            return const_cast< DEC_Decision_ABC* >( &provider->GetDecision() );
     }
     return 0;
 }

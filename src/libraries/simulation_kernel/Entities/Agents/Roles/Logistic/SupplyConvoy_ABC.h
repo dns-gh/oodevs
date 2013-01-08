@@ -11,6 +11,7 @@
 #define __SupplyConvoy_ABC_h_
 
 class PHY_DotationCategory;
+class MIL_Agent_ABC;
 
 namespace sword {
     class UnitId;
@@ -52,7 +53,8 @@ public:
     //! @name Accessors
     //@{
     virtual SupplySupplier_ABC& GetTransportersProvider() const = 0;
-    virtual bool                CanTransport           ( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual bool CanTransport( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual void SetProvider( const MIL_Agent_ABC* provider ) = 0;
     //@}
 
     //! @name Network

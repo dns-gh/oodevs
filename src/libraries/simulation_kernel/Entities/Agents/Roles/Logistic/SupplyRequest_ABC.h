@@ -12,6 +12,7 @@
 
 class PHY_DotationCategory;
 class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 namespace sword
 {
@@ -64,6 +65,7 @@ public:
     virtual const PHY_DotationCategory& GetDotationCategory () const = 0;
     virtual       double                GetGrantedQuantity  () const = 0;
     virtual       double                GetRequestedQuantity() const = 0;
+    virtual const MIL_Agent_ABC*        GetProvider         () const = 0;
     //@}
 
     //! @name Network
