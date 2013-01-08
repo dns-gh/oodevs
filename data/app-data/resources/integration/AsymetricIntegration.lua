@@ -162,17 +162,14 @@ integration.dropUnit = function( unit )
 end
 
 integration.shareKnowledge = function( dest, delay )
-    meKnowledge:RC( eRC_DebutLiaison )
     DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent( myself, dest.source, delay )
 end
 
 integration.shareKnowledgeAgent = function( dest, delay )
-    meKnowledge:RC( eRC_DebutLiaison )
     DEC_Connaissances_PartageConnaissancesAvec(DEC_GetAutomate( dest.source ), delay )
 end
 
 integration.shareKnowledgeAgentFromAutomat = function( dest, delay )
-    meKnowledge:RC( eRC_DebutLiaison )
     DEC_Connaissances_PartageConnaissancesAvec(dest.source, delay )
 end
 
