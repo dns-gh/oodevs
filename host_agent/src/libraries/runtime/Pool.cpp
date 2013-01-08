@@ -102,8 +102,8 @@ bool IsThread( Pool::T_Thread thread, boost::thread::id id )
 void RemoveThread( Pool::T_Threads& dst, boost::thread::id id )
 {
     auto it = std::find_if( dst.begin(), dst.end(), boost::bind( &IsThread, _1, id ) );
-    assert( it != dst.end() );
-    dst.erase( it );
+    if( it != dst.end() )
+        dst.erase( it );
 }
 }
 
