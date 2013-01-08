@@ -8573,8 +8573,8 @@
       <equipment count="1" crew="1" type="VTL R Remorque"/>
       <equipment count="1" crew="2" type="VTC P4"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -8597,8 +8597,8 @@
       <equipment count="1" crew="1" type="VTL R Remorque"/>
       <equipment count="4" crew="1" major="true" type="Centrale GE 80 kW"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -8620,8 +8620,8 @@
       <equipment count="1" crew="3" loadable="true" major="true" type="MATEM"/>
       <equipment count="2" crew="3" major="true" type="UMTE"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="1200"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
@@ -9171,7 +9171,7 @@
     <equipments>
       <equipment count="1" crew="150" loadable="true" major="true" type="150 Individus"/>
     </equipments>
-    <sensors-range range="0"/>
+    <sensors-range range="1500"/>
     <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
@@ -12488,7 +12488,7 @@
     <equipments>
       <equipment count="1" crew="150" loadable="true" major="true" type="150 Individus"/>
     </equipments>
-    <sensors-range range="0"/>
+    <sensors-range range="1500"/>
     <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
@@ -12511,7 +12511,7 @@
     <equipments>
       <equipment count="1" crew="150" loadable="true" major="true" type="150 Individus"/>
     </equipments>
-    <sensors-range range="3000"/>
+    <sensors-range range="1500"/>
     <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
@@ -12760,8 +12760,8 @@
       <equipment count="2" crew="1" type="GBC 8 KT"/>
       <equipment count="2" crew="2" major="true" type="PVP Circu"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -12783,8 +12783,8 @@
       <equipment count="2" crew="1" type="Moto CAGIVA 350"/>
       <equipment count="2" crew="3" major="true" type="PVP Circu"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="1200"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -12808,8 +12808,8 @@
       <equipment count="6" crew="3" major="true" type="PVP Circu"/>
       <equipment count="4" crew="2" type="GBC 180CSIR"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="1200"/>
     <crew-ranks>
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="13" type="SousOfficier"/>
@@ -12833,8 +12833,8 @@
       <equipment count="5" crew="2" type="GBC 180"/>
       <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="1200"/>
     <crew-ranks>
       <crew-rank count="2" type="Officier"/>
       <crew-rank count="7" type="SousOfficier"/>
@@ -12857,8 +12857,8 @@
       <equipment count="2" crew="1" loadable="true" type="Milicien RPG"/>
       <equipment count="1" crew="2" type="PICK UP"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="5000"/>
+    <equipments-range range="1800"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -12888,8 +12888,8 @@
       <equipment count="1" crew="1" loadable="true" type="Milicien RPG"/>
       <equipment count="1" crew="2" type="PICK UP"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="5000"/>
+    <equipments-range range="1800"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -12919,8 +12919,8 @@
       <equipment count="1" crew="1" loadable="true" type="Milicien RPG"/>
       <equipment count="1" crew="2" major="true" type="PICK UP 23/2"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="5000"/>
+    <equipments-range range="2200"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -15387,8 +15387,8 @@
     <equipments>
       <equipment count="2" crew="2" major="true" type="MTU 72"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -15416,8 +15416,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="GSP"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -15503,8 +15503,8 @@
     <equipments>
       <equipment count="2" crew="4" major="true" type="GMZ 3"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="1000"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -15532,8 +15532,8 @@
     <equipments>
       <equipment count="2" crew="1" major="true" type="MDK2"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -15619,8 +15619,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="PMP"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -16109,8 +16109,8 @@
     <equipments>
       <equipment count="2" crew="3" major="true" type="TMM"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -16138,8 +16138,8 @@
     <equipments>
       <equipment count="2" crew="5" major="true" type="PMR-3 + ZIL 157"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -16167,8 +16167,8 @@
     <equipments>
       <equipment count="2" crew="2" major="true" type="PTS"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="1" type="SousOfficier"/>
@@ -16196,8 +16196,8 @@
     <equipments>
       <equipment count="3" crew="1" major="true" type="PZM-2"/>
     </equipments>
-    <sensors-range range="0"/>
-    <equipments-range range="0"/>
+    <sensors-range range="1500"/>
+    <equipments-range range="300"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
@@ -18068,4 +18068,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2787533454" -->
+<!-- signature="2193504404" -->
