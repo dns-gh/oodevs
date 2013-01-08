@@ -1216,6 +1216,7 @@
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
         <mission name="PION Produire et alimenter"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2951,6 +2952,7 @@
         <mission name="PION LOGISTIQUE Se Deployer"/>
         <mission name="PION Produire et alimenter"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -3242,6 +3244,7 @@
         </mission>
         <mission name="PION Produire et alimenter"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -3456,6 +3459,7 @@
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION TRANS Preparer bascule"/>
         <mission name="PION TRANS Se Deployer"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3486,6 +3490,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION TRANS Preparer bascule"/>
         <mission name="PION TRANS Se Deployer"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3547,6 +3552,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION TRANS Preparer bascule"/>
         <mission name="PION TRANS Se Deployer"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7558,4 +7564,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2334729073" -->
+<!-- signature="1958726208" -->
