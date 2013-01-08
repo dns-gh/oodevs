@@ -15,6 +15,7 @@
 #include "preparation/Model.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -204,8 +205,12 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
-        model_.agents_.CreateAgent( *currentGhost, *agentType, position );
-        delete static_cast< const kernel::Ghost_ABC* >( currentGhost );
+        kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
+        agent->Select( controllers_.actions_ );
+        kernel::ActionController::T_Selectables list;
+        list.push_back( agent );
+        agent->MultipleSelect( controllers_.actions_, list );
+        delete currentGhost;
         selectedGhost_ = 0;
         highLightedGhost_ = 0;
         return true;
@@ -238,7 +243,7 @@ bool GhostsLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( key->key() == Qt::Key_Delete && selectedGhost_ )
     {
-        delete static_cast< const kernel::Ghost_ABC* >( selectedGhost_ );
+        delete selectedGhost_;
         return true;
     }
     return false;

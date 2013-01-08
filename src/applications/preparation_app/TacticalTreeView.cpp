@@ -13,6 +13,7 @@
 #include "ChangeAutomatTypeDialog.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
@@ -203,9 +204,12 @@ void TacticalTreeView::Drop( const kernel::AgentType& item, kernel::Entity_ABC& 
     const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
     if( kernel::Entity_ABC* result = model_.agents_.CreateAgent( static_cast< kernel::Ghost_ABC& >( target ), item, position ) )
     {
+        result->Select( controllers_.actions_ );
+        kernel::ActionController::T_Selectables list;
+        list.push_back( result );
+        result->MultipleSelect( controllers_.actions_, list );
         delete static_cast< const kernel::Ghost_ABC* >( &target );
         setFocus(); // utile ?
-        result->Select( controllers_.actions_ );
     }
 }
 
