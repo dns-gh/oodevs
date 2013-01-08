@@ -1,0 +1,86 @@
+-- ****************************************************************************
+-- Utilisation de l'intention de MoveToward pour tirer sur les éléments
+-- à partir de position de tirs passés en paramètre.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveToward, skill.nodes.Shoot },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    -- Le pion est arrivé à sa destination
+    done = function( self )
+        self.movementDone = true
+    end,
+    
+    -- Le node shoot a été exécuté
+    shot = function ( self )
+        Feedback( self.feedbacks.done )
+    end,
+    -- -------------------------------------------------------------------------------- 
+    -- Node begins: store each objective in a table
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.entities = {}
+        DEC_Trace("self.params = " .. tostringr( self.params ))
+        DEC_Trace(" self.params.entity = " .. tostringr(self.params.entity))
+        if self.params.entity and self.params.entity ~= NIL then
+            self.realEnemyId = integration.getAgentIdFromKnowledge( self.params.entity )
+            DEC_Trace( "self.realEnemyId = " .. tostringr( self.realEnemyId ))
+        end
+        if self.params.destroyingPosition and self.params.destroyingPosition ~= NIL  then
+            self.positions = { self.params.destroyingPosition }   
+        else       
+            self.positions = sword.military.queries.tactical.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.ambushObjective }, dynamic = true } ) 
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Select the more interesting position and move toward it to engage ennemy. 
+    -- The more interesting is the first in the table $$$$ MIA à voir
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate       
+        -- Move toward unused position (sorted by user)
+        Activate( skill.links.moveToward, 100, { entities  = { self.positions[1] } } )
+      -- Mission Harceler (ne prend pas d'unité en paramètre et harcèle tous les ennemis qui rentrent dans la zone)
+      if not self.params.entity or self.params.entity == NIL then
+          self.entities = integration.getDestroyableInObjective ( self.params.ambushObjective )
+      else -- Mission Intercepter : on ne tire que sur l'ennemi renseigné par l'utilisateur mais uniquement quand il est dans la zone
+          -- Controle magique de l'objectif qui simule l'effet de patrouiller
+          local enemies = integration.getDestroyableInObjective ( self.params.ambushObjective )
+          self.entities = {}
+          for _, element in pairs( enemies ) do
+              if self.realEnemyId == integration.getAgentIdFromKnowledge( element ) then
+                  if element:isOperational() then
+                      self.entities[ #self.entities + 1 ] = element
+                  end
+              end
+          end
+      end
+      if #self.entities ~= 0 and self.movementDone then -- arrived on a position to engage enemies
+          for _,  element in pairs( self.entities ) do
+              local porteeMax = DEC_Tir_PorteeMaxPourTirer( 0.5 )
+              if element:canNeutralizeIt() and integration.distance( meKnowledge, element ) < porteeMax then
+                  Activate( skill.nodes.Shoot, element:destructionPriority(), { entity = element } )
+              end
+          end
+      end
+
+    end,
+}
+-- **************************************************************************** 
+-- Shoot action on the destroyable element
+-- $$$ MIA cas particulier utitlisation de destroy pour faire une tire de ???
+-- ****************************************************************************
+node "Shoot"
+{
+    feedbacks = { "shot" },
+    acquire = { [ skill.resources.engage ] = 1 },
+    select = function( self )
+        if self.params.entity:neutralizeIt() then
+            Feedback( self.feedbacks.shot )
+        end
+    end
+}

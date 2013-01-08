@@ -1785,6 +1785,23 @@
       <parameter dia-name="automat" name="Automate" optional="false" type="Automat"/>
       <parameter dia-name="position" name="Position" optional="true" type="Point"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.combat.tasks.Embuscade" dia-type="france.military.platoon.combat.tasks.Embuscade" id="28807" name="PION MELEE Detruire Embuscade">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entity" name="Cibles" optional="true" type="AgentKnowledge"/>
+      <parameter dia-name="objective" name="Objectif" optional="false" type="Point"/>
+      <parameter dia-name="destroyingPosition" name="A partir de" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AUTOMATE ALAT Aller Se Recompleter" package="none">
@@ -3528,4 +3545,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1008593030" -->
+<!-- signature="3285175600" -->

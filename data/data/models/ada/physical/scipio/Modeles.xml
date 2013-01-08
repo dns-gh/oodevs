@@ -2015,6 +2015,7 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION Sortir du reseau souterrain"/>
+        <mission name="PION MELEE Detruire Embuscade"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7557,4 +7558,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2420144351" -->
+<!-- signature="2334729073" -->
