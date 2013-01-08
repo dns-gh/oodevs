@@ -13,7 +13,7 @@ local emptyTable = emptyTable
     activations =
     {
         { "ACT_MAJ_EtatOrdreCoordination", { "done_ACT_MAJ_EtatOrdreCoordination" } },
-        { "BEH_Dep_Pion_ALAT_SePoser", { "done_BEH_Dep_Pion_ALAT_SePoser" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
     },
 
     create = function( self )
@@ -22,7 +22,7 @@ local emptyTable = emptyTable
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 1, { eEtatOrdreCoordination_Attendre, } )
-        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
+        Activate( self.activations.ACT_Dep_SePoster, 1, { eEtatOrdreCoordination_Attendre, } )
     end,
 
 --[[//------------------------------------------------------------------------------
@@ -184,4 +184,4 @@ connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_GarderSesDistances, 
 connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_GarderSesDistances, "BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA", nodes.BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_GarderSesDistancesFaceA, "BEH_Eni_Pion_ALAT_DecrocherFaceA", nodes.BEH_Eni_Pion_ALAT_DecrocherFaceA }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_SePoster, "ACT_MAJ_EtatOrdreCoordination", nodes.ACT_MAJ_EtatOrdreCoordination }
-connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_SePoster, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ALAT_SePoster, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
