@@ -37,7 +37,7 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -55,7 +55,7 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -222,7 +222,7 @@
   </object>
   <object geometry="polygon" name="zone protegee" symbol="G*MPSF----****X" type="safe zone">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" neutral="true"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
@@ -282,7 +282,7 @@
   </object>
   <object geometry="polygon" name="zone brouillage" symbol="G*EW***********" type="jamming area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" neutral="true"/>
     <interaction-height height="100"/>
     <interference/>
   </object>
@@ -376,7 +376,7 @@
   </object>
   <object geometry="line" name="zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
     <avoidable distance="10"/>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
@@ -444,4 +444,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2924865350" -->
+<!-- signature="1715396056" -->
