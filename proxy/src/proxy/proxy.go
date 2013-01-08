@@ -14,6 +14,10 @@ import (
 	"time"
 )
 
+const (
+	timeout = 1 * time.Minute
+)
+
 func main() {
 	log.Println("Sword Proxy - copyright Masa Group 2012")
 
@@ -36,8 +40,8 @@ func main() {
 	server := &http.Server{
 		Addr:           fmt.Sprintf(":%d", *port),
 		Handler:        ctx,
-		ReadTimeout:    5 * time.Minute,
-		WriteTimeout:   5 * time.Minute,
+		ReadTimeout:    timeout,
+		WriteTimeout:   timeout,
 		MaxHeaderBytes: http.DefaultMaxHeaderBytes,
 	}
 
