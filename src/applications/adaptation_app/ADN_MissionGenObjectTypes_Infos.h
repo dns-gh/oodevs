@@ -15,6 +15,7 @@
 
 namespace helpers
 {
+    // $$$$ ABR 2013-01-08: Rename this class, not only about gen objects, that can be about object knowledge too
 
 // =============================================================================
 /** @class  ADN_MissionGenObjectTypes_Infos

@@ -237,6 +237,8 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
         }
         else if( current == eMissionParameterTypeGenObject )
             itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_ );
+        else if( current == eMissionParameterTypeObjectKnowledge )
+            itemConnectors_[ADN_Missions_GUI::eKnowledgeObjects]->Connect( &param->knowledgeObjects_ );
     }
     emit TypeChanged( current );
 }
@@ -254,6 +256,7 @@ void ADN_MissionParameters_Table::Disconnect( ADN_Missions_Parameter* param )
         itemConnectors_[ ADN_Missions_GUI::eMinValue ]->Disconnect( &param->minValue_ );
         itemConnectors_[ ADN_Missions_GUI::eMaxValue ]->Disconnect( &param->maxValue_ );
         itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &param->genObjects_ );
+        itemConnectors_[ ADN_Missions_GUI::eKnowledgeObjects ]->Disconnect( &param->knowledgeObjects_ );
     }
 }
 

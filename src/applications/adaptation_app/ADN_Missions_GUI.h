@@ -41,6 +41,7 @@ public:
         eFragOrderAvailableWithoutMission,
         eChoiceValues,
         eGenObjects,
+        eKnowledgeObjects,
         eMinValue,
         eMaxValue,
         eDiaType,

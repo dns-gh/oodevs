@@ -49,8 +49,6 @@ public:
 
 private:
     void FillChoices();
-    void FillGenObjects();
-    bool HasGenObjects() const;
 
 public:
     ADN_Type_String                                                   strMission_;
@@ -63,6 +61,7 @@ public:
     T_MissionParameterValue_Vector                                    values_;
     T_Choice_Vector                                                   choices_;
     helpers::T_MissionGenObjectTypes_Infos_Vector                     genObjects_;
+    helpers::T_MissionGenObjectTypes_Infos_Vector                     knowledgeObjects_;
     ADN_Type_String                                                   diaName_;
     bool                                                              isContext_;
 };

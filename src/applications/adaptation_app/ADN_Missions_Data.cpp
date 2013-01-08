@@ -320,15 +320,22 @@ ADN_Missions_Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T_Missi
 
 namespace
 {
+    void FillUsingMissionFromObjectVector( const std::string& objectName, const std::string& missionName, helpers::T_MissionGenObjectTypes_Infos_Vector& vector, QStringList& result, const QString& prefix = "" )
+    {
+        for( helpers::CIT_MissionGenObjectTypes_Infos_Vector itObject = vector.begin(); itObject != vector.end(); ++itObject )
+            if( ( *itObject )->isAllowed_.GetData() && ( *itObject )->ptrObject_.GetData()->strName_.GetData() == objectName )
+                result << ( ( prefix.isEmpty() ) ? missionName.c_str() : QString( "%1 - %2" ).arg( prefix ).arg( missionName.c_str() ) );
+    }
+
     template< typename T >
     void FillUsingMission( const std::string& objectName, const ADN_Type_Vector_ABC< T >& vector, QStringList& result, const QString& prefix = "" )
     {
         for( ADN_Type_Vector_ABC< T >::const_iterator itMission = vector.begin(); itMission != vector.end(); ++itMission )
             for( ADN_Missions_Data::T_MissionParameter_Vector::const_iterator itParam = ( *itMission )->parameters_.begin(); itParam != ( *itMission )->parameters_.end(); ++itParam )
                 if( ( *itParam )->type_.GetData() == eMissionParameterTypeGenObject )
-                    for( helpers::CIT_MissionGenObjectTypes_Infos_Vector itObject = ( *itParam )->genObjects_.begin(); itObject != ( *itParam )->genObjects_.end(); ++itObject )
-                        if( ( *itObject )->isAllowed_.GetData() && ( *itObject )->ptrObject_.GetData()->strName_.GetData() == objectName )
-                            result << ( ( prefix.isEmpty() ) ? ( *itMission )->strName_.GetData().c_str() : QString( "%1 - %2" ).arg( prefix ).arg( ( *itMission )->strName_.GetData().c_str() ) );
+                    FillUsingMissionFromObjectVector( objectName, ( *itMission )->strName_.GetData(), ( *itParam )->genObjects_, result, prefix );
+                else if( ( *itParam )->type_.GetData() == eMissionParameterTypeObjectKnowledge )
+                    FillUsingMissionFromObjectVector( objectName, ( *itMission )->strName_.GetData(), ( *itParam )->knowledgeObjects_, result, prefix );
     }
 }
 

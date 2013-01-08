@@ -23,6 +23,7 @@ ADN_Missions_Parameter::ADN_Missions_Parameter()
     , minValue_  ( std::numeric_limits< int >::min() )
     , maxValue_  ( std::numeric_limits< int >::max() )
     , genObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
+    , knowledgeObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
     , isContext_( false )
 {
     FillChoices();
@@ -62,14 +63,27 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
         assert( choices_[ i ]->name_ == newParam->choices_[ i ]->name_ );
         newParam->choices_[ i ]->isAllowed_ = choices_[ i ]->isAllowed_.GetData();
     }
-    assert( genObjects_.size() == newParam->genObjects_.size() );
+    assert( genObjects_.size() == newParam->genObjects_.size() &&
+            knowledgeObjects_.size() == newParam->knowledgeObjects_.size() );
     for( unsigned int i = 0; i < genObjects_.size(); ++i )
     {
         assert( genObjects_[ i ]->name_.GetData() == newParam->genObjects_[ i ]->name_.GetData() &&
-                genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() );
+                genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() &&
+                knowledgeObjects_[ i ]->name_.GetData() == newParam->knowledgeObjects_[ i ]->name_.GetData() &&
+                knowledgeObjects_[ i ]->ptrObject_.GetData() == newParam->knowledgeObjects_[ i ]->ptrObject_.GetData() );
         newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
+        newParam->knowledgeObjects_[ i ]->isAllowed_ = knowledgeObjects_[ i ]->isAllowed_.GetData();
     }
     return newParam;
+}
+
+namespace
+{
+    void FillGenObjects( helpers::T_MissionGenObjectTypes_Infos_Vector& vector )
+    {
+        for( std::size_t i = 0; i < vector.size(); ++i )
+            vector[ i ]->isAllowed_ = true;
+    }
 }
 
 void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
@@ -95,24 +109,20 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
               >> xml::start( "choice" )
                   >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoice< T_Choice_Vector >, this, _1, boost::ref( choices_ ) ) )
               >> xml::end;
-    if( type_.GetData() == eMissionParameterTypeGenObject )
+    if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
     {
+        helpers::T_MissionGenObjectTypes_Infos_Vector& vector = ( type_.GetData() == eMissionParameterTypeGenObject ) ? genObjects_ : knowledgeObjects_;
         if( !input.has_child( "objects" ) )
-            FillGenObjects();
+            FillGenObjects( vector );
         else
         {
             input >> xml::start( "objects" )
-                      >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoice< helpers::T_MissionGenObjectTypes_Infos_Vector >, this, _1, boost::ref( genObjects_ ) ) )
+                      >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoice< helpers::T_MissionGenObjectTypes_Infos_Vector >, this, _1, boost::ref( vector ) ) )
                   >> xml::end;
         }
     }
 }
 
-void ADN_Missions_Parameter::FillGenObjects()
-{
-    for( std::size_t i = 0; i < genObjects_.size(); ++i )
-        genObjects_[ i ]->isAllowed_ = true;
-}
 
 void ADN_Missions_Parameter::FillChoices()
 {
@@ -173,14 +183,15 @@ namespace
             output << xml::end;
         }
     }
-}
 
-bool ADN_Missions_Parameter::HasGenObjects() const
-{
-    for( std::size_t i = 0; i < genObjects_.size(); ++i )
-        if( genObjects_[ i ]->isAllowed_.GetData() )
-         return true;
-    return false;
+    std::size_t CountObject( const helpers::T_MissionGenObjectTypes_Infos_Vector& vector )
+    {
+        std::size_t result = 0;
+        for( std::size_t i = 0; i < vector.size(); ++i )
+            if( vector[ i ]->isAllowed_.GetData() )
+                ++result;
+        return result;
+    }
 }
 
 void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
@@ -211,10 +222,15 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
     for( unsigned int i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
-    if( type_.GetData() == eMissionParameterTypeGenObject && !HasGenObjects() )
-        throw MASA_EXCEPTION(
-            tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." )
-                .arg( strName_.GetData().c_str() ).toStdString() );
-    Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
+
+    std::size_t nbGenObject = CountObject( genObjects_ );
+    std::size_t nbKnowledgeObject = CountObject( knowledgeObjects_ );
+    if( ( type_.GetData() == eMissionParameterTypeGenObject && nbGenObject == 0 ) ||
+        ( type_.GetData() == eMissionParameterTypeObjectKnowledge && nbKnowledgeObject == 0 ) )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).toStdString() );
+    if( nbGenObject != genObjects_.size() )
+        Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
+    if( nbKnowledgeObject != knowledgeObjects_.size() )
+        Write( output, knowledgeObjects_, type_.GetData(), eMissionParameterTypeObjectKnowledge, "objects" );
     output << xml::end;
 }

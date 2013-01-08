@@ -66,7 +66,7 @@ public:
     void SetMinMaxOccurs( unsigned int min, unsigned int max );
     void SetKeyName( const std::string& name );
     bool IsOptional() const;
-    bool HasGenObject( const std::string& type ) const;
+    bool HasGenObject( const std::string& type ) const; // $$$$ ABR 2013-01-08: Rename this method, not only about gen objects, that can be about object knowledge too
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
     bool IsList() const;

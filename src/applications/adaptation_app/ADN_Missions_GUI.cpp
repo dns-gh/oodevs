@@ -156,11 +156,21 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pGenObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeGenObject );
-    QCheckBox* all = new QCheckBox( pGenObject );
-    all->setText( tr( "all" ) );
-    ADN_MissionGenObjectTypes_Table* genObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_+ "MissionsGenObject", vInfosConnectors[ eGenObjects ], pGenObject );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    {
+        QCheckBox* all = new QCheckBox( pGenObject );
+        all->setText( tr( "all" ) );
+        ADN_MissionGenObjectTypes_Table* genObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_+ "MissionsGenObject", vInfosConnectors[ eGenObjects ], pGenObject );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    }
+    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeObjectKnowledge );
+    {
+        QCheckBox* all = new QCheckBox( pKnowledgeObject );
+        all->setText( tr( "all" ) );
+        ADN_MissionGenObjectTypes_Table* knowledgeObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_+ "MissionsKnowledgeObject", vInfosConnectors[ eKnowledgeObjects ], pKnowledgeObject );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pKnowledgeObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), knowledgeObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    }
 
     // Html Mission Sheet Editor
     ADN_HtmlEditor* editor = new ADN_HtmlEditor( gui::HtmlEditor::eAllMask ^ gui::HtmlEditor::ePoliceType );
@@ -172,14 +182,15 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     // Layouts
     // -------------------------------------------------------------------------
     // Parameters layout
-    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 5, 1 );
+    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 6, 1 );
     parameterLayout->setMargin( 10 );
     parameterLayout->setSpacing( 10 );
-    parameterLayout->addWidget( paramList, 0, 0 );
-    parameterLayout->addWidget( pLimit, 1, 0 );
-    parameterLayout->addWidget( pEnum, 2, 0 );
-    parameterLayout->addWidget( pChoice, 3, 0 );
-    parameterLayout->addWidget( pGenObject, 4, 0 );
+    parameterLayout->addWidget( paramList );
+    parameterLayout->addWidget( pLimit );
+    parameterLayout->addWidget( pEnum );
+    parameterLayout->addWidget( pChoice );
+    parameterLayout->addWidget( pGenObject );
+    parameterLayout->addWidget( pKnowledgeObject );
 
     // General tab layout
     QWidget* pGeneral= new QWidget();
@@ -288,11 +299,21 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pGenObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeGenObject );
-    QCheckBox* all = new QCheckBox( pGenObject );
-    all->setText( tr( "all" ) );
-    ADN_MissionGenObjectTypes_Table* genObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_ + "FragOrderGenObject", vInfosConnectors[ eGenObjects ], pGenObject );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    {
+        QCheckBox* all = new QCheckBox( pGenObject );
+        all->setText( tr( "all" ) );
+        ADN_MissionGenObjectTypes_Table* genObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_+ "MissionsGenObject", vInfosConnectors[ eGenObjects ], pGenObject );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    }
+    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeObjectKnowledge );
+    {
+        QCheckBox* all = new QCheckBox( pKnowledgeObject );
+        all->setText( tr( "all" ) );
+        ADN_MissionGenObjectTypes_Table* knowledgeObjectList = new ADN_MissionGenObjectTypes_Table( all, strClassName_+ "MissionsKnowledgeObject", vInfosConnectors[ eKnowledgeObjects ], pKnowledgeObject );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pKnowledgeObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+        connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), knowledgeObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    }
 
     //Html Mission Sheet Editor
     ADN_HtmlEditor* editor = new ADN_HtmlEditor( gui::HtmlEditor::eAllMask ^ gui::HtmlEditor::ePoliceType );
@@ -303,14 +324,15 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     // Layouts
     // -------------------------------------------------------------------------
     // Parameters layout
-    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 2, 3 );
+    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 6, 1 );
     parameterLayout->setMargin( 10 );
     parameterLayout->setSpacing( 10 );
-    parameterLayout->addWidget( paramList, 0, 0, 1, 3 );
+    parameterLayout->addWidget( paramList );
     parameterLayout->addWidget( pLimit );
     parameterLayout->addWidget( pEnum );
     parameterLayout->addWidget( pChoice );
     parameterLayout->addWidget( pGenObject );
+    parameterLayout->addWidget( pKnowledgeObject );
 
     // General tab layout
     QWidget* pGeneral= new QWidget();
