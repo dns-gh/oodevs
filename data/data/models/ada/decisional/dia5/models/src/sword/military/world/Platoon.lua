@@ -376,6 +376,12 @@ return
                 return true
             end
     } ),
+    shareInstantlyKnowledge = masalife.brain.integration.startStopAction(
+    {
+        started = function( self )
+           integration.shareKnowledge( self, 0)
+        end
+    } ),
     isInAttackRange = function( self, suicide, dotation )
         if suicide then return self:isReached() end
         return integration.distance( meKnowledge, self ) < integration.porteePourAttentat( dotation )

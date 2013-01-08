@@ -905,6 +905,13 @@ return
             end
     } ),
     
+    shareInstantlyKnowledge = masalife.brain.integration.startStopAction(
+    {
+        started = function( self )
+           integration.shareKnowledgeAgent( self, 0)
+        end
+    } ),
+    
     sortInjured = masalife.brain.integration.startStopAction(
     {
         start = integration.activateInjuredSorting,

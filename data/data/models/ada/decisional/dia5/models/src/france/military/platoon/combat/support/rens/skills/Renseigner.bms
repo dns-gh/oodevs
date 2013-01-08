@@ -1,9 +1,11 @@
 rootnode
 {
+    connections = { skill.nodes.Report },
     done = function( self ) end,
     
      create = function( self )
         if meKnowledge:getDistanceTo( self.params.unit ) > 50000 then
+            meKnowledge:RC( eRC_EtablissementLiaisonImpossible )
             Feedback( self.feedbacks.done )
             return
         end
@@ -11,8 +13,16 @@ rootnode
     
 
     activate = function( self )
-        if self.params.unit:shareKnowledge( eTempsReportInfo ) then
-            Feedback( self.feedbacks.done )
+        if waitInMin(meKnowledge, eTempsReportInfo) then
+            Activate( skill.nodes.Report, 1, { RC = eRC_DebutLiaison } )
+            self.params.unit:shareInstantlyKnowledge()
         end
+    end,
+}
+
+node "Report"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
     end,
 }

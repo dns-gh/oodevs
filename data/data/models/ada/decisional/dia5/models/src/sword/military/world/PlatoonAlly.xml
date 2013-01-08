@@ -1379,6 +1379,20 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="shareInstantlyKnowledge">
+            <description>Transmet instantanément les informations connues a l'automate</description>
+            <argument name="delay">
+                <description>Temps mis pour transmettre l'information.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="activateDrone">
             <description>Mettre en oeuvre les drones disponibles</description>
             <return>

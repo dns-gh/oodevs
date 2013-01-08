@@ -317,6 +317,12 @@ return
             return true
         end
     } ),
+    shareInstantlyKnowledge = masalife.brain.integration.startStopAction(
+    {
+        started = function( self )
+           integration.shareKnowledgeAgentFromAutomat( self, 0)
+        end
+    } ),
     UpdateNewUnitInAutomat = function( self, unit )
         local saintRegimeTravail = -1
         local santePrioritesTact = {}
