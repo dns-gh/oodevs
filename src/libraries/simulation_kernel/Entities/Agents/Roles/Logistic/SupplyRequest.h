@@ -54,6 +54,7 @@ public:
     virtual       double                GetGrantedQuantity  () const;
     virtual       double                GetRequestedQuantity() const;
     virtual       bool                  IsComplementary     () const;
+    virtual const MIL_Agent_ABC*        GetProvider         () const;
     //@}
 
     //! @name Network
@@ -87,6 +88,7 @@ private:
     double suppliedQuantity_;
     bool complementarySupply_;
     boost::shared_ptr< LogisticLink_ABC > supplierQuotas_;
+    const MIL_Agent_ABC* provider_;
     //@}
 };
 

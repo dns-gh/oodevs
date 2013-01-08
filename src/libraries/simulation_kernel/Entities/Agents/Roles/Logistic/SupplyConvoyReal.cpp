@@ -235,6 +235,15 @@ const T_PointVector* SupplyConvoyReal::GetPathToNextDestination() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyConvoyReal::GetProvider
+// Created: LDC 2013-01-08
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC* SupplyConvoyReal::GetProvider() const
+{
+    return provider_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal::Finish
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------

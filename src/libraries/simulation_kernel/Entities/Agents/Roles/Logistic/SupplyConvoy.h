@@ -56,7 +56,8 @@ public:
     //! @name Accessors
     //@{
     virtual SupplySupplier_ABC& GetTransportersProvider() const;
-    virtual bool                CanTransport           ( const PHY_DotationCategory& dotationCategory ) const;
+    virtual bool CanTransport( const PHY_DotationCategory& dotationCategory ) const;
+    virtual void SetProvider( const MIL_Agent_ABC* provider );
     //@}
 
 protected:
@@ -94,6 +95,7 @@ protected:
     E_Action currentAction_;
     unsigned timeRemainingForCurrentAction_;
     SupplyRecipient_ABC* currentSupplyRecipient_;
+    const MIL_Agent_ABC* provider_;
 };
 
 } // end namespace logistic

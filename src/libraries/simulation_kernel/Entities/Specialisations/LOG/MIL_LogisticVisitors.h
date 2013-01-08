@@ -288,7 +288,8 @@ class SupplyStockReservationVisitor : public MIL_LogisticEntitiesVisitor
             : dotationCategory_ ( dotationCategory )
             , requestedQuantity_( requestedQuantity )
             , remainingQuantity_( requestedQuantity )
-         {
+            , provider_         ( 0 )
+        {
         }
 
         void Visit( const MIL_AgentPion& tmp )
@@ -304,13 +305,19 @@ class SupplyStockReservationVisitor : public MIL_LogisticEntitiesVisitor
 
             PHY_RoleInterface_Supply* candidate = const_cast< PHY_RoleInterface_Supply* >( tmp.RetrieveRole< PHY_RoleInterface_Supply >() );
             if( candidate )
-                remainingQuantity_ -= candidate->AddStockReservation( dotationCategory_, remainingQuantity_ );
+            {
+                double reservation = candidate->AddStockReservation( dotationCategory_, remainingQuantity_ );
+                remainingQuantity_ -= reservation;
+                if( !provider_ && reservation )
+                    provider_ = &tmp;
+            }
         }
 
     public:
         const PHY_DotationCategory&  dotationCategory_;
         const double requestedQuantity_;
-        double remainingQuantity_;;
+        double remainingQuantity_;
+        const MIL_AgentPion* provider_;
 
 };
 

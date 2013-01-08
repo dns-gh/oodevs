@@ -41,11 +41,15 @@ namespace logistic
     class SupplyConsign_ABC;
 }
 
-class MIL_Agent_ABC;
+class Human_ABC;
+class MIL_AgentPion;
+class MIL_AgentTypePion;
+class MIL_Army_ABC;
+class MIL_Automate;
 class MIL_AutomateTypeLOG;
+class MIL_Formation;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
-class Human_ABC;
 class PHY_MedicalCollectionAmbulance;
 class PHY_RoleInterface_Medical;
 class PHY_RoleInterface_Maintenance;
@@ -54,12 +58,7 @@ class PHY_RoleInterface_Supply;
 class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_ComposantePion;
-class MIL_Automate;
-class MIL_Formation;
 class PHY_LogisticLevel;
-class MIL_Army_ABC;
-class MIL_AgentPion;
-class MIL_AgentTypePion;
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
@@ -134,7 +133,7 @@ public:
     virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
     virtual bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_ComposanteTypePion& transporterType ) const;
     virtual bool           SupplyHasStock                     ( const PHY_DotationCategory& dotationCategory ) const;
-    virtual double         SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
+    virtual Stock          SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
     virtual bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
     virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy );
     virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );    

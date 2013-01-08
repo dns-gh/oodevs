@@ -32,6 +32,7 @@ SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory )
     , suppliedQuantity_   ( 0 )
     , complementarySupply_( true )
     , supplierQuotas_     ()
+    , provider_           ( 0 )
 {
 }
 
@@ -173,7 +174,10 @@ void SupplyRequest::ReserveStock()
     if( !supplier_ || grantedQuantity_ > 0 )
         return;
 
-    grantedQuantity_  = supplier_->SupplyGetStock( dotationCategory_, requestedQuantity_ );
+    logistic::SupplySupplier_ABC::Stock stock = supplier_->SupplyGetStock( dotationCategory_, requestedQuantity_ );
+    grantedQuantity_ = stock.quantity_;
+    if( !provider_ )
+        provider_ = stock.provider_;
     convoyedQuantity_ = 0;
 }
 
@@ -240,6 +244,15 @@ double SupplyRequest::GetRequestedQuantity() const
 bool SupplyRequest::IsComplementary() const
 {
     return complementarySupply_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest::GetProvider
+// Created: LDC 2013-01-08
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC* SupplyRequest::GetProvider() const
+{
+    return provider_;
 }
 
 // -----------------------------------------------------------------------------
