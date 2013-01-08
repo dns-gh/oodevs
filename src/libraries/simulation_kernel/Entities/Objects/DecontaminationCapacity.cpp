@@ -151,14 +151,11 @@ void DecontaminationCapacity::Update( MIL_Object_ABC& object, unsigned int /*tim
 bool DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     nbc::PHY_RoleInterface_NBC& roleNBC = agent.GetRole< nbc::PHY_RoleInterface_NBC >();
-    if( !roleNBC.IsContaminated() )
-        return true;
-
     AnimatorAttribute& animators = object.GetAttribute< AnimatorAttribute >();
     const double rRatioWorkers = animators.GetAnimatorsRatio();
     if( rRatioWorkers > 0 )
         roleNBC.Decontaminate( rRatioWorkers );
-    return !roleNBC.IsContaminated();
+    return !roleNBC.IsContaminated() && roleNBC.GetDecontaminationState() == 1.;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +177,10 @@ void DecontaminationCapacity::Decontaminate( MIL_Object_ABC& object, MIL_Populat
 void DecontaminationCapacity::QueueForDecontamination( MIL_Agent_ABC& agent )
 {
     if( std::find( agents_.begin(), agents_.end(), &agent ) == agents_.end() )
+    {
+        agent.GetRole< nbc::PHY_RoleInterface_NBC >().StartDecontamination();
         agents_.push_back( &agent );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -187,6 +187,7 @@ private:
     virtual bool IsNeutralized() const;
     virtual bool IsMoving() const;
     virtual bool IsContaminated() const;
+    virtual bool IsDecontaminationFinished () const;
     virtual bool IsJammed() const;
     virtual const MT_Vector2D* GetPosition() const;
     virtual bool IsPC() const;

@@ -877,10 +877,6 @@
         <translation>NBC/Contaminating agents</translation>
     </message>
     <message>
-        <source>NBC/Contamination level</source>
-        <translation>NBC/Contamination level</translation>
-    </message>
-    <message>
         <source>NBC/Contamination quantity</source>
         <translation>NBC/Contamination quantity</translation>
     </message>
@@ -903,10 +899,6 @@
     <message>
         <source>Contaminating agents:</source>
         <translation>Contaminating agents:</translation>
-    </message>
-    <message>
-        <source>Contamination level:</source>
-        <translation>Contamination level:</translation>
     </message>
     <message>
         <source>Contamination quantity:</source>
@@ -939,6 +931,14 @@
     <message>
         <source>Contaminated:</source>
         <translation type="unfinished">Contaminated:</translation>
+    </message>
+    <message>
+        <source>NBC/Decontamination process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decontamination process:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

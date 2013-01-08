@@ -119,6 +119,7 @@ public:
     virtual bool IsNeutralized() const;
     virtual bool IsMoving() const;
     virtual bool IsContaminated() const;
+    virtual bool IsDecontaminationFinished() const;
     virtual bool IsJammed() const;
     virtual bool IsInReceptionBlackout() const;
     virtual bool IsInEmissionBlackout() const;

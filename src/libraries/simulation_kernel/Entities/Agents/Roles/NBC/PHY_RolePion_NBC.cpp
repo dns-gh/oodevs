@@ -83,7 +83,7 @@ namespace nbc
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     : owner_                    ( pion )
-    , rContaminationState_      ( 0. )
+    , rDecontaminationState_    ( 1. )
     , rContaminationQuantity_   ( 0. )
     , dose_                     ( 0. )
     , bNbcProtectionSuitWorn_   ( false )
@@ -91,6 +91,7 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     , poisoned_                 ( false )
     , intoxicated_              ( false )
     , immune_                   ( false )
+    , contaminated_             ( false )
     , currentAttritionThreshold_( -1 )
 {
     // NOTHING
@@ -114,9 +115,10 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
 {
     file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
          & nbcAgentTypesContaminating_
-         & rContaminationState_
+         & rDecontaminationState_
          & rContaminationQuantity_
          & bNbcProtectionSuitWorn_
+         & contaminated_
          & poisoned_
          & intoxicated_
          & immune_
@@ -157,7 +159,7 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
     if( rContaminationQuantity_ == 0 )
         MIL_Report::PostEvent( owner_, MIL_Report::eRC_Contamine );
     rContaminationQuantity_ += contamination.GetQuantity();
-    rContaminationState_ = 1.;
+    rDecontaminationState_ = 0.;
     bHasChanged_ = true;
 }
 
@@ -167,14 +169,15 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Decontaminate()
 {
-    if( rContaminationState_ == 0. )
+    if( rDecontaminationState_ == 1. )
     {
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-    rContaminationState_ = 0.;
+    rDecontaminationState_ = 1.;
     rContaminationQuantity_ = 0.;
     bHasChanged_ = true;
+    contaminated_ = false;
     nbcAgentTypesContaminating_.clear();
 }
 
@@ -184,21 +187,22 @@ void PHY_RolePion_NBC::Decontaminate()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
 {
-    if( rContaminationState_ == 0. )
+    if( rDecontaminationState_ == 1. )
     {
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-    double rNewContaminationState = rContaminationState_ - ( owner_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
-    rNewContaminationState = std::max( rNewContaminationState, 0. );
-    if( static_cast< unsigned int >( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
+    double rNewDecontaminationState = rDecontaminationState_ + ( owner_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
+    rNewDecontaminationState = std::min( rNewDecontaminationState, 1. );
+    if( static_cast< unsigned int >( rNewDecontaminationState * 100. ) != ( rDecontaminationState_ * 100. ) )
         bHasChanged_ = true;
-    rContaminationQuantity_ = std::max( 0., ( rContaminationQuantity_ / rContaminationState_ ) * rNewContaminationState );
-    rContaminationState_ = rNewContaminationState;
-    if( rContaminationState_ == 0. )
+    rContaminationQuantity_ = std::max( 0., ( rContaminationQuantity_ / rNewDecontaminationState ) * rDecontaminationState_ );
+    rDecontaminationState_ = rNewDecontaminationState;
+    if( rDecontaminationState_ == 1. )
     {
         rContaminationQuantity_ = 0.;
         nbcAgentTypesContaminating_.clear();
+        contaminated_ = false;
         bHasChanged_ = true;
     }
 }
@@ -236,8 +240,9 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
             data.set_id( (**itNbcAgent).GetID() );
         }
     msg().set_protective_suits( bNbcProtectionSuitWorn_ );
-    msg().mutable_contamination_state()->set_percentage( static_cast< unsigned int >( rContaminationState_ * 100. ) );
+    msg().mutable_contamination_state()->set_decontamination_process( static_cast< unsigned int >( rDecontaminationState_ * 100. ) );
     msg().mutable_contamination_state()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
+    msg().mutable_contamination_state()->set_contaminated( IsContaminated() );
     msg().mutable_contamination_state()->set_dose( dose_ );
 }
 
@@ -257,7 +262,7 @@ void PHY_RolePion_NBC::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_NBC::IsContaminated() const
 {
-    return !nbcAgentTypesContaminating_.empty() || rContaminationState_ != 0.;
+    return !nbcAgentTypesContaminating_.empty() || contaminated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +355,7 @@ bool PHY_RolePion_NBC::HasChanged() const
 void PHY_RolePion_NBC::ContaminateOtherUnits()
 {
     std::vector< const MIL_NbcAgentType* > typeNbcContaminating = GetContaminating();
-    if( typeNbcContaminating.empty() || rContaminationState_ != 1. || rContaminationQuantity_ < 5 )
+    if( typeNbcContaminating.empty() || !contaminated_ || rContaminationQuantity_ < 5 )
         return;
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
     TER_World::GetWorld().GetAgentManager().GetListWithinCircle( owner_.Get< PHY_RoleInterface_Location >().GetPosition() ,
@@ -417,8 +422,29 @@ void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
         owner_.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
         currentAttritionThreshold_ = currentAttritionThreshold;
         if( type.IsContaminated( dose_ ) )
-            rContaminationState_ = 1.;
+            contaminated_ = true;
+        rDecontaminationState_ = 0.;
+        bHasChanged_ = true;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::StartDecontamination
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::StartDecontamination()
+{
+    rDecontaminationState_ = 0.;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::GetDecontaminationState
+// Created: LGY 2013-01-04
+// -----------------------------------------------------------------------------
+double PHY_RolePion_NBC::GetDecontaminationState() const
+{
+    return rDecontaminationState_;
 }
 
 }

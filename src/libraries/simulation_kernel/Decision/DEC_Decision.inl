@@ -614,6 +614,16 @@ bool DEC_Decision< T >::IsContaminated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsDecontaminationFinished
+// Created: LGY 2013-01-07
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsDecontaminationFinished() const
+{
+    throw MASA_EXCEPTION( "Invalid call of this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::IsJammed
 // Created: MMC 2012-07-03
 // -----------------------------------------------------------------------------

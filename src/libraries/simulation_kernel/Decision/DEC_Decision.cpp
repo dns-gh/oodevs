@@ -85,6 +85,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterMethod( "DEC_Agent_Position", &DEC_Decision_ABC::GetPosition );
     brain.RegisterMethod( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
     brain.RegisterMethod( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
+    brain.RegisterMethod( "DEC_Agent_DecontaminationFinished", &DEC_Decision_ABC::IsDecontaminationFinished );
     brain.RegisterMethod( "DEC_Agent_EstBrouille", &DEC_Decision_ABC::IsJammed );
     brain.RegisterMethod( "DEC_Agent_EstEnSilenceRadioEmission", &DEC_Decision_ABC::IsInEmissionBlackout );
     brain.RegisterMethod( "DEC_Agent_EstEnSilenceRadioReception", &DEC_Decision_ABC::IsInReceptionBlackout );

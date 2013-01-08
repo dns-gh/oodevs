@@ -140,6 +140,7 @@ public:
     virtual bool IsNeutralized() const = 0;
     virtual bool IsMoving() const = 0;
     virtual bool IsContaminated() const = 0;
+    virtual bool IsDecontaminationFinished() const = 0;
     virtual const MT_Vector2D* GetPosition() const = 0;
     virtual void SetStateVariable( const std::string& name, float value ) = 0;
     virtual bool IsPC() const = 0;

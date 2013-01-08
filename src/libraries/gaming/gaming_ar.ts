@@ -877,10 +877,6 @@
         <translation type="unfinished">عملاء شبكة أن بي سي/كونتاميناتينج</translation>
     </message>
     <message>
-        <source>NBC/Contamination level</source>
-        <translation type="unfinished">مستوى شبكة أن بي سي/التلوث</translation>
-    </message>
-    <message>
         <source>NBC/Contamination quantity</source>
         <translation type="unfinished">أن بي سي/تلوث الكمية</translation>
     </message>
@@ -903,10 +899,6 @@
     <message>
         <source>Contaminating agents:</source>
         <translation type="unfinished">تلويث وكلاء:</translation>
-    </message>
-    <message>
-        <source>Contamination level:</source>
-        <translation type="unfinished">مستوى التلوث:</translation>
     </message>
     <message>
         <source>Contamination quantity:</source>
@@ -939,6 +931,14 @@
     <message>
         <source>Contaminated:</source>
         <translation type="unfinished">الملوثة:</translation>
+    </message>
+    <message>
+        <source>NBC/Decontamination process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decontamination process:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

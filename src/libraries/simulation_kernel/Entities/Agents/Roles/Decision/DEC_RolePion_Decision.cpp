@@ -894,6 +894,15 @@ bool DEC_RolePion_Decision::IsContaminated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::IsDecontaminationFinished
+// Created: LGY 2013-01-07
+// -----------------------------------------------------------------------------
+bool DEC_RolePion_Decision::IsDecontaminationFinished() const
+{
+    return GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().GetDecontaminationState() == 1.;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::IsJammed
 // Created: MMC 2012-07-03
 // -----------------------------------------------------------------------------

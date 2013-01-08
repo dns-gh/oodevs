@@ -194,12 +194,13 @@ private:
     bool                                       bRadarEnabled_;
     bool                                       bPrisonner_;
     bool                                       bRefugeeManaged_;
+    bool                                       contaminated_;
     sword::UnitAttributes::Posture             nLastPosture_;
     sword::UnitAttributes::Posture             nCurrentPosture_;
     unsigned int                               nPostureCompletion_;
     unsigned int                               nInstallationState_;
     std::vector< unsigned int >                nbcAgentTypesContaminating_;
-    int                                        contaminationPercentage_;
+    int                                        decontaminationPercentage_;
     float                                      contaminationQuantity_;
     float                                      dose_;
     unsigned int                               knowledgeGroupJammed_;

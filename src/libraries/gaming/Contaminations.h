@@ -80,7 +80,7 @@ public:
     bool bNbcProtectionSuitWorn_;
     bool contaminated_;
     T_NbcAgents contaminatingNbcAgents_;
-    int nContamination_;
+    int nDecontamination_;
     double quantity_;
     double dose_;
     E_AgentNbcSuit type_;

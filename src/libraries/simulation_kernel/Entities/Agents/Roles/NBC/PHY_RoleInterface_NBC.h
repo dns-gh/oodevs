@@ -50,10 +50,12 @@ public:
     virtual bool IsIntoxicated() const = 0;
     virtual void Poison( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void Contaminate( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void StartDecontamination() = 0;
     virtual void Afflict( float dose, const MIL_DisasterType& type ) = 0;
     virtual void Decontaminate() = 0;
     virtual void Decontaminate( double rRatioAgentsWorking ) = 0;
     virtual double GetContaminationQuantity() const = 0;
+    virtual double GetDecontaminationState() const = 0;
     virtual bool IsForcedImmune() const = 0;
     virtual void TemporaryImmunizeAgent( bool bImmunize ) = 0;
     //@}

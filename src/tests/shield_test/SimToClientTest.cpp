@@ -392,7 +392,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_protective_suits( true );
     content.mutable_unit_attributes()->mutable_contamination_agents()->add_elem()->set_id( 100 );
     content.mutable_unit_attributes()->mutable_contamination_agents()->add_elem()->set_id( 101 );
-    content.mutable_unit_attributes()->mutable_contamination_state()->set_percentage( 102 );
+    content.mutable_unit_attributes()->mutable_contamination_state()->set_decontamination_process( 102 );
     content.mutable_unit_attributes()->mutable_contamination_state()->set_quantity( 103.4f );
     content.mutable_unit_attributes()->mutable_communications()->set_jammed( true );
     content.mutable_unit_attributes()->mutable_communications()->mutable_knowledge_group()->set_id( 104 );

@@ -980,10 +980,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Réfugiés pris en compte</translation>
     </message>
     <message>
-        <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
-        <translation>NBC: contamination de type &apos;%1&apos; de niveau &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>Communication: radio emitter silence</source>
         <translation>Communication: silence radio émission</translation>
     </message>
@@ -994,6 +990,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Underground</source>
         <translation>Sous terre</translation>
+    </message>
+    <message>
+        <source>NBC: contamination of type &apos;%1&apos;</source>
+        <translation>NBC: contamination de type &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

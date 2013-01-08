@@ -34,7 +34,7 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
     , resolver_              ( resolver )
     , bNbcProtectionSuitWorn_( false )
     , contaminated_          ( false )
-    , nContamination_        ( 0 )
+    , nDecontamination_      ( 0 )
     , quantity_              ( 0 )
     , dose_                  ( 0.f )
     , type_                  ( type.GetNbcSuit() )
@@ -42,7 +42,7 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
 {
     dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_, true );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_, true );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_, true );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Decontamination process" ), nDecontamination_, true );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_, true );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_, true );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminated" ), contaminated_, true );
@@ -67,17 +67,12 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
 {
     std::set< std::string > updated;
 
-    UPDATE_SUBPROPERTY( message, nContamination_, contamination_state, percentage, "NBC/Contamination level", updated );
+    UPDATE_SUBPROPERTY( message, nDecontamination_, contamination_state, decontamination_process, "NBC/Decontamination process", updated );
     UPDATE_SUBPROPERTY( message, quantity_, contamination_state, quantity, "NBC/Contamination quantity", updated );
     UPDATE_SUBPROPERTY( message, dose_, contamination_state, dose, "NBC/Dose", updated );
-    bool contaminated = nContamination_ != 0;
-    if( contaminated != contaminated_ )
-    {
-        contaminated_ = contaminated;
-        updated.insert( "NBC/Contaminated" );
-    }
+    UPDATE_SUBPROPERTY( message, contaminated_, contamination_state, contaminated, "NBC/Contaminated", updated );
 
-    if( nContamination_ == 0 )
+    if( !contaminated_ )
         contaminatingNbcAgents_.clear();
 
    if( message.has_contamination_agents() )
@@ -107,7 +102,7 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "NBC", "NBC suit:" ),
                         bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "on" ) : tools::translate( "NBC", "off" ) )
                 .Display( tools::translate( "NBC", "Contaminating agents:" ), contaminatingNbcAgents_ )
-                .Display( tools::translate( "NBC", "Contamination level:" ), nContamination_ )
+                .Display( tools::translate( "NBC", "Decontamination process:" ), nDecontamination_ )
                 .Display( tools::translate( "NBC", "Contamination quantity:" ), quantity_ )
                 .Display( tools::translate( "NBC", "Contaminated:" ), contaminated_ )
                 .Display( tools::translate( "NBC", "Dose:" ), dose_ );
@@ -119,6 +114,6 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Contaminations::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( nContamination_ != 0 && viewport.IsHotpointVisible() )
+    if( contaminated_ && viewport.IsHotpointVisible() )
         tools.DrawIcon( xpm_nbc, where, 150.f );
 }

@@ -978,10 +978,6 @@ Reason: %3
         <translation>Refugiados controlados</translation>
     </message>
     <message>
-        <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
-        <translation>NBC: Contaminación de tipo &apos;%1&apos; nivel &apos;%2&apos;</translation>
-    </message>
-    <message>
         <source>Communication: radio emitter silence</source>
         <translation>Comunicaciones: silencio de radio emisor</translation>
     </message>
@@ -991,6 +987,10 @@ Reason: %3
     </message>
     <message>
         <source>Underground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC: contamination of type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

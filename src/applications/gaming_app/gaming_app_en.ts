@@ -989,8 +989,8 @@ Reason: %3
         <translation>Refugees handled</translation>
     </message>
     <message>
-        <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
-        <translation>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</translation>
+        <source>NBC: contamination of type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

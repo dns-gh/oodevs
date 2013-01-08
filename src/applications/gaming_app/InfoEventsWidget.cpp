@@ -124,8 +124,7 @@ void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
         QStringList agents;
         for( unsigned int i = 0; i < attributes.contaminatingNbcAgents_.size(); ++i )
             agents.append( attributes.contaminatingNbcAgents_[i]->GetName().c_str() );
-        label->setText( locale().toString( attributes.nContamination_ ) );
-        label->setToolTip( tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
+        label->setToolTip( tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1'" ).arg( agents.join( ", " ) ) );
     }
     SetShown();
 }

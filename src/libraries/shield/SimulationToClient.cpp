@@ -625,7 +625,7 @@ namespace
     template< typename From, typename To >
     void ConvertContaminationState( const From& from, To* to )
     {
-        CONVERT( percentage );
+        CONVERT_TO( decontamination_process, percentage );
         CONVERT( quantity );
     }
     template< typename From, typename To >

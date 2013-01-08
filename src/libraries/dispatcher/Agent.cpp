@@ -62,11 +62,12 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , bRadarEnabled_              ( false )
     , bPrisonner_                 ( false )
     , bRefugeeManaged_            ( false )
+    , contaminated_               ( false )
     , nLastPosture_               ( sword::UnitAttributes::stopping )
     , nCurrentPosture_            ( sword::UnitAttributes::stopping )
     , nPostureCompletion_         ( 100 )
     , nInstallationState_         ( 0 )
-    , contaminationPercentage_    ( 0 )
+    , decontaminationPercentage_  ( 100 )
     , contaminationQuantity_      ( 0.f )
     , dose_                       ( 0.f )
     , knowledgeGroupJammed_       ( 0 )
@@ -206,15 +207,17 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_contamination_state() )
     {
         sword::ContaminationState state = message.contamination_state();
-        if( state.has_percentage() )
-            contaminationPercentage_ = state.percentage();
+        if( state.has_decontamination_process() )
+            decontaminationPercentage_ = state.decontamination_process();
+        if( state.has_contaminated() )
+            contaminated_ = state.contaminated();
         if( state.has_quantity() )
             contaminationQuantity_= state.quantity();
         if( state.has_dose() )
             dose_ = state.dose();
     }
 
-    if( contaminationPercentage_ == 0 )
+    if( decontaminationPercentage_ == 100. )
         nbcAgentTypesContaminating_.clear();
 
     if( message.has_communications() )
@@ -555,7 +558,8 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
                 data.set_id( *it );
             }
         }
-        asn().mutable_contamination_state()->set_percentage( contaminationPercentage_ );
+        asn().mutable_contamination_state()->set_decontamination_process( decontaminationPercentage_ );
+        asn().mutable_contamination_state()->set_contaminated( contaminated_ );
         asn().mutable_contamination_state()->set_quantity( contaminationQuantity_ );
         asn().mutable_contamination_state()->set_dose( dose_ );
         asn().mutable_communications()->set_jammed( communicationJammed_ );

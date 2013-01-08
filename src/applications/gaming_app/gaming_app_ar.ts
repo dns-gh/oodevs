@@ -990,8 +990,8 @@ Reason: %3
         <translation type="unfinished">التعامل مع اللاجئين</translation>
     </message>
     <message>
-        <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
-        <translation type="unfinished">أن بي سي: تلوث نوع &apos;%1&apos; المستوى &apos;%2&apos;</translation>
+        <source>NBC: contamination of type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

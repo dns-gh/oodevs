@@ -65,6 +65,7 @@ public:
     virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Afflict( float dose, const MIL_DisasterType& type );
     virtual void Decontaminate();
+    virtual void StartDecontamination();
     virtual void Decontaminate( double rRatioAgentsWorking );
     void WearNbcProtectionSuit();
     void RemoveNbcProtectionSuit();
@@ -79,6 +80,7 @@ public:
     //@{
     virtual bool IsContaminated() const;
     virtual bool IsIntoxicated() const;
+    virtual double GetDecontaminationState() const;
     //@}
 
     //! @name Network
@@ -113,7 +115,7 @@ private:
     //@{
     MIL_AgentPion& owner_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
-    double rContaminationState_;
+    double rDecontaminationState_;
     double rContaminationQuantity_;
     float dose_;
     bool bNbcProtectionSuitWorn_;
@@ -121,6 +123,7 @@ private:
     bool poisoned_;
     bool intoxicated_;
     bool immune_;
+    bool contaminated_;
     int currentAttritionThreshold_;
     //@}
 };
