@@ -47,7 +47,7 @@ int main( int argc, char** argv )
     gui::ApplicationMonitor monitor( argc, argv );
 
 #ifdef _DEBUG
-    // Set library path for Qt plugins
+    // Set library path for Qt plugins when debug because the repertory used is not the run dir
     monitor.setLibraryPaths( monitor.libraryPaths() << QDir::currentPath() );
 #endif
     SetConsoleTitle( szADN_Version.c_str() );
