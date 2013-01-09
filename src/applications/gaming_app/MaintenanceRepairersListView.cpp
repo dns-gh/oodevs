@@ -47,7 +47,7 @@ void MaintenanceRepairersListView::NotifyUpdated( const kernel::MaintenanceState
     if( ShouldUpdate( a ) )
     {
         ResizeModelOnNewContent( static_cast< int >( a.GetDispoRepairers().size() ) );
-        for( unsigned int i = 0; i < a.GetDispoHaulers().size(); ++i )
+        for( unsigned int i = 0; i < a.GetDispoRepairers().size(); ++i )
         {
             model_.item( i, 0 )->setText( QString( a.GetDispoRepairers()[ i ].type_->GetName().c_str() ) );
             model_.item( i, 1 )->setText( QString::number( a.GetDispoRepairers()[ i ].total_ ) );
