@@ -335,6 +335,11 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
     double rScaledX = rX / rCellSize_;
 
     short maxOffset = 0;
+    const double halfCellSize_ = 0.5 * rCellSize_;
+    const MT_Vector2D vTR(  halfCellSize_,  halfCellSize_ );
+    const MT_Vector2D vTL( -halfCellSize_,  halfCellSize_ );
+    const MT_Vector2D vBL( -halfCellSize_, -halfCellSize_ );
+    const MT_Vector2D vBR(  halfCellSize_, -halfCellSize_ );
     for( auto it = elevationOffsets_.begin(); it != elevationOffsets_.end(); ++it )
     {
         if( it->second.offset_ > maxOffset )
@@ -342,11 +347,6 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
             MT_Vector2D point( rX, rY );
             if( applyOnCell )
             {
-                static const double halfCellSize_ = 0.5 * rCellSize_;
-                static const MT_Vector2D vTR(  halfCellSize_,  halfCellSize_ );
-                static const MT_Vector2D vTL( -halfCellSize_,  halfCellSize_ );
-                static const MT_Vector2D vBL( -halfCellSize_, -halfCellSize_ );
-                static const MT_Vector2D vBR(  halfCellSize_, -halfCellSize_ );
                 if( it->second.localisation_.GetType() == TER_Localisation::ePolygon )
                 {
                     //geometry::Polygon2f polygon( it->second.points_ );
