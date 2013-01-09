@@ -166,6 +166,10 @@ ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config,
     tabs_->addTab( terrainTab, "" );
     tabs_->addTab( modelTab, "" );
 
+    //main layout
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    layout->addWidget( tabs_ );
+
     //general configuration
     progress_ = new QProgressBar( this );
     progress_->hide();
