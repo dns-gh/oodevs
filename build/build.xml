@@ -1385,6 +1385,19 @@
         </sequential>
     </macrodef>
 
+    <macrodef name="migrate-reports">
+        <attribute name="physical"/>
+        <sequential>
+            <exec executable="python" failonerror="true">
+                <arg value="${root.dir}/build/migratereports.py"/>
+                <arg value="${data.dir}/data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
+                <arg value="${data.dir}/data/models/ada/decisional/dia5/Types_CR.lua"/>
+                <arg value="${data.dir}/data/models/ada/physical/@{physical}/Reports.xml"/>
+                <arg value="${out.dir}/reports/@{physical}"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <target name="package.otpacks" depends="package.otpack.defense.scipioForTrunk,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
                                    description="package the exercise otpacks"/>
 
@@ -1435,6 +1448,7 @@
              - Having a filename not including version numbers makes it
                easier to pull programmatically.
         -->
+        <migrate-reports physical="scipio"/>
         <safe-move file="${out.dir}/decisional.zip">
             <zip destfile="@{file}" filesonly="true">
                 <fileset dir="${data.dir}">
@@ -1443,12 +1457,19 @@
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
                     <include name="data/models/ada/physical/scipio/**"/>
+                    <exclude name="data/models/ada/decisional/dia5/Types_CR.lua"/>
+                    <exclude name="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
+                    <exclude name="data/models/ada/physical/scipio/Reports.xml"/>              
                 </fileset>
+                <zipfileset dir="${out.dir}/reports/scipio" includes="Types_CR.lua" fullpath="data/models/ada/decisional/dia5/Types_CR.lua"/>
+                <zipfileset dir="${out.dir}/reports/scipio" includes="Types_RC.bms" fullpath="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
+                <zipfileset dir="${out.dir}/reports/scipio" includes="Reports.xml" fullpath="data/models/ada/physical/scipio/Reports.xml"/>
             </zip>
         </safe-move>
     </target>
 
     <target name="package.otpack.defense.scipioForTrunk" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
+        <migrate-reports physical="france"/>
         <safe-move file="${out.dir}/decisionalFrance.otpak">
             <echoxml file="${out.dir}/content.xml">
                 <content>
@@ -1463,8 +1484,14 @@
                     <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
-					<include name="data/models/ada/physical/france/**"/>
+                    <include name="data/models/ada/physical/france/**"/>
+                    <exclude name="data/models/ada/decisional/dia5/Types_CR.lua"/>
+                    <exclude name="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
+                    <exclude name="data/models/ada/physical/france/Reports.xml"/>    
                 </zipfileset>
+                <zipfileset dir="${out.dir}/reports/france" includes="Types_CR.lua" fullpath="data/models/ada/decisional/dia5/Types_CR.lua"/>
+                <zipfileset dir="${out.dir}/reports/france" includes="Types_RC.bms" fullpath="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
+                <zipfileset dir="${out.dir}/reports/france" includes="Reports.xml" fullpath="data/models/ada/physical/france/Reports.xml"/>
                 <fileset dir="${out.dir}" includes="content.xml"/>
              </zip>
             <delete file="${out.dir}/content.xml"/>
