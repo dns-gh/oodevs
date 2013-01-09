@@ -16,7 +16,7 @@
 #endif
 
 #ifndef APP_PROJECT_VERSION
-#   define APP_PROJECT_VERSION 1.4.6
+#   define APP_PROJECT_VERSION 1.4.7
 #endif
 
 #ifndef APP_VERSION
