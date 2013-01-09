@@ -12,8 +12,8 @@ rootnode
     done = function( self ) -- done from moveToward
         self.arrived = true
     end,
-    failed = function( self ) -- done from controlCrowds
-        Feedback( self.feedbacks.done )
+    failed = function( self, params, additionalParams ) -- failed from controlCrowds
+        self.positionSurete = additionalParams.positionSurete
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -34,31 +34,35 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-
-        if self.arrived then
-            if self.params.position:isReached() then
-                Activate( skill.links.dismount, 1 )
-                Activate( skill.nodes.AdoptFiltrationPosture, 1, 
-                            { position           = self.params.position,
-                              blockingStrength   = self.blockingStrength, 
-                              bodySearchStrength = self.params.bodySearchStrength } )
-                local crowds = integration.getCrowds()
-                local crowdsNearUnit = {}
-                for i = 1, #crowds do
-                    local crowd = CreateKnowledge( integration.ontology.types.population, crowds[i])
-                    if integration.distance( meKnowledge , crowd ) then
-                        crowdsNearUnit[#crowdsNearUnit + 1 ] = crowd
+        
+        if self.positionSurete then -- If the control failed
+            Activate( skill.links.moveToward, 1, { entities = { self.positionSurete } } )
+        else
+            if self.arrived then
+                if self.params.position:isReached() then
+                    Activate( skill.links.dismount, 1 )
+                    Activate( skill.nodes.AdoptFiltrationPosture, 1, 
+                                { position           = self.params.position,
+                                  blockingStrength   = self.blockingStrength, 
+                                  bodySearchStrength = self.params.bodySearchStrength } )
+                    local crowds = integration.getCrowds()
+                    local crowdsNearUnit = {}
+                    for i = 1, #crowds do
+                        local crowd = CreateKnowledge( integration.ontology.types.population, crowds[i])
+                        if integration.distance( meKnowledge , crowd ) then
+                            crowdsNearUnit[#crowdsNearUnit + 1 ] = crowd
+                        end
                     end
+                    Activate( skill.links.controlCrowds, 1, {crowds = crowdsNearUnit} )
+    
+                else -- Objective not reached, don't build checkpoint
+                    meKnowledge:RC( eRC_ImpossibleAtteindreObjectif )
+                    Feedback( self.feedbacks.failed )
                 end
-                Activate( skill.links.controlCrowds, 1, {crowds = crowdsNearUnit} )
-
-            else -- Objective not reached, don't build checkpoint
-                meKnowledge:RC( eRC_ImpossibleAtteindreObjectif )
-                Feedback( self.feedbacks.failed )
             end
-        end
-        Activate( skill.links.moveToward, 1, { entities = { self.params.position } } )
-        self.arrived = false
+            Activate( skill.links.moveToward, 1, { entities = { self.params.position } } )
+            self.arrived = false
+         end
     end
 }
 

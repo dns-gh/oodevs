@@ -60,7 +60,7 @@ rootnode
                     self.isSelfProtecting = true
                 end
             end
-            Feedback( self.feedbacks.failed )
+            Feedback( self.feedbacks.failed, { positionSurete = self.positionSurete } )
         else  -- move to crowd and try to control it
             Activate( skill.links.control, 1, { objective  = self.params.crowd } )
         end
