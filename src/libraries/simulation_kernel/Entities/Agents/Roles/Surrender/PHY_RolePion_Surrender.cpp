@@ -28,20 +28,20 @@ BOOST_CLASS_EXPORT_IMPLEMENT( surrender::PHY_RolePion_Surrender )
 
 namespace surrender
 {
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ )
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Surrender constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Surrender::PHY_RolePion_Surrender()
+    : pion_                      ( 0 )
+    , pPrison_                   ( 0 )
+    , bPrisoner_                 ( false )
+    , bHasChanged_               ( true )
+    , bSurrendered_              ( false )
+    , nbrHumansLodgingManaged_   ( 0 )
 {
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Surrender( *pion );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const 
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
-    : pion_                      ( pion )
+    : pion_                      ( &pion )
     , pPrison_                   ( 0 )
     , bPrisoner_                 ( false )
     , bHasChanged_               ( true )
@@ -79,10 +79,11 @@ PHY_RolePion_Surrender::~PHY_RolePion_Surrender()
 template< typename Archive >
 void PHY_RolePion_Surrender::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
-         & bPrisoner_
-         & pPrison_
-         & nbrHumansLodgingManaged_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this );
+    file & pion_;
+    file & bPrisoner_;
+    file & pPrison_;
+    file & nbrHumansLodgingManaged_;
 }
 
 // =============================================================================
@@ -99,15 +100,15 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
     {
         LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
         if ( pLodgingAttribute )
-            pLodgingAttribute->UnmanageResident( pion_ );
+            pLodgingAttribute->UnmanageResident( *pion_ );
 
         pPrison_ = 0;
     }
 
     if( HasChanged() )
     {
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
 }
 
@@ -119,9 +120,9 @@ void PHY_RolePion_Surrender::NotifySurrendered()
 {
     if( !bSurrendered_ )
     {
-        MIL_Report::PostEvent( pion_, MIL_Report::eRC_Rendu );
+        MIL_Report::PostEvent( *pion_, MIL_Report::eRC_Rendu );
         bHasChanged_ = true;
-        pion_.Apply(&SurrenderNotificationHandler_ABC::NotifySurrendered);
+        pion_->Apply(&SurrenderNotificationHandler_ABC::NotifySurrendered);
         bSurrendered_ = true;
     }
 }
@@ -135,9 +136,9 @@ void PHY_RolePion_Surrender::NotifySurrenderCanceled()
     if( bSurrendered_ )
     {
         Release();
-        MIL_Report::PostEvent( pion_, MIL_Report::eRC_RedditionAnnulee );
+        MIL_Report::PostEvent( *pion_, MIL_Report::eRC_RedditionAnnulee );
         bHasChanged_ = true;
-        pion_.Apply(&SurrenderNotificationHandler_ABC::NotifySurrenderCanceled);
+        pion_->Apply(&SurrenderNotificationHandler_ABC::NotifySurrenderCanceled);
         bSurrendered_ = false;
     }
 }
@@ -154,8 +155,8 @@ bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
     pPrison_     = 0;
     bPrisoner_   = true;
     bHasChanged_ = true;
-    pion_.Apply(&SurrenderNotificationHandler_ABC::NotifyCaptured);
-    return pion_.GetAutomate().NotifyCaptured( pionTakingPrisoner );
+    pion_->Apply(&SurrenderNotificationHandler_ABC::NotifyCaptured);
+    return pion_->GetAutomate().NotifyCaptured( pionTakingPrisoner );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,15 +172,15 @@ bool PHY_RolePion_Surrender::Release()
     {
         LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
         if ( pLodgingAttribute )
-            pLodgingAttribute->UnmanageResident( pion_ );
+            pLodgingAttribute->UnmanageResident( *pion_ );
     }
 
     pPrison_     = 0;
     bPrisoner_   = false;
     bHasChanged_ = true;
-    pion_.Apply(&SurrenderNotificationHandler_ABC::NotifyReleased);
+    pion_->Apply(&SurrenderNotificationHandler_ABC::NotifyReleased);
 
-    return pion_.GetAutomate().NotifyReleased();
+    return pion_->GetAutomate().NotifyReleased();
 }
 
 // -----------------------------------------------------------------------------
@@ -194,9 +195,9 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp, MIL_AgentPion
 
     LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
     if ( pLodgingAttribute )
-        pLodgingAttribute->ManageResident( pion_, transporter );
+        pLodgingAttribute->ManageResident( *pion_, transporter );
 
-    pion_.GetAutomate().NotifyImprisoned( camp );
+    pion_->GetAutomate().NotifyImprisoned( camp );
     return true;
 }
 
@@ -243,7 +244,7 @@ bool PHY_RolePion_Surrender::IsImprisoned( const MIL_Object_ABC& camp )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Surrender::IsSurrendered() const
 {
-    return pion_.GetAutomate().IsSurrendered();
+    return pion_->GetAutomate().IsSurrendered();
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +253,7 @@ bool PHY_RolePion_Surrender::IsSurrendered() const
 // -----------------------------------------------------------------------------
 const MIL_Army_ABC* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
 {
-    return pion_.GetAutomate().GetArmySurrenderedTo();
+    return pion_->GetAutomate().GetArmySurrenderedTo();
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +338,7 @@ unsigned int PHY_RolePion_Surrender::GetNbrHumansCampManaged() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_RolePion_Surrender::GetNbrHumansCampUnmanaged() const
 {
-    const PHY_RolePion_Composantes& composantes = pion_.GetRole< PHY_RolePion_Composantes >();
+    const PHY_RolePion_Composantes& composantes = pion_->GetRole< PHY_RolePion_Composantes >();
     unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
     if ( nbrUsableHumans == 0 )
         return 0;

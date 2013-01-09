@@ -34,6 +34,7 @@ class NET_RolePion_Dotations : public NET_RoleInterface_Dotations
                              , public NetworkNotificationHandler_ABC
 {
 public:
+             NET_RolePion_Dotations();
     explicit NET_RolePion_Dotations( MIL_AgentPion& pion );
     virtual ~NET_RolePion_Dotations();
 
@@ -61,13 +62,10 @@ private:
     //@}
 
 private:
-    MIL_AgentPion& pion_;
+    MIL_AgentPion* pion_;
     mutable bool   bLastStateDead_;
     mutable bool   bLastStateNeutralized_;
     bool bExternalMustUpdateData_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const NET_RolePion_Dotations* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const unsigned int /*version*/ );
 
 };
 

@@ -42,6 +42,7 @@ class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePion_NBC();
     explicit PHY_RolePion_NBC( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_NBC();
     //@}
@@ -104,7 +105,7 @@ private:
 
     //! @name Data Members
     //@{
-    MIL_AgentPion& pion_;
+    MIL_AgentPion* pion_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
     double rContaminationState_;
     double rContaminationQuantity_;
@@ -114,12 +115,6 @@ private:
     bool intoxicated_;
     bool immune_;
     bool forcedImmuneByDecisional_;
-    //@}
-
-    //! @name Serialization
-    //@{
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_NBC* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsigned int /*version*/ );
     //@}
 };
 

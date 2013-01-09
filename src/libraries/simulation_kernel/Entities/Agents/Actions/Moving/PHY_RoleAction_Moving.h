@@ -56,6 +56,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_Moving();
     explicit PHY_RoleAction_Moving( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Moving();
     //@}
@@ -143,16 +144,10 @@ private:
     void SendEnvironmentType( unsigned int context = 0 ) const;
     //@}
 
-    //! @name Tools
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Moving* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const unsigned int /*version*/ );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
+    MIL_AgentPion* pion_;
     PHY_RoleInterface_Location* pRoleLocation_;
     double rSpeed_;
     double rSpeedModificator_;

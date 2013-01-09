@@ -38,23 +38,20 @@ BOOST_CLASS_EXPORT_IMPLEMENT( human::PHY_RolePion_Humans )
 namespace human
 {
 
-// =============================================================================
-// SERIALIZATION
-// =============================================================================
-
-template< typename Archive >
-inline void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ )
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Humans::PHY_RolePion_Humans()
+    : pion_                   ( 0 )
+    , humansStates_           ()
+    , nNbrUsableHumans_       ( 0 )
+    , humansToUpdate_         ()
+    , nTickRcMedicalQuerySent_( 0 )
+    , nEvacuationMode_        ( eEvacuationMode_Auto )
+    , hasChanged_             ( true )
 {
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-inline void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Humans( *pion );
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +59,7 @@ inline void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, co
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 PHY_RolePion_Humans::PHY_RolePion_Humans( MIL_AgentPion& pion )
-    : pion_                   ( pion )
+    : pion_                   ( &pion )
     , humansStates_           ()
     , nNbrUsableHumans_       ( 0 )
     , humansToUpdate_         ()
@@ -89,12 +86,13 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
 template< typename Archive >
 void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Humans >( *this )
-         & humansStates_
-         & nNbrUsableHumans_
-         & humansToUpdate_
-         & nTickRcMedicalQuerySent_
-         & nEvacuationMode_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Humans >( *this );
+    file & pion_;
+    file & humansStates_;
+    file & nNbrUsableHumans_;
+    file & humansToUpdate_;
+    file & nTickRcMedicalQuerySent_;
+    file & nEvacuationMode_;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,8 +248,8 @@ void PHY_RolePion_Humans::NotifyHumanChanged( Human_ABC& human, const Human_ABC&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
-    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_->GetAlgorithms().healComputerFactory_->Create() );
+    pion_->Execute< OnComponentComputer_ABC >( *healComputer );
     healComputer->EvacuateWoundedHumans( destinationTC2 );
 }
 
@@ -261,8 +259,8 @@ void PHY_RolePion_Humans::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 {
-    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
-    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_->GetAlgorithms().healComputerFactory_->Create() );
+    pion_->Execute< OnComponentComputer_ABC >( *healComputer );
     return healComputer->HasWoundedHumansToEvacuate();
 }
 
@@ -272,7 +270,7 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
-    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( pion_, human );
+    PHY_MedicalHumanState* pMedicalHumanState = destinationTC2.MedicalHandleHumanEvacuatedByThirdParty( *pion_, human );
     human.SetMedicalState( pMedicalHumanState );
 }
 
@@ -283,7 +281,7 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MI
 void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
     //$$$ Ne devrait contenir que la partie RC, et déléguer la gestion de la consign à l'Human
-    MIL_AutomateLOG* pTC2 = pion_.GetLogisticHierarchy().GetPrimarySuperior();
+    MIL_AutomateLOG* pTC2 = pion_->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
         human.SetMedicalState( 0 );
@@ -292,10 +290,10 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
-        MIL_Report::PostEvent( pion_, MIL_Report::eRC_DemandeEvacuationSanitaire );
+        MIL_Report::PostEvent( *pion_, MIL_Report::eRC_DemandeEvacuationSanitaire );
     nTickRcMedicalQuerySent_ = nCurrentTick;
 
-    PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( pion_, human );
+    PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *pion_, human );
     human.SetMedicalState( pMedicalHumanState );
 }
 
@@ -430,8 +428,8 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
     unsigned int nbrOperational = GetNbrOperational( rank );
     nNewNbrFullyAliveHumans = std::min( nNewNbrFullyAliveHumans, GetNbrTotal( rank ) );
 
-    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
-    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_->GetAlgorithms().healComputerFactory_->Create() );
+    pion_->Execute< OnComponentComputer_ABC >( *healComputer );
 
     if( nNewNbrFullyAliveHumans > nbrOperational )
         healComputer->Heal( rank, nNewNbrFullyAliveHumans - nbrOperational );
@@ -462,8 +460,8 @@ unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank&
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::HealAllHumans()
 {
-    std::auto_ptr< HealComputer_ABC > healComputer( pion_.GetAlgorithms().healComputerFactory_->Create() );
-    pion_.Execute< OnComponentComputer_ABC >( *healComputer );
+    std::auto_ptr< HealComputer_ABC > healComputer( pion_->GetAlgorithms().healComputerFactory_->Create() );
+    pion_->Execute< OnComponentComputer_ABC >( *healComputer );
     healComputer->HealAll();
 }
 
@@ -481,8 +479,8 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
     }
     if( hasChanged_ )
     {
-        pion_.Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_->Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
+        pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
 }
 

@@ -56,6 +56,7 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_HumanFactors();
     explicit PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity );
     virtual ~PHY_RolePion_HumanFactors();
 
@@ -105,27 +106,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef boost::function< void() > T_EvolutionFunction;
-    //@}
-
-    //! @name Member data
-    //@{
-    MIL_Entity_ABC&       entity_;
-    bool                  bHasChanged_;
-
-    const PHY_Morale*     pMorale_;
-    const PHY_Experience* pExperience_;
-    const PHY_Tiredness*  pTiredness_;
-    const PHY_Stress*     pStress_;
-    double                stressValue_;
-    double                tirednessValue_;
-
-    T_EvolutionFunction   evolutionFunction_;
-    //@}
-
-private:
     //! @name Helpers
     //@{
     void Evolution();
@@ -136,13 +116,29 @@ private:
     void UpdateTirednessValue();
     bool HasChanged() const;
     void ReadFacteursHumains( xml::xistream& xis );
-    void ReadFatigue        ( xml::xistream& xis );
-    void ReadMoral          ( xml::xistream& xis );
-    void ReadExperience     ( xml::xistream& xis );
-    void ReadStress         ( xml::xistream& xis );
+    void ReadFatigue( xml::xistream& xis );
+    void ReadMoral( xml::xistream& xis );
+    void ReadExperience( xml::xistream& xis );
+    void ReadStress( xml::xistream& xis );
+//@}
 
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
+private:
+    //! @name Types
+    //@{
+    typedef boost::function< void() > T_EvolutionFunction;
+    //@}
+
+    //! @name Member data
+    //@{
+    MIL_Entity_ABC*       entity_;
+    bool                  bHasChanged_;
+    const PHY_Morale*     pMorale_;
+    const PHY_Experience* pExperience_;
+    const PHY_Tiredness*  pTiredness_;
+    const PHY_Stress*     pStress_;
+    double                stressValue_;
+    double                tirednessValue_;
+    T_EvolutionFunction   evolutionFunction_;
     //@}
 };
 

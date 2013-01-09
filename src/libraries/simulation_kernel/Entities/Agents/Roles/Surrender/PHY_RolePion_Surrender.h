@@ -36,6 +36,7 @@ class PHY_RolePion_Surrender : public PHY_RoleInterface_Surrender
                              , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_Surrender();
     explicit PHY_RolePion_Surrender( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Surrender();
 
@@ -85,16 +86,12 @@ private:
     virtual bool HasChanged() const;
     //@}
 
-    MIL_AgentPion&        pion_;
+    MIL_AgentPion*        pion_;
     MIL_Object_ABC*       pPrison_;
     bool                  bPrisoner_;
     bool                  bHasChanged_;
     bool                  bSurrendered_;
     unsigned int          nbrHumansLodgingManaged_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const unsigned int /*version*/ );
-
 };
 
 } // namespace surrender

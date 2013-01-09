@@ -29,7 +29,8 @@ class PHY_RolePion_Illumination : public PHY_RoleInterface_Illumination
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RolePion_Illumination( MIL_Entity_ABC& owner );
+             PHY_RolePion_Illumination();
+    explicit PHY_RolePion_Illumination( MIL_Entity_ABC& owner );
     virtual ~PHY_RolePion_Illumination();
     //@}
 
@@ -67,15 +68,12 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Entity_ABC& owner_;
+    MIL_Entity_ABC* owner_;
     std::set< const MIL_Entity_ABC* > illuminators_;
     bool bIlluminatedDefinitely_;
     bool bHit_;
     const MIL_Entity_ABC* target_;
     //@}
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Illumination* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Illumination )

@@ -26,10 +26,10 @@
 // Name: PHY_PerceptionView constructor
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-PHY_PerceptionView::PHY_PerceptionView( PHY_RoleInterface_Perceiver& perceiver, MIL_Agent_ABC& pion )
+PHY_PerceptionView::PHY_PerceptionView( PHY_RoleInterface_Perceiver& perceiver, bool inCity )
     : PHY_Perception_ABC( perceiver )
     , bIsEnabled_       ( true )
-    , wasInCity_        ( pion.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() ) // TODO SLG : Passer par algo car dépendance de role en perceiver et urbanlocation
+    , wasInCity_        ( inCity )
 {
     // NOTHING
 }

@@ -36,20 +36,19 @@ BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RolePion_Transported )
 
 namespace transport
 {
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Transported* role, const unsigned int /*version*/ )
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Transported constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Transported::PHY_RolePion_Transported()
+    : pion_                        ( 0 )
+    , bHasChanged_                 ( true )
+    , pTransporter_                ( 0 )
+    , vLoadingPosition_            ()
+    , vHumanTransporterPosition_   ()
 {
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RolePion_Transported( *pion );
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +56,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Transported* role, cons
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Transported::PHY_RolePion_Transported( MIL_AgentPion& pion )
-    : pion_                        ( pion )
+    : pion_                        ( &pion )
     , bHasChanged_                 ( true )
     , pTransporter_                ( 0 )
     , vLoadingPosition_            ()
@@ -81,10 +80,11 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
-         >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
-         >> vLoadingPosition_
-         >> vHumanTransporterPosition_;
+    file >> ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this );
+    file >> pion_;
+    file >> const_cast< MIL_Agent_ABC*& >( pTransporter_ );
+    file >> vLoadingPosition_;
+    file >> vHumanTransporterPosition_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,10 +93,11 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
-         << pTransporter_
-         << vLoadingPosition_
-         << vHumanTransporterPosition_;
+    file << ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this );
+    file << pion_;
+    file << pTransporter_;
+    file << vLoadingPosition_;
+    file << vHumanTransporterPosition_;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +108,8 @@ void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter
 {
     if( pTransporter_ != &transporter )
         return ;//false;
-    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsFire().IsAttacked() || pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( pion_ ) > 0 )
-        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
+    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsFire().IsAttacked() || pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( *pion_ ) > 0 )
+        pion_->Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();
@@ -132,12 +133,12 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 
     pTransporter_ = &transporter;
 
-    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Hide );
+    pion_->Apply( &location::LocationActionNotificationHandler_ABC::Hide );
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )
         vHumanTransporterPosition_ = vLoadingPosition_;
     bHasChanged_ = true;
-    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsLoadedForTransport );
+    pion_->Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsLoadedForTransport );
     return ;//true;
 }
 
@@ -152,15 +153,15 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
 
     assert( pTransporter_ );
     const MT_Vector2D& unloadPosition = position ? *position : pTransporter_->GetRole< PHY_RoleInterface_Location >().GetPosition();
-    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, unloadPosition );
+    pion_->Apply( &location::LocationActionNotificationHandler_ABC::Show, unloadPosition );
 
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
     if( !bTransportOnlyLoadable )
         vHumanTransporterPosition_.Reset();
-    pion_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoadedForTransport );
-    pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    pion_->Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoadedForTransport );
+    pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     return ;//true;
 }
 
@@ -172,7 +173,7 @@ void PHY_RolePion_Transported::DisableHumanTransporters( const MT_Vector2D& vPos
 {
     if( vHumanTransporterPosition_.IsZero() )
     {
-        pion_.Apply( &TransportNotificationHandler_ABC::ForceUnloadedState );
+        pion_->Apply( &TransportNotificationHandler_ABC::ForceUnloadedState );
         vHumanTransporterPosition_ = vPos;
         bHasChanged_ = true;
     }
@@ -215,8 +216,8 @@ bool PHY_RolePion_Transported::HasHumanTransportersReady() const
 {
 
     sTransporterComposantePresent func;
-    std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    pion_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( pion_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
+    pion_->Execute( *computer );
 
     return vHumanTransporterPosition_.IsZero() && func.bComposantePresent_;
 }
@@ -230,14 +231,14 @@ void PHY_RolePion_Transported::Update( bool /*bIsDead*/ )
 
     if( pTransporter_ )
     {
-        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
-        pion_.GetKnowledgeGroup()->UpdateKnowledgeFromTransported( *pTransporter_ );
+        pion_->Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pTransporter_ );
+        pion_->GetKnowledgeGroup()->UpdateKnowledgeFromTransported( *pTransporter_ );
     }
 
     if( HasChanged() )
     {
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
 }
 

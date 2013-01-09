@@ -73,6 +73,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_Transport();
     explicit PHY_RoleAction_Transport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Transport();
     //@}
@@ -158,15 +159,12 @@ private:
     double ComputeUnloadingTime() const;
     double DoLoad( const double rWeightToLoad );
     double DoUnload( const double rWeightToUnload, MT_Vector2D* position );
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&        transporter_;
+    MIL_AgentPion*        transporter_;
     E_State               nState_;
     bool                  bHasChanged_;
     bool                  bLoadUnloadHasBeenUpdated_;

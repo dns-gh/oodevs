@@ -49,6 +49,7 @@ public:
     //@}
 
 public:
+             PHY_RoleAction_Loading();
     explicit PHY_RoleAction_Loading( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_Loading();
 
@@ -128,14 +129,12 @@ private:
 
     void SetLoadedState  ();
     void SetUnloadedState();
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Loading* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const unsigned int /*version*/ );
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC* pion_;
     E_State nState_;
     unsigned int nEndTimeStep_; // Load or unload
     bool bIsLoaded_;

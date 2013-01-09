@@ -50,7 +50,7 @@ public:
     //@{
     static void Initialize( xml::xistream& xis );
     //@}
-
+             PHY_RolePion_Communications();
              PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous );
     virtual ~PHY_RolePion_Communications();
 
@@ -122,23 +122,19 @@ private:
     void CopyKnowledgeGroupPartial();
     //@}
 
-    MIL_Agent_ABC& entity_;
+    MIL_Agent_ABC* entity_;
     T_JammerSet jammers_;
     bool bBlackoutEmmittedActivated_;
     bool bBlackoutReceivedActivated_;
     bool bHasChanged_;
     bool bSilentBeforeCapture_;
-
-    const bool bIsAutonomous_;
+    bool bIsAutonomous_;
 
     boost::shared_ptr< MIL_KnowledgeGroup > pJammingKnowledgeGroup_;
 
 private:
     static double rCoefSpeedModificator_;
     static double rCoefReloadingTimeModificator_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Communications )

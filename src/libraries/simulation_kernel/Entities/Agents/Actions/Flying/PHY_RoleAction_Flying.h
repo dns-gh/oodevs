@@ -44,6 +44,7 @@ class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
                             , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
 {
 public:
+             PHY_RoleAction_Flying();
     explicit PHY_RoleAction_Flying( MIL_Agent_ABC& entity );
     virtual ~PHY_RoleAction_Flying();
 
@@ -77,8 +78,6 @@ private:
     virtual void NotifyStopFlying();
     bool TakeOff();
     bool Land();
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     virtual void Execute( location::LocationComputer_ABC& algorithm ) const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
@@ -87,7 +86,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& entity_;
+    MIL_Agent_ABC* entity_;
     MIL_Effect_Fly effectFly_;
     boost::shared_ptr< PHY_ActionFly > pActionFly_;
     double rHeight_;

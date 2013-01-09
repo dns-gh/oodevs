@@ -39,19 +39,23 @@ BOOST_CLASS_EXPORT_IMPLEMENT( moving::PHY_RoleAction_Moving )
 namespace moving
 {
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RoleAction_Moving* role, const unsigned int /*version*/ )
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RoleAction_Moving::PHY_RoleAction_Moving()
+    : pion_                  ( 0 )
+    , pRoleLocation_         ( 0 )
+    , rSpeed_                ( 0.)
+    , rSpeedModificator_     ( 1. )
+    , rMaxSpeedModificator_  ( 1. )
+    , rTrafficModificator_   ( 1. )
+    , bCurrentPathHasChanged_( true )
+    , bEnvironmentHasChanged_( true )
+    , bHasMove_              ( false )
+    , bTheoricMaxSpeed_      ( false )
 {
-    MIL_AgentPion* const pion = &role->pion_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_Moving( *pion );
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +63,8 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Moving* role, const u
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
-    : pion_                  ( pion )
-    , pRoleLocation_         ( &pion_.GetRole< PHY_RoleInterface_Location >() )
+    : pion_                  ( &pion )
+    , pRoleLocation_         ( &pion_->GetRole< PHY_RoleInterface_Location >() )
     , rSpeed_                ( 0.)
     , rSpeedModificator_     ( 1. )
     , rMaxSpeedModificator_  ( 1. )
@@ -90,6 +94,8 @@ template< typename Archive >
 void PHY_RoleAction_Moving::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this );
+    file & pion_;
+    file & pRoleLocation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +148,8 @@ void PHY_RoleAction_Moving::SetTheoricSpeed( bool value ) const
 double PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
     SpeedComputerStrategy strategy( true, false, object );
-    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    pion_.Execute( *computer );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_->Execute( *computer );
     return computer->GetSpeed();
 }
 
@@ -154,8 +160,8 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
     SpeedComputerStrategy strategy( true, false, &environment );
-    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    pion_.Execute( *computer );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_->Execute( *computer );
     return computer->GetSpeed();
 }
 
@@ -166,8 +172,8 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) cons
 double PHY_RoleAction_Moving::GetMaxSpeed() const
 {
     SpeedComputerStrategy strategy( true, false, 0 );
-    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    pion_.Execute( *computer );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_->Execute( *computer );
     return computer->GetSpeed();
 }
 
@@ -178,8 +184,8 @@ double PHY_RoleAction_Moving::GetMaxSpeed() const
 double PHY_RoleAction_Moving::GetMaxSlope() const
 {
     std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
-            pion_.GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
-    pion_.Execute< OnComponentComputer_ABC >( *computer );
+            pion_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
+    pion_->Execute< OnComponentComputer_ABC >( *computer );
 
     return computer->GetMaxSlope();
 }
@@ -192,8 +198,8 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
     SpeedComputerStrategy strategy( true, true, 0 );
     std::auto_ptr< SpeedComputer_ABC > computer;
-        computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    pion_.Execute( *computer );
+        computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_->Execute( *computer );
     return computer->GetSpeed();
 }
 
@@ -206,8 +212,8 @@ double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded )
     SetTheoricSpeed( true );
     SpeedComputerStrategy strategy( true, false, 0 );
     std::auto_ptr< SpeedComputer_ABC > computer;
-    computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
-    pion_.Execute( *computer );
+    computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
+    pion_->Execute( *computer );
     double result = computer->GetSpeed();
     SetTheoricSpeed( false );
     return result;
@@ -221,8 +227,8 @@ double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded )
 double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
     SpeedComputerStrategy strategy( false, true, &environment );
-    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    pion_.Execute( *computer );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_->Execute( *computer );
     double rSpeed = computer->GetSpeed();
     rSpeed = std::min( rSpeed, GetMaxSpeedWithReinforcement() );
     return rSpeed;
@@ -245,12 +251,12 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
 
-    if( !object().IsTrafficable( pion_ ) )
+    if( !object().IsTrafficable( *pion_ ) )
         return 0.;
 
     SpeedComputerStrategy strategy( false, true, object );
-    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-    pion_.Execute( *computer );
+    std::auto_ptr< SpeedComputer_ABC > computer = pion_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    pion_->Execute( *computer );
     double rObjectSpeed = computer->GetSpeed();
 
     const double rCurrentMaxSpeed = GetMaxSpeed();
@@ -258,7 +264,7 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
 
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed = ApplySpeedModificators( rObjectSpeed );
-    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, pion_ );
+    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *pion_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +283,7 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const double rTime, cons
 void PHY_RoleAction_Moving::SendEnvironmentType( unsigned int context ) const
 {
     client::UnitEnvironmentType asn;
-    asn().mutable_unit()->set_id( pion_.GetID() );
+    asn().mutable_unit()->set_id( pion_->GetID() );
     SerializeEnvironmentType( asn() );
     asn.Send( NET_Publisher_ABC::Publisher(), context );
 }
@@ -289,7 +295,7 @@ void PHY_RoleAction_Moving::SendEnvironmentType( unsigned int context ) const
 void PHY_RoleAction_Moving::SendCurrentPath( unsigned int context ) const
 {
     client::UnitPathFind asnMsg;
-    asnMsg().mutable_unit()->set_id( pion_.GetID() );
+    asnMsg().mutable_unit()->set_id( pion_->GetID() );
     if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
         return;
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
@@ -366,7 +372,7 @@ void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*poin
 void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point )
 {
     //@TODO MGD Refactor Path_Point and DEC_Representation, DEC_Representations must be a manager to avoid auto dia register
-    point->SendToDIA( pion_.GetRole< DEC_Representations >(), point );
+    point->SendToDIA( pion_->GetRole< DEC_Representations >(), point );
 }
 
 // -----------------------------------------------------------------------------
@@ -375,7 +381,7 @@ void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_P
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+    pion_->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,7 +390,7 @@ void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
+    pion_->Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -393,8 +399,8 @@ void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanMove() const
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    pion_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    pion_->Execute( *moveComputer );
 
     return moveComputer->CanMoveOverride() || moveComputer->CanMove();
 }
@@ -405,7 +411,7 @@ bool PHY_RoleAction_Moving::CanMove() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
-    return object.CanInteractWith( pion_ );
+    return object.CanInteractWith( *pion_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,15 +420,15 @@ bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object 
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Moving::HasResources()
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    pion_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = pion_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    pion_->Execute( *moveComputer );
 
     if( moveComputer->CanMoveOverride() )
         return true;
 
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-            pion_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
-    pion_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
+            pion_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
+    pion_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
     return request->AllChanged();
 }
@@ -433,7 +439,7 @@ bool PHY_RoleAction_Moving::HasResources()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 {
-    MIL_Report::PostEvent( pion_, static_cast< MIL_Report::E_DecisionalReport >( nReportID ) );
+    MIL_Report::PostEvent( *pion_, static_cast< MIL_Report::E_DecisionalReport >( nReportID ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -442,7 +448,7 @@ void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendRC( int nReportID, const std::string& name ) const
 {
-    MIL_Report::PostEvent( pion_, static_cast< MIL_Report::E_DecisionalReport >( nReportID ), name );
+    MIL_Report::PostEvent( *pion_, static_cast< MIL_Report::E_DecisionalReport >( nReportID ), name );
 }
 
 // -----------------------------------------------------------------------------
@@ -533,7 +539,7 @@ double PHY_RoleAction_Moving::GetMaxSpeedModificator()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::ApplyTrafficModifier()
 {
-    rTrafficModificator_ *= pion_.GetType().GetUnitType().GetSpeedModifier();
+    rTrafficModificator_ *= pion_->GetType().GetUnitType().GetSpeedModifier();
 }
 
 // -----------------------------------------------------------------------------

@@ -36,6 +36,7 @@ public:
     //@}
 
 public:
+             PHY_RoleAction_IndirectFiring();
     explicit PHY_RoleAction_IndirectFiring( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_IndirectFiring();
 
@@ -78,16 +79,9 @@ public:
     //@}
 
 private:
-    //! @name Tools
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_IndirectFiring* role, const unsigned int /*version*/ );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC* pion_;
     //@}
 };
 

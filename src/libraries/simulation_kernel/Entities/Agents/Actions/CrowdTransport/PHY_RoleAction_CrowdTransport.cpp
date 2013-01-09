@@ -20,22 +20,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( crowdtransport::PHY_RoleAction_CrowdTransport )
 
 using namespace crowdtransport;
 
-namespace crowdtransport
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_CrowdTransport constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RoleAction_CrowdTransport::PHY_RoleAction_CrowdTransport()
 {
-    template< typename Archive >
-    void save_construct_data( Archive& archive, const PHY_RoleAction_CrowdTransport* role, const unsigned int /*version*/ )
-    {
-        const MIL_AgentPion* const pion = &role->transporter_;
-        archive << pion;
-    }
-
-    template< typename Archive >
-    void load_construct_data( Archive& archive, PHY_RoleAction_CrowdTransport* role, const unsigned int /*version*/ )
-    {
-        MIL_AgentPion* pion;
-        archive >> pion;
-        ::new( role )PHY_RoleAction_CrowdTransport( *pion );
-    }
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +34,7 @@ namespace crowdtransport
 // Created: JSR 2011-08-09
 // -----------------------------------------------------------------------------
 PHY_RoleAction_CrowdTransport::PHY_RoleAction_CrowdTransport( MIL_AgentPion& pion )
-    : transporter_    ( pion )
+    : transporter_    ( &pion )
     , nState_         ( eNothing )
     , bUpdated_       ( false )
     , currentProgress_( 0 )
@@ -69,9 +60,10 @@ PHY_RoleAction_CrowdTransport::~PHY_RoleAction_CrowdTransport()
 template< typename Archive >
 void PHY_RoleAction_CrowdTransport::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< tools::Role_ABC >( *this )
-         & loadedHumans_
-         & currentCrowd_;
+    file & transporter_;
+    file & boost::serialization::base_object< tools::Role_ABC >( *this );
+    file & loadedHumans_;
+    file & currentCrowd_;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +120,7 @@ bool PHY_RoleAction_CrowdTransport::IsTransportingCrowd() const
 void PHY_RoleAction_CrowdTransport::NotifyComposanteChanged( const PHY_ComposantePion& composante )
 {
     unsigned int transported = loadedHumans_.GetAllHumans();
-    unsigned int capacity = transporter_.GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity();
+    unsigned int capacity = transporter_->GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity();
     if( transported == 0 || capacity == 0 )
         return;
     double ratio = static_cast< double >( composante.GetCrowdTransporterCapacity() ) / capacity;
@@ -146,7 +138,7 @@ void PHY_RoleAction_CrowdTransport::NotifyComposanteChanged( const PHY_Composant
         if( !humans.IsEmpty() )
         {
             loadedHumans_ -= humans;
-            currentCrowd_->GetConcentration( transporter_.GetRole< PHY_RolePion_Location >().GetPosition() ).PushHumans( humans );
+            currentCrowd_->GetConcentration( transporter_->GetRole< PHY_RolePion_Location >().GetPosition() ).PushHumans( humans );
         }
     }
 }
@@ -176,10 +168,10 @@ int PHY_RoleAction_CrowdTransport::LoadCrowd( MIL_Population& crowd, unsigned in
     }
     if( nState_ == eLoading )
     {
-        int capacity =  transporter_.GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity() - loadedHumans_.GetAllHumans();
+        int capacity =  transporter_->GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity() - loadedHumans_.GetAllHumans();
         double loadable  = static_cast< double >( capacity ) - currentProgress_;
         int crowdNumber = concentration->GetAllHumans();
-        double toBeLoaded = std::min( static_cast< double >( crowdNumber ), transporter_.GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterLoadedPerTimeStep() );
+        double toBeLoaded = std::min( static_cast< double >( crowdNumber ), transporter_->GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterLoadedPerTimeStep() );
         if( loadable > toBeLoaded )
         {
             currentProgress_ += toBeLoaded;
@@ -222,7 +214,7 @@ int PHY_RoleAction_CrowdTransport::UnloadCrowd( MIL_Population& crowd, const MT_
     }
     if( nState_ == eUnloading )
     {
-        currentProgress_ += transporter_.GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterUnloadedPerTimeStep();
+        currentProgress_ += transporter_->GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterUnloadedPerTimeStep();
         if( currentProgress_ >= loadedHumans_.GetAllHumans() )
         {
             // TODO envoyer un CR ?
@@ -265,6 +257,6 @@ void PHY_RoleAction_CrowdTransport::SendChangedState( client::UnitAttributes& ms
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_CrowdTransport::SendFullState( client::UnitAttributes& msg ) const
 {
-    if( transporter_.GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity() > 0 )
+    if( transporter_->GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity() > 0 )
         msg().set_transported_crowd( loadedHumans_.GetAllHumans() );
 }

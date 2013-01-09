@@ -33,6 +33,7 @@ class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
                            , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_Refugee();
     explicit PHY_RolePion_Refugee( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Refugee();
 
@@ -84,7 +85,7 @@ private:
     void AddAffinityNearUnit( DEC_Knowledge_Agent& knowledge );
     //@}
 
-    MIL_AgentPion&  pion_;
+    MIL_AgentPion*  pion_;
     MIL_Object_ABC* pCamp_;
     bool            bManaged_;
     bool            bHasChanged_;
@@ -114,9 +115,6 @@ private:
     };
 
     NearbyUnitsAffinity nearbyUnitsAffinity;
-
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const unsigned int /*version*/ );
 };
 
 } //namespace refugee

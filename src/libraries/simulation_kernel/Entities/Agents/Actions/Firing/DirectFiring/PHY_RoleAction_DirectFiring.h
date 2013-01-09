@@ -40,6 +40,7 @@ public:
     //@}
 
 public:
+             PHY_RoleAction_DirectFiring();
     explicit PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_DirectFiring();
 
@@ -93,14 +94,12 @@ private:
     //@{
     MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
     void FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& pion_;
+    MIL_AgentPion* pion_;
     //@}
 };
 

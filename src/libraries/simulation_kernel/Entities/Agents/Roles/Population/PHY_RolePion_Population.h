@@ -37,6 +37,7 @@ class PHY_RolePion_Population : public PHY_RoleInterface_Population
                               , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 {
 public:
+             PHY_RolePion_Population();
     explicit PHY_RolePion_Population( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Population();
 
@@ -66,14 +67,10 @@ public:
 
 
 private:
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC* pion_;
     mutable double rPopulationDensity_;
     bool           bHasChanged_;
     mutable bool   bDensityComputed_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Population )

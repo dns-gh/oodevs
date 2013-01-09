@@ -17,20 +17,18 @@
 #include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Illumination constructor
+// Created: JSR 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Illumination::PHY_RolePion_Illumination()
+    : owner_( 0 )
+    , bIlluminatedDefinitely_( false )
+    , bHit_( false )
+    , target_( 0 )
 {
-    MIL_Entity_ABC* const owner = &role->owner_;
-    archive << owner;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
-{
-    MIL_Entity_ABC* owner;
-    archive >> owner;
-    ::new( role )PHY_RolePion_Illumination( *owner );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +36,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, con
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
 PHY_RolePion_Illumination::PHY_RolePion_Illumination( MIL_Entity_ABC& owner )
-    : owner_( owner )
+    : owner_( &owner )
     , bIlluminatedDefinitely_( false )
     , bHit_( false )
     , target_( 0 )
@@ -156,6 +154,7 @@ void PHY_RolePion_Illumination::NotifyHitByIndirectFire()
 void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >>boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
+    ar >> owner_;
     ar >> bIlluminatedDefinitely_;
     ar >> bHit_;
     MIL_Entity_ABC* target = 0;
@@ -174,6 +173,7 @@ void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const unsigne
 void PHY_RolePion_Illumination::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
+    ar << owner_;
     ar << bIlluminatedDefinitely_;
     ar << bHit_;
     ar << target_;

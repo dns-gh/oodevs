@@ -46,6 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_CrowdTransport();
     explicit PHY_RoleAction_CrowdTransport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_CrowdTransport();
     //@}
@@ -102,16 +103,9 @@ private:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_CrowdTransport* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_CrowdTransport* role, const unsigned int /*version*/ );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_AgentPion& transporter_;
+    MIL_AgentPion* transporter_;
     bool bUpdated_;
     E_State nState_;
     double currentProgress_;

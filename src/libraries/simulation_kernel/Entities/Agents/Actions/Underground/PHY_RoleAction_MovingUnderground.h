@@ -42,6 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_MovingUnderground();
     explicit PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_MovingUnderground();
     //@}
@@ -75,18 +76,9 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    template< typename Archive >
-    friend void save_construct_data( Archive& archive, const PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ );
-    template< typename Archive >
-    friend void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC* pion_;
     std::string currentNetwork_;
     boost::shared_ptr< DEC_Knowledge_Object > pCurrentLocation_;
     boost::shared_ptr< DEC_Knowledge_Object > pDestination_;

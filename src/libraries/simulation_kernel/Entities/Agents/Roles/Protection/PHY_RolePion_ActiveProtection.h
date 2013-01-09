@@ -25,6 +25,7 @@ class PHY_RolePion_ActiveProtection : public PHY_RoleInterface_ActiveProtection
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePion_ActiveProtection();
     explicit PHY_RolePion_ActiveProtection( PHY_RolePion_Composantes& pion );
     virtual ~PHY_RolePion_ActiveProtection();
     //@}
@@ -50,16 +51,9 @@ private:
     //@}
 
 private:
-    //! @name Checkpoints
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_ActiveProtection* role, const unsigned int /*version*/ );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    PHY_RolePion_Composantes& pion_;
+    PHY_RolePion_Composantes* pion_;
     //@}
 };
 

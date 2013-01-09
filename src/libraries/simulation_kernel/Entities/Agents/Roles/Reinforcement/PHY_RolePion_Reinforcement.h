@@ -49,6 +49,7 @@ public:
     //@}
 
 public:
+             PHY_RolePion_Reinforcement();
     explicit PHY_RolePion_Reinforcement( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Reinforcement();
 
@@ -113,15 +114,12 @@ private:
     //@}
 
 private:
-    MIL_AgentPion& pion_;
+    MIL_AgentPion* pion_;
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
     bool           bReinforcedChanged_;
     bool           bReinforcementsChanged_;
     bool           bExternalCanReinforce_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Reinforcement )

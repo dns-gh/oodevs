@@ -44,6 +44,7 @@ class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
                           , public network::NetworkMessageSender_ABC
 {
 public:
+             PHY_RolePion_Humans();
     explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Humans();
 
@@ -105,12 +106,6 @@ private:
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
     //@}
 
-    //! @name Serialization
-    //@{
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
-    //@}
-
 public:
     //! @name Types
     //@{
@@ -125,7 +120,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&      pion_;
+    MIL_AgentPion*      pion_;
     T_HumanStateVector  humansStates_;
     T_HumanSet          humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
     bool                hasChanged_;

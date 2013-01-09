@@ -81,6 +81,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePion_Perceiver();
              PHY_RolePion_Perceiver( MIL_Agent_ABC& pion, const MT_Vector2D* perceiverPosition, const MT_Vector2D* perceiverDirection );
     virtual ~PHY_RolePion_Perceiver();
     //@}
@@ -239,7 +240,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& pion_;
+    MIL_Agent_ABC* pion_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
     MT_Vector2D lastPerceiverPosition_;
@@ -279,9 +280,6 @@ private:
 
 private:
     static const unsigned int nNbrStepsBetweenPeriphericalVision_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Perceiver )

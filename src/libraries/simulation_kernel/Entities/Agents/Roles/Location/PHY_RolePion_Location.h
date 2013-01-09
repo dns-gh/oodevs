@@ -39,6 +39,7 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
                             , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
 public:
+             PHY_RolePion_Location();
     explicit PHY_RolePion_Location( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Location();
 
@@ -107,7 +108,7 @@ private:
     //@}
 
 private:
-    MIL_AgentPion& pion_;
+    MIL_AgentPion* pion_;
     MT_Vector2D vDirection_;
     boost::shared_ptr<MT_Vector2D> pvPosition_;
     double rHeight_;
@@ -119,9 +120,6 @@ private:
     bool bDirectionHasChanged_;
     bool bCurrentSpeedHasChanged_;
     bool bHeightHasChanged_;
-
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ );
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Location )
