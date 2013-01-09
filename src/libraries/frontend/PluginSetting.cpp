@@ -78,16 +78,16 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
 {
     bool display = xis.attribute< bool >( "display", true );
 
-    QHBoxLayout* propertyLayout = new QHBoxLayout();
+    QHBoxLayout* propertyLayout = new QHBoxLayout( parent->layout() );
     label_ = new QLabel();
-    label_->setHidden( !display );
     propertyLayout->addWidget( label_ );
+    label_->setVisible( display );
 
     if( type_ == "string" )
     {
         stringValue_ = new QLineEdit( xis.attribute< std::string >( "default", "" ).c_str() );
-        stringValue_->setHidden( !display );
         propertyLayout->addWidget( stringValue_ );
+        stringValue_->setVisible( display );
     }
     else if( type_ == "integer" )
     {
@@ -97,23 +97,23 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
         if( xis.has_attribute( "max" ) )
             integerValue_->setMaximum( xis.attribute< int >( "max" ) );
         integerValue_->setValue( xis.attribute< int >( "default", 0 ) );
-        integerValue_->setHidden( !display );
         propertyLayout->addWidget( integerValue_ );
+        integerValue_->setVisible( display );
     }
     else if( type_ == "boolean" )
     {
         booleanValue_ = new QCheckBox();
         booleanValue_->setChecked( xis.attribute< bool >( "default", false ) );
-        booleanValue_->setHidden( !display );
         propertyLayout->addWidget( booleanValue_ );
+        booleanValue_->setVisible( display );
     }
     else if( type_ == "time" )
     {
         timeValue_ = new QTimeEdit();
         timeValue_->setDisplayFormat( "hh:mm:ss" );
         timeValue_->setTime( QTime().addSecs( xis.attribute< int >( "default", 0 ) ) );
-        timeValue_->setHidden( !display );
         propertyLayout->addWidget( timeValue_ );
+        timeValue_->setVisible( display );
 
     }
     else if( type_ == "file" )
@@ -136,12 +136,11 @@ PluginSetting::PluginSetting( QWidget* parent, const tools::GeneralConfig& confi
         BOOST_FOREACH( const std::string& enumeration , enumerations )
             enumerationValue_->addItem( enumeration.c_str() );
         enumerationValue_->setCurrentIndex( 0u );
-        enumerationValue_->setHidden( !display );
         propertyLayout->addWidget( enumerationValue_ );
+        enumerationValue_->setVisible( display );
     }
     propertyLayout->setStretch( 0, 1 );
     propertyLayout->setStretch( 1, 3 );
-    static_cast< QVBoxLayout* >( parent->layout() )->addLayout( propertyLayout );
 }
 
 // -----------------------------------------------------------------------------
