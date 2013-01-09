@@ -6,7 +6,7 @@
     <stages>
         <stage label="Changer en ambiance vitesse" disable-when-done="true">
             <skills>
-                <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed" main="true"/>
+                <skill name="sword.military.platoon.coercition.skills.SwitchToSpeed" main="true" priority="1000.0"/>
             </skills>
         </stage>
     </stages>

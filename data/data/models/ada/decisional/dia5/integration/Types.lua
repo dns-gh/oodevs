@@ -311,5 +311,6 @@ eObus_Mine = 5
 eObus_effect = 6
 
 -- Ambiance
-eAmbianceMission_Surete = 0
-eAmbianceMission_Vitesse = 1
+eAmbianceMission_Safety = 0
+eAmbianceMission_Speed = 1
+eAmbianceMission_None = 2

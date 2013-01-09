@@ -208,7 +208,7 @@ integration.startFragOrderTask = function( self )
     stopTask( "sword.military.platoon.tasks.EquipNBCOutfit" )
     orderType = "sword.military.platoon.tasks.UnequipNBCOutfit"
   elseif orderType =="Rep_OrderConduite_ChangerAmbiance" then
-    if integration.getConduiteChangerAmbianceParameter( self ) == eAmbianceMission_Surete then
+    if integration.getConduiteChangerAmbianceParameter( self ) == eAmbianceMission_Safety then
         orderType = "france.military.platoon.tasks.ChangerAmbianceSurete"
     else
         orderType = "france.military.platoon.tasks.ChangerAmbianceVitesse"

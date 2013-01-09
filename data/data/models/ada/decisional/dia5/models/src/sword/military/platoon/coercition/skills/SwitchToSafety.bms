@@ -7,10 +7,10 @@ rootnode
     done = function( self ) end,
     
     create  = function( self )
-       masalife.brain.knowledge.me.body.safetyAttitude = true
+       myself.safetyAttitude = eAmbianceMission_Safety
     end,
     
     destroy = function( self ) 
-      masalife.brain.knowledge.me.body.safetyAttitude = false    
+      myself.safetyAttitude = eAmbianceMission_Speed
     end
 }

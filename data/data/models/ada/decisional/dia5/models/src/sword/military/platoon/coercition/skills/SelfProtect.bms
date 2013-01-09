@@ -57,15 +57,15 @@ rootnode
         end
 
         -- AMBIANCE VITESSE (zone sûre) OU SURETE (ennemi probable)
+        if myself.safetyAttitude == eAmbianceMission_Safety then
+            Activate( skill.nodes.SafetyAttitude, skill.modifiers.importance )
+            Activate( skill.links.dismount, 1 )
+        else -- POSTURE VITESSE
+            myself.speedModulation.switchOnCoverMode = 1
+        end
         if not next( self.entitiesToSafeguardFrom ) then -- PAS D'UNITE FACE AUXQUELLES SE PROTEGER
-            -- no entities to safeguard from but enemy is likely (fragOrder or LCA crossed)
-            if meKnowledge.safetyAttitude then
-                Activate( skill.nodes.SafetyAttitude, skill.modifiers.importance )
-                Activate( skill.links.dismount, 1 )
-            else -- POSTURE VITESSE
-                myself.speedModulation.switchOnCoverMode = 1
-            end
             self.detected = false
+            self.noEntitiesToSafeguardFrom = true
             return -- evaluation of other conditions is useless
         end
 
@@ -78,7 +78,7 @@ rootnode
         end
 
         -- Enemi présent mais ordre de conduite Ambiance vitesse: passer à POSTURE VITESSE
-        if meKnowledge.safetyAttitude == false then
+        if myself.safetyAttitude == eAmbianceMission_Speed then
             myself.speedModulation.switchOnCoverMode = 1
             return
         end

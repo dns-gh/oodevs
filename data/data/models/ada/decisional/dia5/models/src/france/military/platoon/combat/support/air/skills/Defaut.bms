@@ -15,7 +15,7 @@ rootnode
     
     activate = function( self )
         local Activate = Activate
-        if meKnowledge.safetyAttitude then -- POSTURE SURETE
+        if myself.safetyAttitude == eAmbianceMission_Safety then -- POSTURE SURETE
             Activate( skill.nodes.SafetyAttitude, 1 )
         else -- POSTURE VITESSE
             myself.speedModulation.switchOnCoverMode = 1
