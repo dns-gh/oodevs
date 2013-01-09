@@ -10,7 +10,14 @@
 #include "selftraining_app_pch.h"
 #include "Config.h"
 #include "license_gui/LicenseDialog.h"
+
+#pragma warning( push, 0 )
 #include <boost/foreach.hpp>
+#include <boost/program_options.hpp>
+#include <boost/filesystem/path.hpp>
+#pragma warning( pop )
+
+namespace po = boost::program_options;
 
 namespace
 {
@@ -48,7 +55,10 @@ bool CheckSingleFeature( const std::string& feature, bool silent )
 // -----------------------------------------------------------------------------
 Config::Config()
 {
-    // NOTHING
+    po::options_description desc( "General options" );
+    desc.add_options()
+        ( "debug", po::value< bool >( &debugMode_ )->default_value( false ), "activate debug mode" );
+    AddOptions( desc );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,4 +102,13 @@ bool Config::CheckFeature( Feature feature ) const
 bool Config::HasFeature( Feature feature ) const
 {
     return CheckSingleFeature( GetFeature( feature ), true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::IsOnDebugMode
+// Created: NPT 2013-01-03
+// -----------------------------------------------------------------------------
+bool Config::IsOnDebugMode() const
+{
+    return debugMode_;
 }

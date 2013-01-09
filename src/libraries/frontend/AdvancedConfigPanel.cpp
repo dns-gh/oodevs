@@ -127,19 +127,6 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     clientBoxLayout->addWidget( noClientCheckBox_ );
     clientBoxLayout->setMargin( 5 );
 
-    //legacy box
-    legacyLabel_ = new QLabel();
-
-    legacyCheckBox_ = new QCheckBox();
-    legacyCheckBox_->setChecked( false );
-    connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
-
-    legacyBox_ = new QGroupBox();
-    QHBoxLayout* commentBoxLayout = new QHBoxLayout( legacyBox_ );
-    commentBoxLayout->addWidget( legacyLabel_ );
-    commentBoxLayout->addWidget( legacyCheckBox_ );
-    commentBoxLayout->setMargin( 5 );
-
     //general panel
     QVBoxLayout* boxLayout = new QVBoxLayout( this );
     boxLayout->setMargin( 5 );
@@ -147,7 +134,6 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     boxLayout->addWidget( pathfindBox_ );
     boxLayout->addWidget( recordBox_ );
     boxLayout->addWidget( clientBox_ );
-    boxLayout->addWidget( legacyBox_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,9 +165,6 @@ void AdvancedConfigPanel::OnLanguageChanged()
 
     clientBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Client" ) );
     noClientLabel_->setText( tools::translate( "AdvancedConfigPanel", "Do not start gaming client" ) );
-
-    legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
-    legacyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Enable Legacy Mode" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,15 +201,4 @@ void AdvancedConfigPanel::NoClientChecked( int state )
     const bool noClientSelected = state == Qt::Checked;
     WriteRegistry( "NoClientSelected", noClientSelected );
     emit NoClientSelected( noClientSelected );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AdvancedConfigPanel::SwordVersionChecked
-// Created: SLI 2012-01-30
-// -----------------------------------------------------------------------------
-void AdvancedConfigPanel::SwordVersionChecked( int state )
-{
-    const bool isLegacy = state == Qt::Checked;
-    WriteRegistry( "IsLegacy", isLegacy );
-    emit SwordVersionSelected( isLegacy );
 }

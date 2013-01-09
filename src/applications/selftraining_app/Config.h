@@ -40,6 +40,7 @@ public:
     //@{
     bool CheckFeature( Feature feature ) const;
     bool HasFeature( Feature feature ) const;
+    bool IsOnDebugMode() const;
     //@}
 
 private:
@@ -47,6 +48,11 @@ private:
     //@{
     Config( const Config& );            //!< Copy constructor
     Config& operator=( const Config& ); //!< Assignment operator
+    //@}
+
+    //! @name Member data
+    //@{
+    bool debugMode_;
     //@}
 };
 

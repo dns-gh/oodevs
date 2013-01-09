@@ -36,14 +36,6 @@
         <translation type="unfinished">تجزئة التردد:</translation>
     </message>
     <message>
-        <source>Legacy Mode</source>
-        <translation type="unfinished">الوضع القديم</translation>
-    </message>
-    <message>
-        <source>Enable Legacy Mode</source>
-        <translation type="unfinished">تمكين وضع وراثي</translation>
-    </message>
-    <message>
         <source>Advanced</source>
         <translation type="unfinished">متقدم</translation>
     </message>

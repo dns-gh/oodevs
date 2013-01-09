@@ -140,11 +140,26 @@
     <name>DataWidget</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Are you sure you want to delete?</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DebugConfigPanel</name>
+    <message>
+        <source>Enable Legacy Mode</source>
+        <translation>Activer le mode compatibilité</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <source>Integration layer directory</source>
+        <translation>Répertoire d&apos;intégration</translation>
     </message>
 </context>
 <context>
@@ -572,6 +587,10 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Starting scenario</source>
         <translation>Chargement du scénario</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Debug</translation>
     </message>
 </context>
 <context>

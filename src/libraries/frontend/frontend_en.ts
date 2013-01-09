@@ -36,14 +36,6 @@
         <translation>Fragmentation frequency: </translation>
     </message>
     <message>
-        <source>Legacy Mode</source>
-        <translation>Legacy Mode</translation>
-    </message>
-    <message>
-        <source>Enable Legacy Mode</source>
-        <translation>Enable Legacy Mode</translation>
-    </message>
-    <message>
         <source>Advanced</source>
         <translation>Advanced</translation>
     </message>

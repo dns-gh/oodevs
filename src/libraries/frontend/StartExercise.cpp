@@ -34,7 +34,7 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/, const QString& integrationDir )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise.toStdString() )
     , session_ ( session.toStdString() )
@@ -52,6 +52,8 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     if( !checkpoint.isEmpty() )
         AddArgument( "--checkpoint=" + checkpoint );
     AddArgument( ( "--legacy=" + boost::lexical_cast< std::string >( legacy ) ).c_str() );
+    if( !integrationDir.isEmpty() )
+        AddArgument( "--integration-dir=\"" + integrationDir + "\"" );
 }
 
 // -----------------------------------------------------------------------------

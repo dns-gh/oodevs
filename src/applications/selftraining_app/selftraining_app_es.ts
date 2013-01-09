@@ -148,6 +148,21 @@
     </message>
 </context>
 <context>
+    <name>DebugConfigPanel</name>
+    <message>
+        <source>Enable Legacy Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Integration layer directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ExerciseList</name>
     <message>
         <source>Exercise:</source>
@@ -569,6 +584,10 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Starting scenario</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -11,6 +11,7 @@
 #define __ScenarioLauncherPage_h_
 
 #include "LauncherClientPage.h"
+#include "Config.h"
 #include "frontend/Profile.h"
 #include <vector>
 
@@ -55,7 +56,7 @@ public:
     //@{
              ScenarioLauncherPage( Application& app, QStackedWidget* pages,
                                    Page_ABC& previous, kernel::Controllers& controllers,
-                                   const frontend::Config& config,
+                                   const Config& config,
                                    const tools::Loader_ABC& fileLoader,
                                    frontend::LauncherClient& launcher,
                                    gui::LinkInterpreter_ABC& interpreter );
@@ -71,6 +72,7 @@ private slots:
     void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
     void OnSwordVersionSelected( bool isLegacy );
     void OnNoClientSelected( bool noClient );
+    void OnIntegrationPathSelected( const QString& integrationDir );
     //@}
 
 protected:
@@ -93,7 +95,7 @@ protected:
 protected:
     //! @name Member data
     //@{
-    const frontend::Config&       config_;
+    const Config&                 config_;
     const tools::Loader_ABC&      fileLoader_;
     kernel::Controllers&          controllers_;
     gui::LinkInterpreter_ABC&     interpreter_;
@@ -103,6 +105,7 @@ protected:
     frontend::Profile             profile_;
     QString                       session_;
     QString                       checkpoint_;
+    QString                       integrationDir_;
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;

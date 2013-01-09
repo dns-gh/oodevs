@@ -40,14 +40,6 @@
         <translation>Avancé</translation>
     </message>
     <message>
-        <source>Legacy Mode</source>
-        <translation>Mode Compatibilité</translation>
-    </message>
-    <message>
-        <source>Enable Legacy Mode</source>
-        <translation>Activer le mode compatibilité</translation>
-    </message>
-    <message>
         <source>Paused at startup:</source>
         <translation>Démarrage en pause</translation>
     </message>

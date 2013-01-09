@@ -40,14 +40,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Legacy Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enable Legacy Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Paused at startup:</source>
         <translation type="unfinished"></translation>
     </message>

@@ -29,7 +29,7 @@ public:
     //@{
     StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
                     const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded = true,
-                    std::string commanderEndpoint = "", std::string processJobName = "" );
+                    std::string commanderEndpoint = "", std::string processJobName = "", const QString& integrationDir= "" );
     virtual ~StartExercise();
     //@}
 

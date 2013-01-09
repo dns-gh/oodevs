@@ -11,6 +11,7 @@
 #include "ScenarioLauncherPage.h"
 #include "moc_ScenarioLauncherPage.cpp"
 #include "CompositeProcessWrapper.h"
+#include "DebugConfigPanel.h"
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -133,7 +134,7 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
     , config_      ( config )
     , fileLoader_  ( fileLoader )
@@ -143,6 +144,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , exercise_    ( 0 )
     , noClient_    ( ReadRegistry( "NoClientSelected" ) )
     , isLegacy_    ( ReadRegistry( "IsLegacy" ) )
+    , integrationDir_( "" )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -166,12 +168,27 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
+    
+    //session config config panel
     AddPlugin< frontend::SessionConfigPanel >();
+
+    //random config panel
     AddPlugin< frontend::RandomPluginConfigPanel >();
+
+    //advanced config panel
     frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
-    connect( advancedPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
     connect( advancedPanel, SIGNAL( NoClientSelected( bool ) ), SLOT( OnNoClientSelected( bool ) ) );
 
+    //debug config panel
+    if( config.IsOnDebugMode() )
+    {
+        DebugConfigPanel* configPanel = new DebugConfigPanel();
+        connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
+        connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
+        configTabs_->addTab( configPanel, tools::translate( "ScenarioLauncherPage", "Debug" ) );
+    }
+
+    //general settings tab
     QWidget* configBox = new QWidget();
     QVBoxLayout* configBoxLayout = new QVBoxLayout( configBox );
     configBoxLayout->setMargin( 5 );
@@ -225,6 +242,7 @@ void ScenarioLauncherPage::OnLanguageChanged()
     progressPage_->SetTitle( tools::translate( "ScenarioLauncherPage", "Starting scenario" ) );
     for( int i = 0; i < configTabs_->count() && i < static_cast< int >( plugins_.size()); ++i )
         configTabs_->setTabText( i, plugins_[ i ]->GetName() );
+    configTabs_->setTabText( configTabs_->count() - 1, tools::translate( "DebugConfigPanel", "Debug" ) );
     LauncherClientPage::OnLanguageChanged();
 }
 
@@ -262,7 +280,7 @@ void ScenarioLauncherPage::OnStart()
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
         CreateSession( exerciseName, session );
-        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true, isLegacy_ ) );
+        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true, isLegacy_, true, "", "", integrationDir_ ) );
         if ( ! noClient_ )
         {
             boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
@@ -394,4 +412,13 @@ void ScenarioLauncherPage::OnNoClientSelected( bool noClient )
 void ScenarioLauncherPage::OnSwordVersionSelected( bool isLegacy )
 {
     isLegacy_ = isLegacy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnIntegrationPathSelected
+// Created: NPT 2013-01-04
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnIntegrationPathSelected( const QString& integrationDir )
+{
+    integrationDir_ = integrationDir;
 }

@@ -51,14 +51,12 @@ signals:
     //! @name Signals
     //@{
     void NoClientSelected( bool isLegacy );
-    void SwordVersionSelected( bool isLegacy );
     //@}
 
 private slots:
     //! @name Operations
     //@{
     void NoClientChecked( int state );
-    void SwordVersionChecked( int state );
     //@}
 
 private:
