@@ -23,11 +23,8 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.entities = {}
-        DEC_Trace("self.params = " .. tostringr( self.params ))
-        DEC_Trace(" self.params.entity = " .. tostringr(self.params.entity))
         if self.params.entity and self.params.entity ~= NIL then
             self.realEnemyId = integration.getAgentIdFromKnowledge( self.params.entity )
-            DEC_Trace( "self.realEnemyId = " .. tostringr( self.realEnemyId ))
         end
         if self.params.destroyingPosition and self.params.destroyingPosition ~= NIL  then
             self.positions = { self.params.destroyingPosition }   
