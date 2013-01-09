@@ -208,6 +208,9 @@
       <Filter>Source Files\Pathfinder</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_terrain\TER_Polygon.inl">

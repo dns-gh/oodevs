@@ -12,6 +12,7 @@
 #ifndef __TER_Polygon_h_
 #define __TER_Polygon_h_
 
+#include "TER_Localisation_ABC.h"
 #include "MT_Tools/MT_Shared.h"
 #include "MT_Tools/MT_Rect.h"
 
@@ -21,7 +22,7 @@ class MT_Droite;
 //*****************************************************************************
 // Created: JDY 03-05-19
 //*****************************************************************************
-class TER_Polygon
+class TER_Polygon: public TER_Localisation_ABC
 {
 public:
     // @name Constructors/Destructor
@@ -46,7 +47,8 @@ public:
     // @name Tools
     //@{
     virtual bool IsNull               () const;
-            bool IsInside             ( const MT_Vector2D& vPos, double rPrecision = 0.1 ) const; // $$$$ AGE 2005-01-31: stoopid precision
+    virtual bool IsInside             ( const MT_Vector2D& vPos ) const;
+            bool IsInside             ( const MT_Vector2D& vPos, double rPrecision ) const; // $$$$ AGE 2005-01-31: stoopid precision
             bool IsInsidish           ( const MT_Vector2D& vPos ) const;
             bool IsOnBorder           ( const MT_Vector2D& vPos, double rPrecision ) const;
             bool IntersectWithBorder  ( const MT_Line& segment, double rPrecision     ) const;
@@ -64,7 +66,7 @@ public:
 
     const T_PointVector&       GetBorderPoints() const; //$$$ A CLEANER
 
-    MT_Rect GetBoundingBox() const;
+    virtual MT_Rect GetBoundingBox() const;
     //@}
 
 private:

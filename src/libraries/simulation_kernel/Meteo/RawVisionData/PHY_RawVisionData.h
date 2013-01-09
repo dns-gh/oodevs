@@ -109,8 +109,7 @@ public:
     static unsigned int ConvertEnvironmentToObjectIdx( E_VisionObject obj );
     static E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int );
 
-    template< typename T >
-    void GetVisionObjectsInSurface( const T& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
+    void GetVisionObjectsInSurface( const TER_Localisation_ABC& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
     void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );
     void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );

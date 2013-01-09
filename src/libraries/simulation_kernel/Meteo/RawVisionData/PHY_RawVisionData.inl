@@ -242,8 +242,8 @@ const weather::Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
 // Name: PHY_RawVisionData::GetVisionObjectsInSurface
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-template< typename T > inline
-void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, unsigned int& nEmptySurface, unsigned int& nForestSurface, unsigned int& nUrbanSurface ) const
+inline
+void PHY_RawVisionData::GetVisionObjectsInSurface( const TER_Localisation_ABC& localisation, unsigned int& nEmptySurface, unsigned int& nForestSurface, unsigned int& nUrbanSurface ) const
 {
     nEmptySurface  = 0;
     nForestSurface = 0;

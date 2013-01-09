@@ -1106,7 +1106,7 @@ MT_Vector2D TER_Localisation::ComputeBarycenter() const
 // Name: TER_Localisation::GetBoundingBox
 // Created: JVT 03-09-02
 //-----------------------------------------------------------------------------
-const MT_Rect& TER_Localisation::GetBoundingBox() const
+MT_Rect TER_Localisation::GetBoundingBox() const
 {
     return boundingBox_;
 }
@@ -1153,6 +1153,11 @@ bool TER_Localisation::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, 
 // Created: NLD 2003-07-24
 // Last modified: JVT 03-09-02
 //-----------------------------------------------------------------------------
+bool TER_Localisation::IsInside( const MT_Vector2D& vPos ) const
+{
+    return IsInside( vPos, rPrecision_ );
+}
+
 bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) const
 {
     switch( nType_ )

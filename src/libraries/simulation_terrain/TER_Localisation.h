@@ -13,6 +13,7 @@
 #define __TER_Localisation_h_
 
 #include "TER_Polygon.h"
+#include "TER_Localisation_ABC.h"
 #include "MT_Tools/MT_Polyline.h"
 #include <boost/serialization/split_member.hpp>
 
@@ -29,7 +30,7 @@ class MT_Rect;
 // Created: NLD 2003-07-22
 // Last modified: JVT 04-05-28
 //=============================================================================
-class TER_Localisation
+class TER_Localisation: public TER_Localisation_ABC
 {
 public:
     //-------------------------------------------------------------------------
@@ -103,14 +104,16 @@ public:
     /** @name Geometry */
     //-------------------------------------------------------------------------
     //@{
-    const MT_Rect& GetBoundingBox             () const;
+    virtual MT_Rect GetBoundingBox() const;
+    virtual bool IsInside( const MT_Vector2D& vPos ) const;
+
     double       GetArea                      () const;
     double       GetLength                    () const;
     double       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;
 
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
-    bool IsInside             ( const MT_Vector2D& vPos, double rPrecision = rPrecision_ ) const;
+    bool IsInside             ( const MT_Vector2D& vPos, double rPrecision ) const;
     bool IsOnBorder           ( const MT_Vector2D& vPos, double rPrecision = rPrecision_ ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation, double rPrecision = rPrecision_ ) const;
     bool IsIntersecting       ( const TER_Polygon& polygon, double rPrecision = rPrecision_ ) const;

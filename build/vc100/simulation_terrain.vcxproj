@@ -134,6 +134,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Pathfinder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />

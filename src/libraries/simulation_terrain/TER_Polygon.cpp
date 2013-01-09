@@ -636,3 +636,8 @@ bool TER_Polygon::IsInBoundingBox( const MT_Vector2D& p, double rPrecision /*=0*
 {
     return pData_->boundingBox_.IsInside( p, rPrecision );
 }
+
+bool TER_Polygon::IsInside( const MT_Vector2D& vPos ) const
+{
+    return IsInside( vPos, 0.1 );
+}
