@@ -142,3 +142,12 @@ void ADN_TableItem_CheckItem::DoValueChanged()
 {
     static_cast<ADN_Connector_Bool< ADN_TableItem_CheckItem >*>(pConnector_)->SetDataChanged( pEditor_->GetState() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableItem_CheckItem::IsChecked
+// Created: ABR 2013-01-08
+// -----------------------------------------------------------------------------
+bool ADN_TableItem_CheckItem::IsChecked() const
+{
+    return bIsChecked_;
+}

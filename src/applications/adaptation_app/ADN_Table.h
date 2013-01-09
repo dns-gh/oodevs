@@ -24,6 +24,7 @@ public:
     explicit ADN_Table( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_Table();
 
+    virtual void FinalizeConnection();
     void  EnableRefreshing( bool b );
     void  StopEditing();
     void* GetCurrentData();

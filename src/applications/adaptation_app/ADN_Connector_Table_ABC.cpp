@@ -123,6 +123,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
         int i=0;
         for( std::vector<void*>::iterator it=vDatas_.begin();it!=vDatas_.end();++it,++i)
             AddSubItems(i,*it);
+        tab_.FinalizeConnection();
         tab_.EnableRefreshing(true);
         tab_.repaintContents(false);
     }

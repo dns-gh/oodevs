@@ -51,7 +51,6 @@ ADN_MissionTypes_Table::ADN_MissionTypes_Table( QWidget* pParent, const char* sz
 : ADN_Table2( pParent, szName  )
 {
     // peut etre selectionne & trie
-    setSorting(true);
     setSelectionMode(Q3Table::NoSelection);
     setShowGrid(false);
     setLeftMargin(0);
@@ -81,3 +80,13 @@ ADN_MissionTypes_Table::~ADN_MissionTypes_Table()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionTypes_Table::FinalizeConnection
+// Created: ABR 2013-01-09
+// -----------------------------------------------------------------------------
+void ADN_MissionTypes_Table::FinalizeConnection()
+{
+    setSorting( true );
+    sortColumn( 0, true, true );
+    setSorting( false );
+}

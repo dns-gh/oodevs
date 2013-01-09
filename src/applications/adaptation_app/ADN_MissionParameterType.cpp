@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_MissionParameterType.h"
+#include "moc_ADN_MissionParameterType.cpp"
 #include "ADN_Tr.h"
 #include "ADN_Missions_GUI.h"
 
@@ -74,6 +75,10 @@ void ADN_MissionParameterType::DoValueChanged()
     bool isNumeric = param->type_.GetData() == eMissionParameterTypeNumeric;
     itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
     itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
+    bool isObjectKnowledge = param->type_.GetData() == eMissionParameterTypeObjectKnowledge;
+    itemConnectors_[ADN_Missions_GUI::eKnowledgeObjects]->Connect( &param->knowledgeObjects_, isObjectKnowledge );
+
+    emit TypeChanged( param->type_.GetData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,5 +94,6 @@ void ADN_MissionParameterType::Disconnect()
         itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
         itemConnectors_[ADN_Missions_GUI::eMinValue]->Disconnect( &param->minValue_ );
         itemConnectors_[ADN_Missions_GUI::eMaxValue]->Disconnect( &param->maxValue_ );
+        itemConnectors_[ADN_Missions_GUI::eKnowledgeObjects]->Disconnect( &param->knowledgeObjects_ );
     }
 }

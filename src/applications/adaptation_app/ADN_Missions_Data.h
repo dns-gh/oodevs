@@ -14,6 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Drawings_Data.h"
+#include "ADN_MissionGenObjectTypes_Infos.h"
 #include "tools/IdManager.h"
 
 class ADN_Objects_Data_ObjectInfos;
@@ -85,7 +86,8 @@ public:
 
         void ReadArchive ( xml::xistream& input );
         void ReadValue   ( xml::xistream& input );
-        void ReadChoice  ( xml::xistream& input );
+        template< typename T >
+        void ReadChoice  ( xml::xistream& input, T& data );
         void WriteArchive( xml::xostream& output );
 
     private:
@@ -102,7 +104,7 @@ public:
         ADN_Type_Int                                                      maxValue_;
         T_MissionParameterValue_Vector                                    values_;
         T_Choice_Vector                                                   choices_;
-
+        helpers::T_MissionGenObjectTypes_Infos_Vector                     knowledgeObjects_;
         ADN_Type_String                                                   diaName_;
     };
 

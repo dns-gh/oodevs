@@ -536,3 +536,11 @@ void ADN_Table::GoToOnDoubleClicked( int row, int col, int button, const QPoint&
     emit( GoToRequested( goToInfo_ ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::FinalizeConnection
+// Created: ABR 2013-01-09
+// -----------------------------------------------------------------------------
+void ADN_Table::FinalizeConnection()
+{
+    // NOTHING
+}

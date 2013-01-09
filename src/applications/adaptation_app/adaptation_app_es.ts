@@ -2581,6 +2581,17 @@ tirador</translation>
         <source>Maximum</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>all</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Missions_Parameter</name>
+    <message>
+        <source>&apos;%1&apos; parameter should have at least one object.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Models_GUI</name>
@@ -6041,6 +6052,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Categorías - Recurso naural inválido</translation>
+    </message>
+    <message>
+        <source>Invalid mission parameter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -58,6 +58,8 @@ namespace
             itemMin->GetConnector().Connect( &param->minOccurs_ );
             itemMax->GetConnector().Connect( &param->maxOccurs_ );
 
+            connect( itemType, SIGNAL( TypeChanged( E_MissionParameterType ) ), &tab_, SIGNAL( TypeChanged( E_MissionParameterType ) ) );
+
             static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
             tab_.AdjustColumns();
         }
@@ -180,4 +182,5 @@ void ADN_MissionParameters_Table::OnSelectionChanged()
 void ADN_MissionParameters_Table::ResetCurrent()
 {
     current_ = 0;
+    emit TypeChanged( eNbrMissionParameterType );
 }

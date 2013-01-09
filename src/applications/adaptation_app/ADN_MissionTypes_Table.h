@@ -28,6 +28,12 @@ public:
     virtual ~ADN_MissionTypes_Table();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    virtual void FinalizeConnection();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

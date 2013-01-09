@@ -38,7 +38,6 @@ class ADN_TableItem_CheckItem
 : public ADN_TableItem_ABC
 {
 public:
-
     explicit ADN_TableItem_CheckItem(ADN_Table* parent,void *data);
     virtual ~ADN_TableItem_CheckItem();
 
@@ -48,11 +47,13 @@ public:
     virtual void     setContentFromEditor( QWidget *w );
     virtual void     paint( QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected );
 
+    bool IsChecked() const;
+    virtual void DoValueChanged();
+
     int rtti() const;
     static int RTTI;
 
 public:
-
     //-------------------------------------------------------------------------
     /** @name Methods used by Connector */
     //-------------------------------------------------------------------------
@@ -61,17 +62,10 @@ public:
     void setHidden( bool b );
     //@}
 
-
-protected:
-
-    virtual void        DoValueChanged();
-
 private:
-    ADN_BoolEditor*                            pEditor_;
-    bool                                    bIsChecked_;
-
+    ADN_BoolEditor* pEditor_;
+    bool            bIsChecked_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_CheckItem::rtti

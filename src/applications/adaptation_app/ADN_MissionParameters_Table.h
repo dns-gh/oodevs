@@ -37,6 +37,12 @@ public:
     void ResetCurrent();
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void TypeChanged( E_MissionParameterType type );
+    //@}
+
 private slots:
     //! @name Slots
     //@{

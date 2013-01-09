@@ -2582,6 +2582,17 @@ du tireur</translation>
         <source>Maximum</source>
         <translation>Maximum</translation>
     </message>
+    <message>
+        <source>all</source>
+        <translation>tout</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Missions_Parameter</name>
+    <message>
+        <source>&apos;%1&apos; parameter should have at least one object.</source>
+        <translation>Le paramètre &apos;%1&apos; doit avoir un object minimum.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Models_GUI</name>
@@ -6052,6 +6063,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Categories - Invalid resource nature</source>
         <translation>Catégories - Nature de ressource invalide</translation>
+    </message>
+    <message>
+        <source>Invalid mission parameter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
