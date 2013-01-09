@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationConsign )
 // Name: PHY_MedicalEvacuationConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pDoctor_              ( 0 )
     , pEvacuationAmbulance_ ( 0 )

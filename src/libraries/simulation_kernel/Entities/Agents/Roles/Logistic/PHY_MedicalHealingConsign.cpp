@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHealingConsign )
 // Name: PHY_MedicalHealingConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalHealingConsign::PHY_MedicalHealingConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalHealingConsign::PHY_MedicalHealingConsign( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pDoctor_( 0 )
 {

@@ -46,6 +46,7 @@ class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePionLOG_Medical();
     explicit PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Medical();
     //@}
@@ -161,6 +162,7 @@ private:
 private:
     //! @name Tools
     //@{
+    void Initialize();
     void InsertConsign( PHY_MedicalConsign_ABC& );
     void InsertConsigns( const T_MedicalConsigns& );
 
@@ -175,7 +177,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPionLOG_ABC& pion_;
+    MIL_AgentPionLOG_ABC* pion_;
     bool bHasChanged_;
     bool bExternalMustChangeState_;
     bool bSystemEnabled_;
@@ -188,10 +190,7 @@ private:
     T_CollectionAmbulancesList collectionAmbulances_;
     T_CollectionAmbulancesSet reservations_;
     //@}
-
-    template< typename Archive > friend void save_construct_data( Archive& archive, const PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
-    template< typename Archive > friend void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const unsigned int /*version*/ );
-
+    
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Medical )

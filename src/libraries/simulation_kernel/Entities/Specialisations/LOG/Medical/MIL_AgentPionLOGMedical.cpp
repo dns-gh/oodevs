@@ -86,6 +86,7 @@ void MIL_AgentPionLOGMedical::load( MIL_CheckPointInArchive& file, const unsigne
 
     PHY_RolePionLOG_Medical* pRole;
     file >> pRole;
+    RegisterRole( *pRole );
 }
 
 // -----------------------------------------------------------------------------

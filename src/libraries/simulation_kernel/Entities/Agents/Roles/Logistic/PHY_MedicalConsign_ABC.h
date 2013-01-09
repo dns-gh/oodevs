@@ -17,6 +17,7 @@ namespace client
     class LogMedicalHandlingUpdate;
 }
 
+class MIL_Agent_ABC;
 class PHY_RoleInterface_Medical;
 class PHY_MedicalHumanState;
 
@@ -27,7 +28,7 @@ class PHY_MedicalHumanState;
 class PHY_MedicalConsign_ABC : private boost::noncopyable
 {
 public:
-             PHY_MedicalConsign_ABC( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
+             PHY_MedicalConsign_ABC( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalConsign_ABC();
     virtual ~PHY_MedicalConsign_ABC();
 
@@ -108,11 +109,11 @@ protected:
     //@}
 
 private:
-    int                         nTimer_;
-    E_State                     nState_;
-    unsigned                    currentStateEndTimeStep_; // Only used to send the information over the network
-    bool                        bHasChanged_;
-    PHY_RoleInterface_Medical*  pMedical_;
+    int nTimer_;
+    E_State nState_;
+    unsigned currentStateEndTimeStep_; // Only used to send the information over the network
+    bool bHasChanged_;
+    MIL_Agent_ABC* pMedical_;
 
 protected:
     PHY_MedicalHumanState*   pHumanState_;
@@ -126,11 +127,11 @@ protected:
 template< typename Archive >
 void PHY_MedicalConsign_ABC::serialize( Archive& file, const unsigned int )
 {
-    file & pMedical_
-         & pHumanState_
-         & nTimer_
-         & nState_
-         & currentStateEndTimeStep_;
+    file & pMedical_;
+    file & pHumanState_;
+    file & nTimer_;
+    file & nState_;
+    file & currentStateEndTimeStep_;
 }
 
 #endif // __PHY_MedicalConsign_ABC_h_

@@ -30,7 +30,7 @@ class PHY_MedicalEvacuationConsign : public PHY_MedicalConsign_ABC
     friend class PHY_MedicalEvacuationAmbulance;
 
 public:
-             PHY_MedicalEvacuationConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
+             PHY_MedicalEvacuationConsign( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalEvacuationConsign();
     virtual ~PHY_MedicalEvacuationConsign();
 
