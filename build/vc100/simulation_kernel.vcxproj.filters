@@ -67,9 +67,6 @@
     <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries">
       <UniqueIdentifier>{2501c7c8-8e90-4a1a-8b82-dc37b480b3d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion">
-      <UniqueIdentifier>{435c59b5-d3bd-4168-8c58-7f293f12e097}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities\Agents\Units\Humans\Injured Human\Protections">
       <UniqueIdentifier>{51253b7b-7acc-4038-864c-16167fbb8658}</UniqueIdentifier>
     </Filter>
@@ -728,18 +725,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentInjuredHumanPion.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentTypeInjuredHumanPion.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateInjuredHuman.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateTypeInjuredHuman.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.cpp">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Protections</Filter>
@@ -2908,18 +2893,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_Injury_Wound.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Injuries</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentInjuredHumanPion.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AgentTypeInjuredHumanPion.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateInjuredHuman.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\MIL_AutomateTypeInjuredHuman.h">
-      <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\InjuredHumanPion</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_HumanProtection.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Injured Human\Protections</Filter>
