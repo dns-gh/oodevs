@@ -197,6 +197,33 @@ private:
     static const double rPrecision_;
 };
 
-#include "TER_Localisation.inl"
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::load
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+template<class Archive>
+void TER_Localisation::load( Archive& ar, const unsigned int )
+{
+    ar >> nType_
+       >> pointVector_
+       >> bWasCircle_
+       >> vCircleCenter_
+       >> rCircleRadius_;
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::save
+// Created: JVT 2005-03-23
+// -----------------------------------------------------------------------------
+template<class Archive>
+void TER_Localisation::save( Archive& ar, const unsigned int ) const
+{
+    ar << nType_
+       << pointVector_
+       << bWasCircle_
+       << vCircleCenter_
+       << rCircleRadius_;
+}
 
 #endif // __TER_Localisation_h_

@@ -164,7 +164,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_PopulationFlowVisitor_ABC.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\simulation_terrain\TER_Localisation.inl" />
     <None Include="..\..\src\libraries\simulation_terrain\TER_Polygon.inl" />
     <None Include="..\..\src\libraries\simulation_terrain\TER_Object_ABC.inl" />
     <None Include="..\..\src\libraries\simulation_terrain\TER_PopulationManager.inl" />
