@@ -155,6 +155,4 @@ private:
     static sCell emptyCell_;
 };
 
-#include "PHY_RawVisionData.inl"
-
 #endif // __PHY_RawVisionData_h_

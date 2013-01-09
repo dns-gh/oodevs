@@ -1733,7 +1733,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_Ephemeride.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionData.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\tools\MIL_Config.inl" />

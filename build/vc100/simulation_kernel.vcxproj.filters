@@ -5113,9 +5113,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.inl">
       <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionData.inl">
-      <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.inl">
       <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
     </None>
