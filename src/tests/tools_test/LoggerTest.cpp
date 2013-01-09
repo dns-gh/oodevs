@@ -9,7 +9,7 @@
 
 #include "tools_test_pch.h"
 #include "MT_Tools/MT_FileLogger.h"
-#include "MT_Tools/TemporaryDirectory.h"
+#include <tools/TemporaryDirectory.h>
 #include <boost/regex.hpp>
 #include <fstream>
 
@@ -55,7 +55,7 @@ void CheckLines( const char** expected, const std::string& path )
 
 BOOST_AUTO_TEST_CASE( filelogger_basics )
 {
-    TemporaryDirectory temp( "filelogger-", temp_directory );
+    tools::TemporaryDirectory temp( "filelogger-", temp_directory );
     {
         MT_FileLogger logger( (temp.path() / "log.txt" ).string().c_str(), 1, 1000,
             MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eSimulation, false);

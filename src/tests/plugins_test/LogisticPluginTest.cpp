@@ -10,8 +10,8 @@
 #include "plugins_test_pch.h"
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
-#include "MT_Tools/TemporaryDirectory.h"
 #include "protocol/Protocol.h"
+#include <tools/TemporaryDirectory.h>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem.hpp>
@@ -153,7 +153,8 @@ void CheckRegexps( const std::vector< LogFile >& logFiles, const std::vector< st
 
 BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
 {
-    TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-",
+            ::GetTestTempDirectory() );
     boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.path() );
 
     {
@@ -572,7 +573,8 @@ void PushFuneralMessage( LogisticPlugin* plugin )
 
 BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
 {
-    TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-",
+            ::GetTestTempDirectory() );
     boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.path() );
 
     plugin->SetMaxLinesInFile( 1 );
