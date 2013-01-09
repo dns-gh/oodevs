@@ -90,6 +90,7 @@ public:
 
     public:
         ADN_Type_Int id_;
+        ADN_Type_String key_;
         ADN_Type_String category_;
         ADN_Type_String message_;
         ADN_Type_String clientFunctionTrigger_;

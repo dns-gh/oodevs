@@ -24,6 +24,7 @@
 						</xs:sequence>
 						<xs:attribute name="message" type="xs:string" use="required"/>
 						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="key" type="xs:string" use="optional"/>
 						<xs:attribute name="category" type="T_ReportCategory" use="required"/>
 						<xs:attribute name="client-function-trigger" type="T_ReportClientFunctionTrigger" use="optional">
 							<xs:annotation>

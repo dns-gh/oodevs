@@ -207,6 +207,7 @@ void ADN_Reports_Data::ReportInfo::ReadArchive( xml::xistream& input )
 {
     category_ = "operational";
     input >> xml::attribute( "id", id_ )
+          >> xml::optional >> xml::attribute( "key", key_ )
           >> xml::optional >> xml::attribute( "category", category_ )
           >> xml::attribute( "message", message_ )
           >> xml::optional >> xml::attribute( "client-function-trigger", clientFunctionTrigger_ )
@@ -234,8 +235,10 @@ void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
             << xml::attribute( "id", id_ )
             << xml::attribute( "category", category_ )
             << xml::attribute( "message",  message_ );
+    if( key_ != "" )
+        output  << xml::attribute( "key", key_ );
     if( clientFunctionTrigger_ != "" )
-        output  << xml::attribute( "client-function-trigger",  clientFunctionTrigger_ );
+        output  << xml::attribute( "client-function-trigger", clientFunctionTrigger_ );
     for( unsigned long i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
     output << xml::end;
