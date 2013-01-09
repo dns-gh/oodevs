@@ -21,7 +21,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeBaseLOG.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
-#include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
@@ -82,7 +81,6 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate Notable"                ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Journalist"             ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Civilian"               ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate Injured Human"          ] = &MIL_AutomateTypeInjuredHuman::Create;
 
     LoadingWrapper loader;
 
