@@ -42,7 +42,7 @@ rootnode
         
         if self.arrived then
             Activate( skill.links.dismount, 1 )
-            if masalife.brain.knowledge.me.body:isDismounted() then
+            if meKnowledge:isDismounted() then
                 Activate( skill.nodes.HideInUndergroundNetwork, 1, { undergroundNetwork = self.params.undergroundNetwork } )
             end
         end
