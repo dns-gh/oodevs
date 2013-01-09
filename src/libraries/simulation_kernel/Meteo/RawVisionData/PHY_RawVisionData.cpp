@@ -334,12 +334,18 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
 
     double rScaledX = rX / rCellSize_;
 
-    short maxOffset = 0;
     const double halfCellSize_ = 0.5 * rCellSize_;
-    const MT_Vector2D vTR(  halfCellSize_,  halfCellSize_ );
-    const MT_Vector2D vTL( -halfCellSize_,  halfCellSize_ );
-    const MT_Vector2D vBL( -halfCellSize_, -halfCellSize_ );
-    const MT_Vector2D vBR(  halfCellSize_, -halfCellSize_ );
+    const MT_Vector2D offsets[] =
+    {
+        MT_Vector2D(  halfCellSize_,  halfCellSize_ ),
+        MT_Vector2D( -halfCellSize_,  halfCellSize_ ),
+        MT_Vector2D( -halfCellSize_, -halfCellSize_ ),
+        MT_Vector2D(  halfCellSize_, -halfCellSize_ ),
+    };
+    const size_t offsetsLen = sizeof( offsets )/sizeof( *offsets );
+    T_PointVector cellVector;
+
+    short maxOffset = 0;
     for( auto it = elevationOffsets_.begin(); it != elevationOffsets_.end(); ++it )
     {
         if( it->second.offset_ > maxOffset )
@@ -349,17 +355,15 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
             {
                 if( it->second.localisation_.GetType() == TER_Localisation::ePolygon )
                 {
-                    //geometry::Polygon2f polygon( it->second.points_ );
                     if( it->second.localisation_.Intersect2DWithCircle( point, 1.414f * halfCellSize_ ) )
                         maxOffset = it->second.offset_;
                 }
                 else
                 {
-                    T_PointVector cellVector;
-                    cellVector.push_back( point + vTR );
-                    cellVector.push_back( point + vTL );
-                    cellVector.push_back( point + vBL );
-                    cellVector.push_back( point + vBR );
+                    if( cellVector.empty() )
+                        cellVector.resize( offsetsLen );
+                    for( size_t i = 0; i != offsetsLen; ++i )
+                        cellVector[i] = point + offsets[i];
                     TER_Localisation cell( TER_Localisation::ePolygon, cellVector );
                     const T_PointVector linePoints = it->second.localisation_.GetPoints();
                     for( std::size_t i = 0; i < linePoints.size() - 1; ++i )
