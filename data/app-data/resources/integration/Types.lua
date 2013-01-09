@@ -316,5 +316,6 @@ eRandomFlee = 1
 eRandomStay = 2
 
 -- Ambiance
-eAmbianceMission_Surete = 0
-eAmbianceMission_Vitesse = 1
+eAmbianceMission_Safety = 0
+eAmbianceMission_Speed = 1
+eAmbianceMission_None = 2

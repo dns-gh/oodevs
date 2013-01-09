@@ -111,6 +111,7 @@ function RegisterTaskListener()
             -- Clear knowledge cache (queries)
             myself.engineerObjectsOnPath = {}
             myself.blocked = nil
+            myself.safetyAttitude = eAmbianceMission_None
         end,
         TaskFinished = function( self, taskName )
             meKnowledge:RC( eRC_BM_FinPhase, self.stage[ taskName ] )
