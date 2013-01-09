@@ -12,11 +12,9 @@
 
 #include "clients_kernel/UrbanDisplayOptions.h"
 #include "spatialcontainer/SpatialContainer.h"
-#include "tools/Resolver.h"
-#include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/ModelLoaded.h"
 #include "geostore/SpatialIndexer.h"
 #include <boost/noncopyable.hpp>
+#include "tools/Resolver.h"
 
 namespace geostore
 {
@@ -52,8 +50,6 @@ class UrbanMenuManager;
 // Created: SLG 2009-02-10
 // =============================================================================
 class UrbanModel : public tools::Resolver< kernel::UrbanObject_ABC >
-                 , public tools::Observer_ABC
-                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                  , public geostore::SpatialIndexer
                  , private boost::noncopyable
 {
@@ -86,6 +82,7 @@ public:
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
     void ExportShapeFile( const std::string& exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const;
     bool TakeLinkErrors();
+    void CreateGeostoreManager( const tools::ExerciseConfig& config );
     //@}
 
     //! @name Accessors
@@ -97,7 +94,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     void ReadCity( xml::xistream& xis );
     void ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* parent );
     void ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent );

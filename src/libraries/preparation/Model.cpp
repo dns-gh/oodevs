@@ -301,6 +301,7 @@ void Model::Load( const tools::ExerciseConfig& config )
             oldUrbanMode_ = true;
             config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
         }
+    urban_.CreateGeostoreManager( config );
     symbolsFactory_.Load( config );
     urban_.Load();
 

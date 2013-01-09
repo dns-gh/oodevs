@@ -143,7 +143,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
     , menuManager_        ( new UrbanMenuManager( controllers, *this, staticModel_ ) )
 {
-    controllers_.Register( *this );
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,6 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
 UrbanModel::~UrbanModel()
 {
     Purge();
-    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,10 +198,10 @@ void UrbanModel::Load()
 // Name: UrbanModel::NotifyUpdated
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::NotifyUpdated( const kernel::ModelLoaded& model )
+void UrbanModel::CreateGeostoreManager( const tools::ExerciseConfig& config )
 {
-    CreateQuadTree( model.config_.GetTerrainWidth(), model.config_.GetTerrainHeight() );
-    geostore_.reset( new geostore::GeoStoreManager( model.config_.GetTerrainDir( model.config_.GetTerrainName() ), *this ) );
+    CreateQuadTree( config.GetTerrainWidth(), config.GetTerrainHeight() );
+    geostore_.reset( new geostore::GeoStoreManager( config.GetTerrainDir( config.GetTerrainName() ), *this ) );
 }
 
 // -----------------------------------------------------------------------------
