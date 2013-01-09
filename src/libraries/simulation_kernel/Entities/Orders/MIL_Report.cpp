@@ -25,8 +25,9 @@
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
-MIL_Report::T_ReportMap      MIL_Report::reports_;
-MIL_IDManager                MIL_Report::ids_;
+MIL_Report::T_ReportMap MIL_Report::reports_;
+MIL_Report::T_KeyMap    MIL_Report::keys_;
+MIL_IDManager           MIL_Report::ids_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Initialize
@@ -47,11 +48,15 @@ void MIL_Report::Initialize( xml::xistream& xis )
 void MIL_Report::ReadReport( xml::xistream& xis )
 {
     unsigned int id;
-    xis >> xml::attribute( "id", id );
+    std::string key;
+    xis >> xml::attribute( "id", id )
+        >> xml::optional() >> xml::attribute( "key", key );
     const MIL_Report*& pReport = reports_[ id ];
     if( pReport )
         xis.error( "Report id already defined" );
     pReport = new MIL_Report( id, xis );
+    if( !key.empty() )
+        keys_[ key ] = id;
 }
 
 namespace

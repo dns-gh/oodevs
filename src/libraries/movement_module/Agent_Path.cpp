@@ -16,7 +16,7 @@
 #include "Rep_PathPoint_Special.h"
 #include "Rep_PathPoint_Lima.h"
 #include "ModuleFacade.h"
-#include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
+#include "simulation_kernel/Entities/Orders/MIL_DecisionalReport.h" // $$$$ MCO : for enums
 #include "MT_Tools/MT_Line.h"
 #include <tools/Exception.h>
 #include "wrapper/Event.h"
@@ -449,7 +449,7 @@ std::ostream& operator<<( std::ostream& out, const MT_Vector2D& vect )
 
 namespace
 {
-    void SendEvent( const wrapper::View& entity, MIL_Report::E_DecisionalReport code )
+    void SendEvent( const wrapper::View& entity, const MIL_DecisionalReport& code )
     {
         wrapper::Event event( "movement report" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -482,8 +482,8 @@ void Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
     if( nPathState == Path_ABC::eImpossible )
         SendEvent( entity_,
             entity_[ "is-underground" ] // $$$$ MCO 2012-07-09: module should not be aware of the "is-underground" feature
-                ? MIL_Report::eRC_NotActivatedUndergroundNetwork
-                : MIL_Report::eRC_TerrainDifficile );
+                ? report::eRC_NotActivatedUndergroundNetwork
+                : report::eRC_TerrainDifficile );
 
 #ifndef NDEBUG
     for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )
@@ -551,7 +551,7 @@ void Agent_Path::ComputePath()
 {
     if( ! GET_HOOK( IsDestinationTrafficable )( entity_, nextWaypoints_.empty() ? 0 : &nextWaypoints_[0], nextWaypoints_.size() ) )
     {
-        SendEvent( entity_, MIL_Report::eRC_TerrainDifficile );
+        SendEvent( entity_, report::eRC_TerrainDifficile );
         Cancel();
     }
     else

@@ -131,7 +131,7 @@ int PHY_RoleAction_Loading::Load()
 
     if( nState_ == eUnloading )
     {
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_DisembarkmentInterrupted );
+        MIL_Report::PostEvent( owner_, report::eRC_DisembarkmentInterrupted );
         nState_ = eNothing;
     }
     if( bIsLoaded_ )
@@ -146,7 +146,7 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         nState_       = eLoading;
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_EmbarkmentStarted );
+        MIL_Report::PostEvent( owner_, report::eRC_EmbarkmentStarted );
     }
 
     if( nState_ == eLoading )
@@ -154,7 +154,7 @@ int PHY_RoleAction_Loading::Load()
         if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( owner_, MIL_Report::eRC_EmbarkmentFinished );
+            MIL_Report::PostEvent( owner_, report::eRC_EmbarkmentFinished );
             SetLoadedState();
             return eEnd;
         }
@@ -173,7 +173,7 @@ int PHY_RoleAction_Loading::Unload()
 
     if( nState_ == eLoading )
     {
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_EmbarkmentInterrupted );
+        MIL_Report::PostEvent( owner_, report::eRC_EmbarkmentInterrupted );
         nState_ = eNothing;
     }
     if( !bIsLoaded_ )
@@ -188,7 +188,7 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         nState_       = eUnloading;
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_DisembarkmentStarted );
+        MIL_Report::PostEvent( owner_, report::eRC_DisembarkmentStarted );
     }
 
     if( nState_ == eUnloading )
@@ -196,7 +196,7 @@ int PHY_RoleAction_Loading::Unload()
         if( MIL_Time_ABC::GetTime().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( owner_, MIL_Report::eRC_DisembarkmentFinished );            SetUnloadedState();
+            MIL_Report::PostEvent( owner_, report::eRC_DisembarkmentFinished );            SetUnloadedState();
             return eEnd;
         }
         return eRunning;

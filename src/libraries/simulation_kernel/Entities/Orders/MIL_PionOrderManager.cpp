@@ -58,7 +58,7 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
     if( pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
     {
-        MIL_Report::PostEvent( pion_, MIL_Report::eRC_TransportedUnitCannotReceiveOrder );
+        MIL_Report::PostEvent( pion_, report::eRC_TransportedUnitCannotReceiveOrder );
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
     }
     if( pion_.IsImmobilized() )

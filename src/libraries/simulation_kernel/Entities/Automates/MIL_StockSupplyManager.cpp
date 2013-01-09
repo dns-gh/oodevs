@@ -131,7 +131,7 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
         return;
     bSupplyNeeded_ = true;
     if( SendSupplyNeededReport() )
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementStocks );
+        MIL_Report::PostEvent( *pAutomate_, report::eRC_DemandeRavitaillementStocks );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logisti
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementStockAnnule );
+    MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockAnnule );
     bSupplyNeeded_ = true;
     scheduledSupplies_.erase( supplyConsign );
 }
@@ -189,7 +189,7 @@ void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementStockEffectue );
+    MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockEffectue );
     scheduledSupplies_.erase( supplyConsign );
 }
 
@@ -246,7 +246,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowPa
     requestContainer->Execute( dispatcher );
     manualSupplyRequests_.push_back( requestContainer );
     if( !dispatcher.AllowSupply() )
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_SupplierUnavailable );
+        MIL_Report::PostEvent( *pAutomate_, report::eRC_SupplierUnavailable );
 }
 
 // -----------------------------------------------------------------------------

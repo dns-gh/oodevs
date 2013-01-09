@@ -199,7 +199,7 @@ void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception* error )
     if( error )
         LogError( error );
     CleanStateAfterCrash();
-    MIL_Report::PostEvent( *pEntity_, MIL_Report::eRC_MissionImpossible );
+    MIL_Report::PostEvent( *pEntity_, report::eRC_MissionImpossible );
     pEntity_->GetOrderManager().CancelMission();
 }
 

@@ -419,9 +419,9 @@ void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dot
 {
     if( bNewNeed )
     {
-        MIL_Report::PostEvent( *owner_, MIL_Report::eRC_SeuilLogistiqueDotationDepasse, dotationCategory );
+        MIL_Report::PostEvent( *owner_, report::eRC_SeuilLogistiqueDotationDepasse, dotationCategory );
         if( owner_->GetType().IsRefugee() || owner_->GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
-            MIL_Report::PostEvent( *owner_, MIL_Report::eRC_PrisonersUnsupplied );
+            MIL_Report::PostEvent( *owner_, report::eRC_PrisonersUnsupplied );
     }
     owner_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
 }
@@ -640,7 +640,7 @@ void PHY_RolePion_Dotations::SetForbiddenDotation( const PHY_DotationCategory& c
             break;
     if( it == forbiddenDotations_.end() )
     {
-        MIL_Report::PostEvent( *owner_, MIL_Report::eRC_MunitionInterdite, category );
+        MIL_Report::PostEvent( *owner_, report::eRC_MunitionInterdite, category );
         forbiddenDotations_.push_back( &category );
     }
 }
@@ -656,7 +656,7 @@ void PHY_RolePion_Dotations::RemoveForbiddenDotation( const PHY_DotationCategory
             break;
     if( it != forbiddenDotations_.end() )
     {
-       MIL_Report::PostEvent( *owner_, MIL_Report::eRC_MunitionAutorise, category );
+       MIL_Report::PostEvent( *owner_, report::eRC_MunitionAutorise, category );
        forbiddenDotations_.erase( it );
     }
 }

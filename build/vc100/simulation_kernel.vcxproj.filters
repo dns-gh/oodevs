@@ -5423,5 +5423,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFindRequest.h">
       <Filter>Source Files\Decision\Path</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DecisionalReport.h">
+      <Filter>Source Files\Entities\Orders</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

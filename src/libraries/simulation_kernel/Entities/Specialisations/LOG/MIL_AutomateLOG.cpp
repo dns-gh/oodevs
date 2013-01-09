@@ -357,7 +357,7 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler
 void MIL_AutomateLOG::NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const
 {
     if( pAssociatedAutomate_ )
-        MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eRC_AllocationConsentieBientotEpuisee, dotationCategory );
+        MIL_Report::PostEvent( *pAssociatedAutomate_, report::eRC_AllocationConsentieBientotEpuisee, dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,9 +368,9 @@ void MIL_AutomateLOG::NotifyQuotaExceeded( const PHY_DotationCategory& dotationC
 {
     BOOST_FOREACH( T_Requesters::value_type pion, requesters )
     {
-        MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogQuotaExceeded, dotationCategory );
+        MIL_Report::PostEvent( *pion, report::eRC_LogQuotaExceeded, dotationCategory );
         if( pAssociatedAutomate_ )
-            MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eRC_LogQuotaExceededForAgent, dotationCategory, *pion );
+            MIL_Report::PostEvent( *pAssociatedAutomate_, report::eRC_LogQuotaExceededForAgent, dotationCategory, *pion );
     }
 }
 

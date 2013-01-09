@@ -23,7 +23,7 @@
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
-#include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
+#include "simulation_kernel/Entities/Orders/MIL_DecisionalReport.h" // $$$$ MCO : for enums
 #include <boost/bind.hpp>
 
 DECLARE_HOOK( IsInCity, bool, ( const SWORD_Model* entity ) )
@@ -113,7 +113,7 @@ const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& model,
 
 namespace
 {
-    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code )
+    void PostReport( const wrapper::View& entity, const MIL_DecisionalReport& code )
     {
         wrapper::Event event( "report" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -150,7 +150,7 @@ void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::V
                     && agent[ "is-civilian" ]
                     && GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) )
                 {
-                    PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
+                    PostReport( perceiver, report::eRC_CiviliansEncountered );
                     civiliansEncountered = true;
                 }
             }
@@ -267,7 +267,7 @@ void PerceptionView::ExecuteFlows( const wrapper::View& perceiver, const Surface
             civiliansEncountered |= GET_HOOK( IsPopulationElementNewlyPerceived )( perceiver, flow, level->GetID() );
         }
         if( civiliansEncountered )
-            PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
+            PostReport( perceiver, report::eRC_CiviliansEncountered );
     }
 }
 
@@ -306,7 +306,7 @@ void PerceptionView::ExecuteConcentrations( const wrapper::View& perceiver, cons
             civiliansEncountered |= GET_HOOK( IsPopulationElementNewlyPerceived )( perceiver, concentration, level->GetID() );
         }
         if( civiliansEncountered )
-            PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
+            PostReport( perceiver, report::eRC_CiviliansEncountered );
     }
 }
 

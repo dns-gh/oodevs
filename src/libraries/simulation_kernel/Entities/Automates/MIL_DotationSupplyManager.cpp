@@ -130,7 +130,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
         return;
     bSupplyNeeded_ = true;
     if( SendSupplyNeededReport() )
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementDotations );
+        MIL_Report::PostEvent( *pAutomate_, report::eRC_DemandeRavitaillementDotations );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +177,7 @@ void MIL_DotationSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logi
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementDotationsAnnule );
+    MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementDotationsAnnule );
     bSupplyNeeded_ = true;
     scheduledSupplies_.erase( supplyConsign );
 }
@@ -188,7 +188,7 @@ void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logis
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementDotationsEffectue );
+    MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementDotationsEffectue );
     scheduledSupplies_.erase( supplyConsign );
 }
 

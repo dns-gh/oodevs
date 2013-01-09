@@ -1078,9 +1078,9 @@ void DEC_RolePion_Decision::NotifyOperationalStateChanged( E_OperationalState nS
     {
         nOperationalState_ = nState;
         if( nOperationalState_ == eOpStateFullyDestroyed && pion_.IsPC() )
-            MIL_Report::PostEvent( pion_, MIL_Report::eRC_DestructionPC );
+            MIL_Report::PostEvent( pion_, report::eRC_DestructionPC );
         if( nOperationalState_ == eOpStateTacticallyDestroyed )
-            MIL_Report::PostEvent( pion_, MIL_Report::eRC_TacticallyDestroyed );
+            MIL_Report::PostEvent( pion_, report::eRC_TacticallyDestroyed );
         NotifyHasChanged();
     }
 }

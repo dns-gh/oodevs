@@ -1866,7 +1866,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
         unsigned int ammos = (unsigned int) pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
 
-        MIL_Report::PostEvent( *reporter, MIL_Report::eRC_TirIndirectSurCible, targetKn );
+        MIL_Report::PostEvent( *reporter, report::eRC_TirIndirectSurCible, targetKn );
 
         pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
     }

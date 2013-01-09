@@ -1468,7 +1468,7 @@ void MIL_Automate::Serialize( sword::ParentEntity& message ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const
 {
-    MIL_Report::PostEvent( *this, MIL_Report::eRC_AllocationConsentieBientotEpuisee, dotationCategory );
+    MIL_Report::PostEvent( *this, report::eRC_AllocationConsentieBientotEpuisee, dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -1479,8 +1479,8 @@ void MIL_Automate::NotifyQuotaExceeded( const PHY_DotationCategory& dotationCate
 {
     BOOST_FOREACH( T_Requesters::value_type pion, requesters )
     {
-        MIL_Report::PostEvent( *pion, MIL_Report::eRC_LogQuotaExceeded, dotationCategory );
-        MIL_Report::PostEvent( *this, MIL_Report::eRC_LogQuotaExceededForAgent, dotationCategory, *pion );
+        MIL_Report::PostEvent( *pion, report::eRC_LogQuotaExceeded, dotationCategory );
+        MIL_Report::PostEvent( *this, report::eRC_LogQuotaExceededForAgent, dotationCategory, *pion );
     }
 }
 

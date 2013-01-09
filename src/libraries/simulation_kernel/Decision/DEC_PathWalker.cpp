@@ -169,13 +169,13 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
             const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
             if( object.IsInside( lastWaypoint ) )
             {
-                movingEntity_.SendRC( MIL_Report::eRC_DifficultMovementProgression, object.GetType().GetRealName() );
+                movingEntity_.SendRC( report::eRC_DifficultMovementProgression, object.GetType().GetRealName() );
                 isInsideObject = true;
                 break;
             }
         }
         if( !isInsideObject )
-            movingEntity_.SendRC( MIL_Report::eRC_TerrainDifficile );
+            movingEntity_.SendRC( report::eRC_TerrainDifficile );
         rc = ePartialPath;
     }
     itNextPathPoint_ = itCurrentPathPoint_;
@@ -479,7 +479,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
         rCurrentSpeed_ = 0.;
         if( !bFuelReportSent_ )
         {
-            movingEntity_.SendRC( MIL_Report::eRC_PlusDeCarburant );
+            movingEntity_.SendRC( report::eRC_PlusDeCarburant );
             bFuelReportSent_ = true;
         }
         return eNotEnoughFuel;

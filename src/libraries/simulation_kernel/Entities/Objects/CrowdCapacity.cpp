@@ -167,7 +167,7 @@ void CrowdCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& a
         roleUrbanLocation->AddInhabitantCollision( object.GetID() );
     else if( roleLocation->GetCurrentSpeed() > 0. && !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
     {
-        MIL_Report::PostEvent( agent, MIL_Report::eRC_UrbanCollisionStarted );
+        MIL_Report::PostEvent( agent, report::eRC_UrbanCollisionStarted );
         roleUrbanLocation->AddInhabitantCollision( object.GetID() );
     }
 }
@@ -185,5 +185,5 @@ void CrowdCapacity::ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& 
     bool collisionBefore = roleUrbanLocation->HasInhabitantCollision();
     roleUrbanLocation->RemoveInhabitantCollision( object.GetID() );
     if( collisionBefore && !roleUrbanLocation->HasInhabitantCollision() )
-        MIL_Report::PostEvent( agent, MIL_Report::eRC_UrbanCollisionStopped );
+        MIL_Report::PostEvent( agent, report::eRC_UrbanCollisionStopped );
 }

@@ -46,13 +46,13 @@ private:
 
     //! @name Helpers
     //@{
-    void PostEvent( MIL_Report::E_DecisionalReport report, const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
+    void PostEvent( const MIL_DecisionalReport& report, const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::pair< MIL_Report::E_DecisionalReport, const PHY_DotationCategory* >, T_Requesters > T_Notifications;
+    typedef std::map< std::pair< std::string, const PHY_DotationCategory* >, T_Requesters > T_Notifications;
     //@}
 
 private:

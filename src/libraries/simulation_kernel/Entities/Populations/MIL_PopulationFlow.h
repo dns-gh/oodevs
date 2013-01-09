@@ -119,8 +119,8 @@ private:
     virtual bool CanMove() const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasResources();
-    virtual void SendRC( int nReportID ) const;
-    virtual void SendRC( int nReportID, const std::string& name ) const;
+    virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
+    virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;
     bool ManageObjectSplit();
     bool ManageSplit();
     void MoveToAlternateDestination( const MT_Vector2D& destination );

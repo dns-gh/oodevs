@@ -65,8 +65,8 @@ public:
     bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
-    virtual void SendRC( int nReportID ) const;
-    virtual void SendRC( int nReportID, const std::string& name ) const;
+    virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
+    virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 

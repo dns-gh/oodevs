@@ -961,6 +961,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DecisionalReport.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h" />

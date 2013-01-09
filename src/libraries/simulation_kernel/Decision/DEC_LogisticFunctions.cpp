@@ -677,14 +677,14 @@ void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, con
         throw MASA_EXCEPTION( "invalid parameter." );
     const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, funcPredicate );
     if( nNbrGotBack == 0 )
-        MIL_Report::PostEvent( callerAgent, MIL_Report::eRC_RecuperationMaterielPreteImpossible );
+        MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPreteImpossible );
     else
     {
-        MIL_Report::PostEvent( pTarget->GetPion(), MIL_Report::eRC_MaterielRendu );
+        MIL_Report::PostEvent( pTarget->GetPion(), report::eRC_MaterielRendu );
         if( nNbrGotBack < nNbrToGetBack )
-            MIL_Report::PostEvent( callerAgent, MIL_Report::eRC_RecuperationMaterielPretePartiellementEffectuee );
+            MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPretePartiellementEffectuee );
         else
-            MIL_Report::PostEvent( callerAgent, MIL_Report::eRC_RecuperationMaterielPreteEffectuee );
+            MIL_Report::PostEvent( callerAgent, report::eRC_RecuperationMaterielPreteEffectuee );
     }
 }
 

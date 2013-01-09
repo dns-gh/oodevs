@@ -246,9 +246,9 @@ void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& com
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
     if( PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( rRepairerRatio, GetAvailabilityRatio( repairerUsePred, pWorkRate_ ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, MIL_Report::eRC_AlerteDisponibiliteReparateurs );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, report::eRC_AlerteDisponibiliteReparateurs );
     if( PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( rHaulerRatio, GetAvailabilityRatio( haulerUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, MIL_Report::eRC_AlerteDisponibiliteRemorqueurs );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, report::eRC_AlerteDisponibiliteRemorqueurs );
 }
 
 // -----------------------------------------------------------------------------
@@ -626,7 +626,7 @@ void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
     if( nWorkRateWarningRCTick_ != 0 && MIL_Time_ABC::GetTime().GetCurrentTimeStep() > nWorkRateWarningRCTick_ )
     {
         nWorkRateWarningRCTick_ = 0;
-        MIL_Report::PostEvent< MIL_Agent_ABC >( owner_, MIL_Report::eRC_RegimeMaintenanceDelaiDepasse );
+        MIL_Report::PostEvent< MIL_Agent_ABC >( owner_, report::eRC_RegimeMaintenanceDelaiDepasse );
     }
 }
 

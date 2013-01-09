@@ -419,18 +419,18 @@ bool PHY_RoleAction_Moving::HasResources()
 // Name: PHY_RoleAction_Moving::SendRC
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendRC( int nReportID ) const
+void PHY_RoleAction_Moving::SendRC( const MIL_DecisionalReport& reportId ) const
 {
-    MIL_Report::PostEvent( owner_, static_cast< MIL_Report::E_DecisionalReport >( nReportID ) );
+    MIL_Report::PostEvent( owner_, reportId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::SendRC
 // Created: CMA 2012-02-02
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendRC( int nReportID, const std::string& name ) const
+void PHY_RoleAction_Moving::SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const
 {
-    MIL_Report::PostEvent( owner_, static_cast< MIL_Report::E_DecisionalReport >( nReportID ), name );
+    MIL_Report::PostEvent( owner_, reportId, name );
 }
 
 // -----------------------------------------------------------------------------

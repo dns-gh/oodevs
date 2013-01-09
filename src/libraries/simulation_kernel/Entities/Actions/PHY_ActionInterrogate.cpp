@@ -41,7 +41,7 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
     if( affinity < 0 || ( pKnowledge_->IsAnEnemy( caller.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
         result = eFailed;
     else
-        MIL_Report::PostEvent( pKnowledge->GetAgentKnown(), MIL_Report::eRC_Questionning );
+        MIL_Report::PostEvent( pKnowledge->GetAgentKnown(), report::eRC_Questionning );
     Callback( static_cast< int >( result ) );
 }
 

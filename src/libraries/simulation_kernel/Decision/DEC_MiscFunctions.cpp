@@ -274,7 +274,7 @@ void DEC_MiscFunctions::RemoveEnemyRepresentation( const boost::shared_ptr< DEC_
 // Name: DEC_MiscFunctions::AddEnemyRepresentation
 // Created: LDC 2011-09-12
 // -----------------------------------------------------------------------------
-std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller )
+std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller )
 {
     if( !caller )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -291,10 +291,10 @@ std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetE
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::Report
+// Name: DEC_MiscFunctions::Report
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::Report( DEC_Decision_ABC& caller, int type, int reportId )
+void DEC_MiscFunctions::Report( DEC_Decision_ABC& caller, int type, const std::string& reportId )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -304,10 +304,10 @@ void DEC_MiscFunctions::Report( DEC_Decision_ABC& caller, int type, int reportId
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportAgentKnowledge
+// Name: DEC_MiscFunctions::ReportAgentKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportAgentKnowledge( DEC_Decision_ABC& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
+void DEC_MiscFunctions::ReportAgentKnowledge( DEC_Decision_ABC& caller, int type, const std::string& reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -319,10 +319,10 @@ void DEC_MiscFunctions::ReportAgentKnowledge( DEC_Decision_ABC& caller, int type
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportDotationType
+// Name: DEC_MiscFunctions::ReportDotationType
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportDotationType( DEC_Decision_ABC& caller, int type, int reportId, const PHY_DotationCategory* dotationType )
+void DEC_MiscFunctions::ReportDotationType( DEC_Decision_ABC& caller, int type, const std::string& reportId, const PHY_DotationCategory* dotationType )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -334,10 +334,10 @@ void DEC_MiscFunctions::ReportDotationType( DEC_Decision_ABC& caller, int type, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportEquipmentType
+// Name: DEC_MiscFunctions::ReportEquipmentType
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportEquipmentType( DEC_Decision_ABC& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType )
+void DEC_MiscFunctions::ReportEquipmentType( DEC_Decision_ABC& caller, int type, const std::string& reportId, const PHY_ComposanteTypePion* equipmentType )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -349,10 +349,10 @@ void DEC_MiscFunctions::ReportEquipmentType( DEC_Decision_ABC& caller, int type,
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportFloat
+// Name: DEC_MiscFunctions::ReportFloat
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportFloat( DEC_Decision_ABC& caller, int type, int reportId, float param )
+void DEC_MiscFunctions::ReportFloat( DEC_Decision_ABC& caller, int type, const std::string& reportId, float param )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -364,10 +364,10 @@ void DEC_MiscFunctions::ReportFloat( DEC_Decision_ABC& caller, int type, int rep
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportFloatFloat
+// Name: DEC_MiscFunctions::ReportFloatFloat
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportFloatFloat( DEC_Decision_ABC& caller, int type, int reportId, float param1, float param2 )
+void DEC_MiscFunctions::ReportFloatFloat( DEC_Decision_ABC& caller, int type, const std::string& reportId, float param1, float param2 )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -381,10 +381,10 @@ void DEC_MiscFunctions::ReportFloatFloat( DEC_Decision_ABC& caller, int type, in
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportId
+// Name: DEC_MiscFunctions::ReportId
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportId( DEC_Decision_ABC& caller, int type, int reportId, int id )
+void DEC_MiscFunctions::ReportId( DEC_Decision_ABC& caller, int type, const std::string& reportId, int id )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -396,10 +396,10 @@ void DEC_MiscFunctions::ReportId( DEC_Decision_ABC& caller, int type, int report
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportObjectKnoweldge
+// Name: DEC_MiscFunctions::ReportObjectKnoweldge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportObjectKnoweldge( DEC_Decision_ABC& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+void DEC_MiscFunctions::ReportObjectKnoweldge( DEC_Decision_ABC& caller, int type, const std::string& reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -411,10 +411,10 @@ void DEC_MiscFunctions::ReportObjectKnoweldge( DEC_Decision_ABC& caller, int typ
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportPion
+// Name: DEC_MiscFunctions::ReportPion
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportPion( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion )
+void DEC_MiscFunctions::ReportPion( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* pion )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -426,10 +426,10 @@ void DEC_MiscFunctions::ReportPion( DEC_Decision_ABC& caller, int type, int repo
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportPionAutomate
+// Name: DEC_MiscFunctions::ReportPionAutomate
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportPionAutomate( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate )
+void DEC_MiscFunctions::ReportPionAutomate( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -443,10 +443,10 @@ void DEC_MiscFunctions::ReportPionAutomate( DEC_Decision_ABC& caller, int type, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportPionPion
+// Name: DEC_MiscFunctions::ReportPionPion
 // Created: MGD 2010-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportPionPion( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 )
+void DEC_MiscFunctions::ReportPionPion( DEC_Decision_ABC& caller, int type, const std::string& reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -463,10 +463,10 @@ void DEC_MiscFunctions::ReportPionPion( DEC_Decision_ABC& caller, int type, int 
 
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportPopulationKnowledge
+// Name: DEC_MiscFunctions::ReportPopulationKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportPopulationKnowledge( DEC_Decision_ABC& caller, int type, int reportId, int populationKnowledge )
+void DEC_MiscFunctions::ReportPopulationKnowledge( DEC_Decision_ABC& caller, int type, const std::string& reportId, int populationKnowledge )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
@@ -479,25 +479,25 @@ void DEC_MiscFunctions::ReportPopulationKnowledge( DEC_Decision_ABC& caller, int
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportTirPion
+// Name: DEC_MiscFunctions::ReportTirPion
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportTirPion( DEC_Decision_ABC& caller, int type, int reportId, int id )
+void DEC_MiscFunctions::ReportTirPion( DEC_Decision_ABC& caller, int type, const std::string& reportId, int id )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::CreateTir( id ) );
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::CreateTir( id ) );
         params.push_back( missionParam );
         pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: static void DEC_MiscFunctions::ReportString
+// Name: DEC_MiscFunctions::ReportString
 // Created: MGD 2010-03-24
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::ReportString( DEC_Decision_ABC& caller, int type, int reportId, const std::string& message )
+void DEC_MiscFunctions::ReportString( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message )
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {

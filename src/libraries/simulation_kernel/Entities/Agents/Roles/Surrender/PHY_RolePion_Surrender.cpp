@@ -104,7 +104,7 @@ void PHY_RolePion_Surrender::NotifySurrendered()
 {
     if( !bSurrendered_ )
     {
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_Rendu );
+        MIL_Report::PostEvent( owner_, report::eRC_Rendu );
         bHasChanged_ = true;
         owner_.Apply(&SurrenderNotificationHandler_ABC::NotifySurrendered);
         bSurrendered_ = true;
@@ -120,7 +120,7 @@ void PHY_RolePion_Surrender::NotifySurrenderCanceled()
     if( bSurrendered_ )
     {
         Release();
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_RedditionAnnulee );
+        MIL_Report::PostEvent( owner_, report::eRC_RedditionAnnulee );
         bHasChanged_ = true;
         owner_.Apply(&SurrenderNotificationHandler_ABC::NotifySurrenderCanceled);
         bSurrendered_ = false;

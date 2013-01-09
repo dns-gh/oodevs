@@ -246,7 +246,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
             if( pBlockingObject_ )
             {
                 const std::string name = MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( pBlockingObject_->GetType().GetName() ).GetRealName();
-                SendRC( MIL_Report::eRC_DifficultMovementProgression, name );
+                SendRC( report::eRC_DifficultMovementProgression, name );
             }
         }
         bBlocked_ = true;
@@ -445,7 +445,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     if( animatorAttribute )
     {
         for( AnimatorAttribute::CIT_AgentSet it = animatorAttribute->GetAnimators().begin(); it != animatorAttribute->GetAnimators().end(); ++it )
-            MIL_Report::PostEvent( **it, MIL_Report::eRC_DebutInterventionFaceAPopulation, GetAttitude().GetID() );
+            MIL_Report::PostEvent( **it, report::eRC_DebutInterventionFaceAPopulation, GetAttitude().GetID() );
     }
     return true;
 }
@@ -566,18 +566,18 @@ double MIL_PopulationFlow::GetMaxSpeed() const
 // Name: MIL_PopulationFlow::SendRC
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SendRC( int nReportID ) const
+void MIL_PopulationFlow::SendRC( const MIL_DecisionalReport& reportId ) const
 {
-    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_DecisionalReport >( nReportID ) ); //$$$
+    MIL_Report::PostEvent( GetPopulation(), reportId ); //$$$
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::SendRC
 // Created: CMA 2012-02-02
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SendRC( int nReportID, const std::string& name ) const
+void MIL_PopulationFlow::SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const
 {
-    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_DecisionalReport >( nReportID ), name );
+    MIL_Report::PostEvent( GetPopulation(), reportId, name );
 }
 
 // -----------------------------------------------------------------------------

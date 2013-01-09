@@ -49,7 +49,7 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
 
-        MIL_Report::PostEvent( population, MIL_Report::eRC_PopulationVictimeExplosionMines, damages.GetNbrKilledHumans(), damages.GetNbrWoundedHumans() );
+        MIL_Report::PostEvent( population, report::eRC_PopulationVictimeExplosionMines, damages.GetNbrKilledHumans(), damages.GetNbrWoundedHumans() );
     }
 }
 

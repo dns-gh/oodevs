@@ -532,33 +532,33 @@ void RegisterReportFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ItineraireToString", &DEC_DIAFunctions::PathToString  );
     brain.RegisterFunction( "DEC_UnitDecisionalState", &DEC_KnowledgeAgentFunctions::UnitDecisionalState );
     brain.RegisterFunction( "DEC_RC1",
-        boost::function< void ( DEC_Decision_ABC&, int, int ) >( boost::bind( &DEC_MiscFunctions::Report, _1, _2, _3 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::Report, _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_AgentKnowledge",
-        boost::function< void ( DEC_Decision_ABC&, int, int, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_DotationType",
-        boost::function< void ( DEC_Decision_ABC&, int, int, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_EquipmentType",
-        boost::function< void ( DEC_Decision_ABC&, int, int, const PHY_ComposanteTypePion* ) >( boost::bind( &DEC_MiscFunctions::ReportEquipmentType, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const PHY_ComposanteTypePion* ) >( boost::bind( &DEC_MiscFunctions::ReportEquipmentType, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Float",
-        boost::function< void ( DEC_Decision_ABC&, int, int, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Float_Float",
-        boost::function< void ( DEC_Decision_ABC&, int, int, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat, _1, _2, _3, _4, _5 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Id",
-        boost::function< void ( DEC_Decision_ABC&, int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportId, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportId, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_ObjectKnowledge",
-        boost::function< void ( DEC_Decision_ABC&, int, int, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion",
-        boost::function< void ( DEC_Decision_ABC&, int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Automate",
-        boost::function< void ( DEC_Decision_ABC&, int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate, _1, _2, _3, _4, _5 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_Pion_Pion",
-        boost::function< void ( DEC_Decision_ABC&, int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion, _1, _2, _3, _4, _5 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion, _1, _2, _3, _4, _5 ) ) );
     brain.RegisterFunction( "DEC_RC_PopulationKnowledge",
-        boost::function< void ( DEC_Decision_ABC&, int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",
-        boost::function< void ( DEC_Decision_ABC&, int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_String",
-        boost::function< void ( DEC_Decision_ABC&, int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString, _1, _2, _3, _4 ) ) );
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString, _1, _2, _3, _4 ) ) );
 }
 
 // -----------------------------------------------------------------------------

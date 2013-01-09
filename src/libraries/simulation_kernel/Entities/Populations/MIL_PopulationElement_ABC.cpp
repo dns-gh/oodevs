@@ -603,7 +603,7 @@ void MIL_PopulationElement_ABC::UpdateCollidingAttackingAgents( MIL_Agent_ABC& t
     if( !pKnPopulation )
         return;
 
-    MIL_Report::PostEvent( target, MIL_Report::eRC_PriseAPartieParPopulation, pKnPopulation );
+    MIL_Report::PostEvent( target, report::eRC_PriseAPartieParPopulation, pKnPopulation );
 }
 
 namespace

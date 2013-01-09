@@ -1111,7 +1111,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) c
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
-    MIL_Report::PostEvent( owner_, MIL_Report::eRC_ObservationTirIndirect, flyingShell );
+    MIL_Report::PostEvent( owner_, report::eRC_ObservationTirIndirect, flyingShell );
 }
 
 // -----------------------------------------------------------------------------

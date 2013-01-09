@@ -93,7 +93,7 @@ void BorderCapacity::Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ )
     for( it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
         if( populationsNotified_.find( *it ) == populationsNotified_.end() )
         {
-            MIL_Report::PostEvent( **it, MIL_Report::eRC_BorderCrossed );
+            MIL_Report::PostEvent( **it, report::eRC_BorderCrossed );
             populationsNotified_.insert( *it );
         }
     populationsInside_.clear();
@@ -115,7 +115,7 @@ void BorderCapacity::Register( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BorderCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    MIL_Report::PostEvent( agent, MIL_Report::eRC_BorderCrossed );
+    MIL_Report::PostEvent( agent, report::eRC_BorderCrossed );
 }
 
 // -----------------------------------------------------------------------------

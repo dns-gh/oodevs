@@ -361,7 +361,7 @@ bool PHY_Human::NotifyBackToWar()
     if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::dead_ )
         return false;
     CancelMedicalLogisticRequest();
-    MIL_Report::PostEvent( GetPion(), MIL_Report::eRC_HumainRetourDeSante );
+    MIL_Report::PostEvent( GetPion(), report::eRC_HumainRetourDeSante );
     return true;
 }
 
@@ -434,6 +434,18 @@ void PHY_Human::NotifyBackFromFuneral()
     NotifyHumanChanged( oldHumanState );
 }
 
+namespace
+{
+    const MIL_DecisionalReport& GetReport( PHY_MedicalHumanState* pMedicalState )
+    {
+        if( !pMedicalState )
+            return report::eRC_DecesBlesse;
+        else if( pMedicalState->IsInAmbulance() )
+            return report::eRC_DecesBlessePendantTransport;
+        return report::eRC_DecesBlessePendantHospitalisation;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::Update
 // Created: NLD 2005-01-10
@@ -443,18 +455,12 @@ void PHY_Human::Update()
     assert( pComposante_ );
     if( time_.GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
-        MIL_Report::E_DecisionalReport nReportID;
-        if( !pMedicalState_ )
-            nReportID = MIL_Report::eRC_DecesBlesse;
-        else if( pMedicalState_->IsInAmbulance() )
-            nReportID = MIL_Report::eRC_DecesBlessePendantTransport;
-        else
-            nReportID = MIL_Report::eRC_DecesBlessePendantHospitalisation;
+        const MIL_DecisionalReport& nReportID = GetReport( pMedicalState_ );
         if( SetWound( PHY_HumanWound::killed_ ) )
         {
             MIL_Report::PostEvent( GetPion(), nReportID );
             if( pMedicalState_ )
-                MIL_Report::PostEvent( GetPion(), MIL_Report::eRC_DecesBlesse );
+                MIL_Report::PostEvent( GetPion(), report::eRC_DecesBlesse );
         }
     }
     // Logistic requests - $$$ A refactorer...

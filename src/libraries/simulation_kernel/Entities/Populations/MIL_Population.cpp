@@ -381,7 +381,7 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, double rSur
         rSurface -= damage;
     }
     NotifyAttackedBy( exterminator );
-    MIL_Report::PostEvent( *this, MIL_Report::eRC_AttentatTerroristeDansPopulation );
+    MIL_Report::PostEvent( *this, report::eRC_AttentatTerroristeDansPopulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -430,7 +430,7 @@ void MIL_Population::UpdateDecision( float duration )
         DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
         if( role )
             role->LogError( &e );
-        MIL_Report::PostEvent( *this, MIL_Report::eRC_MissionImpossible );
+        MIL_Report::PostEvent( *this, report::eRC_MissionImpossible );
     }
 }
 

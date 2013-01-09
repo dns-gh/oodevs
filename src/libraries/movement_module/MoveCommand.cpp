@@ -14,7 +14,7 @@
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
 #include "wrapper/Hook.h"
-#include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
+#include "simulation_kernel/Entities/Orders/MIL_DecisionalReport.h" // $$$$ MCO : for enums
 #include <tools/Exception.h>
 
 using namespace sword;
@@ -27,7 +27,7 @@ DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >&
 
 namespace
 {
-    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code, const std::string& name )
+    void PostReport( const wrapper::View& entity, const MIL_DecisionalReport& code, const std::string& name )
     {
         wrapper::Event event( "movement report with name" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -122,7 +122,7 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
     if( !mainPath_.lock()->ComputeFutureObjectCollision( entity, *cache_, rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
         return false;
     obstacleId_ = GET_HOOK( GetObjectKnownId )( pObjectColliding );
-    PostReport( entity, MIL_Report::eRC_DifficultMovementProgression, GET_HOOK( GetKnowledgeObjectRealName )( pObjectColliding ) );
+    PostReport( entity, report::eRC_DifficultMovementProgression, GET_HOOK( GetKnowledgeObjectRealName )( pObjectColliding ) );
 
     return true;
 }

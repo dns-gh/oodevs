@@ -78,7 +78,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
         {
             rDeploymentValue_ = 1.f;
             eDeploymentState_ = eDeployed;
-            MIL_Report::PostEvent( owner_, MIL_Report::eRC_SectionDeployee );
+            MIL_Report::PostEvent( owner_, report::eRC_SectionDeployee );
         }
         break;
     case eUndeploying:
@@ -87,7 +87,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
         {
             rDeploymentValue_ = 0.f;
             eDeploymentState_ = eUndeployed;
-            MIL_Report::PostEvent( owner_, MIL_Report::eRC_SectionUndeployed );
+            MIL_Report::PostEvent( owner_, report::eRC_SectionUndeployed );
         }
         break;
     case eDeployed:
@@ -103,7 +103,7 @@ void PHY_RolePion_Deployment::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::Deploy()
 {
-    MIL_Report::PostEvent( owner_, MIL_Report::eRC_StartDeploy );
+    MIL_Report::PostEvent( owner_, report::eRC_StartDeploy );
     eDeploymentState_ = eDeploying;
 }
 
@@ -113,7 +113,7 @@ void PHY_RolePion_Deployment::Deploy()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Deployment::Undeploy()
 {
-    MIL_Report::PostEvent( owner_, MIL_Report::eRC_StartUndeploy );
+    MIL_Report::PostEvent( owner_, report::eRC_StartUndeploy );
     eDeploymentState_ = eUndeploying;
 }
 

@@ -662,7 +662,7 @@ void PHY_ComposantePion::NotifyRepairedByMaintenance()
 {
     assert( pRole_ );
     assert( pType_ );
-    MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_MaterielRetourDeMaintenance, *pType_ );
+    MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_MaterielRetourDeMaintenance, *pType_ );
     pRole_->NotifyComposanteRepaired();
     ReinitializeState( PHY_ComposanteState::undamaged_ );
 }
@@ -767,7 +767,7 @@ void PHY_ComposantePion::Update()
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && time_.GetCurrentTimeStep() >= nAutoRepairTimeStep_ )
     {
         assert( pType_ );
-        MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_MaterielRepareSurPlace, *pType_ );
+        MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_MaterielRepareSurPlace, *pType_ );
         pRole_->NotifyComposanteRepaired();
         ReinitializeState( PHY_ComposanteState::undamaged_ );
     }
@@ -802,7 +802,7 @@ void PHY_ComposantePion::Update()
         if( bRepairEvacuationNoMeans )
         {
             bRepairEvacuationNoMeansChecked_ = true;
-            MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_RepairEvacuationNoMeans, *pType_ );
+            MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_RepairEvacuationNoMeans, *pType_ );
         }
     }
 }

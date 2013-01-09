@@ -14,7 +14,8 @@
 #include "wrapper/Effect.h"
 #include "wrapper/Event.h"
 #include "wrapper/Hook.h"
-#include "simulation_kernel/Entities/Orders/MIL_Report.h" // $$$$ MCO : for enums
+#include "MT_Tools/MT_Line.h"
+#include "simulation_kernel/Entities/Orders/MIL_DecisionalReport.h" // $$$$ MCO : for enums
 #include <module_api/Log.h>
 #include <boost/foreach.hpp>
 
@@ -35,7 +36,7 @@ DECLARE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vect
 
 namespace
 {
-    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code )
+    void PostReport( const wrapper::View& entity, const MIL_DecisionalReport& code )
     {
         wrapper::Event event( "movement report" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -43,7 +44,7 @@ namespace
         event.Post();
     }
 
-    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code, const std::string& name )
+    void PostReport( const wrapper::View& entity, const MIL_DecisionalReport& code, const std::string& name )
     {
         wrapper::Event event( "movement report with name" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -204,13 +205,13 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResu
         {
             if( GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
             {
-                PostReport( entity, MIL_Report::eRC_DifficultMovementProgression, (*it)[ "type/real-name" ] );
+                PostReport( entity, report::eRC_DifficultMovementProgression, (*it)[ "type/real-name" ] );
                 isInsideObject = true;
                 break;
             }
         }
         if( !isInsideObject )
-            PostReport( entity, MIL_Report::eRC_TerrainDifficile );
+            PostReport( entity, report::eRC_TerrainDifficile );
         rc = ePartialPath;
     }
     itNextPathPoint_ = itCurrentPathPoint_;
@@ -532,7 +533,7 @@ PathWalker::E_ReturnCode PathWalker::Move( boost::shared_ptr< PathResult > path,
         speed_ = 0;
         if( !bFuelReportSent_ )
         {
-            PostReport( entity, MIL_Report::eRC_PlusDeCarburant );
+            PostReport( entity, report::eRC_PlusDeCarburant );
             bFuelReportSent_ = true;
         }
         PostMovement( entity );

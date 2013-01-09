@@ -23,6 +23,7 @@ class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class DEC_PathResult;
 class TerrainData;
+struct MIL_DecisionalReport;
 
 // =============================================================================
 // @class  PHY_Actor
@@ -73,8 +74,8 @@ public:
     virtual bool CanMove              () const = 0;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;
     virtual bool HasResources         () = 0;
-    virtual void SendRC               ( int nReportID ) const = 0;
-    virtual void SendRC               ( int nReportID, const std::string& name ) const = 0;
+    virtual void SendRC               ( const MIL_DecisionalReport& reportId ) const = 0;
+    virtual void SendRC               ( const MIL_DecisionalReport& reportId, const std::string& name ) const = 0;
     //@}
 
     //! @name Tools

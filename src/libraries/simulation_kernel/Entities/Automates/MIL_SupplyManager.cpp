@@ -38,7 +38,7 @@ MIL_SupplyManager::~MIL_SupplyManager()
 // -----------------------------------------------------------------------------
 void MIL_SupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
 {
-    PostEvent( MIL_Report::eRC_LogNoSuperior, dotationCategory, requesters );
+    PostEvent( report::eRC_LogNoSuperior, dotationCategory, requesters );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,14 +47,14 @@ void MIL_SupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& 
 // -----------------------------------------------------------------------------
 void MIL_SupplyManager::NotifyStockNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
 {
-    PostEvent( MIL_Report::eRC_LogNoStock, dotationCategory, requesters );
+    PostEvent( report::eRC_LogNoStock, dotationCategory, requesters );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_SupplyManager::PostEvent
 // Created: MCO 2012-12-19
 // -----------------------------------------------------------------------------
-void MIL_SupplyManager::PostEvent( MIL_Report::E_DecisionalReport report, const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
+void MIL_SupplyManager::PostEvent( const MIL_DecisionalReport& report, const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
 {
     const T_Requesters& previous = previousNotifications_[ std::make_pair( report, &dotationCategory ) ];
     BOOST_FOREACH( T_Requesters::value_type pion, requesters )
