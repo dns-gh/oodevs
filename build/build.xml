@@ -1576,6 +1576,7 @@
         <update name="openssl"/>
         <update name="proj4"/>
         <update name="protobuf"/>
+        <update name="python"/>
         <update name="qt"/>
         <update name="spatialite"/>
         <update name="steel"/>
