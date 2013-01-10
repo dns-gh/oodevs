@@ -35,6 +35,7 @@ class PHY_DotationCapacity;
 class PHY_Dotation;
 class MIL_AutomateLOG;
 class PHY_AmmoDotationClass;
+class PHY_UnitType;
 class MIL_CheckPointOutArchive;
 class MIL_CheckPointInArchive;
 
@@ -60,7 +61,7 @@ public:
 
     //! @name Init
     //@{
-    void ReadDotations( xml::xistream& xis );
+    void ReadDotations( xml::xistream& xis, const PHY_UnitType* unitType = 0 );
     void WriteODB     ( xml::xostream& xos ) const;
     //@}
 
@@ -119,7 +120,7 @@ private:
     //@}
     //! @name Helpers
     //@{
-    void ReadDotation ( xml::xistream& xis );
+    void ReadDotation ( xml::xistream& xis, const PHY_UnitType* unitType );
     //@}
 
 public:

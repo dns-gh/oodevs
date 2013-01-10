@@ -36,13 +36,13 @@ public:
     //@{
     void RegisterCapacities ( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const;
     std::map< const PHY_DotationCategory*, double > UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
+    double GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationCapacity* > T_DotationCapacityMap;
-    typedef T_DotationCapacityMap::const_iterator                        CIT_DotationCapacityMap;
     //@}
 
 private:

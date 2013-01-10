@@ -135,6 +135,8 @@ void InitialState::ReadResource( xml::xistream& xis )
     InitialStateResource resource = InitialStateResource( xis );
     resource.category_ = RetrieveResourceCategory( resource.name_ );
     resource.consumption_ = RetrieveNormalizedConsumption( resource.name_ );
+    if( resource.threshold_ == -1 )
+        resource.threshold_ = RetrieveDefaultLogisticThreshold( resource.name_ );
     resources_.push_back( resource );
 }
 
@@ -163,7 +165,7 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
     {
         xos.start( "resources" );
         for( auto it = resources_.begin(); it != resources_.end(); ++it )
-            it->Serialize( xos );
+            it->Serialize( xos, RetrieveDefaultLogisticThreshold( it->name_ ) );
         xos.end();
     }
 }
@@ -311,6 +313,37 @@ double InitialState::RetrieveNormalizedConsumption( const QString& resourceName 
         }
     }
     return normalizedConsumption;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::RetrieveDefaultLogisticThreshold
+// Created: JSR 2013-01-08
+// -----------------------------------------------------------------------------
+double InitialState::RetrieveDefaultLogisticThreshold( const QString& resourceName ) const
+{
+    kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( typeId_ );
+    auto dotationCapacityTypeIt = agent.CreateResourcesIterator();
+    while( dotationCapacityTypeIt.HasMoreElements() )
+    {
+        const kernel::DotationCapacityType& type = dotationCapacityTypeIt.NextElement();
+        if( type.GetName() == resourceName.toStdString() )
+            return type.GetLogisticThreshold();
+    }
+
+    tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
+    while( agentCompositionIterator.HasMoreElements() )
+    {
+        const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
+        while( dotationIterator.HasMoreElements() )
+        {
+            const kernel::DotationCapacityType& type = dotationIterator.NextElement();
+            if( type.GetName() == resourceName.toStdString() )
+                return type.GetLogisticThreshold();
+        }
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

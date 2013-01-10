@@ -105,3 +105,15 @@ std::map< const PHY_DotationCategory*, double > PHY_DotationCapacities::Unregist
         result[ &( it->second->GetCategory() ) ] = container.RemoveCapacity( *it->second );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacities::GetDefaultLogisticThreshold
+// Created: JSR 2013-01-08
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacities::GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const
+{
+    auto it = dotationCapacities_.find( &category );
+    if( it != dotationCapacities_.end() )
+        return it->second->GetDefaultThreshold();
+    return -1;
+}

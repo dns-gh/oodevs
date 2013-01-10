@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_DotationCapacity( const PHY_DotationCategory& category, xml::xistream& xis );
-             PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double supplyThreshold );
+             PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double rSupplyThresholdPercentage );
     virtual ~PHY_DotationCapacity();
     //@}
 
@@ -38,12 +38,13 @@ public:
     const PHY_DotationCategory& GetCategory() const;
     double GetCapacity() const;
     double GetSupplyThreshold() const;
+    double GetDefaultThreshold() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ComputeThreshold( double supplyThresholdPercentage );
+    void ComputeThreshold();
     //@}
 
 private:
@@ -52,6 +53,7 @@ private:
     const PHY_DotationCategory& category_;
     double                      rCapacity_;
     double                      rSupplyThreshold_;
+    double                      rSupplyThresholdPercentage_;
     //@}
 };
 

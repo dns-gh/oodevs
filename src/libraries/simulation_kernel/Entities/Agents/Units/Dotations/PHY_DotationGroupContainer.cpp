@@ -14,6 +14,7 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_Dotation.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -146,14 +147,14 @@ void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigne
 // Name: PHY_DotationGroupContainer::ReadDotations
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
+void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis, const PHY_UnitType* unitType /*= 0*/ )
 {
     if( xis.has_child( "resources" ) )
     {
         for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
             it->second->Reset();
         xis >> xml::start( "resources" )
-                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation )
+                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, unitType )
             >> xml::end;
     }
 }
@@ -162,7 +163,7 @@ void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
 // Name: PHY_DotationGroupContainer::ReadDotation
 // Created: ABR 2011-03-08
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
+void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_UnitType* unitType )
 {
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
     if( !pDotationCategory )
@@ -170,8 +171,13 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
     {
+        double threshold = 0;
+        if( xis.has_attribute( "logistic-threshold" ) )
+            threshold = xis.attribute< double >( "logistic-threshold" );
+        else if( unitType )
+            threshold = unitType->GetDefaultLogisticThreshold( *pDotationCategory );
         pGroup = &CreateDotationGroup( pDotationCategory->GetType() );
-        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), xis.attribute( "logistic-threshold", 0. ) ), 0 );
+        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), threshold ), 0 );
     }
     pGroup->ReadValues( xis, *pDotationCategory );
 }
