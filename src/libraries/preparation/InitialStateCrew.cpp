@@ -79,7 +79,7 @@ InitialStateCrew::InitialStateCrew( E_HumanRank rank, E_HumanState state, E_Inju
 // -----------------------------------------------------------------------------
 InitialStateCrew::InitialStateCrew( xml::xistream& xis )
     : psyop_       ( false )
-    , contaminated_( 0 )
+    , contaminated_( false )
     , number_      ( 0 )
 {
     std::string rank;
@@ -88,8 +88,8 @@ InitialStateCrew::InitialStateCrew( xml::xistream& xis )
     xis >> xml::attribute( "rank", rank )
         >> xml::attribute( "state", state )
         >> xml::optional >> xml::attribute( "injuries", injuries )
-        >> xml::attribute( "psyop", psyop_ )
-        >> xml::attribute( "contaminated", contaminated_ )
+        >> xml::optional >> xml::attribute( "psyop", psyop_ )
+        >> xml::optional >> xml::attribute( "contaminated", contaminated_ )
         >> xml::attribute( "number", number_ );
     rank_ = ENT_Tr::ConvertToHumanRank( rank );
     //rank_ = tools::HumanRankFromString( rank );
@@ -123,9 +123,11 @@ void InitialStateCrew::Serialize( xml::xostream& xos ) const
     if( !injuries_.empty() )
         xos << xml::attribute( "injuries", SaveInjuries() );// $$$$ ABR 2011-07-20: En avance sur l'histoire 660
 
-    xos << xml::attribute( "psyop", psyop_ )
-        << xml::attribute( "contaminated", contaminated_ )
-        << xml::attribute( "number", number_ )
+    if( psyop_ )
+        xos << xml::attribute( "psyop", psyop_ );
+    if( contaminated_ )
+        xos << xml::attribute( "contaminated", contaminated_ );
+    xos << xml::attribute( "number", number_ )
         << xml::end;
 }
 

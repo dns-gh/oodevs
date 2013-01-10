@@ -100,10 +100,12 @@ void PHY_HumanState::Write( xml::xostream& xos ) const
     xos << xml::start( "human" )
             << xml::attribute( "number", number_ )
             << xml::attribute( "rank", rank_->GetName() )
-            << xml::attribute( "state", state_->GetName() )
-            << xml::attribute( "contaminated", contaminated_ )
-            << xml::attribute( "psyop", psyop_ )
-        << xml::end;
+            << xml::attribute( "state", state_->GetName() );
+    if( contaminated_ )
+        xos << xml::attribute( "contaminated", contaminated_ );
+    if( psyop_ )
+        xos << xml::attribute( "psyop", psyop_ );
+    xos << xml::end;
 }
 
 }

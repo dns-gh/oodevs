@@ -984,13 +984,13 @@
 													<xs:documentation xml:lang="fr">Redéfinit l'état de santé de l'effectif humain.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-											<xs:attribute name="psyop" type="xs:boolean" use="required">
+											<xs:attribute name="psyop" type="xs:boolean" use="optional">
 												<xs:annotation>
 													<xs:documentation xml:lang="en">Defines whether specified count of human components is psychologically damage or not.</xs:documentation>
 													<xs:documentation xml:lang="fr">Vrai si l'effectif humain a des dégats psychologiques.</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
-											<xs:attribute name="contaminated" type="xs:boolean" use="required">
+											<xs:attribute name="contaminated" type="xs:boolean" use="optional">
 												<xs:annotation>
 													<xs:documentation xml:lang="en">Defines whether specified count of human components is contaminated or not.</xs:documentation>
 													<xs:documentation xml:lang="fr">Vrai si l'effectif humain est contaminé.</xs:documentation>

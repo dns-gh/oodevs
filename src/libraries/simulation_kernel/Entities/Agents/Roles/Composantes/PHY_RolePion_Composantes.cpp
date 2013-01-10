@@ -384,8 +384,8 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
     const PHY_HumanWound* pWound = PHY_HumanWound::Find( xis.attribute< std::string >( "state" ) );
     if( !pWound )
         xis.error( "Unknown human wound" );
-    bool contaminated = xis.attribute< bool >( "contaminated" );
-    bool psyop = xis.attribute< bool >( "psyop" );
+    bool contaminated = xis.attribute< bool >( "contaminated", false );
+    bool psyop = xis.attribute< bool >( "psyop", false );
     unsigned int number = xis.attribute< unsigned int >( "number" );
     if( !contaminated && !psyop && pWound == &PHY_HumanWound::notWounded_ )
     {
