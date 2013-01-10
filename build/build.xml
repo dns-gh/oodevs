@@ -1398,7 +1398,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.scipioForTrunk,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
+    <target name="package.otpacks" depends="package.otpack.defense.scipioForSword,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1468,8 +1468,8 @@
         </safe-move>
     </target>
 
-    <target name="package.otpack.defense.scipioForTrunk" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
-        <migrate-reports physical="france"/>
+    <target name="package.otpack.defense.scipioForSword" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
+        <!-- This otpack must be compatible with sword 5.1 and later -->
         <safe-move file="${out.dir}/decisionalFrance.otpak">
             <echoxml file="${out.dir}/content.xml">
                 <content>
@@ -1484,14 +1484,8 @@
                     <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
-                    <include name="data/models/ada/physical/france/**"/>
-                    <exclude name="data/models/ada/decisional/dia5/Types_CR.lua"/>
-                    <exclude name="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
-                    <exclude name="data/models/ada/physical/france/Reports.xml"/>    
+					<include name="data/models/ada/physical/france/**"/>
                 </zipfileset>
-                <zipfileset dir="${out.dir}/reports/france" includes="Types_CR.lua" fullpath="data/models/ada/decisional/dia5/Types_CR.lua"/>
-                <zipfileset dir="${out.dir}/reports/france" includes="Types_RC.bms" fullpath="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
-                <zipfileset dir="${out.dir}/reports/france" includes="Reports.xml" fullpath="data/models/ada/physical/france/Reports.xml"/>
                 <fileset dir="${out.dir}" includes="content.xml"/>
              </zip>
             <delete file="${out.dir}/content.xml"/>
