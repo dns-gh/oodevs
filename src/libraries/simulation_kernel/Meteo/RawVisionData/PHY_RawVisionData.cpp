@@ -52,7 +52,6 @@ PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const std::st
     , nNbrRow_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( detection );
     Read( detection );
     sCell::pGlobalMeteo_ = &globalMeteo;
 }
