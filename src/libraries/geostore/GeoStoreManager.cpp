@@ -99,10 +99,10 @@ void GeoStoreManager::InitProjectorOld( const bfs::path& worldfile )
 // Name: GeoStoreManager::CanCreateUrbanBlock
 // Created: AME 2010-07-22
 // -----------------------------------------------------------------------------
-bool GeoStoreManager::CanCreateUrbanBlock( const geometry::Polygon2f& footprint, unsigned int idToExclude /*= 0*/ )
+bool GeoStoreManager::CanCreateUrbanBlock( const geometry::Polygon2f& footprint )
 {
     CreateBlockProcess process;
-    return process.CanCreateBlock( index_, footprint, *trans_, idToExclude );
+    return process.CanCreateBlock( index_, footprint, *trans_ );
 }
 
 // -----------------------------------------------------------------------------

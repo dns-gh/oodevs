@@ -163,7 +163,10 @@ kernel::UrbanObject_ABC* UrbanModel::Create( const geometry::Polygon2f& location
 {
     kernel::UrbanObject_ABC* ptr = factory_->Create( location, parent );
     if( ptr )
+    {
         Register( ptr->GetId(), *ptr );
+        InsertIntoQuadTree( *ptr );
+    }
     return ptr;
 }
 
@@ -380,28 +383,29 @@ void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 // -----------------------------------------------------------------------------
 void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto, double roadWidth /* = 5.0 */ )
 {
+    if( !geostore_.get() )
+        return;
+
     T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
     if( points.front() == points.back() )
         points.pop_back();
 
-    if( points.size() < 3 || ! geostore_.get() )
+    if( points.size() < 3 )
         return;
 
     const geometry::Polygon2f polygon( points );
-    if( ! isAuto )
-    {
-        if( geostore_->CanCreateUrbanBlock( polygon ) )
-            Create( polygon, &parent );
-    }
-    else
+    if( isAuto )
     {
         std::vector< geometry::Polygon2f > blocks;
         geostore_->CreateUrbanBlocksOnCities( polygon, roadWidth, blocks );
         // Create the blocks
         for( auto it = blocks.begin(); it != blocks.end(); ++it )
-        {
             Create( *it, &parent );
-        }
+    }
+    else
+    {
+        if( geostore_->CanCreateUrbanBlock( polygon ) )
+            Create( polygon, &parent );
     }
 }
 
@@ -411,16 +415,21 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
 // -----------------------------------------------------------------------------
 void UrbanModel::ChangeGeometry( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& block )
 {
+    if( !geostore_.get() )
+        return;
+
     T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
     if( points.front() == points.back() )
         points.pop_back();
 
-    if( points.size() < 3 || ! geostore_.get() )
+    if( points.size() < 3 )
         return;
 
+    quadTree_->ForceErase( &block );
     const geometry::Polygon2f polygon( points );
-    if( geostore_->CanCreateUrbanBlock( polygon, block.GetId() ) )
+    if( geostore_->CanCreateUrbanBlock( polygon ) )
         block.Get< kernel::UrbanPositions_ABC >().ChangeGeometry( points );
+    InsertIntoQuadTree( block );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,10 +443,9 @@ void UrbanModel::DeleteBlock( const kernel::UrbanObject_ABC& urbanObject )
         const_cast< kernel::Entity_ABC* >( hierarchy.GetSuperior() )->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
     tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& child = it.NextElement();
-        DeleteBlock( static_cast< const kernel::UrbanObject_ABC& >( child ) );
-    }
+        DeleteBlock( static_cast< const kernel::UrbanObject_ABC& >( it.NextElement() ) );
+    if( hierarchy.GetLevel() == eUrbanLevelBlock )
+        quadTree_->ForceErase( &urbanObject );
     Remove( urbanObject.GetId() );
     delete &urbanObject;
 }
@@ -499,20 +507,22 @@ void UrbanModel::CreateQuadTree( float width, float height )
     {
         const kernel::UrbanObject_ABC& urbanObject = it.NextElement();
         if( const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() ) )
-        {
-            if( urbanHierarchies->GetLevel() != eUrbanLevelBlock )
-                continue;
+            if( urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+                InsertIntoQuadTree( urbanObject );
+    }
+}
 
-            const kernel::UrbanPositions_ABC* pAttribute = urbanObject.Retrieve< kernel::UrbanPositions_ABC >();
-            if( pAttribute )
-            {
-                quadTree_->Insert( &urbanObject );
-                geometry::Rectangle2f boundingBox = pAttribute->Polygon().BoundingBox();
-                float size = 1.1f * std::max( boundingBox.Width(), boundingBox.Height() );
-                if( maxElementSize_ < size )
-                    maxElementSize_ = size;
-            }
-        }
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::InsertIntoQuadTree
+// Created: JSR 2013-01-10
+// -----------------------------------------------------------------------------
+void UrbanModel::InsertIntoQuadTree( const kernel::UrbanObject_ABC& urbanObject )
+{
+    if( const kernel::UrbanPositions_ABC* pAttribute = urbanObject.Retrieve< kernel::UrbanPositions_ABC >() )
+    {
+        quadTree_->Insert( &urbanObject );
+        geometry::Rectangle2f boundingBox = pAttribute->Polygon().BoundingBox();
+        maxElementSize_ = std::max( maxElementSize_, 1.1f * std::max( boundingBox.Width(), boundingBox.Height() ) );
     }
 }
 

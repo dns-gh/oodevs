@@ -102,6 +102,7 @@ private:
     template< typename T, typename U >
     void UpdateCapacity( xml::xistream& xis, kernel::UrbanObject_ABC& object );
     void CreateQuadTree( float width, float height );
+    void InsertIntoQuadTree( const kernel::UrbanObject_ABC& urbanObject );
     void CleanLinks();
     //@}
 

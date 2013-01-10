@@ -10,6 +10,8 @@
 #ifndef __CreateBlockAutoProcess_h_
 #define __CreateBlockAutoProcess_h_
 
+#include <boost/noncopyable.hpp>
+
 class PointProjector_ABC;
 class UrbanModel;
 
@@ -23,7 +25,6 @@ namespace geostore
     class Database;
     class GeometryFactory;
     class SpatialIndexer;
-    class SpatialRequestStatus;
 
 // =============================================================================
 /** @class  CreateBlockAutoProcess
@@ -43,7 +44,6 @@ public:
     //! @name Operations
     //@{
     void Run( const geometry::Polygon2f& footprint, std::vector< geometry::Polygon2f >& blocks );
-    void Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector );
     //@}
 
 private:
