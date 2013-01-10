@@ -11,34 +11,37 @@
 
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
-#include "SIM_NetworkLogger.h"
-#include "FileLoaderObserver.h"
+
 #include "dispatcher/DispatcherLoader.h"
+#include "FileLoaderObserver.h"
+#include "MT_Tools/MT_ConsoleLogger.h"
+#include "MT_Tools/MT_FileLogger.h"
+#include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Version.h"
+#include "resource.h"
+#include "SIM_NetworkLogger.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/Tools/MIL_Config.h"
-#include "MT_Tools/MT_ConsoleLogger.h"
-#include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_Version.h"
-#include "MT_Tools/MT_FileLogger.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/IpcWatch.h"
 #include "tools/Version.h"
 #include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
-#include <xeumeuleu/xml.hpp>
+
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/path.hpp>
+#include <xeumeuleu/xml.hpp>
+
 #include <csignal>
 #include <ctime>
-#include <io.h>
 #include <fcntl.h>
+#include <io.h>
 
 #define MY_WM_NOTIFYICON WM_USER + 1
-
-#include "resource.h"
 
 static const int NUM_ICON_FOR_ANIMATION = 2;
 static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
@@ -298,6 +301,7 @@ void SIM_App::AnimateIcon()
 // -----------------------------------------------------------------------------
 void SIM_App::Run()
 {
+    tools::ipc::Watch watch( *quit_ );
     StartIconAnimation();
     while( !quit_->IsSignaled() )
         if( MIL_AgentServer::GetWorkspace().Update() == MIL_AgentServer::eSimStopped )

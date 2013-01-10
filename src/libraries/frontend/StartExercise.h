@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void         Start();
+    virtual void         Stop();
     virtual unsigned int GetPercentage() const;
     virtual std::string  GetStartedExercise() const;
     virtual std::string  GetExercise() const;

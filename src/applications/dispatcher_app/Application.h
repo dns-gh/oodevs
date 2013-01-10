@@ -19,6 +19,11 @@ namespace dispatcher
     class DispatcherLoader;
 }
 
+namespace tools
+{
+    class WaitEvent;
+}
+
 // =============================================================================
 /** @class  Application
     @brief  Application
@@ -49,6 +54,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< dispatcher::DispatcherLoader > dispatcher_;
+    std::auto_ptr< tools::WaitEvent > quit_;
     //@}
 };
 

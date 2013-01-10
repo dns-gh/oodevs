@@ -175,6 +175,31 @@ void SpawnCommand::Stop()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SpawnCommand::GetPid
+// Created: BAX 2013-01-09
+// -----------------------------------------------------------------------------
+int SpawnCommand::GetPid() const
+{
+    if( !internal_.get() )
+        return -1;
+    return int( internal_->pid_.dwProcessId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpawnCommand::Wait
+// Created: BAX 2013-01-09
+// -----------------------------------------------------------------------------
+bool SpawnCommand::Wait( const boost::posix_time::time_duration& duration )
+{
+    if( !internal_.get() )
+        return true;
+    const auto rpy = WaitForSingleObjectEx( internal_->pid_.hProcess,
+                                            int( duration.total_milliseconds() ),
+                                            false );
+    return rpy != WAIT_OBJECT_0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SpawnCommand::Wait
 // Created: RDS 2008-08-25
 // -----------------------------------------------------------------------------

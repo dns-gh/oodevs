@@ -29,6 +29,12 @@ public:
                      const QString& exercise, const QString& session,
                      const QString& checkpoint = "", const QString& dispatcher_path = "",
                      std::string commanderEndpoint = "", std::string processJobName = "" );
+    virtual ~StartDispatcher();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Stop();
     //@}
 };
 

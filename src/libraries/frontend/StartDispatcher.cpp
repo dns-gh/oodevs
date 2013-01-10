@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "StartDispatcher.h"
 #include "clients_kernel/Tools.h"
+#include "tools/IpcQueue.h"
 
 using namespace frontend;
 
@@ -34,4 +35,24 @@ StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
     AddSessionArgument( session );
     if( !checkpoint.isEmpty() )
         AddArgument( "--checkpoint=" + checkpoint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartDispatcher::~StartDispatcher
+// Created: BAX 2013-01-09
+// -----------------------------------------------------------------------------
+StartDispatcher::~StartDispatcher()
+{
+    Stop();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartDispatcher::Stop
+// Created: BAX 2013-01-09
+// -----------------------------------------------------------------------------
+void StartDispatcher::Stop()
+{
+    if( tools::ipc::Queue::Send( tools::ipc::IPC_COMMAND_STOP, GetPid() ) )
+        Wait( boost::posix_time::seconds( 10 ) );
+    SpawnCommand::Stop();
 }

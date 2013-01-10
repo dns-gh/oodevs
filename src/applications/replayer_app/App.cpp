@@ -8,15 +8,18 @@
 // *****************************************************************************
 
 #include "App.h"
+
+#include "dispatcher/Config.h"
 #include "dispatcher/Replayer.h"
-#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FileLogger.h"
-#include <tools/Exception.h>
+#include "MT_Tools/MT_Logger.h"
+#include "resource.h"
+#include "tools/IpcWatch.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
-#include "resource.h"
-#include "dispatcher/Config.h"
-#include "tools/NullFileLoaderObserver.h"
+#include <tools/Exception.h>
+
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -82,6 +85,7 @@ void App::Execute()
     StartIconAnimation();
     try
     {
+        tools::ipc::Watch watch( *quit_ );
         do
             replayer_->Update();
         while( !test_ && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );

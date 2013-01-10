@@ -11,6 +11,7 @@
 #define __SpawnCommand_h_
 
 #include "Process_ABC.h"
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/noncopyable.hpp>
 
 namespace tools
@@ -41,9 +42,11 @@ public:
 
     //! @name accessors
     //@{
+    int                  GetPid() const;
     bool                 IsRunning() const;
     virtual void         Start();
     virtual bool         Wait();
+    virtual bool         Wait( const boost::posix_time::time_duration& duration ); ///< returns false on failures & timeouts
     virtual void         Stop();
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;

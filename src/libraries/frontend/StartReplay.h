@@ -37,6 +37,7 @@ public:
     //! @name operations
     //@{
     virtual void Start();
+    virtual void Stop();
     //@}
 
 private:

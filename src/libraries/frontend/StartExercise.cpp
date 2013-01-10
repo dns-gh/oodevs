@@ -9,10 +9,13 @@
 
 #include "frontend_pch.h"
 #include "StartExercise.h"
+
 #include "StartDispatcher.h"
 #include "ConfigurationManipulator.h"
 #include "SimulationMonitor.h"
 #include "clients_kernel/Tools.h"
+#include "tools/IpcQueue.h"
+
 #include <boost/thread.hpp>
 
 using namespace frontend;
@@ -62,7 +65,21 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // -----------------------------------------------------------------------------
 StartExercise::~StartExercise()
 {
-    // NOTHING
+    Stop();
+    dispatcher_.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartExercise::Stop
+// Created: BAX 2013-09-01
+// -----------------------------------------------------------------------------
+void StartExercise::Stop()
+{
+    if( dispatcher_.get() )
+        dispatcher_->Stop();
+    if( tools::ipc::Queue::Send( tools::ipc::IPC_COMMAND_STOP, GetPid() ) )
+        Wait( boost::posix_time::seconds( 10 ) );
+    SpawnCommand::Stop();
 }
 
 // -----------------------------------------------------------------------------

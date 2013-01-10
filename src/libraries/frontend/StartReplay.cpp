@@ -11,6 +11,7 @@
 #include "StartReplay.h"
 #include "ConfigurationManipulator.h"
 #include "SimulationMonitor.h"
+#include "tools/IpcQueue.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )
 #include <boost/lexical_cast.hpp>
@@ -43,7 +44,7 @@ StartReplay::StartReplay( const tools::GeneralConfig& config,
 // -----------------------------------------------------------------------------
 StartReplay::~StartReplay()
 {
-    // NOTHING
+    Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -61,4 +62,15 @@ void StartReplay::Start()
         boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
     }
     boost::this_thread::sleep( boost::posix_time::milliseconds( 1000 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartReplay::Stop
+// Created: BAX 2013-01-09
+// -----------------------------------------------------------------------------
+void StartReplay::Stop()
+{
+    if( tools::ipc::Queue::Send( tools::ipc::IPC_COMMAND_STOP, GetPid() ) )
+        Wait( boost::posix_time::seconds( 10 ) );
+    SpawnCommand::Stop();
 }
