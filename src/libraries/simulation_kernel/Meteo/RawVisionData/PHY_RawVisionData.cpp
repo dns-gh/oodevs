@@ -51,6 +51,7 @@ PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo,
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
     , meteoManager_( manager )
+    , cell_( 4 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
     Read( detection );
@@ -212,6 +213,11 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
        throw MASA_EXCEPTION( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+    const double halfCellSize = 0.5*rCellSize_;
+    cell_[0] = MT_Vector2D(  halfCellSize,  halfCellSize );
+    cell_[1] = MT_Vector2D( -halfCellSize,  halfCellSize );
+    cell_[2] = MT_Vector2D( -halfCellSize, -halfCellSize );
+    cell_[3] = MT_Vector2D(  halfCellSize, -halfCellSize );
 
     assert( !ppCells_ );
     ppCells_ = new sCell*[ nNbrCol_ ];
@@ -332,14 +338,7 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
     double rScaledX = rX / rCellSize_;
 
     const double halfCellSize_ = 0.5 * rCellSize_;
-    const MT_Vector2D offsets[] =
-    {
-        MT_Vector2D(  halfCellSize_,  halfCellSize_ ),
-        MT_Vector2D( -halfCellSize_,  halfCellSize_ ),
-        MT_Vector2D( -halfCellSize_, -halfCellSize_ ),
-        MT_Vector2D(  halfCellSize_, -halfCellSize_ ),
-    };
-    const size_t offsetsLen = sizeof( offsets )/sizeof( *offsets );
+    const size_t cellLen = cell_.size();
     T_PointVector cellVector;
 
     short maxOffset = 0;
@@ -358,9 +357,9 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*
                 else
                 {
                     if( cellVector.empty() )
-                        cellVector.resize( offsetsLen );
-                    for( size_t i = 0; i != offsetsLen; ++i )
-                        cellVector[i] = point + offsets[i];
+                        cellVector.resize( cellLen );
+                    for( size_t i = 0; i != cellLen; ++i )
+                        cellVector[i] = point + cell_[i];
                     TER_Localisation cell( TER_Localisation::ePolygon, cellVector );
                     const T_PointVector linePoints = it->second.localisation_.GetPoints();
                     for( std::size_t i = 0; i < linePoints.size() - 1; ++i )

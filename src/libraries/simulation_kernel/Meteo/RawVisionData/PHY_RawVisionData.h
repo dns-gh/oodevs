@@ -153,6 +153,7 @@ private:
     double rMaxAltitude_;
 
     std::map< unsigned int, ElevationOffset > elevationOffsets_;
+    std::vector< MT_Vector2D > cell_;
     PHY_MeteoDataManager* meteoManager_;
 
     static sCell emptyCell_;
