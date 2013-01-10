@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
-#include "MIL_AgentServer.h"
 #include "meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
@@ -46,10 +45,12 @@ const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const std::string& detection )
+PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo,
+    const std::string& detection, PHY_MeteoDataManager* manager )
     : ppCells_( 0 )
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
+    , meteoManager_( manager )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
     Read( detection );
@@ -116,15 +117,12 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     if( nYEnd < nYBeg )
         std::swap( nYEnd, nYBeg );
 
-    assert( MIL_AgentServer::IsInitialized() );
-    PHY_MeteoDataManager& meteoManager = MIL_AgentServer::GetWorkspace().GetMeteoDataManager();
-
     while( nXBeg <= nXEnd )
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            boost::shared_ptr< weather::Meteo > meteo = meteoManager.GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
+            boost::shared_ptr< weather::Meteo > meteo = meteoManager_->GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
             if( meteo.get() && cell.pMeteo.get() != meteo.get() )
                 cell.pMeteo = meteo;
             else if( !meteo )

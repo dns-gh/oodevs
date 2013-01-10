@@ -17,6 +17,7 @@
 class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
+class PHY_MeteoDataManager;
 
 //*****************************************************************************
 // Created: JVT 02-11-05
@@ -78,7 +79,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::Meteo& globalMeteo, const std::string& detection );
+             PHY_RawVisionData( weather::Meteo& globalMeteo,
+                const std::string& detection, PHY_MeteoDataManager* manager );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -151,6 +153,7 @@ private:
     double rMaxAltitude_;
 
     std::map< unsigned int, ElevationOffset > elevationOffsets_;
+    PHY_MeteoDataManager* meteoManager_;
 
     static sCell emptyCell_;
 };

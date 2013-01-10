@@ -38,11 +38,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 namespace
 {
 
-PHY_RawVisionData* CreateRawVisionData( weather::Meteo& globalMeteo,
-        MIL_Config& config )
+PHY_RawVisionData* CreateRawVisionData( PHY_MeteoDataManager* m,
+        weather::Meteo& globalMeteo, MIL_Config& config )
 {
     config.AddFileToCRC( config.GetDetectionFile() );
-    return new PHY_RawVisionData( globalMeteo, config.GetDetectionFile() );
+    return new PHY_RawVisionData( globalMeteo, config.GetDetectionFile(), m );
 }
 
 } // namespace
@@ -91,7 +91,7 @@ void PHY_MeteoDataManager::Load( xml::xistream& xis, MIL_Config& config )
     xis >> xml::start( "weather" );
     pEphemeride_ = new PHY_Ephemeride( xis );
     InitializeGlobalMeteo( xis );
-    pRawData_ = CreateRawVisionData( *pGlobalMeteo_, config );
+    pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }
@@ -209,7 +209,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
          >> pEphemeride_
          >> size;
     MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
-    pRawData_ = CreateRawVisionData( *pGlobalMeteo_, config );
+    pRawData_ = CreateRawVisionData( this, *pGlobalMeteo_, config );
     PHY_LocalMeteo* meteo = 0;
     for( ; size > 0; --size )
     {
