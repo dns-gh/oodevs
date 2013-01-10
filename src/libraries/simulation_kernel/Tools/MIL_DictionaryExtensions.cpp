@@ -62,7 +62,7 @@ MIL_DictionaryExtensions::~MIL_DictionaryExtensions()
 // -----------------------------------------------------------------------------
 void MIL_DictionaryExtensions::ReadExtension( xml::xistream& xis )
 {
-    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
+    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value", "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,9 +84,10 @@ void MIL_DictionaryExtensions::WriteODB( xml::xostream& xos ) const
                 xos << xml::start( "extensions" );
             }
             xos << xml::start( "entry" )
-                    << xml::attribute( "key", it->first )
-                    << xml::attribute( "value", it->second )
-                << xml::end;
+                    << xml::attribute( "key", it->first );
+            if( !it->second.empty() )
+                xos << xml::attribute( "value", it->second );
+            xos << xml::end;
         }
     }
     if( found )

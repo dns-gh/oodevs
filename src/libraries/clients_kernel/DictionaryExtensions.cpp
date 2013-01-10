@@ -76,10 +76,14 @@ void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "extensions" );
         for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
+        {
             xos << xml::start( "entry" )
-                    << xml::attribute( "key", it->first )
-                    << xml::attribute( "value", GetValueWithDictionnaryLink( it->first ) )
-                << xml::end;
+                    << xml::attribute( "key", it->first );
+            std::string value = GetValueWithDictionnaryLink( it->first );
+            if( !value.empty() )
+                 xos << xml::attribute( "value", value );
+            xos << xml::end;
+        }
         xos << xml::end;
     }
 }
@@ -91,7 +95,7 @@ void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
 void DictionaryExtensions::ReadExtension( xml::xistream& xis )
 {
     std::string key = xis.attribute< std::string >( "key" );
-    std::string value = xis.attribute< std::string >( "value" );
+    std::string value = xis.attribute< std::string >( "value", "" );
     SetValueWithDictionnaryLink( key, value );
 }
 
