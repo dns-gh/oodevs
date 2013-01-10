@@ -8,6 +8,7 @@ class Ui(object):
 # then adds a key attribute in the xml with Types_CR value. Warns if any
 # Types_CR ids is not used in Reports.xml
 def migrate_reports( ui, reports, crs, outdir ):
+    ret = 0
     with open( reports, "r" ) as sources:
         lines = sources.readlines()
     with open( outdir + "/" + os.path.basename( reports ), "w" ) as sources:
@@ -18,6 +19,7 @@ def migrate_reports( ui, reports, crs, outdir ):
                 id = int( match.group( 3 ) )
                 if not id in crs:
                     ui.error( "Could not find id '" + str( id ) + "'\n" )
+                    ret = 1
                     sources.write( line )
                 else:
                     key = crs[ id ]
@@ -29,10 +31,13 @@ def migrate_reports( ui, reports, crs, outdir ):
     for ( id,key ) in crs.items():
         ui.error( "Warning: id '" + str( id ) + "': " + key +
                 " was not found in " + reports + "\n" )
+        ret = 1
+    return ret
 
 # Parses Types_CR.lua or Types_RC.bms to add all report_key = report_id
 # in a dictionnary.
 def parse_cr( crs, types_cr, ui ):
+    ret = 0
     with open( types_cr, "r" ) as lines:
         for line in lines:
             match = re.search( "(\w+)\s*=\s*(\d+)", line )
@@ -44,9 +49,10 @@ def parse_cr( crs, types_cr, ui ):
                         + key + "' in " + types_cr
                         + " is different from key already defined '"
                         + crs[ id ] + "'\n" )
+                    ret = 1
                 else:
                     crs[ id ] = key
-    return crs
+    return ret
 
 if __name__ == "__main__":
     ui = Ui()
@@ -58,12 +64,9 @@ if __name__ == "__main__":
     dia4_cr, dia5_cr, report, outdir = args[0], args[1], args[2], args[3]
     if not os.path.exists( outdir ):
         os.makedirs( outdir )
-    try:
-        crs = {}
-        parse_cr( crs, dia4_cr, ui )
-        parse_cr( crs, dia5_cr, ui )
-        migrate_reports( ui, report, crs, outdir )
-    except Exception as e:
-        sys.stderr.write( "error: %s\n" % e )
-        sys.exit( 1 )
-    sys.exit( 0 )
+    ret = 0
+    crs = {}
+    for dia in (dia4_cr, dia5_cr):
+        ret |= parse_cr( crs, dia, ui )
+    ret |= migrate_reports( ui, report, crs, outdir )
+    sys.exit( ret )
