@@ -95,10 +95,14 @@ void GeoStoreManager::InitProjectorOld( const bfs::path& worldfile )
     trans_.reset( new Translator( *proj_, geometry::Vector2d( 0.5 * width, 0.5 * height ) ) );
 }
 
-bool GeoStoreManager::CanCreateUrbanBlock( const geometry::Polygon2f& footprint )
+// -----------------------------------------------------------------------------
+// Name: GeoStoreManager::CanCreateUrbanBlock
+// Created: AME 2010-07-22
+// -----------------------------------------------------------------------------
+bool GeoStoreManager::CanCreateUrbanBlock( const geometry::Polygon2f& footprint, unsigned int idToExclude /*= 0*/ )
 {
     CreateBlockProcess process;
-    return process.CanCreateBlock( index_, footprint, *trans_ );
+    return process.CanCreateBlock( index_, footprint, *trans_, idToExclude );
 }
 
 // -----------------------------------------------------------------------------

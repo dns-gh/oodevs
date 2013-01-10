@@ -43,7 +43,7 @@ public:
     //@}
     const Database& GetDatabase() const;
     void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks );
-    bool CanCreateUrbanBlock( const geometry::Polygon2f& footprint );
+    bool CanCreateUrbanBlock( const geometry::Polygon2f& footprint, unsigned int idToExclude = 0 );
 
 private:
     //! @name Helpers

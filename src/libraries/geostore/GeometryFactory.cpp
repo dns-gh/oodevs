@@ -61,7 +61,7 @@ gaiaGeomCollPtr GeometryFactory::InitGeometryCollection()
 // -----------------------------------------------------------------------------
 gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
 {
-    if( gaiaDimension( geom ) < 0 || gaiaIsValid( geom ) != 1 )
+    if( geom && ( gaiaDimension( geom ) < 0 || gaiaIsValid( geom ) == 0 ) )
     {
         gaiaFreeGeomColl( geom );
         geom = 0;
@@ -76,14 +76,14 @@ gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
 void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaGeomCollPtr& geomColl )
 {
     geomColl = Validate( geomColl );
-    if( ! geomColl )
+    if( geomColl )
     {
-        geomColl = CreatePolygonGeometry( footPrint, projector );
+        gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geomColl, static_cast< int >( footPrint.Vertices().size() + 1 ), 0 );
+        FillPolygon( footPrint, projector, polyg );
+        gaiaMbrGeometry( geomColl );
     }
-
-    gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geomColl, static_cast< int >( footPrint.Vertices().size() + 1 ), 0 );
-    FillPolygon( footPrint, projector, polyg );
-    gaiaMbrGeometry( geomColl );
+    else
+        geomColl = CreatePolygonGeometry( footPrint, projector );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,20 +93,16 @@ void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f&
 void GeometryFactory::FillPolygon( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaPolygonPtr& polyg ) const
 {
     gaiaRingPtr ring = polyg->Exterior;
-    double rLatitudeInDegrees;
-    double rLongitudeInDegrees;
-    int count = 0;
+    double rLatitudeInDegrees = 0;
+    double rLongitudeInDegrees = 0;
     const int numVertices = static_cast< int >( footPrint.Vertices().size() );
-    for( geometry::Polygon2f::CIT_Vertices it = footPrint.Vertices().begin(); it != footPrint.Vertices().end(); ++it )
+    for( int i = numVertices - 1; i >= 0; --i )
     {
-        geometry::Point2d point( ( *it ).X(), ( *it ).Y() );
+        const geometry::Point2f& p = footPrint.Vertices()[ i ];
+        geometry::Point2d point( p.X(), p.Y() );
         projector.Unproject( point, rLatitudeInDegrees, rLongitudeInDegrees );
-        gaiaSetPoint( ring->Coords, count, rLongitudeInDegrees, rLatitudeInDegrees );
-        if( it == footPrint.Vertices().begin() )
-        {
-            gaiaSetPoint( ring->Coords, numVertices, rLongitudeInDegrees, rLatitudeInDegrees );
-        }
-        ++count;
+        gaiaSetPoint( ring->Coords, i, rLongitudeInDegrees, rLatitudeInDegrees );
     }
+    gaiaSetPoint( ring->Coords, numVertices, rLongitudeInDegrees, rLatitudeInDegrees ); // same as i == 0
     gaiaMbrPolygon( polyg );
 }

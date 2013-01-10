@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    bool CanCreateBlock( const SpatialIndexer& indexer, const geometry::Polygon2f& footprint, PointProjector_ABC& projector );
+    bool CanCreateBlock( const SpatialIndexer& indexer, const geometry::Polygon2f& footprint, PointProjector_ABC& projector, unsigned int idToExclude = 0 );
     //@}
 
 private:

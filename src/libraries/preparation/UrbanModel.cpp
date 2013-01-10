@@ -419,7 +419,7 @@ void UrbanModel::ChangeGeometry( const kernel::Location_ABC& location, kernel::U
         return;
 
     const geometry::Polygon2f polygon( points );
-    if( geostore_->CanCreateUrbanBlock( polygon ) )
+    if( geostore_->CanCreateUrbanBlock( polygon, block.GetId() ) )
         block.Get< kernel::UrbanPositions_ABC >().ChangeGeometry( points );
 }
 

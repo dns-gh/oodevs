@@ -10,6 +10,8 @@
 #ifndef __GeometryFactory_h_
 #define __GeometryFactory_h_
 
+#include <boost/noncopyable.hpp>
+
 class PointProjector_ABC;
 
 namespace geostore
