@@ -40,9 +40,6 @@
     <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h">
       <Filter>Source Files\SpatialProcess</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\SpatialRequestStatus.h">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\SpatialIndexer.h">
       <Filter>Source Files\SpatialProcess</Filter>
     </ClInclude>
@@ -79,9 +76,6 @@
       <Filter>Source Files\SpatialProcess</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\SpatialRequestStatus.cpp">
       <Filter>Source Files\SpatialProcess</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\Table.cpp">

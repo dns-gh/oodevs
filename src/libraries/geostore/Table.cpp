@@ -23,7 +23,7 @@ namespace
         for( int i = 0; i < colsNb; ++i )
         {
             std::string value( colsData[ i ] ? colsData[ i ] : "NULL" );
-            row.emplace_back( value );
+            row.push_back( value );
         }
     }
 
@@ -35,12 +35,12 @@ namespace
         {
             std::vector< std::string > row;
             Fill( row, colsNb, colsNames );
-            set->emplace_back( row );
+            set->push_back( row );
         }
 
         std::vector< std::string > row;
         Fill( row, colsNb, colsValues );
-        set->emplace_back( row );
+        set->push_back( row );
 
         return 0;
     }
@@ -61,18 +61,14 @@ void Table::ExecuteQuery( const std::string& query )
 {
     int err = sqlite3_exec( db_, query.c_str(), nullptr, nullptr, nullptr );
     if( SQLITE_OK != err )
-    {
         throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
-    }
 }
 
 void Table::ExecuteQuery( const std::string& query, T_ResultSet& result )
 {
     int err = sqlite3_exec( db_, query.c_str(), &ResultCallback, &result, nullptr );
     if( SQLITE_OK != err )
-    {
         throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
-    }
 }
 
 sqlite3_stmt* Table::CreateStatement( const std::string& query ) const
@@ -85,7 +81,6 @@ sqlite3_stmt* Table::CreateStatement( const std::string& query ) const
         sqlite3_finalize( result );
         throw MASA_EXCEPTION_SQLITE( err, sqlite3_errmsg( db_ ) );
     }
-
     return result;
 }
 

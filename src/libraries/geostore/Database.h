@@ -11,7 +11,6 @@
 #define __Database_h_
 
 class PointProjector_ABC;
-class TerrainFileReader;
 struct sqlite3;
 
 namespace geostore
@@ -37,7 +36,6 @@ public:
     //! @name Operations
     //@{
     void LoadLayers( PointProjector_ABC& projector );
-    void GetTables( std::vector< GeoTable* >& tables ) const;
     //@}
 
 private:
@@ -47,10 +45,7 @@ private:
 public:
    //! @name Member data
     //@{
-    typedef std::map< std::string, GeoTable* > T_Tables;
-    typedef T_Tables::iterator                IT_Tables;
-    typedef T_Tables::const_iterator         CIT_Tables;
-    T_Tables tables_;
+    std::map< std::string, GeoTable* > tables_;
     std::auto_ptr< LogTable > logTable_;
     //@}
 

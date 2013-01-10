@@ -13,7 +13,6 @@
 #include "GeoTable.h"
 #include "LogTable.h"
 #include "ProjectionTable.h"
-#include "terrain/TerrainFileReader.h"
 
 using namespace geostore;
 
@@ -57,7 +56,7 @@ Database::Database( const bfs::path& path )
 // -----------------------------------------------------------------------------
 Database::~Database()
 {
-    for( IT_Tables it = tables_.begin(); it != tables_.end(); ++it )
+    for( auto it = tables_.begin(); it != tables_.end(); ++it )
         delete it->second;
     sqlite3_close( db_ );
 }
@@ -107,14 +106,4 @@ void Database::LoadLayer( const std::string& name )
 
     // Store in the map
     tables_[ name ] = table.release();
-}
-
-void Database::GetTables( std::vector< GeoTable* >& tables ) const
-{
-    tables.clear();
-    tables.reserve( tables_.size() );
-    for( CIT_Tables it = tables_.begin(); it != tables_.end(); ++it )
-    {
-        tables.push_back( it->second );
-    }
 }

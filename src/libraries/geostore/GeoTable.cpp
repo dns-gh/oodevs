@@ -38,33 +38,14 @@ GeoTable::GeometryType GeoTable::GetGeometryType() const
     return geometryType_;
 }
 
-/*std::string GeoTable::GetGeometry() const
-{
-    switch( geometryType_ )
-    {
-    case Polygon:
-        return std::string( "POLYGON" );
-    case LineString:
-        return std::string( "LINESTRING" );
-    default:
-        throw MASA_EXCEPTION( "Invalid geometry type." );
-    }
-}*/
-
 void GeoTable::SetGeometry( const std::string& name )
 {
     if( "POLYGON" == name )
-    {
         geometryType_ = Polygon;
-    }
     else if( "LINESTRING" == name )
-    {
         geometryType_ = LineString;
-    }
     else
-    {
         throw MASA_EXCEPTION( "Invalid geometry name." );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -85,9 +66,7 @@ void GeoTable::LoadTable()
     ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'", results );
 
     if( results.empty() )
-    {
         throw MASA_EXCEPTION( "Could not load table " + GetName() );
-    }
 
     SetGeometry( results.back().back() );
 }
@@ -138,18 +117,13 @@ void GeoTable::CreatePolygonGeometry( gaiaGeomCollPtr geo, const TerrainObject& 
 {
     gaiaPolygonPtr polyg;
     gaiaRingPtr ring;
-    geometry::Point2d firstPoint;
     int numVertices = static_cast< int >( shape.GetCoordinates().size() );
     int numRings = static_cast< int >( shape.GetSubPrimitives().size() );
     polyg = gaiaAddPolygonToGeomColl( geo, numVertices + 1, numRings );
     ring = polyg->Exterior;
     for( int i = 0; i < numVertices; ++i )
-    {
         gaiaSetPoint( ring->Coords, i, shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
-        if( i == 0 )
-            firstPoint.Set( shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
-    }
-    gaiaSetPoint( ring->Coords, numVertices, firstPoint.X(), firstPoint.Y() );    
+    gaiaSetPoint( ring->Coords, numVertices, shape.GetCoordinates()[ 0 ].X(), shape.GetCoordinates()[ 0 ].Y() );
     if( numRings == 0 )
         return;
     geodata::Primitive_ABC::T_Vector innerRing = shape.GetSubPrimitives();
@@ -161,12 +135,8 @@ void GeoTable::CreatePolygonGeometry( gaiaGeomCollPtr geo, const TerrainObject& 
             continue;
         ring = gaiaAddInteriorRing( polyg, numParts, numVertices + 1 );
         for( int i = 0; i < numVertices; ++i )
-        {
             gaiaSetPoint( ring->Coords, i, ( *it )->GetCoordinates()[ i ].X(), ( *it )->GetCoordinates()[ i ].Y() );
-            if( i == 0 )
-                firstPoint.Set( ( *it )->GetCoordinates()[ i ].X(), ( *it )->GetCoordinates()[ i ].Y() );
-        }
-        gaiaSetPoint( ring->Coords, numVertices, firstPoint.X(), firstPoint.Y() );
+        gaiaSetPoint( ring->Coords, numVertices, ( *it )->GetCoordinates()[ 0 ].X(), ( *it )->GetCoordinates()[ 0 ].Y() );
         ++numParts;
     }
 }
@@ -180,9 +150,7 @@ void GeoTable::CreateLineGeometry( gaiaGeomCollPtr geo, const TerrainObject& sha
     const int numVertices = static_cast< int >( shape.GetCoordinates().size() );
     gaiaLinestringPtr line = gaiaAddLinestringToGeomColl( geo, numVertices );
     for( int i = 0; i < numVertices; ++i )
-    {
         gaiaSetPoint( line->Coords, i, shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -298,11 +266,6 @@ gaiaGeomCollPtr GeoTable::CreateGeometry( const TerrainObject& shape )
 gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly )
 {
     gaiaGeomCollPtr result = nullptr;
-
-    /*std::string mbrStr = boost::lexical_cast< std::string >( poly->MinX ) + ", "
-        + boost::lexical_cast< std::string >( poly->MinY ) + ", "
-        + boost::lexical_cast< std::string >( poly->MaxX  ) + ", "
-        + boost::lexical_cast< std::string >( poly->MaxY );*/
 
     std::ostringstream query;
     query << "SELECT GUnion( geom ) FROM " << GetName() << " WHERE MbrIntersects( geom, BuildMbr( ?, ?, ?, ? ) );";

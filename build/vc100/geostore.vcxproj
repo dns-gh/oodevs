@@ -106,7 +106,6 @@
     <ClInclude Include="..\..\src\libraries\geostore\CreateBlockProcess.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h" />
     <ClInclude Include="..\..\src\libraries\geostore\SpatialIndexer.h" />
-    <ClInclude Include="..\..\src\libraries\geostore\SpatialRequestStatus.h" />
     <ClInclude Include="..\..\src\libraries\geostore\Table.h" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +123,6 @@
     <ClCompile Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\CreateBlockProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp" />
-    <ClCompile Include="..\..\src\libraries\geostore\SpatialRequestStatus.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\Table.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

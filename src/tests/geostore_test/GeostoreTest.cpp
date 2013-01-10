@@ -38,9 +38,7 @@ BOOST_AUTO_TEST_CASE( Database_Test )
 
     DummyIndexer index;
     GeoStoreManager manager( terrainPath, index );
-    std::vector< GeoTable* > tables;
-    manager.GetDatabase().GetTables( tables );
-    BOOST_CHECK_EQUAL( tables.size(), 11u );
+    BOOST_CHECK_EQUAL( manager.GetDatabase().tables_.size(), 11u );
 }
 
 BOOST_AUTO_TEST_CASE( UrbanBlockAutoGeneration_Test )
@@ -49,10 +47,10 @@ BOOST_AUTO_TEST_CASE( UrbanBlockAutoGeneration_Test )
     GeoStoreManager manager( BOOST_RESOLVE( "terrain" ), index );
 
     std::vector< Point2f > pts;
-    pts.emplace_back( Point2f( 55744.945f, 58097.934f ) );
-    pts.emplace_back( Point2f( 56851.191f, 58429.145f ) );
-    pts.emplace_back( Point2f( 57403.211f, 57607.742f ) );
-    pts.emplace_back( Point2f( 55941.465f, 57011.563f ) );
+    pts.push_back( Point2f( 55744.945f, 58097.934f ) );
+    pts.push_back( Point2f( 56851.191f, 58429.145f ) );
+    pts.push_back( Point2f( 57403.211f, 57607.742f ) );
+    pts.push_back( Point2f( 55941.465f, 57011.563f ) );
 
     geometry::Polygon2f extent( pts );
     std::vector< geometry::Polygon2f > blocks;

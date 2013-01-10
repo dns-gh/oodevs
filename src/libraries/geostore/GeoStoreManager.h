@@ -25,7 +25,6 @@ namespace geostore
 {
     class Database;
     class SpatialIndexer;
-    class SpatialRequestStatus;
 
 // =============================================================================
 /** @class  GeoStoreManager

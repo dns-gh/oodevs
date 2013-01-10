@@ -27,7 +27,8 @@ namespace geostore
 class GeoTable : public Table
 {
 public:
-    enum GeometryType {
+    enum GeometryType
+    {
         Point       = 0,
         Polygon     = 1,
         LineString  = 2,

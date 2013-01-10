@@ -13,7 +13,6 @@
 #include "Database.h"
 #include "CreateBlockAutoProcess.h"
 #include "CreateBlockProcess.h"
-#include "SpatialRequestStatus.h"
 #include "terrain/PlanarCartesianProjector.h"
 #include "terrain/TerrainFileReader.h"
 #include "terrain/Translator.h"
