@@ -32,6 +32,9 @@ const MIL_Report* MIL_Report::Find( unsigned int nID )
 inline
 const MIL_Report* MIL_Report::Find( const std::string& key )
 {
+    unsigned int id;
+    if( ( std::istringstream( key ) >> id ).eof() )
+        return Find( id );
     auto it = keys_.find( key );
     if( it == keys_.end() )
         return 0;
