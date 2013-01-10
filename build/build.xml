@@ -71,11 +71,11 @@
     </target>
 
     <target name="protocol" description="build protocol static library">
-        <exec taskname="protolint" executable="python" failonerror="true" timeout="60000">
+        <python taskname="protolint" failonerror="true" timeout="60000">
             <arg value="${libraries.dir}/protocol/protolint.py"/>
             <arg value="${libraries.dir}/protocol/proto"/>
             <arg value="style"/>
-        </exec>
+        </python>
         <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
         </build-lib>
     </target>
@@ -1051,23 +1051,23 @@
             <echo>Testing models: @{input}</echo>
             <delete dir="${out.dir}/test-adaptation"/>
             <tempfile property="@{input}.temp" destdir="${out.dir}" deleteonexit="true"/>
-            <exec taskname="checksum" executable="python" output="${@{input}.temp}" failonerror="true">
+            <python taskname="checksum" output="${@{input}.temp}" failonerror="true">
                 <arg value="checksum.py"/>
                 <arg value="@{input}"/>
-            </exec>
+            </python>
             <run-adaptation input="@{input}" output="${out.dir}/test-adaptation"/>
-            <exec taskname="checksum" executable="python" failonerror="true">
+            <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
                 <arg value="@{input}"/>
                 <arg value="--check"/>
                 <arg value="${@{input}.temp}"/>
-            </exec>
-            <exec taskname="checksum" executable="python" failonerror="true">
+            </python>
+            <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
                 <arg value="${out.dir}/test-adaptation"/>
                 <arg value="--check"/>
                 <arg value="${@{input}.temp}"/>
-            </exec>
+            </python>
             <delete dir="${out.dir}/test-adaptation"/>
         </sequential>
     </macrodef>
@@ -1194,13 +1194,13 @@
         <attribute name="app"/>
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
-            <exec taskname="@{app}" executable="python" failonerror="true">
+            <python taskname="@{app}" failonerror="true">
                 <arg value="checkgui.py"/>
                 <arg value="--run_dir"/>
                 <arg value="${run.dir}"/>
                 <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
                 <elements/>
-            </exec>
+            </python>
         </sequential>
     </macrodef>
 
@@ -1259,12 +1259,12 @@
     <target name="proto-api-documentation"
         description="generate SDK documentation">
         <mkdir dir="${out.dir}/sdk/doc/html"/>
-        <exec taskname="python" executable="python" failonerror="true">
+        <python taskname="python" failonerror="true">
             <arg value="${bin.dir}/asciidoc/asciidoc/asciidoc.py" />
             <arg value="--out-file=${out.dir}/sdk/doc/html/index.html" />
             <arg value="${libraries.dir}/protocol/doc/sdk.txt" />
-        </exec>
-        <exec executable="python" failonerror="true">
+        </python>
+        <python failonerror="true">
             <arg value="${bin.dir}/asciidoc/asciidoc/a2x.py" />
             <arg value="--format=pdf" />
             <arg value="--fop" />
@@ -1275,7 +1275,7 @@
             <arg value="--xsltproc-opts=-nonet" />
             <arg value="--destination-dir=${out.dir}/sdk/doc" />
             <arg value="${libraries.dir}/protocol/doc/sdk.txt" />
-        </exec>
+        </python>
     </target>
 
     <target name="prepare-dec-api-files" description="Prepare resources to generate the documentation">
@@ -1292,12 +1292,12 @@
             <arg value="-c"/>
             <arg value='find \"${src.dir.unix}/libraries/simulation_kernel\" -name \"*.cpp\" | xargs grep -e \"brain\\.Register(\" -e \"brain\\[.*=\" | grep -v \"\\.svn\" | grep -o \".*\.cpp\" | sort -u > ${out.dir.unix}/dec_api/dec_files.txt' />
         </exec>
-        <exec executable="python" failonerror="true">
+        <python failonerror="true">
             <arg value="decfilter.py"/>
             <arg value="${out.dir}/dec_api/dec_files.txt"/>
             <arg value="${src.dir}/libraries/simulation_kernel/"/>
             <arg value="${out.dir}/dec_api/definition"/>
-        </exec>
+        </python>
         <copy file="./dec_api/sdk.dox" toDir="${out.dir}/dec_api/definition"/>
     </target>
 
@@ -1400,12 +1400,12 @@
         <attribute name="file"/>
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
-            <exec taskname="depends" executable="python" failonerror="true">
+            <python taskname="depends" failonerror="true">
                 <env key="PATH" path="${env.PATH}:${bin.dir}/7z:${bin.dir}/depends"/>
                 <arg value="${bin.dir}/buildtools/checkdepends.py"/>
                 <arg value="@{file}"/>
                 <elements/>
-            </exec>
+            </python>
         </sequential>
     </macrodef>
 
@@ -1509,7 +1509,7 @@
     ============================================================================
     -->
     <target name="checkproject" description="check project configuration">
-        <exec executable="python" failonerror="true">
+        <python failonerror="true">
             <arg value="${bin.dir}/buildtools/checkproject.py"/>
             <arg value="${root.dir}"/>
             <arg value="${root.dir}/build/vc100/sword.sln"/>
@@ -1518,25 +1518,25 @@
             <!-- cmake targets are not used by "all" -->
             <arg value="--optional-target=*cmake*"/>
             <arg value="--optional-target=client_sample_app"/>
-        </exec>
+        </python>
     </target>
 
     <target name="checkreports" description="check simulation reports">
-        <!--exec executable="python" failonerror="true">
+        <!--python failonerror="true">
             <arg value="${root.dir}/build/checkreports.py"/>
             <arg value="check"/>
             <arg value="${root.dir}"/>
             <arg value="${root.dir}/data/data/models/reports.txt"/>
-        </exec-->
+        </python-->
     </target>
 
     <target name="checkdec" description="check models knows about our DEC functions">
-        <exec executable="python" failonerror="true">
+        <python failonerror="true">
             <arg value="${root.dir}/build/listdec.py"/>
             <arg value="check"/>
             <arg value="${data.dir}/data/models/decfunctions.txt"/>
             <arg value="${src.dir}/libraries/simulation_kernel"/>
-        </exec>
+        </python>
     </target>
 
     <target name="check" depends="checkproject,checkreports,checkdec"
@@ -1608,10 +1608,10 @@
 
     <target name="cmake.msvc">
         <cmake_msvc input="${root.dir}/build"/>
-        <exec taskname="fixmsvc" executable="python" failonerror="true">
+        <python taskname="fixmsvc" failonerror="true">
             <arg value="fixmsvc.py"/>
             <arg value="${out.dir}/msvc"/>
-        </exec>
+        </python>
     </target>
 
     <target name="cmake.configure">
