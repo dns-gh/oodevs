@@ -31,25 +31,21 @@ def migrate_reports( ui, reports, crs, outdir ):
                 " was not found in " + reports + "\n" )
 
 # Parses Types_CR.lua or Types_RC.bms to add all report_key = report_id
-# in a dictionnary. Export a new file with report_key = "report_key"
-def parse_and_migrate_cr( crs, types_cr, outdir, ui ):
-    with open( outdir + "/" + os.path.basename( types_cr ), "w" ) as output:
-        with open( types_cr, "r" ) as lines:
-            for line in lines:
-                match = re.search( "(\w+)\s*=\s*(\d+)", line )
-                if match and match.group( 1 ) != "eNbr":
-                    id = int( match.group( 2 ) )
-                    key = match.group( 1 )
-                    if id in crs and crs[ id ] != key:
-                        ui.error( "id '" + str( id ) + "' already defined but key '"
-                            + key + "' in " + types_cr
-                            + " is different from key already defined '"
-                            + crs[ id ] + "'\n" )
-                    else:
-                        crs[ id ] = key
-                        output.write( key + ' = "' + key + '"\n' )
+# in a dictionnary.
+def parse_cr( crs, types_cr, ui ):
+    with open( types_cr, "r" ) as lines:
+        for line in lines:
+            match = re.search( "(\w+)\s*=\s*(\d+)", line )
+            if match and match.group( 1 ) != "eNbr":
+                id = int( match.group( 2 ) )
+                key = match.group( 1 )
+                if id in crs and crs[ id ] != key:
+                    ui.error( "id '" + str( id ) + "' already defined but key '"
+                        + key + "' in " + types_cr
+                        + " is different from key already defined '"
+                        + crs[ id ] + "'\n" )
                 else:
-                    output.write( line )
+                    crs[ id ] = key
     return crs
 
 if __name__ == "__main__":
@@ -64,8 +60,8 @@ if __name__ == "__main__":
         os.makedirs( outdir )
     try:
         crs = {}
-        parse_and_migrate_cr( crs, dia4_cr, outdir, ui )
-        parse_and_migrate_cr( crs, dia5_cr, outdir, ui )
+        parse_cr( crs, dia4_cr, ui )
+        parse_cr( crs, dia5_cr, ui )
         migrate_reports( ui, report, crs, outdir )
     except Exception as e:
         sys.stderr.write( "error: %s\n" % e )
