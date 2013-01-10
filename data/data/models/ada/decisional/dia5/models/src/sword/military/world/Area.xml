@@ -442,6 +442,14 @@
                 </type>
             </return>
         </method>
+        <method name="getPerimeterPositions" abstract="false">
+            <description>Renvoie la liste de points du périmètre de la zone.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isObservingFor">

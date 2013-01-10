@@ -280,4 +280,7 @@ return
         meKnowledge:RC( eRC_ZoneDecontaminee )
         return true
     end,
+    getPerimeterPositions = function ( self )
+        return integration.getAreaPerimeterPositions( self )
+    end,
 }

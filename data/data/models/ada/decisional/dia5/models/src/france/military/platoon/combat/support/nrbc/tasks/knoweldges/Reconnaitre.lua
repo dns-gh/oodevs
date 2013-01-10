@@ -1,8 +1,8 @@
 local result = 
 {
     fillParameters = function( self, companyTask, params )
-         local entities = companyTask:getEntities( params )
-         return { entities = entities }
+         local area = companyTask:getArea( params )
+         return { area = area }
     end
 }
 

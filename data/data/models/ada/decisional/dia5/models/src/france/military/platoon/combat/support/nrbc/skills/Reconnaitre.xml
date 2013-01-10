@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.nrbc.skills.Reconnaitre" source-version="1.0.0">
-    <description>Reconnaître toutes les entités.</description>
-    <parameters>
-        <parameter name="entities">
-            <description>L'élément à reconnaître.</description>
-            <type>
-                <list>
-                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-                </list>
-            </type>
-        </parameter>
-    </parameters>
-    <goal>
-        <description>Reconnaître les entités.</description>
-    </goal>
-    <modifiers/>
-    <links>
-        <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition">
-            <description>Lien vers le skill MoveAndTakePosition</description>
-        </link>
-        <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
-            <description>Lien vers le skill Observe</description>
-        </link>
-    </links>
+	<description>Reconnaître toutes les entités.</description>
+	<parameters>
+		<parameter name="area">
+			<description>Zone à reconnaitre.</description>
+			<type>
+				<class name="sword.military.world.Area"/>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Reconnaître les entités.</description>
+	</goal>
+	<modifiers/>
+	<links>
+		<link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition">
+			<description>Lien vers le skill MoveAndTakePosition</description>
+		</link>
+	</links>
 </skill>

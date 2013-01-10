@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.nrbc.tasks.Reconnaitre" source-version="1.0.0" knowledge-class="france.military.company.combat.support.nrbc.tasks.knowledges.ReconnaitreEffect">
 	<parameters>
-		<parameter name="entities">
+		<parameter name="areas">
 			<type>
 				<list>
-					<class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+					<class name="sword.military.world.Area"/>
 				</list>
 			</type>
 		</parameter>

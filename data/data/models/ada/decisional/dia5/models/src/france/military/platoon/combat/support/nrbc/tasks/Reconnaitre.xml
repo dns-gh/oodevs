@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.nrbc.tasks.Reconnaitre" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.nrbc.tasks.knoweldges.Reconnaitre">
-    <parameters>
-        <parameter name="entities">
-            <description>L'itinéraire est défini par une liste de point de passage obligé.</description>
-            <type>
-                <list>
-                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-                    <class name="sword.military.knowledge.decisional.Reconnoitring"/>
-                </list>
-            </type>
-        </parameter>
-    </parameters>
-    <goal>
-        <description>Reconnaitre les obstacles rencontrés</description>
-    </goal>
-    <stages>
-        <stage label="Reconnaitre" disable-when-done="true">
-            <description>Reconnaitre les éléments NBC.</description>
-            <goal>
-                <description>Reconnaître les éléments NBC.</description>
-            </goal>
-            <skills>
-                <skill name="sword.military.platoon.skills.actions.EquipNBCOutfit"/>
-                <skill name="france.military.platoon.combat.support.nrbc.skills.Reconnaitre" main="true">
-                    <parameter name="entities">
-                        <value>
-                            <parameter>entities</parameter>
-                        </value>
-                    </parameter>
-                </skill>
-            </skills>
-        </stage>
-    </stages>
+	<parameters>
+		<parameter name="area">
+			<description>Zone à reconnaitre.</description>
+			<type>
+				<class name="sword.military.world.Area"/>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Reconnaitre les éléments NBC rencontrés</description>
+	</goal>
+	<stages>
+		<stage label="Reconnaitre" disable-when-done="true">
+			<description>Reconnaitre les éléments NBC.</description>
+			<goal>
+				<description>Reconnaître les éléments NBC.</description>
+			</goal>
+			<skills>
+				<skill name="sword.military.platoon.skills.actions.EquipNBCOutfit"/>
+				<skill name="france.military.platoon.combat.support.nrbc.skills.Reconnaitre" main="true">
+					<parameter name="area">
+						<value>
+							<parameter>area</parameter>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
 </task>

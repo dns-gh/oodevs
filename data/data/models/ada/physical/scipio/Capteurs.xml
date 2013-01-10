@@ -2973,18 +2973,6 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
-        <object detection-distance="1" type="nbc cloud">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette M559">
@@ -7531,4 +7519,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="0357702064" -->
+<!-- signature="0682650274" -->

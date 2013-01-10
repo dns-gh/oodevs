@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.nrbc.tasks.knowledges.ReconnaitreEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
     <methods>
-        <method name="getEntities">
+        <method name="getArea">
             <return>
                 <type>
                     <class name="sword.military.knowledge.decisional.Reconnoitrable"/>

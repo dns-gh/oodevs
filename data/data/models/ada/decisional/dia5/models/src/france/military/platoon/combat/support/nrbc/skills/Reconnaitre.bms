@@ -5,17 +5,16 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.nodes.ReconnoiterElement },
+    connections = { skill.links.moveAndTakePosition, skill.nodes.ReconnoitreNBC  },
 
-    done = function( self ) end,
-
-    -- --------------------------------------------------------------------------------
-    -- Main effect is reached: send feedback when entities are reconnoitered
-    -- --------------------------------------------------------------------------------
-    reconnoitred = function( self, params, additionalParams )
-        self.unreconnoitredElements[ additionalParams.element ] = nil
-        if not next( self.unreconnoitredElements ) then
-            Feedback( self.feedbacks.done ) -- the job is done, all targets are reconnoitered
+    done = function( self, params )
+        if self.moveToCenter then
+            self.recoNBC = true
+        else
+            self.nextTargetIndex = self.nextTargetIndex + 1
+            if self.nextTargetIndex >= #self.unreconnoitredElements then
+                self.moveToCenter = true
+            end
         end
     end,
 
@@ -24,79 +23,51 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.unreconnoitredElements = {}
-        for _,entity in pairs( self.params.entities ) do
-                self.unreconnoitredElements[ entity ] = true
+        local positionsSim = self.params.area:getPerimeterPositions()
+        local positions = {}
+        for i = 1, #positionsSim do
+           positions[#positions + 1] = CreateKnowledge( sword.military.world.Point, positionsSim[i] )
+        end
+        local idRotation = 1
+        local distance = integration.distance(positions[1], meKnowledge)
+        for i = 2, #positions do
+            if distance > integration.distance(positions[i], meKnowledge) then
+                distance = integration.distance(positions[i], meKnowledge)
+                idRotation = i
             end
+        end
+        
+        -- Sort the list of positions
+        for i= idRotation, #positions do
+            self.unreconnoitredElements[#self.unreconnoitredElements + 1] = positions[i]
+        end
+        for i= 1, idRotation do
+            self.unreconnoitredElements[#self.unreconnoitredElements + 1] = positions[i]
+        end
+        self.nextTargetIndex = 1
     end,
 
     -- --------------------------------------------------------------------------------
     -- For each objective of the skill, reconnoiter it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        for entity in pairs( self.unreconnoitredElements ) do
-            Activate( skill.nodes.ReconnoiterElement, entity:reconnaissancePriority(),
-                 { entity = entity } )
-        end
-    end
-}
-
--- ****************************************************************************
--- Reconnoiter reconnoiterable element using MoveAndTakePosition skills
--- self.params.entity: the reconnoitrable element
--- self.params.positions: the reconnoitering elements
--- ****************************************************************************
-node "ReconnoiterElement"
-{
-    connections = {skill.links.moveAndTakePosition, skill.links.observe,
-                   skill.nodes.Reconnoitre },
-
-    feedbacks = { "reconnoitred" },
-
-    -- -------------------------------------------------------------------------------- 
-    -- Feedbacks
-    -- --------------------------------------------------------------------------------
-    done = function( self )-- from moveAndTakePosition
-        self.movementDone = true
-    end,
-
-    -- -------------------------------------------------------------------------------- 
-    -- Init
-    -- --------------------------------------------------------------------------------
-    create  = function( self )
-        self.movementDone = false
-    end,
-
-    -- --------------------------------------------------------------------------------
-    -- Move toward a reconnoitering element and recconnoiter the entity
-    -- --------------------------------------------------------------------------------
-    activate = function( self )
-        -- Feedback is sent only if element is recongized and if movement is done
-        -- toward the reconnoitring position.
-        if self.params.entity:isRecoNBC() and self.movementDone then
-            Feedback( self.feedbacks.reconnoitred, { element = self.params.entity } )
-        end
-
-        -- Main oservation effort on the entity
-        Activate( skill.links.observe, 1, { entity = self.params.entity } )
-
-        -- when it possible reconnoiter the element.
-        if self.movementDone then
-            if self.params.entity:isBeingReconnoiteredByMeOrNoOne( myself ) then
-                Activate( skill.nodes.Reconnoitre, 1, { target = self.params.entity } )
+        local Activate = Activate
+        Activate( skill.nodes.ReconnoitreNBC, 1, { target = self.params.area } )
+        if self.isMovedToCenter and self.params.area:isRecoNBC() then
+              Feedback( self.feedbacks.done )
+        else
+            if self.moveToCenter then
+                Activate( skill.links.moveAndTakePosition, 1,
+                         { entity = self.params.area,  pathType = eTypeItiNBC } )
             else
-                Feedback( self.feedbacks.reconnoitred, { element = self.params.entity } )
+                Activate( skill.links.moveAndTakePosition, 1,
+                         { entity = self.unreconnoitredElements[self.nextTargetIndex],  pathType = eTypeItiNBC } )
             end
         end
-
-        -- Moving toward the entity
-        Activate( skill.links.moveAndTakePosition, 1, { entity = self.params.entity, pathType = eTypeItiNBC } )
     end
 }
 
--- ****************************************************************************
--- Reconnoitre action on the reconnoitrable element
--- ****************************************************************************
-node "Reconnoitre"
+node "ReconnoitreNBC"
 {
     select = function( self )
        self.params.target:RecoNBC()
