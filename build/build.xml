@@ -1091,6 +1091,7 @@
                          lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                          lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                          lib${ant.project.name}_propagation-${platform}-mt@{suffix},
+                         lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                          lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
                     depends="xerces,xalan,terrain,boost,qt4,protobuf"
                     failonwarning="${failonwarning}">

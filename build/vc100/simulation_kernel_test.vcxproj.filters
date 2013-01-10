@@ -324,5 +324,8 @@
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\DEC_GeometryFunctionsTest.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PHY_RawVisionDataTest.cpp">
+      <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

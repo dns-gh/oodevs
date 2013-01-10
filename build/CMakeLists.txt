@@ -416,7 +416,10 @@ target_link_libraries( simulation_kernel
 # simulation_kernel_test
 add_target( simulation_kernel_test tests "tests/simulation_kernel_test" OPTIONS protocol test )
 masa_add_target_include( simulation_kernel_test "${root_dir}/src/libraries/simulation_kernel" )
-target_link_libraries( simulation_kernel_test simulation_kernel )
+target_link_libraries( simulation_kernel_test
+    simulation_kernel
+    meteo
+)
 
 # replayer_app
 add_target( replayer_app server "applications/replayer_app" OPTIONS win32 executable )
