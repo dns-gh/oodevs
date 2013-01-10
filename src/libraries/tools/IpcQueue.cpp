@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+#include "tools_pch.h"
+
 #ifdef _MSC_VER
 #ifndef _SCL_SECURE_NO_WARNINGS
 #define _SCL_SECURE_NO_WARNINGS
