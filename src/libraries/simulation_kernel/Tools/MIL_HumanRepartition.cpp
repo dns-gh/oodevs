@@ -9,10 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_HumanRepartition.h"
-#include "protocol/ClientSenders.h"
-#include "Network/NET_AsnException.h"
-
-BOOST_CLASS_EXPORT_IMPLEMENT( MIL_HumanRepartition )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_HumanRepartition constructor
@@ -24,17 +20,6 @@ MIL_HumanRepartition::MIL_HumanRepartition()
     , children_( 0.0f )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition constructor
-// Created: MMC 2011-10-07
-// -----------------------------------------------------------------------------
-MIL_HumanRepartition::MIL_HumanRepartition( const MIL_HumanRepartition& humanRepartition )
-{
-    male_   = humanRepartition.GetMale();
-    female_ = humanRepartition.GetFemale();
-    children_ = humanRepartition.GetChildren();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,41 +45,6 @@ MIL_HumanRepartition::MIL_HumanRepartition( xml::xistream& xis )
 MIL_HumanRepartition::~MIL_HumanRepartition()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition::WriteODB
-// Created: MMC 2011-10-07
-// -----------------------------------------------------------------------------
-void MIL_HumanRepartition::WriteODB( xml::xostream& xos ) const
-{
-    xos << xml::start( "repartition" )
-        << xml::attribute( "male", male_ )
-        << xml::attribute( "female", female_ )
-        << xml::attribute( "children", children_ )
-        << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition::load
-// Created: MMC 2011-10-07
-// -----------------------------------------------------------------------------
-void MIL_HumanRepartition::load( MIL_CheckPointInArchive& file, const unsigned int )
-{
-    file >> male_
-         >> female_
-         >> children_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition::save
-// Created: MMC 2011-10-07
-// -----------------------------------------------------------------------------
-void MIL_HumanRepartition::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << male_
-         << female_
-         << children_;
 }
 
 // -----------------------------------------------------------------------------

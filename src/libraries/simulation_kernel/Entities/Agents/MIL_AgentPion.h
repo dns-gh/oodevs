@@ -221,7 +221,6 @@ private:
     std::auto_ptr< MIL_AffinitiesMap >        pAffinities_;
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color >                pColor_;
-    std::auto_ptr< MIL_HumanRepartition >     pHumanRepartition_;
     //@}
 };
 

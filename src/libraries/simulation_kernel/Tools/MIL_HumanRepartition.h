@@ -10,14 +10,6 @@
 #ifndef __MIL_HumanRepartition_h_
 #define __MIL_HumanRepartition_h_
 
-#include "MIL.h"
-
-namespace xml
-{
-    class xistream;
-    class xostream;
-}
-
 // =============================================================================
 /** @class  MIL_HumanRepartition
     @brief  MIL_HumanRepartition
@@ -30,7 +22,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_HumanRepartition();
-             MIL_HumanRepartition( const MIL_HumanRepartition& humanRepartition );
     explicit MIL_HumanRepartition( xml::xistream& xis );
     virtual ~MIL_HumanRepartition();
     //@}
@@ -45,14 +36,6 @@ public:
     float GetChildren() const;
     //@}
 
-    //! @name CheckPoints
-    //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& file, const unsigned int );
-    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
-    void WriteODB( xml::xostream& xos ) const;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -61,8 +44,6 @@ private:
     float children_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( MIL_HumanRepartition )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_HumanRepartition::SendFullState
