@@ -50,7 +50,7 @@ public:
 
     void RegisterPath( boost::shared_ptr< Agent_Path > path );
     void UnregisterPath( std::size_t identifier );
-    boost::weak_ptr< Agent_Path > GetPath( std::size_t identifier );
+    boost::shared_ptr< Agent_Path > GetPath( std::size_t identifier );
 
     std::vector< std::size_t > GetPoints( unsigned int entity ) const;
     const movement::PathPoint& GetPoint( std::size_t point ) const;
