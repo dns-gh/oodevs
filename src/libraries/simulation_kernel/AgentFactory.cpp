@@ -57,7 +57,6 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     type.RegisterRoles( *pPion );
     pPion->Register( missionController_ );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
-    pPion->ReadOverloading( xis );
     return pPion;
 }
 

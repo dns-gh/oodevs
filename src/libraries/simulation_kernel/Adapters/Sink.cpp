@@ -659,6 +659,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
     MIL_AgentPion& pion = Configure( *agents_.Create( type, automate, xis ), vPosTmp );
+    pion.ReadOverloading( xis );
     pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
     return &pion;
 }
