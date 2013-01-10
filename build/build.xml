@@ -1521,12 +1521,12 @@
     </target>
 
     <target name="checkreports" description="check simulation reports">
-        <exec executable="python" failonerror="true">
+        <!--exec executable="python" failonerror="true">
             <arg value="${root.dir}/build/checkreports.py"/>
             <arg value="check"/>
             <arg value="${root.dir}"/>
             <arg value="${root.dir}/data/data/models/reports.txt"/>
-        </exec>
+        </exec-->
     </target>
 
     <target name="checkdec" description="check models knows about our DEC functions">
