@@ -21,7 +21,7 @@
 #include "clients_kernel/ObjectType.h"
 
 #include <boost/bind.hpp>
-
+#include <sstream>
 #include <limits>
 
 using namespace plugins::hla;
@@ -69,14 +69,14 @@ void RemoteTacticalObjectController::RemoteCreated( const std::string& identifie
     message().mutable_parameters()->add_elem(); // position
     message().mutable_parameters()->add_elem(); // name
     message().mutable_parameters()->add_elem(); // army
-    /* Uncomment when simulation_kernel is modified
+    message().mutable_parameters()->add_elem(); // attributes
     sword::Extension* ext = message().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
     sword::Extension_Entry* entry = ext->add_entries(); // extension
     entry->set_name( "RemoteEntity" );
     entry->set_value( "true" );
     entry = ext->add_entries(); // extension
     entry->set_name( "HLA_ObjectID" );
-    entry->set_value( identifier );*/
+    entry->set_value( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +162,7 @@ void RemoteTacticalObjectController::NameChanged( const std::string& identifier,
     if( objectCreations_.end() == it)
         return;
     simulation::ObjectMagicAction& message = *it->second;
-    message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( std::string( "HLA_" ) +name.c_str() );
+    message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( name.c_str() );
     Send( message, identifier );
 }
 
@@ -254,8 +254,18 @@ void RemoteTacticalObjectController::Send( simulation::ObjectMagicAction& messag
     T_Centers::const_iterator itC( centers_.find( identifier ) );
     T_Perimeters::const_iterator itP( perimeters_.find( identifier ) );
 
-    if( message().parameters().elem( 0 ).value_size() > 0 &&        
-        message().parameters().elem( 2 ).value_size() > 0 &&
+    {
+        std::stringstream ss;
+        ss << "Attempt creation object " << identifier << std::boolalpha << " " << message().has_type() << " " <<
+            ( message().has_object() ) << " " <<
+            ( message().parameters().elem( 0 ).value_size() > 0 ) << " " << // type
+            //( message().parameters().elem( 1 ).value_size() > 0 ) << " " << // position
+            ( message().parameters().elem( 3 ).value_size() > 0 ); // army
+        logger_.LogInfo( ss.str() );
+    }
+
+    if( message().parameters().elem( 0 ).value_size() > 0 &&
+        //message().parameters().elem( 1 ).value_size() > 0 &&
         message().parameters().elem( 3 ).value_size() > 0 && 
         centers_.end() != itC &&
         perimeters_.end() != itP )

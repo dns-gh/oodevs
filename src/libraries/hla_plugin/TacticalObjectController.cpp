@@ -113,8 +113,10 @@ namespace
 // -----------------------------------------------------------------------------
 void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
 {
+    std::string remoteExt;
+    bool isRemote = object.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
     // TODO check if object must be created
-    if( !boost::algorithm::starts_with( object.GetName().toStdString(), "HLA_" ) ) // $$$$ _RC_ SLI 2011-09-22: refactor this...
+    if( !isRemote )
     {
         T_Objects::iterator itObject( objects_.insert( T_Objects::value_type( object.GetId(), T_Object( new TacticalObjectProxy( object, dotationResolver_ ) ) ) ).first );
         const kernel::ObjectType& objectType = object.GetType();
