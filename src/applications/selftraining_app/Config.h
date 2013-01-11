@@ -42,18 +42,6 @@ public:
     bool HasFeature( Feature feature ) const;
     bool IsOnDebugMode() const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Config( const Config& );            //!< Copy constructor
-    Config& operator=( const Config& ); //!< Assignment operator
-    //@}
-
-    //! @name Member data
-    //@{
-    bool debugMode_;
-    //@}
 };
 
 #endif // __Config_h_

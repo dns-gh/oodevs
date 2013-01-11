@@ -57,7 +57,7 @@ Config::Config()
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "debug", po::value< bool >( &debugMode_ )->default_value( false ), "activate debug mode" );
+        ( "debug", "activate debug mode" );
     AddOptions( desc );
 }
 
@@ -110,5 +110,5 @@ bool Config::HasFeature( Feature feature ) const
 // -----------------------------------------------------------------------------
 bool Config::IsOnDebugMode() const
 {
-    return debugMode_;
+    return IsSet( "debug" );
 }
