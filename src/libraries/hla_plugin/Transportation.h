@@ -394,7 +394,8 @@ public:
         uint32 size = 0;
         archive >> size;
         objectToManage.resize( size );
-        archive >> objectToManage;
+        if( size != 0 )
+            archive >> objectToManage;
         const unsigned int padding = ( archive.GetSize() - start ) % 8;
         int8 junk;
         for( unsigned int i = 0; i < padding; ++i )
@@ -453,7 +454,8 @@ public:
         uint32 size = 0;
         archive >> size;
         objectToManage.resize( size );
-        archive >> objectToManage;
+        if( size != 0 )
+            archive >> objectToManage;
 
         const unsigned int padding = ( archive.GetSize() - start ) % 8;
         int8 junk;

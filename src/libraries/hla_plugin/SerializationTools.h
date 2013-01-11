@@ -41,8 +41,20 @@ namespace hla
     template< typename T >
     Deserializer_ABC& operator>>( Deserializer_ABC& deserializer, std::vector< T >& values )
     {
-        for( std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
-            deserializer >> *it;
+        if( values.size() != 0 )
+        {
+            for( std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
+                deserializer >> *it;
+        }
+        else
+        {
+            while( deserializer.GetSize() != 0 )
+            {
+                T tmp;
+                deserializer >> tmp;
+                values.push_back( tmp );
+            }
+        }
         return deserializer;
     }
     template< typename T >
