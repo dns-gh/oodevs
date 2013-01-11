@@ -27,7 +27,7 @@ class PHY_MedicalCollectionConsign : public PHY_MedicalConsign_ABC
     friend class PHY_MedicalCollectionAmbulance;
 
 public:
-             PHY_MedicalCollectionConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState );
+             PHY_MedicalCollectionConsign( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState );
              PHY_MedicalCollectionConsign();
     virtual ~PHY_MedicalCollectionConsign();
 

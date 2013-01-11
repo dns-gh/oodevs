@@ -45,6 +45,7 @@ class PHY_RoleAction_Flying : public PHY_RoleAction_InterfaceFlying
                             , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
 {
 public:
+             PHY_RoleAction_Flying();
     explicit PHY_RoleAction_Flying( MIL_Agent_ABC& entity );
     virtual ~PHY_RoleAction_Flying();
 
@@ -83,15 +84,10 @@ private:
     virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Flying )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC&                     owner_;
+    MIL_Agent_ABC*                     owner_;
     MIL_Effect_Fly                     effectFly_;
     boost::shared_ptr< PHY_ActionFly > pActionFly_;
     double                             rHeight_;
@@ -99,6 +95,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Flying )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Flying, MIL_Agent_ABC )
 
 #endif // __PHY_RoleAction_Flying_h_

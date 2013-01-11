@@ -45,6 +45,7 @@ class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
                           , public network::NetworkMessageSender_ABC
 {
 public:
+             PHY_RolePion_Humans();
     explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Humans();
 
@@ -106,11 +107,6 @@ private:
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Humans )
-    //@}
-
 public:
     //! @name Types
     //@{
@@ -153,7 +149,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&     owner_;
+    MIL_AgentPion*     owner_;
     T_HumanStateVector humansStates_;
     T_HumanSet         humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
     bool               hasChanged_;
@@ -167,9 +163,5 @@ private:
 } //namespace human
 
 BOOST_CLASS_EXPORT_KEY( human::PHY_RolePion_Humans )
-namespace human
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Humans, MIL_AgentPion )
-}
 
 #endif // __PHY_RolePion_Humans_h_

@@ -36,6 +36,7 @@ public:
     //@}
 
 public:
+             PHY_RoleAction_IndirectFiring();
     explicit PHY_RoleAction_IndirectFiring( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_IndirectFiring();
 
@@ -78,24 +79,14 @@ public:
     //@}
 
 private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_IndirectFiring )
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& owner_;
+    MIL_Agent_ABC* owner_;
     //@}
 };
 
 } //namespace firing
 
 BOOST_CLASS_EXPORT_KEY( firing::PHY_RoleAction_IndirectFiring )
-namespace firing
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_IndirectFiring, MIL_Agent_ABC )
-}
 
 #endif // __PHY_RoleAction_IndirectFiring_h_

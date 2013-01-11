@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionConsign )
 // Name: PHY_MedicalCollectionConsign constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState )
     : PHY_MedicalConsign_ABC( medical, humanState )
     , pCollectionAmbulance_ ( 0 )
 {

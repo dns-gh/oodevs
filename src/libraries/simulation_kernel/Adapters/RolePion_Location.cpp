@@ -41,29 +41,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( sword::RolePion_Location )
 
 namespace sword
 {
-    template< typename Archive >
-    void save_construct_data( Archive& archive, const RolePion_Location* role, const unsigned int /*version*/ )
-    {
-        const Sink* const sink = &role->sink_;
-        const MIL_AgentPion* const pion = &role->owner_;
-        const core::Model* const entity = &role->entity_;
-        const MT_Vector2D position = *role->pvPosition_;
-        archive << sink << pion << entity << position;
-    }
-    template< typename Archive >
-    void load_construct_data( Archive& archive, RolePion_Location* role, const unsigned int /*version*/ )
-    {
-        Sink* sink;
-        MIL_AgentPion* pion;
-        core::Model* entity;
-        MT_Vector2D position;
-        archive >> sink >> pion >> entity >> position;
-        ::new( role )RolePion_Location( *sink, *pion, *entity, position );
-    }
-}
-
-namespace sword
-{
     class RoleListener_ABC : boost::noncopyable
     {
     public:
@@ -248,14 +225,25 @@ namespace
     };
 }
 
+RolePion_Location::RolePion_Location()
+    : sink_             ( 0 )
+    , owner_            ( 0 )
+    , entity_           ( 0 )
+    , vDirection_       ( 0, 1 )
+    , pvPosition_       ()
+    , bHasDoneMagicMove_( false )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 RolePion_Location::RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity, const MT_Vector2D& position )
-    : sink_             ( sink )
-    , owner_            ( pion )
-    , entity_           ( entity )
+    : sink_             ( &sink )
+    , owner_            ( &pion )
+    , entity_           ( &entity )
     , vDirection_       ( 0, 1 )
     , pvPosition_       ( new MT_Vector2D ( position ) )   // $$$$ Devrait être 'NULL'
     , bHasDoneMagicMove_( false )
@@ -278,11 +266,11 @@ RolePion_Location::~RolePion_Location()
 // -----------------------------------------------------------------------------
 void RolePion_Location::Finalize()
 {
-    listeners_.push_back( boost::make_shared< PositionListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( *this ), boost::ref( pvPosition_ ) ) );
-    listeners_.push_back( boost::make_shared< DirectionListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( vDirection_ ) ) );
-    listeners_.push_back( boost::make_shared< SpeedListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ) ) );
-    listeners_.push_back( boost::make_shared< HeightListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ) ) );
-    listeners_.push_back( boost::make_shared< AltitudeListener >( boost::ref( sink_ ), boost::ref( entity_ ) ) );
+    listeners_.push_back( boost::make_shared< PositionListener >( boost::ref( *sink_ ), boost::ref( *owner_ ), boost::ref( *entity_ ), boost::ref( *this ), boost::ref( pvPosition_ ) ) );
+    listeners_.push_back( boost::make_shared< DirectionListener >( boost::ref( *sink_ ), boost::ref( *owner_ ), boost::ref( *entity_ ), boost::ref( vDirection_ ) ) );
+    listeners_.push_back( boost::make_shared< SpeedListener >( boost::ref( *sink_ ), boost::ref( *owner_ ), boost::ref( *entity_ ) ) );
+    listeners_.push_back( boost::make_shared< HeightListener >( boost::ref( *sink_ ), boost::ref( *owner_ ), boost::ref( *entity_ ) ) );
+    listeners_.push_back( boost::make_shared< AltitudeListener >( boost::ref( *sink_ ), boost::ref( *entity_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,8 +279,12 @@ void RolePion_Location::Finalize()
 // -----------------------------------------------------------------------------
 void RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-         >> bHasDoneMagicMove_;
+    file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this );
+    file >> bHasDoneMagicMove_;
+    file >> owner_;
+    file >> sink_;
+    file >> entity_;
+    file >> pvPosition_;
 }
 
 // -----------------------------------------------------------------------------
@@ -301,8 +293,12 @@ void RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-         << bHasDoneMagicMove_;
+    file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this );
+    file << bHasDoneMagicMove_;
+    file << owner_;
+    file << sink_;
+    file << entity_;
+    file << pvPosition_;
 }
 
 // -----------------------------------------------------------------------------
@@ -357,7 +353,7 @@ void RolePion_Location::Clean()
 // -----------------------------------------------------------------------------
 void RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 {
-    sink_.PostCommand( "follow", core::MakeModel( "identifier", owner_.GetID() )
+    sink_->PostCommand( "follow", core::MakeModel( "identifier", owner_->GetID() )
                                                 ( "followed", agent.GetID() ) );
 }
 
@@ -380,7 +376,7 @@ void RolePion_Location::Hide()
 // -----------------------------------------------------------------------------
 void RolePion_Location::Show( const MT_Vector2D& vPosition )
 {
-    sink_.PostCommand( "magic move", core::MakeModel( "identifier", owner_.GetID() )
+    sink_->PostCommand( "magic move", core::MakeModel( "identifier", owner_->GetID() )
                                                     ( "position/x", vPosition.rX_ )
                                                     ( "position/y", vPosition.rY_ ) );
     TER_Object_ABC::T_ObjectVector objectsColliding;
@@ -396,8 +392,8 @@ void RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
-    owner_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
+    owner_->Execute( *moveComputer );
     if( !moveComputer->CanMove() && !moveComputer->CanMoveOverride() )
         return;
     Hide();
@@ -410,7 +406,7 @@ void RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& RolePion_Location::GetAgent() const
 {
-    return owner_;
+    return *owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -419,7 +415,7 @@ MIL_Agent_ABC& RolePion_Location::GetAgent() const
 // -----------------------------------------------------------------------------
 double RolePion_Location::GetAltitude() const
 {
-    return MIL_Tools::GetAltitude( *pvPosition_ ) + entity_[ "movement/height" ];
+    return MIL_Tools::GetAltitude( *pvPosition_ ) + (*entity_)[ "movement/height" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -428,7 +424,7 @@ double RolePion_Location::GetAltitude() const
 // -----------------------------------------------------------------------------
 double RolePion_Location::GetHeight() const
 {
-    return entity_[ "movement/height" ];
+    return (*entity_)[ "movement/height" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -464,7 +460,7 @@ const MT_Vector2D& RolePion_Location::GetDirection() const
 // -----------------------------------------------------------------------------
 double RolePion_Location::GetCurrentSpeed() const
 {
-    return entity_[ "movement/speed" ];
+    return (*entity_)[ "movement/speed" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +478,7 @@ bool RolePion_Location::HasDoneMagicMove() const
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population )
 {
-    owner_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+    owner_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -491,7 +487,7 @@ void RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentration& population )
 {
-    owner_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+    owner_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -500,7 +496,7 @@ void RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentratio
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 {
-    owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_, vDirection_ );
+    owner_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_, vDirection_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -509,7 +505,7 @@ void RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentMovingInside( owner_ );
+    object.NotifyAgentMovingInside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -518,7 +514,7 @@ void RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentMovingOutside( owner_ );
+    object.NotifyAgentMovingOutside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -527,7 +523,7 @@ void RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutInside( owner_ );
+    object.NotifyAgentPutInside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -536,7 +532,7 @@ void RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutOutside( owner_ );
+    object.NotifyAgentPutOutside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -545,7 +541,7 @@ void RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 {
-    owner_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+    owner_->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -554,7 +550,7 @@ void RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
-    owner_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+    owner_->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------

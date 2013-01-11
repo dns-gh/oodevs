@@ -49,6 +49,7 @@ public:
     //@}
 
 public:
+             PHY_RoleAction_Loading();
     explicit PHY_RoleAction_Loading( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_Loading();
 
@@ -129,15 +130,10 @@ private:
     void SetUnloadedState();
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Loading )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC&  owner_;
+    MIL_Agent_ABC*  owner_;
     E_State nState_;
     unsigned int nEndTimeStep_; // Load or unload
     bool bIsLoaded_;
@@ -149,9 +145,5 @@ private:
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Loading )
-namespace transport
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Loading, MIL_Agent_ABC )
-}
 
 #endif // __PHY_RoleAction_Loading_h_

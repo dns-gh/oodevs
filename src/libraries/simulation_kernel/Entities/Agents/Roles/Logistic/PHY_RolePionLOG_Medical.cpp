@@ -41,15 +41,39 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical constructor
-// Created: NLD 2004-09-07
+// Created: JSR 2013-01-08
 // -----------------------------------------------------------------------------
-PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
-    : owner_                   ( pion )
+PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical()
+    : owner_                   ( 0 )
     , bHasChanged_             ( true )
     , bExternalMustChangeState_( false )
     , bSystemEnabled_          ( false )
     , bSortingFunctionEnabled_ ( false )
     , bHealingFunctionEnabled_ ( false )
+{
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical constructor
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
+    : owner_                   ( &pion )
+    , bHasChanged_             ( true )
+    , bExternalMustChangeState_( false )
+    , bSystemEnabled_          ( false )
+    , bSortingFunctionEnabled_ ( false )
+    , bHealingFunctionEnabled_ ( false )
+{
+    Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::Initialize
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Medical::Initialize()
 {
     priorities_.reserve( 5 );
     priorities_.push_back( & PHY_HumanWound::woundedUE_ );
@@ -236,15 +260,16 @@ namespace boost
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     T_MedicalPriorityVector priorities;
-    file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
-         >> bSystemEnabled_
-         >> bSortingFunctionEnabled_
-         >> bHealingFunctionEnabled_
-         >> priorities
-         >> tacticalPriorities_
-         >> evacuationAmbulances_
-         >> collectionAmbulances_
-         >> reservations_;
+    file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this );
+    file >> owner_;
+    file >> bSystemEnabled_;
+    file >> bSortingFunctionEnabled_;
+    file >> bHealingFunctionEnabled_;
+    file >> priorities;
+    file >> tacticalPriorities_;
+    file >> evacuationAmbulances_;
+    file >> collectionAmbulances_;
+    file >> reservations_;
     priorities_ = priorities;
 
     std::size_t nNbr;
@@ -265,15 +290,16 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Medical >( *this )
-         << bSystemEnabled_
-         << bSortingFunctionEnabled_
-         << bHealingFunctionEnabled_
-         << priorities_
-         << tacticalPriorities_
-         << evacuationAmbulances_
-         << collectionAmbulances_
-         << reservations_;
+    file << boost::serialization::base_object< PHY_RoleInterface_Medical >( *this );
+    file << owner_;
+    file << bSystemEnabled_;
+    file << bSortingFunctionEnabled_;
+    file << bHealingFunctionEnabled_;
+    file << priorities_;
+    file << tacticalPriorities_;
+    file << evacuationAmbulances_;
+    file << collectionAmbulances_;
+    file << reservations_;
     std::size_t size = consigns_.size();
     file << size;
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
@@ -286,7 +312,7 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG* PHY_RolePionLOG_Medical::FindLogisticManager() const
 {
-    return owner_.FindLogisticManager();
+    return owner_->FindLogisticManager();
 }
 
 // -----------------------------------------------------------------------------
@@ -322,8 +348,8 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     }
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
@@ -350,8 +376,8 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
         return 0;
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     PHY_ComposantePion* pCompAmbulance = functor.result_;
     if( !pCompAmbulance )
         return 0;
@@ -370,8 +396,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForDiagnosing() c
 {
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanDiagnoseHumans );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -383,8 +409,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() cons
 {
     PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanSortHumans );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -396,8 +422,8 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 {
     PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, human );
     GetComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -409,8 +435,8 @@ bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const Human_ABC& hum
 {
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -422,8 +448,8 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const Human_ABC& hum
 {
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -435,8 +461,8 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 {
     PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -450,8 +476,8 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
         return false;
     PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );
     HasUsableComponentFunctor functor( predicate );
-    std::auto_ptr< OnComponentComputer_ABC > computer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-    owner_.Execute( *computer );
+    std::auto_ptr< OnComponentComputer_ABC > computer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
+    owner_->Execute( *computer );
     return functor.result_;
 }
 
@@ -565,7 +591,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
     if( !bSystemEnabled_ )
         return 0;
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human, true ); // true is for 'evacuated by third party'
-    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *this, *pHumanState );
+    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *owner_, *pHumanState );
     InsertConsign( *pConsign );
     return pHumanState;
 }
@@ -579,7 +605,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_Ag
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return 0;
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human );
-    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *this, *pHumanState );
+    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *owner_, *pHumanState );
     InsertConsign( *pConsign );
     return pHumanState;
 }
@@ -592,7 +618,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForEvacuation( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( humanState.GetHuman() ) )
         return false;
-    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *this, humanState );
+    PHY_MedicalEvacuationConsign* pConsign = new PHY_MedicalEvacuationConsign( *owner_, humanState );
     InsertConsign( *pConsign );
     return true;
 }
@@ -604,11 +630,11 @@ bool PHY_RolePionLOG_Medical::HandleHumanForEvacuation( PHY_MedicalHumanState& h
 void PHY_RolePionLOG_Medical::ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& composanteUse ) const
 {
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
-    owner_.Execute( *componentComputer );
+    std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
+    owner_->Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
-    owner_.Execute( *lendedComputer );
+    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_->GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
+    owner_->Execute( *lendedComputer );
 }
 
 // -----------------------------------------------------------------------------
@@ -636,7 +662,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& h
 {
     if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return false;
-    PHY_MedicalCollectionConsign* pConsign = new PHY_MedicalCollectionConsign( *this, humanState );
+    PHY_MedicalCollectionConsign* pConsign = new PHY_MedicalCollectionConsign( *owner_, humanState );
     InsertConsign( *pConsign );
     return true;
 }
@@ -664,7 +690,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::HandleHumanForSorting( PHY_MedicalHumanState& humanState )
 {
-    PHY_MedicalSortingConsign* pConsign = new PHY_MedicalSortingConsign( *this, humanState );
+    PHY_MedicalSortingConsign* pConsign = new PHY_MedicalSortingConsign( *owner_, humanState );
     InsertConsign( *pConsign );
 }
 
@@ -696,7 +722,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return false;
-    PHY_MedicalHealingConsign* pConsign = new PHY_MedicalHealingConsign( *this, humanState );
+    PHY_MedicalHealingConsign* pConsign = new PHY_MedicalHealingConsign( *owner_, humanState );
     InsertConsign( *pConsign );
     return true;
 }
@@ -811,11 +837,11 @@ void PHY_RolePionLOG_Medical::StartUsingForLogistic( PHY_ComposantePion& composa
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
     if( PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( rEvacuationRatio, GetAvailabilityRatio( evacuationUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, report::eRC_AlerteDisponibiliteMoyensReleve );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( *owner_, report::eRC_AlerteDisponibiliteMoyensReleve );
     if( PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( rCollectionRatio, GetAvailabilityRatio( collectionUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, report::eRC_AlerteDisponibiliteMoyensRamassage );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( *owner_, report::eRC_AlerteDisponibiliteMoyensRamassage );
     if( PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached( rDoctorsRatio, GetAvailabilityRatio( doctorUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( owner_, report::eRC_AlerteDisponibiliteMedecins );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( *owner_, report::eRC_AlerteDisponibiliteMedecins );
 }
 
 // -----------------------------------------------------------------------------
@@ -854,7 +880,7 @@ namespace
 void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
 {
     client::LogMedicalState asn;
-    asn().mutable_unit()->set_id( owner_.GetID() );
+    asn().mutable_unit()->set_id( owner_->GetID() );
     asn().set_chain( bSystemEnabled_ );
     if( !priorities_.empty() )
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
@@ -902,7 +928,7 @@ void PHY_RolePionLOG_Medical::NotifyComponentHasChanged()
 // -----------------------------------------------------------------------------
 const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Medical::GetPion() const
 {
-    return owner_;
+    return *owner_;
 }
 
 // -----------------------------------------------------------------------------

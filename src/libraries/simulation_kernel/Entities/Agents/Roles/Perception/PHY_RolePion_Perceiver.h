@@ -83,6 +83,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePion_Perceiver();
     explicit PHY_RolePion_Perceiver( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Perceiver();
     //@}
@@ -239,15 +240,10 @@ private:
     void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Perceiver )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& owner_;
+    MIL_Agent_ABC* owner_;
     MT_Vector2D lastPerceiverPosition_;
     unsigned int nNextPeriphericalVisionStep_;
     // Perceptions

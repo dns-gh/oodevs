@@ -46,6 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_CrowdTransport();
     explicit PHY_RoleAction_CrowdTransport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_CrowdTransport();
     //@}
@@ -100,15 +101,10 @@ private:
     };
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_CrowdTransport )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&       owner_;
+    MIL_AgentPion*       owner_;
     bool                 bUpdated_;
     E_State              nState_;
     double               currentProgress_;
@@ -121,9 +117,5 @@ private:
 } // namespace crowdtransport
 
 BOOST_CLASS_EXPORT_KEY( crowdtransport::PHY_RoleAction_CrowdTransport )
-namespace crowdtransport
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_CrowdTransport, MIL_AgentPion )
-}
 
 #endif // __PHY_RoleAction_CrowdTransport_h_

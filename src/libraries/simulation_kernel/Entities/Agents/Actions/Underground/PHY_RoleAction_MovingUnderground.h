@@ -42,6 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_MovingUnderground();
     explicit PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_MovingUnderground();
     //@}
@@ -75,15 +76,9 @@ public:
     //@}
 
 private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_MovingUnderground )
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC&                            owner_;
+    MIL_Agent_ABC*                            owner_;
     std::string                               currentNetwork_;
     boost::shared_ptr< DEC_Knowledge_Object > pCurrentLocation_;
     boost::shared_ptr< DEC_Knowledge_Object > pDestination_;
@@ -95,6 +90,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_MovingUnderground )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_MovingUnderground, MIL_Agent_ABC )
 
 #endif // __PHY_RoleAction_MovingUnderground_h_

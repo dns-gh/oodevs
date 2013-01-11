@@ -32,8 +32,23 @@ using namespace sword;
 // Name: RoleAction_Moving constructor
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
+RoleAction_Moving::RoleAction_Moving()
+    : owner_               ( 0 )
+    , rSpeed_              ( 0.)
+    , rSpeedModificator_   ( 1. )
+    , rMaxSpeedModificator_( 1. )
+    , bHasMove_            ( false )
+    , bTheoricMaxSpeed_    ( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving constructor
+// Created: NLD 2004-09-22
+// -----------------------------------------------------------------------------
 RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion )
-    : owner_               ( pion )
+    : owner_               ( &pion )
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
@@ -60,6 +75,7 @@ template< typename Archive >
 void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< moving::PHY_RoleAction_InterfaceMoving >( *this );
+    file & owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +112,7 @@ namespace
 double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
     moving::SpeedComputerStrategy strategy( true, false, &environment );
-    return ComputeSpeed( owner_, strategy );
+    return ComputeSpeed( *owner_, strategy );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +122,7 @@ double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 double RoleAction_Moving::GetMaxSpeed() const
 {
     moving::SpeedComputerStrategy strategy( true, false, 0 );
-    return ComputeSpeed( owner_, strategy );
+    return ComputeSpeed( *owner_, strategy );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,8 +132,8 @@ double RoleAction_Moving::GetMaxSpeed() const
 double RoleAction_Moving::GetMaxSlope() const
 {
     std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
-            owner_.GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
-    owner_.Execute< OnComponentComputer_ABC >( *computer );
+            owner_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
+    owner_->Execute< OnComponentComputer_ABC >( *computer );
     return computer->GetMaxSlope();
 }
 
@@ -128,7 +144,7 @@ double RoleAction_Moving::GetMaxSlope() const
 double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
     moving::SpeedComputerStrategy strategy( true, true, 0 );
-    return ComputeSpeed( owner_, strategy );
+    return ComputeSpeed( *owner_, strategy );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +176,7 @@ double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
     SetTheoricSpeed( true );
     moving::SpeedComputerStrategy strategy( true, false, 0 );
-    double result = ComputeSpeed( owner_, strategy, loaded );
+    double result = ComputeSpeed( *owner_, strategy, loaded );
     SetTheoricSpeed( false );
     return result;
 }
@@ -172,7 +188,7 @@ double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
     moving::SpeedComputerStrategy strategy( false, true, &environment );
-    double rSpeed = ComputeSpeed( owner_, strategy );
+    double rSpeed = ComputeSpeed( *owner_, strategy );
     rSpeed = std::min( rSpeed, GetMaxSpeedWithReinforcement() );
     return rSpeed;
 }
@@ -185,15 +201,15 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
 {
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
-    if( !object().IsTrafficable( owner_ ) )
+    if( !object().IsTrafficable( *owner_ ) )
         return 0;
     moving::SpeedComputerStrategy strategy( false, true, object );
-    double rObjectSpeed = ComputeSpeed( owner_, strategy );
+    double rObjectSpeed = ComputeSpeed( *owner_, strategy );
     const double rCurrentMaxSpeed = GetMaxSpeed();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed *= rSpeedModificator_;
-    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, owner_ );
+    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,8 +230,8 @@ void RoleAction_Moving::ApplyMove( const MT_Vector2D& /*position*/, const MT_Vec
 // -----------------------------------------------------------------------------
 bool RoleAction_Moving::CanMove() const
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    owner_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    owner_->Execute( *moveComputer );
     return moveComputer->CanMoveOverride() || moveComputer->CanMove();
 }
 
@@ -225,13 +241,13 @@ bool RoleAction_Moving::CanMove() const
 // -----------------------------------------------------------------------------
 bool RoleAction_Moving::HasResources()
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
-    owner_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
+    owner_->Execute( *moveComputer );
     if( moveComputer->CanMoveOverride() )
         return true;
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-            owner_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
-    owner_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
+            owner_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
+    owner_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
     return request->AllChanged();
 }
 

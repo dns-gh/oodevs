@@ -51,7 +51,7 @@ public:
     //@{
     static void Initialize( xml::xistream& xis );
     //@}
-
+             PHY_RolePion_Communications();
              PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous );
     virtual ~PHY_RolePion_Communications();
 
@@ -109,11 +109,6 @@ public:
     bool IsInReceptionBlackout() const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Communications )
-    //@}
-
 public:
     //! @name Types
     //@{
@@ -130,13 +125,13 @@ private:
 
     //! @name Member data
     //@{
-    MIL_Agent_ABC&      owner_;
+    MIL_Agent_ABC*      owner_;
     T_JammerSet         jammers_;
     bool                bBlackoutEmmittedActivated_;
     bool                bBlackoutReceivedActivated_;
     bool                bHasChanged_;
     bool                bSilentBeforeCapture_;
-    const bool          bIsAutonomous_;
+    bool                bIsAutonomous_;
     boost::shared_ptr< MIL_KnowledgeGroup > pJammingKnowledgeGroup_;
 
     //@}

@@ -71,6 +71,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_Transport();
     explicit PHY_RoleAction_Transport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Transport();
     //@}
@@ -157,15 +158,10 @@ private:
     double DoUnload( const double rWeightToUnload, MT_Vector2D* position );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Transport )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&       owner_;
+    MIL_AgentPion*       owner_;
     E_State               nState_;
     bool                  bHasChanged_;
     bool                  bLoadUnloadHasBeenUpdated_;
@@ -177,9 +173,5 @@ private:
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RoleAction_Transport )
-namespace transport
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Transport, MIL_AgentPion )
-}
 
 #endif // __PHY_RoleAction_Transport_h_

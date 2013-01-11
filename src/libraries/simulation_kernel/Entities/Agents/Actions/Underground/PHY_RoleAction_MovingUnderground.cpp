@@ -27,10 +27,24 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_MovingUnderground )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground()
+    : owner_          ( 0 )
+    , transferTime_   ( 0 )
+    , speed_          ( 0 )
+    , preparingToHide_( false )
+    , bHasChanged_    ( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground constructor
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
 PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion )
-    : owner_          ( pion )
+    : owner_          ( &pion )
     , transferTime_   ( 0 )
     , speed_          ( 0 )
     , preparingToHide_( false )
@@ -55,13 +69,14 @@ PHY_RoleAction_MovingUnderground::~PHY_RoleAction_MovingUnderground()
 template< typename Archive >
 void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned int )
 {
-    ar & boost::serialization::base_object< tools::Role_ABC >( *this )
-       & currentNetwork_
-       & pCurrentLocation_
-       & pDestination_
-       & transferTime_
-       & speed_
-       & bHasChanged_;
+    ar & boost::serialization::base_object< tools::Role_ABC >( *this );
+    ar & owner_;
+    ar & currentNetwork_;
+    ar & pCurrentLocation_;
+    ar & pDestination_;
+    ar & transferTime_;
+    ar & speed_;
+    ar & bHasChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +86,7 @@ void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned in
 void PHY_RoleAction_MovingUnderground::Update( bool /*bIsDead*/ )
 {
     if( bHasChanged_ )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +104,7 @@ void PHY_RoleAction_MovingUnderground::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC& algorithm ) const
 {
-    if( algorithm.GetTarget() == owner_ )
+    if( algorithm.GetTarget() == *owner_ )
         algorithm.SetUnderground( IsUnderground() );
 }
 
@@ -130,8 +145,8 @@ bool PHY_RoleAction_MovingUnderground::Run()
     {
         bHasChanged_ = true;
         MT_Vector2D destination = pDestination_->GetLocalisation().ComputeBarycenter();
-        owner_.GetRole< PHY_RoleInterface_Location >().MagicMove( destination );
-        owner_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( destination );
+        owner_->GetRole< PHY_RoleInterface_Location >().MagicMove( destination );
+        owner_->GetRole< PHY_RolePion_UrbanLocation >().MagicMove( destination );
         transferTime_ = 0;
         pCurrentLocation_ = pDestination_;
         pDestination_.reset();
@@ -179,7 +194,7 @@ double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( boost::shared
 {
     if( speed_ == 0 )
         return -1.f;
-    return owner_.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
+    return owner_->GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( pKnowledge->GetLocalisation().ComputeBarycenter() ) / speed_;
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +214,7 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
     bHasChanged_ = true;
     preparingToHide_ = true;
     unsigned int duration = MIL_Time_ABC::GetTime().GetTickDuration();
-    speed_ = duration == 0 ? 0 : owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
+    speed_ = duration == 0 ? 0 : owner_->GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
     preparingToHide_ = false;
     pCurrentLocation_ = pKnowledge;
     currentNetwork_ = attr->Network();

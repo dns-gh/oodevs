@@ -10,7 +10,6 @@
 #ifndef __PHY_RolePion_NBC_h_
 #define __PHY_RolePion_NBC_h_
 
-#include "MIL.h"
 #include "PHY_RoleInterface_NBC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
@@ -44,6 +43,7 @@ class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePion_NBC();
     explicit PHY_RolePion_NBC( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_NBC();
     //@}
@@ -105,15 +105,9 @@ private:
     std::vector< const MIL_NbcAgentType* > GetContaminating() const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_NBC )
-    //@}
-
-private:
     //! @name Data Members
     //@{
-    MIL_AgentPion& owner_;
+    MIL_AgentPion* owner_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
     double rDecontaminationState_;
     double rContaminationQuantity_;
@@ -131,9 +125,5 @@ private:
 }
 
 BOOST_CLASS_EXPORT_KEY( nbc::PHY_RolePion_NBC )
-namespace nbc
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_NBC, MIL_AgentPion )
-}
 
 #endif // __PHY_RolePion_NBC_h_

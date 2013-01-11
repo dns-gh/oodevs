@@ -44,13 +44,16 @@ class RolePion_Perceiver : public PHY_RoleInterface_Perceiver
 public:
     //! @name Constructors/Destructor
     //@{
+             RolePion_Perceiver();
              RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity );
     virtual ~RolePion_Perceiver();
     //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template< typename Archive > void load( Archive&, const unsigned int );
+    template< typename Archive > void save( Archive&, const unsigned int ) const;
     //@}
 
     //@{
@@ -160,18 +163,12 @@ public:
     //@}
 
 private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( sword::RolePion_Perceiver )
-    //@}
-
-private:
     //! @name Member data
     //@{
-    Sink& sink_;
-    const core::Model& model_;
-    MIL_Agent_ABC& owner_;
-    core::Model& entity_;
+    Sink* sink_;
+    const core::Model* model_;
+    MIL_Agent_ABC* owner_;
+    core::Model* entity_;
     boost::shared_ptr< ListenerHelper > recordModeListener_;
     //@}
 };

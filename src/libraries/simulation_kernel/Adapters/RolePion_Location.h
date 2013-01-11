@@ -53,6 +53,7 @@ class RolePion_Location : public PHY_RoleInterface_Location
                         , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
 public:
+             RolePion_Location();
              RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity, const MT_Vector2D& position );
     virtual ~RolePion_Location();
 
@@ -110,17 +111,11 @@ public:
     //@}
 
 private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( sword::RolePion_Location )
-    //@}
-
-private:
     //! @name Member data
     //@{
-    Sink&                            sink_;
-    MIL_AgentPion&                   owner_;
-    core::Model&                     entity_;
+    Sink*                            sink_;
+    MIL_AgentPion*                   owner_;
+    core::Model*                     entity_;
     MT_Vector2D                      vDirection_;
     boost::shared_ptr< MT_Vector2D > pvPosition_;
     bool                             bHasDoneMagicMove_;

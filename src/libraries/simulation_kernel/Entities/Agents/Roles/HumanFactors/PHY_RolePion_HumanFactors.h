@@ -56,6 +56,7 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_HumanFactors();
     explicit PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity );
     virtual ~PHY_RolePion_HumanFactors();
 
@@ -114,16 +115,11 @@ private:
     void UpdateTirednessValue();
     bool HasChanged() const;
     void ReadFacteursHumains( xml::xistream& xis );
-    void ReadFatigue        ( xml::xistream& xis );
-    void ReadMoral          ( xml::xistream& xis );
-    void ReadExperience     ( xml::xistream& xis );
-    void ReadStress         ( xml::xistream& xis );
-    //@}
-
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_HumanFactors )
-    //@}
+    void ReadFatigue( xml::xistream& xis );
+    void ReadMoral( xml::xistream& xis );
+    void ReadExperience( xml::xistream& xis );
+    void ReadStress( xml::xistream& xis );
+//@}
 
 private:
     //! @name Types
@@ -133,7 +129,7 @@ private:
 
     //! @name Member data
     //@{
-    MIL_Entity_ABC&       owner_;
+    MIL_Entity_ABC*       owner_;
     bool                  bHasChanged_;
 
     const PHY_Morale*     pMorale_;
@@ -149,6 +145,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_HumanFactors )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_HumanFactors, MIL_Entity_ABC )
 
 #endif // __PHY_RolePion_HumanFactors_h_

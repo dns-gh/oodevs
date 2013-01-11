@@ -79,10 +79,30 @@ namespace nbc
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC constructor
+// Created: JSR 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_NBC::PHY_RolePion_NBC()
+    : owner_                    ( 0 )
+    , rDecontaminationState_    ( 1. )
+    , rContaminationQuantity_   ( 0. )
+    , dose_                     ( 0. )
+    , bNbcProtectionSuitWorn_   ( false )
+    , bHasChanged_              ( true )
+    , poisoned_                 ( false )
+    , intoxicated_              ( false )
+    , immune_                   ( false )
+    , contaminated_             ( false )
+    , currentAttritionThreshold_( -1 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
-    : owner_                    ( pion )
+    : owner_                   ( &pion )
     , rDecontaminationState_    ( 1. )
     , rContaminationQuantity_   ( 0. )
     , dose_                     ( 0. )
@@ -113,17 +133,18 @@ PHY_RolePion_NBC::~PHY_RolePion_NBC()
 template< typename Archive >
 void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
 {
-    file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
-         & nbcAgentTypesContaminating_
-         & rDecontaminationState_
-         & rContaminationQuantity_
-         & bNbcProtectionSuitWorn_
-         & contaminated_
-         & poisoned_
-         & intoxicated_
-         & immune_
-         & dose_
-         & currentAttritionThreshold_;
+    file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this );
+    file & owner_;
+    file & nbcAgentTypesContaminating_;
+    file & rDecontaminationState_;
+    file & rContaminationQuantity_;
+    file & bNbcProtectionSuitWorn_;
+    file & contaminated_;
+    file & poisoned_;
+    file & intoxicated_;
+    file & immune_;
+    file & dose_;
+    file & currentAttritionThreshold_;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,14 +153,14 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
 {
-    if( owner_.GetType().GetUnitType().IsAutonomous() )
+    if( owner_->GetType().GetUnitType().IsAutonomous() )
         return;
     if( bNbcProtectionSuitWorn_ )
         return;
     if( ! intoxicated_ && ! poisoned_ )
-        MIL_Report::PostEvent( owner_, report::eRC_Empoisonne );
+        MIL_Report::PostEvent( *owner_, report::eRC_Empoisonne );
     poisoned_ = true;
-    owner_.Apply( &WoundEffectsHandler_ABC::ApplyEffect, contamination );
+    owner_->Apply( &WoundEffectsHandler_ABC::ApplyEffect, contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,12 +173,12 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
         return;
     if( ! bNbcProtectionSuitWorn_ )
     {
-        owner_.GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
-        owner_.GetRole< transport::PHY_RoleAction_Transport >().ApplyContamination( contamination );
+        owner_->GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
+        owner_->GetRole< transport::PHY_RoleAction_Transport >().ApplyContamination( contamination );
     }
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     if( rContaminationQuantity_ == 0 )
-        MIL_Report::PostEvent( owner_, report::eRC_Contamine );
+        MIL_Report::PostEvent( *owner_, report::eRC_Contamine );
     rContaminationQuantity_ += contamination.GetQuantity();
     rDecontaminationState_ = 0.;
     bHasChanged_ = true;
@@ -192,7 +213,7 @@ void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
         assert( nbcAgentTypesContaminating_.empty() );
         return;
     }
-    double rNewDecontaminationState = rDecontaminationState_ + ( owner_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
+    double rNewDecontaminationState = rDecontaminationState_ + ( owner_->GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewDecontaminationState = std::min( rNewDecontaminationState, 1. );
     if( static_cast< unsigned int >( rNewDecontaminationState * 100. ) != ( rDecontaminationState_ * 100. ) )
         bHasChanged_ = true;
@@ -323,7 +344,7 @@ void PHY_RolePion_NBC::TemporaryImmunizeAgent( bool bImmunize )
 void PHY_RolePion_NBC::Update( bool /*bIsDead*/ )
 {
     if( HasChanged() )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( IsContaminated() )
         ContaminateOtherUnits();
     intoxicated_ = poisoned_;
@@ -358,13 +379,13 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     if( typeNbcContaminating.empty() || !contaminated_ || rContaminationQuantity_ < 5 )
         return;
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( owner_.Get< PHY_RoleInterface_Location >().GetPosition() ,
+    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( owner_->Get< PHY_RoleInterface_Location >().GetPosition() ,
          MIL_NbcAgentType::GetContaminationDistance() , perceivableAgents );
     double minQuantity = MIL_NbcAgentType::GetMinContaminationQuantity();
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        if( target.GetID() != owner_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsForcedImmune() &&
+        if( target.GetID() != owner_->GetID() && !target.Get< PHY_RoleInterface_NBC >().IsForcedImmune() &&
             ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );
@@ -419,7 +440,7 @@ void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
     if( currentAttritionThreshold != currentAttritionThreshold_ )
     {
         MIL_DisasterEffectManipulator manipulator( currentAttritionThreshold, type );
-        owner_.Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
+        owner_->Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
         currentAttritionThreshold_ = currentAttritionThreshold;
         if( type.IsContaminated( dose_ ) )
             contaminated_ = true;

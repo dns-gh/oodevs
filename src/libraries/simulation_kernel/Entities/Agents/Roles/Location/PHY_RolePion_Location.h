@@ -39,6 +39,7 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
                             , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
 public:
+             PHY_RolePion_Location();
     explicit PHY_RolePion_Location( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Location();
 
@@ -105,15 +106,10 @@ private:
     void SetHeight( double rHeight );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Location )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&                  owner_;
+    MIL_AgentPion*                  owner_;
     MT_Vector2D                     vDirection_;
     boost::shared_ptr<MT_Vector2D>  pvPosition_;
     double                          rHeight_;
@@ -129,6 +125,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Location )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Location, MIL_AgentPion )
 
 #endif // __PHY_RolePion_Location_h_

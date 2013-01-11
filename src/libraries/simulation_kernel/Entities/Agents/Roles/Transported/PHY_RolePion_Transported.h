@@ -39,6 +39,7 @@ class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
                                , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_Transported();
     explicit PHY_RolePion_Transported( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Transported();
 
@@ -91,15 +92,10 @@ private:
     virtual bool HasChanged() const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Transported )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&       owner_;
+    MIL_AgentPion*       owner_;
     bool                 bHasChanged_;
     const MIL_Agent_ABC* pTransporter_;
     MT_Vector2D          vLoadingPosition_;
@@ -110,9 +106,5 @@ private:
 } // namespace transport
 
 BOOST_CLASS_EXPORT_KEY( transport::PHY_RolePion_Transported )
-namespace transport
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Transported, MIL_AgentPion )
-}
 
 #endif // __PHY_RolePion_Transported_h_

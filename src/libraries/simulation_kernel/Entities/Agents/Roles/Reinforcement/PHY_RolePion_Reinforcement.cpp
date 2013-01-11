@@ -22,13 +22,28 @@
 #include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Reinforcement )
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement()
+    : owner_                         ( 0 )
+    , bReinforcedChanged_            ( false )
+    , bReinforcementsChanged_        ( false )
+    , bExternalCanReinforce_         ( true )
+    , reinforcements_                ()
+    , pPionReinforced_               ( 0 )
+{
+        // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
-    : owner_                 ( pion )
+    : owner_                 ( &pion )
     , bReinforcedChanged_    ( false )
     , bReinforcementsChanged_( false )
     , bExternalCanReinforce_ ( true )
@@ -55,6 +70,7 @@ template< typename Archive >
 void PHY_RolePion_Reinforcement::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Reinforcement >( *this );
+    file & owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +79,7 @@ void PHY_RolePion_Reinforcement::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::CanReinforce() const
 {
-    return !owner_.IsDead() && bExternalCanReinforce_;
+    return !owner_->IsDead() && bExternalCanReinforce_;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +88,7 @@ bool PHY_RolePion_Reinforcement::CanReinforce() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 {
-    return !owner_.IsDead() && bExternalCanReinforce_;
+    return !owner_->IsDead() && bExternalCanReinforce_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +112,7 @@ bool PHY_RolePion_Reinforcement::IsReinforcedBy( MIL_AgentPion& pion ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
 {
-    if( pionToReinforce == owner_ )
+    if( pionToReinforce == *owner_ )
         return false;
 
     // Detection des boucles
@@ -110,7 +126,7 @@ bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
     if( pPionReinforced_ )
         CancelReinforcement();
 
-    pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementAdded( owner_ );
+    pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementAdded( *owner_ );
     pPionReinforced_ = &pionToReinforce;
     bReinforcedChanged_ = true;
     return true;
@@ -124,7 +140,7 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
 {
     if( pPionReinforced_ )
     {
-        pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( owner_ );
+        pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( *owner_ );
         pPionReinforced_ = 0;
         bReinforcedChanged_ = true;
     }
@@ -141,11 +157,11 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
         if( bIsDead )
             CancelReinforcement();
         else
-            owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
+            owner_->Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
     }
 
     if( HasChanged() )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------

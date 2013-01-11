@@ -46,6 +46,7 @@ class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePionLOG_Medical();
     explicit PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion );
     virtual ~PHY_RolePionLOG_Medical();
     //@}
@@ -160,6 +161,7 @@ private:
 private:
     //! @name Tools
     //@{
+    void Initialize();
     void InsertConsign( PHY_MedicalConsign_ABC& );
     void InsertConsigns( const T_MedicalConsigns& );
 
@@ -171,15 +173,10 @@ private:
     void ExecuteOnComponentsAndLendedComponents( ComposanteUsePredicate_ABC& predicate, PHY_Composante_ABC::T_ComposanteUseMap& result ) const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePionLOG_Medical )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPionLOG_ABC&       owner_;
+    MIL_AgentPionLOG_ABC*       owner_;
     bool                        bHasChanged_;
     bool                        bExternalMustChangeState_;
     bool                        bSystemEnabled_;
@@ -195,6 +192,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Medical )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePionLOG_Medical, MIL_AgentPionLOG_ABC )
 
 #endif // __PHY_RolePionLOG_Medical_h_

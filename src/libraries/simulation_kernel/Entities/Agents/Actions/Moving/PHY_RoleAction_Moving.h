@@ -49,6 +49,7 @@ class PHY_RoleAction_Moving : public PHY_RoleAction_InterfaceMoving
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RoleAction_Moving();
     explicit PHY_RoleAction_Moving( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Moving();
     //@}
@@ -130,15 +131,10 @@ private:
     void SendEnvironmentType( unsigned int context = 0 ) const;
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Moving )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&              owner_;
+    MIL_AgentPion*              owner_;
     double                      rSpeed_;
     double                      rSpeedModificator_;
     double                      rMaxSpeedModificator_;
@@ -153,8 +149,5 @@ private:
 } // namespace moving
 
 BOOST_CLASS_EXPORT_KEY( moving::PHY_RoleAction_Moving )
-namespace moving
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Moving, MIL_AgentPion )
-}
+
 #endif // __PHY_RoleAction_Moving_h_

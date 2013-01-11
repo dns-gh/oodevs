@@ -12,7 +12,6 @@
 #ifndef __PHY_RolePion_Refugee_h_
 #define __PHY_RolePion_Refugee_h_
 
-#include "MIL.h"
 #include "PHY_RoleInterface_Refugee.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
@@ -33,6 +32,7 @@ class PHY_RolePion_Refugee : public PHY_RoleInterface_Refugee
                            , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
+             PHY_RolePion_Refugee();
     explicit PHY_RolePion_Refugee( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Refugee();
 
@@ -84,10 +84,6 @@ private:
     void AddAffinityNearUnit( DEC_Knowledge_Agent& knowledge );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Refugee )
-    //@}
 
 private:
     //! @name Types
@@ -113,7 +109,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion&        owner_;
+    MIL_AgentPion*        owner_;
     const MIL_Object_ABC* pCamp_;
     bool                  bManaged_;
     bool                  bHasChanged_;
@@ -128,9 +124,5 @@ private:
 } //namespace refugee
 
 BOOST_CLASS_EXPORT_KEY( refugee::PHY_RolePion_Refugee )
-namespace refugee
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Refugee, MIL_AgentPion )
-}
 
 #endif // __PHY_RolePion_Refugee_h_

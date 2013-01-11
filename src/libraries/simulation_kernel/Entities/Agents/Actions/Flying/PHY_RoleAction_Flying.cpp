@@ -28,10 +28,22 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Flying )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Flying constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RoleAction_Flying::PHY_RoleAction_Flying()
+    : owner_    ( 0 )
+    , effectFly_( *this )
+    , rHeight_  ( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Flying constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Flying::PHY_RoleAction_Flying( MIL_Agent_ABC& entity )
-    : owner_   ( entity )
+    : owner_    ( &entity )
     , effectFly_( *this )
     , rHeight_  ( 0. )
 {
@@ -67,9 +79,9 @@ bool PHY_RoleAction_Flying::TakeOff()
     if( pActionFly_ )
         return false;
 
-    pActionFly_.reset( new PHY_ActionFly( owner_ ) );
-    owner_.RegisterAction( pActionFly_ );
-    owner_.Apply( &FlyListener_ABC::TakeOff );
+    pActionFly_.reset( new PHY_ActionFly( *owner_ ) );
+    owner_->RegisterAction( pActionFly_ );
+    owner_->Apply( &FlyListener_ABC::TakeOff );
     return true;
 }
 
@@ -82,7 +94,7 @@ bool PHY_RoleAction_Flying::Land()
     if( !pActionFly_ )
         return false;
 
-    owner_.UnregisterAction( pActionFly_->GetId() );
+    owner_->UnregisterAction( pActionFly_->GetId() );
     NotifyStopFlying();
     return true;
 }
@@ -97,7 +109,7 @@ void PHY_RoleAction_Flying::NotifyStopFlying()
         return;
     rHeight_ = 0.;
     pActionFly_.reset();
-    owner_.Apply( &FlyListener_ABC::Land );
+    owner_->Apply( &FlyListener_ABC::Land );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +144,8 @@ void PHY_RoleAction_Flying::Fly()
 void PHY_RoleAction_Flying::Apply( double rHeight )
 {
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
-            owner_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
-    owner_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
+            owner_->GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest( PHY_ConsumptionType::moving_ );
+    owner_->Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
     if( !request->AllChanged() || rHeight <= 0. )
         Land();

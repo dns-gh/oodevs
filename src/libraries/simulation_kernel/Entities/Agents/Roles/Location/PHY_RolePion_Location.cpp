@@ -38,11 +38,31 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Location )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Location::PHY_RolePion_Location()
+    : owner_                  ( 0 )
+    , vDirection_             ( 0., 0. )
+    , pvPosition_             ( new MT_Vector2D ( -1., -1. ) )   //$$$ Devrait être 'NULL'
+    , rHeight_                ( -1. )
+    , rCurrentSpeed_          ( -1. )
+    , bHasDoneMagicMove_      ( false )
+    , bHasMove_               ( false )
+    , bPositionHasChanged_    ( true )
+    , bDirectionHasChanged_   ( true )
+    , bCurrentSpeedHasChanged_( true )
+    , bHeightHasChanged_      ( true )
+{
+        // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Location::PHY_RolePion_Location( MIL_AgentPion& pion )
-    : owner_                  ( pion )
-    , vDirection_             (  0.,  0. )
+    : owner_                  ( &pion )
+    , vDirection_             ( 0., 0. )
     , pvPosition_             ( new MT_Vector2D ( -1., -1. ) )   //$$$ Devrait être 'NULL'
     , rHeight_                ( -1. )
     , rCurrentSpeed_          ( -1. )
@@ -76,11 +96,12 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
 void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MT_Vector2D vPosition;
-    file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-         >> vDirection_
-         >> pvPosition_
-         >> bHasDoneMagicMove_
-         >> bHasMove_;
+    file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this );
+    file >> owner_;
+    file >> vDirection_;
+    file >> pvPosition_;
+    file >> bHasDoneMagicMove_;
+    file >> bHasMove_;
 
     UpdatePatch();
 }
@@ -91,11 +112,12 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
-         << vDirection_
-         << pvPosition_
-         << bHasDoneMagicMove_
-         << bHasMove_;
+    file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this );
+    file << owner_;
+    file << vDirection_;
+    file << pvPosition_;
+    file << bHasDoneMagicMove_;
+    file << bHasMove_;
 }
 
 // =============================================================================
@@ -108,7 +130,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& PHY_RolePion_Location::GetAgent() const
 {
-    return owner_;
+    return *owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +230,7 @@ void PHY_RolePion_Location::Follow( const MIL_Agent_ABC& agent )
     SetHeight( roleLocation.GetHeight() );
 
     if( bPositionHasChanged_ || bDirectionHasChanged_|| bHeightHasChanged_ || bCurrentSpeedHasChanged_ )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,8 +268,8 @@ void PHY_RolePion_Location::Show( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 {
-    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
-    owner_.Execute( *moveComputer );
+    std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMagicMoveComputer();
+    owner_->Execute( *moveComputer );
 
     if( !moveComputer->CanMove() && !moveComputer->CanMoveOverride() )
         return;
@@ -266,7 +288,7 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population )
 {
-    owner_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+    owner_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -275,7 +297,7 @@ void PHY_RolePion_Location::NotifyFlowCollision( MIL_PopulationFlow& population 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentration& population )
 {
-    owner_.GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
+    owner_->GetKnowledge().GetKsPopulationInteraction().NotifyPopulationCollision( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +306,7 @@ void PHY_RolePion_Location::NotifyConcentrationCollision( MIL_PopulationConcentr
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object )
 {
-    owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_, vDirection_ );
+    owner_->GetKnowledge().GetKsObjectInteraction().NotifyObjectCollision( object, *pvPosition_, vDirection_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +315,7 @@ void PHY_RolePion_Location::NotifyTerrainObjectCollision( MIL_Object_ABC& object
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentMovingInside( owner_ );
+    object.NotifyAgentMovingInside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +324,7 @@ void PHY_RolePion_Location::NotifyMovingInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentMovingOutside( owner_ );
+    object.NotifyAgentMovingOutside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +333,7 @@ void PHY_RolePion_Location::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutInside( owner_ );
+    object.NotifyAgentPutInside( *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +342,7 @@ void PHY_RolePion_Location::NotifyPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
-    object.NotifyAgentPutOutside( owner_ );
+    object.NotifyAgentPutOutside( *owner_ );
 }
 
 // =============================================================================
@@ -421,17 +443,17 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     if( bIsDead || !bHasMove_ )
         Move( *pvPosition_, vDirection_, 0. );
 
-    std::auto_ptr< LocationComputer_ABC > computer( owner_.GetAlgorithms().locationComputerFactory_->Create() );
-    SetHeight( owner_.Execute( *computer ).GetHeight() );
+    std::auto_ptr< LocationComputer_ABC > computer( owner_->GetAlgorithms().locationComputerFactory_->Create() );
+    SetHeight( owner_->Execute( *computer ).GetHeight() );
 
     bool locationChanged = HasLocationChanged();
     if( locationChanged || HasSpeedChanged() )
     {
-        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
     if( locationChanged )
-        owner_.Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
+        owner_->Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -472,7 +494,7 @@ bool PHY_RolePion_Location::HasLocationChanged() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 {
-    owner_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+    owner_->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -481,7 +503,7 @@ void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
-    owner_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+    owner_->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------

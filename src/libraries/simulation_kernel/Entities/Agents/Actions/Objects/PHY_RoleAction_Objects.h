@@ -40,7 +40,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleAction_Objects( MIL_AgentPion& pion );
+             PHY_RoleAction_Objects();
+    explicit PHY_RoleAction_Objects( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Objects();
     //@}
 
@@ -133,19 +134,13 @@ private:
     int Demine( MIL_Object_ABC& object );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_Objects )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& owner_;
+    MIL_AgentPion* owner_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_Objects )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_Objects, MIL_AgentPion )
 
 #endif // __PHY_RoleAction_Objects_h_

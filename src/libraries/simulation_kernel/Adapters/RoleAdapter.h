@@ -45,6 +45,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             RoleAdapter();
              RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity );
     virtual ~RoleAdapter();
     //@}
@@ -56,21 +57,18 @@ public:
     virtual void SendFullState( unsigned int context ) const;
 
     template< typename Archive >
-    void serialize( Archive& a, const unsigned int );
-    //@}
-
-private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( sword::RoleAdapter );
+    void save( Archive& a, const unsigned int ) const;
+    template< typename Archive >
+    void load( Archive& a, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
     //@}
 
 private:
     //! @name Member data
     //@{
-    Sink& sink_;
-    MIL_AgentPion& pion_;
-    core::Model& entity_;
+    Sink* sink_;
+    MIL_AgentPion* pion_;
+    core::Model* entity_;
     std::vector< boost::shared_ptr< network::NetworkMessageSender_ABC > > senders_;
     //@}
 };

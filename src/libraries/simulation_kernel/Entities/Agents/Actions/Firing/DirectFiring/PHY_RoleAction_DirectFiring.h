@@ -39,6 +39,7 @@ public:
     //@}
 
 public:
+             PHY_RoleAction_DirectFiring();
     explicit PHY_RoleAction_DirectFiring( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_DirectFiring();
 
@@ -94,24 +95,15 @@ private:
     void FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RoleAction_DirectFiring )
-    //@}
-
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion& owner_;
+    MIL_AgentPion* owner_;
     //@}
 };
 
 } //namespace firing
 
 BOOST_CLASS_EXPORT_KEY( firing::PHY_RoleAction_DirectFiring )
-namespace firing
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RoleAction_DirectFiring, MIL_AgentPion )
-}
 
 #endif // __PHY_RoleAction_DirectFiring_h_

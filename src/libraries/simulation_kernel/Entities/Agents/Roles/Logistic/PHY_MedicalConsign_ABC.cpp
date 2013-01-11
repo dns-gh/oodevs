@@ -24,7 +24,7 @@
 // Name: PHY_MedicalConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC( PHY_RoleInterface_Medical& medical, PHY_MedicalHumanState& humanState )
+PHY_MedicalConsign_ABC::PHY_MedicalConsign_ABC( MIL_Agent_ABC& medical, PHY_MedicalHumanState& humanState )
     : pMedical_               ( &medical )
     , pHumanState_            ( &humanState )
     , nTimer_                 ( 0 )
@@ -122,7 +122,7 @@ void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& as
 {
     assert( pHumanState_ );
     assert( pMedical_ );
-    asn().mutable_provider()->set_id( pMedical_->GetPion().GetID() );
+    asn().mutable_provider()->set_id( pMedical_->GetID() );
     asn().set_state( sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus( nState_ ) );
     asn().set_current_state_end_tick( currentStateEndTimeStep_ );
 }
@@ -235,7 +235,7 @@ bool PHY_MedicalConsign_ABC::IsFinished() const
 PHY_RoleInterface_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 {
     assert( pMedical_ );
-    return *pMedical_;
+    return pMedical_->GetRole< PHY_RoleInterface_Medical >();
 }
 
 // -----------------------------------------------------------------------------

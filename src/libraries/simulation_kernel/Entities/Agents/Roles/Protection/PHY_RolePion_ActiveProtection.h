@@ -26,6 +26,7 @@ class PHY_RolePion_ActiveProtection : public PHY_RoleInterface_ActiveProtection
 public:
     //! @name Constructors/Destructor
     //@{
+             PHY_RolePion_ActiveProtection();
     explicit PHY_RolePion_ActiveProtection( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_ActiveProtection();
     //@}
@@ -44,19 +45,12 @@ public:
     //@}
 
 private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_ActiveProtection )
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& owner_;
+    MIL_Agent_ABC* owner_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_ActiveProtection )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_ActiveProtection, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_ActiveProtection_h_

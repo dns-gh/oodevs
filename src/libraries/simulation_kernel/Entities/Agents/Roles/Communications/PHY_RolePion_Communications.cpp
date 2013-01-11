@@ -34,24 +34,6 @@ double PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Communications )
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RolePion_Communications* role, const unsigned int /*version*/ )
-{
-    MIL_Entity_ABC* const entity = &role->owner_;
-    archive << entity
-            << role->bIsAutonomous_;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* entity;
-    bool isAutonomous;
-    archive >> entity
-            >> isAutonomous;
-    ::new( role )PHY_RolePion_Communications( *entity, isAutonomous );
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Initialize
 // Created: NLD 2004-11-08
@@ -73,10 +55,25 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications constructor
+// Created: LDC 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Communications::PHY_RolePion_Communications()
+    : owner_                     ( 0 )
+    , bHasChanged_               ( true )
+    , bBlackoutReceivedActivated_( false )
+    , bBlackoutEmmittedActivated_( false )
+    , bSilentBeforeCapture_      ( false )
+    , bIsAutonomous_             ( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous )
-    : owner_                    ( entity )
+    : owner_                     ( &entity )
     , bHasChanged_               ( true )
     , bBlackoutReceivedActivated_( false )
     , bBlackoutEmmittedActivated_( false )
@@ -140,13 +137,15 @@ template< typename Archive >
 inline
 void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this )
-         & jammers_
-         & bBlackoutReceivedActivated_
-         & bBlackoutEmmittedActivated_
-         & bHasChanged_
-         & bSilentBeforeCapture_
-         & pJammingKnowledgeGroup_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this );
+    file & owner_;
+    file & bIsAutonomous_;
+    file & jammers_;
+    file & bBlackoutReceivedActivated_;
+    file & bBlackoutEmmittedActivated_;
+    file & bHasChanged_;
+    file & bSilentBeforeCapture_;
+    file & pJammingKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,8 +174,8 @@ void PHY_RolePion_Communications::CopyKnowledgeGroup()
     if( !pJammingKnowledgeGroup_ )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > noParent;
-        boost::shared_ptr< MIL_KnowledgeGroup > entityKnowledgeGroup = owner_.GetKnowledgeGroup();
-        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *entityKnowledgeGroup, owner_, noParent ) );
+        boost::shared_ptr< MIL_KnowledgeGroup > entityKnowledgeGroup = owner_->GetKnowledgeGroup();
+        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *entityKnowledgeGroup, *owner_, noParent ) );
         entityKnowledgeGroup->GetArmy().RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Clone( *entityKnowledgeGroup );
     }
@@ -190,8 +189,8 @@ void PHY_RolePion_Communications::CopyKnowledgeGroupPartial()
 {
     if( !pJammingKnowledgeGroup_ )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > parent = owner_.GetKnowledgeGroup();
-        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *parent, owner_, parent ) );
+        boost::shared_ptr< MIL_KnowledgeGroup > parent = owner_->GetKnowledgeGroup();
+        pJammingKnowledgeGroup_.reset( new MIL_KnowledgeGroup( *parent, *owner_, parent ) );
         parent->RegisterKnowledgeGroup( pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Clone( *parent );
     }
@@ -208,7 +207,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     // delete copy of knowledge group used in jamming
     if( pJammingKnowledgeGroup_.get() && CanEmit() )
     {
-        owner_.GetKnowledgeGroup()->Merge( *pJammingKnowledgeGroup_ );
+        owner_->GetKnowledgeGroup()->Merge( *pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Destroy();
         pJammingKnowledgeGroup_.reset();
     }
@@ -250,7 +249,7 @@ void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
     if( bHasChanged_ && pJammingKnowledgeGroup_.get() )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
     if( bHasChanged_ )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -319,9 +318,9 @@ boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetKnowledg
 {
     if( pJammingKnowledgeGroup_ ) // pion is jammed
         return pJammingKnowledgeGroup_;
-    else if( owner_.IsDead() ) // if pion is dead, it cannot emit, but it is not jammed
-        return owner_.GetAutomate().GetKnowledgeGroup();
-    throw MASA_EXCEPTION( MT_FormatString( "Jamming knowledge group undefined for agent %d ", owner_.GetID() ) );
+    else if( owner_->IsDead() ) // if pion is dead, it cannot emit, but it is not jammed
+        return owner_->GetAutomate().GetKnowledgeGroup();
+    throw MASA_EXCEPTION( MT_FormatString( "Jamming knowledge group undefined for agent %d ", owner_->GetID() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,7 +382,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DE
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( object );
 
     if( !pKnowledge || !pKnowledge->IsValid() )
-        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( owner_.GetArmy(), perception.GetObjectPerceived() );
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( owner_->GetArmy(), perception.GetObjectPerceived() );
 
     if( pKnowledge ) // $$$$ LDC: idem fix SLG rev 10556 : objects for urban knowledges don't have knowledges...
         pKnowledge->Update( perception );
@@ -400,7 +399,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
     if( collision.GetObject().IsMarkedForDestruction() )
         return;
     if( !pKnowledge || !pKnowledge->IsValid() )
-        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( owner_.GetArmy(), collision.GetObject() );
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( owner_->GetArmy(), collision.GetObject() );
 
     pKnowledge->Update( collision );
 }
@@ -411,7 +410,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Communications::CanReceive() const
 {
-    return jammers_.empty() && !bBlackoutReceivedActivated_ && !owner_.IsDead();
+    return jammers_.empty() && !bBlackoutReceivedActivated_ && !owner_->IsDead();
 }
 
 // -----------------------------------------------------------------------------
@@ -420,7 +419,7 @@ bool PHY_RolePion_Communications::CanReceive() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Communications::CanEmit() const
 {
-    return jammers_.empty() && !bBlackoutEmmittedActivated_ && !owner_.IsDead();
+    return jammers_.empty() && !bBlackoutEmmittedActivated_ && !owner_->IsDead();
 }
 
 // -----------------------------------------------------------------------------

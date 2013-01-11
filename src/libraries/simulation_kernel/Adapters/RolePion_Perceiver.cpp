@@ -46,36 +46,15 @@ using namespace sword;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RolePion_Perceiver )
 
-namespace sword
-{
-    template< typename Archive >
-    void save_construct_data( Archive& archive, const RolePion_Perceiver* role, const unsigned int /*version*/ )
-    {
-        const Sink* const sink = &role->sink_;
-        const core::Model* const model = &role->model_;
-        const MIL_Agent_ABC* const pion = &role->owner_;
-        const core::Model* const entity = &role->entity_;
-        archive << sink << model << pion << entity;
-    }
-
-    template< typename Archive >
-    void load_construct_data( Archive& archive, RolePion_Perceiver* role, const unsigned int /*version*/ )
-    {
-        Sink* sink;
-        core::Model* model;
-        MIL_Agent_ABC* pion;
-        core::Model* entity;
-        archive >> sink >> model >> pion >> entity;
-        ::new( role )RolePion_Perceiver( *sink, *model, *pion, *entity );
-    }
-}
-
 namespace
 {
     const unsigned int nNbrStepsBetweenPeriphericalVision = 12; //$$$ En dur ...
     unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
+    void Initialize( core::Model& entity )
+    {
+        entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision;
+    }
 }
-
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
 DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const SWORD_Model* knowledgeObject ) )
@@ -85,13 +64,26 @@ DECLARE_HOOK( GetPerceptionId, int, () )
 // Name: RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
-    : sink_  ( sink )
-    , model_ ( model )
-    , owner_ ( pion )
-    , entity_( entity )
+RolePion_Perceiver::RolePion_Perceiver()
+    : sink_  ( 0 )
+    , model_ ( 0 )
+    , owner_ ( 0 )
+    , entity_( 0 )
 {
-    entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver constructor
+// Created: NLD 2004-08-19
+// -----------------------------------------------------------------------------
+RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity )
+    : sink_  ( &sink )
+    , model_ ( &model )
+    , owner_ ( &pion )
+    , entity_( &entity )
+{
+    Initialize( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,17 +110,36 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Finalize()
 {
-    recordModeListener_.reset( new ListenerHelper( sink_, entity_[ "perceptions/record-mode/activated" ], boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
+    recordModeListener_.reset( new ListenerHelper( *sink_, (*entity_)[ "perceptions/record-mode/activated" ], boost::bind( &ToggleRecordMode, _1, boost::ref( owner_->GetKnowledge().GetKsPerception() ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::serialize
+// Name: RolePion_Perceiver::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
+void RolePion_Perceiver::load( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this );
+    file >> boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this );
+    file >> sink_;
+    file >> model_;
+    file >> owner_;
+    file >> entity_;
+    Initialize( *entity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::save
+// Created: JVT 2005-03-31
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void RolePion_Perceiver::save( Archive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this );
+    file << sink_;
+    file << model_;
+    file << owner_;
+    file << entity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +268,7 @@ int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& /*locali
 int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& /*callerAgent*/ )  // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
     const int perceptionId = GET_HOOK( GetPerceptionId )();
-    sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+    sink_->PostCommand( "toggle reco", core::MakeModel( "identifier", owner_->GetID() )
                                                      ( "activated", true )
                                                      ( "perception-id", perceptionId )
                                                      ( "has-growth-speed", true )
@@ -282,7 +293,7 @@ int RolePion_Perceiver::EnableRecoUrbanBlock( MIL_UrbanObject_ABC* /*pUrbanBlock
 int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& /*callerAgent*/ ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
     const int perceptionId = GET_HOOK( GetPerceptionId )();
-    sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+    sink_->PostCommand( "toggle reco", core::MakeModel( "identifier", owner_->GetID() )
                                                      ( "activated", true )
                                                      ( "perception-id", perceptionId )
                                                      ( "has-growth-speed", false )
@@ -296,7 +307,7 @@ int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& local
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableRecoLocalisation( int id ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
-    sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
+    sink_->PostCommand( "toggle reco", core::MakeModel( "identifier", owner_->GetID() )
                                                      ( "activated", false )
                                                      ( "perception-id", id ) );
 }
@@ -316,7 +327,7 @@ void RolePion_Perceiver::DisableRecoUrbanBlock( int /*id*/ )
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsUsingActiveRadar() const
 {
-    return GET_HOOK( IsUsingActiveRadar )( core::Convert( &entity_ ) );
+    return GET_HOOK( IsUsingActiveRadar )( core::Convert( entity_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +338,7 @@ bool RolePion_Perceiver::IsUsingActiveRadar() const
 bool RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
 {
     static const std::vector< std::string > translation = boost::assign::list_of( "radar" )( "tapping" )( "tapping-radar" );
-    return GET_HOOK( IsUsingSpecializedActiveRadar )( core::Convert( &entity_ ), translation.at( radarClass.GetID() ).c_str() );
+    return GET_HOOK( IsUsingSpecializedActiveRadar )( core::Convert( entity_ ), translation.at( radarClass.GetID() ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +401,7 @@ void RolePion_Perceiver::DisableFlyingShellDetection( int /*id*/ )
 // -----------------------------------------------------------------------------
 double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 {
-    return entity_[ "perceptions/max-agent-perception-distance" ];
+    return (*entity_)[ "perceptions/max-agent-perception-distance" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +410,7 @@ double RolePion_Perceiver::GetMaxAgentPerceptionDistance() const
 // -----------------------------------------------------------------------------
 double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
 {
-    return entity_[ "perceptions/max-theoretical-agent-perception-distance" ];
+    return (*entity_)[ "perceptions/max-theoretical-agent-perception-distance" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -408,7 +419,7 @@ double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableAllPerceptions()
 {
-    sink_.PostCommand( "disable all perceptions", core::MakeModel( "identifier", owner_.GetID() ) );
+    sink_->PostCommand( "disable all perceptions", core::MakeModel( "identifier", owner_->GetID() ) );
 }
 
 namespace
@@ -479,8 +490,8 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::ExecutePerceptions()
 {
-    DEC_KS_Perception& perceptions = owner_.GetKnowledge().GetKsPerception();
-    const core::Model& notifications = entity_[ "perceptions/notifications" ];
+    DEC_KS_Perception& perceptions = owner_->GetKnowledge().GetKsPerception();
+    const core::Model& notifications = (*entity_)[ "perceptions/notifications" ];
     NotifyAgentPerception( notifications[ "agents" ], perceptions );
     NotifyAgentPerception( notifications[ "agents-in-zone" ], perceptions );
     NotifyObjectPerception( notifications[ "objects" ], perceptions );
@@ -497,7 +508,7 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Know
 {
     core::Model model;
     model[ "data" ].SetUserData( &knowledge );
-    const unsigned int level = static_cast< unsigned int >( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &model_ ), core::Convert( &entity_ ), core::Convert( &model ) ) );
+    const unsigned int level = static_cast< unsigned int >( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( model_ ), core::Convert( entity_ ), core::Convert( &model ) ) );
     return PHY_PerceptionLevel::FindPerceptionLevel( level );
 }
 
@@ -527,7 +538,7 @@ void RolePion_Perceiver::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > RolePion_Perceiver::GetKnowledgeGroup() const
 {
-    return owner_.GetKnowledgeGroup();
+    return owner_->GetKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -536,7 +547,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > RolePion_Perceiver::GetKnowledgeGroup() 
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
-    return owner_.GetKnowledgeGroup()->GetKnowledge().IsKnown( agent );
+    return owner_->GetKnowledgeGroup()->GetKnowledge().IsKnown( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -545,7 +556,7 @@ bool RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 {
-    return owner_.GetKnowledge().IsIdentified( agent );
+    return owner_->GetKnowledge().IsIdentified( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -554,7 +565,7 @@ bool RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-    return owner_.GetArmy().GetKnowledge().IsKnown( object );
+    return owner_->GetArmy().GetKnowledge().IsKnown( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -563,7 +574,7 @@ bool RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 {
-    return owner_.GetKnowledge().IsIdentified( object );
+    return owner_->GetKnowledge().IsIdentified( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -572,7 +583,7 @@ bool RolePion_Perceiver::IsIdentified( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concentration ) const
 {
-    return owner_.GetKnowledge().IsIdentified( concentration );
+    return owner_->GetKnowledge().IsIdentified( concentration );
 }
 
 // -----------------------------------------------------------------------------
@@ -581,7 +592,7 @@ bool RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& concen
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsIdentified( const MIL_UrbanObject_ABC& object ) const
 {
-    return owner_.GetKnowledge().IsIdentified( object );
+    return owner_->GetKnowledge().IsIdentified( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -662,7 +673,7 @@ void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& /*object*/, const MT_
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& target, const PHY_PerceptionLevel& level )
 {
-    sink_.PostCommand( "external perception", core::MakeModel( "perceiver", owner_.GetID() )
+    sink_->PostCommand( "external perception", core::MakeModel( "perceiver", owner_->GetID() )
                                                              ( "level", level.GetID() )
                                                              ( "target", target.GetID() ) );
 }
@@ -701,11 +712,11 @@ bool RolePion_Perceiver::HasDelayedPerceptions() const
 void RolePion_Perceiver::SendDebugState() const
 {
     client::UnitVisionCones message;
-    message().mutable_unit()->set_id( owner_.GetID() );
-    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
-    message().set_elongation( static_cast< float >( owner_.Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
+    message().mutable_unit()->set_id( owner_->GetID() );
+    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_->GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
+    message().set_elongation( static_cast< float >( owner_->Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
     message().mutable_cones();
-    const core::Model& cones = entity_[ "perceptions/cones" ];
+    const core::Model& cones = (*entity_)[ "perceptions/cones" ];
     for( std::size_t i = 0; i != cones.GetSize(); ++i )
     {
         const core::Model& cone = cones.GetElement( i );
@@ -748,7 +759,7 @@ void RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 {
-    return entity_[ "perceptions/peripherical-vision/activated" ];
+    return (*entity_)[ "perceptions/peripherical-vision/activated" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -757,7 +768,7 @@ bool RolePion_Perceiver::IsPeriphericalVisionEnabled() const
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC& RolePion_Perceiver::GetPion() const
 {
-    return owner_;
+    return *owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -793,8 +804,8 @@ void RolePion_Perceiver::SetVisionModePoint( const MT_Vector2D& /*vPoint*/ )
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::GetMainPerceptionDirection( MT_Vector2D& vDirection ) const
 {
-    vDirection.rX_ = entity_[ "perceptions/main-perception-direction/x" ];
-    vDirection.rY_ = entity_[ "perceptions/main-perception-direction/y" ];
+    vDirection.rX_ = (*entity_)[ "perceptions/main-perception-direction/x" ];
+    vDirection.rY_ = (*entity_)[ "perceptions/main-perception-direction/y" ];
 }
 
 // -----------------------------------------------------------------------------
@@ -848,7 +859,7 @@ const RolePion_Perceiver::T_RadarSet& RolePion_Perceiver::GetRadars( const PHY_R
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Execute( detection::DetectionComputer_ABC& algorithm ) const
 {
-    if( algorithm.GetTarget() != owner_ && owner_.GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
+    if( algorithm.GetTarget() != *owner_ && owner_->GetKnowledge().WasPerceived( algorithm.GetTarget() ) )
         algorithm.AlreadyPerceived();
 }
 
@@ -876,7 +887,7 @@ void RolePion_Perceiver::DisableFireObserver()
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsFireObserver() const
 {
-    return entity_[ "perceptions/fire-observer/activated" ];
+    return (*entity_)[ "perceptions/fire-observer/activated" ];
 }
 
 // -----------------------------------------------------------------------------

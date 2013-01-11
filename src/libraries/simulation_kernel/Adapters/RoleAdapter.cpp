@@ -27,90 +27,89 @@ using namespace sword;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAdapter )
 
-namespace sword
+SWORD_USER_DATA_EXPORT( MIL_AgentPion* )
+
+namespace
 {
-    template< typename Archive >
-    void save_construct_data( Archive& archive, const RoleAdapter* role, const unsigned int /*version*/ )
+    void Initialize( core::Model& entity, MIL_AgentPion& pion )
     {
-        const Sink* const sink = &role->sink_;
-        const MIL_AgentPion* const pion = &role->pion_;
-        const core::Model* const entity = &role->entity_;
-        archive << sink << pion << entity;
-    }
-    template< typename Archive >
-    void load_construct_data( Archive& archive, RoleAdapter* role, const unsigned int /*version*/ )
-    {
-        Sink* sink;
-        MIL_AgentPion* pion;
-        core::Model* entity;
-        archive >> sink >> pion >> entity;
-        ::new( role )RoleAdapter( *sink, *pion, *entity );
+        entity[ "data" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
+        entity[ "movement/speed" ] = 0;
+        entity[ "movement/direction/x" ] = 0;
+        entity[ "movement/direction/y" ] = 1;
+        entity[ "movement/height" ] = 0;
+        entity[ "movement/environment/area" ] = 0;
+        entity[ "movement/environment/left" ] = 0;
+        entity[ "movement/environment/right" ] = 0;
+        entity[ "movement/environment/linear" ] = 0;
+        entity[ "identifier" ] = pion.GetID();
+        entity[ "can-fly" ] = pion.GetType().GetUnitType().CanFly();
+        entity[ "is-autonomous" ] = pion.IsAutonomous();
+        entity[ "is-pc" ] = pion.IsPC();
+        entity[ "is-civilian" ] = pion.IsCivilian();
+        entity[ "can-emit" ] = true;
+        entity[ "perceptions/cones" ];
+        entity[ "perceptions/peripherical-vision/activated" ] = false;
+        entity[ "perceptions/scan/activated" ] = false;
+        entity[ "perceptions/record-mode/activated" ] = false;
+        entity[ "perceptions/sensor/activated" ] = true;
+        entity[ "perceptions/radars/radar/activated" ] = false;
+        entity[ "perceptions/radars/tapping/activated" ] = false;
+        entity[ "perceptions/radars/tapping-radar/activated" ] = false;
+        entity[ "perceptions/radars/acquisitions" ];
+        entity[ "perceptions/localized-radars/radar" ];
+        entity[ "perceptions/localized-radars/tapping" ];
+        entity[ "perceptions/localized-radars/tapping-radar" ];
+        entity[ "perceptions/object-detection" ];
+        entity[ "perceptions/recognition-point" ];
+        entity[ "perceptions/flying-shell/zones" ];
+        entity[ "perceptions/flying-shell/previous" ];
+        entity[ "perceptions/reco" ];
+        entity[ "perceptions/urban" ];
+        entity[ "perceptions/alat/reco" ];
+        entity[ "perceptions/alat/monitoring" ];
+        entity[ "perceptions/fire-observer/activated" ] = false;
+        entity[ "perceptions/vision/mode" ] = "normal";
+        entity[ "perceptions/vision/location/x" ] = 0;
+        entity[ "perceptions/vision/location/y" ] = 1;
+        entity[ "perceptions/main-perception-direction/x" ] = 0;
+        entity[ "perceptions/main-perception-direction/y" ] = 1;
+        entity[ "perceptions/drill-blow/width" ] = pion.GetType().GetUnitType().GetCoupDeSondeWidth();
+        entity[ "perceptions/drill-blow/length" ] = pion.GetType().GetUnitType().GetCoupDeSondeLength();
+        entity[ "perceptions/max-agent-perception-distance" ] = 0;
+        entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
+        entity[ "perceptions/notifications/agents" ];
+        entity[ "perceptions/notifications/agents-in-zone" ];
+        entity[ "perceptions/notifications/objects" ];
+        entity[ "perceptions/notifications/population-concentrations" ];
+        entity[ "perceptions/notifications/population-flows" ];
+        entity[ "perceptions/notifications/urban-blocks" ];
+        entity[ "fire/force-ratio/feedback-time" ] = pion.GetType().GetFeedbackTime();
     }
 }
 
-SWORD_USER_DATA_EXPORT( MIL_AgentPion* )
+// -----------------------------------------------------------------------------
+// Name: RoleAdapter constructor
+// Created: LDC 2013-01-10
+// -----------------------------------------------------------------------------
+RoleAdapter::RoleAdapter()
+    : sink_  ( 0 )
+    , pion_  ( 0 )
+    , entity_( 0 )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: RoleAdapter constructor
 // Created: SLI 2012-01-16
 // -----------------------------------------------------------------------------
 RoleAdapter::RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
-    : sink_  ( sink )
-    , pion_  ( pion )
-    , entity_( entity )
+    : sink_  ( &sink )
+    , pion_  ( &pion )
+    , entity_( &entity )
 {
-    entity_[ "data" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
-    entity_[ "movement/speed" ] = 0;
-    entity_[ "movement/direction/x" ] = 0;
-    entity_[ "movement/direction/y" ] = 1;
-    entity_[ "movement/height" ] = 0;
-    entity_[ "movement/environment/area" ] = 0;
-    entity_[ "movement/environment/left" ] = 0;
-    entity_[ "movement/environment/right" ] = 0;
-    entity_[ "movement/environment/linear" ] = 0;
-    entity_[ "identifier" ] = pion.GetID();
-    entity_[ "can-fly" ] = pion.GetType().GetUnitType().CanFly();
-    entity_[ "is-autonomous" ] = pion.IsAutonomous();
-    entity_[ "is-pc" ] = pion.IsPC();
-    entity_[ "is-civilian" ] = pion.IsCivilian();
-    entity_[ "can-emit" ] = true;
-    entity_[ "perceptions/cones" ];
-    entity_[ "perceptions/peripherical-vision/activated" ] = false;
-    entity_[ "perceptions/scan/activated" ] = false;
-    entity_[ "perceptions/record-mode/activated" ] = false;
-    entity_[ "perceptions/sensor/activated" ] = true;
-    entity_[ "perceptions/radars/radar/activated" ] = false;
-    entity_[ "perceptions/radars/tapping/activated" ] = false;
-    entity_[ "perceptions/radars/tapping-radar/activated" ] = false;
-    entity_[ "perceptions/radars/acquisitions" ];
-    entity_[ "perceptions/localized-radars/radar" ];
-    entity_[ "perceptions/localized-radars/tapping" ];
-    entity_[ "perceptions/localized-radars/tapping-radar" ];
-    entity_[ "perceptions/object-detection" ];
-    entity_[ "perceptions/recognition-point" ];
-    entity_[ "perceptions/flying-shell/zones" ];
-    entity_[ "perceptions/flying-shell/previous" ];
-    entity_[ "perceptions/reco" ];
-    entity_[ "perceptions/urban" ];
-    entity_[ "perceptions/alat/reco" ];
-    entity_[ "perceptions/alat/monitoring" ];
-    entity_[ "perceptions/fire-observer/activated" ] = false;
-    entity_[ "perceptions/vision/mode" ] = "normal";
-    entity_[ "perceptions/vision/location/x" ] = 0;
-    entity_[ "perceptions/vision/location/y" ] = 1;
-    entity_[ "perceptions/main-perception-direction/x" ] = 0;
-    entity_[ "perceptions/main-perception-direction/y" ] = 1;
-    entity_[ "perceptions/drill-blow/width" ] = pion.GetType().GetUnitType().GetCoupDeSondeWidth();
-    entity_[ "perceptions/drill-blow/length" ] = pion.GetType().GetUnitType().GetCoupDeSondeLength();
-    entity_[ "perceptions/max-agent-perception-distance" ] = 0;
-    entity_[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
-    entity_[ "perceptions/notifications/agents" ];
-    entity_[ "perceptions/notifications/agents-in-zone" ];
-    entity_[ "perceptions/notifications/objects" ];
-    entity_[ "perceptions/notifications/population-concentrations" ];
-    entity_[ "perceptions/notifications/population-flows" ];
-    entity_[ "perceptions/notifications/urban-blocks" ];
-    entity_[ "fire/force-ratio/feedback-time" ] = pion.GetType().GetFeedbackTime();
+    Initialize( entity, pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,18 +211,35 @@ namespace
 // -----------------------------------------------------------------------------
 void RoleAdapter::Finalize()
 {
-    senders_.push_back( MakeModelSender< client::UnitPathFind >( boost::ref( sink_ ), entity_[ "movement/path/points" ], pion_.GetID() ) );
-    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( boost::ref( sink_ ), entity_[ "movement/environment" ], pion_.GetID() ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
+    senders_.push_back( MakeModelSender< client::UnitPathFind >( boost::ref( *sink_ ), (*entity_)[ "movement/path/points" ], pion_->GetID() ) );
+    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( boost::ref( *sink_ ), (*entity_)[ "movement/environment" ], pion_->GetID() ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAdapter::serialize
+// Name: RoleAdapter::load
 // Created: SLI 2012-01-16
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void RoleAdapter::serialize( Archive& a, const unsigned int )
+void RoleAdapter::load( Archive& a, const unsigned int )
 {
-    a & boost::serialization::base_object< RoleAdapterInterface >( *this );
+    a >> boost::serialization::base_object< RoleAdapterInterface >( *this );
+    a >> entity_;
+    a >> sink_;
+    a >> pion_;
+    Initialize( *entity_, *pion_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAdapter::save
+// Created: SLI 2012-01-16
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void RoleAdapter::save( Archive& a, const unsigned int ) const
+{
+    a << boost::serialization::base_object< RoleAdapterInterface >( *this );
+    a << entity_;
+    a << sink_;
+    a << pion_;
 }
 
 // -----------------------------------------------------------------------------

@@ -36,6 +36,7 @@ class PHY_RolePion_Population : public PHY_RoleInterface_Population
                               , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
 {
 public:
+             PHY_RolePion_Population();
     explicit PHY_RolePion_Population( MIL_Agent_ABC& pion );
     virtual ~PHY_RolePion_Population();
 
@@ -62,15 +63,11 @@ public:
     virtual void DisableCrowdEffect( bool disable );
     //@}
 
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Population )
-    //@}
 
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC& owner_;
+    MIL_Agent_ABC* owner_;
     mutable double rPopulationDensity_;
     bool           bHasChanged_;
     bool           disableEffect_;
@@ -79,6 +76,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Population )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePion_Population, MIL_Agent_ABC )
 
 #endif // __PHY_RolePion_Population_h_

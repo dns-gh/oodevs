@@ -36,10 +36,27 @@ namespace refugee
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee constructor
+// Created: JSR 2013-01-09
+// -----------------------------------------------------------------------------
+PHY_RolePion_Refugee::PHY_RolePion_Refugee()
+    : owner_      ( 0 )
+    , pCamp_      ( 0 )
+    , bManaged_   ( false )
+    , bHasChanged_( true )
+    , nbrHumansLodgingManaged_  ( 0 )
+    , lodgingSatisfaction_      ( 0.0f )
+    , securitySatisfaction_     ( 0.5f )
+    , healthSatisfaction_       ( 0.0f )
+{
+        // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Refugee::PHY_RolePion_Refugee( MIL_AgentPion& pion )
-    : owner_                    ( pion )
+    : owner_      ( &pion )
     , pCamp_      ( 0 )
     , bManaged_   ( false )
     , bHasChanged_( true )
@@ -67,13 +84,14 @@ PHY_RolePion_Refugee::~PHY_RolePion_Refugee()
 template< typename Archive >
 void PHY_RolePion_Refugee::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
-         & bManaged_
-         & const_cast< MIL_Object_ABC*& >( pCamp_ )
-         & nbrHumansLodgingManaged_;
-         & lodgingSatisfaction_;
-         & securitySatisfaction_;
-         & healthSatisfaction_;
+    file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this );
+    file & owner_;
+    file & bManaged_;
+    file & const_cast< MIL_Object_ABC*& >( pCamp_ );
+    file & nbrHumansLodgingManaged_;
+    file & lodgingSatisfaction_;
+    file & securitySatisfaction_;
+    file & healthSatisfaction_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +106,7 @@ void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
     UpdateSecuritySatisfaction();
 
     if( HasChanged() )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,14 +115,14 @@ void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::Orientate( MIL_AgentPion& pionManaging )
 {
-    if( !owner_.GetType().IsRefugee() )
+    if( !owner_->GetType().IsRefugee() )
         return;
     bManaged_    = true;
     bHasChanged_ = true;
     UnmanageLodgingCamp();
-    owner_.GetAutomate().NotifyRefugeeOriented( pionManaging );
+    owner_->GetAutomate().NotifyRefugeeOriented( pionManaging );
     bool bTransportOnlyLoadable = false;
-    pionManaging.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, owner_, bTransportOnlyLoadable );
+    pionManaging.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, *owner_, bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,12 +131,12 @@ void PHY_RolePion_Refugee::Orientate( MIL_AgentPion& pionManaging )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::Release( MIL_AgentPion& callerAgent )
 {
-    if( !owner_.GetType().IsRefugee() || !bManaged_ )
+    if( !owner_->GetType().IsRefugee() || !bManaged_ )
         return;
     bManaged_    = false;
     bHasChanged_ = true;
-    owner_.GetAutomate().NotifyRefugeeReleased();
-    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, owner_ );
+    owner_->GetAutomate().NotifyRefugeeReleased();
+    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,13 +148,13 @@ void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Ob
     if( pCamp_ && ( pCamp_ != &camp ) )
         UnmanageLodgingCamp();
 
-    if( !owner_.GetType().IsRefugee() || !bManaged_ )
+    if( !owner_->GetType().IsRefugee() || !bManaged_ )
         return;
     pCamp_       = &camp;
     bManaged_    = true;
     bHasChanged_ = true;
-    owner_.GetAutomate().NotifyRefugeeReleased( camp );
-    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, owner_ );
+    owner_->GetAutomate().NotifyRefugeeReleased( camp );
+    callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, *owner_ );
     ManageLodgingCamp( callerAgent );
 }
 
@@ -188,7 +206,7 @@ unsigned int PHY_RolePion_Refugee::GetNbrHumansCampManaged() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_RolePion_Refugee::GetNbrHumansCampUnmanaged() const
 {
-    const PHY_RolePion_Composantes& composantes = owner_.GetRole< PHY_RolePion_Composantes >();
+    const PHY_RolePion_Composantes& composantes = owner_->GetRole< PHY_RolePion_Composantes >();
     unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
     if( nbrUsableHumans == 0 )
         return 0;
@@ -216,7 +234,7 @@ void PHY_RolePion_Refugee::UpdateLodging( unsigned int nbrHumansCampManaged )
     float prevSatisf = lodgingSatisfaction_;
     nbrHumansLodgingManaged_ = nbrHumansCampManaged;
 
-    PHY_RolePion_Composantes& composantes = owner_.GetRole< PHY_RolePion_Composantes >();
+    PHY_RolePion_Composantes& composantes = owner_->GetRole< PHY_RolePion_Composantes >();
     unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
 
     if( nbrUsableHumans > 0 )
@@ -255,7 +273,7 @@ void PHY_RolePion_Refugee::ManageLodgingCamp( MIL_AgentPion& transporter )
 
     LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if( pLodgingAttribute )
-        pLodgingAttribute->ManageResident( owner_, transporter );
+        pLodgingAttribute->ManageResident( *owner_, transporter );
 
     UpdateHealthSatisfaction();
 }
@@ -271,7 +289,7 @@ void PHY_RolePion_Refugee::UnmanageLodgingCamp()
 
     LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if( pLodgingAttribute )
-        pLodgingAttribute->UnmanageResident( owner_ );
+        pLodgingAttribute->UnmanageResident( *owner_ );
 
     pCamp_ = 0;
     UpdateHealthSatisfaction();
@@ -285,12 +303,12 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
 {
     float prevSatisf = securitySatisfaction_;
     securitySatisfaction_ = 0.5f;
-    nearbyUnitsAffinity.resetAffinitySum(   owner_.GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalAgentPerceptionDistance(),
-                                            owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    nearbyUnitsAffinity.resetAffinitySum(   owner_->GetRole< PHY_RoleInterface_Perceiver >().GetMaxTheoreticalAgentPerceptionDistance(),
+                                            owner_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     if( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
     {
         class_mem_fun_void_t< PHY_RolePion_Refugee, DEC_Knowledge_Agent > methodAffinityAgent( & PHY_RolePion_Refugee::AddAffinityNearUnit, *this );
-        owner_.GetKnowledgeGroup()->GetKnowledge().ApplyOnKnowledgesAgent( methodAffinityAgent );
+        owner_->GetKnowledgeGroup()->GetKnowledge().ApplyOnKnowledgesAgent( methodAffinityAgent );
 
         if( nearbyUnitsAffinity.absAffinitySum_ > 0.0f )
             securitySatisfaction_ = 0.5f * ( nearbyUnitsAffinity.affinitySum_/nearbyUnitsAffinity.absAffinitySum_ + 1.0f );
@@ -307,7 +325,7 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
 void PHY_RolePion_Refugee::UpdateHealthSatisfaction()
 {
     float prevSatisf = healthSatisfaction_;
-    healthSatisfaction_ = owner_.GetAutomate().GetLogisticHierarchy().HasSuperior() ? 1.0f : 0.0f;
+    healthSatisfaction_ = owner_->GetAutomate().GetLogisticHierarchy().HasSuperior() ? 1.0f : 0.0f;
     if( prevSatisf != healthSatisfaction_ )
         bHasChanged_ = true;
 }
@@ -321,7 +339,7 @@ void PHY_RolePion_Refugee::AddAffinityNearUnit( DEC_Knowledge_Agent& agent )
     const MIL_Army_ABC* army = agent.GetArmy();
     if( army && ( agent.GetPosition().SquareDistance( nearbyUnitsAffinity.position ) < nearbyUnitsAffinity.maxSqrDistance ) )
     {
-        float agentAffinity = owner_.GetAffinity( army->GetID() );
+        float agentAffinity = owner_->GetAffinity( army->GetID() );
         nearbyUnitsAffinity.affinitySum_ += agentAffinity;
         nearbyUnitsAffinity.absAffinitySum_ += fabs( agentAffinity );
     }

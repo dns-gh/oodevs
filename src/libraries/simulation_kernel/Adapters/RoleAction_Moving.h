@@ -39,6 +39,7 @@ class RoleAction_Moving : public moving::PHY_RoleAction_InterfaceMoving
 public:
     //! @name Constructors/Destructor
     //@{
+             RoleAction_Moving();
     explicit RoleAction_Moving( MIL_AgentPion& pion );
     virtual ~RoleAction_Moving();
     //@}
@@ -78,15 +79,9 @@ public:
     //@}
 
 private:
-    //! @name Serialization
-    //@{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( RoleAction_Moving )
-    //@}
-
-private:
     //! @name Member data
     //@{
-    MIL_AgentPion&              owner_;
+    MIL_AgentPion*              owner_;
     double                      rSpeed_;
     double                      rSpeedModificator_;
     double                      rMaxSpeedModificator_;
@@ -99,9 +94,5 @@ private:
 }
 
 BOOST_CLASS_EXPORT_KEY( sword::RoleAction_Moving )
-namespace sword
-{
-    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( RoleAction_Moving, MIL_AgentPion )
-}
 
 #endif // SWORD_ROLE_ACTION_MOVING_H
