@@ -16,7 +16,7 @@ add_definitions(
 find_package( Protobuf REQUIRED )
 find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
-masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL )
+masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL QtWebKit )
 
 set( FLEX_LIBRARIES
     lm_new_md
