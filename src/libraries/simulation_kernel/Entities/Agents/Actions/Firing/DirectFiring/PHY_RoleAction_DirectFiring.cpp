@@ -41,6 +41,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( firing::PHY_RoleAction_DirectFiring )
 // Created: LDC 2013-01-09
 // -----------------------------------------------------------------------------
 PHY_RoleAction_DirectFiring::PHY_RoleAction_DirectFiring()
+    : pion_( 0 )
 {
         // NOTHING
 }

@@ -25,6 +25,12 @@ using namespace crowdtransport;
 // Created: LDC 2013-01-09
 // -----------------------------------------------------------------------------
 PHY_RoleAction_CrowdTransport::PHY_RoleAction_CrowdTransport()
+    : transporter_    ( 0 )
+    , nState_         ( eNothing )
+    , bUpdated_       ( false )
+    , currentProgress_( 0 )
+    , currentCrowd_   ( 0 )
+    , bHasChanged_    ( false )
 {
         // NOTHING
 }
@@ -60,8 +66,8 @@ PHY_RoleAction_CrowdTransport::~PHY_RoleAction_CrowdTransport()
 template< typename Archive >
 void PHY_RoleAction_CrowdTransport::serialize( Archive& file, const unsigned int )
 {
-    file & transporter_;
     file & boost::serialization::base_object< tools::Role_ABC >( *this );
+    file & transporter_;
     file & loadedHumans_;
     file & currentCrowd_;
 }
