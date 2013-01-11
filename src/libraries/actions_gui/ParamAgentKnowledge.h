@@ -31,8 +31,8 @@ namespace actions
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgentKnowledge : public EntityParameter< kernel::AgentKnowledge_ABC >
-                          , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+class ParamAgentKnowledge : public EntityParameter< kernel::Agent_ABC >
+                          , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,7 +49,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& knowledge, kernel::ContextMenu& menu );
     //@}
 
 private:

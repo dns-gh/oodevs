@@ -93,11 +93,12 @@ public:
     virtual void OnMenuClick();
     //@}
 
-protected:
     //! @name Helpers
     //@{
-    virtual bool InternalCheckValidity() const;
+public:
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
+protected:
+    virtual bool InternalCheckValidity() const;
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
     //@}

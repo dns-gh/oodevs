@@ -21,8 +21,9 @@ using namespace parameters;
 // Name: Agent constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller )
+Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller, bool isKnowledge /*= false*/ )
     : Entity< Agent_ABC >( parameter, controller )
+    , isKnowledge_( isKnowledge )
 {
     // NOTHING
 }
@@ -76,7 +77,8 @@ void Agent::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        Entity< Agent_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_agent() );
+        CommitTo( *message.mutable_value()->Add() );
+
 }
 // -----------------------------------------------------------------------------
 // Name: Agent::CommitTo
@@ -85,7 +87,12 @@ void Agent::CommitTo( sword::MissionParameter& message ) const
 void Agent::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        Entity< Agent_ABC >::CommitTo( *message.mutable_agent() );
+    {
+        if( isKnowledge_ )
+            Entity< Agent_ABC >::CommitTo( *message.mutable_agentknowledge() );
+        else
+            Entity< Agent_ABC >::CommitTo( *message.mutable_agent() );
+    }
 }
 
 // -----------------------------------------------------------------------------

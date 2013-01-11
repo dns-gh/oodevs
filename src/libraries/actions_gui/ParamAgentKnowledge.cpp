@@ -9,6 +9,7 @@
 
 #include "actions_gui_pch.h"
 #include "ParamAgentKnowledge.h"
+#include "actions/Agent.h"
 #include "actions/AgentKnowledge.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
@@ -21,7 +22,7 @@ using namespace actions::gui;
 // Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
 ParamAgentKnowledge::ParamAgentKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
-    : EntityParameter< kernel::AgentKnowledge_ABC >( builder, parameter )
+    : EntityParameter< kernel::Agent_ABC >( builder, parameter )
     , converter_( builder.GetAgentKnowledgeConverter() )
     , agent_    ( builder.GetCurrentEntity() )
 {
@@ -41,11 +42,9 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 // Name: ParamAgentKnowledge::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamAgentKnowledge::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+void ParamAgentKnowledge::NotifyContextMenu( const kernel::AgentKnowledge_ABC& knowledge, kernel::ContextMenu& menu )
 {
-    const kernel::AgentKnowledge_ABC* knowledge = converter_->Find( entity, agent_ );
-    if( knowledge )
-        EntityParameter< kernel::AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+        EntityParameter< kernel::Agent_ABC >::NotifyContextMenu( *knowledge.GetEntity(), menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +53,7 @@ void ParamAgentKnowledge::NotifyContextMenu( const kernel::Agent_ABC& entity, ke
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::AgentKnowledge_ABC > > param( new actions::parameters::AgentKnowledge( parameter_, controller_ ) );
-    EntityParameter< kernel::AgentKnowledge_ABC >::CommitTo( *param );
+    std::auto_ptr< actions::parameters::Entity< kernel::Agent_ABC > > param( new actions::parameters::Agent( parameter_, controller_, true ) );
+    EntityParameter< kernel::Agent_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
