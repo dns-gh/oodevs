@@ -1459,13 +1459,9 @@
                     <include name="data/models/ada/decisional/decisional.xml"/>
                     <include name="data/models/ada/physical/scipio/**"/>
                     <include name="data/models/ada/physical/france/**"/>
-                    <exclude name="data/models/ada/decisional/dia5/Types_CR.lua"/>
-                    <exclude name="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
                     <exclude name="data/models/ada/physical/scipio/Reports.xml"/>
                     <exclude name="data/models/ada/physical/france/Reports.xml"/>
                 </fileset>
-                <zipfileset dir="${out.dir}/reports/scipio" includes="Types_CR.lua" fullpath="data/models/ada/decisional/dia5/Types_CR.lua"/>
-                <zipfileset dir="${out.dir}/reports/scipio" includes="Types_RC.bms" fullpath="data/models/ada/decisional/bms/sources/common/moteur/Types_RC.bms"/>
                 <zipfileset dir="${out.dir}/reports/scipio" includes="Reports.xml" fullpath="data/models/ada/physical/scipio/Reports.xml"/>
                 <zipfileset dir="${out.dir}/reports/france" includes="Reports.xml" fullpath="data/models/ada/physical/france/Reports.xml"/>
             </zip>
