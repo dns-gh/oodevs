@@ -206,10 +206,12 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
         kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
+        //the following lines have to be done after creating agent AND BEFORE deleting the ghost in order to prevent crash. don't change theirs positions for modifications or ask ABR or NPT
         agent->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( agent );
         agent->MultipleSelect( controllers_.actions_, list );
+        //---------------------------------------------------
         delete currentGhost;
         selectedGhost_ = 0;
         highLightedGhost_ = 0;
