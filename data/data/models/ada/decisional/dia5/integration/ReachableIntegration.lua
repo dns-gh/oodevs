@@ -76,7 +76,7 @@ integration.getCentralAreaPosition = function( area )
     return area.getCentralAreaPositionResult
 end
 integration.getAreaPerimeterPositions = function( area )
-    DEC_Geometrie_ListePointsLocalisation( area.source )
+    return DEC_Geometrie_ListePointsLocalisation( area.source )
 end
 integration.getUrbanBlockPosition = function( urbanBlock )
   urbanBlock.getUrbanBlockPosition = urbanBlock.getUrbanBlockPosition or DEC_ConnaissanceUrbanBlock_BarycentreDansBU( urbanBlock.source )
