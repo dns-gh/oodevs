@@ -52,17 +52,16 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        Activate( skill.nodes.ReconnoitreNBC, 1, { target = self.params.area } )
-        if self.isMovedToCenter and self.params.area:isRecoNBC() then
-              Feedback( self.feedbacks.done )
-        else
-            if self.moveToCenter then
-                Activate( skill.links.moveAndTakePosition, 1,
-                         { entity = self.params.area,  pathType = eTypeItiNBC } )
-            else
-                Activate( skill.links.moveAndTakePosition, 1,
-                         { entity = self.unreconnoitredElements[self.nextTargetIndex],  pathType = eTypeItiNBC } )
+        if self.moveToCenter then
+            Activate( skill.nodes.ReconnoitreNBC, 1, { target = self.params.area } )
+            Activate( skill.links.moveAndTakePosition, 1,
+                     { entity = self.params.area,  pathType = eTypeItiNBC } )
+            if self.params.area:isRecoNBC() then
+                 Feedback( self.feedbacks.done )
             end
+        else
+            Activate( skill.links.moveAndTakePosition, 1,
+                     { entity = self.unreconnoitredElements[self.nextTargetIndex],  pathType = eTypeItiNBC } )
         end
     end
 }
