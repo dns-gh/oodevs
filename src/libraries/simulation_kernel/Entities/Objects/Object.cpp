@@ -16,6 +16,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -173,6 +174,8 @@ void Object::SendCreation() const
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     if( externalIdentifier_ )
         asn().set_external_identifier( externalIdentifier_ );
+    if( GetExtensions() )
+        GetExtensions()->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

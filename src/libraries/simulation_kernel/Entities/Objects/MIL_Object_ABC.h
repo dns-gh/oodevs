@@ -51,6 +51,7 @@ class TER_Localisation;
 class PHY_DotationCategory;
 class PHY_UrbanAttritionData;
 class MIL_Population;
+class MIL_DictionaryExtensions;
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -149,6 +150,7 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const = 0; //<! create and register every prototyped capacity
     virtual void Finalize() = 0; //<! finalize capacity instanciation : for instance once the object location has been defined
+    virtual void SetExtensions( const MIL_DictionaryExtensions& ) = 0;
     //@}
 
     //! @name Knowledge

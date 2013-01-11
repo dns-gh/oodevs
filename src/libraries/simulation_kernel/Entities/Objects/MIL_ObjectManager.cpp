@@ -33,6 +33,7 @@
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/PHY_RoofShapeType.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
@@ -210,7 +211,7 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
                                                                        const propagation::FloodModel_ABC& floodModel )
 {
-    if( !( message.elem_size() == 4 || message.elem_size() == 5 ) ) // type, location, name, team, attributes
+    if( !( message.elem_size() >= 4 || message.elem_size() <= 6 ) ) // type, location, name, team, attributes, extension
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
 
     MIL_Army_ABC* pArmy = 0;
@@ -237,6 +238,12 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
                 if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
                     if( localisation.IsIntersecting( flood->GetLocalisation() ) )
                         flood->GenerateFlood( floodModel );
+        }
+        if( message.elem_size() == 6 )
+        {
+            MIL_DictionaryExtensions extensions;
+            extensions.ReadExtensions( message.elem( 5 ).value( 0 ).extensionlist() );
+            pObject->SetExtensions( extensions );
         }
     }
     RegisterObject( pObject );

@@ -26,6 +26,7 @@
 #include "UniversalCapacity.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -479,4 +480,22 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const boo
     for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
         (*it)->Instanciate( *pKnowledge );
     return pKnowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::SetExtensions
+// Created: AHC 2013-01-11
+// -----------------------------------------------------------------------------
+void MIL_Object::SetExtensions( const MIL_DictionaryExtensions& ext )
+{
+    pExtensions_.reset( new MIL_DictionaryExtensions( ext ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::GetExtensions
+// Created: AHC 2013-01-11
+// -----------------------------------------------------------------------------
+const MIL_DictionaryExtensions* MIL_Object::GetExtensions() const
+{
+    return pExtensions_.get();
 }

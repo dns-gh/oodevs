@@ -69,6 +69,7 @@ public:
     virtual bool CanBeSeen() const { return true; }
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ ) { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual const std::string& GetName() const { return name_; };
+    virtual void SetExtensions( const MIL_DictionaryExtensions& ) {}
     //@}
 
 private:

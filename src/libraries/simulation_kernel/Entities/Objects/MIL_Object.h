@@ -73,6 +73,7 @@ public:
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const; //<! create and register every prototyped capacity
     virtual void Finalize(); //<! finalize capacity instanciation : for instance once the object location has been defined
+    virtual void SetExtensions( const MIL_DictionaryExtensions& );
     //@}
 
     //! @name Knowledge
@@ -101,6 +102,7 @@ public:
     virtual const std::string& GetName() const = 0;
     size_t CountAttributes() const;
     /*virtual*/ bool IsUniversal() const;
+    const MIL_DictionaryExtensions* GetExtensions() const;
     //@}
 
 protected:
@@ -136,6 +138,7 @@ private:
     T_StructuralStateNotifiers structuralStateNotifiers_;
     T_Capacities capacities_;
     T_Attributes attributes_;
+    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
 
     //! @name Network
     //@{
