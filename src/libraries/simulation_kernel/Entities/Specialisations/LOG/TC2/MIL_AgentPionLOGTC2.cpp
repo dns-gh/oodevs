@@ -85,7 +85,7 @@ void MIL_AgentPionLOGTC2::load( MIL_CheckPointInArchive& file, const unsigned in
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
 
     { PHY_RolePionLOG_Maintenance* pRole; file >> pRole; }
-    { PHY_RolePionLOG_Medical    * pRole; file >> pRole; }
+    { PHY_RolePionLOG_Medical    * pRole; file >> pRole; RegisterRole( *pRole ); }
     { PHY_RolePionLOG_Supply     * pRole; file >> pRole; }
 }
 
