@@ -60,10 +60,11 @@ const std::string& DisasterType::GetName() const
 // -----------------------------------------------------------------------------
 QColor DisasterType::GetColor( double value ) const
 {
+    QColor color( Qt::blue );
     if( color_.empty() )
         return Qt::blue;
-    CIT_Color it = color_.lower_bound( value );
-    if( it == color_.end() )
-        return Qt::blue;
-    return it->second;
+    for( auto it = color_.begin(); it != color_.end(); ++it )
+        if( value >= it->first )
+            color = it->second;
+    return color;
 }
