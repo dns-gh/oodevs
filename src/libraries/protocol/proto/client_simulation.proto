@@ -278,6 +278,7 @@ message ObjectMagicAction {
         resource_network   = 27;
         altitude_modifier  = 28;
         disaster           = 29;
+        density            = 30;
     }
     //! The object identifier
     required ObjectId          object     = 1;

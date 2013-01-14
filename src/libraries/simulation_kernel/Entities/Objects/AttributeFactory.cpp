@@ -254,6 +254,20 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::disaster:
                 object.GetAttribute< DisasterAttribute >() = DisasterAttribute( attributes );
                 break;
+            case ObjectMagicAction::density:
+            {
+                if( attributes.list_size() > 1 && attributes.list( 1 ).has_areal() )
+                {
+                    double density = attributes.list( 1 ).areal();
+                    BuildableCapacity* capacity = object.Retrieve< BuildableCapacity >();
+                    if( capacity )
+                        capacity->SetDensity( density );
+                    ConstructionAttribute* attribute = object.RetrieveAttribute< ConstructionAttribute >();
+                    if( attribute )
+                        attribute->SetDensity( density );
+                }
+                break;
+            }
             default:
                 break;
             }
