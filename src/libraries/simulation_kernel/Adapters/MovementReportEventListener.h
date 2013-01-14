@@ -10,12 +10,7 @@
 #ifndef SWORD_MOVEMENT_REPORT_EVENT_LISTENER_H
 #define SWORD_MOVEMENT_REPORT_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
-
-namespace core
-{
-    class Facade;
-}
+#include "EventListenerBase.h"
 
 namespace sword
 {
@@ -25,7 +20,7 @@ namespace sword
 */
 // Created: MCO 2012-06-15
 // =============================================================================
-class MovementReportEventListener : public core::EventListener_ABC
+class MovementReportEventListener : public EventListenerBase
 {
 public:
     //! @name Constructors/Destructor
@@ -37,12 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& report );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    core::Facade& facade_;
     //@}
 };
 

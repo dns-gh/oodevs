@@ -12,24 +12,18 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MT_Tools/MT_Logger.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "direct fire pion attack";
-}
 
 //-----------------------------------------------------------------------------
 // Name: DirectFirePionAttackEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 DirectFirePionAttackEventListener::DirectFirePionAttackEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "direct fire pion attack" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -38,7 +32,7 @@ DirectFirePionAttackEventListener::DirectFirePionAttackEventListener( core::Faca
 //-----------------------------------------------------------------------------
 DirectFirePionAttackEventListener::~DirectFirePionAttackEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

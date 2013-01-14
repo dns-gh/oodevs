@@ -11,7 +11,6 @@
 #include "CallbackEventListener.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
@@ -21,11 +20,10 @@ using namespace sword;
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
 CallbackEventListener::CallbackEventListener( const core::Model& model, core::Facade& facade, const std::string& event )
-    : model_ ( model )
-    , facade_( facade )
-    , event_ ( event )
+    : EventListenerBase( facade, event )
+    , model_( model )
 {
-    facade.Register( event_, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +32,7 @@ CallbackEventListener::CallbackEventListener( const core::Model& model, core::Fa
 // -----------------------------------------------------------------------------
 CallbackEventListener::~CallbackEventListener()
 {
-    facade_.Unregister( event_, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -14,24 +14,18 @@
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "MT_Tools/MT_Logger.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "external perception";
-}
 
 //-----------------------------------------------------------------------------
 // Name: ExternalPerceptionEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 ExternalPerceptionEventListener::ExternalPerceptionEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "external perception" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -40,7 +34,7 @@ ExternalPerceptionEventListener::ExternalPerceptionEventListener( core::Facade& 
 //-----------------------------------------------------------------------------
 ExternalPerceptionEventListener::~ExternalPerceptionEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

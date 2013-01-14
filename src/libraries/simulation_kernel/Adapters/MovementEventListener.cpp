@@ -12,25 +12,19 @@
 #include "RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "simulation_terrain/TER_World.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "movement";
-}
 
 // -----------------------------------------------------------------------------
 // Name: MovementEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
 MovementEventListener::MovementEventListener( const core::Model& model, core::Facade& facade )
-    : model_ ( model )
-    , facade_( facade )
+    : EventListenerBase( facade, "movement" )
+    , model_ ( model )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +33,7 @@ MovementEventListener::MovementEventListener( const core::Model& model, core::Fa
 // -----------------------------------------------------------------------------
 MovementEventListener::~MovementEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

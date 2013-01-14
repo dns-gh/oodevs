@@ -10,12 +10,7 @@
 #ifndef SWORD_DIRECT_FIRE_POPULATION_ATTACK_EVENT_LISTENER_H
 #define SWORD_DIRECT_FIRE_POPULATION_ATTACK_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
-
-namespace core
-{
-    class Facade;
-}
+#include "EventListenerBase.h"
 
 namespace sword
 {
@@ -25,7 +20,7 @@ namespace sword
 */
 // Created: MCO  2012-09-21
 // =============================================================================
-class DirectFirePopulationAttackEventListener : public core::EventListener_ABC
+class DirectFirePopulationAttackEventListener : public EventListenerBase
 {
 public:
     //! @name Constructor/Destructor
@@ -37,12 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& event );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    core::Facade& facade_;
     //@}
 };
 

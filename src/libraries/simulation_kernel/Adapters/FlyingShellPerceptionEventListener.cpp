@@ -12,24 +12,18 @@
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "flying shell detection";
-}
 
 // -----------------------------------------------------------------------------
 // Name: FlyingShellPerceptionEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
 FlyingShellPerceptionEventListener::FlyingShellPerceptionEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "flying shell detection" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +32,7 @@ FlyingShellPerceptionEventListener::FlyingShellPerceptionEventListener( core::Fa
 // -----------------------------------------------------------------------------
 FlyingShellPerceptionEventListener::~FlyingShellPerceptionEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

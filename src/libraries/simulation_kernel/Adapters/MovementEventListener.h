@@ -10,12 +10,11 @@
 #ifndef SWORD_MOVEMENT_EVENT_LISTENER_H
 #define SWORD_MOVEMENT_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
+#include "EventListenerBase.h"
 
 namespace core
 {
     class Model;
-    class Facade;
 }
 
 namespace sword
@@ -26,7 +25,7 @@ namespace sword
 */
 // Created: MCO 2012-06-15
 // =============================================================================
-class MovementEventListener : public core::EventListener_ABC
+class MovementEventListener : public EventListenerBase
 {
 public:
     //! @name Constructors/Destructor
@@ -44,7 +43,6 @@ private:
     //! @name Member data
     //@{
     const core::Model& model_;
-    core::Facade& facade_;
     //@}
 };
 

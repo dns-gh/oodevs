@@ -11,24 +11,18 @@
 #include "PerceptionCallbackEventListener.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "perception callback";
-}
 
 // -----------------------------------------------------------------------------
 // Name: PerceptionCallbackEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
 PerceptionCallbackEventListener::PerceptionCallbackEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "perception callback" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +31,7 @@ PerceptionCallbackEventListener::PerceptionCallbackEventListener( core::Facade& 
 // -----------------------------------------------------------------------------
 PerceptionCallbackEventListener::~PerceptionCallbackEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

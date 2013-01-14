@@ -11,24 +11,18 @@
 #include "MovementReportEventListener.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Report.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "movement report";
-}
 
 // -----------------------------------------------------------------------------
 // Name: MovementReportEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
 MovementReportEventListener::MovementReportEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "movement report" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +31,7 @@ MovementReportEventListener::MovementReportEventListener( core::Facade& facade )
 // -----------------------------------------------------------------------------
 MovementReportEventListener::~MovementReportEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

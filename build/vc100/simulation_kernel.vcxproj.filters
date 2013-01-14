@@ -2649,6 +2649,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFindRequest.cpp">
       <Filter>Source Files\Decision\Path</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\EventListenerBase.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5425,6 +5428,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_DecisionalReport.h">
       <Filter>Source Files\Entities\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\EventListenerBase.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

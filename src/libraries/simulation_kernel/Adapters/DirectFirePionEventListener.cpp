@@ -24,24 +24,18 @@
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "direct fire pion";
-}
 
 //-----------------------------------------------------------------------------
 // Name: DirectFirePionEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 DirectFirePionEventListener::DirectFirePionEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "direct fire pion" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -50,7 +44,6 @@ DirectFirePionEventListener::DirectFirePionEventListener( core::Facade& facade )
 //-----------------------------------------------------------------------------
 DirectFirePionEventListener::~DirectFirePionEventListener()
 {
-    facade_.Unregister( event, *this );
     for( IT_Results it = results_.begin(); it != results_.end(); ++it )
         it->second->DecRef();
 }

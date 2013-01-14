@@ -16,24 +16,18 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "direct fire population";
-}
 
 //-----------------------------------------------------------------------------
 // Name: DirectFirePopulationEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 DirectFirePopulationEventListener::DirectFirePopulationEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "direct fire population" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -42,7 +36,6 @@ DirectFirePopulationEventListener::DirectFirePopulationEventListener( core::Faca
 //-----------------------------------------------------------------------------
 DirectFirePopulationEventListener::~DirectFirePopulationEventListener()
 {
-    facade_.Unregister( event, *this );
     for( IT_Results it = results_.begin(); it != results_.end(); ++it )
         it->second->DecRef();
 }

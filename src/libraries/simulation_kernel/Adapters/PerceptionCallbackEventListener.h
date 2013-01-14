@@ -10,12 +10,7 @@
 #ifndef SWORD_PERCEPTION_CALLBACK_EVENT_LISTENER_H
 #define SWORD_PERCEPTION_CALLBACK_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
-
-namespace core
-{
-    class Facade;
-}
+#include "EventListenerBase.h"
 
 namespace sword
 {
@@ -25,7 +20,7 @@ namespace sword
 */
 // Created: SLI 2012-08-22
 // =============================================================================
-class PerceptionCallbackEventListener : public core::EventListener_ABC
+class PerceptionCallbackEventListener : public EventListenerBase
 {
 public:
     //! @name Constructors/Destructor
@@ -37,12 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& callback );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    core::Facade& facade_;
     //@}
 };
 

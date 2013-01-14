@@ -9,27 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "FloodModel.h"
-#include <core/EventListener_ABC.h>
+#include <core/MakeModel.h>
 #include <core/Facade.h>
 #include <core/Model.h>
-#include <core/MakeModel.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "flood event";
-}
 
 // -----------------------------------------------------------------------------
 // Name: FloodModel constructor
 // Created: LGY 2012-06-13
 // -----------------------------------------------------------------------------
 FloodModel::FloodModel( core::Facade& facade )
-    : facade_    ( facade )
+    : EventListenerBase( facade, "flood event" )
+    , facade_    ( facade )
     , identifier_( 0 )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +33,7 @@ FloodModel::FloodModel( core::Facade& facade )
 // -----------------------------------------------------------------------------
 FloodModel::~FloodModel()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

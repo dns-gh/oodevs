@@ -11,24 +11,18 @@
 #include "ReportEventListener.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Report.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "report";
-}
 
 // -----------------------------------------------------------------------------
 // Name: ReportEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
 ReportEventListener::ReportEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "report" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +31,7 @@ ReportEventListener::ReportEventListener( core::Facade& facade )
 // -----------------------------------------------------------------------------
 ReportEventListener::~ReportEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

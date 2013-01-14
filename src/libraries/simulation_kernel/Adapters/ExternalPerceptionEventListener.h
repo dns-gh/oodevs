@@ -10,22 +10,17 @@
 #ifndef SWORD_EXTERNAL_PERCEPTION_EVENT_LISTENER_H
 #define SWORD_EXTERNAL_PERCEPTION_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
-
-namespace core
-{
-    class Facade;
-}
+#include "EventListenerBase.h"
 
 namespace sword
 {
 // =============================================================================
 /** @class  ExternalPerceptionEventListener
-    @brief  Direct fire pion attack event listener
+    @brief  External perception event listener
 */
 // Created: MCO 2012-01-26
 // =============================================================================
-class ExternalPerceptionEventListener : public core::EventListener_ABC
+class ExternalPerceptionEventListener : public EventListenerBase
 {
 public:
     //! @name Constructor/Destructor
@@ -37,12 +32,6 @@ public:
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& event );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    core::Facade& facade_;
     //@}
 };
 

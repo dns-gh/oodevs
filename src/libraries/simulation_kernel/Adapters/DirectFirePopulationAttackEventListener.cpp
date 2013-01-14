@@ -15,24 +15,18 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "direct fire population attack";
-}
 
 //-----------------------------------------------------------------------------
 // Name: DirectFirePopulationAttackEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 DirectFirePopulationAttackEventListener::DirectFirePopulationAttackEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "direct fire population attack" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -41,7 +35,7 @@ DirectFirePopulationAttackEventListener::DirectFirePopulationAttackEventListener
 //-----------------------------------------------------------------------------
 DirectFirePopulationAttackEventListener::~DirectFirePopulationAttackEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

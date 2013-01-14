@@ -10,14 +10,9 @@
 #ifndef SWORD_FLOOD_MODEL_H
 #define SWORD_FLOOD_MODEL_H
 
+#include "EventListenerBase.h"
 #include "propagation/FloodModel_ABC.h"
-#include <core/EventListener_ABC.h>
 #include <map>
-
-namespace core
-{
-    class Facade;
-}
 
 namespace sword
 {
@@ -28,7 +23,7 @@ namespace sword
 // Created: LGY 2012-06-13
 // =============================================================================
 class FloodModel : public propagation::FloodModel_ABC
-                 , private core::EventListener_ABC
+                 , private EventListenerBase
 {
 public:
     //! @name Constructors/Destructor

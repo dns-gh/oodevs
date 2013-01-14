@@ -10,15 +10,10 @@
 #ifndef SWORD_DIRECT_FIRE_PION_ATTACK_EVENT_LISTENER_H
 #define SWORD_DIRECT_FIRE_PION_ATTACK_EVENT_LISTENER_H
 
+#include "EventListenerBase.h"
 #include "tools/Resolver.h"
-#include <core/EventListener_ABC.h>
 
 class MIL_AgentPion;
-
-namespace core
-{
-    class Facade;
-}
 
 namespace sword
 {
@@ -28,7 +23,7 @@ namespace sword
 */
 // Created: MCO 2012-01-26
 // =============================================================================
-class DirectFirePionAttackEventListener : public core::EventListener_ABC
+class DirectFirePionAttackEventListener : public EventListenerBase
 {
 public:
     //! @name Constructor/Destructor
@@ -40,12 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& event );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    core::Facade& facade_;
     //@}
 };
 

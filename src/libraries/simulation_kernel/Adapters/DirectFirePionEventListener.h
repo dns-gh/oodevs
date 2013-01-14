@@ -10,15 +10,10 @@
 #ifndef SWORD_DIRECT_FIRE_PION_EVENT_LISTENER_H
 #define SWORD_DIRECT_FIRE_PION_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
+#include "EventListenerBase.h"
 #include <map>
 
 class PHY_FireResults_Pion;
-
-namespace core
-{
-    class Facade;
-}
 
 namespace sword
 {
@@ -28,7 +23,7 @@ namespace sword
 */
 // Created: MCO 2012-01-26
 // =============================================================================
-class DirectFirePionEventListener : public core::EventListener_ABC
+class DirectFirePionEventListener : public EventListenerBase
 {
 public:
     //! @name Constructor/Destructor
@@ -59,7 +54,6 @@ private:
 private:
     //! @name Member data
     //@{
-    core::Facade& facade_;
     T_Results results_;
     //@}
 };

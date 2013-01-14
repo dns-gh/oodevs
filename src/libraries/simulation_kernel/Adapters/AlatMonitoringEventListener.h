@@ -10,7 +10,7 @@
 #ifndef SWORD_ALAT_MONITORING_EVENT_LISTENER_H
 #define SWORD_ALAT_MONITORING_EVENT_LISTENER_H
 
-#include <core/EventListener_ABC.h>
+#include "EventListenerBase.h"
 
 namespace core
 {
@@ -25,7 +25,7 @@ namespace sword
 */
 // Created: MCO 2012-01-26
 // =============================================================================
-class AlatMonitoringEventListener : public core::EventListener_ABC
+class AlatMonitoringEventListener : public EventListenerBase
 {
 public:
     //! @name Constructor/Destructor
@@ -37,12 +37,6 @@ public:
     //! @name Operations
     //@{
     virtual void Notify( const core::Model& event );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    core::Facade& facade_;
     //@}
 };
 

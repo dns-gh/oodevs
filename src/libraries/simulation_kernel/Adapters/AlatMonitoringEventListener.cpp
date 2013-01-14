@@ -12,24 +12,18 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Perception.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "alat monitoring disabled";
-}
 
 //-----------------------------------------------------------------------------
 // Name: AlatMonitoringEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 AlatMonitoringEventListener::AlatMonitoringEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "alat monitoring disabled" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -38,7 +32,7 @@ AlatMonitoringEventListener::AlatMonitoringEventListener( core::Facade& facade )
 //-----------------------------------------------------------------------------
 AlatMonitoringEventListener::~AlatMonitoringEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

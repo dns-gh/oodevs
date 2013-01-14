@@ -24,24 +24,18 @@
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "MT_Tools/MT_Logger.h"
-#include <core/Facade.h>
 #include <core/Model.h>
 
 using namespace sword;
-
-namespace
-{
-    const std::string event = "direct fire pion";
-}
 
 //-----------------------------------------------------------------------------
 // Name: DirectFirePerceptionEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
 DirectFirePerceptionEventListener::DirectFirePerceptionEventListener( core::Facade& facade )
-    : facade_( facade )
+    : EventListenerBase( facade, "direct fire pion" )
 {
-    facade.Register( event, *this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -50,7 +44,7 @@ DirectFirePerceptionEventListener::DirectFirePerceptionEventListener( core::Faca
 //-----------------------------------------------------------------------------
 DirectFirePerceptionEventListener::~DirectFirePerceptionEventListener()
 {
-    facade_.Unregister( event, *this );
+    // NOTHING
 }
 
 namespace
