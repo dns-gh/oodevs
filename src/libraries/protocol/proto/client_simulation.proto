@@ -113,11 +113,12 @@ message ObjectMagicAction {
         lodging            = 21;
         trafficability     = 22;
         underground        = 23;
-        confined           = 24;
-        alerted            = 25;
-        evacuated          = 26;
-        resource_network   = 27;
-        altitude_modifier  = 28;
+        density            = 24;
+        confined           = 25;
+        alerted            = 26;
+        evacuated          = 27;
+        resource_network   = 28;
+        altitude_modifier  = 29;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required ObjectMagicActionType type       = 2; //!< The type of magic action
