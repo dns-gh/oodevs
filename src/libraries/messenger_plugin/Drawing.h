@@ -95,6 +95,7 @@ private:
     boost::optional< std::string > font_;
     boost::optional< unsigned int > fontSize_;
     boost::optional< ::sword::Location_Geometry > geometry_;
+    boost::optional< std::string > ownerlogin_;
     //@}
 };
 

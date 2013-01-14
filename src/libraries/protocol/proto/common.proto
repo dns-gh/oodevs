@@ -1006,6 +1006,7 @@ message Shape {
    optional string           font      = 7; //!< The font
    optional uint32           font_size = 8; //!< The font size
    optional Location.Geometry geometry = 9; //!< The geometry
+   optional string           owner_login = 10; //!< The identifier of the owner of the shape
 }
 
 /** @struct ChatTarget

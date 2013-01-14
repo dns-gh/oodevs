@@ -194,6 +194,7 @@ namespace shield
         s->set_text( "text" );
         s->set_font( "font" );
         s->set_font_size( 42 );
+        s->set_owner_login( "login" );
     }
     template< typename S >
     void FillShieldShape2( S* s )

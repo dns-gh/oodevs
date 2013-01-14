@@ -183,6 +183,7 @@ namespace shield
         CONVERT( text );
         CONVERT( font );
         CONVERT( font_size );
+        CONVERT( owner_login );
     }
     template< typename From, typename To >
     void ConvertMarker( const From& from, To* to )
