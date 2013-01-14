@@ -23,6 +23,7 @@ class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class PHY_SensorTypeObjectData;
 class PHY_SensorType;
+class MIL_ObjectType_ABC;
 
 // =============================================================================
 // @class  PHY_SensorTypeObject
@@ -49,6 +50,13 @@ public:
     //! @name Helpers
     //@{
     void ReadObject( xml::xistream& xis );
+    bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    const PHY_SensorTypeObjectData* GetSensorTypeObjectData( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
 private:

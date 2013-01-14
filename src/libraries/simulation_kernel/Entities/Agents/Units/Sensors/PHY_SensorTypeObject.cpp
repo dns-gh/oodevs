@@ -68,21 +68,26 @@ PHY_SensorTypeObject::~PHY_SensorTypeObject()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObject::GetSensorTypeObjectData
+// Created: MMC 2013-01-11
+// -----------------------------------------------------------------------------
+const PHY_SensorTypeObjectData* PHY_SensorTypeObject::GetSensorTypeObjectData( const MIL_ObjectType_ABC& objectType ) const
+{
+    if( objectType.GetID() < objectData_.size() )
+        return objectData_[ objectType.GetID() ];
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeObject::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Agent_ABC& perceiver, const MIL_Object_ABC& target, double rSensorHeight ) const
 {
     assert( target().CanBePerceived() );
-
-    if( objectData_.size() <= target.GetType().GetID() )
-        return PHY_PerceptionLevel::notSeen_;
-
-    const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];
-    if( !pObjectData )
-        return PHY_PerceptionLevel::notSeen_;
-
-    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
+    if( const PHY_SensorTypeObjectData* pObjectData = GetSensorTypeObjectData( target.GetType() ) )
+        return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
+    return PHY_PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,12 +96,9 @@ const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Ag
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeObject::ComputePerception( const MIL_Agent_ABC& perceiver, const DEC_Knowledge_Object& target, double rSensorHeight ) const
 {
-    if( objectData_.size() <= target.GetType().GetID() )
-        return PHY_PerceptionLevel::notSeen_;
-    const PHY_SensorTypeObjectData* pObjectData = objectData_[ target.GetType().GetID() ];
-    if( !pObjectData )
-        return PHY_PerceptionLevel::notSeen_;
-    return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
+    if( const PHY_SensorTypeObjectData* pObjectData = GetSensorTypeObjectData( target.GetType() ) )
+        return pObjectData->ComputePerception( perceiver, target, rSensorHeight );
+    return PHY_PerceptionLevel::notSeen_; 
 }
 
 // -----------------------------------------------------------------------------
@@ -115,4 +117,13 @@ double PHY_SensorTypeObject::GetMaxDistance() const
 const PHY_SensorType& PHY_SensorTypeObject::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeObject::CanPerceive
+// Created: MMC 2013-01-11
+// -----------------------------------------------------------------------------
+bool PHY_SensorTypeObject::CanPerceive( const MIL_ObjectType_ABC& objectType ) const
+{
+    return GetSensorTypeObjectData( objectType ) != 0;
 }

@@ -205,6 +205,8 @@ public:
     virtual float GetIdentificationMaxRange() const;
     virtual float GetReconnoissanceMaxRange() const;
     virtual unsigned int GetMajorScore() const;
+
+    virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
     //! @name Dotations

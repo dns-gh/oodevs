@@ -31,6 +31,7 @@ class PHY_RadarType;
 class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
+class MIL_ObjectType_ABC;
 class TER_Localisation;
 class UrbanObjectWrapper;
 
@@ -164,6 +165,7 @@ public:
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const = 0;
     virtual bool IsIdentified( const UrbanObjectWrapper& object ) const = 0;
     virtual bool IsFireObserver() const = 0;
+    virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const = 0;
     //@}
 
     //! @name Network

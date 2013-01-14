@@ -87,6 +87,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_PopulationConcentration& ), IsPopulationConcentrationIdentified );
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const UrbanObjectWrapper& ), IsUrbanBlockIdentified );
     MOCK_METHOD( IsFireObserver, 0 );
+    MOCK_METHOD_EXT( CanPerceive, 1, bool( const MIL_ObjectType_ABC& ), CanPerceive );
 
     MOCK_METHOD( SendDebugState, 0 );
     MOCK_METHOD( SendChangedState, 1 );
