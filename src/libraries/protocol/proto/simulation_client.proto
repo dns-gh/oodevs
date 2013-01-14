@@ -546,10 +546,9 @@ message RulesOfEngagement {
         @todo make RulesOfEngagement the enum or move the value field in this message
     */
     enum Value {
-       none             = 0; //!< No rule of engagement
-       free_fire        = 1; //!< Fire permitted
-       retaliation_only = 2; //!< Fire back permitted
-       fire_upon_order  = 3; //!< Fire forbidden
+       free_fire        = 0; //!< Fire permitted
+       retaliation_only = 1; //!< Fire back permitted
+       fire_upon_order  = 2; //!< Fire forbidden
     }
 }
 

@@ -69,6 +69,7 @@ message MsgObjectMagicAction {
         lodging               = 21;
         trafficability        = 22;
         underground           = 23;
+        density               = 24; // FT 370059
    }
    
    required Common.ObjectId              object     = 1;

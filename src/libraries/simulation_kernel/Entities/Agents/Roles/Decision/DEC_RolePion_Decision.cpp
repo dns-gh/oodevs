@@ -226,7 +226,7 @@ void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
     msg().set_meeting_engagement        ( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
     msg().set_operational_state         ( sword::EnumOperationalStatus( nOperationalState_ ) );
     msg().set_indirect_fire_availability( sword::UnitAttributes::FireAvailability( nIndirectFireAvailability_ ) );
-    msg().set_roe                       ( sword::RulesOfEngagement::Value( 1 + nRulesOfEngagementState_ ) ); // none no longer exists in roe
+    msg().set_roe                       ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
     msg().set_roe_crowd                 ( pRoePopulation_->GetAsnID() );
 }
 

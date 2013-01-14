@@ -103,7 +103,6 @@ enum E_OperationalStatus
 
 enum E_Roe
 {
-    eRoe_None,
     eRoe_TirLibre,
     eRoe_TirSurRiposte,
     eRoe_TirInterdit,
