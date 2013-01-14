@@ -167,7 +167,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
         for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
         {
             const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-            if( object.IsInside( lastWaypoint ) )
+            if( movingEntity_.CanObjectInteractWith( object ) && object.IsInside( lastWaypoint ) )
             {
                 movingEntity_.SendRC( report::eRC_DifficultMovementProgression, object.GetType().GetRealName() );
                 isInsideObject = true;

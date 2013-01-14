@@ -203,7 +203,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResu
         GET_HOOK( GetObjectListWithinCircle )( model, lastWaypoint, 100, &AddObject, &objects );
         for( T_Objects::const_iterator it = objects.begin(); it != objects.end(); ++it )
         {
-            if( GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
+            if( GET_HOOK( CanObjectInteractWith )( entity, *it ) && GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
             {
                 PostReport( entity, report::eRC_DifficultMovementProgression, (*it)[ "type/real-name" ] );
                 isInsideObject = true;
