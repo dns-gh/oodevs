@@ -385,6 +385,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Agent_DecontamineConnaissance",
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination, _1, _2 ) ) );
 
+    RegisterFunction( "DEC_Agent_ImmuniserNbc", boost::bind( &DEC_AgentFunctions::ImmunizeAgent, boost::ref( GetPion() ) ) ); // deprecated
+    RegisterFunction( "DEC_Agent_StopImmuniserNbc", boost::bind( &DEC_AgentFunctions::StopImmunizeAgent, boost::ref( GetPion() ) ) ); // deprecated
+
     // Blackout
     RegisterFunction( "DEC_Agent_PasserEnSilenceRadio", boost::bind( &DEC_AgentFunctions::ActivateBlackout, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_PasserEnSilenceRadioPartiel", boost::bind( &DEC_AgentFunctions::ActivatePartialBlackout, boost::ref( GetPion() ) ) );

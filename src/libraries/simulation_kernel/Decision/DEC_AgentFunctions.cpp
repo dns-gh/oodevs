@@ -1620,3 +1620,21 @@ void DEC_AgentFunctions::CreateInstantaneously( const DEC_Decision_ABC* callerAg
         throw MASA_EXCEPTION( "unable to create object." );
     object->Initialize( *pGenObject.get() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::ImmunizeAgent
+// Created: LGY 2013-01-14
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::ImmunizeAgent( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::StopImmunizeAgent
+// Created: LGY 2013-01-14
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( false );
+}
