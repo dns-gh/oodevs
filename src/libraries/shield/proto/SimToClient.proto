@@ -321,10 +321,9 @@ message MsgAutomatCreation {
 
 message RulesOfEngagement {
     enum Value {
-       none_roe        = 0;
-       tir_libre       = 1;
-       tir_sur_riposte = 2;
-       tir_interdit    = 3;
+       tir_libre       = 0; // FT 380239
+       tir_sur_riposte = 1; // FT 380239
+       tir_interdit    = 2; // FT 380239
     }
 }
 

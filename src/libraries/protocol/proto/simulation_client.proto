@@ -790,14 +790,13 @@ message RulesOfEngagement {
               this message
     */
     enum Value {
-        //! No rule of engagement
-        none             = 0;
+
         //! Fire permitted
-        free_fire        = 1;
+        free_fire        = 0;
         //! Fire back permitted
-        retaliation_only = 2;
+        retaliation_only = 1;
         //! Fire forbidden
-        fire_upon_order  = 3;
+        fire_upon_order  = 2;
     }
 }
 

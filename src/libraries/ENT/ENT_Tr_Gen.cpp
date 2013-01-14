@@ -102,7 +102,6 @@ ENT_Tr::T_ConverterOperationalStatus ENT_Tr::OperationalStatusConverter_[] =
 
 ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
 {
-    T_ConverterRoe( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eRoe_None ),
     T_ConverterRoe( "tir libre", QT_TRANSLATE_NOOP( "ENT_Tr", "free fire" ), eRoe_TirLibre ),
     T_ConverterRoe( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "retaliation only" ), eRoe_TirSurRiposte ),
     T_ConverterRoe( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "forbidden fire" ), eRoe_TirInterdit ),

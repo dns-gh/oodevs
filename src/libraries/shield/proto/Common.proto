@@ -693,6 +693,7 @@ message MsgShape {
    optional string              text                 = 5;
    optional string              font                 = 6;
    optional uint32              font_size            = 7;
+   optional string              owner_login          = 8; // FT 370028, 380052 
 }
 
 message MsgChatTarget {

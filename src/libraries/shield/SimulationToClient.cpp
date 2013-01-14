@@ -500,8 +500,7 @@ namespace
     template< typename From, typename To >
     void ConvertRulesOfEngagement( const From& from, To* to )
     {
-        CONVERT_ENUM( roe, ( sword::RulesOfEngagement::none, MsgsSimToClient::RulesOfEngagement::none_roe )
-                           ( sword::RulesOfEngagement::free_fire, MsgsSimToClient::RulesOfEngagement::tir_libre )
+        CONVERT_ENUM( roe, ( sword::RulesOfEngagement::free_fire, MsgsSimToClient::RulesOfEngagement::tir_libre )
                            ( sword::RulesOfEngagement::retaliation_only, MsgsSimToClient::RulesOfEngagement::tir_sur_riposte )
                            ( sword::RulesOfEngagement::fire_upon_order, MsgsSimToClient::RulesOfEngagement::tir_interdit ) );
     }
