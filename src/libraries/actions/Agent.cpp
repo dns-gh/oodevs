@@ -34,6 +34,7 @@ Agent::Agent( const OrderParameter& parameter, kernel::Controller& controller, b
 // -----------------------------------------------------------------------------
 Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< Agent_ABC >( parameter, controller )
+    , isKnowledge_( false )
 {
     if( xis.has_attribute( "value" ) )
         SetValue( &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ) );
@@ -45,6 +46,7 @@ Agent::Agent( const OrderParameter& parameter, xml::xistream& xis, const kernel:
 // -----------------------------------------------------------------------------
 Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< Agent_ABC >( parameter, &resolver.GetAgent( id ), controller )
+    , isKnowledge_( false )
 {
     // NOTHING
 }
@@ -55,6 +57,7 @@ Agent::Agent( const OrderParameter& parameter, unsigned int id, const kernel::En
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< Agent_ABC >( OrderParameter( xis.attribute< std::string >( "name" ), "agent", false ), controller )
+    , isKnowledge_( false )
 {
     if( xis.has_attribute( "value" ) )
         SetValue( &resolver.GetAgent( xis.attribute< unsigned long >( "value" ) ) );
