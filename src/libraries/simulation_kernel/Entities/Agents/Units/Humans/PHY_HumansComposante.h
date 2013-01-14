@@ -56,7 +56,7 @@ public:
     //@{
     bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyContamination();
     virtual void ApplyEffect( const WoundEffects_ABC& effect );
     void ApplyInjury( MIL_Injury_ABC& injury );
     PHY_InjuredHuman* GetInjury();

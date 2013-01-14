@@ -24,7 +24,6 @@ namespace client
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
-class MIL_ToxicEffectManipulator;
 class MT_Vector2D;
 class PHY_ComposantePion;
 
@@ -120,7 +119,7 @@ public:
 
     //! @name Notifications on transporter
     //@{
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyContamination();
     //@}
 
     //! @name Network

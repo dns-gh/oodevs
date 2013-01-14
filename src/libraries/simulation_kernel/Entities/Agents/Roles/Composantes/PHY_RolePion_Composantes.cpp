@@ -832,13 +832,13 @@ void PHY_RolePion_Composantes::ApplyEffect( const WoundEffects_ABC& effect )
 // Name: PHY_RolePion_Composantes::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
+void PHY_RolePion_Composantes::ApplyContamination()
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
-            composante.ApplyContamination( contamination );
+            composante.ApplyContamination();
     }
 }
 

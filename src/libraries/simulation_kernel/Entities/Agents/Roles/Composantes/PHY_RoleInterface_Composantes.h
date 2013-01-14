@@ -29,7 +29,6 @@ class PHY_DotationCategory;
 class PHY_FireDamages_Agent;
 class PHY_FireResults_ABC;
 class PHY_MaintenanceComposanteState;
-class MIL_ToxicEffectManipulator;
 class PHY_SensorTypeAgent_ABC;
 class PHY_Volume;
 
@@ -140,7 +139,7 @@ public:
     virtual double GetMaxRangeToFire                ( const MIL_Agent_ABC&  target, double rWantedPH ) const = 0;
 
     virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void ApplyContamination() = 0;
     //@}
 
     //! @name Notifications (internal)

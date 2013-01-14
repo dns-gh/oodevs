@@ -138,10 +138,8 @@ BOOST_FIXTURE_TEST_CASE( HumanApplyPoisonous, Fixture )
 BOOST_FIXTURE_TEST_CASE( HumanContaminationManagement, Fixture )
 {
     BOOST_CHECK( !human.IsContaminated() );
-    std::vector< const MIL_NbcAgentType* > nbcTypes;
-    MIL_ToxicEffectManipulator nbcAgent( nbcTypes, 1 );
     MOCK_EXPECT( composante.NotifyHumanChanged ).once();
-    human.ApplyContamination( nbcAgent );
+    human.ApplyContamination();
     BOOST_CHECK( human.IsContaminated() );
     MOCK_EXPECT( composante.NotifyHumanChanged ).once();
     human.HealContamination();

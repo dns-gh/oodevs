@@ -17,7 +17,6 @@
 
 class HumansComposante_ABC;
 class MIL_Time_ABC;
-class MIL_ToxicEffectManipulator;
 
 namespace logistic {
     class FuneralConsign_ABC;
@@ -54,7 +53,7 @@ public:
     bool SetRank( const PHY_HumanRank&  newRank ); // Force rank change
     bool SetWound( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
     bool ApplyWound( const PHY_HumanWound& newWound ); // Test 'usability'
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
+    virtual void ApplyContamination(); // NBC effects
     void ApplyMentalDisease();
     void ForceMentalDisease();
     void CancelLogisticRequests();

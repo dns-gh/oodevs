@@ -284,7 +284,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
 // Name: PHY_RoleAction_Transport::ApplyContamination
 // Created: AHC 2009-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
+void PHY_RoleAction_Transport::ApplyContamination()
 {
     double rWeightDamaged = rWeightTransported_;
     for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
@@ -292,7 +292,7 @@ void PHY_RoleAction_Transport::ApplyContamination( const MIL_ToxicEffectManipula
         if( it->second.rTransportedWeight_ )
         {
             rWeightDamaged -= it->second.rTransportedWeight_;
-            (*it->first).GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
+            (*it->first).GetRole< PHY_RoleInterface_Composantes >().ApplyContamination();
         }
     }
 }

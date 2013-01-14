@@ -267,7 +267,7 @@ bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 // Name: PHY_Human::ApplyContamination
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& /*contamination*/ )
+void PHY_Human::ApplyContamination()
 {
     if( !IsUsable() )
         return;

@@ -13,7 +13,6 @@
 #include <boost/noncopyable.hpp>
 
 class MIL_AutomateLOG;
-class MIL_ToxicEffectManipulator;
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_MedicalHumanState;
@@ -49,7 +48,7 @@ public:
     virtual bool SetRank( const PHY_HumanRank&  newRank  ) = 0; // Force rank change
     virtual bool SetWound( const PHY_HumanWound& newWound ) = 0; // Don't test 'usability' or aggravation => force wound change
     virtual bool ApplyWound( const PHY_HumanWound& newWound ) = 0; // Test 'usability'
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void ApplyContamination() = 0;
     virtual void ApplyMentalDisease() = 0;
     virtual void ForceMentalDisease() = 0;
     virtual void CancelLogisticRequests() = 0;

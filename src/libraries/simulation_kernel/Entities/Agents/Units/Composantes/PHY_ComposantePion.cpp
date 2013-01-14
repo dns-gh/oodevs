@@ -404,10 +404,10 @@ void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotation
 // Name: PHY_ComposantePion::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
+void PHY_ComposantePion::ApplyContamination()
 {
     assert( pHumans_ );
-    pHumans_->ApplyContamination( contamination );
+    pHumans_->ApplyContamination();
 }
 
 // -----------------------------------------------------------------------------

@@ -186,7 +186,7 @@ public:
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult );
     virtual void ApplyIndirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, double ratio );
     virtual void ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
-    virtual void ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyContamination               ();
     virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
     virtual void ApplyInjury                      ( MIL_Injury_ABC& injury );
     virtual void ApplyEffect                      ( const WoundEffects_ABC& effect );

@@ -22,7 +22,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( ChangeHumanState, 1 );
     MOCK_METHOD( ChangeHumanSize, 1 );
     MOCK_METHOD( RemoveHealthyHumans, 2 );
-    MOCK_METHOD( ApplyContamination, 1 );
+    MOCK_METHOD( ApplyContamination, 0 );
     MOCK_METHOD( ApplyEffect, 1 );
     MOCK_METHOD( ApplyInjury, 1 );
     MOCK_METHOD( ApplyWounds, 2 );

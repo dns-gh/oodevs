@@ -173,7 +173,7 @@ bool MIL_Object::CanInteractWith( const MIL_Agent_ABC& entity ) const
     if( !MIL_Object_ABC::CanInteractWith( entity ) )
         return false;
     bool canInteract = true;
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
         (*it)->CanInteractWith( *this, entity, canInteract );
     return canInteract;
 }
@@ -193,7 +193,7 @@ bool MIL_Object::CanInteractWith( const MIL_Population& population ) const
 // -----------------------------------------------------------------------------
 bool MIL_Object::CanBeSeen() const
 {
-    for( T_Capacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+    for( auto it = capacities_.begin(); it != capacities_.end(); ++it )
         if( ! (*it)->CanBeSeen() )
             return false;
     return true;

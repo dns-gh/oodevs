@@ -22,7 +22,6 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
-#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
 #include "HumansActionsNotificationHandler_ABC.h"
 #include <boost/serialization/vector.hpp>
@@ -161,11 +160,7 @@ unsigned int PHY_HumansComposante::OverloadHumans( const PHY_HumanRank& rank, un
             human.ForceMentalDisease();
         human.SetWound( newWound );
         if( contaminated )
-        {
-            std::vector< const MIL_NbcAgentType* > nbcTypes;
-            MIL_ToxicEffectManipulator nbcAgent( nbcTypes, 1 );
-            human.ApplyContamination( nbcAgent );
-        }
+            human.ApplyContamination();
         --nNbrToChange;
         ++nNbrChanged;
     }
@@ -245,10 +240,10 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 // Name: PHY_HumansComposante::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
+void PHY_HumansComposante::ApplyContamination()
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        ( **it ).ApplyContamination( contamination );
+        ( **it ).ApplyContamination();
 }
 
 // -----------------------------------------------------------------------------

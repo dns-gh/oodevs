@@ -173,8 +173,8 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
         return;
     if( ! bNbcProtectionSuitWorn_ )
     {
-        owner_->GetRole< PHY_RoleInterface_Composantes >().ApplyContamination( contamination );
-        owner_->GetRole< transport::PHY_RoleAction_Transport >().ApplyContamination( contamination );
+        owner_->GetRole< PHY_RoleInterface_Composantes >().ApplyContamination();
+        owner_->GetRole< transport::PHY_RoleAction_Transport >().ApplyContamination();
     }
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     if( rContaminationQuantity_ == 0 )

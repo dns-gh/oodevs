@@ -27,7 +27,6 @@ class MIL_Object_ABC;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class MIL_Time_ABC;
-class MIL_ToxicEffectManipulator;
 class MIL_BurnEffectManipulator;
 class MIL_FloodEffectManipulator;
 class MIL_DisasterEffectManipulator;
@@ -160,7 +159,7 @@ public:
     void ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages );
     void ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, double ratio );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages );
-    void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
+    void ApplyContamination();
     void ApplyEffect( const WoundEffects_ABC& effects );
     void ApplyInjury( MIL_Injury_ABC& injury );
     void ApplyUrbanObjectCrumbling( const MIL_Object_ABC& object );
