@@ -16,6 +16,11 @@
 
 using namespace sword;
 
+namespace
+{
+    const std::string event = "flood event";
+}
+
 // -----------------------------------------------------------------------------
 // Name: FloodModel constructor
 // Created: LGY 2012-06-13
@@ -24,7 +29,7 @@ FloodModel::FloodModel( core::Facade& facade )
     : facade_    ( facade )
     , identifier_( 0 )
 {
-    facade.Register( "flood event", *this );
+    facade.Register( event, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +38,7 @@ FloodModel::FloodModel( core::Facade& facade )
 // -----------------------------------------------------------------------------
 FloodModel::~FloodModel()
 {
-    // NOTHING
+    facade_.Unregister( event, *this );
 }
 
 // -----------------------------------------------------------------------------
