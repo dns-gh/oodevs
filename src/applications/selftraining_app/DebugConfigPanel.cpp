@@ -12,10 +12,10 @@
 #include "moc_DebugConfigPanel.cpp"
 #include "clients_gui/tools.h"
 
-static int INTEGRATIONDIRMAX = 5;
-
 namespace
 {
+    const int maxIntegrationDir = 5;
+
     bool ReadBoolRegistry( const std::string& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
@@ -142,7 +142,7 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
         {
             //maj of combobox
             pathList_->push_front( directory );
-            if( pathList_->count() > INTEGRATIONDIRMAX )
+            if( pathList_->count() > maxIntegrationDir )
                 pathList_->removeLast();
             integrationComboBox_->clear();
             integrationComboBox_->addItems( *pathList_ );
