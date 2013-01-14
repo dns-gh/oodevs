@@ -423,13 +423,13 @@ double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, 
         if ( capacity )
         {
             const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
-            speed = std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
+            speed = capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. );
         }
         const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
         if ( crowdcapacity )
             speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
     }
-    return speed;
+    return std::min( speed, rAgentSpeedWithinObject );
 }
 
 // -----------------------------------------------------------------------------
