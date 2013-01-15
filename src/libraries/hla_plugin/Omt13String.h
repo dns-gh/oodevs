@@ -44,6 +44,7 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
+        data_.clear();
         int8 data = -1;
         while( data != 0 )
         {

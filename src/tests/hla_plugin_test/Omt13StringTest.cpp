@@ -39,3 +39,23 @@ BOOST_FIXTURE_TEST_CASE( omt13string_deserializes_null_terminated_string, Serial
     deserializedOmt.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( message, deserializedOmt.str() );
 }
+
+BOOST_FIXTURE_TEST_CASE( omt13string_deserializes_twice, SerializationFixture )
+{
+    const std::string message = "message";
+    Omt13String deserializedOmt;
+    {
+        const Omt13String serializedOmt( message );
+        ::hla::Deserializer deserializer = Serialize( serializedOmt,
+            static_cast< unsigned int >( sizeof( int8 ) * ( message.size() + 1 )) );
+        deserializedOmt.Deserialize( deserializer );
+        BOOST_CHECK_EQUAL( message, deserializedOmt.str() );
+    }
+    {
+        const Omt13String serializedOmt( message );
+        ::hla::Deserializer deserializer = Serialize( serializedOmt,
+            static_cast< unsigned int >( sizeof( int8 ) * ( message.size() + 1 )) );
+        deserializedOmt.Deserialize( deserializer );
+        BOOST_CHECK_EQUAL( message, deserializedOmt.str() );
+    }
+}
