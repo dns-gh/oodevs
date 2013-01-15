@@ -447,7 +447,7 @@ void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
         if( type.IsContaminated( dose_ ) )
         {
             contaminated_ = true;
-            owner_.GetRole< PHY_RoleInterface_Composantes >().ApplyContamination();
+            owner_->GetRole< PHY_RoleInterface_Composantes >().ApplyContamination();
         }
         rDecontaminationState_ = 0.;
         bHasChanged_ = true;
