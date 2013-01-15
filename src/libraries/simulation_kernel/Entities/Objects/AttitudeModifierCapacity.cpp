@@ -29,7 +29,7 @@ AttitudeModifierCapacity::AttitudeModifierCapacity( xml::xistream& xis )
     xis >> xml::attribute( "attitude", sAttitude );
     attitude_ = MIL_PopulationAttitude::Find( sAttitude );
     if( !attitude_ )
-        throw MASA_EXCEPTION( MT_FormatString( "Attitude modifier '%s' unknown", sAttitude.c_str() ) );
+        throw MASA_EXCEPTION( "Attitude modifier '" + sAttitude + "' unknown" );
 }
 
 // -----------------------------------------------------------------------------

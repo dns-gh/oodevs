@@ -114,6 +114,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+#include <boost/lexical_cast.hpp>
 
 #include "Adapters/Sink.h"
 #include "Adapters/Legacy/Sink.h"
@@ -360,7 +361,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
 
     const std::string strOrbat = config.GetOrbatFile();
-    MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
+    MT_LOG_INFO_MSG( "ODB file name : '" << strOrbat << "'" );
     config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"       , automateFactory_->Count() ) );
@@ -376,7 +377,10 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
         {
             const MIL_Automate& automate = it.NextElement();
             if( !automate.CheckComposition() )
-                throw MASA_EXCEPTION( MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
+                throw MASA_EXCEPTION(
+                    "The effective composition of the automate '" + boost::lexical_cast< std::string >( automate.GetID() )
+                    + "' ('" + automate.GetName() + "') is not consistent with the composition described in the type '"
+                    + automate.GetType().GetName() + "'" );
         }
 }
 
@@ -416,7 +420,7 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
             MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
 
             std::string directoryPath = bfs::path( oldUrbanMode ? config.GetTerrainFile() : config.GetExerciseFile() ).branch_path().string();
-            MT_LOG_INFO_MSG( MT_FormatString( "Loading Urban Model from path '%s'", directoryPath.c_str() ) );
+            MT_LOG_INFO_MSG( "Loading Urban Model from path '" << directoryPath << "'" );
 
             config.GetLoader().LoadFile( fullPath.string(), boost::bind( &MIL_EntityManager::ReadUrban, this, _1, boost::ref( cities_ ) ) );
             if( cities_.empty() )
@@ -432,7 +436,7 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
                 const std::string strUrbanState = config.GetUrbanStateFile();
                 if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
                 {
-                    MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
+                    MT_LOG_INFO_MSG( "UrbanState file name : '" << strUrbanState << "'" );
                     config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
                 }
             }

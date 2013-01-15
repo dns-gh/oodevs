@@ -546,7 +546,7 @@ TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( cons
     else if( !::_strcmpi( strType.c_str(), "secteur" ) )
         return eSector;
     else
-        throw MASA_EXCEPTION( MT_FormatString( "Invalid location type: '%s'", strType.c_str() ) );
+        throw MASA_EXCEPTION( "Invalid location type: '" + strType + "'" );
 }
 
 //-----------------------------------------------------------------------------

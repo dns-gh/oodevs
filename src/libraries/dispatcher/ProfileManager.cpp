@@ -80,7 +80,7 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", tools::GetExceptionMsg( e ) ) );
+            MT_LOG_ERROR_MSG( "Can't save checkpoint ( '" << tools::GetExceptionMsg( e ) << "' )" );
         }
         catch( ... )
         {

@@ -85,7 +85,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCm
         }
         catch( const std::exception& e )
         {
-            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", tools::GetExceptionMsg( e ) ) );
+            MT_LOG_WARNING_MSG( "Network logger (telnet) not registered - Reason : '" << tools::GetExceptionMsg( e ) << "'" );
             pNetworkLogger_.reset();
         }
     }
@@ -130,7 +130,7 @@ int SIM_App::Initialize()
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", tools::GetExceptionMsg( e ) ) );
+        MT_LOG_ERROR_MSG( "Error initializing workspace : '" << tools::GetExceptionMsg( e ) << "'" );
         throw;
         //return EXIT_FAILURE;
     }

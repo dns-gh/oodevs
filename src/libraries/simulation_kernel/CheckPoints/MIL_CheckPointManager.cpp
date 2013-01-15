@@ -76,12 +76,12 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const Obje
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
-    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) )
+    MT_LOG_INFO_MSG( "Loading SIM state from checkpoint '" << config.BuildCheckpointChildFile( "" ) << "'" );
     if( config.UseCheckPointCRC() )
         CheckCRC( config );
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
     if( !file || !file.is_open() )
-        throw MASA_EXCEPTION( MT_FormatString( "Cannot open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
+        throw MASA_EXCEPTION( "Cannot open file '" + config.BuildCheckpointChildFile( "data" ) + "'" );
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file, resolver );
     MIL_AgentServer::GetWorkspace().load( *pArchive );
     file.close();
@@ -175,7 +175,7 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
     }
     catch( ... )
     {
-        throw MASA_EXCEPTION( MT_FormatString( "Cannot create file '%s'", strFileName.c_str() ) );
+        throw MASA_EXCEPTION( "Cannot create file '" + strFileName + "'" );
     }
 }
 
@@ -187,7 +187,7 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
 {
     std::ofstream file( strFileName.c_str(), std::ios::out | std::ios::binary );
     if( !file || !file.is_open() )
-        throw MASA_EXCEPTION( MT_FormatString( "Cannot open file '%s'", strFileName.c_str() ) );
+        throw MASA_EXCEPTION( "Cannot open file '" + strFileName + "'" );
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
     MIL_AgentServer::GetWorkspace().save( *pArchive );
     file.close();
@@ -270,7 +270,7 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", tools::GetExceptionMsg( e ) ) );
+            MT_LOG_ERROR_MSG( "Error while removing old checkpoint ( '" << tools::GetExceptionMsg( e ) << "' )" );
         }
         currentCheckPoints_.pop();
     }

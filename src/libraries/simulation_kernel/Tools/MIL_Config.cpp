@@ -254,7 +254,7 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     }
     catch( const xml::exception& e )
     {
-        throw MASA_EXCEPTION( MT_FormatString( "Cannot create file '%s', %s", strFileName.c_str(), tools::GetExceptionMsg( e ) ) );
+        throw MASA_EXCEPTION( "Cannot create file '" + strFileName + "', " + tools::GetExceptionMsg( e ) );
     }
     return MIL_Tools::ComputeCRC( strFileName );
 }
