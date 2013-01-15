@@ -1572,7 +1572,9 @@ bool PHY_RolePion_Perceiver::IsFireObserver() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::CanPerceive( const MIL_ObjectType_ABC& objectType ) const
 {
-    const PHY_RolePion_Composantes* pComposantes = pion_.RetrieveRole< PHY_RolePion_Composantes >();
+    if( !pion_ )
+        return false;
+    const PHY_RolePion_Composantes* pComposantes = pion_->RetrieveRole< PHY_RolePion_Composantes >();
     if( pComposantes && pComposantes->CanPerceive( objectType ) )
         return true;
     return false;
