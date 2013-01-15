@@ -217,7 +217,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
             dose_ = state.dose();
     }
 
-    if( decontaminationPercentage_ == 100. )
+    if( decontaminationPercentage_ >= 100. )
         nbcAgentTypesContaminating_.clear();
 
     if( message.has_communications() )

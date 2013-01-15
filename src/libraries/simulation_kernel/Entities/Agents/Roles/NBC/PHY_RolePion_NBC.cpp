@@ -208,7 +208,7 @@ void PHY_RolePion_NBC::Decontaminate()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
 {
-    if( rDecontaminationState_ == 1. )
+    if( rDecontaminationState_ >= 1. )
     {
         assert( nbcAgentTypesContaminating_.empty() );
         return;
@@ -219,7 +219,7 @@ void PHY_RolePion_NBC::Decontaminate( double rRatioAgentsWorking )
         bHasChanged_ = true;
     rContaminationQuantity_ = std::max( 0., ( rContaminationQuantity_ / rNewDecontaminationState ) * rDecontaminationState_ );
     rDecontaminationState_ = rNewDecontaminationState;
-    if( rDecontaminationState_ == 1. )
+    if( rDecontaminationState_ >= 1. )
     {
         rContaminationQuantity_ = 0.;
         nbcAgentTypesContaminating_.clear();
