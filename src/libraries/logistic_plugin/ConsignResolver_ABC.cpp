@@ -158,7 +158,7 @@ namespace logistic
             bfs::rename( from, to );
             curFileIndex_++;
         }
-        fileName_ = name_ + "current";
+        fileName_ = name_ + "current.csv";
     }
 
     // -----------------------------------------------------------------------------
