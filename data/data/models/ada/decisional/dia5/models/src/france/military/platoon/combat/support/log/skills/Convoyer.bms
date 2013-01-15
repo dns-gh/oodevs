@@ -7,37 +7,26 @@ end,
 
 create = function( self )
     self.arrived = false
-    self.fragOrderReceived = false
-    self.sendCR = false
     
     self.transporteur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getTransporter() )
     self.fluxTire = integration.distance(self.transporteur, meKnowledge) < 10
 end,
 
  activate = function( self )
+    local getFragOrder = integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_PoursuivreConvoi" )
     self.ePhase = integration.getActionCouranteConvoi()
-
-    if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_PoursuivreConvoi" )  then
-        self.fragOrderReceived = true
-    end
-    
-    local continueConvoy = self.fragOrderReceived  or F_Pion_GetpionEnEscorte( meKnowledge.source ) 
     -- Action de chargement
     if self.ePhase == eConvoyerAction_Load then
         self.arrived = false
-        self.sendCR = false
-        self.fragOrderReceived = false
         Activate(skill.nodes.RC, 1, { RC = eRC_Convoi_ChargementEnCours, } )
     -- Action de déchargement
     elseif self.ePhase == eConvoyerAction_Unload  then
         self.arrived = false
-        self.sendCR = false
-        self.fragOrderReceived = false
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DechargementEnCours, } )
     -- Action de déplacement vers le ravitailleur
     elseif self.ePhase == eConvoyerAction_MoveToSupplier then
-        if continueConvoy or not self.fluxTire  then
-            self.sendCR = false
+        if self.MoveToSupplier or getFragOrder or F_Pion_GetpionEnEscorte( meKnowledge.source ) or not self.fluxTire  then
+            self.MoveToSupplier = true
             Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointChargement, } )
             self.ravitailleur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getRavitailleur() )
             if not self.itineraryToSupplier then
@@ -54,12 +43,12 @@ end,
                 integration.deplacementVersRavitailleurEffectue()
             end
          else
-            self.sendCR = true
+            Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoiOuEscorte } )
          end
     -- Action de déplacement vers le destinataire du convoi
      elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
-        if self.fragOrderReceived then
-            self.sendCR = false
+        if self.MoveToSupplyRecipient or getFragOrder then
+            self.MoveToSupplyRecipient = true
             Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
             self.destinataireCourant = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getDestinataireCourant() )
             if not self.itineraryToSupplyRecipient then
@@ -76,12 +65,12 @@ end,
                 integration.deplacementVersDestinataireEffectue()
             end
          else
-            self.sendCR = true
+            Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoi } )
          end
     -- Action de déplacement vers le transporteur qui a prêté les véhicules
      elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider then
-        if continueConvoy or self.fluxTire then
-            self.sendCR = false
+        if self.MoveToTransportersProvider or getFragOrder or F_Pion_GetpionEnEscorte( meKnowledge.source ) or self.fluxTire then
+            self.MoveToTransportersProvider = true
             Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_Retour, } )
             if not self.itineraryToTransportersProvider then
                 local itinerary = integration.getItineraireVersProchaineDestination()
@@ -97,15 +86,9 @@ end,
                 integration.deplacementVersTransporteurEffectue()
             end
          else
-            self.sendCR = true
+            Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoiOuEscorte } )
          end
      end
-
-    if self.sendCR then
-        Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoi } )
-        self.sendCR = false
-    end
-
  end,
  
  destroy = function( self )

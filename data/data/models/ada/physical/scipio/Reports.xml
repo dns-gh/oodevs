@@ -601,7 +601,7 @@
   <report category="operational" id="412" message="Prise en otage de %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="413" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
+  <report category="operational" id="413" message="En attente d'une escorte ou de l'ordre de conduite poursuivre convoi"/>
   <report category="operational" id="414" message="Début de dévalorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
@@ -677,5 +677,6 @@
   <report category="operational" id="455" message="Pas de ravitaillement en %1 car le supérieur logistique ne dispose pas des stocks nécessaires">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="456" message="En attente de l'ordre de conduite poursuivre convoi"/>
 </reports>
-<!-- signature="2325486866" -->
+<!-- signature="3365899351" -->
