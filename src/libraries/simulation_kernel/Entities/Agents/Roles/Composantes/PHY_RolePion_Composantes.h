@@ -211,6 +211,7 @@ public:
     virtual const PHY_ComposantePion* GetMajorComposante() const;
     virtual double GetMajorComponentWeight( bool ) const;
     virtual double GetAttritionIndexComposante( const PHY_MaterialCompositionType& material ) const;
+    virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
     //! @name Load / unload / transport

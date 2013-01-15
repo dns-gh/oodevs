@@ -35,6 +35,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -1563,4 +1564,18 @@ void PHY_RolePion_Perceiver::DisablePerceptionUponRequest()
 {
     bPerceptionUponRequest_ = false;
     bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::CanPerceive
+// Created: MMC 2013-01-11
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::CanPerceive( const MIL_ObjectType_ABC& objectType ) const
+{
+    if( !owner_ )
+        return false;
+    const PHY_RolePion_Composantes* pComposantes = owner_->RetrieveRole< PHY_RolePion_Composantes >();
+    if( pComposantes && pComposantes->CanPerceive( objectType ) )
+        return true;
+    return false;
 }

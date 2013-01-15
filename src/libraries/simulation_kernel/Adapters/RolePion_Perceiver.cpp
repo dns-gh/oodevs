@@ -907,3 +907,12 @@ void RolePion_Perceiver::DisablePerceptionUponRequest()
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::CanPerceive
+// Created: MMC 2013-01-11
+// -----------------------------------------------------------------------------
+bool RolePion_Perceiver::CanPerceive( const MIL_ObjectType_ABC& /*objectType*/ ) const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}

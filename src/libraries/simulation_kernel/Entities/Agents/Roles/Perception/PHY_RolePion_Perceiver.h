@@ -200,6 +200,7 @@ public:
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
     virtual bool IsIdentified( const MIL_UrbanObject_ABC& object ) const;
     virtual bool IsFireObserver() const;
+    virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
     //! @name Network
@@ -235,9 +236,6 @@ private:
     void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
     void EnsurePerceptionRecoLocalisation();
-    void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
-    void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;
-    void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;
     //@}
 
 private:

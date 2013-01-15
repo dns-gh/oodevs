@@ -27,6 +27,9 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
@@ -2033,4 +2036,19 @@ bool PHY_RolePion_Composantes::IsUnderIndirectFire()
 void PHY_RolePion_Composantes::ResetUnderIndirectFire()
 {
     bNeutralized_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanPerceive
+// Created: MMC 2013-01-11
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanPerceive( const MIL_ObjectType_ABC& objectType ) const
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion* pComposante = *it;
+        if( pComposante && pComposante->CanPerceive( objectType ) )
+            return true;
+    }
+    return false;
 }

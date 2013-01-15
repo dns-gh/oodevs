@@ -23,6 +23,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -1640,4 +1641,23 @@ void PHY_ComposantePion::ChangeHumanSize( unsigned int newHumanSize )
 void PHY_ComposantePion::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove )
 {
     pHumans_->RemoveHealthyHumans( rank, humansToRemove );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanPerceive
+// Created: MMC 2013-01-11
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::CanPerceive( const MIL_ObjectType_ABC& objectType ) const
+{
+    if( pState_->IsUsable() )
+        for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+        {
+            if( *itSensor )
+            {
+                const PHY_SensorTypeObject* pSensorTypeObject = (*itSensor)->GetType().GetTypeObject();
+                if( pSensorTypeObject && pSensorTypeObject->CanPerceive( objectType ) )
+                    return true;
+            }
+        }
+    return false;
 }

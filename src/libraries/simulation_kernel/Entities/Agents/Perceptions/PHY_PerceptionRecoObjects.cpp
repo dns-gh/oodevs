@@ -19,6 +19,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoObjectsReco constructor
@@ -152,7 +153,6 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoObjects::Compute( const DEC_Knowled
 void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
 {
     TER_Object_ABC::T_ObjectVector perceivableObjects;
-
     for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
         perceivableObjects.clear();
@@ -161,7 +161,7 @@ void PHY_PerceptionRecoObjects::Execute( const TER_Object_ABC::T_ObjectVector& /
         for ( TER_Object_ABC::CIT_ObjectVector it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
-            if( object().CanBePerceived() )
+            if( object().CanBePerceived() && perceiver_.CanPerceive( object.GetType() ) )
                 perceiver_.NotifyPerception( object, PHY_PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }

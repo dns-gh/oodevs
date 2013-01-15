@@ -153,6 +153,8 @@ public:
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
     virtual bool IsIdentified( const MIL_UrbanObject_ABC& object ) const;
     virtual bool IsFireObserver() const;
+
+    virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
     //! @name Network
