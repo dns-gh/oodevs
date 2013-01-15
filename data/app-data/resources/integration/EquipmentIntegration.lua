@@ -28,7 +28,7 @@ integration.isContaminated = function( self )
 end
 
 integration.isDecontaminationDone = function( self )
-    return self.source:DEC_Agent_DecontaminationFinished()
+    return self.source:DEC_Agent_IsDecontaminationFinished()
 end
 
 integration.isPoisoned = function()
