@@ -429,7 +429,7 @@ eRC_UrbanCollisionStopped = 409
 eRC_DecrochageFaceAIncendie = 410
 eRC_Capture = 411
 eRC_TakeHostage = 412
-eRC_AttenteOrdrePoursuivreConvoi = 413
+eRC_AttenteOrdrePoursuivreConvoiOuEscorte = 413
 eRC_DebutDevalorisation = 414
 eRC_FinDevalorisation = 415
 eRC_TrafficablePositionFindingInZone = 416
@@ -472,7 +472,8 @@ eRC_LogQuotaExceededForAgent = 452
 eRC_TransportedUnitCannotReceiveOrder = 453
 eRC_LogNoSuperior = 454
 eRC_LogNoStock = 455
-eNbr = 456
+eRC_AttenteOrdrePoursuivreConvoi = 456
+eNbr = 457
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
