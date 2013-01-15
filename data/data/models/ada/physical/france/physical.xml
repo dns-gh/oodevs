@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<physical model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.1/physical/Physical.xsd">
+<physical model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.2/physical/Physical.xsd">
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
   <protections file="Protections.xml"/>
@@ -46,4 +46,4 @@
   <crowds-mission-sheets-directory path="Mission sheets/crowds"/>
   <fragorders-mission-sheets-directory path="Mission sheets/fragmentary orders"/>
 </physical>
-<!-- signature="1555555984" -->
+<!-- signature="3838017142" -->

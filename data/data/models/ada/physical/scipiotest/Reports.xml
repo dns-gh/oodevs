@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
+<reports model-version="4.9.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
   <report category="information" id="0" message="ras"/>
   <report category="operational" id="1" message="En poste face à obstacle : %1">
     <parameter type="ObjectKnowledge"/>
@@ -601,7 +601,7 @@
   <report category="operational" id="412" message="Prise en otage de %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="413" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
+  <report category="operational" id="413" message="En attente d'une escorte ou de l'ordre de conduite poursuivre convoi"/>
   <report category="operational" id="414" message="Début de dévalorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
@@ -677,5 +677,6 @@
   <report category="operational" id="455" message="Pas de ravitaillement en %1 car le supérieur logistique ne dispose pas des stocks nécessaires">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="456" message="En attente de l'ordre de conduite poursuivre convoi"/>
 </reports>
-<!-- signature="2500520245" -->
+<!-- signature="2729725824" -->

@@ -677,5 +677,6 @@
   <report category="operational" id="455" message="No stock available at logistic superior for %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="456" message="Waiting for a frag order"/>
 </reports>
-<!-- signature="4172498973" -->
+<!-- signature="0715862472" -->
