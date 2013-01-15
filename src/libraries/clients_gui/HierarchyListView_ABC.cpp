@@ -198,7 +198,8 @@ void HierarchyListView_ABC::OnSelectionChange()
             list.push_back( item->GetValueNoCheck< const Entity_ABC >() );
         ++it;
     }
-    controllers_.actions_.SetMultipleSelection( list );
+    if( list.size() > 0 )
+        controllers_.actions_.SetMultipleSelection( list );
 }
 
 // -----------------------------------------------------------------------------
