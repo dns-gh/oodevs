@@ -445,7 +445,10 @@ void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
         owner_->Apply( &WoundEffectsHandler_ABC::ApplyEffect, manipulator );
         currentAttritionThreshold_ = currentAttritionThreshold;
         if( type.IsContaminated( dose_ ) )
+        {
             contaminated_ = true;
+            owner_.GetRole< PHY_RoleInterface_Composantes >().ApplyContamination();
+        }
         rDecontaminationState_ = 0.;
         bHasChanged_ = true;
     }
