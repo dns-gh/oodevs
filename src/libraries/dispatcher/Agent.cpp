@@ -68,6 +68,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , nPostureCompletion_         ( 100 )
     , nInstallationState_         ( 0 )
     , decontaminationPercentage_  ( 100 )
+    , contaminationPercentage_    ( 0 )
     , contaminationQuantity_      ( 0.f )
     , dose_                       ( 0.f )
     , knowledgeGroupJammed_       ( 0 )
@@ -209,6 +210,8 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         sword::ContaminationState state = message.contamination_state();
         if( state.has_decontamination_process() )
             decontaminationPercentage_ = state.decontamination_process();
+        if( state.has_percentage() )
+            contaminationPercentage_ = state.percentage();
         if( state.has_contaminated() )
             contaminated_ = state.contaminated();
         if( state.has_quantity() )
@@ -559,6 +562,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             }
         }
         asn().mutable_contamination_state()->set_decontamination_process( decontaminationPercentage_ );
+        asn().mutable_contamination_state()->set_percentage( contaminationPercentage_ );
         asn().mutable_contamination_state()->set_contaminated( contaminated_ );
         asn().mutable_contamination_state()->set_quantity( contaminationQuantity_ );
         asn().mutable_contamination_state()->set_dose( dose_ );

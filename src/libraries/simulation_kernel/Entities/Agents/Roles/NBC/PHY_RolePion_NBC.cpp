@@ -261,7 +261,9 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
             data.set_id( (**itNbcAgent).GetID() );
         }
     msg().set_protective_suits( bNbcProtectionSuitWorn_ );
-    msg().mutable_contamination_state()->set_decontamination_process( static_cast< unsigned int >( rDecontaminationState_ * 100. ) );
+    const unsigned int rDecontaminationState = static_cast< unsigned int >( rDecontaminationState_ * 100. );
+    msg().mutable_contamination_state()->set_decontamination_process( rDecontaminationState );
+    msg().mutable_contamination_state()->set_percentage( 100u - rDecontaminationState );
     msg().mutable_contamination_state()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
     msg().mutable_contamination_state()->set_contaminated( IsContaminated() );
     msg().mutable_contamination_state()->set_dose( dose_ );

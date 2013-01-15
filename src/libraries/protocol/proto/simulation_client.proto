@@ -1081,14 +1081,16 @@ message HumanDotations {
     @todo move into UnitAttributes
 */
 message ContaminationState {
-    //! The decontamination process
-    optional int32 decontamination_process  = 1;
+    //! deprecated
+    optional int32 percentage               = 1;
     //! @todo What's this ?
     optional float quantity                 = 2;
     //! The contamination dose
     optional float dose                     = 3;
     //! Whether the group is NBC contaminated or not
     optional bool contaminated              = 4;
+    //! The decontamination process
+    optional int32 decontamination_process  = 5;
 }
 
 /** @struct NBCAgents

@@ -200,6 +200,7 @@ private:
     unsigned int                               nPostureCompletion_;
     unsigned int                               nInstallationState_;
     std::vector< unsigned int >                nbcAgentTypesContaminating_;
+    int                                        contaminationPercentage_;  // deprecated
     int                                        decontaminationPercentage_;
     float                                      contaminationQuantity_;
     float                                      dose_;
