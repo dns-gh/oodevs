@@ -265,6 +265,8 @@ bool Profile::CheckRights( const sword::ClientToAuthentication& wrapper ) const
         return bSupervision_; //$$$ Administration
     else if( wrapper.message().has_profile_destruction_request() )
         return bSupervision_; //$$$ Administration
+    else if( wrapper.message().has_connected_profiles_request() )
+        return bSupervision_; //$$$ Administration
     else
         return false;
 }
