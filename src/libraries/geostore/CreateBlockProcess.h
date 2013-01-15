@@ -12,6 +12,11 @@
 
 class PointProjector_ABC;
 
+namespace kernel
+{
+    class UrbanObject_ABC;
+}
+
 namespace geostore
 {
     class GeometryFactory;
@@ -34,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    bool CanCreateBlock( const SpatialIndexer& indexer, const geometry::Polygon2f& footprint, PointProjector_ABC& projector );
+    std::vector< const kernel::UrbanObject_ABC* > IntersectedBlocks( const SpatialIndexer& indexer, const geometry::Polygon2f& footprint, PointProjector_ABC& projector );
     //@}
 
 private:

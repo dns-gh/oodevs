@@ -74,6 +74,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     , paramLayer_   ( paramLayer )
     , urbanModel_   ( urbanModel )
     , selected_     ( controllers )
+    , blinks_       ( 0 )
     , isAuto_       ( false )
     , changingGeom_ ( false )
 {
@@ -173,7 +174,7 @@ void TerrainToolBar::NotifyContextMenu( const kernel::UrbanObject_ABC& object, k
     if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
     {
         selected_ = &object;
-        menu.InsertItem( "Urban", tr( "Change geometry" ), this, SLOT( OnChangeGeometry() ) );
+        menu.InsertItem( "Urban", tr( "Change shape" ), this, SLOT( OnChangeShape() ) );
     }
 }
 
@@ -185,10 +186,50 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
 {
     if( !selected_ )
         return;
+    std::vector< const kernel::UrbanObject_ABC* > intersectedBlocks;
     if( changingGeom_ )
-        urbanModel_.ChangeGeometry( location, *selected_.ConstCast() );
+        urbanModel_.ChangeShape( location, *selected_.ConstCast(), intersectedBlocks );
+    else if( isAuto_ )
+        urbanModel_.CreateAutoUrbanBlocks( location, *selected_.ConstCast(), roadWidthSpinBox_->value() );
     else
-        urbanModel_.CreateUrbanBlocks( location, *selected_.ConstCast(), isAuto_, roadWidthSpinBox_->value() );
+        urbanModel_.CreateManualUrbanBlock( location, *selected_.ConstCast(), intersectedBlocks );
+    if( !intersectedBlocks.empty() )
+    {
+        blinks_ = 3;
+        for( auto it = intersectedBlocks.begin(); it != intersectedBlocks.end(); ++it )
+        {
+            auto ptr = new kernel::SafePointer< kernel::UrbanObject_ABC >( controllers_, *it );
+            urbanColors_[ ptr ] = ( *it )->Get< kernel::UrbanColor_ABC >().GetColor();
+            ptr->ConstCast()->Get< kernel::UrbanColor_ABC >().SetColor( 255, 0, 0, 255 );
+        }
+        QTimer::singleShot( 250, this, SLOT( OnBlink() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainToolBar::OnBlink
+// Created: JSR 2013-01-15
+// -----------------------------------------------------------------------------
+void TerrainToolBar::OnBlink()
+{
+    for( auto it = urbanColors_.begin(); it != urbanColors_.end(); ++it )
+    {
+        if( it->first && *it->first )
+        {
+            if( blinks_ % 2 )
+                it->first->ConstCast()->Get< kernel::UrbanColor_ABC >().SetColor( it->second );
+            else
+                it->first->ConstCast()->Get< kernel::UrbanColor_ABC >().SetColor( 255, 0, 0, 255 );
+        }
+    }
+    if( --blinks_ != 0 )
+        QTimer::singleShot( 250, this, SLOT( OnBlink() ) );
+    else
+    {
+        for( auto it = urbanColors_.begin(); it != urbanColors_.end(); ++it )
+            delete it->first;
+        urbanColors_.clear();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -229,10 +270,10 @@ void TerrainToolBar::OnBlockCreationAuto()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainToolBar::OnChangeGeometry
+// Name: TerrainToolBar::OnChangeShape
 // Created: JSR 2013-01-07
 // -----------------------------------------------------------------------------
-void TerrainToolBar::OnChangeGeometry()
+void TerrainToolBar::OnChangeShape()
 {
     changingGeom_ = true;
     eventStrategy_.TakeExclusiveFocus( paramLayer_ );

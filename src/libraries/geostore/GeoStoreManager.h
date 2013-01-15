@@ -42,7 +42,7 @@ public:
     //@}
     const Database& GetDatabase() const;
     void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks );
-    bool CanCreateUrbanBlock( const geometry::Polygon2f& footprint );
+    std::vector< const kernel::UrbanObject_ABC* > IntersectedBlocks( const geometry::Polygon2f& footprint );
 
 private:
     //! @name Helpers

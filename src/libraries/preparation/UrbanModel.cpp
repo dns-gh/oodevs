@@ -378,10 +378,10 @@ void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanModel::CreateUrbanBlocs
+// Name: UrbanModel::CreateAutoUrbanBlocks
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto, double roadWidth /* = 5.0 */ )
+void UrbanModel::CreateAutoUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, double roadWidth )
 {
     if( !geostore_.get() )
         return;
@@ -394,26 +394,40 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
         return;
 
     const geometry::Polygon2f polygon( points );
-    if( isAuto )
-    {
-        std::vector< geometry::Polygon2f > blocks;
-        geostore_->CreateUrbanBlocksOnCities( polygon, roadWidth, blocks );
-        // Create the blocks
-        for( auto it = blocks.begin(); it != blocks.end(); ++it )
-            Create( *it, &parent );
-    }
-    else
-    {
-        if( geostore_->CanCreateUrbanBlock( polygon ) )
-            Create( polygon, &parent );
-    }
+    std::vector< geometry::Polygon2f > blocks;
+    geostore_->CreateUrbanBlocksOnCities( polygon, roadWidth, blocks );
+    // Create the blocks
+    for( auto it = blocks.begin(); it != blocks.end(); ++it )
+        Create( *it, &parent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::CreateManualUrbanBlock
+// Created: ABR 2012-06-01
+// -----------------------------------------------------------------------------
+void UrbanModel::CreateManualUrbanBlock( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, std::vector< const kernel::UrbanObject_ABC* >& intersectedBlocks )
+{
+    if( !geostore_.get() )
+        return;
+
+    T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
+    if( points.front() == points.back() )
+        points.pop_back();
+
+    if( points.size() < 3 )
+        return;
+
+    const geometry::Polygon2f polygon( points );
+    intersectedBlocks = geostore_->IntersectedBlocks( polygon );
+    if( intersectedBlocks.empty() )
+        Create( polygon, &parent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::ChangeShape
 // Created: JSR 2013-01-07
 // -----------------------------------------------------------------------------
-void UrbanModel::ChangeGeometry( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& block )
+void UrbanModel::ChangeShape( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& block, std::vector< const kernel::UrbanObject_ABC* >& intersectedBlocks )
 {
     if( !geostore_.get() )
         return;
@@ -427,7 +441,8 @@ void UrbanModel::ChangeGeometry( const kernel::Location_ABC& location, kernel::U
 
     quadTree_->ForceErase( &block );
     const geometry::Polygon2f polygon( points );
-    if( geostore_->CanCreateUrbanBlock( polygon ) )
+    intersectedBlocks = geostore_->IntersectedBlocks( polygon );
+    if( intersectedBlocks.empty() )
         block.Get< kernel::UrbanPositions_ABC >().ChangeGeometry( points );
     InsertIntoQuadTree( block );
 }

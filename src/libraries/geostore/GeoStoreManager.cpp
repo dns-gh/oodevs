@@ -95,13 +95,13 @@ void GeoStoreManager::InitProjectorOld( const bfs::path& worldfile )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeoStoreManager::CanCreateUrbanBlock
-// Created: AME 2010-07-22
+// Name: GeoStoreManager::IntersectedBlocks
+// Created: JSR 2013-01-14
 // -----------------------------------------------------------------------------
-bool GeoStoreManager::CanCreateUrbanBlock( const geometry::Polygon2f& footprint )
+std::vector< const kernel::UrbanObject_ABC* > GeoStoreManager::IntersectedBlocks( const geometry::Polygon2f& footprint )
 {
     CreateBlockProcess process;
-    return process.CanCreateBlock( index_, footprint, *trans_ );
+    return process.IntersectedBlocks( index_, footprint, *trans_ );
 }
 
 // -----------------------------------------------------------------------------

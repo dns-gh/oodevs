@@ -34,12 +34,12 @@ CreateBlockProcess::~CreateBlockProcess()
 }
 
 // -----------------------------------------------------------------------------
-// Name: CreateBlockProcess::CanCreateBlock
-// Created: AME 2010-08-05
+// Name: CreateBlockProcess::IntersectedBlocks
+// Created: JSR 2013-01-14
 // -----------------------------------------------------------------------------
-bool CreateBlockProcess::CanCreateBlock( const SpatialIndexer& index, const geometry::Polygon2f& footprint, PointProjector_ABC& projector )
+std::vector< const kernel::UrbanObject_ABC* > CreateBlockProcess::IntersectedBlocks( const SpatialIndexer& index, const geometry::Polygon2f& footprint, PointProjector_ABC& projector )
 {
-    bool create = true;
+    std::vector< const kernel::UrbanObject_ABC* > intersectedBlocks;
     const geometry::Rectangle2f bbox = footprint.BoundingBox();
     float radius = 0.5f * sqrt( bbox.Width() * bbox.Width() + bbox.Height() * bbox.Height() );
     std::vector< const kernel::UrbanObject_ABC* > urbanBlocks;
@@ -47,17 +47,20 @@ bool CreateBlockProcess::CanCreateBlock( const SpatialIndexer& index, const geom
 
     if( !urbanBlocks.empty() )
     {
-        gaiaGeomCollPtr getBlocks = 0;
+        gaiaGeomCollPtr newBlock = geometryFactory_->CreatePolygonGeometry( footprint, projector );
         for( auto it = urbanBlocks.begin(); it != urbanBlocks.end(); ++it )
             if( const kernel::UrbanPositions_ABC* attribute = ( *it )->Retrieve< kernel::UrbanPositions_ABC >() )
+            {
+                gaiaGeomCollPtr getBlocks = 0;
                 geometryFactory_->AddPolygonGeometryToCollection( attribute->Polygon(), projector, getBlocks );
-        if( getBlocks )
-        {
-            gaiaGeomCollPtr newBlock = geometryFactory_->CreatePolygonGeometry( footprint, projector );
-            create = gaiaGeomCollIntersects( newBlock, getBlocks ) == 0;
-            gaiaFreeGeomColl( newBlock );
-            gaiaFreeGeomColl( getBlocks );
-        }
+                if( getBlocks )
+                {
+                    if( gaiaGeomCollIntersects( newBlock, getBlocks ) != 0 )
+                        intersectedBlocks.push_back( *it );
+                    gaiaFreeGeomColl( getBlocks );
+                }
+            }
+        gaiaFreeGeomColl( newBlock );
     }
-    return create;
+    return intersectedBlocks;
 }

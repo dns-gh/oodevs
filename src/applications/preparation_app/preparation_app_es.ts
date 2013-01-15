@@ -2587,7 +2587,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Change geometry</source>
+        <source>Change shape</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

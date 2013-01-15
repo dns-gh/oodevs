@@ -14,6 +14,7 @@
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 
 namespace gui
@@ -85,10 +86,16 @@ private slots:
     void OnSwitchMode();
     void OnBlockCreation();
     void OnBlockCreationAuto();
-    void OnChangeGeometry();
+    void OnChangeShape();
+    void OnBlink();
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< kernel::SafePointer< kernel::UrbanObject_ABC >*, kernel::UrbanBlockColor > T_UrbanColors;
+    //@}
+
     //! @name Member data
     //@{
     gui::ExclusiveEventStrategy&                   eventStrategy_;
@@ -100,6 +107,8 @@ private:
     QToolButton*                                   blockCreationAutoButton_;
     QToolButton*                                   blockRemoveButton_;
     QDoubleSpinBox*                                roadWidthSpinBox_;
+    T_UrbanColors                                  urbanColors_;
+    unsigned char                                  blinks_;
     bool                                           isAuto_;
     bool                                           changingGeom_;
     //@}

@@ -2591,8 +2591,8 @@ This data can&apos;t be projected.</translation>
         <translation>Error during automatic process creation of urban blocks</translation>
     </message>
     <message>
-        <source>Change geometry</source>
-        <translation>Change geometry</translation>
+        <source>Change shape</source>
+        <translation>Change shape</translation>
     </message>
 </context>
 <context>

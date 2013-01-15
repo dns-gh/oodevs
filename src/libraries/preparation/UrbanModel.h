@@ -75,8 +75,9 @@ public:
     void LoadUrbanState( xml::xistream& xis );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void CreateCityOrDistrict( kernel::Entity_ABC* parent );
-    void CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto, double roadWidth = 5.0 );
-    void ChangeGeometry( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& block );
+    void CreateAutoUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, double roadWidth );
+    void CreateManualUrbanBlock( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, std::vector< const kernel::UrbanObject_ABC* >& intersectedBlocks );
+    void ChangeShape( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& block, std::vector< const kernel::UrbanObject_ABC* >& intersectedBlocks );
     kernel::UrbanObject_ABC* Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );

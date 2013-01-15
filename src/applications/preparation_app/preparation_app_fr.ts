@@ -2588,8 +2588,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Erreur lors de la génération automatique de blocks urbains</translation>
     </message>
     <message>
-        <source>Change geometry</source>
-        <translation>Changer la géométrie</translation>
+        <source>Change shape</source>
+        <translation>Changer la forme</translation>
     </message>
 </context>
 <context>

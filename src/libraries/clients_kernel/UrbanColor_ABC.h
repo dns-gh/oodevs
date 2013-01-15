@@ -22,6 +22,13 @@ namespace kernel
 //@{
 struct UrbanBlockColor
 {
+    UrbanBlockColor()
+        : red_  ( 0 )
+        , green_( 0 )
+        , blue_ ( 0 )
+        , alpha_( 0 )
+    {}
+
     UrbanBlockColor( int red, int green, int blue, int alpha )
         : red_  ( red )
         , green_( green )
@@ -56,6 +63,7 @@ public:
     virtual int Red() const;
     virtual int Green() const;
     virtual int Blue() const;
+    virtual UrbanBlockColor GetColor() const;
     virtual float Alpha() const;
     virtual void SetColor( int red, int green, int blue, int alpha );
     virtual void SetColor( const UrbanBlockColor& color );
