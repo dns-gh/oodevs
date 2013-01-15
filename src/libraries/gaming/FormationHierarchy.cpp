@@ -12,7 +12,9 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
+#include "clients_kernel/Team_ABC.h"
 #include "ENT/ENT_Tr_Gen.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -20,8 +22,11 @@ using namespace kernel;
 // Name: FormationHierarchy constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior, kernel::SymbolFactory& factory )
+FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior, kernel::SymbolFactory& factory,
+        const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : MergingTacticalHierarchies( controller, entity, 0 )
+    , formationResolver_( formationResolver )
+    , teamResolver_( teamResolver )
     , superior_( superior )
     , level_   ( factory.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( entity.GetLevel() ) ) )
 {
@@ -74,4 +79,17 @@ void FormationHierarchy::UnregisterParent()
 {
     superior_ = 0;
     kernel::MergingTacticalHierarchies::UnregisterParent();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchy::DoUpdate
+// Created: AHC 2013-01-14
+// -----------------------------------------------------------------------------
+void FormationHierarchy::DoUpdate( const sword::FormationChangeSuperior& message )
+{
+    if( message.superior().has_formation() )
+        superior_ = &formationResolver_.Get( message.superior().formation().id() );
+    else
+        superior_ = &teamResolver_.Get( message.superior().party().id() );
+    ChangeSuperior( superior_ );
 }

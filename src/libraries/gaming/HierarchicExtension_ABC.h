@@ -21,6 +21,7 @@ namespace sword
     class AutomatCreation;
     class FormationCreation;
     class UnitCreation;
+    class FormationChangeSuperior;
 }
 
 namespace kernel
@@ -42,6 +43,7 @@ class HierarchicExtension_ABC : public kernel::Updatable_ABC< sword::UnitCreatio
                               , public kernel::Updatable_ABC< sword::FormationCreation >
                               , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
                               , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
+                              , public kernel::Updatable_ABC< sword::FormationChangeSuperior >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,6 +74,7 @@ private:
     virtual void DoUpdate( const sword::FormationCreation& message );
     virtual void DoUpdate( const sword::UnitChangeSuperior& message );
     virtual void DoUpdate( const sword::AutomatChangeSuperior& message );
+    virtual void DoUpdate( const sword::FormationChangeSuperior& message );
 
     void UpdateSuperior( const kernel::Entity_ABC& superior );
     //@}

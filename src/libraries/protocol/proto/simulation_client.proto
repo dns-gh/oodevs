@@ -3766,6 +3766,8 @@ message SimToClient {
         //! @copybrief LogFuneralHandlingDestruction
         optional LogFuneralHandlingDestruction
             log_funeral_handling_destruction = 145;
+        //! @copybrief AutomatChangeSuperior
+        optional FormationChangeSuperior formation_change_superior = 146;
     }
     /** @property context
         @brief Identifies the request matching the response

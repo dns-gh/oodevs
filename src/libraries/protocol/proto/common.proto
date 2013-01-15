@@ -509,6 +509,26 @@ message AutomatChangeSuperior {
     required Superior  superior = 2;
 }
 
+/** @struct FormationChangeSuperior
+    @brief Notifies of a formation changing superior
+*/
+message FormationChangeSuperior {
+    /** @struct Superior
+        @brief Defines a superior
+        @todo why not use a ParentEntity ?
+    */
+    message Superior {
+        //! An automat
+        optional FormationId formation = 1;
+        //! A formation
+        optional PartyId   party   = 2;
+    }
+    //! The automat identifier
+    required FormationId formation  = 1;
+    //! The superior
+    required Superior  superior = 2;
+}
+
 /** @struct UnitChangeSuperior
     @brief Notifies of a unit changing superior
 */

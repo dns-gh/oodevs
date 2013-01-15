@@ -59,6 +59,7 @@ public:
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     virtual void Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target);
+    virtual void Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target);
     //@}
 
 private slots:

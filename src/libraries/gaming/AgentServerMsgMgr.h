@@ -78,6 +78,7 @@ namespace sword
     class Explosion;
     class FolkCreation;
     class FolkGraphUpdate;
+    class FormationChangeSuperior;
     class FormationCreation;
     class FormationDestruction;
     class FormationUpdate;
@@ -419,6 +420,7 @@ private:
     void OnReceiveAutomatChangeKnowledgeGroupAck ( const sword::AutomatChangeKnowledgeGroupAck& message, unsigned long nCtx );
     void OnReceiveAutomatChangeLogisticLinks     ( const sword::ChangeLogisticLinks&                     message );
     void OnReceiveAutomatChangeLogisticLinksAck  ( const sword::ChangeLogisticLinksAck&         message, unsigned long nCtx );
+    void OnReceiveFormationChangeSuperior        ( const sword::FormationChangeSuperior&                 message );
 
     // RC
     void OnReceiveMsgCR              ( const sword::Report&           message );

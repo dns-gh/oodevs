@@ -140,7 +140,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     const kernel::Karma& karma = superior->Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : symbol;
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol ) );
-    result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_, model_.GetFormationResolver(), model_.GetTeamResolver() ) );
     if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );

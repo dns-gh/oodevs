@@ -328,3 +328,15 @@ const std::string& Formation::GetApp6Symbol() const
 {
     return app6symbol_; 
 }
+
+// -----------------------------------------------------------------------------
+// Name: Formation::DoUpdate
+// Created: AHC 2013-01-14
+// -----------------------------------------------------------------------------
+void Formation::DoUpdate( const sword::FormationChangeSuperior&  msg )
+{
+    if( msg.superior().has_formation() )
+        SetSuperior( model_.Formations().Get( msg.superior().formation().id() ) );
+    else
+        SetSuperior( model_.Sides().Get( msg.superior().party().id() ) );
+}

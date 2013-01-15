@@ -2000,6 +2000,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         OnReceiveControlMeteoLocalDestruction( wrapper.message().control_local_weather_destruction() );
     else if( wrapper.message().has_burning_cell_request_ack() )
         OnReceiveBurningCellRequestAck( wrapper.message().burning_cell_request_ack(), wrapper.context() );
+    else if( wrapper.message().has_formation_change_superior() )
+        OnReceiveFormationChangeSuperior( wrapper.message().formation_change_superior() );
     else if( wrapper.message().has_unit_damaged_by_unit_fire() || wrapper.message().has_crowd_damaged_by_unit_fire() || wrapper.message().has_unit_damaged_by_crowd_fire() )
     {
         // unused
@@ -2325,4 +2327,13 @@ unsigned long AgentServerMsgMgr::GetNbMessagesReceived() const
 unsigned long AgentServerMsgMgr::GetNbMessagesSent() const
 {
     return sender_.GetNbMessagesSent();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveFormationChangeSuperior
+// Created: AHC 2013-01-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveFormationChangeSuperior ( const sword::FormationChangeSuperior& message )
+{
+    GetModel().teams_.GetFormation( message.formation().id() ).Update( message );
 }

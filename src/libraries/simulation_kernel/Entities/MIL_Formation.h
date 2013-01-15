@@ -97,6 +97,7 @@ public:
     void SendFullState( unsigned int context = 0 ) const;
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
     void SetExtensions( const sword::MissionParameter& msg );
+    void OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations );
     //@}
 
     //! @name TMP - Renettoyer les boucles d'updates .. Cf. Scipio

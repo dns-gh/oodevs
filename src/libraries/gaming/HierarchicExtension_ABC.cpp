@@ -110,3 +110,16 @@ const kernel::Entity_ABC* HierarchicExtension_ABC::GetSuperior() const
 {
     return superior_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: HierarchicExtension_ABC::DoUpdate
+// Created: AHC 2013-01-14
+// -----------------------------------------------------------------------------
+void HierarchicExtension_ABC::DoUpdate( const sword::FormationChangeSuperior& message )
+{
+    if( message.superior().has_formation() )
+        UpdateSuperior( formationResolver_.Get( message.superior().formation().id() ) );
+    else
+        UpdateSuperior( teamResolver_.Get( message.superior().party().id() ) );
+}
+

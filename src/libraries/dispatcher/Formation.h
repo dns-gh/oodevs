@@ -20,6 +20,7 @@ namespace sword
     class ChangeLogisticLinks;
     class FormationCreation;
     class FormationUpdate;
+    class FormationChangeSuperior;
 }
 
 namespace dispatcher
@@ -37,6 +38,7 @@ namespace dispatcher
 class Formation : public dispatcher::Formation_ABC
                 , public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< sword::FormationUpdate >
+                , public kernel::Updatable_ABC< sword::FormationChangeSuperior >
 {
 public:
     //! @name Constructors/Destructor
@@ -67,6 +69,7 @@ public:
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
     virtual void DoUpdate( const sword::FormationUpdate& msg );
+    virtual void DoUpdate( const sword::FormationChangeSuperior&  msg );
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 

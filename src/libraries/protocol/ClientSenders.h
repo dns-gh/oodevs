@@ -20,6 +20,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatChangeKnowledgeGroup            , automat_change_knowledge_group            )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatChangeKnowledgeGroupAck         , automat_change_knowledge_group_ack        )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatChangeSuperior                  , automat_change_superior                   )
+    GENERATE_MESSAGE( sword::SimToClient, sword, FormationChangeSuperior                  , formation_change_superior               )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatChangeSuperiorAck               , automat_change_superior_ack               )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatCreation                        , automat_creation                          )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatDestruction                     , automat_destruction                       )

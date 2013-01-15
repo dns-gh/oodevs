@@ -237,6 +237,7 @@ private:
     void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx );
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army, unsigned int context );
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
+    void ProcessFormationChangeSuperior     ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     //@}
 
 private:

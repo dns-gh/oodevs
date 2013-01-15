@@ -17,6 +17,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
@@ -498,4 +499,33 @@ void MIL_Formation::SetExtensions( const sword::MissionParameter& msg )
     if( !msg.value().Get(0).has_extensionlist() )
         return;
     pExtensions_->ReadExtensions( msg.value().Get(0).extensionlist() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::OnReceiveChangeSuperior
+// Created: AHC 2013-01-11
+// -----------------------------------------------------------------------------
+void MIL_Formation::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations )
+{
+    if( msg.parameters().elem( 0 ).value().Get(0).has_formation() )
+    {
+        MIL_Formation* pNewFormation = formations.Find( msg.parameters().elem( 0 ).value().Get(0).formation().id() );
+        if( !pNewFormation )
+            throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_invalid_formation );
+        if( pNewFormation->GetArmy() != GetArmy() )
+            throw MASA_EXCEPTION_ASN( sword::HierarchyModificationAck::ErrorCode, sword::HierarchyModificationAck::error_parties_mismatched );
+        if( pParent_ )
+            pParent_->UnregisterFormation( *this );
+        else
+            pArmy_->UnregisterFormation( *this );
+        pParent_ = pNewFormation;
+        pNewFormation->RegisterFormation( *this );
+    }
+    else
+    {
+        if( pParent_ )
+            pParent_->UnregisterFormation( *this );
+        pParent_ = 0;
+        pArmy_->RegisterFormation( *this );
+    }
 }

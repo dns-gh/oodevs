@@ -13,6 +13,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
+#include "actions/Army.h"
 #include "actions/Formation.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
@@ -23,6 +24,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Team_ABC.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
 
@@ -104,10 +106,15 @@ void TacticalTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& o
 // -----------------------------------------------------------------------------
 bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
 {
+    if( &entity.Get< kernel::TacticalHierarchies >().GetTop() != &superior.Get< kernel::TacticalHierarchies >().GetTop() )
+        return false;
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
     if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
+        return ( dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ||
+                dynamic_cast< const kernel::Team_ABC* >( &superior ) != 0);
     return false;
 }
 
@@ -121,6 +128,8 @@ void TacticalTreeView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Ent
         Drop( *agent, superior );
     else if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
         Drop( *automat, superior );
+    else if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
+        Drop( *formation, superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,4 +188,30 @@ void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Enti
         action->Attach( *new actions::ActionTasker( &item, false ) );
         action->RegisterAndPublish( actionsModel_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Drop
+// Created: AHC 2012-01-11
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target)
+{
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+
+    if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
+    {
+        if( &item.Get< kernel::TacticalHierarchies >().GetUp() == formation )
+            return;
+        action->AddParameter( *new actions::parameters::Formation( it.NextElement(), *formation, controllers_.controller_ ) );
+    } else if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &target ) )
+    {
+        if( &item.Get< kernel::TacticalHierarchies >().GetTop() != team )
+            return;
+        action->AddParameter( *new actions::parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
+    }
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( &item, false ) );
+    action->RegisterAndPublish( actionsModel_ );
 }

@@ -1103,7 +1103,12 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::change_automat_superior:
         case UnitMagicAction::change_formation_superior:
-            ProcessAutomateChangeSuperior( message, nCtx );
+            if( message.tasker().has_automat() )
+                ProcessAutomateChangeSuperior( message, nCtx );
+            else if( message.tasker().has_formation() )
+                ProcessFormationChangeSuperior( message, nCtx );
+            else
+                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::log_supply_push_flow:
             ProcessLogSupplyPushFlow( message, nCtx );
@@ -2550,4 +2555,39 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() const
 {
     return pObjectManager_->GetUniversalObjects();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessFormationChangeSuperior
+// Created: AHC 2013-01-14
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessFormationChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
+{
+    client::AutomatChangeSuperiorAck ack;
+    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
+    try
+    {
+        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
+        if( !pFormation )
+            throw MASA_EXCEPTION_ASN( HierarchyModificationAck_ErrorCode, HierarchyModificationAck::error_invalid_formation );
+        pFormation->OnReceiveChangeSuperior( message, *formationFactory_ );
+    }
+    catch( const NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+
+    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
+    {
+
+        client::FormationChangeSuperior resendMessage;
+        resendMessage().mutable_formation()->set_id( message.tasker().formation().id() );
+        if( message.parameters().elem( 0 ).value().Get( 0 ).has_formation() )
+            resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+        else
+            resendMessage().mutable_superior()->mutable_party()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).party().id() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    }
 }
