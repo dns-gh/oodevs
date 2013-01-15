@@ -460,6 +460,8 @@ void Model::Update( const sword::SimToClient& wrapper )
         meteoModel_->OnReceiveMsgLocalMeteoCreation( message.control_local_weather_creation() );
     else if( message.has_control_local_weather_destruction() )
         meteoModel_->OnReceiveMsgLocalMeteoDestruction( message.control_local_weather_destruction() );
+    else if( message.has_formation_change_superior() )
+        formations_.Get( message.formation_change_superior().formation().id() ).Update( message.formation_change_superior() );
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
 //    }

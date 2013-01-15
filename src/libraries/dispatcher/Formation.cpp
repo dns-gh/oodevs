@@ -115,6 +115,7 @@ void Formation::SetSuperior( dispatcher::Team_ABC& /*superior*/ )
         parent_->Remove( *this );
         parent_ = 0;
     }
+    team_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
