@@ -43,11 +43,11 @@ public:
 
     //! @name Accessors
     //@{
-    bool                IsImpossible() const;
-    const MT_Vector2D&  GetPosStart () const;
-    const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
-    const PathResult& GetPath     () const;
-    void                SetPosStart ( const MT_Vector2D& point );
+    bool               IsImpossible() const;
+    const MT_Vector2D& GetPosStart () const;
+    const MT_Vector2D& GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
+    const PathResult&  GetPath     () const;
+    void               SetPosStart ( const MT_Vector2D& point );
     //@}
 
     void HandlePathPoint( const MT_Vector2D& point, const TerrainData& dataAtPoint, const TerrainData& dataToNextPoint );
