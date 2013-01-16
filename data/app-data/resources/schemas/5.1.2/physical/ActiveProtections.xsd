@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+  <xs:include schemaLocation="tools.xsd"/>
+  <xs:element name="protections">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="protection" type="T_Protection"/>
+      </xs:sequence>
+      <xs:attribute name="model-version" type="T_Version"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="T_Protection">
+    <xs:sequence>
+      <xs:element name="resource" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="usage" type="T_NonNegativeDouble" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="weapon" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="coefficient" type="T_NonNegativeDouble" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="coefficient" type="T_NonNegativeDouble" use="required"/>
+    <xs:attribute name="hard-kill" type="xs:boolean" use="required"/>
+  </xs:complexType>
+</xs:schema>
