@@ -18,7 +18,7 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
 
     Parse a C++ enumeration definition.
     """
-    reports = {}
+    reports = []
     state = 0
     result = 0
     for i in xrange(lineno, len(lines)):
@@ -32,14 +32,16 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
                 line = line.strip()
                 if not line or line == '{':
                     continue
-                if line == '};':
+                if line == '}':
                     state = 2
                     break
                 ui.error('error: cannot parse report enum value:\n    %s\n'
                         % (line,))
                 result = 1
                 continue
-            reports[m.group(1)] = int(m.group(2))
+            if m.group(1) != m.group(2):
+                ui.error( 'In ' + headerpath + ': report name "' + m.group(1) + '" different from its key "' + m.group(2) + '"' );
+            reports.append(m.group(1))
     if state != 2:
         ui.error('error: reached end of %s before seeing all expected enums'
                 % headerpath)
@@ -81,10 +83,10 @@ def parsecpp(ui, swordpath):
     """Check the consistency of reports enumerations in simulation_kernel."""
     result = 0
     headerpath = os.path.join(swordpath,
-        'src/libraries/simulation_kernel/Entities/Orders/MIL_Report.h')
+        'src/libraries/simulation_kernel/Entities/Orders/MIL_DecisionalReport.h')
 
-    redecstart = re.compile(r'^\s*enum\s+E_DecisionalReport\s*$')
-    redecval = re.compile(r'^\s*(eRC_[^\s,]+)\s*=\s*(\d+)\s*,?\s*(//|$)')
+    redecstart = re.compile(r'^\s*namespace\s+report\s*$')
+    redecval = re.compile(r'^\s*const\s+MIL_DecisionalReport\s*(eRC_[^\s,]+)\s*\(\s*"(eRC[^\s,]+)\"\s*\)\s*;')
     lines = list(file(headerpath))
     result = 0
     decreports = parseenum(ui, headerpath, 0, lines, redecstart, redecval)[1]
@@ -104,11 +106,10 @@ def parsecpp(ui, swordpath):
 
     return result, decreports
 
-def parseluaids(ui, path):
+def parselua(ui, path):
     """Parse report identifiers defined in Lua."""
-    relua = re.compile(r'^\s*(eRC_\S+|eNbr)\s*=\s*(\d+)')
-    rids = {}
-    rnames = {}
+    relua = re.compile(r'^\s*(eRC_\S+|eNbr)\s*=\s*("\S+"|\d+)')
+    rnames = []
     result = 0
     for line in file(path):
         line = line.strip()
@@ -118,65 +119,56 @@ def parseluaids(ui, path):
                 ui.error('error: unknown lua line:\n    %s\n' % line)
                 result = 1
             continue
-        rname, rid = m.group(1, 2)
-        rid = int(rid)
-        if rname in rnames:
-            ui.error('error: %s/%d collides with %s/%d\n' % (rname, rid,
-                rname, rnames[rname]))
-            result = 1
-        if rid in rids:
-            ui.error('error: %s/%d collides with %s/%d\n' % (rname, rid,
-                rids[rid], rid))
-            result = 1
+        rname = m.group(1)
         if rname == 'eNbr':
             continue
-        rnames[rname] = rid
-        rids[rid] = rname
+        if '"' + m.group(1) + '"' != m.group(2):
+            ui.error( 'In ' + path + ': report name "' + m.group(1) + '" different from its key "' + m.group(2) + '"' );
+        if rname in rnames:
+            ui.error('error: ' + rname +' already defined in ' + path )
+            result = 1
+        rnames.append(rname)
     return result, rnames
 
 def parseintegrationfile(ui, path):
     """Extract indentifiers looking like report identifiers from Lua files."""
-    rids = set()
+    rnames = set()
     data = file(path, 'rb').read()
     rerc = re.compile(r'eRC_[a-zA-Z0-9_]+')
     for m in rerc.finditer(data):
-        rids.add(m.group(0))
-    return rids
+        rnames.add(m.group(0))
+    return rnames
 
 def parseintegration(ui, intpath):
     """Extract all possible report identifiers in integration subtree"""
-    rids = set()
+    rnames = set()
     for root, dirs, files in os.walk(intpath):
         for f in files:
             p = os.path.join(root, f)
-            rids.update(parseintegrationfile(ui, p))
+            rnames.update(parseintegrationfile(ui, p))
     result = 0
-    if not rids:
+    if not rnames:
         ui.error('error: no report identifier found in integration layer\n')
         result = 1
-    return result, rids
+    return result, rnames
 
-def checkluaintegration(ui, luaids, intnames):
+def checkluaintegration(ui, luanames, intnames):
     """Cross check reports indentifiers integration layer and decisional"""
     result = 0
-    intids = {}
-    for r in intids:
-        if r not in luaids:
+    wrongintnames = []
+    for r in intnames:
+        if r not in luanames:
             ui.error('error: integration uses an unknown report: %s\n' % r)
             result = 1
             continue
-        intids[r] = luaids[r]
-    return result, intids
+        wrongintnames.append(r)
+    return result, wrongintnames
 
-def checkluacpp(ui, luaids, cppids):
+def checkluacpp(ui, luanames, cppnames):
     result = 0
-    luanames = dict((v, k) for k,v in luaids.iteritems())
-    cppnames = dict((v, k) for k,v in cppids.iteritems())
-    for r in sorted(set(cppnames) & set(luanames)):
-        if luanames[r] != cppnames[r]:
-            ui.error('error: lua and c++ names differ: %s != %s\n' %
-                    (luanames[r], cppnames[r]))
-            result = 1
+    for r in sorted(set(cppnames).difference(set(luanames))):
+        ui.error('error: lua and c++ names differ: %s\n' % r)
+        result = 1
     return result
 
 def parsereportlist(path):
@@ -196,46 +188,38 @@ def cmdcheck(ui, args):
     swordpath, reportpath = args
     reports, simnames = parsereportlist(reportpath)
     result = 0
-    res, cppids = parsecpp(ui, swordpath)
+    res, cppnames = parsecpp(ui, swordpath)
     if res:
         result = 1
 
     luapath = os.path.join(swordpath,
             'data/data/models/ada/decisional/dia5/Types_CR.lua')
-    res, luaids = parseluaids(ui, luapath)
+    res, luanames = parselua(ui, luapath)
     if res:
         result = 1
 
-    if checkluacpp(ui, luaids, cppids):
+    if checkluacpp(ui, luanames, cppnames):
         result = 1
-
     intpath = os.path.join(swordpath,
             'data/app-data/resources/integration')
     res, intnames = parseintegration(ui, intpath)
     if res:
         result = 1
-
-    res, intids = checkluaintegration(ui, luaids, intnames)
+    res, wrongintnames = checkluaintegration(ui, luanames, intnames)
     if res:
         result = 1
 
     # Check the list of simulation reports owned by models is a superset
     # of the real one
-    simreports = dict((n, luaids[n]) for n in intids)
-    simreports.update(cppids)
-    for n, c in simreports.iteritems():
+    simreports = set(wrongintnames)
+    simreports.update(cppnames)
+    for n in simreports:
         if n not in reports:
-            ui.error('error: %d/%s is not defined in models reports.txt\n'
-                    % (c, n))
+            ui.error('error: %s is not defined in models reports.txt\n'
+                    % n)
             result = 1
             continue
-        cc = reports[n]
-        if cc != c:
-            ui.error('error: %s has not the same value in the simulation/'
-                    'integration layer and in models (check reports.txt) '
-                    '%d != %d\n' % (n, c, cc))
-            result = 1
-    for n in (set(cppids) - simnames):
+    for n in (set(cppnames) - simnames):
         ui.error('error: %s is not marked as a simulation identifier in '
                 'models reports.txt\n' % n)
     return result
@@ -247,7 +231,7 @@ def cmddump(ui, args):
         raise Abort('failed to parse c++ enumerations')
     luapath = os.path.join(swordpath,
             'data/data/models/ada/decisional/dia5/Types_CR.lua')
-    res, luaids = parseluaids(ui, luapath)
+    res, luaids = parselua(ui, luapath)
     if res:
         raise Abort('failed to parse lua identifiers')
 
@@ -290,4 +274,3 @@ if __name__ == '__main__':
         sys.stderr.write('error: %s\n' % e)
         sys.exit(1)
     sys.exit(ret)
-
