@@ -59,7 +59,7 @@ void FormationProxy::Register( EventListener_ABC& listener )
     {
         std::string parentId( localAgentResolver_.Resolve( agent_.GetParent()->GetId() ) );
         if( parentId.size() > 0 )
-        listener.ParentChanged( parentId );
+            listener.ParentChanged( parentId );
     }
 }
 
@@ -140,4 +140,21 @@ void FormationProxy::UpdateLocationCallback()
     loc = loc / static_cast< double >(  childrenListeners_.size() );
     BOOST_FOREACH( EventListener_ABC* l, listeners_ )
         l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationProxy::HasSubordinate
+// Created: AHC 2013-01-15
+// -----------------------------------------------------------------------------
+bool FormationProxy::HasSubordinate( unsigned int id ) const
+{
+    return subordinates_.end() != subordinates_.find( id );
+}
+
+void FormationProxy::PublishParent()
+{
+    std::string parentId( localAgentResolver_.Resolve( agent_.GetParent()->GetId() ) );
+   if( parentId.size() > 0 )
+       BOOST_FOREACH( EventListener_ABC* l, listeners_ )
+              l->ParentChanged( parentId );
 }

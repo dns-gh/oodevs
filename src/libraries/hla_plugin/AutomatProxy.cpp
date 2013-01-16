@@ -135,3 +135,12 @@ void AutomatProxy::UpdateLocationCallback( const ChildListener& )
     BOOST_FOREACH( EventListener_ABC* l, listeners_ )
         l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatProxy::HasSubordinate
+// Created: AHC 2013-01-15
+// -----------------------------------------------------------------------------
+bool AutomatProxy::HasSubordinate( unsigned int id ) const
+{
+    return subordinates_.end() != subordinates_.find( id );
+}

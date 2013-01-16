@@ -358,5 +358,20 @@ void AgentController::CreateFormation( dispatcher::Formation_ABC& entity )
                 parentIt->second->AddSubordinate( entity.GetId(), *proxy );
             }
         }
+        // Formations creation order is not from top to bottom, so the code above do not create all links. Necessary to process children formations
+        tools::Iterator< const dispatcher::Formation_ABC& > childIt( entity.GetFormations().CreateIterator() );
+        while( childIt.HasMoreElements() )
+        {
+            const dispatcher::Formation_ABC& child( childIt.NextElement() );
+            T_Agents::const_iterator childAgent( agents_.find( child.GetId() ) );
+            if( agents_.end() !=  childAgent && !proxy->HasSubordinate( childAgent->first ) )
+            {
+                proxy->AddSubordinate( childAgent->first, *childAgent->second );
+                if( dynamic_cast< FormationProxy* >( childAgent->second.get() ) )
+                {
+                    dynamic_cast< FormationProxy* >( childAgent->second.get() )->PublishParent();
+                }
+            }
+        }
     }
 }

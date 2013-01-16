@@ -91,3 +91,12 @@ void PlatformProxy::MountedChanged( bool isMounted )
         listeners_.EmbarkmentChanged( isMounted_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PlatformProxy::HasSubordinate
+// Created: AHC 2013-01-15
+// -----------------------------------------------------------------------------
+bool PlatformProxy::HasSubordinate( unsigned int ) const
+{
+    return false;
+}

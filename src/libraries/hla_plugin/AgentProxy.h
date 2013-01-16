@@ -61,6 +61,7 @@ public:
     //@{
     virtual void Register( EventListener_ABC& listener );
     virtual void Unregister( EventListener_ABC& listener );
+    virtual bool HasSubordinate( unsigned int id ) const;
     virtual void AddSubordinate( unsigned int id, Agent_ABC& agent );
     virtual void RemoveSubordinate( unsigned int id );
     //@}

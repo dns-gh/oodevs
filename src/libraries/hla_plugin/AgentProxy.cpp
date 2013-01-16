@@ -177,3 +177,12 @@ void AgentProxy::AddSubordinate( unsigned int id, Agent_ABC& /*agent*/ )
 void AgentProxy::RemoveSubordinate( unsigned int /*id*/ )
 {
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentProxy::HasSubordinate
+// Created: AHC 2013-01-15
+// -----------------------------------------------------------------------------
+bool AgentProxy::HasSubordinate( unsigned int ) const
+{
+    return false;
+}
