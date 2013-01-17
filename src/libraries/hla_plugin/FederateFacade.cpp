@@ -105,9 +105,15 @@ FederateFacade::~FederateFacade()
 {
     tacticalObjectSubject_.Unregister( *this );
     subject_.Unregister( *this );
+    groundVehicleClass_.reset( 0 );
+    humanClass_.reset( 0 );
+    rprAggregateClass_.reset( 0 );
+    rprAircraftClass_.reset( 0 );
+    rprSurfaceVesselClass_.reset( 0 );
     aircraftClass_.reset( 0 );
     surfaceVesselClass_.reset( 0 );
     aggregateClass_.reset( 0 );
+    minefieldClass_.reset( 0 );
     destructor_.reset( 0 );
     federate_.reset( 0 );
     rtiFactory_.DeleteAmbassador( ambassador_ );
