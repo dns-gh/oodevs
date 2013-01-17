@@ -41,6 +41,7 @@ private slots:
     //! @name slots
     //@{
     void OnTextChanged();
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 
 private:

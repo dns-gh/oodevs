@@ -25,10 +25,17 @@ public:
     virtual ~ADN_TextEdit_ABC();
 
     void setEnabled( bool b );
+    void SetToolTip( const QString& toolTip );
+    void ConnectWithRefValidity( const ADN_Ref_ABC& ref );
 
 protected slots:
     virtual void TextChanged() = 0;
     virtual void UpdateEnableState() = 0;
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
+
+private:
+    const QPalette originalPalette_;
+    QString originalToolTip_;
 };
 
 #endif // __ADN_TextEdit_ABC_h_

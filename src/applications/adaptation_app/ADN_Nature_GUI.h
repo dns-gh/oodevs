@@ -37,8 +37,8 @@ private slots:
     //@{
     void OnTextChanged( const QString& );
     void UpdateEnableState();
-
     void OnUnitSymbolChanged( const QString& nature );
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 };
 

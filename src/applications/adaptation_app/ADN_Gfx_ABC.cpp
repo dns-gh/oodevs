@@ -16,10 +16,11 @@
 // Created: JDY 03-07-10
 //-----------------------------------------------------------------------------
 ADN_Gfx_ABC::ADN_Gfx_ABC(bool bAuto)
-: pConnector_(0)
-, bAutoEnabled_(bAuto)
-, bEnabledOnlyInAdminMode_( false )
+    : pConnector_(0)
+    , bAutoEnabled_(bAuto)
+    , bEnabledOnlyInAdminMode_( false )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -28,4 +29,5 @@ ADN_Gfx_ABC::ADN_Gfx_ABC(bool bAuto)
 //-----------------------------------------------------------------------------
 ADN_Gfx_ABC::~ADN_Gfx_ABC()
 {
+    // NOTHING
 }

@@ -264,3 +264,12 @@ void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
     if( value%3600 > 0 )
         nMinimumHoursValue_ += 1;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::Warn
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_TimeField::Warn( ADN_ErrorStatus, const QString& )
+{
+    // NOTHING (For now)
+}

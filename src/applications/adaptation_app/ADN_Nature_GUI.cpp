@@ -66,3 +66,12 @@ void ADN_Nature_GUI::OnUnitSymbolChanged( const QString& nature )
     if( text() != nature )
         setText( nature );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Nature_GUI::Warn
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_Nature_GUI::Warn( ADN_ErrorStatus, const QString& )
+{
+    // NOTHING
+}

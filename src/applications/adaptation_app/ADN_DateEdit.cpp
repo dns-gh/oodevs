@@ -91,3 +91,12 @@ void ADN_DateEdit::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_String< ADN_DateEdit >* >( pConnector_ )->IsConnected() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_DateEdit::Warn
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_DateEdit::Warn( ADN_ErrorStatus, const QString& )
+{
+    // NOTHING
+}

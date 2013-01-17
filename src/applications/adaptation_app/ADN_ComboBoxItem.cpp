@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ComboBoxItem.h"
+#include "moc_ADN_ComboBoxItem.cpp"
 #include "ADN_Connector_String.h"
 
 //-----------------------------------------------------------------------------
@@ -68,6 +69,15 @@ QString ADN_ComboBoxItem::text() const
 // Created: JDY 03-09-10
 //-----------------------------------------------------------------------------
 void ADN_ComboBoxItem::setEnabled(bool /*bEnable*/)
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ComboBoxItem::Warn
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_ComboBoxItem::Warn( ADN_ErrorStatus, const QString& )
 {
     // NOTHING
 }

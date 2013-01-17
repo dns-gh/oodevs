@@ -103,3 +103,12 @@ void ADN_ColorSelector::OnClick()
         static_cast< ADN_Connector_String< ADN_ColorSelector >* >( pConnector_ )->SetDataChanged( "0x" + color_.name().right( 6 ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ColorSelector::Warn
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_ColorSelector::Warn( ADN_ErrorStatus, const QString& )
+{
+    // NOTHING
+}

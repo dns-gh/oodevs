@@ -30,7 +30,6 @@ public:
     void SetIsEnabledOnlyInAdminMode( bool b );
 
 protected:
-
     ADN_Connector_ABC* pConnector_;
     bool               bAutoEnabled_;
     bool               bEnabledOnlyInAdminMode_;

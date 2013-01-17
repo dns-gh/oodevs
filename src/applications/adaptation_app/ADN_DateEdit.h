@@ -42,6 +42,7 @@ private slots:
     //@{
     void DateChanged( const QDate& date );
     void UpdateEnableState();
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 
 private:

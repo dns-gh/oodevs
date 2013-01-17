@@ -897,3 +897,37 @@ void ADN_ListView::GoToOnDoubleClicked( const QModelIndex& index )
     assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
     emit( GoToRequested( goToInfo_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::Warn
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus */, const QString& )
+{
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+    {
+        ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row ) );
+        ADN_Ref_ABC* pData = reinterpret_cast< ADN_Ref_ABC* >( item->GetData() );
+
+        if( !pData )
+            continue;
+
+        ADN_ErrorStatus elementStatus = pData->GetErrorStatus();
+        QBrush brush = Qt::transparent;
+        switch( elementStatus )
+        {
+        case eWarning:
+            brush = Qt::yellow;
+            break;
+        case eError:
+            brush = Qt::red;
+            break;
+        case eNoError:
+        default:
+            break;
+        }
+        item->setBackground( brush );
+    }
+
+    // $$$$ ABR 2013-01-15: ListView Border color depending on errorStatus ??
+}

@@ -46,6 +46,7 @@ private slots:
     //@{
     void OnClick();
     void UpdateEnableState();
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 
 private:

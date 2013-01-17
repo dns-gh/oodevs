@@ -36,6 +36,8 @@ public:
     virtual ~ADN_EditLine_ABC();
 
     void setEnabled( bool b );
+    void SetToolTip( const QString& toolTip );
+    void ConnectWithRefValidity( const ADN_Ref_ABC& ref );
 
 protected:
     void focusOutEvent( QFocusEvent* pEvent );
@@ -45,8 +47,13 @@ signals:
     void StartEditing();
 
 protected slots:
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     virtual void TextChanged( const QString& string )=0;
     virtual void UpdateEnableState() = 0;
+
+private:
+    const QPalette originalPalette_;
+    QString originalToolTip_;
 };
 
 #endif // __ADN_EditLine_ABC_h_

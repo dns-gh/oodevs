@@ -118,6 +118,8 @@ protected slots:
     bool SetCurrentItem();
     void UpdateEnableState();
 
+    void Warn( ADN_ErrorStatus errorStatus, const QString& errorMsg );
+
 signals:
     void ItemSelected( void* pData );
     void UsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );

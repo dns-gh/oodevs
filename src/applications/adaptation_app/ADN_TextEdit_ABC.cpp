@@ -21,6 +21,8 @@
 ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent, const char * name)
     : QTextEdit( parent,name )
     , ADN_Gfx_ABC()
+    , originalPalette_( palette() )
+    , originalToolTip_( "" )
 {
     // connect edit line & connector
     connect( this, SIGNAL( textChanged() ), this, SLOT( TextChanged() ) );
@@ -46,4 +48,70 @@ void ADN_TextEdit_ABC::setEnabled( bool b )
         QTextEdit::setEnabled( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin );
     else
         QTextEdit::setEnabled( b );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TextEdit_ABC::SetToolTip
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_TextEdit_ABC::SetToolTip( const QString& toolTip )
+{
+    originalToolTip_ = toolTip;
+    setToolTip( originalToolTip_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TextEdit_ABC::ConnectWithRefValidity
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_TextEdit_ABC::ConnectWithRefValidity( const ADN_Ref_ABC& ref )
+{
+    connect( this, SIGNAL( textChanged( const QString& ) ), &ref, SLOT( CheckValidity() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TextEdit_ABC::Warn
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_TextEdit_ABC::Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage /*= ""*/ )
+{
+    switch( errorStatus )
+    {
+    case eNoError:
+        {
+            setToolTip( originalToolTip_ );
+            setPalette( originalPalette_ );
+        }
+        break;
+    case eWarning:
+        {
+            if( !errorMessage.isEmpty() )
+                setToolTip( errorMessage );
+            QPalette palette;
+            palette.setColor( QPalette::Text, Qt::black );
+            palette.setColor( QPalette::Base, Qt::yellow );
+            palette.setColor( QPalette::Shadow, Qt::yellow );
+            palette.setColor( QPalette::Window, Qt::yellow );
+            palette.setColor( QPalette::Highlight, Qt::yellow );
+            palette.setColor( QPalette::HighlightedText, Qt::black );
+            setPalette( palette );
+        }
+        break;
+    case eError:
+        {
+            if( !errorMessage.isEmpty() )
+                setToolTip( errorMessage );
+            QPalette palette;
+            palette.setColor( QPalette::Text, Qt::black );
+            palette.setColor( QPalette::Base, Qt::red );
+            palette.setColor( QPalette::Shadow, Qt::red );
+            palette.setColor( QPalette::Window, Qt::red );
+            palette.setColor( QPalette::Highlight, Qt::red );
+            palette.setColor( QPalette::HighlightedText, Qt::black );
+            setPalette( palette );
+        }
+        break;
+    default:
+        break;
+    }
 }

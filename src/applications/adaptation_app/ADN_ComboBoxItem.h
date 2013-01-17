@@ -19,9 +19,11 @@ class ADN_ComboBox;
 //*****************************************************************************
 // Created: JDY 03-09-08
 //*****************************************************************************
-class ADN_ComboBoxItem : public ADN_Gfx_ABC
+class ADN_ComboBoxItem : public QObject
+                       , public ADN_Gfx_ABC
                        , private boost::noncopyable
 {
+    Q_OBJECT
 
 public:
 
@@ -32,6 +34,9 @@ public:
     void            setText(const QString& txt);
     QString         text() const;
     void            setEnabled(bool);
+
+protected slots:
+    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
 
 protected:
     ADN_ComboBox&   combo_;

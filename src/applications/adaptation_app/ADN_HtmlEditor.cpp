@@ -58,3 +58,11 @@ void ADN_HtmlEditor::OnTextChanged()
     static_cast< ADN_Connector_String< ADN_HtmlEditor >* >( pConnector_ )->SetDataChanged( GetText() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_HtmlEditor::Warn
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_HtmlEditor::Warn( ADN_ErrorStatus, const QString& )
+{
+    // NOTHING
+}
