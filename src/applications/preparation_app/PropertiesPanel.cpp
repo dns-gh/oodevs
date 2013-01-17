@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "PropertiesPanel.h"
 #include "PropertyDisplayer.h"
+#include "PropertiesComparator.h"
 #include "EditorFactory.h"
 #include "preparation/StaticModel.h"
 
@@ -19,8 +20,9 @@
 // -----------------------------------------------------------------------------
 PropertiesPanelBase::PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
                                           const tools::GeneralConfig& config )
-    : editorFactory_      ( new EditorFactory( controllers, model, staticModel, config ) )
-    , propertiesDisplayer_( new PropertyDisplayer( staticModel.coordinateConverter_ ) )
+    : editorFactory_       ( new EditorFactory( controllers, model, staticModel, config ) )
+    , propertiesComparator_( new PropertiesComparator( staticModel.coordinateConverter_ ) )
+    , propertiesDisplayer_ ( new PropertyDisplayer( staticModel.coordinateConverter_ ) )
 {
     // NOTHING
 }
@@ -41,7 +43,7 @@ PropertiesPanelBase::~PropertiesPanelBase()
 PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
                                   const gui::GlProxy& glProxy, const tools::GeneralConfig& config )
     : PropertiesPanelBase( controllers, model, staticModel, config )
-    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertiesDisplayer_, glProxy )
+    , gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertiesDisplayer_, *propertiesComparator_, glProxy )
 {
     // NOTHING
 }

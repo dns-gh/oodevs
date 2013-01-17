@@ -41,3 +41,12 @@ Displayer_ABC& Displayer_ABC::NotToBeCalled( const char* function ) const
 {
     throw MASA_EXCEPTION( std::string() + "Function '" + function + "' of '" + typeid(*this).name() + "' should not be called" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Displayer_ABC::IsValid
+// Created: LGY 2013-01-16
+// -----------------------------------------------------------------------------
+bool Displayer_ABC::IsValid() const
+{
+    return true;
+}

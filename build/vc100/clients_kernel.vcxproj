@@ -127,6 +127,8 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp" />
@@ -288,6 +290,8 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroup.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ReadOnlyModable.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />

@@ -17,6 +17,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/PropertiesGroupDictionary.h"
 #include "PropertyDisplayer.h"
 #include "GlProxy.h"
 
@@ -26,14 +27,16 @@ using namespace gui;
 // Name: PropertiesPanel constructor
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory, PropertyDisplayer& displayer, const GlProxy& glProxy )
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory,
+                                  PropertyDisplayer& displayer, PropertyDisplayer& comparator, const GlProxy& glProxy )
     : QScrollArea( parent )
-    , controllers_( controllers )
-    , glProxy_    ( glProxy )
-    , selected_   ( 0 )
-    , view_       ( new PropertyTreeView() )
-    , delegate_   ( new PropertyDelegate( controllers.actions_, factory ) )
-    , model_      ( new PropertyModel( displayer ) )
+    , controllers_     ( controllers )
+    , glProxy_         ( glProxy )
+    , selected_        ( 0 )
+    , view_            ( new PropertyTreeView() )
+    , delegate_        ( new PropertyDelegate( controllers.actions_, factory ) )
+    , model_           ( new PropertyModel( displayer ) )
+    , pMultiProperties_( new kernel::PropertiesGroupDictionary( controllers.controller_, comparator ) )
 {
     view_->setModel( model_ );
     view_->setItemDelegate( delegate_ );
@@ -85,6 +88,22 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
     setWidget( view_ );
     if( element )
         view_->setEnabled( glProxy_.ShouldEdit( *element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanel::NotifySelectionChanged
+// Created: LGY 2013-01-03
+// -----------------------------------------------------------------------------
+void PropertiesPanel::NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements )
+{
+    if( elements.size() > 1 )
+    {
+        NotifySelected( 0 );
+
+        pMultiProperties_->Fill( elements );
+        pMultiProperties_->Display( *model_ );
+        view_->Display();
+    }
 }
 
 // -----------------------------------------------------------------------------

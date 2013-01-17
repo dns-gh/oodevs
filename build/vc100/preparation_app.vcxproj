@@ -227,6 +227,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantCreationPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ObjectCreationPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ProfilesChecker.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\PropertiesComparator.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PropertyDisplayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolDialog.cpp" />
@@ -709,6 +710,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\PropertiesComparator.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PropertyDisplayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\StockPrototype.h" />

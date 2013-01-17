@@ -3,56 +3,45 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef gui_PropertyDisplayer_h_
-#define gui_PropertyDisplayer_h_
+#ifndef PropertiesComparator_h
+#define PropertiesComparator_h
 
-#include "NoLinkDisplayer.h"
+#include "PropertyDisplayer.h"
 
-namespace gui
-{
 // =============================================================================
-/** @class  PropertyDisplayer
-    @brief  Property displayer
+/** @class  PropertiesComparator
+    @brief  Properties comparator
 */
-// Created: SBO 2006-10-18
+// Created: LGY 2013-01-16
 // =============================================================================
-class PropertyDisplayer : public NoLinkDisplayer
+class PropertiesComparator : public PropertyDisplayer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertyDisplayer();
-    virtual ~PropertyDisplayer();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Hide() ;
-    void SetItem( QStandardItem* item );
+    explicit PropertiesComparator( const kernel::CoordinateConverter_ABC& converter );
+    virtual ~PropertiesComparator();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual kernel::Displayer_ABC& SubItem( const QString& name ) ;
+    virtual bool IsValid() const;
+    virtual void Clear();
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
-    QString        message_;
-    QStandardItem* item_;
-    QColor         color_;
+    std::vector< QString > texts_;
     //@}
 };
 
-}
-
-#endif // gui_PropertyDisplayer_h_
+#endif // PropertiesComparator_h

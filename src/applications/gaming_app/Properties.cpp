@@ -19,6 +19,7 @@
 PropertiesBase::PropertiesBase()
     : editorFactory_    ( new gui::EditorFactory() )
     , propertyDisplayer_( new gui::PropertyDisplayer() )
+    , propertyComparator_( new gui::PropertyDisplayer() )
 {
     // NOTHING
 }
@@ -37,7 +38,7 @@ PropertiesBase::~PropertiesBase()
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 Properties::Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy )
-    : gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertyDisplayer_, glProxy )
+    : gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertyDisplayer_, *propertyComparator_, glProxy )
 {
     // NOTHING
 }

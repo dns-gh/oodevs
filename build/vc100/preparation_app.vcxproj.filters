@@ -529,6 +529,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\InputPropagationPrototype.cpp">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PropertiesComparator.cpp">
+      <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -737,6 +740,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\InputPropagationPrototype.h">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\PropertiesComparator.h">
+      <Filter>Source Files\Dialogs\Editors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

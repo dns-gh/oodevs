@@ -73,3 +73,12 @@ void PropertiesDictionary::Display( const QString& name, Displayer_ABC& displaye
     if( it != properties_.end() )
         displayer.Display( it->second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesDictionary::GetProperties
+// Created: LGY 2013-01-17
+// -----------------------------------------------------------------------------
+const PropertiesDictionary::T_Properties& PropertiesDictionary::GetProperties() const
+{
+    return properties_;
+}

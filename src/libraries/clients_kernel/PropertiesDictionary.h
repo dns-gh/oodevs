@@ -38,12 +38,20 @@ public:
     virtual ~PropertiesDictionary();
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< QString, Property_ABC* > T_Properties;
+    typedef T_Properties::iterator            IT_Properties;
+    typedef T_Properties::const_iterator     CIT_Properties;
+    //@}
+
     //! @name Operations
     //@{
     bool HasKey( const QString& name ) const;
     void Remove( const QString& name );
     void Display( Displayer_ABC& displayer );
     void Display( const QString& name, Displayer_ABC& displayer );
+    const T_Properties& GetProperties() const;
 
     template< typename T, typename Owner, typename Setter >
     void Register( const Owner& owner, const QString& name, T& value, const Setter& setter, bool readOnly = false, E_Category category = eNothing )
@@ -66,14 +74,6 @@ public:
     {
         Register( owner, name, value, caller< ConcreteOwner, T >( c, set ), readOnly, category );
     }
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    typedef std::map< QString, Property_ABC* > T_Properties;
-    typedef T_Properties::iterator            IT_Properties;
-    typedef T_Properties::const_iterator     CIT_Properties;
     //@}
 
     //! @name Types
@@ -107,6 +107,11 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
     T_Properties properties_;
     //@}
 };

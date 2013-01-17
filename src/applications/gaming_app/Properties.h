@@ -44,6 +44,7 @@ protected:
     //@{
     std::auto_ptr< kernel::EditorFactory_ABC > editorFactory_;
     std::auto_ptr< gui::PropertyDisplayer > propertyDisplayer_;
+    std::auto_ptr< gui::PropertyDisplayer > propertyComparator_;
     //@}
 };
 

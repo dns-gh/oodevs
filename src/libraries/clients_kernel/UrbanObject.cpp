@@ -127,6 +127,7 @@ void UrbanObject::CreateDictionary( bool readOnly )
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, kernel::eUrbanTemplate );
+    dictionary.Register( static_cast< const EntityImplementation& >( *this ), tools::translate( "EntityImplementation", "Info/Name" ), name_, static_cast< EntityImplementation& >( *this ), &EntityImplementation::Rename, !readOnly );
 }
 
 // -----------------------------------------------------------------------------

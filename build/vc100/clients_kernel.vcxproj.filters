@@ -511,6 +511,12 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterType.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroup.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
@@ -1214,6 +1220,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterType.h">
       <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroup.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.h">
+      <Filter>Source Files\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

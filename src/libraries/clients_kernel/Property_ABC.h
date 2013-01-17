@@ -51,6 +51,7 @@ public:
     virtual void Display( Displayer_ABC& displayer ) = 0;
     virtual const QString& GetName() const = 0;
     virtual E_Category GetCategory() const = 0;
+    virtual void AddSubProperty( Property_ABC* property ) = 0;
     //@}
 
 private:
@@ -112,6 +113,11 @@ public:
     virtual E_Category GetCategory() const
     {
         return category_;
+    }
+
+    virtual void AddSubProperty( Property_ABC* /*property*/ )
+    {
+        // NOTHING
     }
 
 private:
