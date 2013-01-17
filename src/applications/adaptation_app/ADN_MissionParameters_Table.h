@@ -57,7 +57,6 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( const QItemSelection&, const QItemSelection& );
-    void OnTypeChanged( E_MissionParameterType type );
     void OnMissionSelectionChanged();
     //@}
 

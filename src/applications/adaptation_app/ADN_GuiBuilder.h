@@ -128,10 +128,6 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
     else if( sideWidget != 0 )
         thirdWidget = sideWidget;
 
-    //QLabel* pUnitLabel = 0;
-    //if( szUnit != 0 )
-    //    pUnitLabel = new QLabel( szUnit, pParent );
-
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
     pCurrentFieldGfx2_ = pField;
@@ -162,10 +158,6 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
         thirdWidget = new QLabel( szUnit, pParent );
     else if( sideWidget != 0 )
         thirdWidget = sideWidget;
-
-    //QLabel* pUnitLabel = 0;
-    //if( szUnit != 0 )
-    //    pUnitLabel = new QLabel( szUnit, pParent );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;

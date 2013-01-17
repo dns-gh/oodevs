@@ -119,15 +119,6 @@ void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& it
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MissionParameters_Table::OnTypeChanged
-// Created: ABR 2012-10-25
-// -----------------------------------------------------------------------------
-void ADN_MissionParameters_Table::OnTypeChanged( E_MissionParameterType type )
-{
-    emit TypeChanged( type );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::OnContextMenu
 // Created: ABR 2012-10-29
 // -----------------------------------------------------------------------------
