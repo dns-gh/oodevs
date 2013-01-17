@@ -96,7 +96,7 @@ void ADN_MissionGenObjectTypes_Table::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_MissionGenObjectTypes_Table::OnTypeChanged( E_MissionParameterType type )
 {
-    if( type == eMissionParameterTypeGenObject )
+    if( type == eMissionParameterTypeGenObject || type == eMissionParameterTypeObjectKnowledge )
     {
         all_->blockSignals( true );
         all_->setChecked( IsChecked() );
