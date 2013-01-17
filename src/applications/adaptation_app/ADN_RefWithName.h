@@ -33,6 +33,18 @@ public:
     virtual ~ADN_RefWithName() {}
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void CheckValidity()
+    {
+        ADN_Ref_ABC::CheckValidity();
+        ADN_ErrorStatus status = GetErrorStatus();
+        strName_.CheckValidity();
+        status = std::max< ADN_ErrorStatus >( status, strName_.GetErrorStatus() );
+        SetErrorStatus( status );
+    }
+    //@}
+
 public:
     //! @name Member data
     //@{

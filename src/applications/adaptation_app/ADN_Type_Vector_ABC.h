@@ -11,6 +11,8 @@
 #define __ADN_Type_Vector_ABC_h_
 
 #include "ADN_Connector_Vector_ABC.h"
+#include "ADN_Type_ABC.h"
+#include "ADN_Tools.h"
 
 //*****************************************************************************
 // Created: JDY 03-06-26
@@ -25,6 +27,36 @@ public:
     typedef T_PtrVector::iterator          IT_PtrVector;
     typedef T_PtrVector::const_iterator    CIT_PtrVector;
 
+    typedef ADN_Type_ABC< std::string >& ( *T_Extractor )( T& );
+    class UniquenessChecker : public ADN_Checker
+    {
+    public:
+        UniquenessChecker( ADN_ErrorStatus type, const QString& errorMsg, T_Extractor extractor )
+            : ADN_Checker( type, errorMsg )
+            , extractor_( extractor )
+        {
+            // NOTHING
+        }
+        virtual ~UniquenessChecker() {}
+
+        bool IsValid( T& lhs, T& rhs ) const
+        {
+            return extractor_( lhs ).GetData() != extractor_( rhs ).GetData();
+        }
+
+        void InvalidData( T& lhs, T& rhs ) const
+        {
+            extractor_( lhs ).SetErrorStatus( std::max< ADN_ErrorStatus >( status_, extractor_( lhs ).GetErrorStatus() ), msg_ );
+            extractor_( rhs ).SetErrorStatus( std::max< ADN_ErrorStatus >( status_, extractor_( rhs ).GetErrorStatus() ), msg_ );
+            lhs.SetErrorStatus( std::max< ADN_ErrorStatus >( status_, lhs.GetErrorStatus() ), msg_ );
+            rhs.SetErrorStatus( std::max< ADN_ErrorStatus >( status_, rhs.GetErrorStatus() ), msg_ );
+        }
+
+    private:
+        T_Extractor extractor_;
+    };
+    typedef std::vector< UniquenessChecker* > T_Checkers;
+
 public:
     explicit ADN_Type_Vector_ABC( bool bAutoRef = true );
     virtual ~ADN_Type_Vector_ABC();
@@ -34,6 +66,9 @@ public:
     virtual void EndVector();
             void Reset();
             void Delete();
+
+    virtual void CheckValidity();
+    void AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor = &ADN_Tools::NameExtractor );
 
 protected:
     virtual void SetDataPrivate( void* pData );
@@ -53,6 +88,7 @@ public:
 
 protected:
     bool bAutoRef_;
+    T_Checkers checkers_;
 };
 
 #include "ADN_Type_Vector_ABC.inl"

@@ -205,6 +205,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Checker.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.h">
@@ -3156,7 +3157,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBoxItem.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ComboBoxItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_EditLine.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_EditLine_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

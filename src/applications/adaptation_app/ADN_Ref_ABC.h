@@ -10,6 +10,8 @@
 #ifndef __ADN_Ref_ABC_h_
 #define __ADN_Ref_ABC_h_
 
+#include "ADN_Checker.h"
+
 class ADN_Connector_ABC;
 class ADN_Connector_Vector_ABC;
 
@@ -45,11 +47,25 @@ public:
     bool IsMultiRef();
     //@}
 
+    //! @name Validity
+    //@{
+    ADN_ErrorStatus GetErrorStatus() const;
+    void SetErrorStatus( ADN_ErrorStatus errorStatus, const QString& errorMsg = "" );
+    //@}
+
 public slots:
+    //! @name Slots
+    //@{
     void Invalidate( void* pObj, bool bDel = false );
+    virtual void CheckValidity();
+    //@}
 
 signals:
+    //! @name Signals
+    //@{
     void Invalidated( void* pObj, bool bDel );
+    void SendErrorStatus( ADN_ErrorStatus status, const QString& errorMsg );
+    //@}
 
 public:
     //! @name Double dispatch connexion mechanism
@@ -84,6 +100,7 @@ private:
     bool bConnecting_;
     bool bSlotsBlocked_;
     int  nRef_;
+    ADN_ErrorStatus errorStatus_;
 };
 
 // -----------------------------------------------------------------------------
@@ -135,6 +152,16 @@ inline
 void ADN_Ref_ABC::BlockSlots( bool bBlock )
 {
     bSlotsBlocked_ = bBlock;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Ref_ABC::GetErrorStatus
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+inline
+ADN_ErrorStatus ADN_Ref_ABC::GetErrorStatus() const
+{
+    return errorStatus_;
 }
 
 #endif // __ADN_Ref_ABC_h_

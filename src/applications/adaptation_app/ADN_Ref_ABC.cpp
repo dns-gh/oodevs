@@ -20,6 +20,7 @@ ADN_Ref_ABC::ADN_Ref_ABC()
     , bConnecting_  ( false )
     , bSlotsBlocked_( false )
     , nRef_         ( 0 )
+    , errorStatus_  ( eNoError )
 {
     // NOTHING
 }
@@ -222,4 +223,23 @@ void ADN_Ref_ABC::AutoDelete()
 void ADN_Ref_ABC::AutoDeleteEx()
 {
     delete this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Ref_ABC::CheckValidity
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_Ref_ABC::CheckValidity()
+{
+    errorStatus_ = eNoError;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Ref_ABC::SetErrorStatus
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_Ref_ABC::SetErrorStatus( ADN_ErrorStatus errorStatus, const QString& errorMsg /* = "" */ )
+{
+    emit SendErrorStatus( errorStatus, errorMsg );
+    errorStatus_ = errorStatus;
 }

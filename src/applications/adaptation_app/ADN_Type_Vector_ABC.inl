@@ -39,7 +39,9 @@ ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
 template <class T>
 ADN_Type_Vector_ABC<T>::~ADN_Type_Vector_ABC()
 {
-    // NOTHING
+    for( auto it = checkers_.begin(); it != checkers_.end(); ++it )
+        delete *it;
+    checkers_.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -243,4 +245,47 @@ template <class T>
 void ADN_Type_Vector_ABC< T >::push_back(  T* const & x )
 {
     std::vector<T*>::push_back( x );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_Vector_ABC::AddUniquenessChecker
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_Type_Vector_ABC< T >::AddUniquenessChecker( ADN_ErrorStatus errorType, const QString& errorMsg, T_Extractor extractor /* = &ADN_Tools::NameExtractor */ )
+{
+    checkers_.push_back( new UniquenessChecker( errorType, errorMsg, extractor ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_Vector_ABC::IsValid
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+template <class T>
+void ADN_Type_Vector_ABC< T >::CheckValidity()
+{
+    ADN_Ref_ABC::CheckValidity();
+    ADN_ErrorStatus errorStatus = GetErrorStatus();
+
+    // Elements validity
+    for( auto it = begin(); it != end(); ++it )
+    {
+        ( *it )->CheckValidity();
+        errorStatus = std::max< ADN_ErrorStatus >( ( *it )->GetErrorStatus(), errorStatus );
+    }
+
+    // Vector validity
+    for( auto checker = checkers_.begin(); checker != checkers_.end(); ++checker )
+    {
+        assert( *checker != 0 );
+        for( auto lhs = begin(); lhs != end(); ++lhs )
+            for( auto rhs = lhs + 1; rhs != end(); ++rhs )
+                if( lhs != rhs && !( *checker )->IsValid( **lhs, **rhs ) )
+                {
+                    ( *checker )->InvalidData( **lhs, **rhs );
+                    errorStatus = std::max< ADN_ErrorStatus >( ( *checker )->status_, errorStatus );
+                }
+    }
+
+    SetErrorStatus( errorStatus );
 }

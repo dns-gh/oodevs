@@ -13,6 +13,7 @@
 #define __ADN_Tools_h_
 
 #include "ADN_Connector_ABC.h"
+//#include "ADN_Types.h"
 
 namespace xml
 {
@@ -32,6 +33,12 @@ class Q3PopupMenu;
 // =============================================================================
 namespace ADN_Tools
 {
+    template< typename Data >
+    ADN_Type_ABC< std::string >& NameExtractor( Data& data )
+    {
+        return data.strName_;
+    }
+
     template< typename T >
     class NameCmp : public std::unary_function< T* , bool >
     {
