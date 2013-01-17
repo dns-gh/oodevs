@@ -69,7 +69,7 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent, const QString& objectNam
     , vInfosConnectors_( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) )
 {
     setObjectName( objectName );
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( objectName );
 
     ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Poisoning effect" ), this );
     vInfosConnectors_[eIntoxPresent] = &pIntoxGroup->GetConnector();

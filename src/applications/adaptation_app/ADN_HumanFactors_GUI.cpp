@@ -122,7 +122,7 @@ void ADN_HumanFactors_GUI::Build()
 // -----------------------------------------------------------------------------
 QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const QString& szName )
 {
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
     ADN_EditLine_Double* editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
     editDouble->setObjectName( editDouble->objectName() + szName );
@@ -143,7 +143,7 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
 // -----------------------------------------------------------------------------
 QWidget* ADN_HumanFactors_GUI::BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName )
 {
-    ADN_GuiBuilder builder;
+    ADN_GuiBuilder builder( strClassName_ );
     Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
     ADN_EditLine_Int* editInt = builder.AddField< ADN_EditLine_Int >( pGroupBox, firstThresholdName, thresholds.firstThreshold_, 0, eGreaterZero );
     editInt->setObjectName( editInt->objectName() + firstThresholdName );
