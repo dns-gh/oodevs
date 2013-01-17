@@ -206,7 +206,8 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
         kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
-        //the following lines have to be done after creating agent AND BEFORE deleting the ghost in order to prevent crash. don't change theirs positions for modifications or ask ABR or NPT
+        // $$$$ NPT 2013-01-11: The following lines have to be done after creating agent AND BEFORE deleting the ghost in order to prevent a crash on QTreeView (takeItem on the selectedItem crash in this case)
+        // $$$$ ABR 2013-01-14: Oddly, the crash on the tree view doesn't occur with automat ghost
         agent->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( agent );
@@ -246,6 +247,8 @@ bool GhostsLayer::HandleKeyPress( QKeyEvent* key )
     if( key->key() == Qt::Key_Delete && selectedGhost_ )
     {
         delete selectedGhost_;
+        selectedGhost_ = 0;
+        highLightedGhost_ = 0;
         return true;
     }
     return false;
