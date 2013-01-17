@@ -67,7 +67,7 @@ void RemoteTacticalObjectController::RemoteCreated( const std::string& identifie
     --objId;
     message().mutable_parameters()->add_elem(); // type
     message().mutable_parameters()->add_elem(); // position
-    message().mutable_parameters()->add_elem(); // name
+    message().mutable_parameters()->add_elem()->add_value()->set_acharstr("remote"); // name FIXME
     message().mutable_parameters()->add_elem(); // army
     message().mutable_parameters()->add_elem(); // attributes
     sword::Extension* ext = message().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
@@ -148,6 +148,8 @@ void RemoteTacticalObjectController::SideChanged( const std::string& identifier,
     if( objectCreations_.end() == it)
         return;
     simulation::ObjectMagicAction& message = *it->second;
+    if( message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->size() == 1  )
+        return;
     message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( sideResolver_.ResolveTeam( side ) );
     Send( message, identifier );
 }
@@ -162,7 +164,10 @@ void RemoteTacticalObjectController::NameChanged( const std::string& identifier,
     if( objectCreations_.end() == it)
         return;
     simulation::ObjectMagicAction& message = *it->second;
-    message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( name.c_str() );
+    if( message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->size() == 1  )
+        message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Mutable( 0 )->set_acharstr( name.c_str() );
+    else
+        message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( name.c_str() );
     Send( message, identifier );
 }
 
@@ -179,7 +184,11 @@ void RemoteTacticalObjectController::TypeChanged( const std::string& identifier,
     std::string objTypeName;
     if( !objectEntityTypeResolver_.Resolve( type, objTypeName ) )
         logger_.LogWarning( std::string( "Could not find object for EntityType: ") + type.str() );
-    message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->Add()->set_acharstr( objTypeName.c_str() );
+
+    if( message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->size() == 1 )
+        message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->Mutable( 0 )->set_acharstr( objTypeName.c_str() );
+    else
+        message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->Add()->set_acharstr( objTypeName.c_str() );
     Send( message, identifier );
 }
 
