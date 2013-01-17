@@ -127,3 +127,25 @@ bool ADN_Connector_Double< T >::IsConnected() const
 {
     return bIsConnected_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Connector_Double::ConnectPrivateSub
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_Connector_Double< T >::ConnectPrivateSub( ADN_Connector_ABC* pTarget )
+{
+    connect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), pGfx_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
+    ADN_Connector_ABC::ConnectPrivateSub( pTarget );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Connector_Double::DisconnectPrivateSub
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_Connector_Double< T >::DisconnectPrivateSub( ADN_Connector_ABC* pTarget )
+{
+    disconnect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), pGfx_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
+    ADN_Connector_ABC::DisconnectPrivateSub( pTarget );
+}

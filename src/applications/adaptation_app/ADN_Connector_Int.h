@@ -29,6 +29,8 @@ public:
 
 protected:
     void  SetDataPrivate(void *data);
+    virtual void ConnectPrivateSub( ADN_Connector_ABC* pTarget );
+    virtual void DisconnectPrivateSub( ADN_Connector_ABC* pTarget );
 
 private:
     void  connectNotify(const char *signal);
