@@ -28,6 +28,7 @@ class StandardModel;
 // Created: JSR 2012-09-14
 // =============================================================================
 class ItemPixmapDelegate : public QItemDelegate
+
 {
     typedef boost::function< const QPixmap* ( const kernel::Entity_ABC& ) > T_PixmapGetter;
 
@@ -47,7 +48,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void DrawPixmap( QPainter* painter, const QRect& rect, const QPixmap& pixmap ) const;
+    void DrawPixmap( QPainter* painter, const QStyleOptionViewItem& option, const QPixmap& pixmap, const QModelIndex& index ) const;
     //@}
 
 private:

@@ -41,6 +41,7 @@ EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const 
     connect( this,             SIGNAL( activated       ( const QModelIndex& ) ),                           this, SLOT( OnActivate( const QModelIndex& ) ) );
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelect  ( const QItemSelection&, const QItemSelection& ) ) );
     connect( &dataModel_, SIGNAL( DataChanged( const QModelIndex&, const QVariant& ) ), SLOT( OnDataChanged ( const QModelIndex&, const QVariant& ) ) );
+    connect( horizontalScrollBar(), SIGNAL( valueChanged( int ) ), proxyModel_, SLOT( invalidate() ) ); // force redraw
 
     controllers_.Register( *this );
 }
