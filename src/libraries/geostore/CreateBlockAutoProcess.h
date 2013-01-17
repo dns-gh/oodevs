@@ -52,7 +52,7 @@ private:
     void ExtractTerrainComponents( gaiaGeomCollPtr footprint, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& buffers );
     gaiaGeomCollPtr SubstractTerrainComponentsFromAreas( gaiaGeomCollPtr urbans, gaiaGeomCollPtr areas, gaiaGeomCollPtr lines );
     gaiaGeomCollPtr ClipBlocksWithCollection( gaiaGeomCollPtr blocks, gaiaGeomCollPtr collection );
-    gaiaGeomCollPtr GetUrbanBlocksInAreaFromIndex( gaiaGeomCollPtr blocks, const geometry::Polygon2f& footprint );
+    gaiaGeomCollPtr GetUrbanBlocksInAreaFromIndex( const geometry::Polygon2f& footprint );
     void FillPolygonVector( gaiaGeomCollPtr blocks, std::vector< geometry::Polygon2f >& vec );
     //@}
 

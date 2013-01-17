@@ -92,7 +92,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     urbanBlocks = temp;
 
     // Remove blocks that intersect with existing urban blocks in the index/model
-    gaiaGeomCollPtr blocksFromIndex = GeometryFactory::Validate( GetUrbanBlocksInAreaFromIndex( urbanBlocks, footprint ) );
+    gaiaGeomCollPtr blocksFromIndex = GeometryFactory::Validate( GetUrbanBlocksInAreaFromIndex( footprint ) );
     temp = ClipBlocksWithCollection( urbanBlocks, blocksFromIndex );
     gaiaFreeGeomColl( urbanBlocks );
     gaiaFreeGeomColl( blocksFromIndex );
@@ -199,14 +199,11 @@ gaiaGeomCollPtr CreateBlockAutoProcess::SubstractTerrainComponentsFromAreas( gai
 // Name: CreateBlockAutoProcess::GetUrbanBlockInArea
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlocksInAreaFromIndex( gaiaGeomCollPtr /*blocks*/, const geometry::Polygon2f& footprint )
+gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlocksInAreaFromIndex( const geometry::Polygon2f& footprint )
 {
     const geometry::Rectangle2f bbox = footprint.BoundingBox();
     float radius = 0.5f * sqrt( bbox.Width() * bbox.Width() + bbox.Height() * bbox.Height() );
 
-/*    geometry::Point2d centerProjected = projector_.Project( ( blocks->MaxY + blocks->MinY ) / 2 , ( blocks->MaxX + blocks->MinX ) / 2  );
-    geometry::Point2f center( static_cast< float >( centerProjected.X() ), static_cast< float >( centerProjected.Y() ) );
-    */
     gaiaGeomCollPtr blocksFromIndex = 0;
 
     std::vector< const kernel::UrbanObject_ABC* > urbanBlocks;
