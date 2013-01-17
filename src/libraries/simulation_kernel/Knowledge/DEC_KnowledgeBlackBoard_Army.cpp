@@ -350,7 +350,7 @@ namespace
             const InteractWithSideCapacity* pSideInteraction = knowledge->GetType().GetCapacity< InteractWithSideCapacity >();
             if( pSideInteraction && knowledge->GetArmy() )
             {
-                if( pSideInteraction->IsPossible( *knowledge->GetArmy(), *army_ ) )
+                if( pSideInteraction->IsPossible( *knowledge->GetArmy(), agent_ ) )
                     pContainer_->push_back( knowledge );
                 return;
             }
