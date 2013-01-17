@@ -30,9 +30,8 @@ class Q3PopupMenu;
 */
 // Created: APE 2005-03-09
 // =============================================================================
-class ADN_Tools
+namespace ADN_Tools
 {
-public:
     template< typename T >
     class NameCmp : public std::unary_function< T* , bool >
     {
@@ -57,23 +56,23 @@ public:
         }
     };
 
-public:
-    static bool CaselessCompare( const std::string& str1, const std::string& str2 );
+    bool CaselessCompare( const std::string& str1, const std::string& str2 );
 
-    static void CreatePathToFile( const std::string& strFilePath );
-    static bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
+    void CreatePathToFile( const std::string& strFilePath );
+    bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
 
-    static std::string Scriptify( const std::string& strFieldName );
-    static std::string ComputePostureScriptName( E_UnitPosture nPosture );
+    std::string Scriptify( const std::string& strFieldName );
+    std::string ComputePostureScriptName( E_UnitPosture nPosture );
 
-    static void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
+    void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
 
-    static std::string SecondToString( double rSecond );
+    std::string SecondToString( double rSecond );
 
-    static void SortMenu( Q3PopupMenu& menu );
+    void SortMenu( Q3PopupMenu& menu );
 
-    static void AddSchema( xml::xostream& xos, const std::string& name );
+    void AddSchema( xml::xostream& xos, const std::string& name );
 
-    static void AddVersion( xml::xostream& xos, const std::string& name );
-};
+    void AddVersion( xml::xostream& xos, const std::string& name );
+}
+
 #endif // __ADN_Tools_h_
