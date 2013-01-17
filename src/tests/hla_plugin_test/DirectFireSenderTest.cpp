@@ -70,7 +70,6 @@ namespace
             startMessage.mutable_start_unit_fire()->mutable_ammunition()->set_id( 42 );
             stopMessage.mutable_stop_unit_fire();
         }
-        DirectFireSender sender;
         sword::SimToClient_Content startMessage;
         sword::SimToClient_Content stopMessage;
         unsigned int fireIdentifier;
@@ -78,6 +77,8 @@ namespace
         ObjectListener_ABC* remoteAgentListener;
         MockHlaClass hlaClass;
         MockHlaObject object;
+        MockAgent localAgent;
+        DirectFireSender sender;
     };
 }
 
@@ -138,7 +139,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_local_fire, RegisteredFixture )
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_platform_fires, RegisteredFixture )
 {
-    MockAgent localAgent;
     EventListener_ABC* localAgentListener = 0;
     const unsigned int platformId1 = firingUnitIdentifier * 100 + 1;
     const unsigned int platformId2 = firingUnitIdentifier * 100 + 2;
@@ -167,6 +167,8 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_platform_fires, RegisteredFixtu
     MOCK_EXPECT( interactionSender.Send ).exactly( 3 );
     MOCK_EXPECT( weaponFireSender.Send ).exactly( 2 );
     controller.Dispatch( stopMessage );
+
+    MOCK_EXPECT( localAgent.Unregister ).once();
 }
 
 namespace

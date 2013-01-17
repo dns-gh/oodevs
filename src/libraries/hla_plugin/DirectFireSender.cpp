@@ -58,6 +58,8 @@ DirectFireSender::~DirectFireSender()
 {
     localAgentSubject_.Unregister( *this );
     remoteAgentSubject_.Unregister( *this );
+    BOOST_FOREACH( T_LocalListeners::const_reference v, listeners_ )
+        v.second.second->Unregister( *v.second.first );
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +299,7 @@ namespace
 void DirectFireSender::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool /*isLocal*/, const std::vector< char >& /*uniqueId*/ )
 {
     boost::shared_ptr< ChildListener > child( new ChildListener( boost::bind( &UpdateLocation, boost::ref( positions_ ), identifier, boost::cref( localResolver_ ), _1 ) ) );
-    listeners_[ identifier ] = child;
+    listeners_[ identifier ] = std::make_pair( child, &agent );
     agent.Register( *child );
 }
 
@@ -308,7 +310,7 @@ void DirectFireSender::AggregateCreated( Agent_ABC& agent, unsigned long identif
 void DirectFireSender::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::vector< char >& /*uniqueId*/ )
 {
     boost::shared_ptr< ChildListener > child( new ChildListener( boost::bind( &UpdateLocation, boost::ref( positions_ ), identifier, boost::cref( localResolver_ ), _1 ) ) );
-    listeners_[ identifier ] = child;
+    listeners_[ identifier ] = std::make_pair( child, &agent );
     agent.Register( *child );
 }
 
@@ -321,10 +323,10 @@ void DirectFireSender::ComputeChildrenRtiIds( unsigned int parentSimId )
     std::string parentRtiId = localResolver_.Resolve( parentSimId );
     T_LocalListeners::const_iterator itTargetListener( listeners_.find( parentSimId ) );
     if( itTargetListener != listeners_.end() && 
-        itTargetListener->second.get() != 0 && itTargetListener->second->GetPlatforms().size() !=0 )
+        itTargetListener->second.first.get() != 0 && itTargetListener->second.first->GetPlatforms().size() !=0 )
     {
         std::set< std::string > rtiIDs;
-        BOOST_FOREACH( unsigned int id, itTargetListener->second->GetPlatforms() )
+        BOOST_FOREACH( unsigned int id, itTargetListener->second.first->GetPlatforms() )
         {
             std::string rtiId = localResolver_.Resolve( id );
             if( !rtiId.empty() )
@@ -372,8 +374,9 @@ void DirectFireSender::DoPlatformsFire( unsigned long fireIdentifier, const std:
     interactions::MunitionDetonation childDeto = parentDeto;
     
     T_LocalListeners::const_iterator itFiringListener( listeners_.find( firingSimId ) );
-    if( itFiringListener == listeners_.end() || itFiringListener->second->GetPlatforms().empty() )
+    if( itFiringListener == listeners_.end() || itFiringListener->second.first->GetPlatforms().empty() )
         return;
+    boost::shared_ptr< ChildListener > firingL( itFiringListener->second.first );
 
     interactions::WeaponFire fire;
     fire.eventIdentifier.eventCount = childDeto.eventIdentifier.eventCount;
@@ -389,12 +392,12 @@ void DirectFireSender::DoPlatformsFire( unsigned long fireIdentifier, const std:
 
     // distribute targets
     T_ChildrenRtiIds::const_iterator itTargetChildren( childrenRtiIds_.find( targetIdentifier ) );
-    std::vector< Omt13String > targetIdentifiers( itFiringListener->second->GetPlatforms().size(), Omt13String( targetIdentifier ) );
+    std::vector< Omt13String > targetIdentifiers( firingL->GetPlatforms().size(), Omt13String( targetIdentifier ) );
     if( itTargetChildren != childrenRtiIds_.end() && itTargetChildren->second.size() != 0 )
         std::generate( targetIdentifiers.begin(), targetIdentifiers.end(), ChildrenDistributor( itTargetChildren->second ) );
         
     std::size_t targetIndex = 0;
-    BOOST_FOREACH( unsigned int chId, itFiringListener->second->GetPlatforms() )
+    BOOST_FOREACH( unsigned int chId, firingL->GetPlatforms() )
     {
         const Omt13String& childTgtIdentifier = targetIdentifiers[ targetIndex ];
         std::string chRtiId( localResolver_.Resolve( chId ) );

@@ -107,7 +107,7 @@ private:
     //@{
     typedef std::map< std::string, rpr::WorldLocation > T_Positions;
     typedef std::map< unsigned int, sword::StartUnitFire > T_Fires;
-    typedef std::map< unsigned long, boost::shared_ptr< ChildListener > > T_LocalListeners;
+    typedef std::map< unsigned long, std::pair< boost::shared_ptr< ChildListener >, Agent_ABC* > > T_LocalListeners;
     typedef std::map< std::string, std::set< std::string > > T_ChildrenRtiIds;
     //@}
 
