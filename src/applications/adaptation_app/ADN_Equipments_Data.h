@@ -36,7 +36,7 @@ class ADN_Equipments_Data : public ADN_Data_ABC
 
 public:
     //*****************************************************************************
-    class AmbulanceInfos
+    class AmbulanceInfos : public ADN_Ref_ABC
     {
 
     public:
@@ -57,7 +57,7 @@ public:
     };
 
     //*****************************************************************************
-    class LogHealthInfos
+    class LogHealthInfos : public ADN_Ref_ABC
     {
 
     public:
@@ -84,7 +84,7 @@ public:
     };
 
     //*****************************************************************************
-    class NTIInfos
+    class NTIInfos : public ADN_Ref_ABC
     {
 
     public:
@@ -105,7 +105,7 @@ public:
     };
 
     //*****************************************************************************
-    class LogMaintenanceInfos
+    class LogMaintenanceInfos : public ADN_Ref_ABC
     {
 
     public:
@@ -148,7 +148,7 @@ public:
     };
 
     //*****************************************************************************
-    class LogInfos
+    class LogInfos : public ADN_Ref_ABC
     {
 
     public:
@@ -190,7 +190,7 @@ public:
     typedef T_BreakdownInfos_Vector::const_iterator CIT_BreakdownInfos_Vector;
 
     //*****************************************************************************
-    class BreakdownGroupInfos
+    class BreakdownGroupInfos : public ADN_Ref_ABC
     {
 
     public:
@@ -209,7 +209,7 @@ public:
     };
 
     //*****************************************************************************
-    class SpeedInfos
+    class SpeedInfos : public ADN_Ref_ABC
     {
 
     public:

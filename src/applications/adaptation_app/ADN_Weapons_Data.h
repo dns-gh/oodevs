@@ -31,7 +31,7 @@ class ADN_Weapons_Data : public ADN_Data_ABC
 
 public:
 // *****************************************************************************
-    class PhInfos
+    class PhInfos : public ADN_Ref_ABC
     {
     public:
         PhInfos();

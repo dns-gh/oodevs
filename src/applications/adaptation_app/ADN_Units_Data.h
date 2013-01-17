@@ -100,7 +100,7 @@ public:
     };
 
     //*****************************************************************************
-    class PostureInfos
+    class PostureInfos : public ADN_Ref_ABC
     {
     public:
         explicit PostureInfos( const E_UnitPosture& posture );
@@ -132,7 +132,7 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PostureInfos>, PostureInfos_Vector )
 
     //*****************************************************************************
-    class PointInfos
+    class PointInfos : public ADN_Ref_ABC
     {
     public:
         PointInfos();
