@@ -211,7 +211,7 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
                                                                        const propagation::FloodModel_ABC& floodModel )
 {
-    if( !( message.elem_size() >= 4 || message.elem_size() <= 6 ) ) // type, location, name, team, attributes, extension
+    if( !( message.elem_size() >= 4 && message.elem_size() <= 6 ) ) // type, location, name, team, attributes, extension
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
 
     MIL_Army_ABC* pArmy = 0;
