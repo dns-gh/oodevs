@@ -60,7 +60,7 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& outpu
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_Maintenance_Data::ADN_Maintenance_Data()
-: ADN_Data_ABC()
+    : ADN_Data_ABC( eLogistic, eMaintenance )
 {
     for( int n = 0; n < 4; ++n )
         vWorkingSchemes_.AddItem( new WorkingSchemeInfo( n+1 ) );

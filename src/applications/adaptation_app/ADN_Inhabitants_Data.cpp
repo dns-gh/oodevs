@@ -374,9 +374,9 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption( xml::xistream& inp
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::ADN_Inhabitants_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eInhabitants )
 {
-    // NOTHING
+    vInhabitants_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,6 +416,7 @@ void ADN_Inhabitants_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "populations" )
               >> xml::list( "population", *this, &ADN_Inhabitants_Data::ReadPeople )
           >> xml::end;
+    vInhabitants_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -435,6 +436,9 @@ void ADN_Inhabitants_Data::ReadPeople( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
 {
+    if( vInhabitants_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Inhabitants" );
     for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )

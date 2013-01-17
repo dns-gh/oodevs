@@ -19,8 +19,9 @@
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ADN_ActiveProtections_Data()
+    : ADN_Data_ABC( eActiveProtections )
 {
-    // NOTHING
+    activeProtections_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +79,9 @@ void ADN_ActiveProtections_Data::Reset()
 void ADN_ActiveProtections_Data::ReadArchive( xml::xistream& xis )
 {
     xis >> xml::start( "protections" )
-            >> xml::list( "protection", *this, &ADN_ActiveProtections_Data::ReadProtection );
+            >> xml::list( "protection", *this, &ADN_ActiveProtections_Data::ReadProtection )
+        >> xml::end;
+    activeProtections_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +101,9 @@ void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 {
+    if( activeProtections_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     xos << xml::start( "protections" );
     ADN_Tools::AddSchema( xos, "ActiveProtections" );
     for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )

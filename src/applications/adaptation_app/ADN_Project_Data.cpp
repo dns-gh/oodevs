@@ -337,7 +337,7 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
 // Created: JDY 03-06-20
 //-----------------------------------------------------------------------------
 ADN_Project_Data::ADN_Project_Data()
-    : ADN_Data_ABC   ()
+    : ADN_Data_ABC   ( eNbrWorkspaceElements )
     , dataInfos_     ()
     , szFile_        ()
 {

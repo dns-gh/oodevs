@@ -293,14 +293,14 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::ADN_NBC_Datas()
-    : ADN_Data_ABC                  ()
+    : ADN_Data_ABC                  ( eNBC )
     , rContaminationDistance_       ( 0.f )
     , rContaminationQuantityGiven_  ( 0.f )
     , rWindSpeedLimitForSpreading_  ( 0.f )
     , rNbcSuitMaxSpeedMultiplier_   ( 0.f )
     , rNbcSuitReloadSpeedMultiplier_( 0.f )
 {
-    // NOTHING
+    vNbcAgent_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,6 +361,7 @@ void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
     input >> xml::start( "agents" )
             >> xml::list( "agent", *this, &ADN_NBC_Datas::ReadAgent )
           >> xml::end;
+    vNbcAgent_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -369,6 +370,9 @@ void ADN_NBC_Datas::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::WriteArchive( xml::xostream& output )
 {
+    if( vNbcAgent_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "nbc" );
     ADN_Tools::AddSchema( output, "NBC" );
     output  << xml::start( "propagation" )

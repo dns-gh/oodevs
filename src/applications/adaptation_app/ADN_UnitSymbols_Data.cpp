@@ -161,7 +161,8 @@ void ADN_UnitSymbols_Data::UnitSymbolInfo::Draw()
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
 ADN_UnitSymbols_Data::ADN_UnitSymbols_Data()
-    : pSymbolFactory_( 0 )
+    : ADN_Data_ABC( eUnitSymbols )
+    , pSymbolFactory_( 0 )
 {
     // NOTHING
 }

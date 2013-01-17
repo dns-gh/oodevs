@@ -219,6 +219,22 @@ void ADN_Objects_Data_ObjectInfos::CheckDatabaseValidity( ADN_ConsistencyChecker
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::CheckValidity
+// Created: ABR 2013-01-15
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data_ObjectInfos::CheckValidity()
+{
+    // $$$$ ABR 2013-01-15: TODO: Add a tree hierarchy between adn_ref, so we can apply CheckValidity on every child
+    ADN_Ref_ABC::CheckValidity();
+    ADN_ErrorStatus status = GetErrorStatus();
+    strName_.CheckValidity();
+    strType_.CheckValidity();
+    status = std::max< ADN_ErrorStatus >( status, strName_.GetErrorStatus() );
+    status = std::max< ADN_ErrorStatus >( status, strType_.GetErrorStatus() );
+    SetErrorStatus( status );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::GetAllGeometries
 // Created: JSR 2012-02-14
 // -----------------------------------------------------------------------------

@@ -727,11 +727,13 @@ void ADN_Resources_Data::ResourceInfos::Initialize()
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::ADN_Resources_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eResources )
     , resources_ ()
 {
     for( int n = 0; n < eNbrDotationFamily; ++n )
         resources_.AddItem( new ResourceInfos( (E_DotationFamily)n ) );
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
+        ( *it )->categories_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -759,7 +761,7 @@ void ADN_Resources_Data::FilesNeeded(T_StringList& files ) const
 void ADN_Resources_Data::Reset()
 {
     idManager_.Reset();
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->Reset();
 }
 
@@ -788,7 +790,7 @@ void ADN_Resources_Data::ReadArchive( xml::xistream& input )
           >> xml::end;
 
     // Update network usable resources
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         T_CategoryInfos_Vector& categories = ( *it )->categories_;
         for( IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
@@ -800,6 +802,7 @@ void ADN_Resources_Data::ReadArchive( xml::xistream& input )
                 networkUsableResources_.AddItem( category );
         }
     }
+    resources_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -808,9 +811,18 @@ void ADN_Resources_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::WriteArchive( xml::xostream& output )
 {
+    if( resources_.GetErrorStatus() == eError )
+    {
+        for( auto it = resources_.begin(); it != resources_.end(); ++it )
+            if( ( *it )->categories_.GetErrorStatus() == eError )
+                throw MASA_EXCEPTION( tools::translate( "ADN_Resources_Data", "Invalid data on tab '%1', subtab '%2'" )
+                                      .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromDotationFamily( ( *it )->nType_, ENT_Tr_ABC::eToTr ).c_str() ).toStdString() );
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+    }
+
     output << xml::start( "resources" );
     ADN_Tools::AddSchema( output, "Resources" );
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -821,7 +833,7 @@ void ADN_Resources_Data::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::Initialize()
 {
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         (*it)->Initialize();
 }
 
@@ -831,7 +843,7 @@ void ADN_Resources_Data::Initialize()
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::FindResourceCategory( const std::string& strDotationName, const std::string& strCategoryName )
 {
-    IT_ResourceInfos_Vector it = std::find_if( resources_.begin(), resources_.end(), ADN_Tools::NameCmp<ResourceInfos>( strDotationName ) );
+    auto it = std::find_if( resources_.begin(), resources_.end(), ADN_Tools::NameCmp<ResourceInfos>( strDotationName ) );
     if( it == resources_.end() )
         return 0;
     return (*it)->FindCategory( strCategoryName );
@@ -843,7 +855,7 @@ ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::FindResourceCategory( cons
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::FindResourceCategory( const std::string& strCategoryName )
 {
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ADN_Resources_Data::CategoryInfo* category = (*it)->FindCategory( strCategoryName );
         if( category )
@@ -868,7 +880,7 @@ ADN_Resources_Data::ResourceInfos& ADN_Resources_Data::GetResource( E_DotationFa
 QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Objects_Data_ObjectInfos& object )
 {
     QStringList result;
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
@@ -887,7 +899,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Objects_Data_ObjectInfo
 QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfos& object )
 {
     QStringList result;
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
@@ -904,7 +916,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfo
 QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::LogisticSupplyClass& object )
 {
     QStringList result;
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
@@ -921,7 +933,7 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::LogisticSupplyClas
 QStringList ADN_Resources_Data::GetResourcesWithDirectFire()
 {
     QStringList result;
-    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
@@ -953,4 +965,39 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfo
 bool ADN_Resources_Data::IsMineOrExplosive( E_DotationFamily type )
 {
     return type == eDotationFamily_Mine || type == eDotationFamily_Explosif;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Resources_Data::CheckValidity
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_Resources_Data::T_ResourceInfos_Vector::CheckValidity()
+{
+    ADN_Ref_ABC::CheckValidity();
+    ADN_ErrorStatus errorStatus = GetErrorStatus();
+
+    // Vectors internal validity
+    for( auto it = begin(); it != end(); ++it )
+    {
+        ( *it )->categories_.CheckValidity();
+        errorStatus = std::max< ADN_ErrorStatus >( ( *it )->categories_.GetErrorStatus(), errorStatus );
+    }
+
+    // Vectors pair validity
+    for( auto leftVector = begin(); leftVector != end(); ++leftVector )
+    {
+        for( auto leftElement = ( *leftVector )->categories_.begin(); leftElement != ( *leftVector )->categories_.end(); ++leftElement )
+            for( auto rightVector = leftVector + 1; rightVector != end(); ++rightVector )
+                for( auto checker = ( *rightVector )->categories_.checkers_.begin(); checker != ( *rightVector )->categories_.checkers_.end(); ++checker ) // use the right vector because AmmoCategoryInfo inherit CategoryInfo
+                    for( auto rightElement = ( *rightVector )->categories_.begin(); rightElement != ( *rightVector )->categories_.end(); ++rightElement )
+                        if( *leftElement != *rightElement && !( *checker )->IsValid( **leftElement, **rightElement ) )
+                        {
+                            ( *checker )->InvalidData( **leftElement, **rightElement );
+                            ( *leftVector )->categories_.SetErrorStatus( std::max< ADN_ErrorStatus >( ( *checker )->status_, ( *leftVector )->categories_.GetErrorStatus() ), ( *checker )->msg_ );
+                            ( *rightVector )->categories_.SetErrorStatus( std::max< ADN_ErrorStatus >( ( *checker )->status_, ( *rightVector )->categories_.GetErrorStatus() ), ( *checker )->msg_ );
+                            errorStatus = std::max< ADN_ErrorStatus >( ( *checker )->status_, errorStatus );
+                        }
+    }
+
+    SetErrorStatus( errorStatus );
 }

@@ -51,7 +51,8 @@ void ADN_KnowledgeGroups_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    nameField->ConnectWithRefValidity( data_.GetGroupInfos() );
 
     Q3GroupBox* pDelayGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ) );
     builder.AddField< ADN_TimeField >( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );

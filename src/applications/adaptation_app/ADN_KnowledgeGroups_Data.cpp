@@ -149,9 +149,9 @@ void ADN_KnowledgeGroups_Data::GroupInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::ADN_KnowledgeGroups_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eKnowledgeGroups )
 {
-    // NOTHING
+    vGroups_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,6 +190,7 @@ void ADN_KnowledgeGroups_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "knowledge-groups" )
             >> xml::list( "knowledge-group", *this, &ADN_KnowledgeGroups_Data::ReadKnowledgeGroup )
           >> xml::end;
+    vGroups_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -209,6 +210,9 @@ void ADN_KnowledgeGroups_Data::ReadKnowledgeGroup( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output )
 {
+    if( vGroups_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "knowledge-groups" );
     ADN_Tools::AddSchema( output, "KnowledgeGroups" );
     for( IT_GroupInfoVector it = vGroups_.begin(); it != vGroups_.end(); ++it )

@@ -56,7 +56,8 @@ void ADN_Launchers_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetLaunchersInfos() );
 
     // Indirect fire
     builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Indirect fire" ), vConnectors[ eIndirect ] );

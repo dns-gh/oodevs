@@ -24,7 +24,6 @@ ADN_Health_Data::WoundInfo::WoundInfo()
     , treatTime_( "0s" )
     , restingTime_( "0s" )
     , rPercentage_( 0. )
-
 {
     // NOTHING
 }
@@ -61,7 +60,7 @@ void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output, int n )
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 ADN_Health_Data::ADN_Health_Data()
-    : ADN_Data_ABC             ()
+    : ADN_Data_ABC             ( eLogistic, eHealth )
     , diagnosticTime_          ( "0s" )
     , sortingTime_             ( "0s" )
     , shockTreatTime_          ( "0s" )

@@ -249,6 +249,7 @@ void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
 ADN_Reports_Data::ADN_Reports_Data()
+    : ADN_Data_ABC( eReports )
 {
     // NOTHING
 }

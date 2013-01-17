@@ -14,8 +14,8 @@
 // Name: ADN_Data_Container constructor
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-ADN_Data_Container::ADN_Data_Container()
-    : ADN_Data_ABC()
+ADN_Data_Container::ADN_Data_Container( E_WorkspaceElements currentTab )
+    : ADN_Data_ABC( currentTab )
 {
     // NOTHING
 }

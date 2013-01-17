@@ -10,7 +10,6 @@
 #ifndef __ADN_Data_Container_h_
 #define __ADN_Data_Container_h_
 
-#include <boost/noncopyable.hpp>
 #include "ADN_Data_ABC.h"
 
 // =============================================================================
@@ -25,7 +24,7 @@ class ADN_Data_Container : public ADN_Data_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Data_Container();
+             ADN_Data_Container( E_WorkspaceElements currentTab );
     virtual ~ADN_Data_Container();
     //@}
 

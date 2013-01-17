@@ -214,8 +214,9 @@ void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyCh
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::ADN_Automata_Data()
-: ADN_Data_ABC()
+    : ADN_Data_ABC( eAutomata )
 {
+    vAutomata_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,6 +256,7 @@ void ADN_Automata_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "automats" )
             >> xml::list( "automat", *this, &ADN_Automata_Data::ReadAutomat )
           >> xml::end;
+    vAutomata_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -274,6 +276,9 @@ void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 {
+    if( vAutomata_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "automats" );
     ADN_Tools::AddSchema( output, "Automats" );
     for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )

@@ -28,10 +28,11 @@
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_Communications_Data::ADN_Communications_Data()
-: ADN_Data_ABC()
-, rSpeedModifier_( 0 )
-, rReloadModifier_( 0 )
+    : ADN_Data_ABC( eCommunications )
+    , rSpeedModifier_( 0 )
+    , rReloadModifier_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +41,7 @@ ADN_Communications_Data::ADN_Communications_Data()
 // -----------------------------------------------------------------------------
 ADN_Communications_Data::~ADN_Communications_Data()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

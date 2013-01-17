@@ -259,8 +259,9 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::ADN_Radars_Data()
+    : ADN_Data_ABC( eSensors )
 {
-    // NOTHING
+    vRadars_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,6 +312,7 @@ void ADN_Radars_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "radars" )
             >> xml::list( "radar", *this, &ADN_Radars_Data::ReadRadar )
           >> xml::end;
+    vRadars_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -330,6 +332,10 @@ void ADN_Radars_Data::ReadRadar( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::WriteArchive( xml::xostream& output )
 {
+    if( vRadars_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Radars_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Radars_Data", "Radars" ) ).toStdString() );
+
     output << xml::start( "radars" );
     for( IT_RadarInfos_Vector it = vRadars_.begin(); it != vRadars_.end(); ++it )
         (*it)->WriteArchive( output );

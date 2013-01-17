@@ -102,8 +102,9 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostrea
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
 ADN_ResourceNetworks_Data::ADN_ResourceNetworks_Data()
+    : ADN_Data_ABC( eResourceNetworks )
 {
-    // NOTHING
+    resourceNetworks_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,6 +164,7 @@ void ADN_ResourceNetworks_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "resource-networks" )
             >> xml::list( "resource-network", *this, &ADN_ResourceNetworks_Data::ReadResourceNetwork )
           >> xml::end;
+    resourceNetworks_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +184,9 @@ void ADN_ResourceNetworks_Data::ReadResourceNetwork( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
 {
+    if( resourceNetworks_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "resource-networks" );
     ADN_Tools::AddSchema( output, "ResourceNetworks" );
     for( IT_ResourceNetworkInfosVector it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )

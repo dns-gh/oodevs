@@ -205,7 +205,17 @@ public:
         E_DotationFamily       nType_;
         T_CategoryInfos_Vector categories_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ResourceInfos>, ResourceInfos_Vector );
+
+    class T_ResourceInfos_Vector : public ADN_Type_Vector_ABC< ResourceInfos >
+    {
+    public:
+        T_ResourceInfos_Vector( bool bAutoRef = true ) : ADN_Type_Vector_ABC< ResourceInfos >( bAutoRef ) {}
+        ~T_ResourceInfos_Vector(){}
+
+        virtual void CheckValidity();
+    };
+    typedef T_ResourceInfos_Vector::iterator         IT_ResourceInfos_Vector;
+    typedef T_ResourceInfos_Vector::const_iterator  CIT_ResourceInfos_Vector;
 
 // *****************************************************************************
 public:

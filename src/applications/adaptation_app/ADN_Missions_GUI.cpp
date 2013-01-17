@@ -121,8 +121,10 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_String* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->setToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField->SetToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
+    nameField->ConnectWithRefValidity( missions );
+
     builder.SetValidator( new MissionNameValidator() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
     if( eEntityType == eEntityType_Automat )
@@ -275,7 +277,9 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 
     // Content
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetFragOrders() );
+
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
     QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Available without mission" ) , vInfosConnectors[ eFragOrderAvailableWithoutMission ] );
 

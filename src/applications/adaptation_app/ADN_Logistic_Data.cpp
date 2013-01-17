@@ -20,7 +20,7 @@
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
 ADN_Logistic_Data::ADN_Logistic_Data()
-    : ADN_Data_Container()
+    : ADN_Data_Container( eLogistic )
 {
     AddElement< ADN_Maintenance_Data >( eMaintenance );
     AddElement< ADN_Supply_Data >( eSupply );

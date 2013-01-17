@@ -95,8 +95,12 @@ void ADN_Objects_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
 
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name"), vInfosConnectors[ eName ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type"), vInfosConnectors[ eType ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name"), vInfosConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetObjectInfos() );
+
+    ADN_EditLine_String* typeField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type"), vInfosConnectors[ eType ] );
+    typeField->ConnectWithRefValidity( data_.GetObjectInfos() );
+
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterEqualZero );
     pPointDistance_->SetAutoEnabled( false );
     builder.AddField< ADN_TextEdit_String >( pInfoHolder, tr( "Description"), vInfosConnectors[ eDescription ] );

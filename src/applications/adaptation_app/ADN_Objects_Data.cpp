@@ -1267,14 +1267,24 @@ INIT_DATA( ADN_CapacityInfos_Disaster,                "disaster" );
 
 #pragma warning( pop )
 
+namespace
+{
+    template< typename Data >
+    ADN_Type_ABC< std::string >& TypeExtractor( Data& data )
+    {
+        return data.strType_;
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data constructor
 // Created: JDY 03-06-25
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_Objects_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eObjects )
 {
-    // NOTHING
+    vObjectInfos_.AddUniquenessChecker( eError, duplicateName_ );
+    vObjectInfos_.AddUniquenessChecker( eError, tr( "Duplicate type" ), &TypeExtractor );
 }
 
 //-----------------------------------------------------------------------------
@@ -1362,6 +1372,7 @@ void ADN_Objects_Data::ReadArchive( xml::xistream& xis )
         ADN_Objects_Data::ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Spawn* >( ( *it )->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Spawn::TAG ].get() );
         spawn->Load( ( *it )->strName_.GetData() );
     }
+    vObjectInfos_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -1370,6 +1381,10 @@ void ADN_Objects_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
 {
+    // $$$$ ABR 2013-01-15: TODO: link error sending with consistency dialog
+    if( vObjectInfos_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     xos << xml::start( "objects" );
     ADN_Tools::AddSchema( xos, "Objects" );
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )

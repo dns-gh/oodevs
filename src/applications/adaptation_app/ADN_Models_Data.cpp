@@ -321,8 +321,11 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Models_Data::ADN_Models_Data()
+    : ADN_Data_ABC( eModels )
 {
-    // NOTHING
+    vUnitModels_.AddUniquenessChecker( eError, duplicateName_ );
+    vAutomataModels_.AddUniquenessChecker( eError, duplicateName_ );
+    vPopulationModels_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -404,6 +407,9 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
                 >> xml::list( "crowd", *this, &ADN_Models_Data::ReadPopulation )
             >> xml::end
           >> xml::end;
+    vUnitModels_.CheckValidity();
+    vAutomataModels_.CheckValidity();
+    vPopulationModels_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -412,6 +418,16 @@ void ADN_Models_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::WriteArchive( xml::xostream& output )
 {
+    if( vUnitModels_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Unit models" ) ).toStdString() );
+    if( vAutomataModels_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Automata models" ) ).toStdString() );
+    if( vPopulationModels_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Models_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Models_Data", "Crowds models" ) ).toStdString() );
+
     output << xml::start( "models" );
     ADN_Tools::AddSchema( output, "Models" );
     output  << xml::start( "units" );

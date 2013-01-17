@@ -27,8 +27,12 @@ tools::IdManager ADN_Missions_Data::idManager_;
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::ADN_Missions_Data()
+    : ADN_Data_ABC( eMissions )
 {
-    // NOTHING
+    unitMissions_.AddUniquenessChecker( eError, duplicateName_ );
+    automatMissions_.AddUniquenessChecker( eError, duplicateName_ );
+    populationMissions_.AddUniquenessChecker( eError, duplicateName_ );
+    fragOrders_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +170,10 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
             >> xml::end
           >> xml::end;
+    unitMissions_.CheckValidity();
+    automatMissions_.CheckValidity();
+    populationMissions_.CheckValidity();
+    fragOrders_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -219,6 +227,19 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 {
+    if( unitMissions_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Missions_Data", "Unit missions" ) ).toStdString() );
+    if( automatMissions_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Missions_Data", "Automat missions" ) ).toStdString() );
+    if( populationMissions_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Missions_Data", "Crowd missions" ) ).toStdString() );
+    if( fragOrders_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Missions_Data", "Fragmentary orders" ) ).toStdString() );
+
     output << xml::start( "missions" );
     ADN_Tools::AddSchema( output, "Missions" );
     WriteMissions( output, "units", eEntityType_Pawn, unitMissions_ );

@@ -1124,9 +1124,10 @@ void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
 // Created: JDY 03-06-30
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ADN_Sensors_Data()
-    : radarData_( *new ADN_Radars_Data() )
+    : ADN_Data_ABC( eSensors )
+    , radarData_( *new ADN_Radars_Data() )
 {
-    // NOTHING
+    vSensors_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -1183,6 +1184,7 @@ void ADN_Sensors_Data::ReadArchive( xml::xistream& input )
     cobraInfos_.ReadArchive( input );
     radarData_ .ReadArchive( input );
     input >> xml::end;
+    vSensors_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -1191,6 +1193,10 @@ void ADN_Sensors_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
 {
+    if( vSensors_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( tools::translate( "ADN_Sensors_Data", "Invalid data on tab '%1', subtab '%2'" )
+                              .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Sensors_Data", "Sensors" ) ).toStdString() );
+
     output << xml::start( "sensors" );
     ADN_Tools::AddSchema( output, "Sensors" );
     alatInfos_ .WriteArchive( output );

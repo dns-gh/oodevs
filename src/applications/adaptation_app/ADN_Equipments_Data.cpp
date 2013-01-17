@@ -1952,10 +1952,10 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output ) 
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
 ADN_Equipments_Data::ADN_Equipments_Data()
-    : ADN_Data_ABC ()
+    : ADN_Data_ABC( eEquipments )
     , vEquipments_()
 {
-    // NOTHING
+    vEquipments_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -2006,6 +2006,7 @@ void ADN_Equipments_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &ADN_Equipments_Data::ReadElement )
           >> xml::end;
+    vEquipments_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -2014,6 +2015,9 @@ void ADN_Equipments_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::WriteArchive( xml::xostream& output )
 {
+    if( vEquipments_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "equipments" );
     ADN_Tools::AddSchema( output, "Equipments" );
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )

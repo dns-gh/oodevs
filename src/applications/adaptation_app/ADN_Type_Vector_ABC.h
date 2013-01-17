@@ -86,7 +86,7 @@ public:
     ADN_Type_Vector_ABC< T >& operator=( const ADN_Type_Vector_ABC< T >& o );
     //@}
 
-protected:
+public:
     bool bAutoRef_;
     T_Checkers checkers_;
 };

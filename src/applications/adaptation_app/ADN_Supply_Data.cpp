@@ -285,7 +285,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::ADN_Supply_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eLogistic, eSupply )
 {
     // NOTHING
 }

@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <list>
+#include "ADN_Enums.h"
 
 namespace xml
 {
@@ -42,7 +43,7 @@ class ADN_Data_ABC : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Data_ABC();
+             ADN_Data_ABC( E_WorkspaceElements currentTab, int subTab = -1 );
     virtual ~ADN_Data_ABC();
     //@}
 
@@ -56,6 +57,21 @@ public:
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
+    virtual std::string GetInvalidDataErrorMsg() const;
+    //@}
+
+    //! @name Initializer
+    //@{
+    static void InitTranslations();
+    //@}
+
+protected:
+    //! @name Member Data
+    //@{
+    static QString duplicateName_;
+    static QString invalidDataOntab_;
+    E_WorkspaceElements currentTab_;
+    int subTab_;
     //@}
 };
 

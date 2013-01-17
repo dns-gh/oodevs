@@ -317,7 +317,7 @@ void ADN_Drawings_Data::DrawingInfo::DrawItem( const T_PointVector& points )
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::ADN_Drawings_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eDrawings )
     , renderer_()
     , tools_   ( new GlToolsSymbols() )
 {

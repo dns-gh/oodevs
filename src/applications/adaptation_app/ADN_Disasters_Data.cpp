@@ -348,9 +348,9 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
 // Created: LGY 2012-11-13
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::ADN_Disasters_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eDisasters )
 {
-    // NOTHING
+    vDisasters_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -389,6 +389,7 @@ void ADN_Disasters_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "disasters" )
               >> xml::list( "disaster", *this, &ADN_Disasters_Data::ReadDisaster )
           >> xml::end;
+    vDisasters_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -408,6 +409,9 @@ void ADN_Disasters_Data::ReadDisaster( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::WriteArchive( xml::xostream& output )
 {
+    if( vDisasters_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "disasters" );
     ADN_Tools::AddSchema( output, "Disasters" );
     for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )

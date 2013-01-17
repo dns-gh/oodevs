@@ -476,10 +476,6 @@ Arrêt moteur allumé</translation>
         <translation>Volumes</translation>
     </message>
     <message>
-        <source>Size</source>
-        <translation>Volume</translation>
-    </message>
-    <message>
         <source>Armor classes</source>
         <translation>Blindages</translation>
     </message>
@@ -494,10 +490,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Type</source>
         <translation>Type</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Nature</translation>
     </message>
     <message>
         <source>Attrition effects on humans</source>
@@ -518,10 +510,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Logistic resource categories</source>
         <translation>Catégories de ressource logistique</translation>
-    </message>
-    <message>
-        <source>Logistic resource category</source>
-        <translation>Catégorie de ressource logistique</translation>
     </message>
 </context>
 <context>
@@ -893,6 +881,17 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Attitudes</source>
         <translation>Attitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Data_ABC</name>
+    <message>
+        <source>Duplicate name</source>
+        <translation>Nom dupliqué</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;</source>
+        <translation>Données invalid dans l&apos;onglet &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -2511,6 +2510,29 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_Data</name>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Unit missions</source>
+        <translation>Missions pions</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation>Missions automates</translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation>Ordres de conduite</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Unit missions</source>
@@ -2625,6 +2647,25 @@ du tireur</translation>
     <message>
         <source>Fragmentary orders</source>
         <translation>Ordres de conduite</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_Data</name>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Unit models</source>
+        <translation>Modèles de pions</translation>
+    </message>
+    <message>
+        <source>Automata models</source>
+        <translation>Modèles d&apos;automates</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation>Modèles de foules</translation>
     </message>
 </context>
 <context>
@@ -2838,6 +2879,10 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     <message>
         <source>Reference error</source>
         <translation>Erreur de référence</translation>
+    </message>
+    <message>
+        <source>Duplicate type</source>
+        <translation>Type dupliqué</translation>
     </message>
 </context>
 <context>
@@ -3344,6 +3389,17 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Data</name>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Radars</source>
+        <translation>Capteurs spéciaux</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3476,6 +3532,10 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation>Equipement - Type de dotation invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -3785,6 +3845,14 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
         <translation>Capteurs - Désastre invalide  &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation>Capteurs</translation>
     </message>
 </context>
 <context>
@@ -5490,14 +5558,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>RoofShapes</source>
         <translation>Formes des toits</translation>
-    </message>
-    <message>
-        <source>RoofShape</source>
-        <translation>Forme de toit</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
     </message>
     <message>
         <source>Infrastructures</source>

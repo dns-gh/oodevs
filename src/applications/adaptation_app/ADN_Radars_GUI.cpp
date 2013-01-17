@@ -55,7 +55,9 @@ void ADN_Radars_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetRadars() );
+
     builder.AddEnumField( pInfoHolder,  tr( "Type" ), vConnectors[ eType ] );
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Range" ), vConnectors[ eRange ], tr( "m" ), eGreaterEqualZero );
     builder.AddOptionnalField< ADN_EditLine_Double >( pInfoHolder, tr( "Min. height" ), vConnectors[ eHasMinHeight ], vConnectors[ eMinHeight ], tr( "m" ), eGreaterEqualZero );

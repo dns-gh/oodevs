@@ -20,7 +20,7 @@
 // Created: AGN 2004-06-15
 // -----------------------------------------------------------------------------
 ADN_AiEngine_Data::ADN_AiEngine_Data()
-    : ADN_Data_ABC                 ()
+    : ADN_Data_ABC                 ( eAiEngine )
     , rPertinenceMaxDecrease_      ( 0.f )
     , rOperationalStateMaxDecrease_( 0.f )
     , rNeutralizedStateMaxDecrease_( 0.f )
@@ -48,6 +48,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
 // -----------------------------------------------------------------------------
 ADN_AiEngine_Data::~ADN_AiEngine_Data()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -11,15 +11,24 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
+#include "ADN_Tr.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
+#pragma warning( push, 0 )
+#include <QtGui/QApplication>
+#pragma warning( pop )
+
+QString ADN_Data_ABC::duplicateName_ = QT_TRANSLATE_NOOP( "ADN_Data_ABC", "Duplicate name" );
+QString ADN_Data_ABC::invalidDataOntab_   = QT_TRANSLATE_NOOP( "ADN_Data_ABC", "Invalid data on tab '%1'" );
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC constructor
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-ADN_Data_ABC::ADN_Data_ABC()
+ADN_Data_ABC::ADN_Data_ABC( E_WorkspaceElements currentTab, int subTab /* = -1 */ )
     : QObject()
+    , currentTab_( currentTab )
+    , subTab_( subTab )
 {
     // NOTHING
 }
@@ -101,4 +110,23 @@ void ADN_Data_ABC::WriteArchive( xml::xostream& )
 void ADN_Data_ABC::CheckDatabaseValidity( ADN_ConsistencyChecker& ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::GetInvalidDataErrorMsg
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+std::string ADN_Data_ABC::GetInvalidDataErrorMsg() const
+{
+    return invalidDataOntab_.arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).toStdString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::InitTranslations
+// Created: ABR 2013-01-16
+// -----------------------------------------------------------------------------
+void ADN_Data_ABC::InitTranslations()
+{
+    duplicateName_ = qApp->translate( "ADN_Data_ABC", duplicateName_ );
+    invalidDataOntab_ = qApp->translate( "ADN_Data_ABC", invalidDataOntab_ );
 }

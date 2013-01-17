@@ -827,9 +827,9 @@ void ADN_Units_Data::UnitInfos::CleanupNature()
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Units_Data::ADN_Units_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eUnits )
 {
-    // NOTHING
+    vUnits_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -882,8 +882,8 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "units" )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
           >> xml::end;
-    vUnits_.AddItem( 0 );
-
+    //vUnits_.AddItem( 0 ); // $$$$ ABR 2013-01-16: Needed ?
+    vUnits_.CheckValidity();
     if( !vUnits_.empty() )
         ADN_Workspace::GetWorkspace().GetUnits().GetGui().PreloadUnitSymbolComboBox( vUnits_[0] );
 }
@@ -894,6 +894,9 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::WriteArchive( xml::xostream& output )
 {
+    if( vUnits_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "units" );
     ADN_Tools::AddSchema( output, "Units" );
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )

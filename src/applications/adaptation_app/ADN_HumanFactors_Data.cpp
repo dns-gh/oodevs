@@ -105,7 +105,7 @@ void ADN_HumanFactors_Data::ThresholdsInfo::WriteArchive( xml::xostream& output 
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_Data::ADN_HumanFactors_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eHumanFactors )
     , veteranModifiers_      ( "Veteran" )
     , xpModifiers_           ( "Experimente" )
     , newbieModifiers_       ( "Conscrit" )

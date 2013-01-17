@@ -177,7 +177,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetSensorsInfos() );
     // Detection delay
     builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Delay" ), vConnectors[ eDetectionDelay ] );
     // Activated on request

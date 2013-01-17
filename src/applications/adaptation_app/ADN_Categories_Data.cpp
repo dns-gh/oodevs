@@ -26,8 +26,12 @@ tools::IdManager ADN_Categories_Data::idManager_;
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
 ADN_Categories_Data::ADN_Categories_Data()
+    : ADN_Data_ABC( eCategories )
 {
-    // NOTHING
+    vArmors_.AddUniquenessChecker( eError, duplicateName_ );
+    vSizes_.AddUniquenessChecker( eError, duplicateName_ );
+    vDotationNatures_.AddUniquenessChecker( eError, duplicateName_ );
+    vLogisticSupplyClasses_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -85,6 +89,11 @@ void ADN_Categories_Data::Load( const tools::Loader_ABC& fileLoader )
     const std::string szLogisticSupplyClassesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData();
     fileLoader.LoadFile( szLogisticSupplyClassesFile, boost::bind( &ADN_Categories_Data::ReadLogisticSupplyClasses, this, _1 ) );
+
+    vSizes_.CheckValidity();
+    vArmors_.CheckValidity();
+    vDotationNatures_.CheckValidity();
+    vLogisticSupplyClasses_.CheckValidity();
 }
 
 //-----------------------------------------------------------------------------
@@ -93,6 +102,12 @@ void ADN_Categories_Data::Load( const tools::Loader_ABC& fileLoader )
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Save()
 {
+    if( vArmors_.GetErrorStatus() == eError ||
+        vSizes_.GetErrorStatus() == eError ||
+        vDotationNatures_.GetErrorStatus() == eError ||
+        vLogisticSupplyClasses_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     std::string szArmorFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
     {

@@ -690,12 +690,12 @@ void ADN_Crowds_Data::ReloadingSpeedEffectInfos::WriteArchive( xml::xostream& ou
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::ADN_Crowds_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eCrowds )
     , vCrowds_              ()
     , reloadingSpeedEffectInfos_()
     , timeBetweenNbcApplication_ ( "1h" )
 {
-    // NOTHING
+    vCrowds_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -740,6 +740,7 @@ void ADN_Crowds_Data::ReadArchive( xml::xistream& input )
     timeBetweenNbcApplication_ = time;
     input >> xml::list( "population", *this, &ADN_Crowds_Data::ReadPopulation )
           >> xml::end;
+    vCrowds_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -759,6 +760,9 @@ void ADN_Crowds_Data::ReadPopulation( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
 {
+    if( vCrowds_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Crowds" );
     reloadingSpeedEffectInfos_.WriteArchive( output );

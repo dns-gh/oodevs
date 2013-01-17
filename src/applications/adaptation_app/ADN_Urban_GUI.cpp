@@ -77,15 +77,21 @@ void ADN_Urban_GUI::Build()
         pListMaterial_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
-        // material
-        Q3GroupBox* pGroupMaterial = new Q3VGroupBox( tr( "Material" ), pGroupMaterials);
-        pGroupMaterial->setInsideMargin( 10 );
-        pGroupMaterial->setInsideSpacing( 10 );
-        ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupMaterial );
-        pEdit->setObjectName( strClassName_ + "_MaterialName" );
-        vMaterialInfosConnectors[ eUrbanMaterialName ] = &pEdit->GetConnector();
+        // material info
+        QWidget* pHolder = builder.AddFieldHolder( pGroupMaterials );
+        pHolder->layout()->setMargin( 0 );
+        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vMaterialInfosConnectors[ eUrbanMaterialName ] );
+        nameField->ConnectWithRefValidity( data_.GetMaterialsInfos() );
 
-        pAttritionTable_ = new ADN_Urban_AttritionTable( strClassName_ + "_MaterialAttrition", vMaterialInfosConnectors[ eUrbanMaterialAttrition ], pGroupMaterial );
+        //// material
+        //Q3GroupBox* pGroupMaterial = new Q3VGroupBox( tr( "Material" ), pGroupMaterials);
+        //pGroupMaterial->setInsideMargin( 10 );
+        //pGroupMaterial->setInsideSpacing( 10 );
+        //ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupMaterial );
+        //pEdit->setObjectName( strClassName_ + "_MaterialName" );
+        //vMaterialInfosConnectors[ eUrbanMaterialName ] = &pEdit->GetConnector();
+
+        pAttritionTable_ = new ADN_Urban_AttritionTable( strClassName_ + "_MaterialAttrition", vMaterialInfosConnectors[ eUrbanMaterialAttrition ], pGroupMaterials );
         pAttritionTable_->setFixedHeight( 180 );
     }
 
@@ -97,13 +103,19 @@ void ADN_Urban_GUI::Build()
         pListRoofShape_->setObjectName( strClassName_ + "_RoofShapes" );
         static_cast< ADN_Connector_Vector_ABC* >( &pListRoofShape_->GetConnector() )->Connect( &data_.GetRoofShapesInfos() );
 
-        // roofsape
-        Q3GroupBox* pGroupRoofShape = new Q3VGroupBox( tr( "RoofShape" ), pGroupRoofShapes);
-        pGroupRoofShape->setInsideMargin( 10 );
-        pGroupRoofShape->setInsideSpacing( 10 );
-        ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupRoofShape );
-        pEdit->setObjectName( strClassName_ + "_RoofShapeName" );
-        vRoofShapeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
+        // Roofshape info
+        QWidget* pHolder = builder.AddFieldHolder( pGroupRoofShapes );
+        pHolder->layout()->setMargin( 0 );
+        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vRoofShapeInfosConnectors[ eUrbanName ] );
+        nameField->ConnectWithRefValidity( data_.GetRoofShapesInfos() );
+
+        //// roofsape
+        //Q3GroupBox* pGroupRoofShape = new Q3VGroupBox( tr( "RoofShape" ), pGroupRoofShapes);
+        //pGroupRoofShape->setInsideMargin( 10 );
+        //pGroupRoofShape->setInsideSpacing( 10 );
+        //ADN_EditLine_ABC* pEdit = new ADN_EditLine_String( pGroupRoofShape );
+        //pEdit->setObjectName( strClassName_ + "_RoofShapeName" );
+        //vRoofShapeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
     }
 
     // Accommodations
@@ -126,7 +138,9 @@ void ADN_Urban_GUI::Build()
         pGroupAccommodation->setInsideSpacing( 10 );
         pHolder = builder.AddFieldHolder( pGroupAccommodation );
 
-        builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
+        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
+        nameField->ConnectWithRefValidity( data_.GetAccommodationsInfos() );
+        //builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
         builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Nominal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationNominalCapacity ], tr( "persons/m2" ), eGreaterZero );
         builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Maximal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationMaxCapacity ], tr( "persons/m2" ), eGreaterZero );
     }
@@ -145,7 +159,8 @@ void ADN_Urban_GUI::Build()
         pGroupInfrastructure->setInsideSpacing( 10 );
         QWidget* pHolder = builder.AddFieldHolder( pGroupInfrastructure );
 
-        builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
+        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
+        nameField->ConnectWithRefValidity( data_.GetInfrastructuresInfos() );
         builder.AddField< ADN_ComboBox_Vector >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
         builder.AddField< ADN_CheckBox >( pHolder, tr( "Medical" ), vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] );
     }
@@ -160,7 +175,8 @@ void ADN_Urban_GUI::Build()
         Q3GroupBox* pGroupTemplate = new Q3VGroupBox( tr( "Template" ), pTemplates );
         Q3HBox* pInfoBox = new Q3HBox( pGroupTemplate );
         pInfoBox->setSpacing( 10 );
-        builder.AddField< ADN_EditLine_String >( pInfoBox, tr( "Name" ), vUsageInfosConnectors[ eUrbanUsageName ] );
+        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoBox, tr( "Name" ), vUsageInfosConnectors[ eUrbanUsageName ] );
+        nameField->ConnectWithRefValidity( data_.GetTemplatesInfos() );
         builder.AddField< ADN_ColorNameSelector >( pInfoBox, tr( "Color" ), vUsageInfosConnectors[ eUrbanUsageColor ] );
         ADN_EditLine_Int* alpha = builder.AddField< ADN_EditLine_Int >( pInfoBox, tr( "Alpha" ), vUsageInfosConnectors[ eUrbanUsageAlpha ] );
         alpha->GetValidator().setRange( 0, 255 );

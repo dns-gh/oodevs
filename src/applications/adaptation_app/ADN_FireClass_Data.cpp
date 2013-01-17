@@ -351,9 +351,10 @@ void ADN_FireClass_Data::FireClassInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_FireClass_Data::ADN_FireClass_Data()
-    : cellSize_( 10 )
+    : ADN_Data_ABC( eFireClasses )
+    , cellSize_( 10 )
 {
-    // NOTHING
+    fireClasses_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,6 +396,7 @@ void ADN_FireClass_Data::ReadArchive( xml::xistream& input )
             >> xml::end
             >> xml::list( "fire", *this, &ADN_FireClass_Data::ReadFireClass )
           >> xml::end;
+    fireClasses_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -414,6 +416,9 @@ void ADN_FireClass_Data::ReadFireClass( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_FireClass_Data::WriteArchive( xml::xostream& output )
 {
+    if( fireClasses_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "fires" );
     ADN_Tools::AddSchema( output, "Fires" );
     output << xml::start( "cell-size" )

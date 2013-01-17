@@ -25,7 +25,7 @@ using namespace helpers;
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
 ADN_Urban_Data::ADN_Urban_Data()
-    : ADN_Data_ABC           ()
+    : ADN_Data_ABC           ( eUrban )
     , vMaterials_            ()
     , vRoofShapes_           ()
     , vAccommodations_       ()
@@ -34,7 +34,11 @@ ADN_Urban_Data::ADN_Urban_Data()
     , defaultNominalCapacity_( 0.1 )
     , defaultMaxCapacity_    ( 1 )
 {
-    // NOTHING
+    vMaterials_.AddUniquenessChecker( eError, duplicateName_ );
+    vRoofShapes_.AddUniquenessChecker( eError, duplicateName_ );
+    vAccommodations_.AddUniquenessChecker( eError, duplicateName_ );
+    vInfrastructures_.AddUniquenessChecker( eError, duplicateName_ );
+    vTemplates_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -167,6 +171,12 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
     ReadAccommodations( input );
     ReadInfrastructures( input );
     input >> xml::end;
+
+    vMaterials_.CheckValidity();
+    vRoofShapes_.CheckValidity();
+    vAccommodations_.CheckValidity();
+    vInfrastructures_.CheckValidity();
+    vTemplates_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -175,6 +185,13 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::WriteArchive( xml::xostream& output )
 {
+    if( vMaterials_.GetErrorStatus() == eError ||
+        vRoofShapes_.GetErrorStatus() == eError ||
+        vAccommodations_.GetErrorStatus() == eError ||
+        vInfrastructures_.GetErrorStatus() == eError ||
+        vTemplates_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "urban" );
     ADN_Tools::AddSchema( output, "UrbanTypes" );
     output  << xml::start( "urban-block-types" );

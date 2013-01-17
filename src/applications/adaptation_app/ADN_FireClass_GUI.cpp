@@ -62,7 +62,8 @@ void ADN_FireClass_GUI::Build()
     // Local fire parameters
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetFireClassesInfos() );
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Initial heat" ), vInfosConnectors[ eInitialHeat ] );
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Max heat" ), vInfosConnectors[ eMaxHeat ] );
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Increase rate" ), vInfosConnectors[ eIncreaseRate ] );

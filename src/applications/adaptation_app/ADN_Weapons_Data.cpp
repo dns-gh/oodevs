@@ -319,8 +319,9 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data::ADN_Weapons_Data()
-: ADN_Data_ABC()
+    : ADN_Data_ABC( eWeapons )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

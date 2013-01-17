@@ -126,8 +126,9 @@ ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::LauncherInfos::CreateCopy
 // Created: JDY 03-07-11
 //-----------------------------------------------------------------------------
 ADN_Launchers_Data::ADN_Launchers_Data()
-: ADN_Data_ABC()
+    : ADN_Data_ABC( eLaunchers )
 {
+    vLaunchers_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -177,6 +178,7 @@ void ADN_Launchers_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "launchers" )
             >> xml::list( "launcher", *this, &ADN_Launchers_Data::ReadLauncher )
           >> xml::end;
+    vLaunchers_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -185,6 +187,9 @@ void ADN_Launchers_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Launchers_Data::WriteArchive( xml::xostream& output )
 {
+    if( vLaunchers_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "launchers" );
     ADN_Tools::AddSchema( output, "Launchers" );
     for( T_LauncherInfos_Vector::iterator it = vLaunchers_.begin(); it != vLaunchers_.end(); ++it )

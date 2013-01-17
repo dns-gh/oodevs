@@ -504,24 +504,12 @@ Parked engine running</translation>
         <translation>Sizes</translation>
     </message>
     <message>
-        <source>Size</source>
-        <translation>Size</translation>
-    </message>
-    <message>
         <source>Resource natures</source>
         <translation>Resource natures</translation>
     </message>
     <message>
-        <source>Nature</source>
-        <translation>Nature</translation>
-    </message>
-    <message>
         <source>Logistic resource categories</source>
         <translation>Logistic resource categories</translation>
-    </message>
-    <message>
-        <source>Logistic resource category</source>
-        <translation>Logistic resource category</translation>
     </message>
 </context>
 <context>
@@ -893,6 +881,17 @@ Parked engine running</translation>
     <message>
         <source>Attitudes</source>
         <translation>Attitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Data_ABC</name>
+    <message>
+        <source>Duplicate name</source>
+        <translation>Duplicate name</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;</source>
+        <translation>Invalid data on tab &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -2508,6 +2507,29 @@ posture</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_Data</name>
+    <message>
+        <source>Unit missions</source>
+        <translation>Unit missions</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation>Automaton missions</translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation>Fragmentary orders</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Crowd missions</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Type</source>
@@ -2622,6 +2644,25 @@ posture</translation>
     <message>
         <source>Fragmentary orders</source>
         <translation>Fragmentary orders</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_Data</name>
+    <message>
+        <source>Unit models</source>
+        <translation>Unit models</translation>
+    </message>
+    <message>
+        <source>Automata models</source>
+        <translation>Automata models</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation>Crowds models</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -2835,6 +2876,10 @@ The spawn capacity will be disabled.</translation>
     <message>
         <source>Reference error</source>
         <translation>Reference error</translation>
+    </message>
+    <message>
+        <source>Duplicate type</source>
+        <translation>Duplicate type</translation>
     </message>
 </context>
 <context>
@@ -3341,6 +3386,17 @@ The spawn capacity will be disabled.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Data</name>
+    <message>
+        <source>Radars</source>
+        <translation>Radars</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3473,6 +3529,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation>Equipment - Invalid resource type &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -3782,6 +3842,14 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
         <translation>Sensors - Invalid disaster &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation>Sensors</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -5478,10 +5546,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>RoofShapes</translation>
     </message>
     <message>
-        <source>RoofShape</source>
-        <translation>RoofShape</translation>
-    </message>
-    <message>
         <source>Activities</source>
         <translation>Activities</translation>
     </message>
@@ -5500,10 +5564,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Activity</source>
         <translation>Activity</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
     </message>
     <message>
         <source>Nominal capacity</source>

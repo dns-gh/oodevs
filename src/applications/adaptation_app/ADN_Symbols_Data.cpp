@@ -46,7 +46,7 @@ ADN_Symbols_Data::SymbolsInfra::~SymbolsInfra()
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::ADN_Symbols_Data()
-    : ADN_Data_ABC()
+    : ADN_Data_ABC( eSymbols )
     , factory_( 0 )
 {
     // NOTHING

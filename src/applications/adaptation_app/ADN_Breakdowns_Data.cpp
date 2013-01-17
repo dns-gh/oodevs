@@ -172,10 +172,10 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::ADN_Breakdowns_Data()
-    : ADN_Data_ABC             ()
+    : ADN_Data_ABC             ( eBreakdowns )
     , strAverageDiagnosticTime_( "0s" )
 {
-    // NOTHING
+    vBreakdowns_.AddUniquenessChecker( eError, duplicateName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,6 +239,7 @@ void ADN_Breakdowns_Data::ReadArchive( xml::xistream& input )
             >> xml::end
             >> xml::list( "category", *this, &ADN_Breakdowns_Data::ReadCategory )
         >> xml::end;
+    vBreakdowns_.CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -271,6 +272,9 @@ void ADN_Breakdowns_Data::ReadBreakdown( xml::xistream& input, const E_Breakdown
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
 {
+    if( vBreakdowns_.GetErrorStatus() == eError )
+        throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
+
     output << xml::start( "breakdowns" );
     ADN_Tools::AddSchema( output, "Breakdowns" );
     output   << xml::start( "diagnosis" )

@@ -80,7 +80,8 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( model );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
     builder.AddFileField( pInfoHolder, tr( "File" ), vInfosConnectors[ eFile ] );
     builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Masalife" ), vInfosConnectors[ eMasalife ] );

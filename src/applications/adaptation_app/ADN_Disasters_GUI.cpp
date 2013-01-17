@@ -53,7 +53,8 @@ void ADN_Disasters_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetDisastersInfos() );
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Toxicity exponent" ), vConnectors[ eToxicityExponent ] );
 
     // -------------------------------------------------------------------------

@@ -476,10 +476,6 @@ estacionado con motor encendido</translation>
         <translation>Volumenes</translation>
     </message>
     <message>
-        <source>Size</source>
-        <translation>Volúmen</translation>
-    </message>
-    <message>
         <source>Armor classes</source>
         <translation>Clases de blindaje</translation>
     </message>
@@ -494,10 +490,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Type</source>
         <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Naturaleza</translation>
     </message>
     <message>
         <source>Attrition effects on humans</source>
@@ -517,10 +509,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Logistic resource categories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic resource category</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -893,6 +881,17 @@ estacionado con motor encendido</translation>
     <message>
         <source>Attitudes</source>
         <translation type="unfinished">Actitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Data_ABC</name>
+    <message>
+        <source>Duplicate name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2511,6 +2510,29 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_Data</name>
+    <message>
+        <source>Unit missions</source>
+        <translation type="unfinished">Misiones de unidad</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation type="unfinished">Misiones de autómata</translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">Ordenes parciales</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Unit missions</source>
@@ -2625,6 +2647,25 @@ tirador</translation>
     <message>
         <source>Fragmentary orders</source>
         <translation type="unfinished">Ordenes parciales</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_Data</name>
+    <message>
+        <source>Unit models</source>
+        <translation type="unfinished">Modelos de unidad</translation>
+    </message>
+    <message>
+        <source>Automata models</source>
+        <translation type="unfinished">Modelos de autómata</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2835,6 +2876,10 @@ The spawn capacity will be disabled.</source>
     </message>
     <message>
         <source>Reference error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3342,6 +3387,17 @@ The spawn capacity will be disabled.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Data</name>
+    <message>
+        <source>Radars</source>
+        <translation type="unfinished">Radares</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3475,6 +3531,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation type="unfinished">Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Resources_Data::AmmoCategoryInfo</name>
@@ -3550,7 +3610,7 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
     <message>
         <source>Nature</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nature</translation>
     </message>
     <message>
         <source>Logistic supply class</source>
@@ -3782,6 +3842,14 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     <name>ADN_Sensors_Data</name>
     <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensores</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5481,10 +5549,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>RoofShape</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Activities</source>
         <translation>Actividas</translation>
     </message>
@@ -5499,10 +5563,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Activity</source>
         <translation>Actividad</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
     </message>
     <message>
         <source>Nominal capacity</source>

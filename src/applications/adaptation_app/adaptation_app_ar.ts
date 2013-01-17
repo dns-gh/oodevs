@@ -492,24 +492,12 @@ Parked engine running</source>
         <translation type="unfinished">أحجام</translation>
     </message>
     <message>
-        <source>Size</source>
-        <translation type="unfinished">الحجم</translation>
-    </message>
-    <message>
         <source>Resource natures</source>
         <translation type="unfinished">الموارد الطبيعة</translation>
     </message>
     <message>
-        <source>Nature</source>
-        <translation type="unfinished">طبيعة</translation>
-    </message>
-    <message>
         <source>Logistic resource categories</source>
         <translation type="unfinished">فئات الموارد اللوجستية</translation>
-    </message>
-    <message>
-        <source>Logistic resource category</source>
-        <translation type="unfinished">فئة الموارد اللوجستية</translation>
     </message>
 </context>
 <context>
@@ -881,6 +869,17 @@ Parked engine running</source>
     <message>
         <source>Attitudes</source>
         <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Data_ABC</name>
+    <message>
+        <source>Duplicate name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2495,6 +2494,29 @@ stance</source>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_Data</name>
+    <message>
+        <source>Unit missions</source>
+        <translation type="unfinished">وحدة البعثات</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation type="unfinished">بعثات [اوتومت]</translation>
+    </message>
+    <message>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">أوامر مجزأ</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation type="unfinished">البعثات الحشد</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Type</source>
@@ -2609,6 +2631,25 @@ stance</source>
     <message>
         <source>Fragmentary orders</source>
         <translation type="unfinished">أوامر مجزأ</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Models_Data</name>
+    <message>
+        <source>Unit models</source>
+        <translation type="unfinished">نماذج وحدة</translation>
+    </message>
+    <message>
+        <source>Automata models</source>
+        <translation type="unfinished">نماذج الآلات</translation>
+    </message>
+    <message>
+        <source>Crowds models</source>
+        <translation type="unfinished">نماذج الحشود</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2822,6 +2863,10 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Reference error</source>
         <translation type="unfinished">خطأ مرجع</translation>
+    </message>
+    <message>
+        <source>Duplicate type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3328,6 +3373,17 @@ The spawn capacity will be disabled.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Data</name>
+    <message>
+        <source>Radars</source>
+        <translation type="unfinished">الرادار</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3460,6 +3516,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3768,6 +3828,14 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <name>ADN_Sensors_Data</name>
     <message>
         <source>Sensors - Invalid disaster &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
+    </message>
+    <message>
+        <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5465,10 +5533,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">روفشابيس</translation>
     </message>
     <message>
-        <source>RoofShape</source>
-        <translation type="unfinished">روفشابي</translation>
-    </message>
-    <message>
         <source>Activities</source>
         <translation type="unfinished">الأنشطة</translation>
     </message>
@@ -5487,10 +5551,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Activity</source>
         <translation type="unfinished">النشاط</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
     </message>
     <message>
         <source>Nominal capacity</source>

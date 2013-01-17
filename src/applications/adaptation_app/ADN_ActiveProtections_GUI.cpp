@@ -47,7 +47,8 @@ void ADN_ActiveProtections_GUI::Build()
 
     // Properties
     Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Properties" ) );
-    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
+    nameField->ConnectWithRefValidity( data_.GetActiveProtectionsInfos() );
     ADN_EditLine_Double* pEdit = builder.AddField< ADN_EditLine_Double >( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
     pEdit->GetValidator().setTop( 1 );
     builder.AddField< ADN_CheckBox >( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );

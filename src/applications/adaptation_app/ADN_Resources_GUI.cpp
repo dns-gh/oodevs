@@ -148,7 +148,8 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    nameField->ConnectWithRefValidity( data_.GetResources() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code NNO" ), vConnectors[ eGenNNOCode ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
@@ -246,7 +247,8 @@ void ADN_Resources_GUI::BuildAmmunition()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eAmmoName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eAmmoName ] );
+    nameField->ConnectWithRefValidity( data_.GetResources() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code NNO" ), vConnectors[ eNNOCode ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eEMAT6Code ] );
