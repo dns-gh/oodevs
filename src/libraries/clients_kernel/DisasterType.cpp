@@ -61,8 +61,6 @@ const std::string& DisasterType::GetName() const
 QColor DisasterType::GetColor( double value ) const
 {
     QColor color( Qt::blue );
-    if( color_.empty() )
-        return Qt::blue;
     for( auto it = color_.begin(); it != color_.end(); ++it )
         if( value >= it->first )
             color = it->second;
