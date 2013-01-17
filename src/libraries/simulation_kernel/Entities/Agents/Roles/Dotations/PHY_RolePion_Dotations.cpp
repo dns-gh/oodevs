@@ -16,7 +16,6 @@
 #include "ConsumptionComputerFactory_ABC.h"
 #include "ConsumptionModeChangeRequest_ABC.h"
 #include "DotationComputer_ABC.h"
-#include "FireData_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputer_ABC.h"
@@ -34,6 +33,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -670,31 +670,13 @@ void PHY_RolePion_Dotations::AllowAllDotations()
      forbiddenDotations_.clear();
 }
 
-namespace
-{
-    class FireData : public firing::FireData_ABC
-    {
-    public:
-        FireData( const PHY_DotationCategory& category ) : number_( 0 ), category_( category ) {}
-        virtual void operator()( const PHY_ComposantePion& /*firer*/, PHY_Weapon& weapon )
-        {
-            number_ += weapon.GetNumberOfDotationPerBurst( category_ );
-        }
-        int number_;
-        const PHY_DotationCategory& category_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::HasDotationForFiring
 // Created: LDC 2011-06-23
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Dotations::HasDotationForFiring( const PHY_DotationCategory& category, int iterations )
 {
-    FireData firerWeapons( category );
-    std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( owner_->GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
-    owner_->Execute( *weaponAvailabilityComputer );
-    return( GetDotationNumber( category ) >= iterations * firerWeapons.number_ );
+    return( GetDotationNumber( category ) >= category.ConvertToNbrAmmo( static_cast< double >( iterations ) ) );
 }
 
 } // namespace dotation
