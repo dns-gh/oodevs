@@ -28,9 +28,10 @@ class ADN_Resources_Wizard : public ADN_Wizard< ADN_Resources_Data::CategoryInfo
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Resources_Wizard( ADN_Resources_Data::ResourceInfos& parentDotation, const QString& elementName, QWidget* pParent = 0 )
+    explicit ADN_Resources_Wizard( ADN_Resources_Data::ResourceInfos& parentDotation, ADN_Resources_Data::T_ResourceInfos_Vector& allResources, const QString& elementName, QWidget* pParent = 0 )
         : ADN_Wizard< ADN_Resources_Data::CategoryInfo, ADN_Resources_WizardPage >( elementName, parentDotation.categories_, pParent )
         , parentDotation_( parentDotation )
+        , allResources_( allResources )
     {
         // NOTHING
     }
@@ -45,7 +46,7 @@ public:
     //@{
     virtual ADN_Resources_WizardPage* CreatePage()
     {
-        return new ADN_Resources_WizardPage( vector_, title_, this, &parentDotation_ );
+        return new ADN_Resources_WizardPage( vector_, title_, this, &parentDotation_, &allResources_ );
     }
     //@}
 
@@ -53,6 +54,7 @@ private:
     //! @name Member data
     //@{
     ADN_Resources_Data::ResourceInfos& parentDotation_;
+    ADN_Resources_Data::T_ResourceInfos_Vector& allResources_;
     //@}
 };
 

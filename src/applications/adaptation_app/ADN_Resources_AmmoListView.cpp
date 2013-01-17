@@ -147,7 +147,7 @@ void ADN_Resources_AmmoListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
-    ADN_Resources_Wizard wizard( dotation, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str(), this );
+    ADN_Resources_Wizard wizard( dotation, ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources(), ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

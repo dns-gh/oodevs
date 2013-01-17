@@ -57,7 +57,7 @@ protected:
     virtual bool validatePage();
     //@}
 
-private:
+protected:
     //! @name Types
     //@{
     enum E_RadioButtons { eNew = 0, eCopy = 1 };

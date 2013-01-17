@@ -25,9 +25,10 @@ class ADN_Resources_WizardPage : public ADN_WizardPage< ADN_Resources_Data::Cate
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Resources_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, ADN_Resources_Data::ResourceInfos* parentDotation = 0 )
+             ADN_Resources_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, ADN_Resources_Data::ResourceInfos* parentDotation = 0, ADN_Resources_Data::T_ResourceInfos_Vector* allResources = 0 )
                  : ADN_WizardPage< ADN_Resources_Data::CategoryInfo >( existingItems, pageTitle, pParent )
                  , parentResource_( *parentDotation )
+                 , allResources_( *allResources )
              {
                  // NOTHING
              }
@@ -39,6 +40,61 @@ public:
 
     //! @name Operations
     //@{
+    virtual ADN_Resources_Data::CategoryInfo* CreateObject()
+    {
+        element_ = 0;
+        std::string strNewName = GetName();
+
+        // Check if the name empty.
+        if( strNewName.empty() )
+        {
+            QMessageBox::warning( this, errorTitle_, errorMsg_, QMessageBox::Ok, Qt::NoButton );
+            return 0;
+        }
+
+        // Check if the name is not already used.
+        for( auto resourceVector = allResources_.begin(); resourceVector != allResources_.end(); ++resourceVector )
+        {
+            for( auto it = ( *resourceVector )->categories_.begin(); it != ( *resourceVector )->categories_.end(); ++it )
+                if( ( *it )->strName_.GetData() == strNewName )
+                {
+                    QMessageBox::warning( this, errorTitle_, errorMsg_, QMessageBox::Ok, Qt::NoButton );
+                    return 0;
+                }
+        }
+
+        //QList< QStandardItem* > items = model_->findItems( strNewName.c_str(), Qt::MatchExactly );
+        //if( !items.isEmpty() )
+        //{
+        //    QMessageBox::warning( this, errorTitle_, errorMsg_, QMessageBox::Ok, Qt::NoButton );
+        //    return 0;
+        //}
+
+        // Create a new item or create a copy of an existing one.
+        if( static_cast< QRadioButton* >( buttonGroup_->button( eCopy ) )->isOn() )
+        {
+            QItemSelection selection = proxy_->mapSelectionToSource( view_->selectionModel()->selection() );
+            QModelIndexList indexes = selection.indexes();
+            if( indexes.size() == 0 )
+            {
+                QMessageBox::warning( this, errorTitle_, noSelectionMsg_, QMessageBox::Ok, Qt::NoButton );
+                return 0;
+            }
+            const ADN_Resources_Data::CategoryInfo* objectToCopy = static_cast< const ADN_Resources_Data::CategoryInfo* >( indexes[ 0 ].data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ );
+            assert( objectToCopy );
+            element_ = const_cast< ADN_Resources_Data::CategoryInfo* >( objectToCopy )->CreateCopy();
+        }
+        else
+        {
+            element_ = NewT();
+        }
+
+        // Set name and options
+        element_->strName_ = strNewName;
+        ApplyOptions();
+        return element_;
+    }
+
     virtual ADN_Resources_Data::CategoryInfo* NewT()
     {
         if( parentResource_.nType_ == eDotationFamily_Munition ||
@@ -54,6 +110,7 @@ private:
     //! @name Member data
     //@{
     ADN_Resources_Data::ResourceInfos& parentResource_;
+    ADN_Resources_Data::T_ResourceInfos_Vector& allResources_;
     //@}
 };
 

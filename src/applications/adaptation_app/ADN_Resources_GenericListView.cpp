@@ -97,7 +97,7 @@ void ADN_Resources_GenericListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( nType_ );
-    ADN_Resources_Wizard wizard( dotation, ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str(), this );
+    ADN_Resources_Wizard wizard( dotation, ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources(), ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
