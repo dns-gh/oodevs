@@ -69,12 +69,12 @@ void TacticalObjectProxy::Register( TacticalObjectEventListener_ABC& listener )
         std::vector< rpr::EntityType > resources;
         xml::xistream& xis( *it->second );
         xis >> xml::optional >> xml::start( "buildable" )
-                >> xml::start( "resources" )
+                >> xml::optional >> xml::start( "resources" )
                     >> xml::list( "resource", boost::bind( &readResource, _1, boost::cref( dotationResolver_ ), boost::ref( resources ) ) )
                 >> xml::end
             >> xml::end
             >> xml::optional >> xml::start( "improvable" )
-                >> xml::start( "resources" )
+                >> xml::optional >> xml::start( "resources" )
                     >> xml::list( "resource", boost::bind( &readResource, _1, boost::cref( dotationResolver_ ), boost::ref( resources ) ) )
                 >> xml::end
             >> xml::end;
