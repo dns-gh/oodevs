@@ -23,12 +23,11 @@
 
 using namespace actions;
 
-unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
-const std::string Action_ABC::typeName_ = "action";
-EActionType Action_ABC::actionTypeEntity_ = eTypeEntity;
-EActionType Action_ABC::actionTypeObjects_ = eTypeObjects;
-EActionType Action_ABC::actionTypeWeather_ = eTypeWeather;
-EActionType Action_ABC::actionTypeMagic_ = eTypeMagic;
+namespace
+{
+    unsigned long ids = 0;
+    const std::string typeName = "action";
+}
 
 // -----------------------------------------------------------------------------
 // Name: Action_ABC constructor
@@ -37,7 +36,7 @@ EActionType Action_ABC::actionTypeMagic_ = eTypeMagic;
 Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
     , type_      ( type )
-    , id_        ( ++idManager_ )
+    , id_        ( ++ids )
     , name_      ( type_.GetName().c_str() )
     , valid_     ( true )
 {
@@ -51,7 +50,7 @@ Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType&
 Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
     , type_      ( type )
-    , id_        ( ++idManager_ )
+    , id_        ( ++ids )
     , name_      ( xis.attribute< std::string >( "name", type_.GetName() ).c_str() )
     , valid_     ( true )
 {
@@ -73,7 +72,7 @@ Action_ABC::~Action_ABC()
 // -----------------------------------------------------------------------------
 const std::string& Action_ABC::GetTypeName() const
 {
-    return typeName_;
+    return typeName;
 }
 
 // -----------------------------------------------------------------------------

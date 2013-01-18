@@ -61,16 +61,6 @@ class Action_ABC : public kernel::Entity_ABC
                  , public ParameterContainer_ABC
 {
 public:
-    //! @name Static
-    //@{
-    static const std::string typeName_;
-    static EActionType actionTypeEntity_;
-    static EActionType actionTypeObjects_;
-    static EActionType actionTypeWeather_;
-    static EActionType actionTypeMagic_;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              Action_ABC( kernel::Controller& controller, const kernel::OrderType& type );
@@ -123,10 +113,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::OrderType& type_;
-    unsigned long id_;
+    const unsigned long id_;
     QString name_;
     mutable bool valid_;
-    static unsigned long idManager_;
     //@}
 };
 
