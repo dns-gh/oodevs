@@ -79,7 +79,9 @@ integration.updateApplyFireOnPoint = function( point )
         end
         return false
     else
-        if point[myself].eIndirectFireState then
+        if point[myself].eIndirectFireState == eIndirectFireState_Finished then
+            return true
+        elseif point[myself].eIndirectFireState then -- eIndirectFireState_NoCapacity, eIndirectFireState_Impossible, eIndirectFireState_NoAmmo
             integration.updateApplyFireImpossible( point )
             return true
         else
@@ -101,7 +103,9 @@ integration.updateApplyFireOnPlatoon = function( target )
         end
         return false
     else
-        if target[myself].eIndirectFireState then
+        if target[myself].eIndirectFireState == eIndirectFireState_Finished then
+            return true
+        elseif target[myself].eIndirectFireState then -- eIndirectFireState_NoCapacity, eIndirectFireState_Impossible, eIndirectFireState_NoAmmo
             integration.updateApplyFireImpossible( target )
             return true
         else
