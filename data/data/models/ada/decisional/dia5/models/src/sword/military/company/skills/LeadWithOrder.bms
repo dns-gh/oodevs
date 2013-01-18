@@ -124,12 +124,6 @@ create = function( self )
         meKnowledge.nbPionsMain = integration.nbPlatoonsHaveTask( self.parameters.commandingEntities, self.params.mainTasks )
 
         -- Initialisation des missions pion
-        -- Le pion PC rejoint le meetingPoint
-        if self.params.pcTasks and self.params.pcTasks ~= NIL then
-            self.parameters.pcObjective = self.params.pcObjective
-            issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { integration.query.getPCUnit() } )
-        end
-
         -- S'il y a des obstacles à construire, les pions GEN (ou PIA) vont le construire
         if self.params.engineerTask and self.params.engineerTask ~= NIL then
             issueMission ( self, self.params.engineerTask,  #self.companyTask:getObstaclesPlan( myself.taskParams ), eEtatEchelon_None )
@@ -153,7 +147,14 @@ activate = function( self )
     end
     
     -- Si on a recu l'ordre de conduite poursuivre alors on distribue les missions au second echelon
-    if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Poursuivre" ) ~= nil or myself.leadData.noASSScoutUnit then
+    if not self.missionGiven and ( integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Poursuivre" ) ~= nil or myself.leadData.noASSScoutUnit ) then
+        -- Le pion PC rejoint le meetingPoint
+        self.missionGiven = true
+        if self.params.pcTasks and self.params.pcTasks ~= NIL then
+            self.parameters.pcObjective = self.params.pcObjective
+            issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { integration.query.getPCUnit() } )
+        end
+        
         -- Le second echelon recoit les missions de "supportTask"
         issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second )
 

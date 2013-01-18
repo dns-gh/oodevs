@@ -27,6 +27,16 @@
 		<stage label="Reconnaissance et deploiement">
 			<skills>
 				<skill name="sword.military.company.skills.LeadWithOrder" main="true">
+					<parameter name="pcObjective">
+						<value>
+							<parameter>meetingPoint</parameter>
+						</value>
+					</parameter>
+					<parameter name="pcTasks">
+						<value>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
+						</value>
+					</parameter>
 					<parameter name="companyTask">
 						<value>
 							<string>france.military.company.combat.support.art.tasks.RecoEtDeploiement</string>
