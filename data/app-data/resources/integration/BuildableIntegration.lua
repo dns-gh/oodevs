@@ -320,24 +320,46 @@ integration.destroyInstantlyCheckpointOn = function( position )
 end
 
 -- -------------------------------------------------------------------------------- 
--- Create object on position
+-- Delet object with same same localisation and return the localisation
 -- --------------------------------------------------------------------------------
-integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appeler une seule fois.
+integration.deleteObjectWithSameLocalisation = function( typeObject, area )  -- A appeler une seule fois.
     local localisation
-    if masalife.brain.core.class.isOfType( position, integration.ontology.types.area) then
-        localisation = position.source
+    if masalife.brain.core.class.isOfType( area, integration.ontology.types.area) then
+        localisation = area.source
     else
-        localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+        localisation = DEC_Geometrie_ConvertirPointEnLocalisation( area.source )
     end
     local object = object
     object = integration.obtenirObjetProcheDe( localisation, typeObject, 10 )
     if object ~= nil then -- rebuild the already existing object
         DEC_DetruireObjetSansDelais( object )
     end
+    return localisation
+end
+
+-- -------------------------------------------------------------------------------- 
+-- Create object on position
+-- --------------------------------------------------------------------------------
+integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appeler une seule fois.
+    local localisation = integration.deleteObjectWithSameLocalisation( typeObject, position ) 
     myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
     myself.constructedInstantlyObject[ typeObject ].id = DEC_CreerObjetSansDelais( typeObject, localisation )
 end
+
+
+-- -------------------------------------------------------------------------------- 
+-- Create cordon object on area
+-- --------------------------------------------------------------------------------
+integration.buildInstantlyPolyligneOnArea = function( typeObject, area )  -- A appeler une seule fois.
+    local localisation = integration.deleteObjectWithSameLocalisation( typeObject, area ) 
+    local points = DEC_Geometrie_ListePointsLocalisation( localisation )
+    local polyligne = DEC_Geometrie_CreerLocalisationPolyligne( points )
+    myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
+    myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
+    myself.constructedInstantlyObject[ typeObject ].id = DEC_CreerObjetSansDelais( typeObject, polyligne )
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Destroy object on position
 -- --------------------------------------------------------------------------------
