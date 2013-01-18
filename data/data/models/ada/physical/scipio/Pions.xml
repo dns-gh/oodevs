@@ -8916,6 +8916,7 @@
     <setup footprint-radius="10" installation-time="60s" speed-modifier="0.7" uninstallation-time="2m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
+    <repartition children="0" female="0.5" male="0.5"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Individu Isole" id="300" name="Individu Isole" type="Pion Civilian">
@@ -8971,6 +8972,7 @@
     <setup footprint-radius="10" installation-time="60s" speed-modifier="0.7" uninstallation-time="2m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
+    <repartition children="0" female="0.5" male="0.5"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Milice" id="302" name="MILICE . PICK UP CDT" type="Pion MILICE">
@@ -12459,6 +12461,7 @@
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1s"/>
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
+    <repartition children="0" female="0.5" male="0.5"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ONG Transport" id="422" name="ONG Transport" type="Pion Organization">
@@ -12481,6 +12484,7 @@
     <setup footprint-radius="10" installation-time="60s" speed-modifier="0.7" uninstallation-time="2m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
+    <repartition children="0" female="0.5" male="0.5"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.DPRE" id="423" name="Refugiés femmes et enfants" type="Pion REFUGIE">
@@ -18068,4 +18072,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0343632892" -->
+<!-- signature="1108086622" -->
