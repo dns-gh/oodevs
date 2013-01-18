@@ -284,7 +284,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     assert( pDotations_ );
     pDotations_->CancelConsumptionReservations();
 
-    bool bIsTransported = pion_->GetRole< transport::PHY_RolePion_Transported >().IsTransported();
+    const transport::PHY_RolePion_Transported& transportRole = pion_->GetRole< transport::PHY_RolePion_Transported >();
+    bool bIsTransported = transportRole.IsTransported() || transportRole.HasHumanTransportersToRecover();
 
     sConsumptionReservation func( consumptionMode, *pDotations_, bIsTransported );
     std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );

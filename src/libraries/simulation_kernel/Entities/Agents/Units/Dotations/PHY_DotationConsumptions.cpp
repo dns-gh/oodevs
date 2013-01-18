@@ -71,7 +71,7 @@ bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGrou
     {
         // transported units do not consume fuel
         if( isTransported && it->first->GetType() == *PHY_DotationType::carburant_ )
-            continue;   
+            continue;
         const double rConsumption = it->second->GetConsumption();
         if( container.AddConsumptionReservation( *it->first, rConsumption ) < rConsumption )
             return false;
