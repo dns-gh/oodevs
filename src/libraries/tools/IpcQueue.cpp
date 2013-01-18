@@ -19,10 +19,10 @@
 
 #include "IpcHandler_ABC.h"
 #include "ThreadPool.h"
-#include "WaitEvent.h"
 
 #include "MT_Tools/MT_Logger.h"
 
+#include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/interprocess/detail/os_thread_functions.hpp>
@@ -37,7 +37,6 @@ namespace
 {
     const size_t max_messages = 64;
     const size_t message_size = sizeof( Command );
-    const size_t timeout_ms = 100;
     uint32_t num_queues = 0;
 
     template< typename T >
@@ -63,7 +62,6 @@ namespace
 Queue::Queue( Handler_ABC& handler )
     : handler_( handler )
     , pool_   ( new tools::ThreadPool( 1 ) )
-    , quit_   ( new tools::WaitEvent() )
     , queue_  ( MakeQueue() )
 {
     const bool first = !bip::ipcdetail::atomic_inc32( &num_queues );
@@ -74,7 +72,7 @@ Queue::Queue( Handler_ABC& handler )
 
 Queue::~Queue()
 {
-    quit_->Signal();
+    Send( *queue_, IPC_COMMAND_EXIT );
     pool_->Join( tools::ThreadPool::ProcessPending );
     try
     {
@@ -90,10 +88,12 @@ Queue::~Queue()
 
 void Queue::Run()
 {
-    while( !quit_->IsSignaled() )
+    for( ;; )
         try
         {
-            Update();
+            const bool last = Update();
+            if( last )
+                return;
         }
         catch( std::exception& err )
         {
@@ -140,46 +140,61 @@ void Pack( void* data, size_t size, Command cmd )
 }
 }
 
-void Queue::Update()
+bool Queue::Update()
 {
     char buffer[sizeof(Command)];
     size_t read;
     unsigned priority;
-    const auto timeout = boost::posix_time::microsec_clock::universal_time()
-                       + boost::posix_time::milliseconds( timeout_ms );
-    const bool found = queue_->timed_receive( buffer, sizeof buffer, read,
-                                              priority, timeout );
-    if( !found )
-        return;
+    queue_->receive( buffer, sizeof buffer, read, priority );
     if( read != sizeof buffer )
     {
         MT_LOG_WARNING_MSG( "Skipping invalid command ("
                             + boost::lexical_cast< std::string >( read )
                             + " bytes)" );
-        return;
+        return false;
     }
-    Process( Unpack( buffer, sizeof buffer ) );
+    return Process( Unpack( buffer, sizeof buffer ) );
 }
 
-void Queue::Process( Command cmd )
+bool Queue::Process( Command cmd )
 {
     switch( cmd )
     {
-        case IPC_COMMAND_STOP:  return handler_.Stop();
+        case IPC_COMMAND_STOP:
+            handler_.Stop();
+            return false;
+
+        case IPC_COMMAND_EXIT:
+            return true;
     }
     MT_LOG_WARNING_MSG( "Skipping invalid command "
                         + boost::lexical_cast< std::string >( cmd ) );
+    return false;
+}
+
+bool Queue::Send( bip::message_queue& queue, Command cmd )
+{
+    try
+    {
+        char buffer[sizeof cmd];
+        Pack( buffer, sizeof buffer, cmd );
+        queue.send( buffer, sizeof buffer, 0 );
+        return true;
+    }
+    catch( ... )
+    {
+        return false;
+    }
 }
 
 bool Queue::Send( Command cmd, int pid )
 {
     try
     {
-        char buffer[sizeof cmd];
-        Pack( buffer, sizeof buffer, cmd );
-        bip::message_queue dst( bip::open_only, GetQueueName( pid ).c_str() );
-        dst.send( buffer, sizeof buffer, 0 );
-        return true;
+        if( cmd == IPC_COMMAND_EXIT )
+            return false;
+        bip::message_queue queue( bip::open_only, GetQueueName( pid ).c_str() );
+        return Send( queue, cmd );
     }
     catch( ... )
     {

@@ -51,6 +51,11 @@ BOOST_FIXTURE_TEST_CASE( ipc_send_to_invalid_pid_throws, Fixture )
     BOOST_CHECK( !Queue::Send( IPC_COMMAND_STOP, bip::get_current_process_id() + 1 ) );
 }
 
+BOOST_FIXTURE_TEST_CASE( ipc_queue_cannot_send_exit_command, Fixture )
+{
+    BOOST_CHECK( !Queue::Send( IPC_COMMAND_EXIT, 0 ) );
+}
+
 namespace
 {
 void MakeQueue()

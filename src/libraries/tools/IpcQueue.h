@@ -17,7 +17,6 @@
 namespace tools
 {
     class ThreadPool;
-    class WaitEvent;
 namespace ipc
 {
     class Handler_ABC;
@@ -31,7 +30,8 @@ namespace ipc
 // do not modify current values or suffer ABI breakage
 enum Command
 {
-    IPC_COMMAND_STOP  = 1,
+    IPC_COMMAND_EXIT = -1, ///< private command
+    IPC_COMMAND_STOP =  1,
 };
 
 // =============================================================================
@@ -57,8 +57,9 @@ private:
     //! @name Private methods
     //@{
     void Run();
-    void Update();
-    void Process( Command cmd );
+    bool Update();
+    bool Process( Command cmd );
+    static bool Send( boost::interprocess::message_queue& queue, Command cmd );
     //@}
 
 private:
@@ -66,7 +67,6 @@ private:
     //@{
     Handler_ABC& handler_;
     std::auto_ptr< tools::ThreadPool > pool_;
-    std::auto_ptr< tools::WaitEvent > quit_;
     std::auto_ptr< boost::interprocess::message_queue > queue_;
     //@}
 };
