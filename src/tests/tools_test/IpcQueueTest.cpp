@@ -37,6 +37,23 @@ namespace
         MockHandler handler_;
         Queue queue_;
     };
+
+    void MakeQueue()
+    {
+        MockHandler handler;
+        Queue queue( handler );
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( ipc_queue_constructs, Fixture )
+{
+    // NOTHING
+}
+
+BOOST_FIXTURE_TEST_CASE( ipc_queue_instancied_twice_throws, Fixture )
+{
+    BOOST_CHECK_THROW( MakeQueue(), tools::Exception );
+    BOOST_CHECK_THROW( MakeQueue(), tools::Exception );
 }
 
 BOOST_FIXTURE_TEST_CASE( ipc_roundtrip_stop, Fixture )
@@ -54,19 +71,4 @@ BOOST_FIXTURE_TEST_CASE( ipc_send_to_invalid_pid_throws, Fixture )
 BOOST_FIXTURE_TEST_CASE( ipc_queue_cannot_send_exit_command, Fixture )
 {
     BOOST_CHECK( !Queue::Send( IPC_COMMAND_EXIT, 0 ) );
-}
-
-namespace
-{
-void MakeQueue()
-{
-    MockHandler handler;
-    Queue queue( handler );
-}
-}
-
-BOOST_FIXTURE_TEST_CASE( ipc_queue_instancied_twice_throws, Fixture )
-{
-    BOOST_CHECK_THROW( MakeQueue(), tools::Exception );
-    BOOST_CHECK_THROW( MakeQueue(), tools::Exception );
 }

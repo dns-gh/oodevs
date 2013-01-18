@@ -59,13 +59,27 @@ namespace
     }
 }
 
+struct tools::ipc::Queue::Counter : public boost::noncopyable
+{
+    Counter()
+        : value( bip::ipcdetail::atomic_inc32( &num_queues ) )
+    {
+        // NOTHING
+    }
+    ~Counter()
+    {
+        bip::ipcdetail::atomic_dec32( &num_queues );
+    }
+    const uint32_t value;
+};
+
 Queue::Queue( Handler_ABC& handler )
     : handler_( handler )
     , pool_   ( new tools::ThreadPool( 1 ) )
     , queue_  ( MakeQueue() )
+    , counter_( new Counter() )
 {
-    const bool first = !bip::ipcdetail::atomic_inc32( &num_queues );
-    if( !first )
+    if( counter_->value > 0 )
         throw MASA_EXCEPTION( "Unable to start multiple IPC queues" );
     pool_->Post( boost::bind( &Queue::Run, this ) );
 }
@@ -77,7 +91,6 @@ Queue::~Queue()
     try
     {
         bip::message_queue::remove( GetQueueName().c_str() );
-        bip::ipcdetail::atomic_dec32( &num_queues );
     }
     catch( const std::exception& err )
     {

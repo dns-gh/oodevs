@@ -62,12 +62,18 @@ private:
     static bool Send( boost::interprocess::message_queue& queue, Command cmd );
     //@}
 
+    //! @name Private types
+    //@{
+    struct Counter;
+    //@}
+
 private:
     //! @name Member data
     //@{
     Handler_ABC& handler_;
     std::auto_ptr< tools::ThreadPool > pool_;
     std::auto_ptr< boost::interprocess::message_queue > queue_;
+    std::auto_ptr< Counter > counter_;
     //@}
 };
 }
