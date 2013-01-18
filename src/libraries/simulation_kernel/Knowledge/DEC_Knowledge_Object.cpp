@@ -679,14 +679,12 @@ void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
     reconByAgentTypes_.insert( &agent.GetType() );
     if( !IsValid() || !pObjectKnown_ || &agent.GetArmy() != &GetArmy() )
         return;
-    DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute >* crossingSiteAttribute = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute > >();
-    DEC_Knowledge_ObjectAttributeProxy_ABC< NBCAttribute >* nbcAttribute = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< NBCAttribute > >();
-    if( ( crossingSiteAttribute && crossingSiteAttribute->ForceUpdateAttributeFromObject( *pObjectKnown_ ) ) ||
-        ( nbcAttribute && nbcAttribute->ForceUpdateAttributeFromObject( *pObjectKnown_ ) ) )
-    {
-        nAttributesUpdated_ = eAttr_AllAttributes;
-        SendUpdateOnNetwork();
-    }
+    if( DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute >* proxy = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< CrossingSiteAttribute > >() )
+        if( proxy->ForceUpdateAttributeFromObject( *pObjectKnown_ ) )
+        {
+            nAttributesUpdated_ = eAttr_AllAttributes;
+            SendUpdateOnNetwork();
+        }
 }
 
 // -----------------------------------------------------------------------------

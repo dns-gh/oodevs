@@ -235,6 +235,49 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVecto
 
 namespace
 {
+    // -----------------------------------------------------------------------------
+    // Name: DEC_KnowledgeBlackBoard_Army::GetObjectsInZone
+    // Created: ABR 2012-18-01
+    // -----------------------------------------------------------------------------
+    template< typename T >
+    class sObjectKnowledgesIntersectingInZoneFilteredInserter
+    {
+    public:
+        sObjectKnowledgesIntersectingInZoneFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const T& zone )
+            : pContainer_( &container )
+            , filter_    ( filter )
+            , pZone_     ( &zone )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( filter_.Test( knowledge->GetType() ) 
+                && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) 
+                && pZone_->IsIntersecting( knowledge->GetLocalisation() )
+                && knowledge->IsValid() )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector* pContainer_;
+        const MIL_ObjectFilter& filter_;
+        const T* pZone_;
+    };
+}
+
+void DEC_KnowledgeBlackBoard_Army::GetObjectsIntersectingInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone )
+{
+    sObjectKnowledgesIntersectingInZoneFilteredInserter< TER_Localisation > functor( container, filter, zone );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+
+}
+
+namespace
+{
     class sObjectKnowledgesInZoneCapacityInserter
     {
     public:

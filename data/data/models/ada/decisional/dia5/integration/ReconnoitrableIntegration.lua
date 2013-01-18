@@ -87,7 +87,7 @@ integration.startNBCUrbanBlock = function( urbanBlock )
     urbanBlock.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ urbanBlock.actionNBC ] = function( arg )
         urbanBlock.bActionNBCFinished = true
-        lstObjects = DEC_ObjectKnowledgesInZone( urbanBlock.area, { eTypeObjectNBCZone, eTypeObjectRota } )
+        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( urbanBlock.area, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
             DEC_ConnaissanceObjet_Reconnaitre( object )
         end
@@ -181,7 +181,7 @@ integration.startNBCPoint = function( point )
     perceptionReconnaissanceCallbacks[ point.actionNBC ] = function( arg )
         point.bActionNBCFinished = true
         local pointArea = DEC_Geometrie_CreerLocalisationCercle( point.source, pointCircleRadius )
-        lstObjects = DEC_ObjectKnowledgesInZone( pointArea, { eTypeObjectNBCZone, eTypeObjectRota } )
+        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( pointArea, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
             DEC_ConnaissanceObjet_Reconnaitre( object )
         end
@@ -284,7 +284,7 @@ integration.startNBCArea = function( area )
     area.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ area.actionNBC ] = function( arg )
         area.bActionNBCFinished = true
-        lstObjects = DEC_ObjectKnowledgesInZone( area.source, { eTypeObjectNBCZone, eTypeObjectRota } )
+        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( area.source, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
             DEC_ConnaissanceObjet_Reconnaitre( object )
         end
@@ -344,7 +344,7 @@ integration.startNBCObject = function( object )
     object.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ object.actionNBC ] = function( arg )
         object.bActionNBCFinished = true
-        lstObjects = DEC_ObjectKnowledgesInZone( DEC_ConnaissanceObjet_Localisation( object.source ), { eTypeObjectNBCZone, eTypeObjectRota } )
+        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( DEC_ConnaissanceObjet_Localisation( object.source ), { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
             DEC_ConnaissanceObjet_Reconnaitre( object )
         end
