@@ -26089,7 +26089,9 @@
       <sensor height="2" type="Jumelle Optique Gx8"/>
       <sensor height="2" type="Lunette Thermique ACCP"/>
     </sensors>
-    <radars/>
+    <radars>
+      <radar type="MISTRAL"/>
+    </radars>
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
@@ -35745,4 +35747,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2949262703" -->
+<!-- signature="0757386377" -->
