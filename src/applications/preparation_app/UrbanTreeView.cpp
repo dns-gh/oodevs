@@ -157,8 +157,9 @@ void UrbanTreeView::OnCreateCity()
 // Name: UrbanTreeView::GetEntityPixmap
 // Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-const QPixmap* UrbanTreeView::GetEntityPixmap( const kernel::Entity_ABC& object )
+std::vector< const QPixmap* > UrbanTreeView::GetEntityPixmap( const kernel::Entity_ABC& object )
 {
+    std::vector< const QPixmap* > ret;
     if( const kernel::Infrastructure_ABC* infra = object.Retrieve< kernel::Infrastructure_ABC >() )
     {
         const kernel::InfrastructureType* infraType = infra->GetType();
@@ -168,11 +169,14 @@ const QPixmap* UrbanTreeView::GetEntityPixmap( const kernel::Entity_ABC& object 
             icon.SetSize( 24 );
             const QPixmap& pixmap = symbols_.GetSymbol( icon );
             if( !pixmap.isNull() )
-                return &pixmap;
+            {
+                ret.push_back( &pixmap );
+                return ret;
+            }
             doItemsLayout();
         }
     }
-    return 0;
+    return ret;
 }
 
 namespace

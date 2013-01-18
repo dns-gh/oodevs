@@ -62,8 +62,11 @@ void ItemPixmapDelegate::paint( QPainter* painter, const QStyleOptionViewItem& o
         drawBackground( painter, pmOption, index );
     }
     if( const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
-        if( const QPixmap* pixmap = getter_( *entity ) )
-            DrawPixmap( painter, option, *pixmap, index );
+    {
+        const std::vector< const QPixmap* > pixmaps = getter_( *entity );
+        if( !pixmaps.empty() )
+            DrawPixmap( painter, option, pixmaps, index );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -83,32 +86,43 @@ QSize ItemPixmapDelegate::sizeHint( const QStyleOptionViewItem &option, const QM
 // Name: ItemPixmapDelegate::DrawPixmap
 // Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-void ItemPixmapDelegate::DrawPixmap( QPainter* painter, const QStyleOptionViewItem& option, const QPixmap& pixmap, const QModelIndex& index ) const
+void ItemPixmapDelegate::DrawPixmap( QPainter* painter, const QStyleOptionViewItem& option, const std::vector< const QPixmap* >& pixmaps, const QModelIndex& index ) const
 {
     const QRect rect = option.rect;
     QPoint p;
     QStyleOptionViewItem pmOption = option;
     QAbstractItemView* view = static_cast< QAbstractItemView* >( parent() );
+    int pixWidth = 0;
+    int pixHeight = 0;
+    for( auto it = pixmaps.begin(); it != pixmaps.end(); ++it )
+    {
+        pixWidth += ( *it )->width() + 5;
+        pixHeight = std::max( pixHeight, ( *it )->height() );
+    }
     if( qApp->layoutDirection() == Qt::RightToLeft )
     {
         p = rect.topLeft();
         p.rx() += std::max( 0, view->sizeHintForColumn( 0 ) - view->viewport()->width() ) - view->horizontalScrollBar()->value();
         pmOption.rect.setLeft( p.rx() );
         p.rx() += 5;
-        pmOption.rect.setRight( p.rx() + pixmap.width() + 5 );
+        pmOption.rect.setRight( p.rx() + pixWidth );
     }
     else
     {
         p = rect.topRight();
-        p.rx() = std::min( p.rx(), view->viewport()->width() ) - pixmap.width() - 5;
+        p.rx() = std::min( p.rx(), view->viewport()->width() ) - pixWidth;
         pmOption.rect.setLeft( p.rx() - 5 );
-        pmOption.rect.setRight( p.rx() + pixmap.width() + 5 );
+        pmOption.rect.setRight( p.rx() + pixWidth );
     }
 
     painter->save();
     painter->fillRect( pmOption.rect, option.palette.brush( QPalette::Active, QPalette::Base ) );
     drawBackground( painter, pmOption, index );
-    p.ry() += ( rect.height() - pixmap.height() ) / 2;
-    painter->drawPixmap( p, pixmap );
+    p.ry() += ( rect.height() - pixHeight ) / 2;
+    for( auto it = pixmaps.begin(); it != pixmaps.end(); ++it )
+    {
+        painter->drawPixmap( p, **it );
+        p.rx() += ( *it )->width() + 5;
+    }
     painter->restore();
 }

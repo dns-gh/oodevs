@@ -62,13 +62,14 @@ TacticalTreeView::~TacticalTreeView()
 // Name: TacticalTreeView::GetEntityPixmap
 // Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-const QPixmap* TacticalTreeView::GetEntityPixmap( const kernel::Entity_ABC& entity )
+std::vector< const QPixmap* > TacticalTreeView::GetEntityPixmap( const kernel::Entity_ABC& entity )
 {
+    std::vector< const QPixmap* > ret;
     if( IsCommandPost( entity ) )
-        return &commandPost_;
-    else if( IsEngaged( entity ) )
-        return &lock_;
-    return 0;
+        ret.push_back( &commandPost_ );
+    if( IsEngaged( entity ) )
+        ret.push_back( &lock_ );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

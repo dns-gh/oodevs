@@ -30,7 +30,7 @@ class StandardModel;
 class ItemPixmapDelegate : public QItemDelegate
 
 {
-    typedef boost::function< const QPixmap* ( const kernel::Entity_ABC& ) > T_PixmapGetter;
+    typedef boost::function< std::vector< const QPixmap* >( const kernel::Entity_ABC& ) > T_PixmapGetter;
 
 public:
     //! @name Constructors/Destructor
@@ -48,7 +48,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void DrawPixmap( QPainter* painter, const QStyleOptionViewItem& option, const QPixmap& pixmap, const QModelIndex& index ) const;
+    void DrawPixmap( QPainter* painter, const QStyleOptionViewItem& option, const std::vector< const QPixmap* >& pixmaps, const QModelIndex& index ) const;
     //@}
 
 private:

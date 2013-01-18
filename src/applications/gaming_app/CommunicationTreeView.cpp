@@ -92,15 +92,16 @@ CommunicationTreeView::~CommunicationTreeView()
 // Name: CommunicationTreeView::GetEntityPixmap
 // Created: JSR 2012-09-28
 // -----------------------------------------------------------------------------
-const QPixmap* CommunicationTreeView::GetEntityPixmap( const kernel::Entity_ABC& entity )
+std::vector< const QPixmap* > CommunicationTreeView::GetEntityPixmap( const kernel::Entity_ABC& entity )
 {
+    std::vector< const QPixmap* > ret;
     if( IsCommandPost( entity ) )
-        return &commandPost_;
-    else if( IsEngaged( entity ) )
-        return &lock_;
+        ret.push_back( &commandPost_ );
+    if( IsEngaged( entity ) )
+        ret.push_back( &lock_ );
     else if( IsKgDeactivated( entity ) )
-        return &scisors_;
-    return 0;
+        ret.push_back( &scisors_ );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
