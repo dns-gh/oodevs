@@ -70,7 +70,7 @@ void ActionScheduler::Tick( const QDateTime& time )
 {
     while( cursor_ != actions_.end() && (*cursor_)->Get< actions::ActionTiming >().GetTime() <= time )
     {
-        (*cursor_)->Publish( publisher_ );
+        (*cursor_)->Publish( publisher_, 0 );
         ++cursor_;
     }
 }

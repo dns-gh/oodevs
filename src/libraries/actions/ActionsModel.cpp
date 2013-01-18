@@ -309,5 +309,5 @@ void ActionsModel::Publish( const Action_ABC& action, int context )
 // -----------------------------------------------------------------------------
 void ActionsModel::PublishForce( const Action_ABC& action )
 {
-    action.Publish( defaultPublisher_ );
+    action.Publish( defaultPublisher_, 0 );
 }

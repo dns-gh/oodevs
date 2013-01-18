@@ -279,7 +279,7 @@ void Action_ABC::RegisterAndPublish( ActionsModel& actionsModel )
 {
     Polish();
     actionsModel.Register( GetId(), *this );
-    actionsModel.Publish( *this );
+    actionsModel.Publish( *this, 0 );
 }
 
 // -----------------------------------------------------------------------------

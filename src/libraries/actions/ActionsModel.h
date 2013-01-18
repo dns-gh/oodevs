@@ -92,7 +92,7 @@ public:
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
     void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
-    void Publish( const Action_ABC& action, int context = 0 );
+    void Publish( const Action_ABC& action, int context );
     void PublishForce( const Action_ABC& action );
     //@}
 

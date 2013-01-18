@@ -54,5 +54,5 @@ void UnitMissionInterface::Publish()
         if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
             if( decisions->IsEmbraye() )
                 const_cast< kernel::AutomatDecisions_ABC* >( decisions )->Disengage();
-    model_.Publish( *action );
+    model_.Publish( *action, 0 );
 }

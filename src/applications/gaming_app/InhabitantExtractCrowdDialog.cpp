@@ -140,7 +140,7 @@ void InhabitantExtractCrowdDialog::Validate()
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( selected_, false ) );
         action->Polish();
-        actionsModel_.Publish( *action );
+        actionsModel_.Publish( *action, 0 );
     }
     // Throw Crowd_Creation Magic Action
     {
@@ -150,7 +150,7 @@ void InhabitantExtractCrowdDialog::Validate()
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( &top, false ) );
         action->Polish();
-        actionsModel_.Publish( *action );
+        actionsModel_.Publish( *action, 0 );
     }
     selected_ = 0;
 }

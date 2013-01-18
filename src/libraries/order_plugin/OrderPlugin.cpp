@@ -115,7 +115,7 @@ void OrderPlugin::ReadAction( xml::xistream& xis )
 {
     std::auto_ptr< actions::Action_ABC > action( pFactory_->CreateAction( xis ) );
     if( action.get() )
-        action->Publish( *pPublisher_ );
+        action->Publish( *pPublisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------

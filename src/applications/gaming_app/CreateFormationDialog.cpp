@@ -87,5 +87,5 @@ void CreateFormationDialog::OnCreateFormation( int level )
     actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, time_ ) );
     action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
-    actionsModel_.Publish( *action );
+    actionsModel_.Publish( *action, 0 );
 }

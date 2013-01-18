@@ -51,5 +51,5 @@ void AutomateMissionInterface::Publish()
     if( const kernel::AutomatDecisions_ABC* decisions = GetEntity().Retrieve< kernel::AutomatDecisions_ABC >() )
         if( ! decisions->IsEmbraye() )
             const_cast< kernel::AutomatDecisions_ABC* >( decisions )->Engage();
-    model_.Publish( *action );
+    model_.Publish( *action, 0 );
 }

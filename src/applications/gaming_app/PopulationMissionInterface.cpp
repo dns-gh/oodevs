@@ -47,5 +47,5 @@ void PopulationMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    model_.Publish( *action );
+    model_.Publish( *action, 0 );
 }

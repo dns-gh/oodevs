@@ -47,5 +47,5 @@ void FragmentaryOrderInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
     CommitTo( *action );
-    model_.Publish( *action );
+    model_.Publish( *action, 0 );
 }

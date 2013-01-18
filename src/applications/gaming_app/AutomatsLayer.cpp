@@ -126,7 +126,7 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
-    actionsModel_.Publish( *action );
+    actionsModel_.Publish( *action, 0 );
 }
 
 // -----------------------------------------------------------------------------

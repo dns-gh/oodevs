@@ -126,7 +126,7 @@ void Actions::IssueOrderFromFile( const std::string& name, const std::string& fi
         {
             const actions::Action_ABC& action = it.NextElement();
             if( action.GetName() == name.c_str() )
-                action.Publish( *publisher_ );
+                action.Publish( *publisher_, 0 );
         }
     }
     catch( const std::exception& e )
@@ -169,7 +169,7 @@ void Actions::Read( xml::xistream& xis )
     xis >> xml::start( "action" );
     std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
     if( action.get() )
-        action->Publish( *publisher_ );
+        action->Publish( *publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------

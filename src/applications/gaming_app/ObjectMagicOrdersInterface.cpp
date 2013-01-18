@@ -228,7 +228,7 @@ void ObjectMagicOrdersInterface::BuildObject()
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
     list.AddQuantity( "Percentage", 100 );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,7 +239,7 @@ void ObjectMagicOrdersInterface::DestroyObject()
 {
     if( !selectedEntity_ )
         return;
-    actionsModel_.Publish( *actionsModel_.CreateObjectDestroyMagicAction( *selectedEntity_ ) );
+    actionsModel_.Publish( *actionsModel_.CreateObjectDestroyMagicAction( *selectedEntity_ ), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void ObjectMagicOrdersInterface::DoMineObject( int quantity )
     list.AddQuantity( "Number", 0 );
     list.AddNumeric( "Density", 0 );
     list.AddQuantity( "Percentage", quantity );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ void ObjectMagicOrdersInterface::DoActivateObstacle( bool activate )
     ParameterList& list = *new ParameterList( OrderParameter( "Obstacle", "list", false ) );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::obstacle );
     list.AddBool( "Activation", activate );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +322,7 @@ void ObjectMagicOrdersInterface::ChangeStructuralState()
         ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::structural_state );
         list.AddNumeric( "Value", 0.01f * editor->text().toInt() );
-        actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+        actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
     }
 }
 
@@ -337,7 +337,7 @@ void ObjectMagicOrdersInterface::PublishActivation( const std::string& name, uns
     ParameterList& list = *new ParameterList( OrderParameter( name, "list", false ) );
     list.AddIdentifier( "AttributeId", id );
     list.AddBool( name, activate );
-    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -372,7 +372,7 @@ void ObjectMagicOrdersInterface::ChangeThreshold()
             ParameterList& list = *new ParameterList( OrderParameter( "Infrastructure", "list", false ) );
             list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::infrastructure );
             list.AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
-            actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+            actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
         }
 }
 
@@ -468,7 +468,7 @@ void ObjectMagicOrdersInterface::ChangeTrafficability()
                 ParameterList& list = *new ParameterList( OrderParameter( "Trafficability", "list", false ) );
                 list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::trafficability );
                 list.AddNumeric( "Trafficability", editor->text().toFloat() );
-                actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+                actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ), 0 );
             }
         }
     }
