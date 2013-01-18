@@ -49,7 +49,7 @@ ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& co
 ObjectMagicAction::~ObjectMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ ObjectMagicAction::~ObjectMagicAction()
 void ObjectMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

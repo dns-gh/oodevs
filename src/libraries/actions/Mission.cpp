@@ -82,7 +82,7 @@ Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resol
 Mission::~Mission()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ Mission::~Mission()
 void Mission::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
