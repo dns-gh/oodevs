@@ -433,6 +433,19 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="hasDotationForFiring">
+            <description>Indique si l'unité a assez de dotations pour effectuer le nombre d'itération</description>
+            <argument name="dotation">
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="canUseDotation">
             <description>Indique si l'unité peut utiliser des dotations du type donnée</description>
             <argument name="dotation">

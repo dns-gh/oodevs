@@ -19,6 +19,10 @@ integration.hasDotation = function( munition )
     return DEC_HasDotation(munition)
 end
 
+integration.hasDotationForFiring = function( munition, number)
+ return DEC_HasDotationForFiring(meKnowledge.source, munition, number)
+end
+
 integration.canUseDotation = function( munition )
     return DEC_CanUseDotation(munition)
 end

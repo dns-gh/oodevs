@@ -555,6 +555,9 @@ return
     hasDotation = function( self, dotation )
         return integration.hasDotation( dotation )
     end,
+    hasDotationForFiring = function( self, munition, number)
+        return integration.hasDotationForFiring( munition, number)
+    end,
     hasLauncherFor = function( self, dotation )
         return integration.hasLauncherFor( dotation )
     end,

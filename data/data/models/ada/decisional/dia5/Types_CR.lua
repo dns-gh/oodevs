@@ -468,4 +468,5 @@ eRC_TransportedUnitCannotReceiveOrder = 453
 eRC_LogNoSuperior = 454
 eRC_LogNoStock = 455
 eRC_AttenteOrdrePoursuivreConvoi = 456
-eNbr = 457
+eRC_TirIndirectLessInterventionType = 457
+eNbr = 458
