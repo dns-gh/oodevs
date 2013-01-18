@@ -18,6 +18,11 @@
 #include "MIL_AgentServer.h"
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/InteractWithSideCapacity.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -297,7 +302,7 @@ bool DEC_BlackBoard_CanContainKnowledgeObject::HasObjectsAtInteractionHeightCach
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeight
 // Created: LDC 2012-02-02
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const
+void DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight )
 {
     std::map< double, T_KnowledgeObjectVector >::const_iterator it = obstacleCache_.find( rHeight );
     if( it != obstacleCache_.end() )
@@ -337,4 +342,64 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* /*subGroup*/ )
 {
+}
+
+namespace
+{
+    // -----------------------------------------------------------------------------
+    // Name: DEC_KnowledgeBlackBoard_Army::sObjectKnowledgesFilteredHeightInserter
+    // Created: NLD 2005-05-09
+    // -----------------------------------------------------------------------------
+    class sObjectKnowledgesFilteredHeightInserter : private boost::noncopyable
+    {
+    public:
+        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter )
+            : pContainer_( &container )
+            , agent_     ( agent )
+            , filter_    ( filter )
+        {
+            // NOTHING
+        }
+
+        void operator()( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( !knowledge->IsValid() )
+                return;
+            if( !knowledge->CanCollideWith( agent_ ) )
+                return;
+            const InteractWithSideCapacity* pSideInteraction = knowledge->GetType().GetCapacity< InteractWithSideCapacity >();
+            if( pSideInteraction && knowledge->GetArmy() )
+            {
+                if( pSideInteraction->IsPossible( *knowledge->GetArmy(), agent_ ) )
+                    pContainer_->push_back( knowledge );
+                return;
+            }
+            if( filter_.Test( knowledge->GetType() ) )
+                pContainer_->push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectVector* pContainer_;
+        const MIL_Agent_ABC& agent_;
+        const MIL_ObjectFilter& filter_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetObjectsAtInteractionHeight
+// Created: LGY 2013-01-18
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter )
+{
+    bool useCache = ( dynamic_cast< const MIL_DangerousObjectFilter* >( &filter ) != 0 );
+    const double rHeight = agent.GetRole< PHY_RoleInterface_Location >().GetHeight();
+    if( useCache && HasObjectsAtInteractionHeightCache( rHeight ) )
+    {
+        GetCachedObjectsAtInteractionHeight( container, rHeight );
+        return ;
+    }
+    sObjectKnowledgesFilteredHeightInserter functor( container, agent, filter );
+    ApplyOnKnowledgesObject( functor );
+    if( useCache )
+        SetCachedObjectsAtInteractionHeight( container, rHeight );
 }

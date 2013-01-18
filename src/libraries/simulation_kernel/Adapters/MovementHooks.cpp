@@ -40,6 +40,7 @@
 #include "Entities/Orders/MIL_LimaFunction.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -437,7 +438,8 @@ namespace
             cache.reset( new KnowledgeCache() );
         T_KnowledgeObjectVector knowledges;
         MIL_AgentPion& pion = GET_PION( entity );
-        pion.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion, MIL_DangerousObjectFilter() );
+        pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, pion, MIL_DangerousObjectFilter() );
+
         if( knowledges != cache->objectsToAvoid_ )
         {
             cache->objectsToAvoid_ = knowledges;

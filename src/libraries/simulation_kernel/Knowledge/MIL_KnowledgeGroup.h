@@ -135,6 +135,7 @@ public:
           MIL_Army_ABC&                           GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
+    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
@@ -201,7 +202,6 @@ private:
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
     boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
-    DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     //@}
 
 private:

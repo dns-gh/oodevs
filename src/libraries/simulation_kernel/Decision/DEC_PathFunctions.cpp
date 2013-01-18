@@ -25,6 +25,8 @@
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
@@ -132,7 +134,7 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
         double rDistanceCollision = 0.;
         T_KnowledgeObjectVector knowledges;
-        callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, callerAgent, filter );
+        callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, callerAgent, filter );
         if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( knowledges, rDistanceCollision, pObjectColliding, callerAgent, false, false ) )
         {
             result.first = false;

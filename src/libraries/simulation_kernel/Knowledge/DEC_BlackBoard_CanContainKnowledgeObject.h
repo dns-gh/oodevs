@@ -19,7 +19,9 @@
 class DEC_Knowledge_Object;
 class MIL_Object_ABC;
 class MIL_Army_ABC;
+class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
+class MIL_ObjectFilter;
 class KnowledgesVisitor_ABC;
 
 // =============================================================================
@@ -62,11 +64,9 @@ public:
     void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     void Prepare();
-    bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
-    void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const;
-    void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
     void UpdateUniversalObjects( const MIL_Army_ABC& team );
     void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup );
+    void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter );
     //@}
 
     //! @name Queries
@@ -108,6 +108,14 @@ private:
     typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectIDMap;
     typedef T_KnowledgeObjectIDMap::iterator                                   IT_KnowledgeObjectIDMap;
     typedef T_KnowledgeObjectIDMap::const_iterator                            CIT_KnowledgeObjectIDMap;
+    //@}
+
+private:
+    //! @name Helpers
+    //@
+    void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
+    void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight );
+    bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
     //@}
 
 private:

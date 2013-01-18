@@ -34,6 +34,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -302,7 +303,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
     {
         T_KnowledgeObjectVector knowledgesObject;
         MIL_DangerousObjectFilter filter;
-        pion.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, pion, filter );
+        pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledgesObject, pion, filter );
         T_PointVector firstPointVector;
         GET_HOOK( GetFirstPoint )( GetID(), &AddPoint, &firstPointVector );
         for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )

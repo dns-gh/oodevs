@@ -42,6 +42,8 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KS_Perception.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include <core/Facade.h>
@@ -262,7 +264,7 @@ namespace
         boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
         double rDistanceCollision = 0;
         KnowledgeCache cache;
-        agent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter );
+        agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter );
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
         if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model[ "entities" ][ agent.GetID() ] ), cache, rDistanceCollision, pObjectColliding ) )
         {

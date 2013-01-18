@@ -42,6 +42,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
@@ -251,7 +252,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     {
         T_KnowledgeObjectVector knowledgesObject;
         MIL_PathObjectFilter filter;
-        queryMaker_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );
+        queryMaker_.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledgesObject, queryMaker_, filter );;
 
         T_PointVector firstPointVector;
         if( !pathPoints.empty() )
