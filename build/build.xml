@@ -732,12 +732,6 @@
     data
     ============================================================================
     -->
-    <target name="generate-symbols" description="generate symbols">
-        <zip destfile="${run.dir}/resources/symbols.pak" duplicate="fail">
-            <fileset dir="${libraries.dir}/clients_gui/svg"/>
-        </zip>
-    </target>
-
     <target name="deploy-application-data" description="deploy applications data to run directory">
         <copy todir="${run.dir}">
             <fileset dir="${data.dir}/app-data"/>
@@ -1593,7 +1587,7 @@
         <update name="zlib"/>
     </target>
 
-    <target name="configure" description="update packages and decisional" depends="update,deploy-application-data,generate-symbols"/>
+    <target name="configure" description="update packages and decisional" depends="update,deploy-application-data"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
