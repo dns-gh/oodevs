@@ -72,6 +72,7 @@ private:
     //! @name Helpers
     //@{
     virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
+    virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -81,6 +82,7 @@ private:
     const kernel::Time_ABC& simulation_;
     actions::ActionsModel& actionsModel_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
+    QPixmap icon_user_;
     //@}
 };
 

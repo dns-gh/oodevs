@@ -43,7 +43,7 @@ public:
 public:
     //! @name Operations
     //@{
-    std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
+    virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 

@@ -11,8 +11,9 @@
 #include "OrbatDockWidget.h"
 #include "OrbatToolbar.h"
 #include "CommunicationTreeView.h"
-#include "TacticalTreeView.h"
 #include "LogisticTreeView.h"
+#include "PopulationTreeView.h"
+#include "TacticalTreeView.h"
 #include "clients_gui/AggregateToolBar.h"
 #include "clients_gui/EntityTreeView.h"
 #include "clients_gui/ObjectTreeView.h"
@@ -67,7 +68,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
         pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Objects" ) );
     }
     {
-        searchTreeView = new gui::SearchTreeView< gui::PopulationTreeView >( pListsTabWidget, controllers, filter, observer_ );
+        searchTreeView = new gui::SearchTreeView< PopulationTreeView >( pListsTabWidget, controllers, filter, observer_ );
         searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Crowds" ) );
     }

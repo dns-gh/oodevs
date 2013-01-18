@@ -21,12 +21,14 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "gaming/Attributes.h"
 #include "gaming/StaticModel.h"
+#include "tools/GeneralConfig.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalTreeView constructor
@@ -38,6 +40,7 @@ TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kern
     , simulation_( simulation )
     , actionsModel_( actionsModel )
     , changeSuperiorDialog_( 0 )
+    , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).c_str() )
 {
     controllers_.Update( *this );
     setEditTriggers( 0 );
@@ -98,6 +101,47 @@ void TacticalTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& o
         }
     }
     gui::TacticalTreeView::drawRow( painter, options, index );
+}
+
+namespace
+{
+    bool CanBeOrdered( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
+    {
+        if( ( dynamic_cast< const kernel::Agent_ABC* >( &entity ) || dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+         && profile.CanBeOrdered( entity ) )
+            return true;
+        if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            auto it = hierarchies->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& sub = it.NextElement();
+                return CanBeOrdered( sub, profile);
+            }
+        }
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::GetEntityPixmap
+// Created: JSR 2013-01-17
+// -----------------------------------------------------------------------------
+std::vector< const QPixmap* > TacticalTreeView::GetEntityPixmap( const kernel::Entity_ABC& entity )
+{
+    std::vector< const QPixmap* > ret = gui::TacticalTreeView::GetEntityPixmap( entity );
+    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) || dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+        if( profile_.CanBeOrdered( entity ) )
+            ret.push_back( &icon_user_ );
+    if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) || dynamic_cast< const kernel::Team_ABC* >( &entity ) )
+    {
+        if( QStandardItem* item = dataModel_.FindDataItem( entity ) )
+        {
+            if( !isExpanded( proxyModel_->mapFromSource( dataModel_.indexFromItem( item ) ) ) && CanBeOrdered( entity, profile_ ) )
+                ret.push_back( &icon_user_ );
+        }
+    }
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

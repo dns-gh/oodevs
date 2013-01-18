@@ -192,6 +192,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\PlanificationModePanel.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ReplayerToolbar.cpp" />
@@ -1027,6 +1028,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationTreeView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ReconnectLoginDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ResourceLinksDialog.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileDialog.h">

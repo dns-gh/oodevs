@@ -808,6 +808,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\DisasterPrototype.cpp">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\PopulationTreeView.cpp">
+      <Filter>Source Files\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1151,6 +1154,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\DisasterPrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\PopulationTreeView.h">
+      <Filter>Source Files\TreeView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
