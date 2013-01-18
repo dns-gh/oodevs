@@ -44,7 +44,7 @@ Population::Population( const sword::CrowdCreation& message, Controllers& contro
 {
     if( name_.isEmpty() )
         name_ = QString( type.GetName().c_str() );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
     controllers_.Register( *this );
 }

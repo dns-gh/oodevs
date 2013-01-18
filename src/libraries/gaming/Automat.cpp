@@ -36,7 +36,7 @@ Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
 {
     if( name_.isEmpty() )
         name_ = QString( type.GetName().c_str() );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary( type );
 }
 

@@ -40,7 +40,7 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, co
     , drawer_             ( new SvgLocationDrawer( style ) )
     , coordinateConverter_( coordinateConverter )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 namespace
@@ -78,7 +78,7 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xm
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     xis >> xml::list( "point", *this, &DrawerShape::ReadPoint );
-    RegisterSelf( *this );
+    AddExtension( *this );
     Create();
 }
 

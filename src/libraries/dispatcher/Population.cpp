@@ -43,7 +43,7 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg, const
     , decisionalModel_ ( decisionalModel )
 {
     side_.Register( *this );
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

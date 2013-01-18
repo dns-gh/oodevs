@@ -37,7 +37,7 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
     , entityId_      ( message.object().id() )
     , pTeam_         ( 0 )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
 
     //$$ NLD - 2010-11-03 - Ce bloc sucks
     kernel::Object_ABC* pRealObject = objectResolver_.Find( entityId_ );

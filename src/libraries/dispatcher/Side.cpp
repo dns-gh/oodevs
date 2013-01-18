@@ -47,7 +47,7 @@ Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
         case sword::enemy  : karma_ = kernel::Karma::enemy_; break;
         case sword::neutral: karma_ = kernel::Karma::neutral_; break;
     }
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

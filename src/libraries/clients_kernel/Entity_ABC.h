@@ -39,13 +39,13 @@ namespace kernel
 */
 // Created: AGE 2006-02-07
 // =============================================================================
-    
+
 class EntityBase_ABC : public tools::Extendable< Extension_ABC >
-                 , public tools::SortedInterfaceContainer< Extension_ABC >
+                     , public tools::SortedInterfaceContainer< Extension_ABC >
 {
 public:
-             EntityBase_ABC() {};
-    virtual ~EntityBase_ABC() {};
+             EntityBase_ABC() {}
+    virtual ~EntityBase_ABC() {}
 
     template< typename T >
     void Update( const T& updateMessage )
@@ -89,24 +89,15 @@ public:
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
     tools::SortedInterfaceContainer< Extension_ABC >& Interface() const;
+
+    virtual void AddExtension( Extension_ABC& ext );
     //@}
 
-protected:
-    //! @name Helpers
-    //@{
-    void RegisterSelf( Extension_ABC& ext );
-    //@}
-
-public:
+private:
     //! @name Copy/Assignment
     //@{
     Entity_ABC( const Entity_ABC& );            //!< Copy constructor
     Entity_ABC& operator=( const Entity_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void AddExtension( Extension_ABC& ext );
     //@}
 
 private:

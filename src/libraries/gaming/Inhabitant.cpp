@@ -71,7 +71,7 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
     }
     position_ = polygon.Barycenter();
     CreateDictionary();
-    RegisterSelf( *this );
+    AddExtension( *this );
     controller_.Register( *this );
 }
 

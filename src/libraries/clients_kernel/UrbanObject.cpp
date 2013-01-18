@@ -53,7 +53,7 @@ UrbanObject::UrbanObject( Controllers& controllers, const std::string& name, uns
     , controllers_     ( controllers )
     , options_        ( options )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     UpdateColor();
     controllers_.Register( *this );
     CreateDictionary( false );
@@ -81,7 +81,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
     , controllers_     ( controllers )
     , options_         ( options )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     UpdateColor();
     controllers_.Register( *this );
     CreateDictionary( true );

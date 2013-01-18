@@ -30,7 +30,7 @@ Object::Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools:
     , attributes_  ( model )
 {
     side_.Register( *this );
-    RegisterSelf( *this );
+    AddExtension( *this );
     optionals_.localisationPresent = 0;
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )

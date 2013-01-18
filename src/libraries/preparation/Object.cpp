@@ -32,7 +32,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 {
     if( type.HasSpawn() )
         idManager.GetNextId(); // we need to skip one ID for dynamic created object.
-//    RegisterSelf( *this );
+//    AddExtension( *this );
     name_ = name.isEmpty() ? type.GetName().c_str() : name;
     CreateDictionary();
 }
@@ -50,7 +50,7 @@ Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConv
         idManager.Lock( id_ + 1 );
     else
         idManager.Lock( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 

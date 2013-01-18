@@ -34,7 +34,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, tools::IdMana
     , type_( type )
 {
     name_ = name.isEmpty() ? type.GetName().c_str() : name;
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Automat::Automat( xml::xistream& xis, Controller& controller, tools::IdManager& 
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , type_ ( type )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     idManager.Lock( id_ );
 }
 

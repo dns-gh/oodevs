@@ -31,7 +31,7 @@ Object::Object( const sword::ObjectCreation& message, Controller& controller, co
 {
     if( name_.isEmpty() )
         name_ = QString( type_.GetName().c_str() );
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

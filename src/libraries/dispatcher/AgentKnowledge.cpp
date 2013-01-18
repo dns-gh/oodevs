@@ -58,7 +58,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     optionals_.campPresent = 0;
     optionals_.perceptionsPresent = 0;
     optionals_.critical_intelligencePresent = 0;
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

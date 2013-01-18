@@ -34,7 +34,7 @@ Formation::Formation( kernel::Controller& controller, E_NatureLevel level, tools
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
     , level_( level )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     name_ = tools::translate( "Formation", "Formation [%L1]" ).arg( id_ );
 }
 
@@ -53,7 +53,7 @@ Formation::Formation( xml::xistream& xis, Controller& controller, tools::IdManag
     name_  = name.empty() ? tools::translate( "Formation", "Formation [%L1]" ).arg( id_ ) : name.c_str();
 
     idManager.Lock( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

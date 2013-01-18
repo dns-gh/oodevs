@@ -34,7 +34,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kern
     , types_( types )
     , activated_( true ) // LTO
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     kernel::KnowledgeGroupType* pType = types.Find( type_ );
     delay_ = pType ? pType->ShowCommunicationDelay() : "0m0s";
     CreateDictionary();

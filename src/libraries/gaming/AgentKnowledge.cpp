@@ -53,7 +53,7 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::Un
 {
     fullSymbol_  = realAgent_.GetType().GetSymbol();
     UpdateSymbol();
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

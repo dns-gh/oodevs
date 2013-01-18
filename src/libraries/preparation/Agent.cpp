@@ -43,7 +43,7 @@ Agent::Agent( const AgentType& type, Controller& controller, tools::IdManager& i
     , nature_              ( type.GetNature().GetNature() )
     , weight_              ( type.GetComposantesWeight() )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 
@@ -84,7 +84,7 @@ Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idMa
 
     level_ = ENT_Tr::ConvertToNatureLevel( ( level.empty() ) ? type.GetNature().GetLevel() : level );
     idManager.Lock( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 

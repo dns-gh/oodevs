@@ -48,10 +48,10 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     if( msg.logistic_level() != sword::none )
     {
         logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
-        RegisterSelf( *logisticEntity_ );
-        RegisterSelf( logisticEntity_->GetLogisticHierarchy() );
+        AddExtension( *logisticEntity_ );
+        AddExtension( logisticEntity_->GetLogisticHierarchy() );
     }
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +327,7 @@ bool Formation::GetExtension( const std::string& key, std::string& result ) cons
 // -----------------------------------------------------------------------------
 const std::string& Formation::GetApp6Symbol() const
 {
-    return app6symbol_; 
+    return app6symbol_;
 }
 
 // -----------------------------------------------------------------------------

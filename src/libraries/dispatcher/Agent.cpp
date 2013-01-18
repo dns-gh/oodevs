@@ -111,7 +111,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

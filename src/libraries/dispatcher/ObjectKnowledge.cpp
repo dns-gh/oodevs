@@ -43,7 +43,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     optionals_.perceivedPresent = 0;
     optionals_.specific_attributesPresent = 0;
     optionals_.automat_perceptionPresent = 0;
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

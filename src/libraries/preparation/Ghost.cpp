@@ -62,7 +62,7 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, tools::IdManag
     , converted_         ( false )
     , logisticSuperiorID_( -1 )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 
@@ -94,7 +94,7 @@ Ghost::Ghost( kernel::Controller& controller, const Model& model, tools::IdManag
 
     symbol_ = symbolsFactory.CreateSymbol( nature_ );
     idManager.Lock( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 
@@ -138,7 +138,7 @@ Ghost::Ghost( Controller& controller, const Model& model, tools::IdManager& idMa
     }
 
     idManager.Lock( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 
@@ -271,7 +271,6 @@ void Ghost::ReadGhostProfiles( xml::xistream& xis )
     if( xis.has_attribute( "write" ) )
         profilesWriteOnly_.push_back( xis.attribute< std::string >( "write" ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Ghost::ReadDotations

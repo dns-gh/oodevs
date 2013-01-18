@@ -29,7 +29,7 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
     unsigned int healthPeopleNumber = type.GetHealthPeopleNumber();
     if( healthPeopleNumber )
         healthNeed_ = static_cast< float >( number ) / healthPeopleNumber;
-    RegisterSelf( *this );
+    AddExtension( *this );
     name_ = name.isEmpty() ? tools::translate( "Population", "%1 [%L2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
     CreateDictionary();
 }
@@ -56,7 +56,7 @@ Inhabitant::Inhabitant( xml::xistream& xis, kernel::Controller& controller, tool
         >> xml::end;
 
     text_ = text.c_str();
-    RegisterSelf( *this );
+    AddExtension( *this );
     idManager.Lock( id_ );
     CreateDictionary();
 }

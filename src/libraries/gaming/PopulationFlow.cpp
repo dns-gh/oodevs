@@ -35,7 +35,7 @@ PopulationFlow::PopulationFlow( const sword::CrowdFlowCreation& message, const C
     , nDeadHumans_        ( 0 )
     , rDensity_           ( 0 )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

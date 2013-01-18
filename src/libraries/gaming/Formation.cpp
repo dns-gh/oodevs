@@ -36,7 +36,7 @@ Formation::Formation( const sword::FormationCreation& message, Controller& contr
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() ).arg( message.formation().id() );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 

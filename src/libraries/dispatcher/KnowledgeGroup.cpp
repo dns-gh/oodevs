@@ -43,7 +43,7 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCre
     else
         team_.Register( *this );
     // LTO end
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

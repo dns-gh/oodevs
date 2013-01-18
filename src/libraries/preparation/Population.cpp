@@ -36,7 +36,7 @@ Population::Population( const PopulationType& type, int number, Controller& cont
     repartition_->male_ = static_cast< unsigned int >( type.GetMale() * 100 );
     repartition_->female_ = static_cast< unsigned int >( type.GetFemale() * 100 );
     repartition_->children_ = static_cast< unsigned int >( type.GetChildren() * 100 );
-    RegisterSelf( *this );
+    AddExtension( *this );
     name_ = type.GetName().c_str();
     CreateDictionary();
 }
@@ -74,7 +74,7 @@ Population::Population( xml::xistream& xis, const kernel::PopulationType& type, 
     repartition_->female_ = static_cast< unsigned int >( ( female + 0.005f ) * 100 );
     repartition_->children_ = static_cast< unsigned int >( ( children + 0.005f ) * 100 );
     armedIndividuals_.value_ = static_cast< unsigned int >( ( armedIndividuals + 0.005f ) * 100 );
-    RegisterSelf( *this );
+    AddExtension( *this );
     idManager.Lock( id_ );
     CreateDictionary();
 }

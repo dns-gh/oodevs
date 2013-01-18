@@ -44,7 +44,7 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Contr
     const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : popu_;
     pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );
 
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

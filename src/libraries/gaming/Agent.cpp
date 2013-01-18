@@ -42,7 +42,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
     level_ = ( message.has_level() ) ? "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) ) : type_.GetLevelSymbol();
     symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type_.GetSymbol();
 
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
     controller_.Register( *this );
 }

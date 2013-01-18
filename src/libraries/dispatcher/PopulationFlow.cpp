@@ -32,7 +32,7 @@ PopulationFlow::PopulationFlow( const Population& population, const sword::Crowd
     , nDeadHumans_        ( 0 )
     , nAttitude_          ( sword::agressive )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

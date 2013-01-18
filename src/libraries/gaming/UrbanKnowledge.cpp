@@ -29,7 +29,7 @@ UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowled
 {
     if( pRealUrban_ )
         entityId_ = pRealUrban_->GetId();
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

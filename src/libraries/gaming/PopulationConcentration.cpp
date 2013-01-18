@@ -33,7 +33,7 @@ PopulationConcentration::PopulationConcentration( const sword::CrowdConcentratio
     , deadRadius_         ( 0 )
     , attitude_           ( static_cast< E_PopulationAttitude > ( 0 ) )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -41,7 +41,7 @@ Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg,
     for( int i = 0; i < msg.objects_size(); ++i )
         urbanObjectId_.push_back( msg.objects( i ).id() );
     side_.Register( *this );
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,7 +23,7 @@ Team::Team( kernel::Controllers& controllers, tools::IdManager& idManager )
     : kernel::Team( controllers, idManager.GetNextId(), "" )
 {
     name_ = tools::translate( "Preparation", "Army %L1" ).arg( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     controllers_.Register( *this );
 }
 
@@ -34,7 +34,7 @@ Team::Team( kernel::Controllers& controllers, tools::IdManager& idManager )
 Team::Team( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager )
     : kernel::Team( controllers, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     idManager.Lock( id_ );
     controllers_.Register( *this );
 }

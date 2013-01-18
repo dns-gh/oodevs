@@ -23,7 +23,7 @@
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, tools::IdManager& idManager )
     : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     name_ = ( baseName + " %L1" ).arg( id_ );
 }
 
@@ -34,7 +34,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QStrin
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager )
     : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
-    RegisterSelf( *this );
+    AddExtension( *this );
     std::string name;
     xis >> xml::attribute( "name", name );
     name_ = name.c_str();

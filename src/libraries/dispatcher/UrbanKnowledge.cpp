@@ -36,7 +36,7 @@ UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const sword::UrbanKnowle
     optionals_.automat_perceptionPresent = 0;
     optionals_.progressPresent = 0;
     optionals_.maxProgressPresent = 0;
-    RegisterSelf( *this );
+    AddExtension( *this );
 }
 
 // -----------------------------------------------------------------------------

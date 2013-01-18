@@ -27,7 +27,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, tools::IdManager& idMana
 {
     UpdateCommunicationDelay();
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 
@@ -44,7 +44,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, tool
         name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     UpdateCommunicationDelay(); // LTO
     idManager.Lock( id_ );
-    RegisterSelf( *this );
+    AddExtension( *this );
     CreateDictionary();
 }
 
