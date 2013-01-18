@@ -66,6 +66,7 @@ private:
         ePerformanceData_AvgUnitsKG,
         ePerformanceData_SingleStationLoadLevel,
         ePerformanceData_MultiStationLoadLevel,
+        ePerformanceData_EDTStationLoadLevel,
         eNbrPerformanceData
     };
     //@}
@@ -74,14 +75,18 @@ private:
     const StaticModel& staticModel_;
     QProgressBar* progressValueSingle_;
     QProgressBar* progressValueMulti_;
+    QProgressBar* progressValueEDT_;
     QStandardItemModel* dataModel_;
     
     QLabel* loadLevelSingle_;
     QLabel* loadLevelMulti_;
+    QLabel* loadLevelEDT_;
     QLabel* limitValueSingle_;
     QLabel* limitValueMulti_;
+    QLabel* limitValueEDT_;
     QLabel* limitLineSingle_;
     QLabel* limitLineMulti_;
+    QLabel* limitLineEDT_;
     QTextEdit* textEdit_;
 
     const int progressLimit_;

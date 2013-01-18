@@ -111,6 +111,7 @@ public:
         unsigned int populations_;
         float terrainLoad_;
         unsigned int teams_;
+        unsigned int formations_;
         unsigned int knowledgeGroups_;
         unsigned int terrainWidth_;
         unsigned int terrainHeight_;

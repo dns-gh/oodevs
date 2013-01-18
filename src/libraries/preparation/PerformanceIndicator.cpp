@@ -16,6 +16,7 @@
 #include "ProfilesModel.h"
 #include "TeamsModel.h"
 #include "UrbanModel.h"
+#include "FormationModel.h"
 #include "preparation/Agent.h"
 #include "preparation/Automat.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -154,6 +155,7 @@ void PerformanceIndicator::Update()
     values.profiles_        = model_.profiles_.GetProfilesCount();
     values.teams_           = model_.teams_.tools::Resolver< kernel::Team_ABC >::Count();
     values.units_           = model_.agents_.tools::Resolver< kernel::Agent_ABC >::Count();
+    values.formations_      = model_.formations_.tools::Resolver< kernel::Formation_ABC >::Count();
     values.automats_        = model_.agents_.tools::Resolver< kernel::Automat_ABC >::Count();
     values.objects_         = model_.objects_.tools::Resolver< kernel::Object_ABC >::Count();
     values.blocs_           = model_.urban_.tools::Resolver< kernel::UrbanObject_ABC >::Count();

@@ -1702,6 +1702,18 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Multi station load level</source>
         <translation>Niveau de charge de l&apos;exercice en multi poste</translation>
     </message>
+    <message>
+        <source>EDT station load level</source>
+        <translation>Niveau de charge de l&apos;exercice sur l&apos;EDT</translation>
+    </message>
+    <message>
+        <source>EDT station</source>
+        <translation>Poste EDT</translation>
+    </message>
+    <message>
+        <source>EDT station load level: </source>
+        <translation>Niveau de charge de l&apos;exercice sur l&apos;EDT: </translation>
+    </message>
 </context>
 <context>
     <name>PopulationListView</name>

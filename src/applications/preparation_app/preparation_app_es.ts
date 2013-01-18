@@ -1697,6 +1697,18 @@ This data can&apos;t be projected.</source>
         <source>Multi station load level</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>EDT station load level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EDT station</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EDT station load level: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PopulationListView</name>
