@@ -19831,6 +19831,7 @@
     <sensors>
       <sensor height="1.8" type="Oeil"/>
       <sensor height="2" type="Oreille"/>
+      <sensor height="1.8" type="Lunette Optique Gx6"/>
     </sensors>
     <radars/>
     <transports/>
@@ -19891,6 +19892,7 @@
     <sensors>
       <sensor height="1.8" type="Oeil"/>
       <sensor height="2" type="Oreille"/>
+      <sensor height="1.8" type="Lunette Optique Gx6"/>
     </sensors>
     <radars/>
     <transports/>
@@ -35743,4 +35745,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0585561893" -->
+<!-- signature="2949262703" -->
