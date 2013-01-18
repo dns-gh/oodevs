@@ -97,6 +97,21 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetObjectsIntersectingInZone
+// Created: ABR 2013-01-18
+// -----------------------------------------------------------------------------
+template< typename T > 
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsIntersectingInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
+{
+    if( !pLoc )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    MIL_ObjectFilter filter( parameters );
+    T_KnowledgeObjectDiaIDVector knowledges;
+    caller.GetArmy().GetKnowledge().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetObjectsInFuseau
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
