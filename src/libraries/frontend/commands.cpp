@@ -281,25 +281,25 @@ namespace frontend
         bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise )
         {
             const QStringList exercises = ListExercises( config );
-            return exercises.indexOf( exercise.c_str() ) != exercises.size();
+            return exercises.indexOf( exercise.c_str() ) != -1;
         }
 
         bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
         {
             const QStringList sessions = ListSessions( config, exercise );
-            return sessions.indexOf( session.c_str() ) != sessions.size();
+            return sessions.indexOf( session.c_str() ) != -1;
         }
 
         bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint )
         {
             const QStringList checkpoints = ListCheckpoints( config, exercise, session );
-            return checkpoints.indexOf( checkpoint.c_str() ) != checkpoints.size();
+            return checkpoints.indexOf( checkpoint.c_str() ) != -1;
         }
 
         bool TerrainExists( const tools::GeneralConfig& config, const std::string& terrain )
         {
             const QStringList terrains = ListTerrains( config );
-            return terrains.indexOf( terrain.c_str() ) != terrains.size();
+            return terrains.indexOf( terrain.c_str() ) != -1;
         }
     }
 }
