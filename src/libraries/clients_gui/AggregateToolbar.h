@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateToolbar( kernel::Controller& controller, AutomatsLayer& automatsLayer,
-                               FormationLayer& formationsLayer );
+                               FormationLayer& formationsLayer, bool showDisplayModes );
     virtual ~AggregateToolbar();
     //@}
 
@@ -65,6 +65,7 @@ private:
 
 signals:
     void LockDragAndDrop( bool lock );
+    void ChangeDisplay( int mode );
 
 private slots:
     //! @name Slots
@@ -73,6 +74,7 @@ private slots:
     void DisaggregateAll();
     void Aggregate( int id );
     void OnLockDragAndDropToggled( bool toggled );
+    void OnChangeDisplay( int id );
     //@}
 
 private:
@@ -95,7 +97,8 @@ private:
     FormationLayer& formationsLayer_;
     T_Automats automats_;
     T_Formations formations_;
-    kernel::ContextMenu* menu_;
+    kernel::ContextMenu* levelMenu_;
+    kernel::ContextMenu* displayMenu_;
     //@}
 };
 }

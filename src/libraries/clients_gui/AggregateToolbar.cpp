@@ -19,6 +19,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ContextMenu.h"
 #include "ENT/ENT_Tr_Gen.h"
+#include "tools/GeneralConfig.h"
 #include <boost/assign/list_of.hpp>
 
 using namespace gui;
@@ -35,11 +36,12 @@ namespace
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
 AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
-                                    AutomatsLayer& automatsLayer, FormationLayer& formationsLayer )
+                                    AutomatsLayer& automatsLayer, FormationLayer& formationsLayer, bool showDisplayModes )
     : QHBoxLayout()
     , controller_     ( controller )
     , automatsLayer_  ( automatsLayer )
     , formationsLayer_( formationsLayer )
+    , displayMenu_( 0 )
 {
     QToolButton* btn = new QToolButton();
     btn->setAutoRaise( true );
@@ -50,11 +52,11 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
     connect( btn, SIGNAL( clicked() ), SLOT( Aggregate() ) );
     addWidget( btn );
 
-    menu_ = new kernel::ContextMenu( btn );
+    levelMenu_ = new kernel::ContextMenu( btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
-        menu_->insertItem( LEVELS[ i ].c_str(), i );
-    btn->setPopup( menu_ );
-    connect( menu_, SIGNAL( activated( int ) ), SLOT( Aggregate( int ) ) );
+        levelMenu_->insertItem( LEVELS[ i ].c_str(), i );
+    btn->setPopup( levelMenu_ );
+    connect( levelMenu_, SIGNAL( activated( int ) ), SLOT( Aggregate( int ) ) );
 
     btn = new QToolButton();
     btn->setAutoRaise( true );
@@ -73,6 +75,24 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Lock/Unlock drag-and-drop" ) );
     connect( btn, SIGNAL( toggled( bool ) ), SLOT( OnLockDragAndDropToggled( bool ) ) );
     addWidget( btn );
+
+    if( showDisplayModes)
+    {
+        btn = new QToolButton();
+        btn->setIcon( QIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ).c_str() ) );
+        btn->setAutoRaise( true );
+        btn->setPopupMode( QToolButton::InstantPopup );
+        QToolTip::add( btn, tools::translate( "AggregateToolbar", "Change Orbat display mode" ) );
+        addWidget( btn );
+
+        displayMenu_ = new kernel::ContextMenu( btn );
+        displayMenu_->insertItem( tools::translate( "AggregateToolbar", "Observable units (Default)" ), 0 );
+        displayMenu_->insertItem( tools::translate( "AggregateToolbar", "Controlled units" ), 1 );
+        displayMenu_->insertItem( tools::translate( "AggregateToolbar", "Sides" ), 2 );
+        displayMenu_->setItemChecked( 0, true );
+        btn->setPopup( displayMenu_ );
+        connect( displayMenu_, SIGNAL( activated( int ) ), SLOT( OnChangeDisplay( int ) ) );
+    }
 
     controller_.Register( *this );
 }
@@ -104,7 +124,7 @@ void AggregateToolbar::Aggregate()
 void AggregateToolbar::DisaggregateAll()
 {
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
-        menu_->setItemChecked( i, false );
+        levelMenu_->setItemChecked( i, false );
     for( auto it = formations_.begin(); it != formations_.end(); ++it )
         formationsLayer_.Disaggregate( **it );
 }
@@ -137,7 +157,7 @@ void AggregateToolbar::Aggregate( int id )
         if( path != "" && IsValid( path.substr( 7, path.length() ), level ) )
             automatsLayer_.Aggregate( **it );
     }
-    menu_->setItemChecked( id, true );
+    levelMenu_->setItemChecked( id, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,6 +167,18 @@ void AggregateToolbar::Aggregate( int id )
 void AggregateToolbar::OnLockDragAndDropToggled( bool toggled )
 {
     emit LockDragAndDrop( toggled );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateToolbar::OnChangeDisplay
+// Created: JSR 2013-01-18
+// -----------------------------------------------------------------------------
+void AggregateToolbar::OnChangeDisplay( int id )
+{
+    emit ChangeDisplay( id );
+    displayMenu_->setItemChecked( 0, 0 == id );
+    displayMenu_->setItemChecked( 1, 1 == id );
+    displayMenu_->setItemChecked( 2, 2 == id );
 }
 
 // -----------------------------------------------------------------------------

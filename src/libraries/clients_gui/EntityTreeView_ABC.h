@@ -89,6 +89,7 @@ protected:
     virtual Qt::ItemFlags ItemSpecificFlags( const kernel::Entity_ABC& entity ) const;
     virtual void ContextMenuRequested( const QPoint& /*where*/ ) {}
     virtual void ApplyProfileFilter();
+    virtual bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
     //@}
 
 protected slots:
@@ -97,12 +98,6 @@ protected slots:
     virtual void OnActivate( const QModelIndex& index );
     virtual void OnSelect( const QItemSelection& selected, const QItemSelection& deselected );
     void OnDataChanged( const QModelIndex& index, const QVariant& value );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    bool ApplyProfileFilter( QStandardItem& item, StandardModel& model ) const;
     //@}
 
 protected:

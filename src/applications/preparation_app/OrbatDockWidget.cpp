@@ -34,7 +34,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     , oldMaxWith_  ( 0 )
 {
     QGridLayout* toolbarBox = new QGridLayout();
-    gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( controllers.controller_, automats, formation );
+    gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( controllers.controller_, automats, formation, false );
     toolbarBox->addLayout( aggregateToolbar, 0, 0, 1, 1, Qt::AlignLeft );
 
     expandButton_ = new QToolButton();

@@ -15,6 +15,22 @@
         <source>Lock/Unlock drag-and-drop</source>
         <translation>Lock/Unlock drag-and-drop</translation>
     </message>
+    <message>
+        <source>Change Orbat display mode</source>
+        <translation>Change Orbat display mode</translation>
+    </message>
+    <message>
+        <source>Observable units (Default)</source>
+        <translation>Observable units (Default)</translation>
+    </message>
+    <message>
+        <source>Controlled units</source>
+        <translation>Controlled units</translation>
+    </message>
+    <message>
+        <source>Sides</source>
+        <translation>Sides</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

@@ -38,7 +38,7 @@ OrbatToolbar::OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, P
     setMaximumWidth( 440 );
 
     QGridLayout* toolbarBox = new QGridLayout( this );
-    pAggregateToolbar_ = new gui::AggregateToolbar( controllers.controller_, automats, formations );
+    pAggregateToolbar_ = new gui::AggregateToolbar( controllers.controller_, automats, formations, true );
     toolbarBox->addLayout( pAggregateToolbar_, 0, 0, 1, 1, Qt::AlignLeft );
 
     filterBtn_ = new QToolButton();

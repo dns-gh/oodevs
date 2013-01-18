@@ -39,6 +39,7 @@ TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kern
     , static_( staticModel )
     , simulation_( simulation )
     , actionsModel_( actionsModel )
+    , displayMode_( eObservableUnits )
     , changeSuperiorDialog_( 0 )
     , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).c_str() )
 {
@@ -116,7 +117,7 @@ namespace
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& sub = it.NextElement();
-                return CanBeOrdered( sub, profile);
+                return CanBeOrdered( sub, profile );
             }
         }
         return false;
@@ -191,6 +192,72 @@ void TacticalTreeView::OnChangeSuperior()
                 changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
             changeSuperiorDialog_->Show( *entity );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::ChangeDisplay
+// Created: JSR 2013-01-18
+// -----------------------------------------------------------------------------
+void TacticalTreeView::ChangeDisplay( int mode )
+{
+    displayMode_ = static_cast< EDisplayMode >( mode );
+    EntityTreeView_ABC::ApplyProfileFilter();
+}
+
+namespace
+{
+    bool IsVisible( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
+    {
+        if( profile.IsVisible( entity ) )
+            return true;
+
+        if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            auto it = hierarchies->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& sub = it.NextElement();
+                return IsVisible( sub, profile );
+            }
+        }
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::ApplyProfileFilter
+// Created: JSR 2013-01-18
+// -----------------------------------------------------------------------------
+bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const
+{
+    if( displayMode_ == eObservableUnits )
+        return gui::TacticalTreeView::ApplyProfileFilter( item, model );
+    else if( displayMode_ == eControlledUnits )
+    {
+        if( !gui::TacticalTreeView::ApplyProfileFilter( item, model ) )
+            return false;
+        const kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
+        return entity && CanBeOrdered( *entity, profile_ );
+    }
+    else // eSides
+    {
+        const kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
+        if( entity )
+        {
+            if( profile_.IsVisible( *entity ) )
+                return true;
+            if( const kernel::TacticalHierarchies* hierarchies = entity->Retrieve< kernel::TacticalHierarchies >() )
+                if( IsVisible( hierarchies->GetTop(), profile_ ) )
+                {
+                    QFont font = item.font();
+                    font.setItalic( true );
+                    item.setFont( font );
+                    item.setForeground( QBrush( Qt::lightGray ) );
+                    return true;
+                }
+        }
+        return false;
     }
 }
 

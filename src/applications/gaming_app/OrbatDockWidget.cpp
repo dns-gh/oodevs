@@ -47,6 +47,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
         {
             searchTreeView = new gui::SearchTreeView< TacticalTreeView >( pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
             searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
+            searchTreeView->connect( aggregateToolbar, SIGNAL( ChangeDisplay( int ) ), searchTreeView->GetRichTreeView(), SLOT( ChangeDisplay( int ) ) );
             pUnit->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Tactical" ) );
         }
         {

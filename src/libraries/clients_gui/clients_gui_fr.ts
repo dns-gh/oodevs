@@ -15,6 +15,22 @@
         <source>Lock/Unlock drag-and-drop</source>
         <translation>Activer/Désactiver le glisser-déposer</translation>
     </message>
+    <message>
+        <source>Change Orbat display mode</source>
+        <translation>Changer le mode d'affichage de l'ODB</translation>
+    </message>
+    <message>
+        <source>Observable units (Default)</source>
+        <translation>Unités observables (par défaut)</translation>
+    </message>
+    <message>
+        <source>Controlled units</source>
+        <translation>Unités controllées</translation>
+    </message>
+    <message>
+        <source>Sides</source>
+        <translation>Camps</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

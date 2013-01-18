@@ -15,6 +15,22 @@
         <source>Lock/Unlock drag-and-drop</source>
         <translation type="unfinished">تأمين/إلغاء تأمين السحب والإفلات</translation>
     </message>
+    <message>
+        <source>Change Orbat display mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Observable units (Default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Controlled units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sides</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

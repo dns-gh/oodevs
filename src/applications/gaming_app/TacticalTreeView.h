@@ -66,6 +66,7 @@ private slots:
     //! @name Slots
     //@{
     void OnChangeSuperior();
+    void ChangeDisplay( int mode );
     //@}
 
 private:
@@ -73,6 +74,18 @@ private:
     //@{
     virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
     virtual std::vector< const QPixmap* > GetEntityPixmap( const kernel::Entity_ABC& entity );
+    virtual bool ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    enum EDisplayMode
+    {
+        eObservableUnits,
+        eControlledUnits,
+        eSides
+    };
     //@}
 
 private:
@@ -81,6 +94,7 @@ private:
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     actions::ActionsModel& actionsModel_;
+    EDisplayMode displayMode_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     QPixmap icon_user_;
     //@}
