@@ -23,7 +23,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
-#include <boost/foreach.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
 
@@ -68,13 +68,11 @@ MIL_DotationSupplyManager::~MIL_DotationSupplyManager()
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pAutomate_
-         >> bSupplyNeeded_
-         >> bDotationSupplyExplicitlyRequested_;
-
-    // $$ TMP
-    assert( pAutomate_ );
-    supplyRequestBuilder_.reset( new logistic::SupplyDotationRequestBuilder( *pAutomate_, *this ) );
+    file >> boost::serialization::base_object< MIL_SupplyManager >( *this );
+    file >> pAutomate_;
+    file >> bSupplyNeeded_;
+    file >> bDotationSupplyExplicitlyRequested_;
+    file >> supplyRequestBuilder_;
     supplyRequests_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
 }
 
@@ -84,9 +82,11 @@ void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pAutomate_
-         << bSupplyNeeded_
-         << bDotationSupplyExplicitlyRequested_;
+    file << boost::serialization::base_object< MIL_SupplyManager >( *this );
+    file << pAutomate_;
+    file << bSupplyNeeded_;
+    file << bDotationSupplyExplicitlyRequested_;
+    file << supplyRequestBuilder_;
 }
 
 // =============================================================================

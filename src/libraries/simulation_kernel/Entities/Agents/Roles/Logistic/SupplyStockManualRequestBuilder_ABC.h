@@ -13,6 +13,7 @@
 #include "SupplyRequestBuilder_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/Resolver.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Automate;
 class PHY_DotationStock;
@@ -34,6 +35,8 @@ public:
              SupplyStockManualRequestBuilder_ABC();
     virtual ~SupplyStockManualRequestBuilder_ABC();
     //@}
+
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
 
 protected:
     //! @name Operations

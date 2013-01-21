@@ -12,6 +12,8 @@
 #include "MIL_AgentServer.h"
 #include <boost/foreach.hpp>
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_SupplyManager );
+
 // -----------------------------------------------------------------------------
 // Name: MIL_SupplyManager::MIL_SupplyManager
 // Created: MCO 2012-12-19

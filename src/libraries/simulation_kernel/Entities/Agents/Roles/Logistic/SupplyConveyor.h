@@ -11,9 +11,12 @@
 #define __SupplyConveyor_h_
 
 #include "SupplyConveyor_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
 class MIL_AgentPion;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 namespace logistic {
 
@@ -28,6 +31,7 @@ class SupplyConveyor : public SupplyConveyor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             SupplyConveyor();
              SupplyConveyor( PHY_ComposantePion& composante, MIL_AgentPion& pion );
     virtual ~SupplyConveyor();
     //@}
@@ -41,8 +45,9 @@ public:
     virtual unsigned ApproximateTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     virtual double   Supply               ( const PHY_DotationCategory& dotationCategory, double quantity );
     virtual void     Destroy              ( SupplyConvoyEventsObserver_ABC& eventsObserver );
-    
     virtual bool     CanTransport         ( const PHY_DotationCategory& dotationCategory ) const;
+    void serialize( MIL_CheckPointInArchive&, const unsigned int );
+    void serialize( MIL_CheckPointOutArchive&, const unsigned int );
     //@}
 
 private:
@@ -58,8 +63,8 @@ private:
     //@}
 
 private:
-    PHY_ComposantePion& composante_;
-    MIL_AgentPion&      pion_;
+    PHY_ComposantePion* composante_;
+    MIL_AgentPion*      pion_;
     double              weightCapacity_;
     double              volumeCapacity_;
     T_Resources         resourcesConvoyed_;
@@ -67,5 +72,7 @@ private:
 };
 
 } // end namespace logistic
+
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyConveyor );
 
 #endif // __SupplyConveyor_h_

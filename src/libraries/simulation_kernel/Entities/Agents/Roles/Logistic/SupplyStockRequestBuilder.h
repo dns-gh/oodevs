@@ -11,6 +11,7 @@
 #define __SupplyStockRequestBuilder_h_
 
 #include "SupplyRequestBuilder_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class MIL_Automate;
 class MIL_AgentPion;
@@ -30,6 +31,7 @@ class SupplyStockRequestBuilder : public SupplyRequestBuilder_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+             SupplyStockRequestBuilder();
              SupplyStockRequestBuilder( MIL_Automate& automate, SupplyRecipient_ABC& recipient );
     virtual ~SupplyStockRequestBuilder();
     //@}
@@ -37,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Process( SupplyRequestContainer_ABC& container );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -46,10 +49,12 @@ private:
     //@}
 
 private:
-    MIL_Automate& automate_;
-    SupplyRecipient_ABC& recipient_;
+    MIL_Automate* automate_;
+    SupplyRecipient_ABC* recipient_;
 };
 
 } // end namespace logistic
+
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyStockRequestBuilder )
 
 #endif // __SupplyStockRequestBuilder_h_

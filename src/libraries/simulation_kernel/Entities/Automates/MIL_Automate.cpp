@@ -248,33 +248,33 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_DictionaryExtensions* pExtensions;
     MIL_Color* pColor;
-    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )
-         >> boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
-         >> const_cast< unsigned int& >( nID_ );
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
+    file >> boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
+    file >> const_cast< unsigned int& >( nID_ );
     {
         DEC_AutomateDecision* pRole;
         file >> pRole;
         RegisterRole( *pRole );
         RegisterRole( *new DEC_Representations() );
     }
-    file >> pParentFormation_
-         >> pParentAutomate_
-         >> bEngaged_
-         >> pKnowledgeGroup_
-         >> pPionPC_
-         >> pions_
-         >> recycledPions_
-         >> automates_
-         >> bAutomateModeChanged_
-         >> pKnowledgeBlackBoard_
-         >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
-         >> pExtensions
-         >> pColor
-         >> symbol_
-         >> pLogisticHierarchy_
-         >> pBrainLogistic_
-         >> pDotationSupplyManager_
-         >> pStockSupplyManager_;
+    file >> pParentFormation_;
+    file >> pParentAutomate_;
+    file >> bEngaged_;
+    file >> pKnowledgeGroup_;
+    file >> pPionPC_;
+    file >> pions_;
+    file >> recycledPions_;
+    file >> automates_;
+    file >> bAutomateModeChanged_;
+    file >> pKnowledgeBlackBoard_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ );
+    file >> pExtensions;
+    file >> pColor;
+    file >> symbol_;
+    file >> pLogisticHierarchy_;
+    file >> pBrainLogistic_;
+    file >> pDotationSupplyManager_;
+    file >> pStockSupplyManager_;
 
     if( pBrainLogistic_.get() )
     {
@@ -293,28 +293,28 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 {
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     const MIL_Color* const pColor = pColor_.get();
-    file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
-         << boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
-         << const_cast< unsigned int& >( nID_ );
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
+    file << boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
+    file << const_cast< unsigned int& >( nID_ );
     SaveRole< DEC_AutomateDecision >( *this, file );
-    file << pParentFormation_
-         << pParentAutomate_
-         << bEngaged_
-         << pKnowledgeGroup_
-         << pPionPC_
-         << pions_
-         << recycledPions_
-         << automates_
-         << bAutomateModeChanged_
-         << pKnowledgeBlackBoard_
-         << pArmySurrenderedTo_
-         << pExtensions
-         << pColor
-         << symbol_
-         << pLogisticHierarchy_
-         << pBrainLogistic_
-         << pDotationSupplyManager_
-         << pStockSupplyManager_;
+    file << pParentFormation_;
+    file << pParentAutomate_;
+    file << bEngaged_;
+    file << pKnowledgeGroup_;
+    file << pPionPC_;
+    file << pions_;
+    file << recycledPions_;
+    file << automates_;
+    file << bAutomateModeChanged_;
+    file << pKnowledgeBlackBoard_;
+    file << pArmySurrenderedTo_;
+    file << pExtensions;
+    file << pColor;
+    file << symbol_;
+    file << pLogisticHierarchy_;
+    file << pBrainLogistic_;
+    file << pDotationSupplyManager_;
+    file << pStockSupplyManager_;
 }
 
 // -----------------------------------------------------------------------------
