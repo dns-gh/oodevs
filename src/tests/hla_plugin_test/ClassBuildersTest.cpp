@@ -172,7 +172,8 @@ BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( groundvehicle_builder_registers_attributes, Fixture )
 {
     GroundVehicleBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -186,7 +187,8 @@ BOOST_FIXTURE_TEST_CASE( groundvehicle_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixture )
 {
     NetnGroundVehicleBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -204,7 +206,8 @@ BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixtur
 BOOST_FIXTURE_TEST_CASE( human_builder_registers_attributes, Fixture )
 {
     HumanBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -218,7 +221,8 @@ BOOST_FIXTURE_TEST_CASE( human_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( netn_human_builder_registers_attributes, Fixture )
 {
     NetnHumanBuilder builder;
-    attributes = boost::assign::list_of( "EntityType" )
+    attributes = boost::assign::list_of( "HLAprivilegeToDeleteObject" )
+                                       ( "EntityType" )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
@@ -235,7 +239,8 @@ BOOST_FIXTURE_TEST_CASE( netn_human_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( minefield_builder_registers_attributes, Fixture )
 {
     MinefieldBuilder builder;
-    attributes = boost::assign::list_of ( "ActiveStatus" )
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "ActiveStatus" )
                                         ( "ForceIdentifier" )
                                         ( "MinefieldIdentifier" )
                                         ( "MinefieldLocation" )

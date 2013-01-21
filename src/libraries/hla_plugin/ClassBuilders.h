@@ -51,7 +51,7 @@ namespace hla
                      , publish_   ( publish )
                      , subscribe_ ( subscribe )
                      , attributes_( attributes.begin(), attributes.end() )
-                 {}
+                 { }
         virtual ~ClassBuilder() {}
 
     public:
@@ -95,32 +95,22 @@ namespace hla
     private:
         std::auto_ptr< ClassBuilder_ABC > builder_;
     };
+    namespace details
+    {
+        inline std::vector< std::string > BuildAttributeList( bool isHla13, const std::vector< std::string>& attributes )
+        {
+            std::vector< std::string > retval( 1, isHla13 ? "privilegeToDelete" : "HLAprivilegeToDeleteObject" );
+            retval.insert( retval.end(), attributes.begin(), attributes.end() );
+            return retval;
+        }
+    }
 
     class AggregateEntityBuilder : public ClassBuilder
     {
     public:
         AggregateEntityBuilder( bool isHla13 = false )
             : ClassBuilder( "BaseEntity.AggregateEntity", true, true, 
-                            isHla13 ?  std::vector< std::string>( boost::assign::list_of( "privilegeToDelete" )
-                                                            ( "EntityType" )
-                                                            ( "EntityIdentifier" )
-                                                            ( "ForceIdentifier" )
-                                                            ( "AggregateMarking" )
-                                                            ( "AggregateState" )
-                                                            ( "Dimensions" )
-                                                            ( "Spatial" )
-                                                            ( "Formation" )
-                                                            ( "NumberOfSilentEntities" )
-                                                            ( "SilentEntities" )
-                                                            ( "SilentAggregates" )
-                                                            ( "SubAggregateIdentifiers" )
-                                                            ( "IsPartOf" )
-                                                            ( "NumberOfVariableDatums" )
-                                                            ( "RelativeSpatial" )
-                                                            ( "EntityIdentifiers" )
-                                                            ( "VariableDatums" ) ) : 
-                                     std::vector< std::string>( boost::assign::list_of( "HLAprivilegeToDeleteObject" )
-                                                            ( "EntityType" )
+                    details::BuildAttributeList( isHla13, boost::assign::list_of( "EntityType" )
                                                             ( "EntityIdentifier" )
                                                             ( "ForceIdentifier" )
                                                             ( "AggregateMarking" )
@@ -142,9 +132,9 @@ namespace hla
     class NetnAggregateEntityBuilder : public NetnClassBuilder
     {
     public:
-        NetnAggregateEntityBuilder()
+        NetnAggregateEntityBuilder( bool isHla13 = false )
             : NetnClassBuilder( "BaseEntity.AggregateEntity.NETN_Aggregate", true, true
-            , boost::assign::list_of( "Mounted" )
+                    , boost::assign::list_of( "Mounted" )
                                     ( "Echelon" )
                                     ( "UniqueID" )
                                     ( "HigherHeadquarters" )
@@ -152,7 +142,7 @@ namespace hla
                                     ( "Status" )
                                     ( "Symbol" )
                                     ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder() ) )
+            , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder( isHla13 ) ) )
         {}
     };
     class SurfaceVesselBuilder : public ClassBuilder
@@ -160,35 +150,25 @@ namespace hla
     public:
         SurfaceVesselBuilder( bool isHla13 = false )
             : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true
-            , isHla13 ? std::vector< std::string>( boost::assign::list_of( "privilegeToDelete" )
-                                                                        ( "EntityType" )
-                                                                        ( "EntityIdentifier" )
-                                                                        ( "ForceIdentifier" )
-                                                                        ( "Marking" )
-                                                                        ( "Spatial" )
-                                                                        ( "IsPartOf" )
-                                                                        ( "DamageState" )
-                                                                        ( "IsConcealed" ) ) :
-                    std::vector< std::string>( boost::assign::list_of( "HLAprivilegeToDeleteObject" )
-                                                                        ( "EntityType" )
-                                                                        ( "EntityIdentifier" )
-                                                                        ( "ForceIdentifier" )
-                                                                        ( "Marking" )
-                                                                        ( "Spatial" )
-                                                                        ( "IsPartOf" )
-                                                                        ( "DamageState" )
-                                                                        ( "IsConcealed" ) ) )
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of ( "EntityType" )
+                                                                  ( "EntityIdentifier" )
+                                                                  ( "ForceIdentifier" )
+                                                                  ( "Marking" )
+                                                                  ( "Spatial" )
+                                                                  ( "IsPartOf" )
+                                                                  ( "DamageState" )
+                                                                  ( "IsConcealed" ) ) )
         {}
     };
     class NetnSurfaceVesselBuilder : public NetnClassBuilder
     {
     public:
-        NetnSurfaceVesselBuilder()
+        NetnSurfaceVesselBuilder( bool isHla13 = false )
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", true, true
-            , boost::assign::list_of( "UniqueID" )
-                                    ( "Callsign" )
-                                    ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder() ) )
+                    , boost::assign::list_of( "UniqueID" )
+                                            ( "Callsign" )
+                                            ( "EmbeddedUnitList" )
+            , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder( isHla13 ) ) )
         {}
     };
     class AircraftBuilder : public ClassBuilder
@@ -196,88 +176,78 @@ namespace hla
     public:
         AircraftBuilder( bool isHla13 = false )
             : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft", true, true
-            , isHla13 ? std::vector< std::string>( boost::assign::list_of( "privilegeToDelete" )
-                                                                        ( "EntityType" )
-                                                                        ( "EntityIdentifier" )
-                                                                        ( "ForceIdentifier" )
-                                                                        ( "Marking" )
-                                                                        ( "Spatial" )
-                                                                        ( "IsPartOf" )
-                                                                        ( "DamageState" )
-                                                                        ( "IsConcealed" ) ) :
-                        std::vector< std::string>( boost::assign::list_of( "HLAprivilegeToDeleteObject" )
-                                                                        ( "EntityType" )
-                                                                        ( "EntityIdentifier" )
-                                                                        ( "ForceIdentifier" )
-                                                                        ( "Marking" )
-                                                                        ( "Spatial" )
-                                                                        ( "IsPartOf" )
-                                                                        ( "DamageState" )
-                                                                        ( "IsConcealed" ) ) )
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "EntityType" )
+                                                                                 ( "EntityIdentifier" )
+                                                                                 ( "ForceIdentifier" )
+                                                                                 ( "Marking" )
+                                                                                 ( "Spatial" )
+                                                                                 ( "IsPartOf" )
+                                                                                 ( "DamageState" )
+                                                                                 ( "IsConcealed" ) ) )
         {}
     };
     class NetnAircraftBuilder : public NetnClassBuilder
     {
     public:
-        NetnAircraftBuilder()
+        NetnAircraftBuilder( bool isHla13 = false )
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", true, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
                                     ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder() ) )
+            , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder( isHla13 ) ) )
         {}
     };
 
     class GroundVehicleBuilder : public ClassBuilder
     {
     public:
-        GroundVehicleBuilder( bool /*isHla13*/ = false )
+        GroundVehicleBuilder( bool isHla13 = false )
             : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, false
-            , boost::assign::list_of( "EntityType" )
-                                    ( "EntityIdentifier" )
-                                    ( "ForceIdentifier" )
-                                    ( "Marking" )
-                                    ( "Spatial" )
-                                    ( "IsPartOf" )
-                                    ( "DamageState" )
-                                    ( "IsConcealed" ) )
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "EntityType" )
+                                                                                 ( "EntityIdentifier" )
+                                                                                 ( "ForceIdentifier" )
+                                                                                 ( "Marking" )
+                                                                                 ( "Spatial" )
+                                                                                 ( "IsPartOf" )
+                                                                                 ( "DamageState" )
+                                                                                 ( "IsConcealed" ) ) )
         {}
     };
     class NetnGroundVehicleBuilder : public NetnClassBuilder
     {
     public:
-        NetnGroundVehicleBuilder()
+        NetnGroundVehicleBuilder( bool isHla13 = false )
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, false
-            , boost::assign::list_of( "UniqueID" )
-                                    ( "Callsign" )
-                                    ( "EmbeddedUnitList" )
-            , std::auto_ptr< ClassBuilder_ABC >( new GroundVehicleBuilder() ) )
+                    , boost::assign::list_of( "UniqueID" )
+                                            ( "Callsign" )
+                                            ( "EmbeddedUnitList" )
+            , std::auto_ptr< ClassBuilder_ABC >( new GroundVehicleBuilder( isHla13 ) ) )
         {}
     };
 
     class HumanBuilder : public ClassBuilder
     {
     public:
-        HumanBuilder( bool /*isHla13*/ = false )
+        HumanBuilder( bool isHla13 = false )
             : ClassBuilder( "BaseEntity.PhysicalEntity.Lifeform.Human", true, false
-            , boost::assign::list_of( "EntityType" )
-                                    ( "EntityIdentifier" )
-                                    ( "ForceIdentifier" )
-                                    ( "Marking" )
-                                    ( "Spatial" )
-                                    ( "IsPartOf" )
-                                    ( "DamageState" )
-                                    ( "IsConcealed" ) )
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "EntityType" )
+                                                                                 ( "EntityIdentifier" )
+                                                                                 ( "ForceIdentifier" )
+                                                                                 ( "Marking" )
+                                                                                 ( "Spatial" )
+                                                                                 ( "IsPartOf" )
+                                                                                 ( "DamageState" )
+                                                                                 ( "IsConcealed" ) ) )
         {}
     };
     class NetnHumanBuilder : public NetnClassBuilder
     {
     public:
-        NetnHumanBuilder()
+        NetnHumanBuilder( bool isHla13 = false )
             : NetnClassBuilder( "BaseEntity.PhysicalEntity.Lifeform.Human.NETN_Human", true, false
-            , boost::assign::list_of( "UniqueID" )
+                    , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
-            , std::auto_ptr< ClassBuilder_ABC >( new HumanBuilder() ) )
+            , std::auto_ptr< ClassBuilder_ABC >( new HumanBuilder( isHla13 ) ) )
         {}
     };
 
@@ -287,7 +257,7 @@ namespace hla
     public:
         CulturalFeaturedBuilder()
             : ClassBuilder( "BaseEntity.PhysicalEntity.CulturalFeature", true, true
-            , boost::assign::list_of( "EntityType" )
+                    , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
                                     ( "Marking" )
@@ -297,18 +267,18 @@ namespace hla
     class MinefieldBuilder : public ClassBuilder
     {
     public:
-        MinefieldBuilder( bool /*isHla13*/ = false )
+        MinefieldBuilder( bool isHla13 = false )
             : ClassBuilder( "Minefield", true, true
-            , boost::assign::list_of( "ActiveStatus" )
-                                    ( "ForceIdentifier" )
-                                    ( "MinefieldIdentifier" )
-                                    ( "MinefieldLocation" )
-                                    ( "MinefieldOrientation" )
-                                    ( "MinefieldType" )
-                                    ( "MineTypes" )
-                                    ( "PerimeterPointCoordinates" )
-                                    ( "ProtocolMode" )
-                                    ( "State" ) )
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "ActiveStatus" )
+                                                                                 ( "ForceIdentifier" )
+                                                                                 ( "MinefieldIdentifier" )
+                                                                                 ( "MinefieldLocation" )
+                                                                                 ( "MinefieldOrientation" )
+                                                                                 ( "MinefieldType" )
+                                                                                 ( "MineTypes" )
+                                                                                 ( "PerimeterPointCoordinates" )
+                                                                                 ( "ProtocolMode" )
+                                                                                 ( "State" ) ) )
         {}
     };
 }
