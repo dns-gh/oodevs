@@ -5107,9 +5107,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.inl">
       <Filter>Source Files\Entities\Orders</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_Ephemeride.inl">
-      <Filter>Source Files\Knowledge\Meteo</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.inl">
       <Filter>Source Files\Knowledge\Meteo</Filter>
     </None>

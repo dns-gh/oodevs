@@ -65,6 +65,4 @@ private:
     //@}
 };
 
-#include "PHY_Ephemeride.inl"
-
 #endif // __PHY_Ephemeride_h_

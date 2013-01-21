@@ -159,3 +159,12 @@ const weather::PHY_Lighting& PHY_Ephemeride::GetLightingBase() const
 {
     return bIsNight_ ? *pNightBase_ : *pDayBase_;
 }
+
+//-----------------------------------------------------------------------------
+// Name: PHY_Ephemeride::GetCurrentTimeBase
+// Created: JVT 03-08-07
+//-----------------------------------------------------------------------------
+bool PHY_Ephemeride::IsNight() const
+{
+    return bIsNight_;
+}
