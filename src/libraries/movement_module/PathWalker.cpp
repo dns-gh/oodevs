@@ -91,9 +91,10 @@ PathWalker::~PathWalker()
 // -----------------------------------------------------------------------------
 bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const
 {
-    if( path_.expired() )
+    auto path = path_.lock();
+    if( !path )
         return false;
-    return path_.lock()->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, blockedByObject, applyScale );
+    return path->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +103,7 @@ bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, cons
 // -----------------------------------------------------------------------------
 bool PathWalker::IsMovingOn( boost::shared_ptr< Path_ABC > path ) const
 {
-    return !path_.expired() && *path == *path_.lock();
+    return !path_.expired() && path == path_.lock();
 }
 
 //-----------------------------------------------------------------------------
@@ -112,11 +113,12 @@ bool PathWalker::IsMovingOn( boost::shared_ptr< Path_ABC > path ) const
 MT_Vector2D PathWalker::ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const
 {
     const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
-    if( path_.expired() )
+    auto path = path_.lock();
+    if( !path)
         return position;
     try
     {
-        return path_.lock()->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
+        return path->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
     }
     catch( const std::exception& e )
     {
@@ -651,10 +653,13 @@ void PathWalker::PostMovement( const wrapper::View& entity ) const
 // -----------------------------------------------------------------------------
 void PathWalker::PostPath( const wrapper::View& entity ) const
 {
+    auto path = path_.lock();
+    if( !path )
+        return;
     wrapper::Effect effect( entity[ "movement/path" ] );
     wrapper::Node points = effect[ "points" ];
-    effect[ "identifier" ] = path_.lock()->GetID();
-    const PathResult::T_PathPointList& pts = path_.lock()->GetResult();
+    effect[ "identifier" ] = path->GetID();
+    const PathResult::T_PathPointList& pts = path->GetResult();
     PathResult::CIT_PathPointList it = pts.begin();
     std::advance( it, pointsPassed_ );
     for( std::size_t index = 0; it != pts.end() && index < pathSizeThreshold; ++it, ++index )

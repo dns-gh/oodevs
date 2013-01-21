@@ -64,7 +64,9 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     pathWalker_->MoveStopped( entity );
-    GET_HOOK( CancelPathFindJob )( mainPath_.lock()->GetID() );
+    auto mainPath = mainPath_.lock();
+    if( mainPath )
+        GET_HOOK( CancelPathFindJob )( mainPath->GetID() );
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 
@@ -106,7 +108,10 @@ void MoveCommand::PostCallback( sword::movement::PathWalker::E_ReturnCode code )
 // -----------------------------------------------------------------------------
 bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D& /*position*/ ) const
 {
-    if( mainPath_.lock()->GetState() == Path_ABC::eComputing )
+    auto mainPath = mainPath_.lock();
+    if( !mainPath )
+        throw MASA_EXCEPTION( "Invalid path while avoiding obstacles" );
+    if( mainPath->GetState() == Path_ABC::eComputing )
         return false;
 
     if( !GET_HOOK( UpdateObjectsToAvoid )( cache_, entity ) )
@@ -120,7 +125,7 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
     double rDistanceCollision = 0.;
-    if( !mainPath_.lock()->ComputeFutureObjectCollision( entity, *cache_, rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
+    if( !mainPath->ComputeFutureObjectCollision( entity, *cache_, rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
         return false;
     obstacleId_ = GET_HOOK( GetObjectKnownId )( pObjectColliding );
     PostReport( entity, report::eRC_DifficultMovementProgression, GET_HOOK( GetKnowledgeObjectRealName )( pObjectColliding ) );

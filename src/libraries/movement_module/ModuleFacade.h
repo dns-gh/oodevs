@@ -53,7 +53,7 @@ public:
     boost::shared_ptr< Agent_Path > GetPath( std::size_t identifier );
 
     std::vector< std::size_t > GetPoints( unsigned int entity ) const;
-    const movement::PathPoint& GetPoint( std::size_t point ) const;
+    boost::shared_ptr< movement::PathPoint > GetPoint( std::size_t point ) const;
     void AddPathPoint( unsigned int entity, const boost::weak_ptr< movement::PathPoint >& point );
     void RemovePathPoint( unsigned int entity, std::size_t point );
     void RemovePathPoints( unsigned int entity );

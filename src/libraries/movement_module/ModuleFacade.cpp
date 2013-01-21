@@ -152,29 +152,29 @@ namespace
     }
     DEFINE_HOOK( GetPathTypePoint, 1, int, ( std::size_t point ) )
     {
-        return facade->GetPoint( point ).GetTypePoint();
+        return facade->GetPoint( point )->GetTypePoint();
     }
     DEFINE_HOOK( GetPathDestPoint, 1, std::size_t, ( std::size_t point ) )
     {
-        auto destPoint = facade->GetPoint( point ).GetDestPoint();
+        auto destPoint = facade->GetPoint( point )->GetDestPoint();
         facade->RegisterPoint( destPoint );
         return destPoint->GetID();
     }
     DEFINE_HOOK( GetPathTypeLimaPoint, 1, int, ( std::size_t point ) )
     {
-        return facade->GetPoint( point ).GetTypeLima();
+        return facade->GetPoint( point )->GetTypeLima();
     }
     DEFINE_HOOK( GetPathLimaPoint, 1, unsigned int, ( std::size_t point ) )
     {
-        return facade->GetPoint( point ).GetLimaID();
+        return facade->GetPoint( point )->GetLimaID();
     }
     DEFINE_HOOK( GetPathDIAType, 1, const char*, ( std::size_t point ) )
     {
-        return facade->GetPoint( point ).GetDIAType().c_str();
+        return facade->GetPoint( point )->GetDIAType().c_str();
     }
     DEFINE_HOOK( GetPathPos, 1, const MT_Vector2D*, ( std::size_t point ) )
     {
-        return &facade->GetPoint( point ).GetPos();
+        return &facade->GetPoint( point )->GetPos();
     }
     DEFINE_HOOK( InitializePathClass, 3, void, ( const char* xml, const unsigned int* first, size_t size ) )
     {
@@ -282,12 +282,26 @@ std::vector< std::size_t > ModuleFacade::GetPoints( unsigned int entity ) const
 // Name: ModuleFacade::GetPoint
 // Created: SLI 2012-12-13
 // -----------------------------------------------------------------------------
-const movement::PathPoint& ModuleFacade::GetPoint( std::size_t point ) const
+boost::shared_ptr< movement::PathPoint > ModuleFacade::GetPoint( std::size_t point ) const
 {
     auto it = points_.find( point );
     if( it == points_.end() )
         throw MASA_EXCEPTION( "Could not retrieve decisionnal point" );
-    return *it->second.lock();
+    auto result = it->second.lock();
+    if( !result )
+        throw MASA_EXCEPTION( "Decisional point has been removed" );
+    return result;
+}
+
+namespace
+{
+    std::size_t GetId( const boost::weak_ptr< movement::PathPoint >& point )
+    {
+        auto shared = point.lock();
+        if( !shared )
+            throw MASA_EXCEPTION( "Decisional point has been removed" );
+        return shared->GetID();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +311,7 @@ const movement::PathPoint& ModuleFacade::GetPoint( std::size_t point ) const
 void ModuleFacade::AddPathPoint( unsigned int entity, const boost::weak_ptr< movement::PathPoint >& point )
 {
     RegisterPoint( point );
-    pathPoints_[ entity ].push_back( point.lock()->GetID() );
+    pathPoints_[ entity ].push_back( GetId( point ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +339,7 @@ void ModuleFacade::RemovePathPoints( unsigned int entity )
 // -----------------------------------------------------------------------------
 void ModuleFacade::RegisterPoint( const boost::weak_ptr< movement::PathPoint >& point )
 {
-    points_[ point.lock()->GetID() ] = point;
+    points_[ GetId( point ) ] = point;
 }
 
 // -----------------------------------------------------------------------------
@@ -334,5 +348,5 @@ void ModuleFacade::RegisterPoint( const boost::weak_ptr< movement::PathPoint >& 
 // -----------------------------------------------------------------------------
 void ModuleFacade::UnregisterPoint( const boost::weak_ptr< movement::PathPoint >& point )
 {
-    points_.erase( point.lock()->GetID() );
+    points_.erase( GetId( point ) );
 }
