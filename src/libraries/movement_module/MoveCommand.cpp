@@ -24,6 +24,7 @@ DECLARE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
 DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
 DECLARE_HOOK( GetObjectKnownId, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
 DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
+DECLARE_HOOK( CancelPathFindJob, void, ( std::size_t path ) )
 
 namespace
 {
@@ -63,7 +64,7 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
 {
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     pathWalker_->MoveStopped( entity );
-    module_.UnregisterPath( mainPath_.lock()->GetID() );
+    GET_HOOK( CancelPathFindJob )( mainPath_.lock()->GetID() );
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 
@@ -82,7 +83,7 @@ void MoveCommand::CreateNewPath( const wrapper::View& entity ) const
     pNewPath->Initialize();
     pathWalker_->MoveCanceled( mainPath );
     mainPath->Cancel();
-    module_.UnregisterPath( mainPath->GetID() );
+    GET_HOOK( CancelPathFindJob )( mainPath->GetID() );
     mainPath_ = pNewPath;
 }
 

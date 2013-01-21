@@ -41,6 +41,7 @@
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <core/Convert.h>
 #include <boost/lexical_cast.hpp>
+#include <boost/thread/mutex.hpp>
 
 using namespace sword;
 
@@ -61,58 +62,63 @@ DECLARE_HOOK( HandlePopulations, bool, ( std::size_t path ) )
 DECLARE_HOOK( GetPopulationSecurityRange, double, ( std::size_t path ) )
 DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( std::size_t path ) )
 DECLARE_HOOK( GetPopulationAttitudeCost, double, ( std::size_t path, unsigned int type ) )
+DECLARE_HOOK( RemovePath, void, ( std::size_t path ) )
 
 DEFINE_HOOK( NotifyPathCreation, 0, std::size_t, () )
 {
     return sword::PathAdapter::Add();
 }
-
+DEFINE_HOOK( GetPathHandler, 1, const void*, ( std::size_t identifier ) )
+{
+    return PathAdapter::Get( identifier ).get();
+}
 DEFINE_HOOK( InitializePath, 2, void, ( std::size_t path, const SWORD_Model* entity ) )
 {
     sword::PathAdapter::Get( path )->Initialize( *core::Convert( entity ) );
 }
 
-DEFINE_HOOK( GetFuseauxCost, 10, double, ( std::size_t path,
+DEFINE_HOOK( GetFuseauxCost, 10, double, ( const void* handler,
                                            const MT_Vector2D& from, const MT_Vector2D& to,
                                            double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
                                            double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
                                            double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) )
 {
-    return sword::PathAdapter::Get( path )->GetFuseauxCost( from, to, rMaximumFuseauDistance, rMaximumFuseauDistanceWithAutomata, rFuseauCostPerMeterOut, rComfortFuseauDistance, rFuseauCostPerMeterIn, rMaximumAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut );
+    return static_cast< const PathAdapter* >( handler )->GetFuseauxCost( from, to, rMaximumFuseauDistance, rMaximumFuseauDistanceWithAutomata, rFuseauCostPerMeterOut, rComfortFuseauDistance, rFuseauCostPerMeterIn, rMaximumAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut );
 }
 
-DEFINE_HOOK( GetObjectsCost, 5, double, ( std::size_t path,
+DEFINE_HOOK( GetObjectsCost, 5, double, ( const void* handler,
                                           const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
 {
-    return PathAdapter::Get( path )->GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
+    return static_cast< const PathAdapter* >( handler )->GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
 }
 
-DEFINE_HOOK( GetUrbanBlockCost, 3, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to ) )
+DEFINE_HOOK( GetUrbanBlockCost, 3, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to ) )
 {
-    return sword::PathAdapter::Get( path )->GetUrbanBlockCost( from, to );
+    return static_cast< const PathAdapter* >( handler )->GetUrbanBlockCost( from, to );
 }
 
-DEFINE_HOOK( GetEnemiesCost, 6, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to,
+DEFINE_HOOK( GetEnemiesCost, 6, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to,
                                           const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) )
 {
-    return sword::PathAdapter::Get( path )->GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost );
+    return static_cast< const PathAdapter* >( handler )->GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost );
 }
 
-DEFINE_HOOK( GetPopulationsCost, 6, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to,
+DEFINE_HOOK( GetPopulationsCost, 6, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to,
                                               const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
 {
-    return sword::PathAdapter::Get( path )->GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType, rPopulationMaximumCost );
+    return static_cast< const PathAdapter* >( handler )->GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType, rPopulationMaximumCost );
 }
 
-DEFINE_HOOK( GetAltitudeCost, 4, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
+DEFINE_HOOK( GetAltitudeCost, 4, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
 {
-    return sword::PathAdapter::Get( path )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
+    return static_cast< const PathAdapter* >( handler )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
 }
 
 namespace
 {
     typedef std::map< std::size_t, boost::shared_ptr< PathAdapter > > T_Paths;
     T_Paths paths;
+    boost::mutex mutex;
 }
 
 // -----------------------------------------------------------------------------
@@ -122,6 +128,7 @@ namespace
 std::size_t PathAdapter::Add()
 {
     boost::shared_ptr< PathAdapter > path( new PathAdapter() );
+    boost::mutex::scoped_lock lock( mutex );
     paths[ path->GetID() ] = path;
     return path->GetID();
 }
@@ -130,28 +137,23 @@ std::size_t PathAdapter::Add()
 // Name: PathAdapter::Get
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-const boost::shared_ptr< PathAdapter >& PathAdapter::Get( std::size_t path )
+boost::shared_ptr< PathAdapter > PathAdapter::Get( std::size_t identifier )
 {
-    boost::shared_ptr< PathAdapter >& result = paths[ path ];
-    if( ! result )
-        throw MASA_EXCEPTION( "Could not retrieve path '" + boost::lexical_cast< std::string >( path ) + "'" );
-    return result;
+    boost::mutex::scoped_lock lock( mutex );
+    boost::shared_ptr< PathAdapter > result = paths[ identifier ];
+    if( result )
+        return result;
+    throw MASA_EXCEPTION( "Could not retrieve path '" + boost::lexical_cast< std::string >( identifier ) + "'" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathAdapter::Remove
 // Created: MCO 2012-05-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< PathAdapter > PathAdapter::Remove( std::size_t path )
+void PathAdapter::Remove( std::size_t identifier )
 {
-    boost::shared_ptr< PathAdapter > result;
-    T_Paths::iterator it = paths.find( path );
-    if( it != paths.end() )
-    {
-        result = it->second;
-        paths.erase( it );
-    }
-    return result;
+    boost::mutex::scoped_lock lock( mutex );
+    paths.erase( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +172,7 @@ PathAdapter::PathAdapter()
 // -----------------------------------------------------------------------------
 PathAdapter::~PathAdapter()
 {
-    // NOTHING
+    GET_HOOK( RemovePath )( GetID() );
 }
 
 namespace

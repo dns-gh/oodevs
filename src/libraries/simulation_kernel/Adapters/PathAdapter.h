@@ -52,8 +52,8 @@ public:
     //! @name Operations
     //@{
     static std::size_t Add();
-    static const boost::shared_ptr< PathAdapter >& Get( std::size_t path );
-    static boost::shared_ptr< PathAdapter > Remove( std::size_t path );
+    static boost::shared_ptr< PathAdapter > Get( std::size_t path );
+    static void Remove( std::size_t path );
 
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();

@@ -35,6 +35,7 @@ namespace movement
     {
         PathfindFixture()
             : identifier( 12u )
+            , handler   ( reinterpret_cast< const void* >( 0xBEBE ) )
             , pathId    ( 47u )
             , entity    ( model[ "entities" ][ identifier ] )
         {
@@ -109,6 +110,7 @@ namespace movement
             MOCK_EXPECT( GetSpeedWithReinforcement ).once().returns( baseSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).exactly( TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes ).returns( terrainSpeed );
             MOCK_EXPECT( NotifyPathCreation ).once().returns( pathId );
+            MOCK_EXPECT( GetPathHandler ).once().with( pathId ).returns( handler );
             MOCK_EXPECT( InitializePath ).once();
             return CreatePath( core::Convert( &entity ), vPosEnd, movementPathType );
         }
@@ -121,6 +123,7 @@ namespace movement
         }
         TER_Pathfinder_ABC pathfind;
         const unsigned int identifier;
+        const void* handler;
         const std::size_t pathId;
         core::Model& entity;
     };

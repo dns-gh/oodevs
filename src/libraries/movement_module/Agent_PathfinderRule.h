@@ -58,6 +58,7 @@ private:
 private:
     const wrapper::View entity_;
     Agent_Path& path_;
+    const void* handler_;
     // Misc
     const float rMaxSpeed_;
     const bool bShort_;

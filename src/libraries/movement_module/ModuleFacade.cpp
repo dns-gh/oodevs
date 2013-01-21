@@ -29,8 +29,6 @@ using namespace sword::movement;
 namespace
 {
     ModuleFacade* facade = 0; // $$$$ MCO : need a means to bind additional data to a hook
-    DECLARE_HOOK( CancelPathFindJob, void, ( std::size_t path ) )
-
     DEFINE_HOOK( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) )
     {
         assert( facade );
@@ -73,6 +71,11 @@ namespace
         facade->RegisterPath( path );
         path->Initialize();
         return path->GetID();
+    }
+    DEFINE_HOOK( RemovePath, 1, void, ( std::size_t path ) )
+    {
+        assert( facade );
+        facade->UnregisterPath( path );
     }
     DEFINE_HOOK( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( std::size_t path ) )
     {
@@ -248,7 +251,6 @@ void ModuleFacade::RegisterPath( boost::shared_ptr< Agent_Path > path )
 // -----------------------------------------------------------------------------
 void ModuleFacade::UnregisterPath( std::size_t identifier )
 {
-    GET_HOOK( CancelPathFindJob )( identifier );
     paths_.erase( identifier );
 }
 

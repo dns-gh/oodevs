@@ -203,11 +203,8 @@ namespace
     }
     DEFINE_HOOK( CancelPathFindJob, 1, void, ( std::size_t path) )
     {
-        boost::shared_ptr< PathAdapter > removed = PathAdapter::Remove( path );
-        if( removed )
-            MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( removed.get() );
-        else
-            MT_LOG_ERROR_MSG( "Path already canceled" );
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( PathAdapter::Get( path ).get() );
+        PathAdapter::Remove( path );
     }
     DEFINE_HOOK( ComputeObjectCollision, 8, void,
         ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance,

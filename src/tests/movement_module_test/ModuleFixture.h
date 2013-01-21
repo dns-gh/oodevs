@@ -70,6 +70,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( PathGetLength, 1, double, ( std::size_t path ) ) \
     APPLY( PathGetState, 1, DEC_Path_ABC::E_State, ( std::size_t path ) ) \
     APPLY( RemovePathPoint, 2, void, ( unsigned int entity, std::size_t point ) ) \
+    APPLY( RemovePath, 1, void, ( std::size_t path ) )
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetDistanceAvantLima, 1, double, ( const SWORD_Model* entity ) ) \
@@ -83,12 +84,12 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( UsePathDebug, 0, bool, () ) \
     APPLY( FindObjectType, 1, unsigned int, ( const char* type ) ) \
     APPLY( FindPopulationAttitude, 2, bool, ( const char* attitude, unsigned int& id ) ) \
-    APPLY( GetAltitudeCost, 4, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) ) \
-    APPLY( GetEnemiesCost, 6, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) ) \
-    APPLY( GetFuseauxCost, 10, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn, double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) ) \
-    APPLY( GetObjectsCost, 5, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) ) \
-    APPLY( GetPopulationsCost, 6, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) ) \
-    APPLY( GetUrbanBlockCost, 3, double, ( std::size_t path, const MT_Vector2D& from, const MT_Vector2D& to ) ) \
+    APPLY( GetAltitudeCost, 4, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) ) \
+    APPLY( GetEnemiesCost, 6, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) ) \
+    APPLY( GetFuseauxCost, 10, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to, double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn, double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) ) \
+    APPLY( GetObjectsCost, 5, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) ) \
+    APPLY( GetPopulationsCost, 6, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) ) \
+    APPLY( GetUrbanBlockCost, 3, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to ) ) \
     APPLY( IsValidPosition, 1, bool, ( const MT_Vector2D& point ) ) \
     APPLY( GetMaxPathFindComputationDuration, 0, unsigned int, () ) \
     APPLY( CancelPathFindJob, 1, void, ( std::size_t path ) ) \
@@ -118,6 +119,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( NotifyPathCreation, 0, std::size_t, () ) \
     APPLY( InitializePath, 2, void, ( std::size_t path, const SWORD_Model* entity ) ) \
     APPLY( HasKnowledgeObject, 2, bool, (  const SWORD_Model* entity, const SWORD_Model* object ) ) \
+    APPLY( GetPathHandler, 1, const void*, ( std::size_t identifier ) ) \
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )
