@@ -77,9 +77,11 @@ namespace
         assert( facade );
         facade->UnregisterPath( path );
     }
-    DEFINE_HOOK( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( size_t path ) )
+    DEFINE_HOOK( PathGetLastPointOfPath, 2, void, ( size_t path, MT_Vector2D* point ) )
     {
-        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( facade->GetPath( path )->GetResult().back()->GetPos() ) );
+        const MT_Vector2D& lastPoint = facade->GetPath( path )->GetResult().back()->GetPos();
+        point->rX_ = lastPoint.rX_;
+        point->rY_ = lastPoint.rY_;
     }
     DEFINE_HOOK( ExecutePathfind, 2, void, ( size_t path, TER_Pathfinder_ABC& pathfind ) )
     {

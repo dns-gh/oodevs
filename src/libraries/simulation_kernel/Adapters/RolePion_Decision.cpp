@@ -102,7 +102,7 @@ DECLARE_HOOK( CreatePathList, size_t, ( const SWORD_Model* model, std::vector< b
 DECLARE_HOOK( GetAgentFuturePosition, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
 DECLARE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( size_t point, void* userData ), void* userData ) )
 DECLARE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, size_t path ) )
-DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( size_t path ) )
+DECLARE_HOOK( PathGetLastPointOfPath, void, ( size_t path, MT_Vector2D* point ) )
 
 // perception
 DECLARE_HOOK( GetPerceptionId, int, () )
@@ -374,7 +374,9 @@ namespace
     }
     boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const DEC_Path_ABC* pPath )
     {
-        return GET_HOOK( PathGetLastPointOfPath )( pPath->GetID() );
+        boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D() );
+        GET_HOOK( PathGetLastPointOfPath )( pPath->GetID(), result.get() );
+        return result;
     }
     unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const boost::shared_ptr< DEC_Path_ABC >& path )
     {

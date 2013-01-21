@@ -66,7 +66,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( GetPathTypePoint, 1, int, ( size_t point ) ) \
     APPLY( InitializePathClass, 3, void, ( const char* xml, const unsigned int* first, size_t size ) ) \
     APPLY( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, size_t path ) ) \
-    APPLY( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( size_t path ) ) \
+    APPLY( PathGetLastPointOfPath, 2, void, ( size_t path, MT_Vector2D* point ) ) \
     APPLY( PathGetLength, 1, double, ( size_t path ) ) \
     APPLY( PathGetState, 1, DEC_Path_ABC::E_State, ( size_t path ) ) \
     APPLY( RemovePathPoint, 2, void, ( unsigned int entity, size_t point ) ) \
