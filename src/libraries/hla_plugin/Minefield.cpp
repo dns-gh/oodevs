@@ -19,6 +19,8 @@
 #include "protocol/proto/common.pb.h"
 #pragma warning( pop )
 
+#include <geocoord/Geodetic.h>
+#include <geocoord/PlanarCartesian.h>
 #include <hla/Deserializer_ABC.h>
 #include <hla/Serializer_ABC.h>
 #include <hla/AttributeIdentifier.h>
@@ -179,10 +181,12 @@ namespace
     {
         return v + l.longitude();
     }
-    rpr::PerimeterPoint computePerimeter( const sword::CoordLatLong& v, double cx, double cy )
+    static const double rPiOver180 = std::acos( -1. ) / 180.;
+    rpr::PerimeterPoint computePerimeter( const sword::CoordLatLong& v, const geocoord::PlanarCartesian::Parameters& params )
     {
-        rpr::WorldLocation loc( v.latitude(), v.longitude(), 0 );
-        return rpr::PerimeterPoint( static_cast< float >( loc.X() - cx ), static_cast< float >( loc.Y() - cy ) );
+        const geocoord::Geodetic pos( v.latitude() * rPiOver180, v.longitude() * rPiOver180, 0 );
+        geocoord::PlanarCartesian pLoc( pos, params );
+        return rpr::PerimeterPoint ( (float)pLoc.GetX(), (float)pLoc.GetY() );
     }
 }
 
@@ -195,13 +199,15 @@ void Minefield::SpatialChanged( const TacticalObjectEventListener_ABC::T_Positio
     if( pos.size() == 0 )
         return;
 
-    double centerLat = std::accumulate( pos.begin(), pos.end(), 0., addLat );
-    double centerLong = std::accumulate( pos.begin(), pos.end(), 0., addLong );
-    center_ = rpr::WorldLocation( centerLat/pos.size(), centerLong/pos.size(), 0 );
+    double centerLat = std::accumulate( pos.begin(), pos.end(), 0., addLat ) / pos.size();
+    double centerLong = std::accumulate( pos.begin(), pos.end(), 0., addLong ) / pos.size();
+    center_ = rpr::WorldLocation( centerLat, centerLong, 0 );
     attributes_->Update( "MinefieldLocation", center_ );
 
+    const geocoord::Geodetic center( centerLat * rPiOver180, centerLong * rPiOver180, 0 );
     perimeter_.resize( pos.size() );
-    std::transform( pos.begin(), pos.end(), perimeter_.begin(), boost::bind( &computePerimeter, _1, center_.X(), center_.Y() ) );
+    geocoord::PlanarCartesian::Parameters params; params.SetOrigin( centerLat * rPiOver180, centerLong * rPiOver180 );
+    std::transform( pos.begin(), pos.end(), perimeter_.begin(), boost::bind( &computePerimeter, _1, boost::cref( params ) ) );
     attributes_->Update( "PerimeterPointCoordinates", Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
 }
 

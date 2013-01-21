@@ -20,6 +20,8 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/ObjectType.h"
 
+#include <geocoord/Geodetic.h>
+#include <geocoord/PlanarCartesian.h>
 #include <boost/bind.hpp>
 #include <sstream>
 #include <limits>
@@ -244,13 +246,14 @@ void RemoteTacticalObjectController::PerimeterChanged( const std::string& identi
 
 namespace
 {
-    void fillCoord( const rpr::PerimeterPoint& p, const rpr::WorldLocation& center, sword::CoordLatLongList& list )
+    static const double rPiOver180 = std::acos( -1. ) / 180.;
+    void fillCoord( const rpr::PerimeterPoint& p, const geocoord::PlanarCartesian::Parameters& params, sword::CoordLatLongList& list )
     {
         sword::CoordLatLong *elem = list.add_elem();
-        rpr::WorldLocation v;
-        v.Reset( center.X() + p.X(), center.Y() + p.Y(), center.Z() );
-        elem->set_latitude( v.Latitude() );
-        elem->set_longitude( v.Longitude() );
+        geocoord::PlanarCartesian loc( p.X(), p.Y(), 0, params );
+        geocoord::Geodetic geo( loc );
+        elem->set_latitude( geo.GetLatitude() / rPiOver180 );
+        elem->set_longitude( geo.GetLongitude() / rPiOver180 );
     }
 }
 
@@ -268,13 +271,11 @@ void RemoteTacticalObjectController::Send( simulation::ObjectMagicAction& messag
         ss << "Attempt creation object " << identifier << std::boolalpha << " " << message().has_type() << " " <<
             ( message().has_object() ) << " " <<
             ( message().parameters().elem( 0 ).value_size() > 0 ) << " " << // type
-            //( message().parameters().elem( 1 ).value_size() > 0 ) << " " << // position
             ( message().parameters().elem( 3 ).value_size() > 0 ); // army
         logger_.LogInfo( ss.str() );
     }
 
     if( message().parameters().elem( 0 ).value_size() > 0 &&
-        //message().parameters().elem( 1 ).value_size() > 0 &&
         message().parameters().elem( 3 ).value_size() > 0 && 
         centers_.end() != itC &&
         perimeters_.end() != itP )
@@ -291,7 +292,8 @@ void RemoteTacticalObjectController::Send( simulation::ObjectMagicAction& messag
         {
             loc->set_type( sword::Location_Geometry_polygon );
             rpr::WorldLocation center( itC->second.first, itC->second.second, 0);
-            std::for_each( itP->second.begin(), itP->second.end(), boost::bind( &fillCoord, _1, boost::cref( center ), boost::ref( *loc->mutable_coordinates() ) ) );
+            geocoord::PlanarCartesian::Parameters params; params.SetOrigin( center.Latitude() * rPiOver180, center.Longitude() * rPiOver180 );
+            std::for_each( itP->second.begin(), itP->second.end(), boost::bind( &fillCoord, _1, boost::cref( params ), boost::ref( *loc->mutable_coordinates() ) ) );
         }
         message.Send( publisher_ );
     }

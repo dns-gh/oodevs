@@ -189,8 +189,8 @@ public:
      //@}
      //! @name Accessors
      //@{
-     double X() const   { return x_; };
-     double Y() const { return y_; };
+     float X() const   { return x_; };
+     float Y() const { return y_; };
      //@}
 
 private:
