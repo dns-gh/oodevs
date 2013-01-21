@@ -45,7 +45,8 @@ namespace
                         >> xml::content("aggregate", aggregateMapping_)
                         >> xml::content("surface-vessel", surfaceMapping_)
                         >> xml::content("component", componentMapping_)
-                        >> xml::content("munition", munitionMapping_);
+                        >> xml::content("munition", munitionMapping_)
+                        >> xml::content("object", objectMapping_);
             staticModel_.Load( config_ );
         }
         ~Fixture()
@@ -59,13 +60,14 @@ namespace
         std::string SurfaceMappingFile() const { return pluginRoot_+"/"+ surfaceMapping_; }
         std::string ComponentMappingFile() const { return pluginRoot_+"/"+ componentMapping_; }
         std::string MunitionMappingFile() const { return pluginRoot_+"/"+ munitionMapping_; }
+        std::string ObjectMappingFile() const { return pluginRoot_+"/"+ objectMapping_; }
         const kernel::StaticModel& StaticModel() const { return staticModel_; }
 
     private:
         VoidRealFileLoaderObserver fileObserver_;
         tools::SessionConfig config_;
         std::string pluginRoot_;
-        std::string aggregateMapping_, surfaceMapping_, componentMapping_, munitionMapping_;
+        std::string aggregateMapping_, surfaceMapping_, componentMapping_, munitionMapping_, objectMapping_;
         kernel::StaticModel staticModel_;
     };
 }
@@ -77,6 +79,7 @@ BOOST_FIXTURE_TEST_CASE( hla_read_config, Fixture )
     BOOST_CHECK( SurfaceMappingFile().size() > (PluginRoot().size()+1) );
     BOOST_CHECK( ComponentMappingFile().size() > (PluginRoot().size()+1) );
     BOOST_CHECK( MunitionMappingFile().size() > (PluginRoot().size()+1) );
+    BOOST_CHECK( ObjectMappingFile().size() > (PluginRoot().size()+1) );
 }
 
 namespace
@@ -147,4 +150,11 @@ BOOST_FIXTURE_TEST_CASE( hla_check_munition_mapping, Fixture )
     const kernel::StaticModel& st( StaticModel() );
     CheckEntry< kernel::DotationType > checker( st.objectTypes_, MunitionMappingFile() );
     parseMapping(MunitionMappingFile(), checker);
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_check_object_mapping, Fixture )
+{
+    const kernel::StaticModel& st( StaticModel() );
+    CheckEntry< kernel::ObjectType > checker( st.objectTypes_, ObjectMappingFile() );
+    parseMapping(ObjectMappingFile(), checker);
 }
