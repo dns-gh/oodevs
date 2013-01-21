@@ -318,20 +318,20 @@ void MIL_KnowledgeGroup::WriteKnowledges( xml::xostream& xos ) const
     if( GetKnowledge().GetKnowledgeObjectContainer() )
     {
         const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& objectMap = GetKnowledge().GetKnowledgeObjectContainer()->GetKnowledgeObjects();
-        for( DEC_BlackBoard_CanContainKnowledgeObject::CIT_KnowledgeObjectMap it = objectMap.begin(); it != objectMap.end(); ++it )
+        for( auto it = objectMap.begin(); it != objectMap.end(); ++it )
             it->second->WriteKnowledges( xos );
     }
     xos     << xml::end;
 
     xos     << xml::start( "populations" );
     const DEC_BlackBoard_CanContainKnowledgePopulation::T_KnowledgePopulationMap& populationMap = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulations();
-    for( DEC_BlackBoard_CanContainKnowledgePopulation::CIT_KnowledgePopulationMap it = populationMap.begin(); it != populationMap.end(); ++it )
+    for( auto it = populationMap.begin(); it != populationMap.end(); ++it )
         it->second->WriteKnowledges( xos );
     xos     << xml::end;
 
     xos     << xml::start( "units" );
     const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& agentMap =  GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgents();
-    for( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = agentMap.begin(); it != agentMap.end(); ++it )
+    for( auto it = agentMap.begin(); it != agentMap.end(); ++it )
         it->second->WriteKnowledges( xos );
     xos     << xml::end;
 

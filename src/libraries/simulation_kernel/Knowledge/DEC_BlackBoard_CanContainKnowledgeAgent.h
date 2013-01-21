@@ -29,14 +29,12 @@ public:
     //! @name Types
     //@{
     typedef std::map< const MIL_Agent_ABC*, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentMap;
-    typedef T_KnowledgeAgentMap::iterator                                              IT_KnowledgeAgentMap;
-    typedef T_KnowledgeAgentMap::const_iterator                                        CIT_KnowledgeAgentMap;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_BlackBoard_CanContainKnowledgeAgent( MIL_KnowledgeGroup* knowledgeGroup );
+    explicit DEC_BlackBoard_CanContainKnowledgeAgent( MIL_KnowledgeGroup* knowledgeGroup );
              DEC_BlackBoard_CanContainKnowledgeAgent();
     virtual ~DEC_BlackBoard_CanContainKnowledgeAgent();
     //@}
@@ -68,7 +66,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
+        for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
         {
             DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -78,7 +76,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnPreviousKnowledgesAgent( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeAgentMap itKnowledge = previousAgentMap_.begin(); itKnowledge != previousAgentMap_.end(); )
+        for( auto itKnowledge = previousAgentMap_.begin(); itKnowledge != previousAgentMap_.end(); )
         {
             DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -88,7 +86,7 @@ public:
     template < class BinaryFunction >
     void ApplyOnKnowledgesAgent( BinaryFunction& fct, int currentTimeStep ) const
     {
-        for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
+        for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
         {
             DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
             ++itKnowledge;

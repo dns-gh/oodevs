@@ -113,7 +113,7 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledge
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const
 {
-    CIT_KnowledgePopulationMap itKnowledge = knowledgePopulationMap_.find( &associatedPopulation );
+    auto itKnowledge = knowledgePopulationMap_.find( &associatedPopulation );
     if( itKnowledge != knowledgePopulationMap_.end() )
         return itKnowledge->second;
     return boost::shared_ptr< DEC_Knowledge_Population >();

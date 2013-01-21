@@ -43,8 +43,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< const MIL_Object_ABC*, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::iterator                                              IT_KnowledgeObjectMap;
-    typedef T_KnowledgeObjectMap::const_iterator                                       CIT_KnowledgeObjectMap;
     //@}
 
 public:
@@ -82,7 +80,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
+        for( auto itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
         {
             boost::shared_ptr< DEC_Knowledge_Object > knowledge = itKnowledge->second;
             ++itKnowledge;
@@ -93,7 +91,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeObjectIDMap itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
+        for( auto itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
         {
             DEC_Knowledge_Object& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -106,8 +104,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectIDMap;
-    typedef T_KnowledgeObjectIDMap::iterator                                   IT_KnowledgeObjectIDMap;
-    typedef T_KnowledgeObjectIDMap::const_iterator                            CIT_KnowledgeObjectIDMap;
     //@}
 
 private:

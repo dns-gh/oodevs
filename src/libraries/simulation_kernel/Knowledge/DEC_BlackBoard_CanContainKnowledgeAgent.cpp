@@ -88,7 +88,7 @@ namespace boost
         {
             const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type size = map.size();
             file << size;
-            for( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
@@ -120,10 +120,8 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
          >> nLastCacheUpdateTick_;
     file >> realAgentMap_;
     file >> previousAgentMap_;
-    for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
-    {
+    for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
         unitKnowledgeFromIDMap_[ itKnowledge->second->GetID() ] = itKnowledge->second;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +185,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
     assert( pKnowledgeGroup_ );
     const MIL_Army_ABC& army = pKnowledgeGroup_->GetArmy();
 
-    for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
+    for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = itKnowledge->second;
 
@@ -223,7 +221,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const
 {
-    CIT_KnowledgeAgentMap it = realAgentMap_.find( &agentKnown );
+    auto it = realAgentMap_.find( &agentKnown );
     if( it == realAgentMap_.end() )
         return boost::shared_ptr< DEC_Knowledge_Agent >();
     return it->second;
