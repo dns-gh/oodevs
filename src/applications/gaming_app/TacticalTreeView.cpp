@@ -62,7 +62,7 @@ TacticalTreeView::~TacticalTreeView()
 // -----------------------------------------------------------------------------
 void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( !isVisible() )
+    if( !isVisible() || !profile_.IsVisible( entity ) )
         return;
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 )
@@ -151,6 +151,8 @@ std::vector< const QPixmap* > TacticalTreeView::GetEntityPixmap( const kernel::E
 // -----------------------------------------------------------------------------
 bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
 {
+    if( !profile_.IsVisible( entity ) )
+        return false;
     if( &entity.Get< kernel::TacticalHierarchies >().GetTop() != &superior.Get< kernel::TacticalHierarchies >().GetTop() )
         return false;
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
@@ -231,6 +233,13 @@ namespace
 // -----------------------------------------------------------------------------
 bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardModel& model ) const
 {
+    QFont font = item.font();
+    if( font.italic() )
+    {
+        font.setItalic( false );
+        item.setFont( font );
+        item.setForeground( QBrush( Qt::black ) );
+    }
     if( displayMode_ == eObservableUnits )
         return gui::TacticalTreeView::ApplyProfileFilter( item, model );
     else if( displayMode_ == eControlledUnits )
@@ -250,7 +259,6 @@ bool TacticalTreeView::ApplyProfileFilter( QStandardItem& item, gui::StandardMod
             if( const kernel::TacticalHierarchies* hierarchies = entity->Retrieve< kernel::TacticalHierarchies >() )
                 if( IsVisible( hierarchies->GetTop(), profile_ ) )
                 {
-                    QFont font = item.font();
                     font.setItalic( true );
                     item.setFont( font );
                     item.setForeground( QBrush( Qt::lightGray ) );
@@ -325,4 +333,15 @@ void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::En
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( &item, false ) );
     action->RegisterAndPublish( actionsModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::OnActivate
+// Created: JSR 2013-01-21
+// -----------------------------------------------------------------------------
+void TacticalTreeView::OnActivate( const QModelIndex& index )
+{
+    const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+    if( entity && profile_.IsVisible( *entity ) )
+        entity->Activate( controllers_.actions_ );
 }

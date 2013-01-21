@@ -10,10 +10,11 @@
 #include "clients_gui_pch.h"
 #include "FormationLayer.h"
 #include "moc_FormationLayer.cpp"
-#include "clients_kernel/Positions.h"
-#include "clients_kernel/Aggregatable_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -84,6 +85,8 @@ void FormationLayer::Disaggregate()
 // -----------------------------------------------------------------------------
 void FormationLayer::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
 {
+    if( !profile_.IsVisible( formation ) )
+        return;
     selected_ = &formation;
     if( !IsAggregated( formation ) )
     {

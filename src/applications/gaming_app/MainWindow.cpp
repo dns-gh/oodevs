@@ -165,7 +165,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     glProxy_ = new gui::GlProxy();
     strategy_ = new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, *pProfile_ ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, *pProfile_ ) ) );
 
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
@@ -249,7 +249,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
 
     // Mini views
-    gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_ );
+    gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_, *pProfile_ );
     addDockWidget( Qt::RightDockWidgetArea, miniviews );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), miniviews, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     miniviews->hide();

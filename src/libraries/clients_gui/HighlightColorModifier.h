@@ -19,6 +19,7 @@ namespace kernel
 {
     class Entity_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -41,7 +42,7 @@ class HighlightColorModifier : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit HighlightColorModifier( kernel::Controllers& controllers );
+             HighlightColorModifier( kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
     virtual ~HighlightColorModifier();
     //@}
 
@@ -69,6 +70,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::Profile_ABC& profile_;
     std::set< const kernel::Entity_ABC* > highlighted_;
     kernel::SafePointer< const kernel::Entity_ABC > selected_;
     bool blink_;

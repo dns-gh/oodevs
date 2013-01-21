@@ -18,6 +18,7 @@ namespace kernel
     class Entity_ABC;
     class Agent_ABC;
     class Population_ABC;
+    class Profile_ABC;
     class Controllers;
     class Automat_ABC;
 }
@@ -44,7 +45,7 @@ class MiniViews : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniViews( QMainWindow* parent, kernel::Controllers& controllers );
+             MiniViews( QMainWindow* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
     virtual ~MiniViews();
     //@}
 
@@ -78,6 +79,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::Profile_ABC& profile_;
     GlWidget* widget_;
     SmartGridWidget* grid_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;

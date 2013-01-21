@@ -10,27 +10,28 @@
 #include "clients_gui_pch.h"
 #include "MiniViews.h"
 #include "moc_MiniViews.cpp"
-#include "clients_kernel/Controllers.h"
+#include "GlWidget.h"
+#include "MiniView.h"
+#include "MiniViewsRenderPass.h"
+#include "SmartGridWidget.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "MiniView.h"
-#include "GlWidget.h"
-#include "SmartGridWidget.h"
-#include "MiniViewsRenderPass.h"
+#include "clients_kernel/Profile_ABC.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MiniViews constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
+MiniViews::MiniViews( QMainWindow* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : QDockWidget( "miniviews", parent )
     , controllers_( controllers )
-    , widget_     ( 0 )
-    , selected_   ( controllers_ )
+    , profile_( profile )
+    , widget_( 0 )
+    , selected_( controllers_ )
 {
     setObjectName( "miniviews" );
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
@@ -79,7 +80,7 @@ void MiniViews::OnWidget2dChanged( gui::GlWidget* widget )
 // -----------------------------------------------------------------------------
 void MiniViews::NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu )
 {
-    if( widget_ && agent.Retrieve< Positions >() )
+    if( widget_ && agent.Retrieve< kernel::Positions >() && profile_.IsVisible( agent ) )
     {
         selected_ = &agent;
         bool remove = miniViews_.find( &agent ) != miniViews_.end();

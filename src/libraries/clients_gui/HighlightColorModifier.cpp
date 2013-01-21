@@ -12,6 +12,7 @@
 #include "moc_HighlightColorModifier.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "Tools.h"
 
 using namespace gui;
@@ -20,8 +21,9 @@ using namespace gui;
 // Name: HighlightColorModifier constructor
 // Created: AGE 2008-05-15
 // -----------------------------------------------------------------------------
-HighlightColorModifier::HighlightColorModifier( kernel::Controllers& controllers )
+HighlightColorModifier::HighlightColorModifier( kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : controllers_( controllers )
+    , profile_    ( profile )
     , selected_   ( controllers )
     , blink_      ( false )
 {
@@ -57,6 +59,8 @@ QColor HighlightColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
 // -----------------------------------------------------------------------------
 void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
+    if( !profile_.IsVisible( entity ) )
+        return;
     selected_ = &entity;
     if( highlighted_.find( &entity ) == highlighted_.end() )
         menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );

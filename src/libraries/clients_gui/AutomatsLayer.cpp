@@ -12,8 +12,9 @@
 #include "moc_AutomatsLayer.cpp"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include <boost/lambda/lambda.hpp>
 #include <boost/bind.hpp>
 
@@ -84,6 +85,8 @@ void AutomatsLayer::Disaggregate()
 // -----------------------------------------------------------------------------
 void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::ContextMenu& menu )
 {
+    if( !profile_.IsVisible( automat ) )
+        return;
     selected_ = &automat;
     if( !IsAggregated( automat ) )
     {

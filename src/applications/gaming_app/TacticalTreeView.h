@@ -67,6 +67,7 @@ private slots:
     //@{
     void OnChangeSuperior();
     void ChangeDisplay( int mode );
+    virtual void OnActivate( const QModelIndex& index );
     //@}
 
 private:
