@@ -41,7 +41,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
 // end of dependencies
 
 #define REGISTERED_HOOKS( APPLY ) \
-    APPLY( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
+    APPLY( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
     APPLY( CreatePath, 3, size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) ) \
     APPLY( CreatePathList, 3, size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
     APPLY( ExecutePathfind, 2, void, ( size_t path, TER_Pathfinder_ABC& pathfind ) ) \
@@ -93,7 +93,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( IsValidPosition, 1, bool, ( const MT_Vector2D& point ) ) \
     APPLY( GetMaxPathFindComputationDuration, 0, unsigned int, () ) \
     APPLY( CancelPathFindJob, 1, void, ( size_t path ) ) \
-    APPLY( ComputeObjectCollision, 8, void, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) ) \
+    APPLY( ComputeObjectCollision, 8, void, ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) ) \
     APPLY( GetWorldWeldValue, 0, double, () ) \
     APPLY( ComputePathfind, 13, bool, ( TER_Pathfinder_ABC& pathfind, bool needRefine, bool strictClosest, const geometry::Point2f& from, const geometry::Point2f& to, PathfindEvaluateCost evaluate, void* evaluateData, PathfindGetCost get, void* getData, PathfindHandlePathPoint handler, void* handlerData, PathfindShouldEndComputation termination, void* terminationData ) ) \
     APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
@@ -111,7 +111,9 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( GetKnowledgeObjectRealName, 1, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) ) \
     APPLY( GetObjectKnownId, 1, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) ) \
     APPLY( StartComputePathfind, 1, void, ( size_t path ) ) \
-    APPLY( UpdateObjectsToAvoid, 2, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) ) \
+    APPLY( CreateKnowledgeCache, 0, KnowledgeCache*, () ) \
+    APPLY( DeleteKnowledgeCache, 1, void, ( KnowledgeCache* cache ) ) \
+    APPLY( UpdateObjectsToAvoid, 2, bool, ( KnowledgeCache* cache, const SWORD_Model* entity ) ) \
     APPLY( ConvertSpeedMosToSim, 1, double, ( double speed ) ) \
     APPLY( GetLandTypeName, 1, const char*, ( const TerrainData& terrain ) ) \
     APPLY( VisitKnowledgeObjects, 3, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) ) \

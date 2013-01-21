@@ -29,7 +29,7 @@ using namespace sword::movement;
 namespace
 {
     ModuleFacade* facade = 0; // $$$$ MCO : need a means to bind additional data to a hook
-    DEFINE_HOOK( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) )
+    DEFINE_HOOK( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) )
     {
         assert( facade );
         PathWalker* pathWalker = facade->GetPathWalker( wrapper::View( entity )[ "identifier" ] );

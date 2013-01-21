@@ -96,7 +96,7 @@ namespace sword
 using namespace sword;
 
 // movement
-DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
+DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
 DECLARE_HOOK( CreatePath, size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
 DECLARE_HOOK( CreatePathList, size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
 DECLARE_HOOK( GetAgentFuturePosition, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
@@ -266,7 +266,7 @@ namespace
         KnowledgeCache cache;
         agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter );
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
-        if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model[ "entities" ][ agent.GetID() ] ), cache, rDistanceCollision, pObjectColliding ) )
+        if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model[ "entities" ][ agent.GetID() ] ), &cache, rDistanceCollision, pObjectColliding ) )
         {
             result.first = false;
             return result;

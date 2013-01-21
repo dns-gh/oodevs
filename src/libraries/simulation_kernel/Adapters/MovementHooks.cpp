@@ -207,7 +207,7 @@ namespace
         PathAdapter::Remove( path );
     }
     DEFINE_HOOK( ComputeObjectCollision, 8, void,
-        ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance,
+        ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance,
           boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
     {
         const MIL_AgentPion& agent = GET_PION( entity );
@@ -230,7 +230,7 @@ namespace
         bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
         // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
         std::auto_ptr< const TER_Localisation > pScaledObjectLocation;
-        for( auto itKnowledge = objectsToTest.objectsToAvoid_.begin(); itKnowledge != objectsToTest.objectsToAvoid_.end(); ++itKnowledge )
+        for( auto itKnowledge = objectsToTest->objectsToAvoid_.begin(); itKnowledge != objectsToTest->objectsToAvoid_.end(); ++itKnowledge )
         {
             boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
             const TER_Localisation* pObjectLocation = 0;
@@ -429,10 +429,16 @@ namespace
         assert( obstacle && obstacle->IsValid() );
         return obstacle->GetObjectKnown() ? obstacle->GetObjectKnown()->GetID() : 0;
     }
-    DEFINE_HOOK( UpdateObjectsToAvoid, 2, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
+    DEFINE_HOOK( CreateKnowledgeCache, 0, KnowledgeCache*, () )
     {
-        if( ! cache )
-            cache.reset( new KnowledgeCache() );
+        return new KnowledgeCache();
+    }
+    DEFINE_HOOK( DeleteKnowledgeCache, 1, void, ( KnowledgeCache* cache ) )
+    {
+        delete cache;
+    }
+    DEFINE_HOOK( UpdateObjectsToAvoid, 2, bool, ( KnowledgeCache* cache, const SWORD_Model* entity ) )
+    {
         T_KnowledgeObjectVector knowledges;
         MIL_AgentPion& pion = GET_PION( entity );
         pion.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, pion, MIL_DangerousObjectFilter() );

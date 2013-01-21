@@ -38,6 +38,7 @@ namespace
             MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
             MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &PathfindFixture::AddPoints, this, boost::ref( points ), bp::arg_names::arg10, bp::arg_names::arg11 ) );
             MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _1, boost::ref( pathfind ) ) );
+            MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );
         }
         void Step( double speed, bool hasResources, bool canMove )
         {
@@ -89,6 +90,7 @@ BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, MovementFixture 
                                                       ( end, TerrainData() );
     command = StartMoveCommand( points );
     MOCK_EXPECT( CancelPathFindJob ).once();
+    MOCK_EXPECT( DeleteKnowledgeCache );
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
     commands.Stop( command );
     mock::verify();
@@ -102,6 +104,7 @@ namespace
         ~UnfinishedMovementFixture()
         {
             MOCK_EXPECT( CancelPathFindJob ).once();
+            MOCK_EXPECT( DeleteKnowledgeCache );
             ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
             StopCommand( command );
         }
@@ -139,6 +142,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     MOCK_EXPECT( IsDestinationTrafficable ).returns( false );
     ExpectEvent( "movement report" );
     const std::size_t path = CreateSimplePath();
+    MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );
     command = StartCommand( "move",
         core::MakeModel( "action", action )
                        ( "identifier", identifier )
@@ -154,6 +158,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     ConfigureImpossiblePathfind();
     ExpectEvent( "movement report" );
     const std::size_t path = CreateSimplePath();
+    MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );
     command = StartCommand( "move",
         core::MakeModel( "action", action )
                        ( "identifier", identifier )

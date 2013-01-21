@@ -24,7 +24,7 @@ using namespace sword;
 using namespace sword::movement;
 
 DECLARE_HOOK( ComputeObjectCollision, void,
-    ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest,
+    ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest,
       double& rDistance,
       boost::shared_ptr< DEC_Knowledge_Object >& pObject,
       MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
@@ -126,7 +126,7 @@ MT_Vector2D PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, double 
 // Name: PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool PathResult::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const
+bool PathResult::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const
 {
     rDistance = std::numeric_limits< double >::max();
     pObject.reset();

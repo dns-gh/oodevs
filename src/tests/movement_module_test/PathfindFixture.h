@@ -35,7 +35,7 @@ namespace movement
     {
         PathfindFixture()
             : identifier( 12u )
-            , handler   ( reinterpret_cast< const void* >( 0xBEBE ) )
+            , handler   ( reinterpret_cast< const void* >( 0xABCD ) )
             , pathId    ( 47u )
             , entity    ( model[ "entities" ][ identifier ] )
         {

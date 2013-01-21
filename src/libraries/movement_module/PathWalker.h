@@ -73,7 +73,7 @@ public:
 
     //! @name Tools
     //@{
-    bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const;
+    bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const;
     MT_Vector2D ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const;
     bool IsMovingOn( boost::shared_ptr< Path_ABC > path ) const;
     //@}

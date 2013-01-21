@@ -23,7 +23,9 @@ using namespace sword::movement;
 DECLARE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
 DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
 DECLARE_HOOK( GetObjectKnownId, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
-DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
+DECLARE_HOOK( CreateKnowledgeCache, KnowledgeCache*, () )
+DECLARE_HOOK( DeleteKnowledgeCache, void, ( KnowledgeCache* cache ) )
+DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( KnowledgeCache* cache, const SWORD_Model* entity ) )
 DECLARE_HOOK( CancelPathFindJob, void, ( size_t path ) )
 
 namespace
@@ -47,6 +49,7 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
     , action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
     , mainPath_          ( module.GetPath( parameters[ "path" ] ) )
+    , cache_             ( GET_HOOK( CreateKnowledgeCache )(), boost::bind( GET_HOOK( DeleteKnowledgeCache ), _1 ) )
     , executionSuspended_( false )
     , isBlockedByObject_ ( false )
     , blockedTickCounter_( 0 )
@@ -113,8 +116,7 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
         throw MASA_EXCEPTION( "Invalid path while avoiding obstacles" );
     if( mainPath->GetState() == Path_ABC::eComputing )
         return false;
-
-    if( !GET_HOOK( UpdateObjectsToAvoid )( cache_, entity ) )
+    if( !GET_HOOK( UpdateObjectsToAvoid )( cache_.get(), entity ) )
     {
         if( isBlockedByObject_ )
             blockedTickCounter_++;
@@ -125,7 +127,7 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
     double rDistanceCollision = 0.;
-    if( !mainPath->ComputeFutureObjectCollision( entity, *cache_, rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
+    if( !mainPath->ComputeFutureObjectCollision( entity, cache_.get(), rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
         return false;
     obstacleId_ = GET_HOOK( GetObjectKnownId )( pObjectColliding );
     PostReport( entity, report::eRC_DifficultMovementProgression, GET_HOOK( GetKnowledgeObjectRealName )( pObjectColliding ) );
