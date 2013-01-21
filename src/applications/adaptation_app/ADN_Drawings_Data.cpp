@@ -35,8 +35,8 @@ namespace
 
         //! @name Options
         //@{
-        virtual std::pair< bool, bool > UnSelect() const { return std::pair< bool, bool >( false, false ); }
-        virtual void Select( bool, bool ) const {}
+        virtual boost::tuple< bool, bool, bool > UnSelect() const { return boost::tuple< bool, bool, bool >( false, false, false ); }
+        virtual void Select( bool, bool, bool ) const {}
         virtual bool ShouldDisplay( const std::string& ) const { return true; }
         virtual bool ShouldDisplay( const std::string&, bool ) const { return true; }
         //@}

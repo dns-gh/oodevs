@@ -12,6 +12,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 using namespace gui;
@@ -20,9 +21,10 @@ using namespace gui;
 // Name: SelectionColorModifier constructor
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-SelectionColorModifier::SelectionColorModifier( kernel::Controllers& controllers, kernel::GlTools_ABC& tools )
-    : controllers_   ( controllers )
-    , tools_         ( tools )
+SelectionColorModifier::SelectionColorModifier( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile )
+    : controllers_( controllers )
+    , tools_( tools )
+    , profile_( profile )
     , selectedEntity_( controllers )
 {
     controllers_.Register( *this );
@@ -57,7 +59,7 @@ QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
     const bool selected = selectedEntity_ == &entity;
     const bool superiorSelected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( entity, *selectedEntity_ )
                                                     || IsSubordinate< kernel::CommunicationHierarchies >( entity, *selectedEntity_ ) );
-    tools_.Select( selected, superiorSelected );
+    tools_.Select( selected, superiorSelected, profile_.CanBeOrdered( entity ) );
     if( selected )
         return SelectedColor( base );
     if( superiorSelected )

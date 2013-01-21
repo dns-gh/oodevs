@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Change Orbat display mode</source>
-        <translation>Changer le mode d'affichage de l'ODB</translation>
+        <translation>Changer le mode d&apos;affichage de l&apos;ODB</translation>
     </message>
     <message>
         <source>Observable units (Default)</source>

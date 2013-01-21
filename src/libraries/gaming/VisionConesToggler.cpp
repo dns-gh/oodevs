@@ -50,12 +50,12 @@ void VisionConesToggler::OptionChanged( const std::string& name, const OptionVar
 {
     if( name == "VisionCones" )
     {
-        displayCones_ = value.To< FourStateOption >().IsSet( true, true );
+        displayCones_ = value.To< FourStateOption >().IsSet( true, true, true );
         SendControlEnableVisionCones();
     }
     else if( name == "VisionSurfaces" )
     {
-        displaySurfaces_ = value.To< FourStateOption >().IsSet( true, true );
+        displaySurfaces_ = value.To< FourStateOption >().IsSet( true, true, true );
         SendControlEnableVisionCones();
     }
     else if( name == "FogOfWar" )

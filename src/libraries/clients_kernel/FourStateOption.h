@@ -28,11 +28,13 @@ public:
     static FourStateOption On();
     static FourStateOption Selected();
     static FourStateOption SuperiorSelected();
+    static FourStateOption Controlled();
 
     static QString OffName();
     static QString OnName();
     static QString SelectedName();
     static QString SuperiorSelectedName();
+    static QString ControlledName();
     //@}
 
 public:
@@ -44,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    bool IsSet( bool selected, bool superior ) const;
+    bool IsSet( bool selected, bool superior, bool controlled ) const;
     bool operator==( const FourStateOption& rhs ) const { return rhs.state_ == state_; };
     operator QString() const;
     //@}

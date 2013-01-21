@@ -72,7 +72,7 @@ void LimitsLayer::Delete( const kernel::TacticalLine_ABC& l )
 // -----------------------------------------------------------------------------
 bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    if( ! drawLines_.IsSet( true, true ) )
+    if( ! drawLines_.IsSet( true, true, true ) )
         return false;
     return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( entity );
 }

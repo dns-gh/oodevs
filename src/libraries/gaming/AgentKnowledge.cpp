@@ -240,7 +240,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewpor
 {
     if( viewport.IsVisible( where ) )
     {
-        const std::pair< bool, bool > backupState = tools.UnSelect();
+        const boost::tuple< bool, bool, bool > backupState = tools.UnSelect();
         tools.DrawApp6Symbol( currentSymbol_, where, -1 );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
@@ -248,7 +248,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewpor
             if( bIsPC_.IsSet() && bIsPC_ )
                 tools.DrawApp6Symbol( realAgent_.GetType().GetHQSymbol(), where, -1 );
         }
-        tools.Select( backupState.first, backupState.second );
+        tools.Select( backupState.get< 0 >(), backupState.get< 1 >(), backupState.get< 2 >() );
     }
 }
 

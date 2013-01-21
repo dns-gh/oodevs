@@ -40,12 +40,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::pair< bool, bool > UnSelect() const;
-    virtual void Select( bool, bool ) const;
+    virtual boost::tuple< bool, bool, bool > UnSelect() const;
+    virtual void Select( bool, bool, bool ) const;
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
-    virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2 ) const;
+    virtual bool ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const;
 
@@ -65,12 +65,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GlToolsBase( const GlToolsBase& );            //!< Copy constructor
-    GlToolsBase& operator=( const GlToolsBase& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< const char**, unsigned int > T_Icons;
@@ -87,6 +81,7 @@ private:
     kernel::Controllers& controllers_;
     mutable bool selected_;
     mutable bool superiorSelected_;
+    mutable bool controlled_;
     T_Icons icons_;
     std::auto_ptr< SvglRenderer > renderer_;
     std::auto_ptr< GLSymbols > symbols_;

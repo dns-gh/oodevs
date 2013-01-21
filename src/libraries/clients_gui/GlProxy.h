@@ -59,8 +59,8 @@ public:
     virtual void    Zoom( float width );
     virtual float   GetAdaptiveZoomFactor() const;
 
-    virtual std::pair< bool, bool > UnSelect() const;
-    virtual void Select( bool, bool ) const;
+    virtual boost::tuple< bool, bool, bool > UnSelect() const;
+    virtual void Select( bool, bool, bool ) const;
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;

@@ -149,7 +149,7 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
     if( !TacticalLinesLayer::ShouldDisplay( entity ) )
         return false;
-    return drawLines_.IsSet( true, true );
+    return drawLines_.IsSet( true, true, true );
 }
 
 // -----------------------------------------------------------------------------

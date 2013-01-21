@@ -132,7 +132,7 @@ void GlProxy::Zoom( float width )
 // Name: GlProxy::UnSelect
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-std::pair< bool, bool > GlProxy::UnSelect() const
+boost::tuple< bool, bool, bool > GlProxy::UnSelect() const
 {
     return tools_->UnSelect();
 }
@@ -141,9 +141,9 @@ std::pair< bool, bool > GlProxy::UnSelect() const
 // Name: GlProxy::Select
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlProxy::Select( bool b1, bool b2 ) const
+void GlProxy::Select( bool b1, bool b2, bool b3 ) const
 {
-    tools_->Select( b1, b2 );
+    tools_->Select( b1, b2, b3 );
 }
 
 // -----------------------------------------------------------------------------

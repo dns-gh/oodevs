@@ -16,6 +16,8 @@
 #pragma warning( push, 0 )
 #include <QtGui/qfont.h>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
+#include <boost/tuple/tuple.hpp>
 
 class QImage;
 class QCursor;
@@ -33,7 +35,7 @@ namespace kernel
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class GlTools_ABC
+class GlTools_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -56,8 +58,8 @@ public:
     // $$$$ AGE 2006-05-19: Sortir de GlTools_ABC ?
     // $$$$ AGE 2006-05-19: et trouver mieux
     //@{
-    virtual std::pair< bool, bool > UnSelect() const = 0;
-    virtual void Select( bool, bool ) const = 0;  //!< Returns the previous selection state
+    virtual boost::tuple< bool, bool, bool > UnSelect() const = 0;
+    virtual void Select( bool, bool, bool ) const = 0;  //!< Returns the previous selection state
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const = 0;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;
     //@}
@@ -102,14 +104,6 @@ public:
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const = 0;
     virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const = 0;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    GlTools_ABC( const GlTools_ABC& );
-    GlTools_ABC& operator=( const GlTools_ABC& );
-    //@}
-
 };
 
 }

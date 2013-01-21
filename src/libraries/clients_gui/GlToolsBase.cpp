@@ -29,6 +29,8 @@ using namespace gui;
 GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
     , selected_   ( false )
+    , superiorSelected_( false )
+    , controlled_( false )
     , renderer_   ( new SvglRenderer() )
     , symbols_    ( new GLSymbols( *renderer_ ) )
     , svgl_       ( new SvglProxy( *renderer_ ) )
@@ -54,10 +56,10 @@ GlToolsBase::~GlToolsBase()
 // Name: GlToolsBase::UnSelect
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-std::pair< bool, bool > GlToolsBase::UnSelect() const
+boost::tuple< bool, bool, bool > GlToolsBase::UnSelect() const
 {
-    std::pair< bool, bool > result( selected_, superiorSelected_ );
-    selected_ = superiorSelected_ = false;
+    boost::tuple< bool, bool, bool > result( selected_, superiorSelected_, controlled_ );
+    selected_ = superiorSelected_ = controlled_ = false;
     return result;
 }
 
@@ -65,10 +67,11 @@ std::pair< bool, bool > GlToolsBase::UnSelect() const
 // Name: GlToolsBase::Select
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlToolsBase::Select( bool b1, bool b2 ) const
+void GlToolsBase::Select( bool b1, bool b2, bool b3 ) const
 {
     selected_ = b1;
     superiorSelected_ = b2;
+    controlled_ = b3;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +80,7 @@ void GlToolsBase::Select( bool b1, bool b2 ) const
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name /* = std::string()*/ ) const
 {
-    return ShouldDisplay( name, selected_, superiorSelected_ );
+    return ShouldDisplay( name, selected_, superiorSelected_, controlled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,14 +89,14 @@ bool GlToolsBase::ShouldDisplay( const std::string& name /* = std::string()*/ ) 
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
-    return ShouldDisplay( name, autoCondition, false );
+    return ShouldDisplay( name, autoCondition, false, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlToolsBase::ShouldDisplay
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2 ) const
+bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const
 {
     if( name.empty() )
         return b1;
@@ -103,7 +106,7 @@ bool GlToolsBase::ShouldDisplay( const std::string& name, bool b1, bool b2 ) con
         const FourStateOption& option = controllers_.options_.GetOption( name, FourStateOption::Selected() ).To< FourStateOption >();
         it = options_.insert( std::make_pair( name, option ) ).first;
     }
-    return it->second.IsSet( b1, b2 );
+    return it->second.IsSet( b1, b2, b3 );
 }
 
 // -----------------------------------------------------------------------------

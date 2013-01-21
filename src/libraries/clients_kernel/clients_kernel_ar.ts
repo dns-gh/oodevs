@@ -406,6 +406,10 @@
         <source>Superior Selected</source>
         <translation type="unfinished">متفوقة مختارة</translation>
     </message>
+    <message>
+        <source>Controlled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Karma</name>

@@ -33,6 +33,10 @@ FourStateOption FourStateOption::SuperiorSelected() {
     return FourStateOption( SuperiorSelectedName() );
 }
 
+FourStateOption FourStateOption::Controlled() {
+    return FourStateOption( ControlledName() );
+}
+
 QString FourStateOption::OffName() {
     static const QString name = tools::translate( "Fourstate", "Off" );
     return name;
@@ -53,6 +57,11 @@ QString FourStateOption::SuperiorSelectedName() {
     return name;
 }
 
+QString FourStateOption::ControlledName() {
+    static const QString name = tools::translate( "Fourstate", "Controlled" );
+    return name;
+}
+
 // -----------------------------------------------------------------------------
 // Name: FourStateOption constructor
 // Created: AGE 2007-05-31
@@ -66,6 +75,8 @@ FourStateOption::FourStateOption( const QString& state /* = OffName()*/ )
         state_ = 's';
     else if( state == SuperiorSelectedName() || state == "+" )
         state_ = '+';
+    else if( state == ControlledName() || state == "c" )
+        state_ = 'c';
 }
 
 // -----------------------------------------------------------------------------
@@ -81,10 +92,11 @@ FourStateOption::~FourStateOption()
 // Name: FourStateOption::IsSet
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-bool FourStateOption::IsSet( bool selected, bool superior ) const
+bool FourStateOption::IsSet( bool selected, bool superior, bool controlled ) const
 {
     return state_ == '1'
         || ( state_ == 's' && selected )
+        || ( state_ == 'c' && controlled )
         || ( state_ == '+' && ( selected || superior ) );
 }
 
@@ -94,6 +106,8 @@ bool FourStateOption::IsSet( bool selected, bool superior ) const
 // -----------------------------------------------------------------------------
 FourStateOption::operator QString() const
 {
+    if( state_ == 'c' )
+        return ControlledName();
     if( state_ == '+' )
         return SuperiorSelectedName();
     if( state_ == 's' )

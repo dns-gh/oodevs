@@ -17,6 +17,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -35,7 +36,7 @@ class SelectionColorModifier : public ColorModifier_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionColorModifier( kernel::Controllers& controllers, kernel::GlTools_ABC& tools );
+             SelectionColorModifier( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile );
     virtual ~SelectionColorModifier();
     //@}
 
@@ -57,6 +58,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
+    const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };

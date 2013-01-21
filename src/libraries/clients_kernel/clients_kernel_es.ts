@@ -406,6 +406,10 @@
         <source>Superior Selected</source>
         <translation>Seleccionado superior</translation>
     </message>
+    <message>
+        <source>Controlled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Karma</name>
