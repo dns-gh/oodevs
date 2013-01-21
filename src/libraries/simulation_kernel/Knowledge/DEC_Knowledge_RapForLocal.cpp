@@ -79,7 +79,7 @@ void DEC_Knowledge_RapForLocal::Update()
     double rTotalFightScoreFriend = 0;
 
     // 1 - Compute the enemy fight score, and get the dangerous enemies
-    for( CIT_KnowledgeAgentVector itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
+    for( auto itEnemy = enemies.begin(); itEnemy != enemies.end(); ++itEnemy )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledgeEnemy = *itEnemy;
         double rDangerosity = knowledgeEnemy->GetDangerosity( *pPion_, false ) * knowledgeEnemy->GetOperationalState();
@@ -94,12 +94,12 @@ void DEC_Knowledge_RapForLocal::Update()
     int enemiesSize = (int) dangerousEnemies_.size();
     if( enemiesSize )
     {
-        for( CIT_KnowledgeAgentVector itFriend = friends.begin(); itFriend != friends.end(); ++itFriend )
+        for( auto itFriend = friends.begin(); itFriend != friends.end(); ++itFriend )
         {
             DEC_Knowledge_Agent& knowledgeFriend = **itFriend;
             double rTotalDangerosity = 0.;
             double operationalState = knowledgeFriend.GetOperationalState();
-            for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
+            for( auto itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
                 rTotalDangerosity += ( knowledgeFriend.GetDangerosity( **itAgentEnemy, true ) * operationalState );
             rTotalFightScoreFriend += ( rTotalDangerosity / enemiesSize );
         }

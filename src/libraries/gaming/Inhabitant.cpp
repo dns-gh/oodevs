@@ -130,7 +130,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
-                CIT_MotivationSatisfactions it = motivationSatisfactions_.find( motivation.motivation() );
+                auto it = motivationSatisfactions_.find( motivation.motivation() );
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, it->second );
             }
         }
@@ -153,7 +153,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
-        CIT_UrbanObjectVector it = livingUrbanObject_.find( occupation.object().id() );
+        auto it = livingUrbanObject_.find( occupation.object().id() );
         if( it != livingUrbanObject_.end() )
             static_cast< kernel::UrbanObject* >( it->second )->UpdateHumans( name_.toStdString(), occupation );
     }

@@ -86,13 +86,8 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, kernel::UrbanObject_ABC* > T_UrbanObjectVector;
-    typedef T_UrbanObjectVector::const_iterator              CIT_UrbanObjectVector;
-
     typedef std::map< std::string, unsigned int >       T_MotivationSatisfactions;
-    typedef T_MotivationSatisfactions::const_iterator CIT_MotivationSatisfactions;
-
     typedef std::map< const kernel::DotationType*, unsigned int > T_ResourceSatisfactions;
-    typedef T_ResourceSatisfactions::const_iterator             CIT_ResourceSatisfactions;
     //@}
 
 private:

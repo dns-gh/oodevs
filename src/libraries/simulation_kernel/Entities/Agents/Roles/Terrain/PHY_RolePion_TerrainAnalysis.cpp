@@ -255,7 +255,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
         bool isInside = false;
         T_PointVector pathPoints;
         pathPoints.push_back( *itPoint );
-        for( CIT_KnowledgeObjectVector itKnowledge = knowledgesObject.begin(); itKnowledge != knowledgesObject.end(); ++itKnowledge )
+        for( auto itKnowledge = knowledgesObject.begin(); itKnowledge != knowledgesObject.end(); ++itKnowledge )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledge;
             if( knowledge.CanCollideWith( owner_ ) && knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( pathPoints, owner_ ) )

@@ -106,7 +106,7 @@ void DEC_Knowledge_AgentDataRecognition::WriteKnowledges( xml::xostream& xos ) c
     unsigned int number = 1;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        CIT_KnowledgeComposanteVector itNext = it + 1;
+        auto itNext = it + 1;
         if( itNext == composantes_.end() || ( it->GetType().GetMosID().id() != itNext->GetType().GetMosID().id() ) )
         {
             it->WriteKnowledges( xos, number );

@@ -124,7 +124,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bWounded_
          << rPopulationDensity_;
     std::size_t size = visionVolumes_.size();
-    for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
+    for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
         if( !(*it) )
             --size;
     file << size;

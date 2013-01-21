@@ -548,7 +548,7 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, sword::ObjectKnowledgeIdList& listResult, const DEC_KnowledgeResolver_ABC& /*resolver*/ )
 {
     listResult.clear_elem();
-    for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
+    for( auto itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
         listResult.add_elem()->set_id( pKnowledge && pKnowledge->IsValid() ? pKnowledge->GetID() : 0 );

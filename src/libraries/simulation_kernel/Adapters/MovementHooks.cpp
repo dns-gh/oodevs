@@ -230,7 +230,7 @@ namespace
         bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
         // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
         std::auto_ptr< const TER_Localisation > pScaledObjectLocation;
-        for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.objectsToAvoid_.begin(); itKnowledge != objectsToTest.objectsToAvoid_.end(); ++itKnowledge )
+        for( auto itKnowledge = objectsToTest.objectsToAvoid_.begin(); itKnowledge != objectsToTest.objectsToAvoid_.end(); ++itKnowledge )
         {
             boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
             const TER_Localisation* pObjectLocation = 0;
@@ -494,7 +494,7 @@ namespace
     {
         T_KnowledgeObjectVector knowledgesObject;
         GET_PION( entity ).GetArmy().GetKnowledge().GetObjects( knowledgesObject );
-        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             if( visitor( &knowledge, userData ) )

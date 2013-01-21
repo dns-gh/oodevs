@@ -156,7 +156,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectKnowledgeSynthetizer::ProcessEphemeralKnowledges()
 {
-    for( CIT_ObjectVector itObject = ephemeralKnowledges_.begin(); itObject != ephemeralKnowledges_.end(); ++itObject )
+    for( auto itObject = ephemeralKnowledges_.begin(); itObject != ephemeralKnowledges_.end(); ++itObject )
     {
         MIL_Object_ABC& object = **itObject;
         if( object.IsMarkedForDestruction() )
@@ -174,7 +174,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessObjectsToForget()
 {
     assert( pBlackBoard_ );
 
-    for( CIT_ObjectVector itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
+    for( auto itObject = objectsToForget_.begin(); itObject != objectsToForget_.end(); ++itObject )
     {
         DEC_Knowledge_Object* pKnowledge = pBlackBoard_->GetKnowledgeObjectContainer().RetrieveKnowledgeObject( **itObject );
         if( pKnowledge && pKnowledge->IsValid() )
@@ -191,7 +191,7 @@ void DEC_KS_ObjectKnowledgeSynthetizer::ProcessKnowledgesObjectToForget()
 {
     assert( pBlackBoard_ );
 
-    for( CIT_KnowledgeObjectVector itKnowledge = knowledgesObjectToForget_.begin(); itKnowledge != knowledgesObjectToForget_.end(); ++itKnowledge )
+    for( auto itKnowledge = knowledgesObjectToForget_.begin(); itKnowledge != knowledgesObjectToForget_.end(); ++itKnowledge )
         pBlackBoard_->GetKnowledgeObjectContainer().DestroyKnowledgeObject( **itKnowledge );
     knowledgesObjectToForget_.clear();
 }

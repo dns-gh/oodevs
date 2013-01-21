@@ -234,7 +234,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     if( pathClass_.AvoidEnemies() )
     {
         const T_KnowledgeAgentVector& enemies = queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-        for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+        for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
@@ -257,7 +257,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         T_PointVector firstPointVector;
         if( !pathPoints.empty() )
             firstPointVector.push_back( *pathPoints.begin() );
-        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             if( knowledge.CanCollideWith( queryMaker_ ) )

@@ -81,8 +81,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_Object_ABC* >  T_ObjectVector;
-    typedef T_ObjectVector::const_iterator  CIT_ObjectVector;
+    typedef std::vector< MIL_Object_ABC* > T_ObjectVector;
     //@}
 
 private:

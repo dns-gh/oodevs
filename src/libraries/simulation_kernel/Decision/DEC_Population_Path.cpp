@@ -99,7 +99,7 @@ void DEC_Population_Path::InitializePathKnowledges( const T_PointVector& /*pathP
     {
         T_KnowledgeObjectVector knowledgesObject;
         population_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
-        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
             if( knowledge.CanCollideWithEntity() )

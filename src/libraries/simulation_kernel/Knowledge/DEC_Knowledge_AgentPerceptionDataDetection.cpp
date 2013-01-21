@@ -113,7 +113,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << rPopulationDensity_;
     // Serialisation des volumes par nom ( données "statiques" )
     std::size_t size = visionVolumes_.size();
-    for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
+    for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
         if( !( *it ) )
             --size;
     file << size;

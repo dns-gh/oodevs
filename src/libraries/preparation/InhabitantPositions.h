@@ -52,8 +52,6 @@ public:
     //@{
     typedef boost::tuple< unsigned long, std::string, const kernel::UrbanObject_ABC* > T_UrbanObject;
     typedef std::vector< T_UrbanObject >                                               T_UrbanObjectVector;
-    typedef T_UrbanObjectVector::iterator                                             IT_UrbanObjectVector;
-    typedef T_UrbanObjectVector::const_iterator                                      CIT_UrbanObjectVector;
     //@}
 
 public:

@@ -105,7 +105,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemiesAttacking( const D
         for( std::vector< MIL_AgentPion* >::const_iterator pit = pions.begin(); pit != pions.end(); ++pit )
         {
             T_ConstKnowledgeAgentVector enemies = DEC_KnowledgeFunctions::GetAgentsAttacking( **pit );
-            for( CIT_ConstKnowledgeAgentVector cit = enemies.begin(); cit != enemies.end(); ++cit )
+            for( auto cit = enemies.begin(); cit != enemies.end(); ++cit )
             {
                 std::pair< std::set< boost::shared_ptr< DEC_Knowledge_Agent > >::iterator, bool> insertion = buffer.insert( *cit );
                 if( insertion.second )
@@ -137,7 +137,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeFunctions::GetNearestToFri
             if( !(*pit) )
                 throw MASA_EXCEPTION( "invalid parameter." );
             const MT_Vector2D& allyPosition = (*pit)->Get< PHY_RoleInterface_Location >().GetPosition();
-            for( CIT_ConstKnowledgeAgentVector uit = units.begin(); uit != units.end(); ++uit )
+            for( auto uit = units.begin(); uit != units.end(); ++uit )
             {
                 if( !(*uit) )
                     throw MASA_EXCEPTION( "invalid parameter." );

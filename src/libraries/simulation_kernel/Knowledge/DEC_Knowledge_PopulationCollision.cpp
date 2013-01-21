@@ -112,13 +112,13 @@ double DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
     {
         const MIL_PopulationFlow& flow = **it;
-        for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
+        for( auto itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
             rMaxSpeed = std::min( rMaxSpeed, flow.GetPionMaxSpeed( **itVolume ) );
     }
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         const MIL_PopulationConcentration& concentration = **it;
-        for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
+        for( auto itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
             rMaxSpeed = std::min( rMaxSpeed, concentration.GetPionMaxSpeed( **itVolume ) );
     }
     return rMaxSpeed;

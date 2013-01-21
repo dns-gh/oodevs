@@ -397,7 +397,7 @@ void InhabitantPositions::NotifyDeleted( const kernel::UrbanObject_ABC& block )
 {
     if( livingUrbanObject_.empty() )
         return;
-    IT_UrbanObjectVector it = livingUrbanObject_.begin();
+    auto it = livingUrbanObject_.begin();
     while( it != livingUrbanObject_.end() )
     {
         if( it->get< 2 >() == &block )

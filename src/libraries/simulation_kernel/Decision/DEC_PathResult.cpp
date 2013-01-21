@@ -176,7 +176,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
     bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     std::auto_ptr< const TER_Localisation > pScaledObjectLocation;
-    for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
+    for( auto itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
         const TER_Localisation* pObjectLocation = 0;
