@@ -33,7 +33,7 @@ namespace
     }
 }
 
-DECLARE_HOOK( IsTemporarilyBlocked, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) )
+DECLARE_HOOK( IsTemporarilyBlocked, bool, ( const SWORD_Model* entity, size_t nUrbanCoefficient ) )
 DECLARE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
 
 std::size_t DirectFireData::nUrbanCoefficient_ = 100;

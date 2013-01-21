@@ -38,11 +38,11 @@ DECLARE_HOOK( IsDestinationTrafficable, bool, ( const SWORD_Model* entity, const
 DECLARE_HOOK( IsNullAutomateFuseau, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( LimaIntersect2D, bool, ( const MIL_LimaOrder& lima, const MT_Line& line, MT_Vector2D& intersection ) )
 DECLARE_HOOK( UsePathDebug, bool, () )
-DECLARE_HOOK( StartComputePathfind, void, ( std::size_t path ) )
+DECLARE_HOOK( StartComputePathfind, void, ( size_t path ) )
 DECLARE_HOOK( VisitKnowledgeObjects, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) )
 DECLARE_HOOK( CanMoveOn, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
-DECLARE_HOOK( NotifyPathCreation, std::size_t, () )
-DECLARE_HOOK( InitializePath, void, ( std::size_t path, const SWORD_Model* entity ) )
+DECLARE_HOOK( NotifyPathCreation, size_t, () )
+DECLARE_HOOK( InitializePath, void, ( size_t path, const SWORD_Model* entity ) )
 
 //-----------------------------------------------------------------------------
 // Name: Agent_Path constructor

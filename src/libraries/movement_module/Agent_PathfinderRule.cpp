@@ -27,7 +27,7 @@ DECLARE_HOOK( GetPopulationsCost, double, ( const void* handler, const MT_Vector
               const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
 DECLARE_HOOK( GetUrbanBlockCost, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to ) )
 DECLARE_HOOK( IsValidPosition, bool, ( const MT_Vector2D& point ) )
-DECLARE_HOOK( GetPathHandler, const void*, ( std::size_t identifier ) )
+DECLARE_HOOK( GetPathHandler, const void*, ( size_t identifier ) )
 
 // -----------------------------------------------------------------------------
 // Name: Agent_PathfinderRule constructor

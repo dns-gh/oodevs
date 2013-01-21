@@ -60,7 +60,7 @@ namespace
     {
         return MIL_Random::rand32_io( static_cast< long >( min ), static_cast< long >( max ), MIL_Random::eFire );
     }
-    DEFINE_HOOK( IsTemporarilyBlocked, 2, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) )
+    DEFINE_HOOK( IsTemporarilyBlocked, 2, bool, ( const SWORD_Model* entity, size_t nUrbanCoefficient ) )
     {
         if( ! GET_ROLE( entity, PHY_RoleInterface_UrbanLocation ).IsInCity() )
             return false;

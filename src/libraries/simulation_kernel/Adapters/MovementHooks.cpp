@@ -72,7 +72,7 @@ using namespace sword;
 
 namespace
 {
-    DEFINE_HOOK( StartComputePathfind, 1, void, ( std::size_t path) )
+    DEFINE_HOOK( StartComputePathfind, 1, void, ( size_t path) )
     {
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( PathAdapter::Get( path ) );
     }
@@ -201,14 +201,14 @@ namespace
     {
         return MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
     }
-    DEFINE_HOOK( CancelPathFindJob, 1, void, ( std::size_t path) )
+    DEFINE_HOOK( CancelPathFindJob, 1, void, ( size_t path) )
     {
         MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( PathAdapter::Get( path ).get() );
         PathAdapter::Remove( path );
     }
     DEFINE_HOOK( ComputeObjectCollision, 8, void,
         ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance,
-          boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, std::size_t size, bool blockedByObject, bool applyScale ) )
+          boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
     {
         const MIL_AgentPion& agent = GET_PION( entity );
         static const double epsilon = 1e-8;

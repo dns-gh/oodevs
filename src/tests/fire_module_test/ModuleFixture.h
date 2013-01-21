@@ -41,7 +41,7 @@
     APPLY( GetDistance, 2, double, ( const SWORD_Model* firer, const SWORD_Model* target ) ) \
     APPLY( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, int dotation, double rPh ) ) \
     APPLY( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, int dotation ) ) \
-    APPLY( IsTemporarilyBlocked, 2, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) ) \
+    APPLY( IsTemporarilyBlocked, 2, bool, ( const SWORD_Model* entity, size_t nUrbanCoefficient ) ) \
     APPLY( GetFireRandomInteger, 2, size_t, ( size_t min, size_t max ) ) \
     APPLY( GetFireRandomNumber, 2, double, ( double min, double max ) ) \
     APPLY( GetVolumeId, 1, size_t, ( const char* type ) ) \

@@ -45,34 +45,34 @@
 
 using namespace sword;
 
-DECLARE_HOOK( ExecutePathfind, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) )
-DECLARE_HOOK( PathGetLength, double, ( std::size_t path ) )
-DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( std::size_t path ) )
+DECLARE_HOOK( ExecutePathfind, void, ( size_t path, TER_Pathfinder_ABC& pathfind ) )
+DECLARE_HOOK( PathGetLength, double, ( size_t path ) )
+DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( size_t path ) )
 
-DECLARE_HOOK( AvoidEnemies, bool, ( std::size_t path ) )
-DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( std::size_t path ) )
-DECLARE_HOOK( GetEnemyCostOnContact, double, ( std::size_t path ) )
+DECLARE_HOOK( AvoidEnemies, bool, ( size_t path ) )
+DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( size_t path ) )
+DECLARE_HOOK( GetEnemyCostOnContact, double, ( size_t path ) )
 
-DECLARE_HOOK( AvoidObjects, bool, ( std::size_t path ) )
-DECLARE_HOOK( GetFirstPoint, void, ( std::size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectCost, double, ( std::size_t path, unsigned int type ) )
-DECLARE_HOOK( GetThreshold, double, ( std::size_t path ) )
+DECLARE_HOOK( AvoidObjects, bool, ( size_t path ) )
+DECLARE_HOOK( GetFirstPoint, void, ( size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+DECLARE_HOOK( GetObjectCost, double, ( size_t path, unsigned int type ) )
+DECLARE_HOOK( GetThreshold, double, ( size_t path ) )
 
-DECLARE_HOOK( HandlePopulations, bool, ( std::size_t path ) )
-DECLARE_HOOK( GetPopulationSecurityRange, double, ( std::size_t path ) )
-DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( std::size_t path ) )
-DECLARE_HOOK( GetPopulationAttitudeCost, double, ( std::size_t path, unsigned int type ) )
-DECLARE_HOOK( RemovePath, void, ( std::size_t path ) )
+DECLARE_HOOK( HandlePopulations, bool, ( size_t path ) )
+DECLARE_HOOK( GetPopulationSecurityRange, double, ( size_t path ) )
+DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( size_t path ) )
+DECLARE_HOOK( GetPopulationAttitudeCost, double, ( size_t path, unsigned int type ) )
+DECLARE_HOOK( RemovePath, void, ( size_t path ) )
 
-DEFINE_HOOK( NotifyPathCreation, 0, std::size_t, () )
+DEFINE_HOOK( NotifyPathCreation, 0, size_t, () )
 {
     return sword::PathAdapter::Add();
 }
-DEFINE_HOOK( GetPathHandler, 1, const void*, ( std::size_t identifier ) )
+DEFINE_HOOK( GetPathHandler, 1, const void*, ( size_t identifier ) )
 {
     return PathAdapter::Get( identifier ).get();
 }
-DEFINE_HOOK( InitializePath, 2, void, ( std::size_t path, const SWORD_Model* entity ) )
+DEFINE_HOOK( InitializePath, 2, void, ( size_t path, const SWORD_Model* entity ) )
 {
     sword::PathAdapter::Get( path )->Initialize( *core::Convert( entity ) );
 }

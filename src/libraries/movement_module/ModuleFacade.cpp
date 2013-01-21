@@ -45,7 +45,7 @@ namespace
             return MT_Vector2D();
         return pathWalker->ExtrapolatePosition( entity, rTime, bBoundOnPath );
     }
-    DEFINE_HOOK( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, std::size_t path ) )
+    DEFINE_HOOK( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, size_t path ) )
     {
         assert( facade );
         PathWalker* pathWalker = facade->GetPathWalker( entity );
@@ -53,7 +53,7 @@ namespace
             return false;
         return pathWalker->IsMovingOn( facade->GetPath( path ) );
     }
-    DEFINE_HOOK( CreatePath, 3, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
+    DEFINE_HOOK( CreatePath, 3, size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
     {
         assert( facade );
         const PathType* pPathType = PathType::Find( pathType );
@@ -63,7 +63,7 @@ namespace
         path->Initialize();
         return path->GetID();
     }
-    DEFINE_HOOK( CreatePathList, 3, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
+    DEFINE_HOOK( CreatePathList, 3, size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
     {
         const PathType* pPathType = PathType::Find( pathType );
         assert( pPathType );
@@ -72,107 +72,107 @@ namespace
         path->Initialize();
         return path->GetID();
     }
-    DEFINE_HOOK( RemovePath, 1, void, ( std::size_t path ) )
+    DEFINE_HOOK( RemovePath, 1, void, ( size_t path ) )
     {
         assert( facade );
         facade->UnregisterPath( path );
     }
-    DEFINE_HOOK( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( std::size_t path ) )
+    DEFINE_HOOK( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( size_t path ) )
     {
         return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( facade->GetPath( path )->GetResult().back()->GetPos() ) );
     }
-    DEFINE_HOOK( ExecutePathfind, 2, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) )
+    DEFINE_HOOK( ExecutePathfind, 2, void, ( size_t path, TER_Pathfinder_ABC& pathfind ) )
     {
         facade->GetPath( path )->Execute( pathfind );
     }
-    DEFINE_HOOK( PathGetLength, 1, double, ( std::size_t path ) )
+    DEFINE_HOOK( PathGetLength, 1, double, ( size_t path ) )
     {
         return facade->GetPath( path )->GetLength();
     }
-    DEFINE_HOOK( PathGetState, 1, DEC_Path_ABC::E_State, ( std::size_t path ) )
+    DEFINE_HOOK( PathGetState, 1, DEC_Path_ABC::E_State, ( size_t path ) )
     {
         return static_cast< DEC_Path_ABC::E_State >( facade->GetPath( path )->GetState() ); // $$$$ MCO : static_assert bijection
     }
-    DEFINE_HOOK( AvoidEnemies, 1, bool, ( std::size_t path ) )
+    DEFINE_HOOK( AvoidEnemies, 1, bool, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().AvoidEnemies();
     }
-    DEFINE_HOOK( GetEnemyCostAtSecurityRange, 1, double, ( std::size_t path ) )
+    DEFINE_HOOK( GetEnemyCostAtSecurityRange, 1, double, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().GetEnemyCostAtSecurityRange();
     }
-    DEFINE_HOOK( GetEnemyCostOnContact, 1, double, ( std::size_t path ) )
+    DEFINE_HOOK( GetEnemyCostOnContact, 1, double, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().GetEnemyCostOnContact();
     }
-    DEFINE_HOOK( AvoidObjects, 1, bool, ( std::size_t path ) )
+    DEFINE_HOOK( AvoidObjects, 1, bool, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().AvoidObjects();
     }
-    DEFINE_HOOK( GetFirstPoint, 3, void, ( std::size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetFirstPoint, 3, void, ( size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
     {
         const MT_Vector2D* first = facade->GetPath( path )->GetFirstPoint();
         if( first )
             callback( *first, userData );
     }
-    DEFINE_HOOK( GetObjectCost, 2, double, ( std::size_t path, unsigned int type ) )
+    DEFINE_HOOK( GetObjectCost, 2, double, ( size_t path, unsigned int type ) )
     {
         return facade->GetPath( path )->GetClass().GetObjectCost( type );
     }
-    DEFINE_HOOK( GetThreshold, 1, double, ( std::size_t path ) )
+    DEFINE_HOOK( GetThreshold, 1, double, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().GetThreshold();
     }
-    DEFINE_HOOK( HandlePopulations, 1, bool, ( std::size_t path ) )
+    DEFINE_HOOK( HandlePopulations, 1, bool, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().HandlePopulations();
     }
-    DEFINE_HOOK( GetPopulationSecurityRange, 1, double, ( std::size_t path ) )
+    DEFINE_HOOK( GetPopulationSecurityRange, 1, double, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().GetPopulationSecurityRange();
     }
-    DEFINE_HOOK( GetCostOutsideOfPopulation, 1, double, ( std::size_t path ) )
+    DEFINE_HOOK( GetCostOutsideOfPopulation, 1, double, ( size_t path ) )
     {
         return facade->GetPath( path )->GetClass().GetCostOutsideOfPopulation();
     }
-    DEFINE_HOOK( GetPopulationAttitudeCost, 2, double, ( std::size_t path, unsigned int type ) )
+    DEFINE_HOOK( GetPopulationAttitudeCost, 2, double, ( size_t path, unsigned int type ) )
     {
         return facade->GetPath( path )->GetClass().GetPopulationAttitudeCost( type );
     }
-    DEFINE_HOOK( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( size_t point, void* userData ), void* userData ) )
     {
         assert( facade );
         auto points = facade->GetPoints( entity );
         BOOST_FOREACH( std::size_t point, points )
             callback( point, userData );
     }
-    DEFINE_HOOK( RemovePathPoint, 2, void, ( unsigned int entity, std::size_t point ) )
+    DEFINE_HOOK( RemovePathPoint, 2, void, ( unsigned int entity, size_t point ) )
     {
         facade->RemovePathPoint( entity, point );
     }
-    DEFINE_HOOK( GetPathTypePoint, 1, int, ( std::size_t point ) )
+    DEFINE_HOOK( GetPathTypePoint, 1, int, ( size_t point ) )
     {
         return facade->GetPoint( point )->GetTypePoint();
     }
-    DEFINE_HOOK( GetPathDestPoint, 1, std::size_t, ( std::size_t point ) )
+    DEFINE_HOOK( GetPathDestPoint, 1, size_t, ( size_t point ) )
     {
         auto destPoint = facade->GetPoint( point )->GetDestPoint();
         facade->RegisterPoint( destPoint );
         return destPoint->GetID();
     }
-    DEFINE_HOOK( GetPathTypeLimaPoint, 1, int, ( std::size_t point ) )
+    DEFINE_HOOK( GetPathTypeLimaPoint, 1, int, ( size_t point ) )
     {
         return facade->GetPoint( point )->GetTypeLima();
     }
-    DEFINE_HOOK( GetPathLimaPoint, 1, unsigned int, ( std::size_t point ) )
+    DEFINE_HOOK( GetPathLimaPoint, 1, unsigned int, ( size_t point ) )
     {
         return facade->GetPoint( point )->GetLimaID();
     }
-    DEFINE_HOOK( GetPathDIAType, 1, const char*, ( std::size_t point ) )
+    DEFINE_HOOK( GetPathDIAType, 1, const char*, ( size_t point ) )
     {
         return facade->GetPoint( point )->GetDIAType().c_str();
     }
-    DEFINE_HOOK( GetPathPos, 1, const MT_Vector2D*, ( std::size_t point ) )
+    DEFINE_HOOK( GetPathPos, 1, const MT_Vector2D*, ( size_t point ) )
     {
         return &facade->GetPoint( point )->GetPos();
     }

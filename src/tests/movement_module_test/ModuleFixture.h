@@ -42,35 +42,35 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
 
 #define REGISTERED_HOOKS( APPLY ) \
     APPLY( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
-    APPLY( CreatePath, 3, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) ) \
-    APPLY( CreatePathList, 3, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
-    APPLY( ExecutePathfind, 2, void, ( std::size_t path, TER_Pathfinder_ABC& pathfind ) ) \
+    APPLY( CreatePath, 3, size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) ) \
+    APPLY( CreatePathList, 3, size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
+    APPLY( ExecutePathfind, 2, void, ( size_t path, TER_Pathfinder_ABC& pathfind ) ) \
     APPLY( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) ) \
-    APPLY( GetPathDestPoint, 1, std::size_t, ( std::size_t point ) ) \
-    APPLY( GetPathDIAType, 1, const char*, ( std::size_t point ) ) \
-    APPLY( GetPathLimaPoint, 1, unsigned int, ( std::size_t point ) ) \
-    APPLY( AvoidEnemies, 1, bool, ( std::size_t path ) ) \
-    APPLY( GetEnemyCostAtSecurityRange, 1, double, ( std::size_t path ) ) \
-    APPLY( GetEnemyCostOnContact, 1, double, ( std::size_t path ) ) \
-    APPLY( AvoidObjects, 1, bool, ( std::size_t path ) ) \
-    APPLY( GetFirstPoint, 3, void, ( std::size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) ) \
-    APPLY( GetObjectCost, 2, double, ( std::size_t path, unsigned int type ) ) \
-    APPLY( GetThreshold, 1, double, ( std::size_t path ) ) \
-    APPLY( HandlePopulations, 1, bool, ( std::size_t path ) ) \
-    APPLY( GetPopulationSecurityRange, 1, double, ( std::size_t path ) ) \
-    APPLY( GetCostOutsideOfPopulation, 1, double, ( std::size_t path ) ) \
-    APPLY( GetPopulationAttitudeCost, 2, double, ( std::size_t path, unsigned int type ) ) \
-    APPLY( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) ) \
-    APPLY( GetPathPos, 1, const MT_Vector2D*, ( std::size_t point ) ) \
-    APPLY( GetPathTypeLimaPoint, 1, int, ( std::size_t point ) ) \
-    APPLY( GetPathTypePoint, 1, int, ( std::size_t point ) ) \
+    APPLY( GetPathDestPoint, 1, size_t, ( size_t point ) ) \
+    APPLY( GetPathDIAType, 1, const char*, ( size_t point ) ) \
+    APPLY( GetPathLimaPoint, 1, unsigned int, ( size_t point ) ) \
+    APPLY( AvoidEnemies, 1, bool, ( size_t path ) ) \
+    APPLY( GetEnemyCostAtSecurityRange, 1, double, ( size_t path ) ) \
+    APPLY( GetEnemyCostOnContact, 1, double, ( size_t path ) ) \
+    APPLY( AvoidObjects, 1, bool, ( size_t path ) ) \
+    APPLY( GetFirstPoint, 3, void, ( size_t path, void(*callback)( const MT_Vector2D& point, void* userData ), void* userData ) ) \
+    APPLY( GetObjectCost, 2, double, ( size_t path, unsigned int type ) ) \
+    APPLY( GetThreshold, 1, double, ( size_t path ) ) \
+    APPLY( HandlePopulations, 1, bool, ( size_t path ) ) \
+    APPLY( GetPopulationSecurityRange, 1, double, ( size_t path ) ) \
+    APPLY( GetCostOutsideOfPopulation, 1, double, ( size_t path ) ) \
+    APPLY( GetPopulationAttitudeCost, 2, double, ( size_t path, unsigned int type ) ) \
+    APPLY( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( size_t point, void* userData ), void* userData ) ) \
+    APPLY( GetPathPos, 1, const MT_Vector2D*, ( size_t point ) ) \
+    APPLY( GetPathTypeLimaPoint, 1, int, ( size_t point ) ) \
+    APPLY( GetPathTypePoint, 1, int, ( size_t point ) ) \
     APPLY( InitializePathClass, 3, void, ( const char* xml, const unsigned int* first, size_t size ) ) \
-    APPLY( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, std::size_t path ) ) \
-    APPLY( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( std::size_t path ) ) \
-    APPLY( PathGetLength, 1, double, ( std::size_t path ) ) \
-    APPLY( PathGetState, 1, DEC_Path_ABC::E_State, ( std::size_t path ) ) \
-    APPLY( RemovePathPoint, 2, void, ( unsigned int entity, std::size_t point ) ) \
-    APPLY( RemovePath, 1, void, ( std::size_t path ) )
+    APPLY( IsAgentMovingOnPath, 2, bool, ( unsigned int entity, size_t path ) ) \
+    APPLY( PathGetLastPointOfPath, 1, boost::shared_ptr< MT_Vector2D >, ( size_t path ) ) \
+    APPLY( PathGetLength, 1, double, ( size_t path ) ) \
+    APPLY( PathGetState, 1, DEC_Path_ABC::E_State, ( size_t path ) ) \
+    APPLY( RemovePathPoint, 2, void, ( unsigned int entity, size_t point ) ) \
+    APPLY( RemovePath, 1, void, ( size_t path ) )
 
 #define USED_HOOKS( APPLY ) \
     APPLY( GetDistanceAvantLima, 1, double, ( const SWORD_Model* entity ) ) \
@@ -92,8 +92,8 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( GetUrbanBlockCost, 3, double, ( const void* handler, const MT_Vector2D& from, const MT_Vector2D& to ) ) \
     APPLY( IsValidPosition, 1, bool, ( const MT_Vector2D& point ) ) \
     APPLY( GetMaxPathFindComputationDuration, 0, unsigned int, () ) \
-    APPLY( CancelPathFindJob, 1, void, ( std::size_t path ) ) \
-    APPLY( ComputeObjectCollision, 8, void, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, std::size_t size, bool blockedByObject, bool applyScale ) ) \
+    APPLY( CancelPathFindJob, 1, void, ( size_t path ) ) \
+    APPLY( ComputeObjectCollision, 8, void, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) ) \
     APPLY( GetWorldWeldValue, 0, double, () ) \
     APPLY( ComputePathfind, 13, bool, ( TER_Pathfinder_ABC& pathfind, bool needRefine, bool strictClosest, const geometry::Point2f& from, const geometry::Point2f& to, PathfindEvaluateCost evaluate, void* evaluateData, PathfindGetCost get, void* getData, PathfindHandlePathPoint handler, void* handlerData, PathfindShouldEndComputation termination, void* terminationData ) ) \
     APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
@@ -110,16 +110,16 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( EntityManagerFindObject, 1, bool, ( unsigned int nID ) ) \
     APPLY( GetKnowledgeObjectRealName, 1, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) ) \
     APPLY( GetObjectKnownId, 1, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) ) \
-    APPLY( StartComputePathfind, 1, void, ( std::size_t path ) ) \
+    APPLY( StartComputePathfind, 1, void, ( size_t path ) ) \
     APPLY( UpdateObjectsToAvoid, 2, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) ) \
     APPLY( ConvertSpeedMosToSim, 1, double, ( double speed ) ) \
     APPLY( GetLandTypeName, 1, const char*, ( const TerrainData& terrain ) ) \
     APPLY( VisitKnowledgeObjects, 3, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) ) \
     APPLY( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
-    APPLY( NotifyPathCreation, 0, std::size_t, () ) \
-    APPLY( InitializePath, 2, void, ( std::size_t path, const SWORD_Model* entity ) ) \
-    APPLY( HasKnowledgeObject, 2, bool, (  const SWORD_Model* entity, const SWORD_Model* object ) ) \
-    APPLY( GetPathHandler, 1, const void*, ( std::size_t identifier ) ) \
+    APPLY( NotifyPathCreation, 0, size_t, () ) \
+    APPLY( InitializePath, 2, void, ( size_t path, const SWORD_Model* entity ) ) \
+    APPLY( GetPathHandler, 1, const void*, ( size_t identifier ) ) \
+    APPLY( HasKnowledgeObject, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )

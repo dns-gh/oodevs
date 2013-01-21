@@ -27,7 +27,7 @@ DECLARE_HOOK( ComputeObjectCollision, void,
     ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest,
       double& rDistance,
       boost::shared_ptr< DEC_Knowledge_Object >& pObject,
-      MT_Vector2D* start, std::size_t size, bool blockedByObject, bool applyScale ) )
+      MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
 
 // -----------------------------------------------------------------------------
 // Name: PathResult constructor

@@ -15,13 +15,13 @@
 
 using namespace sword;
 
-DECLARE_HOOK( GetPathDestPoint, std::size_t, ( std::size_t point ) )
-DECLARE_HOOK( GetPathDIAType, const char*, ( std::size_t point ) )
-DECLARE_HOOK( GetPathLimaPoint, unsigned int, ( std::size_t point ) )
-DECLARE_HOOK( GetPathPos, const MT_Vector2D*, ( std::size_t point ) )
-DECLARE_HOOK( GetPathTypeLimaPoint, int, ( std::size_t point ) )
-DECLARE_HOOK( GetPathTypePoint, int, ( std::size_t point ) )
-DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, std::size_t point ) )
+DECLARE_HOOK( GetPathDestPoint, size_t, ( size_t point ) )
+DECLARE_HOOK( GetPathDIAType, const char*, ( size_t point ) )
+DECLARE_HOOK( GetPathLimaPoint, unsigned int, ( size_t point ) )
+DECLARE_HOOK( GetPathPos, const MT_Vector2D*, ( size_t point ) )
+DECLARE_HOOK( GetPathTypeLimaPoint, int, ( size_t point ) )
+DECLARE_HOOK( GetPathTypePoint, int, ( size_t point ) )
+DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, size_t point ) )
 
 //-----------------------------------------------------------------------------
 // Name: PathPointAdapter constructor

@@ -97,12 +97,12 @@ using namespace sword;
 
 // movement
 DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
-DECLARE_HOOK( CreatePath, std::size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
-DECLARE_HOOK( CreatePathList, std::size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
+DECLARE_HOOK( CreatePath, size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
+DECLARE_HOOK( CreatePathList, size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
 DECLARE_HOOK( GetAgentFuturePosition, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
-DECLARE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( std::size_t point, void* userData ), void* userData ) )
-DECLARE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, std::size_t path ) )
-DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( std::size_t path ) )
+DECLARE_HOOK( GetPathPoints, void, ( unsigned int entity, void(*callback)( size_t point, void* userData ), void* userData ) )
+DECLARE_HOOK( IsAgentMovingOnPath, bool, ( unsigned int entity, size_t path ) )
+DECLARE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( size_t path ) )
 
 // perception
 DECLARE_HOOK( GetPerceptionId, int, () )

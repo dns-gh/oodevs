@@ -24,7 +24,7 @@ DECLARE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
 DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
 DECLARE_HOOK( GetObjectKnownId, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
 DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
-DECLARE_HOOK( CancelPathFindJob, void, ( std::size_t path ) )
+DECLARE_HOOK( CancelPathFindJob, void, ( size_t path ) )
 
 namespace
 {
