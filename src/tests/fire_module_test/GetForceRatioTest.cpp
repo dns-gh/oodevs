@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_some_ratio, sword::fire::Module
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ].AddElement() = 52;
-    core::Model& f = model[ "knowledges" ][ 1242 ][ 52 ];
+    core::Model& f = model[ "knowledges" ][ 1242 ][ "agents" ][ 52 ];
     entity[ "fire/force-ratio/feedback-time" ] = 0.1;
     entity[ "knowledges" ] = 1242;
     MOCK_EXPECT( EvaluateDangerosity ).once().with( enemy, firer ).returns( 1 );

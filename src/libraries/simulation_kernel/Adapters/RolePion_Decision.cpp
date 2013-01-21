@@ -96,7 +96,8 @@ namespace sword
 using namespace sword;
 
 // movement
-DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
+DECLARE_HOOK( ComputeAgentFutureObjectCollision, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const KnowledgeCache* objectsToTest, \
+                                                         double& rDistance, const SWORD_Model** pObject ) ) \
 DECLARE_HOOK( CreatePath, size_t, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) )
 DECLARE_HOOK( CreatePathList, size_t, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
 DECLARE_HOOK( GetAgentFuturePosition, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
@@ -261,16 +262,19 @@ namespace
 {
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > NextObjectOnPath( const MIL_ObjectFilter& filter, const MIL_Agent_ABC& agent, const core::Model& model )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
         double rDistanceCollision = 0;
         KnowledgeCache cache;
         agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter );
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
-        if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model[ "entities" ][ agent.GetID() ] ), &cache, rDistanceCollision, pObjectColliding ) )
+        const SWORD_Model* pObject = 0;
+        if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model ), core::Convert( &model[ "entities" ][ agent.GetID() ] ), &cache, rDistanceCollision, &pObject ) )
         {
             result.first = false;
             return result;
         }
+        if( !pObject )
+            throw MASA_EXCEPTION( "invalid parameter." );
+        boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding = (*core::Convert( pObject ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Object > >();
         if( !pObjectColliding || !pObjectColliding->IsValid() )
             throw MASA_EXCEPTION( "invalid parameter." );
         result.first = true;
@@ -820,7 +824,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ "agents" ][ target->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH, GetDotationIdentifier( dotation ) );
     }
     double GetMinRangeToFireOnEnemy( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
@@ -829,7 +833,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ "agents" ][ target->GetID() ];
         const double range = GET_HOOK( GetMinRangeToFireOn )( Convert( &entity ), Convert( &knowledge ), &CanFire, rWantedPH );
         if( range == std::numeric_limits< double >::max() )
             return -1;
@@ -841,7 +845,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ "agents" ][ target->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOnWithPosture )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH );
     }
     double GetMinRangeToFireOnEnemyActualPosture( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
@@ -850,7 +854,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ "agents" ][ target->GetID() ];
         const double range = GET_HOOK( GetMinRangeToFireOnWithPosture )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFire, rWantedPH );
         if( range == std::numeric_limits< double >::max() )
             return -1;
@@ -866,7 +870,7 @@ namespace
             return -1;
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = entity[ "knowledges" ];
-        const core::Model& knowledge = model[ "knowledges" ][ id ][ target->GetID() ];
+        const core::Model& knowledge = model[ "knowledges" ][ id ][ "agents" ][ target->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &entity ), core::Convert( &knowledge ), &CanFireWhenUnloaded, rWantedPH, 0 );
     }
     bool True( const SWORD_Model* /*component*/ )
@@ -879,7 +883,7 @@ namespace
             return -1;
         const core::Model& target = model[ "entities" ][ agent.GetID() ];
         const unsigned int id = target[ "knowledges" ];
-        const core::Model& firer = model[ "knowledges" ][ id ][ enemy->GetID() ];
+        const core::Model& firer = model[ "knowledges" ][ id ][ "agents" ][ enemy->GetID() ];
         return GET_HOOK( GetMaxRangeToFireOn )( core::Convert( &firer ), core::Convert( &target ), &True, rWantedPH, 0 );
     }
     double GetMaxRangeToFire( const MIL_Agent_ABC& agent, const core::Model& model, float rWantedPH )
@@ -1035,7 +1039,7 @@ namespace
     }
     const core::Model& GetKnowledge( const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
     {
-        return model[ "knowledges" ][ pKnowledge->GetGroupID() ][ pKnowledge->GetID() ];
+        return model[ "knowledges" ][ pKnowledge->GetGroupID() ][ "agents" ][ pKnowledge->GetID() ];
     }
     double GetPotentialAttrition( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge, boost::shared_ptr< MT_Vector2D > position )
     {

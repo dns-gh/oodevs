@@ -64,9 +64,11 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -308,6 +310,7 @@ void Sink::NotifyEffects()
 }
 
 SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
+SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Object > )
 SWORD_USER_DATA_EXPORT( const MIL_Population* )
 SWORD_USER_DATA_EXPORT( const MIL_PopulationElement_ABC* )
 SWORD_USER_DATA_EXPORT( const PHY_ComposantePion* )
@@ -319,7 +322,7 @@ namespace
     {
         weapons.AddElement()[ "type" ] = weapon.GetType().GetID();
     }
-    void UpdateKnowledge( core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
+    void UpdateAgentKnowledge( core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
     {
         knowledge[ "data" ].SetUserData( agent );
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
@@ -343,6 +346,12 @@ namespace
             composante.GetComposante().ApplyOnWeapons( boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 ) );
         }
     }
+    void UpdateObjectKnowledge( core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Object > object )
+    {
+        knowledge[ "data" ].SetUserData( object );
+        knowledge[ "identifier" ] = object->GetObjectKnown() ? object->GetObjectKnown()->GetID() : 0;
+        knowledge[ "real-name" ] = object->GetType().GetRealName();
+    }
     void UpdateKnowledgeRelations( core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group, boost::shared_ptr< DEC_Knowledge_Agent > knowledge )
     {
         const MIL_Army_ABC* army = knowledge->GetArmy();
@@ -354,21 +363,32 @@ namespace
                 friends.AddElement() = knowledge->GetID();
         }
     }
-    void UpdateKnowledgeGroupBlackBoard( core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
+    void UpdateAgentKnowledgeGroupBlackBoard( core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
         typedef DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::value_type T_Agent;
         const DEC_BlackBoard_CanContainKnowledgeAgent& blackboard = group.GetKnowledge().GetKnowledgeAgentContainer();
         BOOST_FOREACH( const T_Agent& agent, blackboard.GetKnowledgeAgents() )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agent.second;
-            UpdateKnowledge( knowledges[ knowledge->GetID() ], knowledge );
+            UpdateAgentKnowledge( knowledges[ "agents" ][ knowledge->GetID() ], knowledge );
             UpdateKnowledgeRelations( enemies, friends, group, knowledge );
+        }
+    }
+    void UpdateObjectKnowledgeGroupBlackBoard( core::Model& knowledges, const MIL_KnowledgeGroup& group )
+    {
+        typedef DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap::value_type T_Object;
+        const DEC_BlackBoard_CanContainKnowledgeObject& blackboard = group.GetKnowledgeObjectContainer();
+        BOOST_FOREACH( const T_Object& object, blackboard.GetKnowledgeObjects() )
+        {
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = object.second;
+            UpdateObjectKnowledge( knowledges[ "objects" ][ knowledge->GetID() ], knowledge );
         }
     }
     void UpdateKnowledgeGroup( core::Model& knowledges, core::Model& enemies, core::Model& friends, boost::shared_ptr< MIL_KnowledgeGroup > group )
     {
         const unsigned int id = group->GetId();
-        UpdateKnowledgeGroupBlackBoard( knowledges[ id ], enemies[ id ], friends[ id ], *group );
+        UpdateAgentKnowledgeGroupBlackBoard( knowledges[ id ], enemies[ id ], friends[ id ], *group );
+        UpdateObjectKnowledgeGroupBlackBoard( knowledges[ id ], *group );
         MIL_KnowledgeGroup::T_KnowledgeGroupVector groups = group->GetKnowledgeGroups();
         for( MIL_KnowledgeGroup::T_KnowledgeGroupVector::const_iterator it = groups.begin(); it != groups.end(); ++it )
             UpdateKnowledgeGroup( knowledges, enemies, friends, *it );

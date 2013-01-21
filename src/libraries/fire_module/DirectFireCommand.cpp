@@ -50,7 +50,7 @@ void DirectFireCommand::Execute( const wrapper::View& parameters, const wrapper:
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const std::size_t knowledges = entity[ "knowledges" ];
     const std::size_t enemy = parameters[ "enemy" ];
-    const wrapper::View& target = model[ "knowledges" ][ knowledges ][ enemy ];
+    const wrapper::View& target = model[ "knowledges" ][ knowledges ][ "agents" ][ enemy ];
     int nResult = role_.FirePion( model, entity, target, parameters, mustReport_ );
     PostCallback( nResult );
     mustReport_ = false;
@@ -65,7 +65,7 @@ void DirectFireCommand::ExecutePaused( const wrapper::View& parameters, const wr
     const wrapper::View& entity = model[ "entities" ][ identifier_ ];
     const std::size_t knowledges = entity[ "knowledges" ];
     const std::size_t enemy = parameters[ "enemy" ];
-    const wrapper::View& target = model[ "knowledges" ][ knowledges ][ enemy ];
+    const wrapper::View& target = model[ "knowledges" ][ knowledges ][ "agents" ][ enemy ];
     role_.FirePionSuspended( entity, target, !mustReport_ );
     mustReport_ = true;
 }

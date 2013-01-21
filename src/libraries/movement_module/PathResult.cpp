@@ -24,10 +24,9 @@ using namespace sword;
 using namespace sword::movement;
 
 DECLARE_HOOK( ComputeObjectCollision, void,
-    ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest,
-      double& rDistance,
-      boost::shared_ptr< DEC_Knowledge_Object >& pObject,
-      MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
+                ( const SWORD_Model* model, const SWORD_Model* entity, const KnowledgeCache* objectsToTest,
+                  double& rDistance, const SWORD_Model** pObject,
+                  MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
 
 // -----------------------------------------------------------------------------
 // Name: PathResult constructor
@@ -126,10 +125,10 @@ MT_Vector2D PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, double 
 // Name: PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool PathResult::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const
+bool PathResult::ComputeFutureObjectCollision( const wrapper::View& model, const wrapper::View& entity, const KnowledgeCache* objectsToTest,
+                                               double& rDistance, wrapper::View* knowledgeObjectColliding, bool blockedByObject, bool applyScale ) const
 {
     rDistance = std::numeric_limits< double >::max();
-    pObject.reset();
     E_State nPathState = GetState();
     if( nPathState != eValid && nPathState != ePartial )
         return false;
@@ -146,9 +145,11 @@ bool PathResult::ComputeFutureObjectCollision( const wrapper::View& entity, cons
         boost::lambda::bind( &PathPoint::GetPos, *boost::lambda::_1 ) );
     if( path.empty() )
         return false;
-    GET_HOOK( ComputeObjectCollision )( entity, objectsToTest, rDistance, pObject, &path.front(), path.size(), blockedByObject, applyScale );
-    if( !pObject )
+    const SWORD_Model* object = 0;
+    GET_HOOK( ComputeObjectCollision )( model, entity, objectsToTest, rDistance, &object, &path.front(), path.size(), blockedByObject, applyScale );
+    if( !object )
         return false;
+    *knowledgeObjectColliding = wrapper::View( object );
     return true;
 }
 

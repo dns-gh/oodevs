@@ -46,7 +46,7 @@ BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_some_ratio, sword::fire::Mo
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ].AddElement() = 52;
-    core::Model& f = model[ "knowledges" ][ 1242 ][ 52 ];
+    core::Model& f = model[ "knowledges" ][ 1242 ][ "agents" ][ 52 ];
     entity[ "knowledges" ] = 1242;
     int userData;
     MOCK_EXPECT( callback ).once().with( enemy, &userData ).returns( true );

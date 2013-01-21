@@ -16,10 +16,6 @@
 #include <vector>
 #include <map>
 
-class KnowledgeCache;
-class DEC_Knowledge_Object;
-class MT_Vector2D;
-
 namespace sword
 {
 namespace movement

@@ -29,13 +29,16 @@ using namespace sword::movement;
 namespace
 {
     ModuleFacade* facade = 0; // $$$$ MCO : need a means to bind additional data to a hook
-    DEFINE_HOOK( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) )
+    DEFINE_HOOK( ComputeAgentFutureObjectCollision, 5, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance, const SWORD_Model** pObject ) )
     {
         assert( facade );
         PathWalker* pathWalker = facade->GetPathWalker( wrapper::View( entity )[ "identifier" ] );
         if( !pathWalker )
             return false;
-        return pathWalker->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, false, false );
+        wrapper::View knowledgeObjectColliding;
+        bool result = pathWalker->ComputeFutureObjectCollision( model, entity, objectsToTest, rDistance, &knowledgeObjectColliding, false, false );
+        *pObject = knowledgeObjectColliding;
+        return result;
     }
     DEFINE_HOOK( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) )
     {

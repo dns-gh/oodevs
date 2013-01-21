@@ -14,7 +14,6 @@
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include <boost/shared_ptr.hpp>
 
-class DEC_Knowledge_Object;
 class KnowledgeCache;
 
 namespace sword
@@ -40,8 +39,7 @@ class PathResult : public Path_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectVector;
-    typedef T_KnowledgeObjectVector::const_iterator                CIT_KnowledgeObjectVector;
+    typedef std::vector< wrapper::View > T_KnowledgeObjectVector;
 
     typedef std::list< boost::shared_ptr< PathPoint > >          T_PathPointList;
     typedef T_PathPointList::iterator                                IT_PathPointList;
@@ -66,7 +64,8 @@ public:
     //@{
     CIT_PathPointList GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
-    bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache* objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const;
+    bool ComputeFutureObjectCollision( const wrapper::View& model, const wrapper::View& entity, const KnowledgeCache* objectsToTest,
+                                       double& rDistance, wrapper::View* knowledgeObjectColliding, bool blockedByObject, bool applyScale ) const;
     virtual void InsertDecPoints() = 0;
     virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;

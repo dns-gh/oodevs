@@ -206,9 +206,9 @@ namespace
         MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJob( PathAdapter::Get( path ).get() );
         PathAdapter::Remove( path );
     }
-    DEFINE_HOOK( ComputeObjectCollision, 8, void,
-        ( const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance,
-          boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
+    DEFINE_HOOK( ComputeObjectCollision, 9, void,
+        ( const SWORD_Model* model, const SWORD_Model* entity, const KnowledgeCache* objectsToTest, double& rDistance,
+          const SWORD_Model** pObject, MT_Vector2D* start, size_t size, bool blockedByObject, bool applyScale ) )
     {
         const MIL_AgentPion& agent = GET_PION( entity );
         static const double epsilon = 1e-8;
@@ -290,10 +290,12 @@ namespace
                     if( collisions.empty() ) // should never happen
                         continue;
                     rDistanceSum += pPrevPos->Distance( *collisions.begin() );
-                    if( !pObject || rDistanceSum < rDistance )
+                    if( !*pObject || rDistanceSum < rDistance )
                     {
                         rDistance = rDistanceSum;
-                        pObject = pKnowledge;
+                        const core::Model& knowledges = (*core::Convert( model ))[ "knowledges" ];
+                        const std::size_t knowledgeGroup = (*core::Convert( entity ))[ "knowledges" ];
+                        *pObject = core::Convert( &knowledges[ knowledgeGroup ][ "objects" ][ pKnowledge->GetID() ] );
                     }
                     break;
                 }
@@ -424,11 +426,6 @@ namespace
     {
         GET_PION( entity ).Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( GetObjectKnownId, 1, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
-    {
-        assert( obstacle && obstacle->IsValid() );
-        return obstacle->GetObjectKnown() ? obstacle->GetObjectKnown()->GetID() : 0;
-    }
     DEFINE_HOOK( CreateKnowledgeCache, 0, KnowledgeCache*, () )
     {
         return new KnowledgeCache();
@@ -486,10 +483,6 @@ namespace
     DEFINE_HOOK( GetLandTypeName, 1, const char*, ( const TerrainData& terrain ) )
     {
         return MIL_Tools::GetLandTypeName( terrain ).c_str();
-    }
-    DEFINE_HOOK( GetKnowledgeObjectRealName, 1, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
-    {
-        return object->GetType().GetRealName().c_str();
     }
     DEFINE_HOOK( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )
     {

@@ -70,7 +70,7 @@ namespace fire
             : HookFixture( "fire_module", boost::assign::list_of( "direct fire" )( "direct fire population" ) )
             , entity   ( model[ "entities" ][ 42 ] )
             , firer    ( core::Convert( &entity ) )
-            , target   ( model[ "knowledges" ][ 1242 ][ 51 ] )
+            , target   ( model[ "knowledges" ][ 1242 ][ "agents" ][ 51 ] )
             , enemy    ( core::Convert( &target ) )
             , posture_1( 1 )
             , posture_2( 2 )

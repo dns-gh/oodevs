@@ -70,7 +70,7 @@ namespace
         const std::size_t k = entity[ "knowledges" ];
         T_DangerosityCache& cache = caches[ k ];
         if( cache.empty() )
-            FillCache( cache, k, model[ "knowledges" ][ k ], model );
+            FillCache( cache, k, model[ "knowledges" ][ k ][ "agents" ], model );
         return cache;
     }
 
@@ -85,7 +85,7 @@ namespace
     {
         const T_DangerosityCache& cache = GetCache( model, entity );
         const std::size_t id = entity[ "knowledges" ];
-        const wrapper::View& knowledges = model[ "knowledges" ][ id ];
+        const wrapper::View& knowledges = model[ "knowledges" ][ id ][ "agents" ];
         double rTotalFightScoreEnemy  = 0;
         double rTotalFightScoreFriend = 0;
         // 1 - Compute the enemy fight score, and get the dangerous enemies

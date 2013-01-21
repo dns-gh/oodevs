@@ -21,8 +21,6 @@ using namespace sword;
 using namespace sword::movement;
 
 DECLARE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
-DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
-DECLARE_HOOK( GetObjectKnownId, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
 DECLARE_HOOK( CreateKnowledgeCache, KnowledgeCache*, () )
 DECLARE_HOOK( DeleteKnowledgeCache, void, ( KnowledgeCache* cache ) )
 DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( KnowledgeCache* cache, const SWORD_Model* entity ) )
@@ -109,7 +107,7 @@ void MoveCommand::PostCallback( sword::movement::PathWalker::E_ReturnCode code )
 // Name: MoveCommand::AvoidObstacles
 // Created: NLD 2005-06-30
 // -----------------------------------------------------------------------------
-bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D& /*position*/ ) const
+bool MoveCommand::AvoidObstacles( const wrapper::View& model, const wrapper::View& entity, const MT_Vector2D& /*position*/ ) const
 {
     auto mainPath = mainPath_.lock();
     if( !mainPath )
@@ -125,12 +123,12 @@ bool MoveCommand::AvoidObstacles( const wrapper::View& entity, const MT_Vector2D
     }
     blockedTickCounter_ = 0;
 
-    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+    wrapper::View knowledgeObjectColliding;
     double rDistanceCollision = 0.;
-    if( !mainPath->ComputeFutureObjectCollision( entity, cache_.get(), rDistanceCollision, pObjectColliding, isBlockedByObject_, true ) )
+    if( !mainPath->ComputeFutureObjectCollision( model, entity, cache_.get(), rDistanceCollision, &knowledgeObjectColliding, isBlockedByObject_, true ) )
         return false;
-    obstacleId_ = GET_HOOK( GetObjectKnownId )( pObjectColliding );
-    PostReport( entity, report::eRC_DifficultMovementProgression, GET_HOOK( GetKnowledgeObjectRealName )( pObjectColliding ) );
+    obstacleId_ = knowledgeObjectColliding[ "identifier" ];
+    PostReport( entity, report::eRC_DifficultMovementProgression, knowledgeObjectColliding[ "real-name" ] );
 
     return true;
 }
@@ -153,7 +151,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
         return PostCallback( PathWalker::eNotAllowed );
 
     boost::shared_ptr< PathResult > mainPath = mainPath_.lock();
-    if( ( AvoidObstacles( entity, position ) && GET_HOOK( EntityManagerFindObject )( obstacleId_ ) ) ||
+    if( ( AvoidObstacles( model, entity, position ) && GET_HOOK( EntityManagerFindObject )( obstacleId_ ) ) ||
         ( executionSuspended_ && mainPath->GetState() != Path_ABC::eComputing &&
         ( mainPath->GetCurrentKeyOnPath() == mainPath->GetResult().end() || position != (*mainPath->GetCurrentKeyOnPath())->GetPos() ) ) )
     {

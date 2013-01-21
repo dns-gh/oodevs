@@ -52,7 +52,7 @@ public:
 private:
     //! @name Tools
     //@{
-    bool AvoidObstacles( const wrapper::View& model, const MT_Vector2D& position ) const;
+    bool AvoidObstacles( const wrapper::View& model, const wrapper::View& entity, const MT_Vector2D& position ) const;
     void CreateNewPath( const wrapper::View& entity ) const;
     void PostCallback( PathWalker::E_ReturnCode code ) const;
     //@}
