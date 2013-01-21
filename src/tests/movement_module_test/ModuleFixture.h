@@ -117,6 +117,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
     APPLY( NotifyPathCreation, 0, std::size_t, () ) \
     APPLY( InitializePath, 2, void, ( std::size_t path, const SWORD_Model* entity ) ) \
+    APPLY( HasKnowledgeObject, 2, bool, (  const SWORD_Model* entity, const SWORD_Model* object ) ) \
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )

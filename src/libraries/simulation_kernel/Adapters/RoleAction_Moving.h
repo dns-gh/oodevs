@@ -73,6 +73,7 @@ public:
     virtual double GetMaxSpeedModificator() const;
     virtual bool CanMove() const;
     virtual double GetTheoricMaxSpeedWithReinforcement() const;
+    virtual bool HasKnowledgeObject( const MIL_Object_ABC& object ) const;
     virtual void SetTheoricSpeed( bool ) const;
 
     bool HasResources();

@@ -504,6 +504,10 @@ namespace
                 break;
         }
     }
+    DEFINE_HOOK( HasKnowledgeObject, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
+    {
+        return GET_ROLE( entity, RoleAction_Moving ).HasKnowledgeObject( GET_DATA( object, MIL_Object_ABC ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

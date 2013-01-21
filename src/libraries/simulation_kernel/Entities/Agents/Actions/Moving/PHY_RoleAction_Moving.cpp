@@ -30,6 +30,10 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_Agent_Path.h"
+#include "Decision/DEC_Agent_PathClass.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -412,6 +416,24 @@ bool PHY_RoleAction_Moving::CanMove() const
 bool PHY_RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
     return object.CanInteractWith( *owner_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::CanBeBlock
+// Created: LGY 2013-01-21
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
+{
+    return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetObjectCost
+// Created: LGY 2013-01-21
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetObjectCost( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const
+{
+    return DEC_Agent_PathClass::GetPathClass( pathType, *owner_ ).GetObjectCost( objectType );
 }
 
 // -----------------------------------------------------------------------------

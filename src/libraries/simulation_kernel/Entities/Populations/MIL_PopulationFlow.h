@@ -118,6 +118,8 @@ private:
     //@{
     virtual bool CanMove() const;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
+    virtual bool HasKnowledgeObject( const MIL_Object_ABC& object ) const;
+    virtual double GetObjectCost( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const;
     virtual bool HasResources();
     virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;

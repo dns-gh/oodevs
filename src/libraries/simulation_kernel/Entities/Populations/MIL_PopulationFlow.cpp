@@ -15,6 +15,8 @@
 #include "Decision/DEC_Population_Path.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_Population_PathClass.h"
+#include "Decision/DEC_PathType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
@@ -316,6 +318,25 @@ double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*envir
 bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) const
 {
     return object.CanInteractWithEntity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CanBeBlock
+// Created: LGY 2013-01-21
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::HasKnowledgeObject( const MIL_Object_ABC& /*object*/ ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetObjectCost
+// Created: LGY 2013-01-21
+// -----------------------------------------------------------------------------
+double MIL_PopulationFlow::GetObjectCost( const MIL_ObjectType_ABC& objectType,
+                                          const DEC_PathType& pathType ) const
+{
+    return DEC_Population_PathClass::GetPathClass( pathType.GetName() ).GetObjectCost( objectType );
 }
 
 // -----------------------------------------------------------------------------

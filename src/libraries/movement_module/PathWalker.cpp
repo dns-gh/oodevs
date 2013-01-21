@@ -10,6 +10,7 @@
 #include "PathWalker.h"
 #include "PathPoint.h"
 #include "ModuleFacade.h"
+#include "Agent_PathClass.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Event.h"
@@ -33,6 +34,7 @@ DECLARE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, cons
 DECLARE_HOOK( ObjectIntersect2D, bool, ( const SWORD_Model* object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
 DECLARE_HOOK( ObjectIsInside, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
 DECLARE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
+DECLARE_HOOK( HasKnowledgeObject, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 
 namespace
 {
@@ -196,21 +198,27 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResu
         currentPath->NotifyPointReached( itCurrentPathPoint_ );
     if( ( currentPath->GetState() == PathResult::ePartial ) && pathChanged )
     {
-        bool isInsideObject = false;
         const MT_Vector2D& lastWaypoint = currentPath->GetLastWaypoint();
         typedef std::vector< wrapper::View > T_Objects;
         T_Objects objects;
+        std::string objectName;
+        double cost = 0;
         GET_HOOK( GetObjectListWithinCircle )( model, lastWaypoint, 100, &AddObject, &objects );
         for( T_Objects::const_iterator it = objects.begin(); it != objects.end(); ++it )
         {
-            if( GET_HOOK( CanObjectInteractWith )( entity, *it ) && GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
+            if( GET_HOOK( CanObjectInteractWith )( entity, *it ) && GET_HOOK( HasKnowledgeObject )( entity, *it ) )
             {
-                PostReport( entity, report::eRC_DifficultMovementProgression, (*it)[ "type/real-name" ] );
-                isInsideObject = true;
-                break;
+                const double objectCost = path->GetClass().GetObjectCost( (*it)[ "type/identifier" ] );
+                if( objectCost > cost )
+                {
+                    cost = objectCost;
+                    objectName = (*it)[ "type/real-name" ];
+                }
             }
         }
-        if( !isInsideObject )
+        if( objectName != "" )
+            PostReport( entity, report::eRC_DifficultMovementProgression, objectName );
+        else
             PostReport( entity, report::eRC_TerrainDifficile );
         rc = ePartialPath;
     }

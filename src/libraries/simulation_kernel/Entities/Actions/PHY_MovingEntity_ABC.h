@@ -21,6 +21,7 @@ namespace sword
 
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
+class MIL_ObjectType_ABC;
 class DEC_PathResult;
 class TerrainData;
 struct MIL_DecisionalReport;
@@ -73,6 +74,8 @@ public:
     //@{
     virtual bool CanMove              () const = 0;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;
+    virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const = 0;
+    virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const = 0;
     virtual bool HasResources         () = 0;
     virtual void SendRC               ( const MIL_DecisionalReport& reportId ) const = 0;
     virtual void SendRC               ( const MIL_DecisionalReport& reportId, const std::string& name ) const = 0;

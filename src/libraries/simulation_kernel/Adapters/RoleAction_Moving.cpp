@@ -23,6 +23,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAction_Moving )
 
@@ -310,4 +312,13 @@ void RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) const
         algorithm.UnsetPostureMovement();
     else
         algorithm.SetPostureMovement();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::HasKnowledgeObject
+// Created: LGY 2013-01-21
+// -----------------------------------------------------------------------------
+bool RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
+{
+    return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
 }

@@ -160,21 +160,28 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
         pPath->NotifyPointReached( itCurrentPathPoint_ );
     if( ( pPath->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
     {
-        bool isInsideObject = false;
         const MT_Vector2D& lastWaypoint = pPath->GetLastWaypoint();
         TER_Object_ABC::T_ObjectVector objects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( lastWaypoint, 100., objects );
+        std::string objectName;
+        double cost = 0;
         for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
         {
             const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-            if( movingEntity_.CanObjectInteractWith( object ) && object.IsInside( lastWaypoint ) )
+            if( movingEntity_.CanObjectInteractWith( object ) && movingEntity_.HasKnowledgeObject( object ) )
             {
-                movingEntity_.SendRC( report::eRC_DifficultMovementProgression, object.GetType().GetRealName() );
-                isInsideObject = true;
-                break;
+                const double objectCost = movingEntity_.GetObjectCost( object.GetType(), pPath->GetPathType() );
+                if( objectCost > cost )
+                {
+                    cost = objectCost;
+                    objectName = object.GetType().GetRealName();
+                }
             }
         }
-        if( !isInsideObject )
+
+        if( objectName != "" )
+            movingEntity_.SendRC( report::eRC_DifficultMovementProgression, objectName );
+        else
             movingEntity_.SendRC( report::eRC_TerrainDifficile );
         rc = ePartialPath;
     }

@@ -115,6 +115,9 @@ public:
     //! @name
     //@{
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
+    virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const;
+    virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType,
+                                        const DEC_PathType& pathType ) const;
     //@}
 
 private:
