@@ -255,13 +255,13 @@ namespace hla
     class CulturalFeaturedBuilder : public ClassBuilder
     {
     public:
-        CulturalFeaturedBuilder()
+        CulturalFeaturedBuilder( bool isHla13 = false )
             : ClassBuilder( "BaseEntity.PhysicalEntity.CulturalFeature", true, true
-                    , boost::assign::list_of( "EntityType" )
-                                    ( "EntityIdentifier" )
-                                    ( "ForceIdentifier" )
-                                    ( "Marking" )
-                                    ( "Spatial" ) )
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "EntityType" )
+                                                                                ( "EntityIdentifier" )
+                                                                                ( "ForceIdentifier" )
+                                                                                ( "Marking" )
+                                                                                ( "Spatial" ) ) )
         {}
     };
     class MinefieldBuilder : public ClassBuilder

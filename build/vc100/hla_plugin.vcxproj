@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\CulturalFeature.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DetonationFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextHandler.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ContextHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\CulturalFeature.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DetonationFacade.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireReceiver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\DirectFireSender.h" />

@@ -159,6 +159,7 @@ private:
     std::auto_ptr< HlaClass > rprSurfaceVesselClass_;
     std::auto_ptr< HlaClass > rprAircraftClass_;
     std::auto_ptr< HlaTacticalObjectClass > minefieldClass_;
+    std::auto_ptr< HlaTacticalObjectClass > culturalFeatureClass_;
     //@}
 };
 

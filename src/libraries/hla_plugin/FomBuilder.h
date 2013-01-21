@@ -58,6 +58,7 @@ public:
     std::auto_ptr< HlaClass > CreateRprSurfaceVesselClass();
     std::auto_ptr< HlaClass > CreateRprAircraftClass();
     std::auto_ptr< HlaTacticalObjectClass > CreateMinefieldClass();
+    std::auto_ptr< HlaTacticalObjectClass > CreateCulturalFeatureClass();
     //@}
 
 private:

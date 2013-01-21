@@ -23,6 +23,7 @@
 #include "Human.h"
 #include "NetnHuman.h"
 #include "Minefield.h"
+#include "CulturalFeature.h"
 
 #include "Federate_ABC.h"
 #include "MarkingFactory.h"
@@ -196,7 +197,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateRprAircraftClass()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FomBuilder::CreateSurfaceVesselClass
+// Name: FomBuilder::CreateMinefieldClass
 // Created: AHC 2011-11-12
 // -----------------------------------------------------------------------------
 std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateMinefieldClass()
@@ -218,3 +219,16 @@ std::auto_ptr< HlaClass > FomBuilder::CreateHumanClass()
                                          std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
                                          CreateClassBuilder< HumanBuilder, NetnHumanBuilder >( xis_.attribute< bool >( "netn", true ), isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FomBuilder::CreateCulturalFeatureClass
+// Created: AHC 2013-01-21
+// -----------------------------------------------------------------------------
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateCulturalFeatureClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< CulturalFeature >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< CulturalFeature >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< CulturalFeaturedBuilder, CulturalFeaturedBuilder >( false, isHla13( xis_ ) ) ) );
+}
+

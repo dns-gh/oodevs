@@ -89,8 +89,9 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , humanClass_        ( xis.attribute< bool >( "disaggregate", false ) ? fomBuilder_->CreateHumanClass() : std::auto_ptr< HlaClass >( 0 ) )
     , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprAggregateClass() : std::auto_ptr< HlaClass >( 0 ) )
     , rprSurfaceVesselClass_ ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprSurfaceVesselClass() : std::auto_ptr< HlaClass >( 0 ) )
-    , rprAircraftClass_ ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprAircraftClass() : std::auto_ptr< HlaClass >( 0 ) )
-    , minefieldClass_ ( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateMinefieldClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , rprAircraftClass_  ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprAircraftClass() : std::auto_ptr< HlaClass >( 0 ) )
+    , minefieldClass_    ( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateMinefieldClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , culturalFeatureClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateCulturalFeatureClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
 {
     subject_.Register( *this );
     tacticalObjectSubject_.Register( *this );
@@ -114,6 +115,7 @@ FederateFacade::~FederateFacade()
     surfaceVesselClass_.reset( 0 );
     aggregateClass_.reset( 0 );
     minefieldClass_.reset( 0 );
+    culturalFeatureClass_.reset( 0 );
     destructor_.reset( 0 );
     federate_.reset( 0 );
     rtiFactory_.DeleteAmbassador( ambassador_ );

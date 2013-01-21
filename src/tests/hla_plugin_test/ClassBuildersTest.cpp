@@ -256,7 +256,8 @@ BOOST_FIXTURE_TEST_CASE( minefield_builder_registers_attributes, Fixture )
 BOOST_FIXTURE_TEST_CASE( culturefeature_builder_registers_attributes, Fixture )
 {
     CulturalFeaturedBuilder builder;
-    attributes = boost::assign::list_of ( "EntityType" )
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "EntityType" )
                                         ( "EntityIdentifier" )
                                         ( "ForceIdentifier" )
                                         ( "Marking" )

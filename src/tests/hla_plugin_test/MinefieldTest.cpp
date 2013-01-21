@@ -153,14 +153,6 @@ namespace
         retval.set_longitude( lon );
         return retval;
     }
-    double addLat( double v, const sword::CoordLatLong& l )
-    {
-        return v + l.latitude();
-    }
-    double addLong( double v, const sword::CoordLatLong& l )
-    {
-        return v + l.longitude();
-    }
     bool CheckPerimeter( ::hla::T_SerializerPtr serializer, const TacticalObjectEventListener_ABC::T_PositionVector& p,
         const rpr::WorldLocation& center )
     {
