@@ -51,7 +51,7 @@ EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& co
 EngageMagicAction::~EngageMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *this );
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ EngageMagicAction::~EngageMagicAction()
 void EngageMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *this );
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

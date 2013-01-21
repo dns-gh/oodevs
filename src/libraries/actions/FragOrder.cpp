@@ -65,7 +65,7 @@ FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::R
 FragOrder::~FragOrder()
 {
     if( registered_ )
-        controller_.Delete( *this );
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ FragOrder::~FragOrder()
 void FragOrder::Polish()
 {
     if( registered_ )
-        controller_.Create( *this );
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

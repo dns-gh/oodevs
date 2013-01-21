@@ -47,7 +47,7 @@ KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel
 KnowledgeGroupMagicAction::~KnowledgeGroupMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *this );
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void KnowledgeGroupMagicAction::Serialize( xml::xostream& xos ) const
 void KnowledgeGroupMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *this );
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

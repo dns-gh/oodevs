@@ -54,7 +54,7 @@ UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& contro
 UnitMagicAction::~UnitMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *this );
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ UnitMagicAction::~UnitMagicAction()
 void UnitMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *this );
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

@@ -47,7 +47,7 @@ MagicAction::MagicAction( xml::xistream& xis, kernel::Controller& controller, co
 MagicAction::~MagicAction()
 {
     if( registered_ )
-        controller_.Delete( *this );
+        controller_.Delete( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ MagicAction::~MagicAction()
 void MagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *this );
+        controller_.Create( *(Action_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
