@@ -59,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    void Save( const std::string& name ) const;
+    void Save( const std::string& name, bool automatic ) const;
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& client );
     void UpdateTime( std::string time );
     //@}

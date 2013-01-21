@@ -2089,7 +2089,8 @@ message ControlCheckPointSaveBeginAck {
     @see ControlCheckPointSaveNow ControlCheckPointSaveBegin
 */
 message ControlCheckPointSaveEnd {
-    optional string name = 1; //!< The checkpoint name
+    optional string name    = 1; //!< The checkpoint name
+    optional bool automatic = 2; //!< The checkpoint type
 }
 
 /** @struct ControlCheckPointSaveDelete

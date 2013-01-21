@@ -85,13 +85,22 @@ namespace
 // Name: Model::Save
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void Model::Save( const std::string& name ) const
+void Model::Save( const std::string& name, bool automatic ) const
 {
     const std::string directory = config_.GetCheckpointDirectory( name );
 
     ::_mkdir( directory.c_str() );
 
     {
+        if( automatic )
+        {
+            bfs::path path = bfs::path( directory ) / "auto";
+            if( !bfs::exists( path ) )
+            {
+                std::ofstream file( path.string(), std::ios::out | std::ios::binary );
+                file.close();
+            }
+        }
         xml::xofstream xos( GetCheckPointFileName( directory ) );
         TacticalLinesModel::T_FormationMap formations;
         TacticalLinesModel::T_AutomatMap automats;

@@ -63,9 +63,13 @@ void MessengerPlugin::Register( dispatcher::Services& services )
 void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_checkpoint_save_end() )
-        model_->Save( wrapper.message().control_checkpoint_save_end().name() );
-    if( wrapper.message().has_control_begin_tick())
-        model_->UpdateTime( wrapper.message().control_begin_tick().date_time().data());
+    {
+        auto msg = wrapper.message().control_checkpoint_save_end();
+        bool automatic = msg.has_automatic() ? msg.automatic() : false;
+        model_->Save( msg.name(), automatic );
+    }
+    if( wrapper.message().has_control_begin_tick() )
+        model_->UpdateTime( wrapper.message().control_begin_tick().date_time().data() );
 }
 
 // -----------------------------------------------------------------------------

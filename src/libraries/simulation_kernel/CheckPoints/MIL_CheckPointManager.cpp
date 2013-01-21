@@ -416,6 +416,7 @@ bool MIL_CheckPointManager::SaveCheckPoint( bool automatic, const std::string& n
     MT_LOG_INFO_MSG( "End save checkpoint" );
     client::ControlCheckPointSaveEnd msg;
     msg().set_name( checkpointName );
+    msg().set_automatic( automatic );
     msg.Send( NET_Publisher_ABC::Publisher() );
     return ! bNotOk;
 }
