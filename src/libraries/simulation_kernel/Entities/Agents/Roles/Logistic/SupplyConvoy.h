@@ -11,14 +11,9 @@
 #define __SupplyConvoy_h_
 
 #include "SupplyConvoy_ABC.h"
-#include "SupplyRecipient_ABC.h"
-#include "Checkpoints/SerializationTools.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
 
 class PHY_ComposantePion;
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 
 namespace logistic {
     class SupplyConveyor_ABC;
@@ -44,7 +39,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters );
-             SupplyConvoy();
     virtual ~SupplyConvoy();
     //@}
 
@@ -64,12 +58,6 @@ public:
     virtual SupplySupplier_ABC& GetTransportersProvider() const;
     virtual bool CanTransport( const PHY_DotationCategory& dotationCategory ) const;
     virtual void SetProvider( const MIL_Agent_ABC* provider );
-    //@}
-
-    //! @name Serialization
-    //@{
-    void serialize( MIL_CheckPointInArchive& archive, const unsigned int );
-    void serialize( MIL_CheckPointOutArchive& archive, const unsigned int );
     //@}
 
 protected:
@@ -98,19 +86,18 @@ private:
     //@}
 
 protected:
-    SupplyConvoyEventsObserver_ABC* eventsObserver_;
-    SupplyRequestParameters_ABC* parameters_;
-    SupplySupplier_ABC* supplier_;
-    SupplySupplier_ABC* transportersProvider_;
+    SupplyConvoyEventsObserver_ABC& eventsObserver_;
+    SupplyRequestParameters_ABC& parameters_;
+    SupplySupplier_ABC& supplier_;
+    SupplySupplier_ABC& transportersProvider_;
     bool autoAllocateNewTransporters_;
     T_Conveyors conveyors_;
     E_Action currentAction_;
     unsigned timeRemainingForCurrentAction_;
     SupplyRecipient_ABC* currentSupplyRecipient_;
-    MIL_Agent_ABC* provider_;
+    const MIL_Agent_ABC* provider_;
 };
-} // end namespace logistic
 
-BOOST_CLASS_EXPORT_KEY( logistic::SupplyConvoy )
+} // end namespace logistic
 
 #endif // __SupplyConvoy_h_

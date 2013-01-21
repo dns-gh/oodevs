@@ -25,8 +25,6 @@ using namespace logistic;
 // Constructor / destructor 
 // =============================================================================
 
-static int count = 0;
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal constructor
 // Created: NLD 2011-08-01
@@ -35,21 +33,7 @@ SupplyConvoyReal::SupplyConvoyReal( SupplyConvoyEventsObserver_ABC& eventsObserv
     : SupplyConvoy      ( eventsObserver, supplier, parameters )
     , convoyPion_       ( 0 )
     , currentActionDone_( false )
-    , counter_( ++count )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConvoyReal constructor
-// Created: LDC 2013-01-14
-// -----------------------------------------------------------------------------
-SupplyConvoyReal::SupplyConvoyReal()
-    : SupplyConvoy      ()
-    , convoyPion_       ( 0 )
-    , currentActionDone_( false )
-    , counter_ (++count )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +44,7 @@ SupplyConvoyReal::~SupplyConvoyReal()
 {
     if( convoyPion_ )
     {
-        transportersProvider_->SupplyDestroyConvoyPion( *convoyPion_ );
+        transportersProvider_.SupplyDestroyConvoyPion( *convoyPion_ );
         convoyPion_ = 0;
     }
 }
@@ -77,7 +61,7 @@ unsigned SupplyConvoyReal::Setup()
 {
     if( !convoyPion_ )
     {
-        convoyPion_ = transportersProvider_->SupplyCreateConvoyPion( *SupplyConvoyConfig::convoyAgentType_, shared_from_this() );
+        convoyPion_ = transportersProvider_.SupplyCreateConvoyPion( *SupplyConvoyConfig::convoyAgentType_, shared_from_this() );
         BOOST_FOREACH( T_Conveyors::value_type& data, conveyors_ )
             data.second->LendTo( *convoyPion_ );
         convoyPion_->GetOrderManager().OnReceiveMission( *SupplyConvoyConfig::convoyMissionType_ );
@@ -169,7 +153,7 @@ void SupplyConvoyReal::NotifyTransporterDestroyed( PHY_ComposantePion& transport
 {
     T_Conveyors::const_iterator it = conveyors_.find( &transporter );
     if( it != conveyors_.end() )
-        it->second->Destroy( *eventsObserver_ );
+        it->second->Destroy( eventsObserver_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +162,7 @@ void SupplyConvoyReal::NotifyTransporterDestroyed( PHY_ComposantePion& transport
 // -----------------------------------------------------------------------------
 void SupplyConvoyReal::NotifyConvoyEndMission()
 {
-    eventsObserver_->OnConvoyEndMission();
+    eventsObserver_.OnConvoyEndMission();
 }
 
 // =============================================================================
@@ -222,7 +206,7 @@ SupplyRecipient_ABC* SupplyConvoyReal::GetCurrentSupplyRecipient() const
 // -----------------------------------------------------------------------------
 SupplySupplier_ABC& SupplyConvoyReal::GetSupplier() const
 {
-    return *supplier_;
+    return supplier_;
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +215,7 @@ SupplySupplier_ABC& SupplyConvoyReal::GetSupplier() const
 // -----------------------------------------------------------------------------
 SupplySupplier_ABC& SupplyConvoyReal::GetTransportersProvider() const
 {
-    return *transportersProvider_;
+    return transportersProvider_;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,9 +226,9 @@ const T_PointVector* SupplyConvoyReal::GetPathToNextDestination() const
 {
     switch( currentAction_ )
     {
-        case eMoveToSupplier: return &parameters_->GetPathToSupplier();
-        case eMoveToTransportersProvider: return &parameters_->GetPathToTransportersProvider();
-        case eMoveToSupplyRecipient: assert( currentSupplyRecipient_ ); return &parameters_->GetPathToRecipient( *currentSupplyRecipient_ );
+        case eMoveToSupplier: return &parameters_.GetPathToSupplier();
+        case eMoveToTransportersProvider: return &parameters_.GetPathToTransportersProvider();
+        case eMoveToSupplyRecipient: assert( currentSupplyRecipient_ ); return &parameters_.GetPathToRecipient( *currentSupplyRecipient_ );
         default:
             return 0;
     }
@@ -268,7 +252,7 @@ void SupplyConvoyReal::Finish()
     SupplyConvoy::Finish();
     if( convoyPion_ )
     {
-        transportersProvider_->SupplyDestroyConvoyPion( *convoyPion_ );
+        transportersProvider_.SupplyDestroyConvoyPion( *convoyPion_ );
         convoyPion_ = 0;
     }
 }
@@ -287,21 +271,4 @@ void SupplyConvoyReal::Serialize( sword::UnitId& msg ) const
         msg.set_id( convoyPion_->GetID() );
     else
         msg.set_id( 0 );
-}
-
-// Serialization
-
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoyReal )
-
-// -----------------------------------------------------------------------------
-// Name: template< typename Archive > SupplyConvoyReal::serialize
-// Created: LDC 2013-01-14
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void SupplyConvoyReal::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< SupplyConvoy >( *this );
-    archive & boost::serialization::base_object< SupplyConvoyReal_ABC >( *this );
-    archive & convoyPion_;
-    archive & currentActionDone_;
 }

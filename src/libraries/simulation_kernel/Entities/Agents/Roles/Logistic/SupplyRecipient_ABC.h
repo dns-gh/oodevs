@@ -69,7 +69,6 @@ public:
     //! @name Network
     //@{
     virtual void Serialize( sword::AutomatId& message ) const = 0;
-    template < typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 };
 

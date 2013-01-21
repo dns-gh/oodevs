@@ -11,26 +11,20 @@
 #include "SupplyRequest.h"
 #include "SupplyResource_ABC.h"
 #include "SupplyRecipient_ABC.h"
-#include "Checkpoints/SerializationTools.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace logistic;
-
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyRequest )
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRequest constructor
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory )
-    : dotationCategory_   ( &dotationCategory )
+    : dotationCategory_   ( dotationCategory )
     , supplier_           ( 0 )
     , requestedQuantity_  ( 0 )
     , grantedQuantity_    ( 0 )
@@ -40,24 +34,6 @@ SupplyRequest::SupplyRequest( const PHY_DotationCategory& dotationCategory )
     , supplierQuotas_     ()
     , provider_           ( 0 )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRequest constructor
-// Created: LDC 2013-01-16
-// -----------------------------------------------------------------------------
-SupplyRequest::SupplyRequest()
-    : dotationCategory_   ( 0 )
-    , supplier_           ( 0 )
-    , requestedQuantity_  ( 0 )
-    , grantedQuantity_    ( 0 )
-    , convoyedQuantity_   ( 0 )
-    , suppliedQuantity_   ( 0 )
-    , complementarySupply_( true )
-    , supplierQuotas_     ()
-    , provider_           ( 0 )
-{
-        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +44,10 @@ SupplyRequest::~SupplyRequest()
 {
     //$$$ Return remaining stock automatically - BOF: magic
     if( supplier_ && convoyedQuantity_ > 0 )
-        supplier_->SupplyReturnStock( *dotationCategory_, convoyedQuantity_ );
+        supplier_->SupplyReturnStock( dotationCategory_, convoyedQuantity_ );
 
     if( supplierQuotas_ && requestedQuantity_ > suppliedQuantity_ )
-        supplierQuotas_->ReturnQuota( *dotationCategory_, requestedQuantity_ - suppliedQuantity_ );
+        supplierQuotas_->ReturnQuota( dotationCategory_, requestedQuantity_ - suppliedQuantity_ );
 }
 
 // =============================================================================
@@ -102,7 +78,7 @@ bool SupplyRequest::AffectSupplier( SupplySupplier_ABC& supplier )
 {
     if( supplier_ )
         return true;
-    if( supplier.SupplyHasStock( *dotationCategory_ ) )
+    if( supplier.SupplyHasStock( dotationCategory_ ) )
     {
         supplier_ = &supplier;
         return true;
@@ -120,10 +96,10 @@ bool SupplyRequest::AffectSupplier( SupplyRecipient_ABC& recipient, boost::share
         return true;
     if( !AffectSupplier( supplier->GetSuperior() ) )
     {
-        recipient.NotifyStockNotAvailable( *dotationCategory_, requesters_ );
+        recipient.NotifyStockNotAvailable( dotationCategory_, requesters_ );
         return false;
     }
-    const double authorizedQuantity = supplier->ConsumeQuota( *dotationCategory_, requestedQuantity_, requesters_ );
+    const double authorizedQuantity = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_, requesters_ );
     if( authorizedQuantity <= 0 )
     {
         supplier_ = 0;
@@ -198,7 +174,7 @@ void SupplyRequest::ReserveStock()
     if( !supplier_ || grantedQuantity_ > 0 )
         return;
 
-    logistic::SupplySupplier_ABC::Stock stock = supplier_->SupplyGetStock( *dotationCategory_, requestedQuantity_ );
+    logistic::SupplySupplier_ABC::Stock stock = supplier_->SupplyGetStock( dotationCategory_, requestedQuantity_ );
     grantedQuantity_ = stock.quantity_;
     if( !provider_ )
         provider_ = stock.provider_;
@@ -213,7 +189,7 @@ void SupplyRequest::ReturnStockNotAssignedToConvoy()
 {
     double tmp = grantedQuantity_ - convoyedQuantity_;
     if( tmp > 0 )
-        supplier_->SupplyReturnStock( *dotationCategory_, tmp );
+        supplier_->SupplyReturnStock( dotationCategory_, tmp );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +198,7 @@ void SupplyRequest::ReturnStockNotAssignedToConvoy()
 // -----------------------------------------------------------------------------
 void SupplyRequest::NotifySuperiorNotAvailable( SupplyRecipient_ABC& recipient )
 {
-    recipient.NotifySuperiorNotAvailable( *dotationCategory_, requesters_ );
+    recipient.NotifySuperiorNotAvailable( dotationCategory_, requesters_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +216,7 @@ SupplySupplier_ABC* SupplyRequest::GetSupplier() const
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory& SupplyRequest::GetDotationCategory() const
 {
-    return *dotationCategory_;
+    return dotationCategory_;
 }
 
 // -----------------------------------------------------------------------------
@@ -285,62 +261,8 @@ const MIL_Agent_ABC* SupplyRequest::GetProvider() const
 // -----------------------------------------------------------------------------
 void SupplyRequest::Serialize( sword::SupplyResourceRequest& msg ) const
 {
-    msg.mutable_resource()->set_id( dotationCategory_->GetMosID() );
+    msg.mutable_resource()->set_id( dotationCategory_.GetMosID() );
     msg.set_requested( (unsigned)requestedQuantity_ );
     msg.set_granted  ( (unsigned)grantedQuantity_ );
     msg.set_convoyed ( (unsigned)convoyedQuantity_ );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRequest::load
-// Created: LDC 2013-01-16
-// -----------------------------------------------------------------------------
-void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
-{
-    archive >> boost::serialization::base_object< SupplyRequest_ABC >( *this );
-    int dotationId;
-    archive >> dotationId;
-    dotationCategory_ = PHY_DotationType::FindDotationCategory( dotationId );
-    archive >> resources_;
-    size_t requestersSize;
-    archive >> requestersSize;
-    for( size_t i = 0; i < requestersSize; ++i )
-    {
-        MIL_AgentPion* pion;
-        archive >> pion;
-        requesters_.push_back( pion );
-    }
-    archive >> supplier_;
-    archive >> requestedQuantity_;
-    archive >> grantedQuantity_;
-    archive >> convoyedQuantity_;
-    archive >> suppliedQuantity_;
-    archive >> complementarySupply_;
-    archive >> supplierQuotas_;
-    archive >> const_cast< MIL_Agent_ABC*& >( provider_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRequest::save
-// Created: LDC 2013-01-16
-// -----------------------------------------------------------------------------
-void SupplyRequest::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
-{
-    archive << boost::serialization::base_object< SupplyRequest_ABC >( *this );
-    int dotationId = dotationCategory_->GetMosID();
-    archive << dotationId;
-    archive << resources_;
-    size_t requestersSize = requesters_.size();
-    archive << requestersSize;
-    for( auto it = requesters_.begin(); it != requesters_.end(); ++it )
-        archive << *it;
-    archive << supplier_;
-    archive << requestedQuantity_;
-    archive << grantedQuantity_;
-    archive << convoyedQuantity_;
-    archive << suppliedQuantity_;
-    archive << complementarySupply_;
-    archive << supplierQuotas_;
-    archive << provider_;
 }

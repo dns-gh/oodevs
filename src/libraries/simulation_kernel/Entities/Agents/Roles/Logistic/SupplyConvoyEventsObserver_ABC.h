@@ -36,8 +36,6 @@ public:
     virtual void OnResourceRemovedFromConvoy   ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
     virtual void OnConvoyEndMission            () = 0;
     //@}
-    
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
 };
 
 } // end namespace logistic

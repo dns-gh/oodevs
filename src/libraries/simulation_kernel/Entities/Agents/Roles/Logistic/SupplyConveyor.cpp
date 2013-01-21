@@ -12,15 +12,12 @@
 #include "SupplyConvoyEventsObserver_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include <boost/foreach.hpp>
 
 using namespace logistic;
-
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConveyor );
 
 // =============================================================================
 // Constructor / destructor 
@@ -31,25 +28,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConveyor );
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 SupplyConveyor::SupplyConveyor( PHY_ComposantePion& composante, MIL_AgentPion& pion )
-    : composante_( &composante )
-    , pion_      ( &pion )
+    : composante_( composante )
+    , pion_      ( pion )
     , borrower_  ( 0 )
 {
-    composante_->GetStockTransporterCapacity( weightCapacity_, volumeCapacity_ );
+    composante_.GetStockTransporterCapacity( weightCapacity_, volumeCapacity_ );
     assert( weightCapacity_ > 0. && volumeCapacity_ > 0. );
-    pion_->GetRole< PHY_RoleInterface_Supply >().StartUsingForLogistic( composante );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConveyor constructor
-// Created: LDC 2013-01-17
-// -----------------------------------------------------------------------------
-SupplyConveyor::SupplyConveyor()
-    : composante_( 0 )
-    , pion_      ( 0 )
-    , borrower_  ( 0 )
-{
-        // NOTHING
+    pion_.GetRole< PHY_RoleInterface_Supply >().StartUsingForLogistic( composante );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +44,7 @@ SupplyConveyor::SupplyConveyor()
 SupplyConveyor::~SupplyConveyor()
 {
     UndoLend();
-    pion_->GetRole< PHY_RoleInterface_Supply >().StopUsingForLogistic( *composante_ );
+    pion_.GetRole< PHY_RoleInterface_Supply >().StopUsingForLogistic( composante_ );
 }
 
 // =============================================================================
@@ -72,7 +57,7 @@ SupplyConveyor::~SupplyConveyor()
 // -----------------------------------------------------------------------------
 bool SupplyConveyor::CanTransport( const PHY_DotationCategory& dotationCategory ) const
 {
-    return composante_->GetType().CanTransportStock( dotationCategory );
+    return composante_.GetType().CanTransportStock( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +66,7 @@ bool SupplyConveyor::CanTransport( const PHY_DotationCategory& dotationCategory 
 // -----------------------------------------------------------------------------
 double SupplyConveyor::Convoy( SupplyConvoyEventsObserver_ABC& eventsObserver, const PHY_DotationCategory& dotationCategory, double quantity )
 {
-    if( !composante_->GetType().CanTransportStock( dotationCategory ) )
+    if( !composante_.GetType().CanTransportStock( dotationCategory ) )
         return 0.;
 
     double volumeToConvoy = quantity * dotationCategory.GetVolume();
@@ -139,8 +124,8 @@ void SupplyConveyor::LendTo( MIL_AgentPion& borrower )
         UndoLend();
 
     borrower_ = &borrower;
-    pion_->GetRole< PHY_RoleInterface_Supply      >().StopUsingForLogistic( *composante_ );
-    pion_->GetRole< PHY_RoleInterface_Composantes >().LendComposante      ( *borrower_, *composante_ );
+    pion_.GetRole< PHY_RoleInterface_Supply      >().StopUsingForLogistic( composante_ );
+    pion_.GetRole< PHY_RoleInterface_Composantes >().LendComposante      ( *borrower_, composante_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,8 +136,8 @@ void SupplyConveyor::UndoLend()
 {
     if( borrower_ )
     {
-        pion_->GetRole< PHY_RoleInterface_Composantes >().RetrieveLentComposante( *borrower_, *composante_ );
-        pion_->GetRole< PHY_RoleInterface_Supply      >().StartUsingForLogistic ( *composante_ );
+        pion_.GetRole< PHY_RoleInterface_Composantes >().RetrieveLentComposante( *borrower_, composante_ );
+        pion_.GetRole< PHY_RoleInterface_Supply      >().StartUsingForLogistic ( composante_ );
         borrower_ = 0;
     }
 }
@@ -163,7 +148,7 @@ void SupplyConveyor::UndoLend()
 // -----------------------------------------------------------------------------
 unsigned SupplyConveyor::ApproximateTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const
 {
-    return composante_->ApproximateTravelTime( startPos, endPos );
+    return composante_.ApproximateTravelTime( startPos, endPos );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,51 +176,4 @@ void SupplyConveyor::Destroy( SupplyConvoyEventsObserver_ABC& eventsObserver )
     BOOST_FOREACH( const T_Resources::value_type& data, resourcesConvoyed_ )
         eventsObserver.OnResourceRemovedFromConvoy( *data.first, data.second );
     resourcesConvoyed_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConveyor::serialize
-// Created: LDC 2013-01-17
-// -----------------------------------------------------------------------------
-void SupplyConveyor::serialize( MIL_CheckPointInArchive& archive, const unsigned int )
-{
-    archive >> boost::serialization::base_object< SupplyConveyor_ABC >( *this );
-    archive >> composante_;
-    archive >> pion_;
-    archive >> weightCapacity_;
-    archive >> volumeCapacity_;
-    size_t resourcesSize;
-    archive >> resourcesSize;
-    for( int i = 0; i < resourcesSize; ++i )
-    {
-        unsigned int dotationId;
-        archive >> dotationId;
-        double value;
-        archive >> value;
-        resourcesConvoyed_[ PHY_DotationType::FindDotationCategory( dotationId ) ] = value;
-    }
-    archive >> borrower_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConveyor::serialize
-// Created: LDC 2013-01-17
-// -----------------------------------------------------------------------------
-void SupplyConveyor::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
-{
-    archive << boost::serialization::base_object< SupplyConveyor_ABC >( *this );
-    archive << composante_;
-    archive << pion_;
-    archive << weightCapacity_;
-    archive << volumeCapacity_;
-    size_t resourcesSize = resourcesConvoyed_.size();
-    archive << resourcesSize;
-    for( auto it = resourcesConvoyed_.begin(); it != resourcesConvoyed_.end(); ++it )
-    {
-        unsigned int dotationId = it->first->GetMosID();
-        archive << dotationId;
-        double value = it->second;
-        archive << value;
-    }
-    archive << borrower_;
 }

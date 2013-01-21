@@ -13,12 +13,9 @@
 #include "SupplyStockManualRequestBuilder_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/Resolver.h"
-#include <boost/serialization/export.hpp>
 
 class MIL_Automate;
 class PHY_DotationStock;
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 
 namespace logistic {
     class SupplySupplier_ABC;
@@ -34,7 +31,6 @@ class SupplyStockPushFlowRequestBuilder : public SupplyStockManualRequestBuilder
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStockPushFlowRequestBuilder();
              SupplyStockPushFlowRequestBuilder( const sword::PushFlowParameters& parameters, SupplySupplier_ABC& supplier, const tools::Resolver_ABC< MIL_Automate >& recipientResolver );
     virtual ~SupplyStockPushFlowRequestBuilder();
     //@}
@@ -42,18 +38,14 @@ public:
     //! @name Operations
     //@{
     virtual void Process( SupplyRequestContainer_ABC& container );
-    void serialize( MIL_CheckPointInArchive&, const unsigned int );
-    void serialize( MIL_CheckPointOutArchive&, const unsigned int );
     //@}
 
 private:
     const sword::PushFlowParameters pushFlowParameters_;
-    SupplySupplier_ABC* supplier_;
-    const tools::Resolver_ABC< MIL_Automate >* recipientResolver_;
+    SupplySupplier_ABC& supplier_;
+    const tools::Resolver_ABC< MIL_Automate >& recipientResolver_;
 };
 
 } // end namespace logistic
-
-BOOST_CLASS_EXPORT_KEY( logistic::SupplyStockPushFlowRequestBuilder )
 
 #endif // __SupplyStockPushFlowRequestBuilder_h_

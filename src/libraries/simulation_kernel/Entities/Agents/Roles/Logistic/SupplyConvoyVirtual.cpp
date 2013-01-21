@@ -17,8 +17,6 @@
 
 using namespace logistic;
 
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoyVirtual )
-
 // =============================================================================
 // Constructor / destructor 
 // =============================================================================
@@ -29,15 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoyVirtual )
 // -----------------------------------------------------------------------------
 SupplyConvoyVirtual::SupplyConvoyVirtual( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
     : SupplyConvoy( eventsObserver, supplier, parameters )
-    , position_   ( transportersProvider_->GetPosition() )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConvoyVirtual constructor
-// Created: LDC 2013-01-17
-// -----------------------------------------------------------------------------
-SupplyConvoyVirtual::SupplyConvoyVirtual()
+    , position_   ( transportersProvider_.GetPosition() )
 {
 }
 
@@ -91,7 +81,7 @@ unsigned SupplyConvoyVirtual::MoveTo( const MT_Vector2D& position )
 unsigned SupplyConvoyVirtual::MoveToSupplier()
 {
     currentAction_ = eMoveToSupplier;
-    return MoveTo( supplier_->GetPosition() );
+    return MoveTo( supplier_.GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +103,7 @@ unsigned SupplyConvoyVirtual::MoveToSupplyRecipient()
 unsigned SupplyConvoyVirtual::MoveToTransportersProvider()
 {
     currentAction_ = eMoveToTransportersProvider;
-    return MoveTo( transportersProvider_->GetPosition() );
+    return MoveTo( transportersProvider_.GetPosition() );
 }
 
 // =============================================================================
@@ -127,14 +117,4 @@ unsigned SupplyConvoyVirtual::MoveToTransportersProvider()
 void SupplyConvoyVirtual::Serialize( sword::UnitId& msg ) const
 {
     msg.set_id( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename Archive > void SupplyConvoyVirtual::serialize
-// Created: LDC 2013-01-17
-// -----------------------------------------------------------------------------
-template< typename Archive > void SupplyConvoyVirtual::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< SupplyConvoy >( *this );
-    archive & position_;
 }

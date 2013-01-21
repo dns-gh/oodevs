@@ -13,25 +13,13 @@
 
 using namespace logistic;
 
-BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyResourceDotation )
-
 // -----------------------------------------------------------------------------
 // Name: SupplyResourceDotation::SupplyResourceDotation
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 SupplyResourceDotation::SupplyResourceDotation( PHY_Dotation& dotation )
-    : dotation_( &dotation )
+    : dotation_( dotation )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyResourceDotation constructor
-// Created: LDC 2013-01-16
-// -----------------------------------------------------------------------------
-SupplyResourceDotation::SupplyResourceDotation()
-    : dotation_( 0 )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +40,7 @@ SupplyResourceDotation::~SupplyResourceDotation()
 // -----------------------------------------------------------------------------
 double SupplyResourceDotation::Supply( double quantity )
 {
-    return dotation_->Supply( quantity );
+    return dotation_.Supply( quantity );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +49,7 @@ double SupplyResourceDotation::Supply( double quantity )
 // -----------------------------------------------------------------------------
 bool SupplyResourceDotation::HasReachedSupplyThreshold() const
 {
-    return dotation_->HasReachedSupplyThreshold();
+    return dotation_.HasReachedSupplyThreshold();
 }
 
 // =============================================================================
@@ -74,15 +62,6 @@ bool SupplyResourceDotation::HasReachedSupplyThreshold() const
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory& SupplyResourceDotation::GetCategory() const
 {
-    return dotation_->GetCategory();
+    return dotation_.GetCategory();
 }
 
-// -----------------------------------------------------------------------------
-// Name: template< typename Archive > void SupplyResourceDotation::serialize
-// Created: LDC 2013-01-16
-// -----------------------------------------------------------------------------
-template< typename Archive > void SupplyResourceDotation::serialize( Archive& archive, const unsigned int )
-{
-    archive & boost::serialization::base_object< SupplyResource_ABC >( *this );
-    archive & dotation_;
-}

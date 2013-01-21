@@ -57,8 +57,7 @@ public:
     //@{
     virtual void SendChangedState() const = 0;
     virtual void SendFullState   () const = 0;
-    virtual void Clean           () = 0;    
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    virtual void Clean           () = 0;
     //@}
 };
 

@@ -110,8 +110,6 @@ private:
     static MIL_IDManager idManager_;
 };
 
-BOOST_CLASS_EXPORT_KEY( MIL_Agent_ABC )
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Agent_ABC::serialize
 // Created: SBO 2009-07-01

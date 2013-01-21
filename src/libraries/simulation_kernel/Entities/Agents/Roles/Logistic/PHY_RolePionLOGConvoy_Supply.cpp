@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOGConvoy_Supply.h"
-#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConvoyReal_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -66,7 +65,7 @@ template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
-    file & convoy_;
+//         & pConvoy_;
 }
 
 // -----------------------------------------------------------------------------

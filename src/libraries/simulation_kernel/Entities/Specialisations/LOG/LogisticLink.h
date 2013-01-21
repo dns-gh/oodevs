@@ -15,8 +15,6 @@
 
 class PHY_DotationCategory;
 class MIL_AutomateLOG;
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 
 namespace sword {
     class MissionParameter;
@@ -36,7 +34,6 @@ class LogisticLink : public LogisticLink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLink();
              LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, bool useQuotas, xml::xistream& xis );
              LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_AutomateLOG& superior, bool useQuotas );
     virtual ~LogisticLink();
@@ -57,8 +54,7 @@ public:
 
     //! @name CheckPoint
     //@{
-    void serialize( MIL_CheckPointOutArchive&, const unsigned int );
-    void serialize( MIL_CheckPointInArchive&, const unsigned int );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Network
@@ -105,6 +101,10 @@ private:
 
     // Network
     mutable bool quotasUpdated_;
+
+private:
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const LogisticLink*, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, LogisticLink*, const unsigned int /*version*/ );
 };
 
 } // namespace logistic

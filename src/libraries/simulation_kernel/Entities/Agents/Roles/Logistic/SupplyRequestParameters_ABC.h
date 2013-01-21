@@ -46,8 +46,6 @@ public:
     virtual const T_PointVector&           GetPathToTransportersProvider() const = 0;
     virtual const T_PointVector&           GetPathToSupplier            () const = 0;
     virtual const SupplyConvoyFactory_ABC& GetConvoyFactory       () const = 0;
-    
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 };
 

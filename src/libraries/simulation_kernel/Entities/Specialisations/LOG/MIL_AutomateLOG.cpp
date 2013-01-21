@@ -137,14 +137,13 @@ template< typename T > void MIL_AutomateLOG::Visit( T& visitor ) const
 template < typename Archive >
 void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
-    file & boost::serialization::base_object< logistic::SupplySupplier_ABC >( *this );
-    file & pAssociatedAutomate_;
-    file & pAssociatedFormation_;
-    file & pLogisticHierarchy_;
-    file & nextConvoyInstanceId_;
-    file & supplyRequests_;
-    file & supplyConsigns_;
+    file & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
+         & pAssociatedAutomate_
+         & pAssociatedFormation_
+         & pLogisticHierarchy_
+         & nextConvoyInstanceId_;
+    /*     & pExplicitStockSupplyState_;
+         & supplyConsigns_;*/
 }
 
 // =============================================================================

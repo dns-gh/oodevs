@@ -73,9 +73,8 @@ MIL_StockSupplyManager::~MIL_StockSupplyManager()
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_SupplyManager >( *this );
-    file >> pAutomate_;
-    file >> bSupplyNeeded_;
+    file >> pAutomate_
+         >> bSupplyNeeded_;
     assert( pAutomate_ );
     supplyRequestBuilder_.reset( new logistic::SupplyStockRequestBuilder( *pAutomate_, *this ) );
     autoSupplyRequest_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
@@ -87,9 +86,8 @@ void MIL_StockSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< MIL_SupplyManager >( *this );
-    file << pAutomate_;
-    file << bSupplyNeeded_;
+    file << pAutomate_
+         << bSupplyNeeded_;
 }
 
 // -----------------------------------------------------------------------------

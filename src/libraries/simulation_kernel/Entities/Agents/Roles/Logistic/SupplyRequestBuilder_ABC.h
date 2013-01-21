@@ -31,7 +31,6 @@ public:
     //! @name Operations
     //@{
     virtual void Process( SupplyRequestContainer_ABC& container ) = 0;
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 };
 
