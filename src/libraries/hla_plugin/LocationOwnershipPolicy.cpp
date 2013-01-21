@@ -78,7 +78,7 @@ private:
     virtual void UniqueIdChanged( const std::string& identifier, const std::vector< char >& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
-    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
+    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter );
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
@@ -309,7 +309,7 @@ void LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged( const std
 // Name: LocationOwnershipPolicy::OwnershipState::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::OwnershipState::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+void LocationOwnershipPolicy::OwnershipState::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
 {
     // NOTHING
 }

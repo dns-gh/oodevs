@@ -298,7 +298,7 @@ void EquipmentUpdater::EmbeddedUnitListChanged( const std::string& /*identifier*
 // Name: EquipmentUpdater::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+void EquipmentUpdater::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
 {
     // NOTHING
 }

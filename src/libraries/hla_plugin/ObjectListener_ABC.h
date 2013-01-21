@@ -17,7 +17,7 @@
 namespace rpr
 {
     class EntityType;
-    class PerimeterPoint;
+    class WorldLocation;
 }
 
 namespace plugins
@@ -55,7 +55,7 @@ public:
     virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId ) = 0;
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& embeddedUnits ) = 0;
-    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter ) = 0;
+    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter ) = 0;
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId ) = 0;
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;

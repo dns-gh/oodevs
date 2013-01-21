@@ -35,6 +35,8 @@ using namespace plugins::hla;
 namespace
 {
 
+static const double rPiOver180 = std::acos( -1. ) / 180.;
+
 void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
 {
     int8 tmpForce;
@@ -55,15 +57,22 @@ void ReadNothing( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& 
 {
     // NOTHING
 }
-void ReadWorldLocation( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::WorldLocation& loc )
+void ReadWorldLocation( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, rpr::WorldLocation& loc )
 {
     loc.Deserialize( deserializer );
-    listener.Moved( identifier, loc.Latitude(), loc.Longitude() );
 }
-void ReadPerimeter( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< rpr::PerimeterPoint >& loc )
+void ReadPerimeter( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< rpr::PerimeterPoint >& loc, const rpr::WorldLocation& center )
 {
     deserializer >> loc;
-    listener.PerimeterChanged( identifier, loc );
+    geocoord::PlanarCartesian::Parameters params; params.SetOrigin( center.Latitude() * rPiOver180, center.Longitude() * rPiOver180 );
+    std::vector< rpr::WorldLocation > wl;
+    BOOST_FOREACH( const rpr::PerimeterPoint& v, loc )
+    {
+        geocoord::PlanarCartesian pc( v.X(), v.Y(), 0, params );
+        geocoord::Geodetic geo( pc );
+        wl.push_back( rpr::WorldLocation( geo.GetLatitude() / rPiOver180, geo.GetLongitude() / rPiOver180, 0 ) );
+    }
+    listener.PerimeterChanged( identifier, wl );
 }
 }
 
@@ -165,7 +174,7 @@ void Minefield::RegisterAttributes()
     attributes_->Register( "MinefieldLocation", boost::bind( &ReadWorldLocation, _1, _2, _3, boost::ref( center_ ) ), center_);
     //attributes_->Register( "MinefieldOrientation" ); // FIXME AHC
     attributes_->Register( "MineTypes", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::EntityType > >( mineTypes_ ) );
-    attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadPerimeter, _1, _2, _3, boost::ref( perimeter_ ) ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
+    attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadPerimeter, _1, _2, _3, boost::ref( perimeter_ ), boost::cref( center_ ) ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
     attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8 >( 0 ) ); // HearbeatMode
     attributes_->Register( "State", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( false ) ); // FIXME AHC
     attributes_->Register( "ActiveStatus", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
@@ -181,7 +190,6 @@ namespace
     {
         return v + l.longitude();
     }
-    static const double rPiOver180 = std::acos( -1. ) / 180.;
     rpr::PerimeterPoint computePerimeter( const sword::CoordLatLong& v, const geocoord::PlanarCartesian::Parameters& params )
     {
         const geocoord::Geodetic pos( v.latitude() * rPiOver180, v.longitude() * rPiOver180, 0 );

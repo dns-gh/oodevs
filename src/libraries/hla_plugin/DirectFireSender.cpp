@@ -249,7 +249,7 @@ void DirectFireSender::EmbeddedUnitListChanged( const std::string& /*identifier*
 // Name: DirectFireSender::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void DirectFireSender::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*points*/ )
+void DirectFireSender::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*points*/ )
 {
     // NOTHING
 }

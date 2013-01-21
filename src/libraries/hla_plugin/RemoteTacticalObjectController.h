@@ -69,7 +69,7 @@ private:
     typedef boost::shared_ptr< simulation::ObjectMagicAction > T_ObjectCreation;
     typedef std::map< std::string, T_ObjectCreation > T_ObjectCreations;
     typedef std::map< std::string, std::pair< double, double > > T_Centers;
-    typedef std::map< std::string, std::vector< rpr::PerimeterPoint > > T_Perimeters;
+    typedef std::map< std::string, std::vector< rpr::WorldLocation > > T_Perimeters;
     //@}
 
 private:
@@ -89,7 +89,7 @@ private:
     virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
-    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
+    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter );
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );

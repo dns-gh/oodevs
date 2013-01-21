@@ -394,7 +394,7 @@ void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int 
 // Name: RemoteAgentController::PlatformCreated
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
-void RemoteAgentController::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+void RemoteAgentController::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
 {
     // NOTHING
 }

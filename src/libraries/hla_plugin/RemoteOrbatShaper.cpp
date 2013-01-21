@@ -484,7 +484,7 @@ void RemoteOrbatShaper::EmbeddedUnitListChanged( const std::string& /*identifier
 // Name: RemoteOrbatShaper::PerimeterChanged
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+void RemoteOrbatShaper::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
 
 {
 }

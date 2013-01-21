@@ -20,8 +20,6 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/ObjectType.h"
 
-#include <geocoord/Geodetic.h>
-#include <geocoord/PlanarCartesian.h>
 #include <boost/bind.hpp>
 #include <sstream>
 #include <limits>
@@ -135,8 +133,16 @@ void RemoteTacticalObjectController::Moved( const std::string& identifier, doubl
     T_ObjectCreations::iterator it( objectCreations_.find( identifier ) );
     if( objectCreations_.end() == it)
         return;
-    centers_[ identifier ] = std::make_pair( latitude, longitude );
     simulation::ObjectMagicAction& message = *it->second;
+    sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->size() == 0 ?
+            message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location() :
+            message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_location();
+
+    loc->set_type( sword::Location_Geometry_point );
+    sword::CoordLatLong *elem = loc->mutable_coordinates()->add_elem();
+    elem->set_latitude( latitude );
+    elem->set_longitude( longitude );
+
     Send( message, identifier );
 }
 
@@ -230,32 +236,44 @@ void RemoteTacticalObjectController::EmbeddedUnitListChanged( const std::string&
     // NOTHING
 }
 
+namespace
+{
+    void fillCoord( const rpr::WorldLocation& p, sword::CoordLatLongList& list )
+    {
+        sword::CoordLatLong *elem = list.add_elem();
+        elem->set_latitude( p.Latitude() );
+        elem->set_longitude( p.Longitude() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RemoteTacticalObjectController::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter )
+void RemoteTacticalObjectController::PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter )
 {
     T_ObjectCreations::iterator it( objectCreations_.find( identifier ) );
     if( objectCreations_.end() == it)
         return;
     perimeters_[ identifier ] = perimeter;
     simulation::ObjectMagicAction& message = *it->second;
+
+    sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location();
+    if( perimeter.size() == 1 )
+    {
+        loc->set_type( sword::Location_Geometry_point );
+        sword::CoordLatLong *elem = loc->mutable_coordinates()->add_elem();
+        elem->set_latitude( perimeter[0].Latitude() );
+        elem->set_longitude( perimeter[0].Longitude() );
+    }
+    else
+    {
+        loc->set_type( sword::Location_Geometry_polygon );
+        std::for_each( perimeter.begin(), perimeter.end(), boost::bind( &fillCoord, _1, boost::ref( *loc->mutable_coordinates() ) ) );
+    }
     Send( message, identifier );
 }
 
-namespace
-{
-    static const double rPiOver180 = std::acos( -1. ) / 180.;
-    void fillCoord( const rpr::PerimeterPoint& p, const geocoord::PlanarCartesian::Parameters& params, sword::CoordLatLongList& list )
-    {
-        sword::CoordLatLong *elem = list.add_elem();
-        geocoord::PlanarCartesian loc( p.X(), p.Y(), 0, params );
-        geocoord::Geodetic geo( loc );
-        elem->set_latitude( geo.GetLatitude() / rPiOver180 );
-        elem->set_longitude( geo.GetLongitude() / rPiOver180 );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: RemoteTacticalObjectController::Send
@@ -263,39 +281,22 @@ namespace
 // -----------------------------------------------------------------------------
 void RemoteTacticalObjectController::Send( simulation::ObjectMagicAction& message, const std::string& identifier )
 {
-    T_Centers::const_iterator itC( centers_.find( identifier ) );
-    T_Perimeters::const_iterator itP( perimeters_.find( identifier ) );
-
     {
         std::stringstream ss;
         ss << "Attempt creation object " << identifier << std::boolalpha << " " << message().has_type() << " " <<
             ( message().has_object() ) << " " <<
             ( message().parameters().elem( 0 ).value_size() > 0 ) << " " << // type
+            ( message().parameters().elem( 1 ).value_size() > 0 ) << " " << // position
             ( message().parameters().elem( 3 ).value_size() > 0 ); // army
         logger_.LogInfo( ss.str() );
     }
 
     if( message().parameters().elem( 0 ).value_size() > 0 &&
-        message().parameters().elem( 3 ).value_size() > 0 && 
-        centers_.end() != itC &&
-        perimeters_.end() != itP )
+        message().parameters().elem( 1 ).value_size() > 0 &&
+        message().parameters().elem( 3 ).value_size() > 0 )
     {
-        sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location();
-        if( itP->second.size() == 1 )
-        {
-            loc->set_type( sword::Location_Geometry_point );
-            sword::CoordLatLong *elem = loc->mutable_coordinates()->add_elem();
-            elem->set_latitude( itC->second.first );
-            elem->set_longitude( itC->second.second );
-        }
-        else
-        {
-            loc->set_type( sword::Location_Geometry_polygon );
-            rpr::WorldLocation center( itC->second.first, itC->second.second, 0);
-            geocoord::PlanarCartesian::Parameters params; params.SetOrigin( center.Latitude() * rPiOver180, center.Longitude() * rPiOver180 );
-            std::for_each( itP->second.begin(), itP->second.end(), boost::bind( &fillCoord, _1, boost::cref( params ), boost::ref( *loc->mutable_coordinates() ) ) );
-        }
         message.Send( publisher_ );
+        objectCreations_.erase( identifier );
     }
 }
 

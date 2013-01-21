@@ -64,10 +64,8 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     dispatcher::MockTeam team( 18 );
     ObjectListener_ABC* objectListener = 0;
     rpr::EntityType objectType("1 2 3 4 5 6 7");
-    std::vector< rpr::PerimeterPoint > v;
-    v.push_back( rpr::PerimeterPoint( 12.f, 13.f ) ) ;
     
-    MOCK_EXPECT( logger.LogInfo ).exactly( 5 );
+    MOCK_EXPECT( logger.LogInfo ).exactly( 4 );
 
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
     remoteListener->RemoteCreated( "an_object", clazz, object ); 
@@ -76,7 +74,6 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ), mock::assign( "an_object_type" ) ).returns( true );
     objectListener->TypeChanged( "an_object", objectType );
 
-    objectListener->Moved( "an_object", 42.0, 42.1 );
 
     MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     objectListener->SideChanged( "an_object", rpr::Friendly );
@@ -84,7 +81,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     
     sword::ClientToSim actual;
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( actual ) );
-    objectListener->PerimeterChanged( "an_object", v);
+    objectListener->Moved( "an_object", 42.0, 42.1 );
 
     BOOST_ASSERT( actual.message().has_object_magic_action() );
     const sword::ObjectMagicAction& action = actual.message().object_magic_action();
@@ -95,7 +92,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_point );
-    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), (int)v.size() );
+    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), 1 );
     const sword::CoordLatLong& c( loc.coordinates().elem( 0 ) );
     BOOST_CHECK_EQUAL( c.latitude(), 42.0 );
     BOOST_CHECK_EQUAL( c.longitude(), 42.1 );
@@ -108,12 +105,12 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     dispatcher::MockTeam team( 18 );
     ObjectListener_ABC* objectListener = 0;
     rpr::EntityType objectType("1 2 3 4 5 6 7");
-    std::vector< rpr::PerimeterPoint > v;
-    v.push_back( rpr::PerimeterPoint( 12.f, 13.f ) ) ;
-    v.push_back( rpr::PerimeterPoint( 16.f, 17.f ) ) ;
-    v.push_back( rpr::PerimeterPoint( 12.f, 13.f ) ) ;
+    std::vector< rpr::WorldLocation > v;
+    v.push_back( rpr::WorldLocation( 12.f, 13.f, 0.f ) ) ;
+    v.push_back( rpr::WorldLocation( 16.f, 17.f, 0.f ) ) ;
+    v.push_back( rpr::WorldLocation( 12.f, 13.f, 0.f ) ) ;
     
-    MOCK_EXPECT( logger.LogInfo ).exactly( 5 );
+    MOCK_EXPECT( logger.LogInfo ).exactly( 4 );
 
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
     remoteListener->RemoteCreated( "an_object", clazz, object ); 
@@ -121,8 +118,6 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
 
     MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ), mock::assign( "an_object_type" ) ).returns( true );
     objectListener->TypeChanged( "an_object", objectType );
-
-    objectListener->Moved( "an_object", 42.0, 42.1 );
 
     MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     objectListener->SideChanged( "an_object", rpr::Friendly );
