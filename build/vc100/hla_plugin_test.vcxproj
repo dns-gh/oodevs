@@ -177,6 +177,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\InteractionBuilderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IsPartOfStructTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MappingsTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\MinefieldTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTacticalObject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTacticalObjectSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransferSender.h" />
