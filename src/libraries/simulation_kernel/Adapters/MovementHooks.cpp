@@ -496,17 +496,6 @@ namespace
         MIL_AgentPion& pion = GET_PION( entity );
         return pion.Execute( *pion.GetAlgorithms().locationComputerFactory_->Create() ).GetHeight();
     }
-    DEFINE_HOOK( VisitKnowledgeObjects, 3, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) )
-    {
-        T_KnowledgeObjectVector knowledgesObject;
-        GET_PION( entity ).GetArmy().GetKnowledge().GetObjects( knowledgesObject );
-        for( auto itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
-        {
-            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( visitor( &knowledge, userData ) )
-                break;
-        }
-    }
     DEFINE_HOOK( HasKnowledgeObject, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {
         return GET_ROLE( entity, RoleAction_Moving ).HasKnowledgeObject( GET_DATA( object, MIL_Object_ABC ) );

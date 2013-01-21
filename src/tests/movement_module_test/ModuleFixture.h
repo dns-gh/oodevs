@@ -116,7 +116,6 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( UpdateObjectsToAvoid, 2, bool, ( KnowledgeCache* cache, const SWORD_Model* entity ) ) \
     APPLY( ConvertSpeedMosToSim, 1, double, ( double speed ) ) \
     APPLY( GetLandTypeName, 1, const char*, ( const TerrainData& terrain ) ) \
-    APPLY( VisitKnowledgeObjects, 3, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) ) \
     APPLY( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
     APPLY( NotifyPathCreation, 0, size_t, () ) \
     APPLY( InitializePath, 2, void, ( size_t path, const SWORD_Model* entity ) ) \
