@@ -13,6 +13,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/serialization/export.hpp>
 
 class PHY_ComposantePion;
 
@@ -59,6 +60,8 @@ public:
     virtual const T_PointVector* GetPathToNextDestination () const = 0;
     virtual const MIL_Agent_ABC* GetProvider              () const = 0;
     //@}
+    
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
 };
 
 } // end namespace logistic

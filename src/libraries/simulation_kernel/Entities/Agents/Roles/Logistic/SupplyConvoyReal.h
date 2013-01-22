@@ -31,6 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SupplyConvoyReal( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters );
+             SupplyConvoyReal();
     virtual ~SupplyConvoyReal();
     //@}
 
@@ -72,6 +73,11 @@ public:
     virtual void Serialize( sword::UnitId& msg ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive& archive, const unsigned int );
+    //@}
+
 private:
     //! @name Operations
     //@{
@@ -81,8 +87,10 @@ private:
 private:
     MIL_AgentPion* convoyPion_;
     bool currentActionDone_;
+    int counter_;
 };
 
 } // end namespace logistic
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyConvoyReal )
 
 #endif // __SupplyConvoyReal_h_

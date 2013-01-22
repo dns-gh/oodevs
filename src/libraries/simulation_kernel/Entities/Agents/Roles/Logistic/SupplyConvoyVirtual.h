@@ -26,6 +26,7 @@ class SupplyConvoyVirtual : public SupplyConvoy
 public:
     //! @name Constructors/Destructor
     //@{
+             SupplyConvoyVirtual();
              SupplyConvoyVirtual( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters );
     virtual ~SupplyConvoyVirtual();
     //@}
@@ -40,6 +41,7 @@ public:
     //! @name Network
     //@{
     virtual void Serialize( sword::UnitId& msg ) const;
+    template< typename Archive > void serialize( Archive& archive, const unsigned int );
     //@}
 
 private:
@@ -54,5 +56,6 @@ private:
 };
 
 } // end namespace logistic
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyConvoyVirtual )
 
 #endif // __SupplyConvoyVirtual_h_

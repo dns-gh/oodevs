@@ -12,8 +12,11 @@
 
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 namespace logistic
 {
@@ -34,13 +37,14 @@ class SupplyRequestContainer : public SupplyRequestContainer_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< std::pair< const PHY_ComposanteTypePion* , unsigned > > T_Transporters;
+    typedef std::vector< std::pair< const PHY_ComposanteTypePion* , unsigned int > > T_Transporters;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
     explicit SupplyRequestContainer( boost::shared_ptr< SupplyRequestBuilder_ABC > builder );
+             SupplyRequestContainer();
     virtual ~SupplyRequestContainer();
     //@}
 
@@ -76,6 +80,12 @@ public:
     void SendChangedState() const;
     void SendFullState   () const;
     //@}
+    
+    //! @name CheckPoints
+    //@{
+    void serialize( MIL_CheckPointInArchive&, const unsigned int );
+    void serialize( MIL_CheckPointOutArchive&, const unsigned int );
+    //@}
 
 private:
     //! @name Tools
@@ -102,8 +112,11 @@ private:
     T_PointVector transportersProviderPath_;
     T_PointVector supplierPath_;
     const SupplyConvoyFactory_ABC* convoyFactory_;
+    int counter_;
 };
 
 }
+
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyRequestContainer )
 
 #endif // __SupplyRequestContainer_h_

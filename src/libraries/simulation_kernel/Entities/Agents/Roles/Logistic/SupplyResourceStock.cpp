@@ -13,12 +13,23 @@
 
 using namespace logistic;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyResourceStock )
+
 // -----------------------------------------------------------------------------
 // Name: SupplyResourceStock::SupplyResourceStock
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
 SupplyResourceStock::SupplyResourceStock( PHY_DotationStock& stock )
-    : stock_( stock )
+    : stock_( &stock )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceStock constructor
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+SupplyResourceStock::SupplyResourceStock()
+    : stock_( 0 )
 {
 }
 
@@ -40,7 +51,7 @@ SupplyResourceStock::~SupplyResourceStock()
 // -----------------------------------------------------------------------------
 double SupplyResourceStock::Supply( double quantity )
 {
-    return stock_.Supply( quantity );
+    return stock_->Supply( quantity );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +60,7 @@ double SupplyResourceStock::Supply( double quantity )
 // -----------------------------------------------------------------------------
 bool SupplyResourceStock::HasReachedSupplyThreshold() const
 {
-    return stock_.HasReachedSupplyThreshold();
+    return stock_->HasReachedSupplyThreshold();
 }
 
 // =============================================================================
@@ -62,5 +73,15 @@ bool SupplyResourceStock::HasReachedSupplyThreshold() const
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory& SupplyResourceStock::GetCategory() const
 {
-    return stock_.GetCategory();
+    return stock_->GetCategory();
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void SupplyResourceStock::serialize
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+template< typename Archive > void SupplyResourceStock::serialize( Archive& archive, const unsigned int )
+{
+    archive & boost::serialization::base_object< SupplyResource_ABC >(* this );
+    archive & stock_;
 }

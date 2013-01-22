@@ -15,6 +15,8 @@
 
 MIL_IDManager MIL_Agent_ABC::idManager_;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Agent_ABC )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Agent_ABC constructor
 // Created: NLD 2004-08-11

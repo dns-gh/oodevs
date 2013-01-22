@@ -61,6 +61,8 @@ public:
     //@{
     virtual void Serialize( sword::UnitId& msg ) const = 0;
     //@}
+
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
 };
 
 } // end namespace logistic

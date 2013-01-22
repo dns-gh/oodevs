@@ -52,6 +52,13 @@ namespace boost {
 namespace serialization {
     template<>
     struct is_abstract<const AutomateFactory_ABC> : boost::true_type { } ;
+
+    template<>
+    struct is_abstract< const tools::Resolver< MIL_Automate > > : boost::true_type { } ;
+
+    template<class Archive>
+    void serialize( Archive & ar, tools::Resolver< MIL_Automate >&, const unsigned int ) {}
+
 } // namespace serialization
 }
 
@@ -62,6 +69,7 @@ namespace serialization {
 template< typename Archive >
 void AutomateFactory_ABC::serialize( Archive& file, const unsigned int )
 {
+    file & boost::serialization::base_object< tools::Resolver< MIL_Automate > >( *this );
     file & elements_;
 }
 

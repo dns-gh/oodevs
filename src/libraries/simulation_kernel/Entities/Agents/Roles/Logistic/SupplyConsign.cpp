@@ -9,20 +9,26 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyConsign.h"
+#include "MIL_AgentServer.h"
 #include "SupplyRequest_ABC.h"
 #include "SupplyConvoy_ABC.h"
 #include "SupplyConvoyFactory_ABC.h"
 #include "SupplyRecipient_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
 #include "SupplySupplier_ABC.h"
-#include "MIL_AgentServer.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/serialization/deque.hpp>
+#include <boost/serialization/export.hpp>
 
 using namespace logistic;
 
 MIL_IDManager SupplyConsign::idManager_;
+
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConsign )
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign constructor
@@ -31,7 +37,7 @@ MIL_IDManager SupplyConsign::idManager_;
 SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
     : id_                       ( idManager_.GetFreeId() )
     , creationTick_             ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() ) //$$$ Huge shit
-    , supplier_                 ( supplier )
+    , supplier_                 ( &supplier )
     , provider_                 ( 0 )
     , state_                    ( eConvoyWaitingForTransporters )
     , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
@@ -41,6 +47,24 @@ SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParamet
     , requestsNeedNetworkUpdate_( true )
 {
     SendMsgCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign constructor
+// Created: JSR 2013-01-15
+// -----------------------------------------------------------------------------
+SupplyConsign::SupplyConsign()
+    : id_                       ( 0 )
+    , creationTick_             ( 0 ) 
+    , supplier_                 ( 0 )
+    , provider_                 ( 0 )
+    , state_                    ( eConvoyWaitingForTransporters )
+    , currentStateEndTimeStep_  ( std::numeric_limits< unsigned >::max() )
+    , currentRecipient_         ( 0 )
+    , needNetworkUpdate_        ( true )
+    , requestsNeedNetworkUpdate_( true )
+{
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -94,11 +118,11 @@ void SupplyConsign::Activate()
             request->ReserveStock();
             resources_[ &request->GetDotationCategory() ] += request->GetGrantedQuantity();
             if( !provider_ )
-                provider_ = request->GetProvider();
+                provider_ = const_cast< MIL_Agent_ABC* >( request->GetProvider() );
         }
     BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
         data.first->OnSupplyScheduled( shared_from_this() );
-    supplier_.SupplyHandleRequest( shared_from_this() );
+    supplier_->SupplyHandleRequest( shared_from_this() );
     requestsNeedNetworkUpdate_ = true;
 }
 
@@ -257,7 +281,7 @@ void SupplyConsign::DoConvoyMoveToSupplier()
     if( IsActionDone( convoy_->MoveToSupplier() ) )
     {
         SetState( eConvoyLoading );
-        supplier_.OnSupplyConvoyArriving( shared_from_this() );
+        supplier_->OnSupplyConvoyArriving( shared_from_this() );
     }
 }
 
@@ -269,7 +293,7 @@ void SupplyConsign::DoConvoyLoad()
 {
     if( IsActionDone( convoy_->Load() ) )
     {
-        supplier_.OnSupplyConvoyLeaving( shared_from_this() );
+        supplier_->OnSupplyConvoyLeaving( shared_from_this() );
         SupplyAndProceedWithNextRecipient();
     }
 }
@@ -419,7 +443,7 @@ void SupplyConsign::SendMsgCreation() const
     client::LogSupplyHandlingCreation msg;
     msg().mutable_request()->set_id( id_ );
     msg().set_tick( creationTick_ );
-    supplier_.Serialize( *msg().mutable_supplier() );
+    supplier_->Serialize( *msg().mutable_supplier() );
     convoy_->GetTransportersProvider().Serialize( *msg().mutable_transporters_provider() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -516,7 +540,7 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
         case eFinished                      : break;
     }
 
-    if( (check & eCheckSupplier) && supplier_.BelongsToLogisticBase( destination ) )
+    if( (check & eCheckSupplier) && supplier_->BelongsToLogisticBase( destination ) )
         return true;
 
     if( (check & eCheckTransportersProvider) && convoy_->GetTransportersProvider().BelongsToLogisticBase( destination ) )
@@ -540,7 +564,7 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
 bool SupplyConsign::IsAt( const MIL_AutomateLOG& destination ) const
 {
     if( state_ == eConvoyLoading )
-        return supplier_.BelongsToLogisticBase( destination );
+        return supplier_->BelongsToLogisticBase( destination );
     else if( state_ == eConvoyUnloading )
     {
         assert( currentRecipient_ );
@@ -560,3 +584,92 @@ boost::shared_ptr< SupplyConvoy_ABC > SupplyConsign::GetConvoy() const
     return convoy_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< class Archive > void SupplyConsign::load
+// Created: LDC 2013-01-15
+// -----------------------------------------------------------------------------
+template< class Archive > void SupplyConsign::load( Archive& archive, const unsigned int )
+{
+    archive >> boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
+    archive >> boost::serialization::base_object< SupplyConsign_ABC >( *this );
+    archive >> id_;
+    archive >> creationTick_;
+    archive >> supplier_;
+    archive >> provider_;
+    archive >> state_;
+    archive >> currentStateEndTimeStep_;
+    archive >> convoy_;
+    size_t resourcesSize;
+    archive >> resourcesSize;
+    for( size_t i = 0; i < resourcesSize; ++i )
+    {
+        int dotationId;
+        archive >> dotationId;
+        double quantity;
+        archive >> quantity;
+        resources_[ PHY_DotationType::FindDotationCategory( dotationId ) ] = quantity;
+    }
+    archive >> resourcesSize;
+    for( size_t i = 0; i < resourcesSize; ++i ) //std::deque< std::pair< SupplyRecipient_ABC*, T_Requests > > 
+    {
+        SupplyRecipient_ABC* recipient;
+        archive >> recipient;
+        size_t requestsSize;
+        archive >> requestsSize;
+        T_Requests requestMap;
+        for( size_t j = 0; j < requestsSize; ++j ) //std::map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > >
+        { 
+            int dotationId;
+            archive >> dotationId;
+            boost::shared_ptr< SupplyRequest_ABC > request;
+            archive >> request;
+            requestMap[ PHY_DotationType::FindDotationCategory( dotationId ) ] = request;
+        }
+        requestsQueued_.push_back( std::pair< SupplyRecipient_ABC*, T_Requests >( recipient, requestMap ) );
+    }
+    archive >> currentRecipient_;
+    archive >> needNetworkUpdate_;
+    archive >> requestsNeedNetworkUpdate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< class Archive > void SupplyConsign::save
+// Created: LDC 2013-01-15
+// -----------------------------------------------------------------------------
+template< class Archive > void SupplyConsign::save( Archive& archive, const unsigned int ) const
+{
+    archive << boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
+    archive << boost::serialization::base_object< SupplyConsign_ABC >( *this );
+    archive << id_;
+    archive << creationTick_;
+    archive << supplier_;
+    archive << provider_;
+    archive << state_;
+    archive << currentStateEndTimeStep_;
+    archive << convoy_;
+    size_t size = resources_.size();
+    archive << size;
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        int dotation = it->first->GetMosID();
+        archive << dotation;
+        archive << it->second;
+    }
+    size = requestsQueued_.size();
+    archive << size;
+    for( auto it = requestsQueued_.begin(); it != requestsQueued_.end(); ++it )
+    {
+        archive << it->first;
+        size_t requestsSize = it->second.size();
+        archive << requestsSize;
+        for( auto requestsIt = it->second.begin(); requestsIt != it->second.end(); ++requestsIt )
+        {
+            int dotation = requestsIt->first->GetMosID();
+            archive << dotation;
+            archive << requestsIt->second;
+        }
+    }
+    archive << currentRecipient_;
+    archive << needNetworkUpdate_;
+    archive << requestsNeedNetworkUpdate_;
+}

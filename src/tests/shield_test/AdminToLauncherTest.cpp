@@ -96,7 +96,8 @@ BOOST_FIXTURE_TEST_CASE( session_command_execution_request_to_launcher_is_conver
     content.mutable_session_command_execution_request()->set_session( "session" );
     content.mutable_session_command_execution_request()->set_save_checkpoint( "checkpoint" );
     content.mutable_session_command_execution_request()->set_set_running( MsgsAdminToLauncher::MsgSessionCommandExecutionRequest::pause );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_command_execution_request { exercise: \"name\" session: \"session\" save_checkpoint: \"checkpoint\" set_running: false } }" ) );
+    content.mutable_session_command_execution_request()->mutable_time_change()->set_data( "date" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_command_execution_request { exercise: \"name\" session: \"session\" save_checkpoint: \"checkpoint\" set_running: false time_change { data: \"date\" } } }" ) );
     converter.ReceiveAdminToLauncher( msg );
 }
 
