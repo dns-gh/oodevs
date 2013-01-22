@@ -44,6 +44,8 @@ public:
     virtual void     Destroy              ( SupplyConvoyEventsObserver_ABC& eventsObserver ) = 0;
 
     virtual bool     CanTransport         ( const PHY_DotationCategory& dotationCategory ) const = 0;
+    
+    template< typename Archive >void serialize( Archive&, const unsigned int ) {}
     //@}
 };
 

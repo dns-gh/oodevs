@@ -135,12 +135,13 @@ template< typename T > void MIL_AutomateLOG::Visit( T& visitor ) const
 template < typename Archive >
 void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
-         & pAssociatedAutomate_
-         & pAssociatedFormation_
-         & pLogisticHierarchy_
-    ;/*     & pExplicitStockSupplyState_;
-         & supplyConsigns_;*/
+    file & boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this );
+    file & boost::serialization::base_object< logistic::SupplySupplier_ABC >( *this );
+    file & pAssociatedAutomate_;
+    file & pAssociatedFormation_;
+    file & pLogisticHierarchy_;
+    file & supplyRequests_;
+    file & supplyConsigns_;
 }
 
 // =============================================================================
@@ -497,7 +498,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 // Name: MIL_AutomateLOG::OnReceiveLogSupplyPushFlow
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver )
+void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver )
 {
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder( new logistic::SupplyStockPushFlowRequestBuilder( parameters, *this, automateResolver ) );
     boost::shared_ptr< logistic::SupplyRequestContainer > requestContainer( new logistic::SupplyRequestContainer( builder ) );

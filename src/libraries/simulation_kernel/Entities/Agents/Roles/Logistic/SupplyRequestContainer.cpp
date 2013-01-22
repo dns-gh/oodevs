@@ -14,6 +14,24 @@
 #include "SupplyRequestDispatcher_ABC.h"
 #include "SupplyRequestBuilder_ABC.h"
 #include "SupplyConsign.h"
+#include "SupplyConvoyRealFactory.h"
+#include "SupplyRecipient_ABC.h"
+#include "SupplySupplier_ABC.h"
+#include "Checkpoints/MIL_CheckPointInArchive.h"
+#include "Checkpoints/MIL_CheckPointOutArchive.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "protocol/Protocol.h" // $$$$ LDC FIXME For serialization only...
+#include "SupplyConvoyRealFactory.h"
+#include "SupplyRecipient_ABC.h"
+#include "SupplySupplier_ABC.h"
+#include "Checkpoints/MIL_CheckPointInArchive.h"
+#include "Checkpoints/MIL_CheckPointOutArchive.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "protocol/Protocol.h" // $$$$ LDC FIXME For serialization only...
 #include <boost/foreach.hpp>
 
 using namespace logistic;
@@ -26,6 +44,17 @@ SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequest
     : builder_             ( builder )
     , transportersProvider_( 0 )
     , convoyFactory_       ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequestContainer constructor
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+SupplyRequestContainer::SupplyRequestContainer()
+    : transportersProvider_( 0 )
+    , convoyFactory_       ( &SupplyConvoyRealFactory::Instance() ) // $$$$ LDC We are deserializing only real convoys for now
 {
     // NOTHING
 }
@@ -262,3 +291,92 @@ void SupplyRequestContainer::SendFullState() const
     BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
         data.second->SendFullState();
 }
+
+// -----------------------------------------------------------------------------
+// Name: void SupplyRequestContainer::serialize
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const unsigned int )
+{
+    archive >> boost::serialization::base_object< SupplyRequestParameters_ABC >( *this );
+    archive >> builder_;
+    archive >> dispatcher_;
+    size_t requestsSize;
+    archive >> requestsSize;
+    for( int i = 0; i < requestsSize; ++i )
+    {
+        SupplyRecipient_ABC* recipient; 
+        archive >> recipient;
+        size_t requestSize;
+        archive >> requestSize;
+        for( int j = 0; j < requestSize; ++j )
+        {
+            unsigned int dotationCategory;
+            archive >> dotationCategory;
+            const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotationCategory );
+            boost::shared_ptr< SupplyRequest_ABC > request;
+            archive >> request;
+            requests_[ recipient ][ category ] = request;
+        }
+    }
+    archive >> consigns_;
+    archive >> transportersProvider_;
+    size_t transportersSize;
+    archive >> transportersSize;
+    for( size_t i = 0; i < transportersSize; ++i )
+    {
+        unsigned int equipment;
+        archive >> equipment;
+        sword::EquipmentType nEqID;
+        nEqID.set_id( equipment );
+        const PHY_ComposanteTypePion* type = PHY_ComposanteTypePion::Find( nEqID );
+        unsigned int value;
+        archive >> value;
+        transporters_.push_back( std::pair< const PHY_ComposanteTypePion* , unsigned int >( type, value ) );
+    }
+    archive >> recipientPaths_;
+    archive >> transportersProviderPath_;
+    archive >> supplierPath_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: void SupplyRequestContainer::serialize
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
+{
+    archive << boost::serialization::base_object< SupplyRequestParameters_ABC >( *this );
+    archive << builder_;
+    archive << dispatcher_;
+
+    size_t requestsSize = requests_.size();
+    archive << requestsSize;
+    for( auto it = requests_.begin(); it != requests_.end(); ++it )
+    {
+        archive << it->first;
+        T_Requests request = it->second;
+        size_t requestSize = request.size();
+        archive << requestSize;
+        for( auto requestIt = request.begin(); requestIt != request.end(); ++requestIt )
+        {
+            unsigned int id = requestIt->first->GetMosID();
+            archive << id;
+            archive << requestIt->second;
+        }
+    }
+    archive << consigns_;
+    archive << transportersProvider_;
+    size_t transportersSize = transporters_.size();
+    archive << transportersSize;
+    for( auto it = transporters_.begin(); it != transporters_.end(); ++it )
+    {
+        unsigned int id = it->first->GetMosID().id();
+        archive << id;
+        archive << it->second;
+    }
+    archive << recipientPaths_;
+    archive << transportersProviderPath_;
+    archive << supplierPath_;
+}
+
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyRequestContainer )

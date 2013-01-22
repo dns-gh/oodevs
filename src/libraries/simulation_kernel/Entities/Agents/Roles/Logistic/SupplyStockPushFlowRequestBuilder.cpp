@@ -9,8 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyStockPushFlowRequestBuilder.h"
+#include "AutomateFactory_ABC.h"
+#include "SupplyConvoyRealFactory.h"
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyConvoyConfig.h"
+#include "SupplySupplier_ABC.h"
 #include "Entities/Automates/MIL_Automate.h" //$$$ A GICLER
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Network/NET_ASN_Tools.h"
@@ -19,14 +22,26 @@
 
 using namespace logistic;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyStockPushFlowRequestBuilder )
+
 // -----------------------------------------------------------------------------
 // Name: SupplyStockPushFlowRequestBuilder::SupplyDotationRequestBuilder
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-SupplyStockPushFlowRequestBuilder::SupplyStockPushFlowRequestBuilder( const sword::PushFlowParameters& parameters, SupplySupplier_ABC& supplier, const tools::Resolver_ABC< MIL_Automate >& recipientResolver )
+SupplyStockPushFlowRequestBuilder::SupplyStockPushFlowRequestBuilder( const sword::PushFlowParameters& parameters, SupplySupplier_ABC& supplier, const AutomateFactory_ABC& recipientResolver )
     : pushFlowParameters_( parameters )
-    , supplier_          ( supplier )
-    , recipientResolver_ ( recipientResolver )
+    , supplier_          ( &supplier )
+    , recipientResolver_ ( &recipientResolver )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStockPushFlowRequestBuilder constructor
+// Created: LDC 2013-01-17
+// -----------------------------------------------------------------------------
+SupplyStockPushFlowRequestBuilder::SupplyStockPushFlowRequestBuilder()
+    : supplier_          ( 0 )
+    , recipientResolver_ ( 0 )
 {
 }
 
@@ -50,7 +65,7 @@ void SupplyStockPushFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
 {
     BOOST_FOREACH( const sword::SupplyFlowRecipient& data, pushFlowParameters_.recipients() )
     {
-        MIL_Automate* recipient = recipientResolver_.Find( data.receiver().id() );
+        MIL_Automate* recipient = recipientResolver_->Find( data.receiver().id() );
         if( recipient )
         {
             BOOST_FOREACH( const sword::SupplyFlowResource& resource, data.resources() )
@@ -70,7 +85,35 @@ void SupplyStockPushFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
         if( NET_ASN_Tools::ReadPointList( pushFlowParameters_.waybackpath(), wayPoints ) )
             container.SetPathToTransportersProvider( wayPoints );
     }
-    container.SetTransportersProvider( &supplier_ );
+    container.SetTransportersProvider( supplier_ );
     SetTransporters( pushFlowParameters_.transporters(), container );
     container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStockPushFlowRequestBuilder::serialize
+// Created: LDC 2013-01-17
+// -----------------------------------------------------------------------------
+void SupplyStockPushFlowRequestBuilder::serialize( MIL_CheckPointInArchive& archive, const unsigned int )
+{
+    archive >> boost::serialization::base_object< SupplyStockManualRequestBuilder_ABC >( *this );
+    std::string pushFlow;
+    archive >> pushFlow;
+    const_cast< sword::PushFlowParameters& >( pushFlowParameters_ ).ParseFromString( pushFlow );
+    archive >> supplier_;
+    archive >> const_cast< AutomateFactory_ABC*& >( recipientResolver_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStockPushFlowRequestBuilder::serialize
+// Created: LDC 2013-01-17
+// -----------------------------------------------------------------------------
+void SupplyStockPushFlowRequestBuilder::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
+{
+    archive << boost::serialization::base_object< SupplyStockManualRequestBuilder_ABC >( *this );
+    std::string pushFlow = pushFlowParameters_.SerializeAsString();
+    archive << pushFlow;
+    archive << supplier_;
+    archive << recipientResolver_;
 }

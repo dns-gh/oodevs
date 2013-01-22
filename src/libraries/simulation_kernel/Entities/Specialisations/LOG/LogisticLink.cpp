@@ -19,27 +19,7 @@
 
 using namespace logistic;
 
-BOOST_CLASS_EXPORT_IMPLEMENT( LogisticLink )
-
-template< typename Archive >
-void logistic::save_construct_data( Archive& archive, const logistic::LogisticLink* link, const unsigned int )
-{
-    archive << link->owner_
-            << link->superior_
-            << link->useQuotas_;
-}
-
-template< typename Archive >
-void logistic::load_construct_data( Archive& archive, logistic::LogisticLink* link, const unsigned int )
-{
-    LogisticHierarchyOwner_ABC* owner;
-    MIL_AutomateLOG* superior;
-    bool useQuotas;
-    archive >> owner
-            >> superior
-            >> useQuotas;
-    ::new(link)LogisticLink( *owner, *superior, useQuotas );
-}
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::LogisticLink )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLink constructor
@@ -68,6 +48,19 @@ LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_Automat
     , superior_     ( &superior )
     , useQuotas_    ( useQuotas )
     , quotasUpdated_( useQuotas )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLink constructor
+// Created: LDC 2013-01-17
+// -----------------------------------------------------------------------------
+LogisticLink::LogisticLink()
+    : owner_        ( 0 )
+    , superior_     ( 0 )
+    , useQuotas_    ( false )
+    , quotasUpdated_( false ) 
 {
     // NOTHING
 }
@@ -318,11 +311,26 @@ namespace boost
 // Name: LogisticHierarchy::serialize
 // Created: NLD 2011-02-07
 // -----------------------------------------------------------------------------
-template < typename Archive >
-void LogisticLink::serialize( Archive& file, const unsigned int )
+void LogisticLink::serialize( MIL_CheckPointOutArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< LogisticLink_ABC >( *this )
-         & quotas_;
+    file << boost::serialization::base_object< LogisticLink_ABC >( *this );
+    file << quotas_;
+    file << owner_;
+    file << superior_;
+    file << useQuotas_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticHierarchy::serialize
+// Created: NLD 2011-02-07
+// -----------------------------------------------------------------------------
+void LogisticLink::serialize( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< LogisticLink_ABC >( *this );
+    file >> quotas_;
+    file >> const_cast< LogisticHierarchyOwner_ABC*& >( owner_ );
+    file >> superior_;
+    file >> const_cast< bool& >( useQuotas_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #define __SupplyResourceStock_h_
 
 #include "SupplyResource_ABC.h"
+#include <boost/serialization/export.hpp>
 
 class PHY_DotationStock;
 
@@ -28,6 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SupplyResourceStock( PHY_DotationStock& Stock );
+             SupplyResourceStock();
     virtual ~SupplyResourceStock();
     //@}
 
@@ -42,10 +44,17 @@ public:
     virtual const PHY_DotationCategory& GetCategory() const;
     //@}
 
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@}
+
 private:
-    PHY_DotationStock& stock_;
+    PHY_DotationStock* stock_;
 };
 
 } // end namespace logistic
+
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyResourceStock )
 
 #endif // __SupplyRequestContainer_ABC_h_

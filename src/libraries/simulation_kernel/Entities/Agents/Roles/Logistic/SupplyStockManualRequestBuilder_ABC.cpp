@@ -23,6 +23,8 @@
 
 using namespace logistic;
 
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyStockManualRequestBuilder_ABC )
+
 // -----------------------------------------------------------------------------
 // Name: SupplyStockManualRequestBuilder_ABC::SupplyStockManualRequestBuilder_ABC
 // Created: NLD 2011-07-25

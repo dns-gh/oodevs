@@ -37,6 +37,22 @@
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
+    
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* const pion = &role->owner_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePionLOG_Supply* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPionLOG_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePionLOG_Supply( *pion );
+    pion->RegisterRole( *role );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply constructor

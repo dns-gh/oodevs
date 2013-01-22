@@ -12,6 +12,8 @@
 
 #include "SupplyConsign_ABC.h"
 #include "SupplyConvoyEventsObserver_ABC.h"
+#include "Checkpoints/SerializationTools.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include <deque>
 
@@ -36,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters );
+             SupplyConsign();
     virtual ~SupplyConsign();
     //@}
 
@@ -68,6 +71,10 @@ public:
     virtual void SendChangedState() const;
     virtual void SendFullState   () const;
     virtual void Clean           ();
+
+    BOOST_SERIALIZATION_SPLIT_MEMBER()        
+    template< class Archive > void load( Archive& archive, const unsigned int );
+    template< class Archive > void save( Archive& archive, const unsigned int ) const;
     //@}
 
 private:
@@ -121,10 +128,10 @@ private:
 private:
     unsigned long id_;
     unsigned long creationTick_;
-    SupplySupplier_ABC& supplier_;
-    const MIL_Agent_ABC* provider_;
+    SupplySupplier_ABC* supplier_;
+    MIL_Agent_ABC* provider_;
     E_State state_;
-    unsigned currentStateEndTimeStep_;
+    unsigned int currentStateEndTimeStep_;
     boost::shared_ptr< SupplyConvoy_ABC > convoy_;
 
     T_Resources resources_;
@@ -142,5 +149,7 @@ private:
 };
 
 } // end namespace logistic
+
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyConsign )
 
 #endif // __SupplyConsign_ABC_h_

@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOGConvoy_Supply.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConvoyReal_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -20,6 +21,22 @@
 #include "SpeedComputer_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOGConvoy_Supply )
+    
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* const pion = &role->owner_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* pion;
+    archive >> pion;
+    ::new( role )PHY_RolePionLOGConvoy_Supply( *pion );
+    pion->RegisterRole( *role );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply constructor
@@ -48,6 +65,7 @@ template< typename Archive >
 void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this );
+    file & convoy_;
 }
 
 // -----------------------------------------------------------------------------

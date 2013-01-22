@@ -71,7 +71,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void Serialize( sword::ParentEntity& message ) const = 0;
+    virtual void Serialize( sword::ParentEntity& message ) const = 0;    
+    template < typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 };
 

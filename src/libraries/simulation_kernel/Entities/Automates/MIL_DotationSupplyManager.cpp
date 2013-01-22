@@ -22,6 +22,7 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/range/algorithm.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
 
@@ -66,12 +67,22 @@ MIL_DotationSupplyManager::~MIL_DotationSupplyManager()
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> pAutomate_
-         >> bSupplyNeeded_
-         >> bDotationSupplyExplicitlyRequested_;
-    assert( pAutomate_ );
-    supplyRequestBuilder_.reset( new logistic::SupplyDotationRequestBuilder( *pAutomate_, *this ) );
-    supplyRequests_.reset( new logistic::SupplyRequestContainer( supplyRequestBuilder_ ) );
+    file >> boost::serialization::base_object< MIL_SupplyManager >( *this );
+    file >> pAutomate_;
+    file >> bSupplyNeeded_;
+    file >> bDotationSupplyExplicitlyRequested_;
+    file >> supplyRequestBuilder_;
+    logistic::SupplyRequestContainer* ptr;
+    file >> ptr;
+    supplyRequests_.reset( ptr );
+    size_t scheduleSize;
+    file >> scheduleSize;
+    for( size_t i = 0; i < scheduleSize; ++i )
+    {
+        boost::shared_ptr< logistic::SupplyConsign_ABC > ptr;
+        file >> ptr;
+        scheduledSupplies_.insert( ptr );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,9 +91,20 @@ void MIL_DotationSupplyManager::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << pAutomate_
-         << bSupplyNeeded_
-         << bDotationSupplyExplicitlyRequested_;
+    file << boost::serialization::base_object< MIL_SupplyManager >( *this );
+    file << pAutomate_;
+    file << bSupplyNeeded_;
+    file << bDotationSupplyExplicitlyRequested_;
+    file << supplyRequestBuilder_;
+    logistic::SupplyRequestContainer* ptr = supplyRequests_.get();
+    file << ptr;
+    size_t scheduleSize = scheduledSupplies_.size();
+    file << scheduleSize;
+    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
+    {
+        boost::shared_ptr< logistic::SupplyConsign_ABC > ptr( boost::const_pointer_cast< logistic::SupplyConsign_ABC >( *it ) );
+        file << ptr;
+    }
 }
 
 // -----------------------------------------------------------------------------

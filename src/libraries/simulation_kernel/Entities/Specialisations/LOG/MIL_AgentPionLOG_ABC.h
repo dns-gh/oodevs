@@ -39,22 +39,6 @@ public:
     //! @name CheckPoints
     //@{
     template < typename Archive > void serialize( Archive&, const unsigned int );
-    template< typename R >
-    R& LoadRole( MIL_CheckPointInArchive& archive, tools::RoleContainer& container )
-    {
-        R* role;
-        archive >> role;
-        if( !role )
-            throw MASA_EXCEPTION( "Failed to load role " + std::string( typeid( role ).name() ) );
-        container.RegisterRole( *role );
-        return *role;
-    }
-    template< typename R >
-    void SaveRole( MIL_CheckPointOutArchive& file, const MIL_AgentPion& pion ) const
-    {
-        const R* const role = & pion.GetRole< R >();
-        file << role;
-    }
     //@}
 
     //! @name Operations

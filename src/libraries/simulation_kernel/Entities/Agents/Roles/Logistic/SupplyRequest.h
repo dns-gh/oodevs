@@ -12,6 +12,10 @@
 
 #include "SupplyRequest_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <boost/serialization/export.hpp>
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 namespace logistic
 {
@@ -30,6 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SupplyRequest( const PHY_DotationCategory& dotationCategory );
+             SupplyRequest();
     virtual ~SupplyRequest();
     //@}
 
@@ -62,6 +67,9 @@ public:
     //! @name Network
     //@{
     virtual void Serialize( sword::SupplyResourceRequest& msg ) const;
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
@@ -80,7 +88,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const PHY_DotationCategory& dotationCategory_;
+    const PHY_DotationCategory* dotationCategory_;
     T_Resources resources_;
     T_Requesters requesters_;
     SupplySupplier_ABC* supplier_;
@@ -95,5 +103,7 @@ private:
 };
 
 }
+
+BOOST_CLASS_EXPORT_KEY( logistic::SupplyRequest )
 
 #endif // __SupplyRequest_ABC_h_

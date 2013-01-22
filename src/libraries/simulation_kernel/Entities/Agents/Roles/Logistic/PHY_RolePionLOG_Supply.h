@@ -132,6 +132,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePionLOG_Supply )
-INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA( PHY_RolePionLOG_Supply, MIL_AgentPionLOG_ABC )
 
 #endif // __PHY_RolePionLOG_Supply_h_

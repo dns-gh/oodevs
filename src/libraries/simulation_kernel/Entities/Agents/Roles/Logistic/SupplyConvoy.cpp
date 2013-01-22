@@ -13,11 +13,15 @@
 #include "SupplyConvoyEventsObserver_ABC.h"
 #include "SupplyConvoyConfig.h"
 #include "SupplyRequestParameters_ABC.h"
+#include "Checkpoints/MIL_CheckPointInArchive.h"
+#include "Checkpoints/MIL_CheckPointOutArchive.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include <boost/foreach.hpp>
 
 using namespace logistic;
+BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConvoy )
 
 // =============================================================================
 // Constructor / destructor 
@@ -28,16 +32,34 @@ using namespace logistic;
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 SupplyConvoy::SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
-    : eventsObserver_               ( eventsObserver )
-    , parameters_                   ( parameters )
-    , supplier_                     ( supplier )
-    , transportersProvider_         ( parameters.GetTransportersProvider() ? *parameters.GetTransportersProvider() : supplier )
+    : eventsObserver_               ( &eventsObserver )
+    , parameters_                   ( &parameters )
+    , supplier_                     ( &supplier )
+    , transportersProvider_         ( parameters.GetTransportersProvider() ? parameters.GetTransportersProvider() : &supplier )
     , autoAllocateNewTransporters_  ( parameters.GetTransporters().empty() )
     , currentAction_                ( eNone )
     , timeRemainingForCurrentAction_( 0 )
     , currentSupplyRecipient_       ( 0 )
     , provider_                     ( 0 )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy constructor
+// Created: LDC 2013-01-14
+// -----------------------------------------------------------------------------
+SupplyConvoy::SupplyConvoy()
+    : eventsObserver_               ( 0 )
+    , parameters_                   ( 0 )
+    , supplier_                     ( 0 )
+    , transportersProvider_         ( 0 )
+    , autoAllocateNewTransporters_  ( false )
+    , currentAction_                ( eNone )
+    , timeRemainingForCurrentAction_( 0 )
+    , currentSupplyRecipient_       ( 0 )
+    , provider_                     ( 0 )
+{
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +83,7 @@ SupplyConveyor_ABC* SupplyConvoy::CreateConveyor( const T& constraint )
 {
     PHY_ComposantePion* conveyorComposante = 0;
     MIL_AgentPion*      conveyorPion = 0;
-    if( !transportersProvider_.SupplyGetAvailableConvoyTransporter( conveyorComposante, conveyorPion, constraint ) )
+    if( !transportersProvider_->SupplyGetAvailableConvoyTransporter( conveyorComposante, conveyorPion, constraint ) )
         return 0;
     SupplyConveyor_ABC* conveyor = new SupplyConveyor( *conveyorComposante, *conveyorPion );
     conveyors_.insert( std::make_pair( conveyorComposante, conveyor ) );
@@ -80,7 +102,7 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
         SupplyConveyor_ABC& conveyor = *it->second;
         if( conveyor.IsFull() )
             continue;
-        quantity -= conveyor.Convoy( eventsObserver_, dotationCategory, quantity );
+        quantity -= conveyor.Convoy( *eventsObserver_, dotationCategory, quantity );
     }
 
     // Allocate new conveyors
@@ -90,7 +112,7 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
         {
             SupplyConveyor_ABC* conveyor = CreateConveyor( dotationCategory );
             if( conveyor )
-                quantity -= conveyor->Convoy( eventsObserver_, dotationCategory, quantity );
+                quantity -= conveyor->Convoy( *eventsObserver_, dotationCategory, quantity );
             else
                 break;
         }
@@ -104,7 +126,7 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
 unsigned SupplyConvoy::ReserveTransporters( const T_Resources& resources )
 {
     // Allocate the specified transporters
-    BOOST_FOREACH( const SupplyRequestParameters_ABC::T_Transporters::value_type& data, parameters_.GetTransporters() )
+    BOOST_FOREACH( const SupplyRequestParameters_ABC::T_Transporters::value_type& data, parameters_->GetTransporters() )
     {
         for( unsigned i = 0; i < data.second; ++i )
         {
@@ -129,7 +151,7 @@ unsigned SupplyConvoy::ReserveTransporters( const T_Resources& resources )
     if( conveyors_.empty() )
         return std::numeric_limits< unsigned >::max();
 
-    eventsObserver_.OnAllResourcesAssignedToConvoy();
+    eventsObserver_->OnAllResourcesAssignedToConvoy();
     return 0;
 }
 
@@ -224,7 +246,7 @@ void SupplyConvoy::Finish()
 // -----------------------------------------------------------------------------
 SupplySupplier_ABC& SupplyConvoy::GetTransportersProvider() const
 {
-    return transportersProvider_;
+    return *transportersProvider_;
 }
 
 // -----------------------------------------------------------------------------
@@ -245,5 +267,43 @@ bool SupplyConvoy::CanTransport( const PHY_DotationCategory& dotationCategory ) 
 // -----------------------------------------------------------------------------
 void SupplyConvoy::SetProvider( const MIL_Agent_ABC* provider )
 {
-    provider_ = provider;
+    provider_ = const_cast< MIL_Agent_ABC* >( provider );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::serialize
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+void SupplyConvoy::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
+{
+    archive & boost::serialization::base_object< SupplyConvoy_ABC >( *this );
+    archive & eventsObserver_;
+    archive & parameters_;
+    archive & supplier_;
+    archive & transportersProvider_;
+    archive & autoAllocateNewTransporters_;
+    archive & conveyors_;
+    archive & currentAction_;
+    archive & timeRemainingForCurrentAction_;
+    archive & currentSupplyRecipient_;
+    archive & provider_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::serialize
+// Created: LDC 2013-01-16
+// -----------------------------------------------------------------------------
+void SupplyConvoy::serialize( MIL_CheckPointInArchive& archive, const unsigned int )
+{
+    archive & boost::serialization::base_object< SupplyConvoy_ABC >( *this );
+    archive & eventsObserver_;
+    archive & parameters_;
+    archive & supplier_;
+    archive & transportersProvider_;
+    archive & autoAllocateNewTransporters_;
+    archive & conveyors_;
+    archive & currentAction_;
+    archive & timeRemainingForCurrentAction_;
+    archive & currentSupplyRecipient_;
+    archive & provider_;
 }

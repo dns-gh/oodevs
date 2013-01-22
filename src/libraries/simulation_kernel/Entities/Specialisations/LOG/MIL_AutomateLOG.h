@@ -17,7 +17,6 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include "Entities/Agents/Roles/Logistic/SupplySupplier_ABC.h"
 #include "Entities/Agents/Roles/Logistic/FuneralHandler_ABC.h"
-#include "tools/Resolver.h"
 
 namespace xml
 {
@@ -41,6 +40,7 @@ namespace logistic
     class SupplyConsign_ABC;
 }
 
+class AutomateFactory_ABC;
 class Human_ABC;
 class MIL_AgentPion;
 class MIL_AgentTypePion;
@@ -144,7 +144,7 @@ public:
     virtual const MT_Vector2D& GetPosition() const;
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
 
-    void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver );
+    void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
     //@}
 
     //! @name Funeral

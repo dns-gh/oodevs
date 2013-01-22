@@ -35,6 +35,11 @@ protected:
     //@{
     void Clean();
     bool SendSupplyNeededReport();
+    friend class boost::serialization::access;
+    template < typename Archive > void serialize( Archive& archive, const unsigned int )
+    {
+        archive & boost::serialization::base_object< logistic::SupplyRecipient_ABC >( *this );
+    }
     //@}
 
 private:
@@ -58,9 +63,12 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Notifications currentNotifications_, previousNotifications_;
+    T_Notifications currentNotifications_;
+    T_Notifications previousNotifications_;
     unsigned int nTickRcSupplyQuerySent_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_SupplyManager );
 
 #endif // __MIL_SupplyManager_h_

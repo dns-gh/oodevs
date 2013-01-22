@@ -39,6 +39,11 @@ public:
     //@{
     virtual const PHY_DotationCategory& GetCategory() const = 0;
     //@}
+        
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    //@}
 };
 
 } // end namespace logistic
