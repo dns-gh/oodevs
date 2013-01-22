@@ -3817,10 +3817,10 @@ overwhelming force.]]></doctrine>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="391" name="Munition - Forbidden">
-      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
+      <parameter dia-name="munitions_" max-occurs="unbounded" min-occurs="1" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserMunition" id="392" name="Munition - Authorize">
-      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
+      <parameter dia-name="munitions_" max-occurs="unbounded" min-occurs="1" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="393" name="Munition - Authorize all"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuteAirStrike" id="411" name="Execute an air strike">
@@ -3834,4 +3834,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1591841480" -->
+<!-- signature="1321535852" -->

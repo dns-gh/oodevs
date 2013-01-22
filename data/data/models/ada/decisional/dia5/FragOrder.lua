@@ -127,7 +127,7 @@ integration.startFragOrderTask = function( self )
       end
   elseif orderType =="france.military.platoon.combat.support.art.tasks.UtiliserALR" then
     mission.entity = CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) )
-    mission.munition = integration.getMunitionsParameter( self )
+    mission.munition = integration.getMunitionParameter( self )
     mission.interventionType = integration.getNbItParameter( self )
   elseif orderType == "france.military.platoon.tasks.RejoindreAToutPrix" then
     mission.objectif = CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) )
@@ -148,7 +148,7 @@ integration.startFragOrderTask = function( self )
     orderType = "sword.military.platoon.tasks.frago.RapidDeploiement"
     mission.entity = CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) )
     mission.interventionType = integration.getNbItParameter( self )
-    mission.munition = integration.getMunitionsParameter( self )
+    mission.munition = integration.getMunitionParameter( self )
     mission.firePositions = {CreateKnowledge( integration.ontology.types.point, integration.copyPoint( meKnowledge:getPosition() ) )}
   elseif orderType == "Rep_OrderConduite_AttendreSePoster" then
     orderType = "sword.military.platoon.tasks.frago.Settle"

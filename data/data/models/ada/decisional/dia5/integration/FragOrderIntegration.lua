@@ -44,7 +44,7 @@ integration.getFireParameters = function( self )
     if not pcall( uggly ) then
         params.entities = { CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) ) }
     end
-    params.munition = integration.getMunitionsParameter( self )
+    params.munition = integration.getMunitionParameter( self )
     params.interventionType = integration.getNbItParameter( self)
     return params
 end
@@ -125,6 +125,10 @@ end
 
 integration.getConduiteChangerAmbianceParameter = function( fragorder )
     return fragorder.source:GetorderConduiteChangerAmbiance_()
+end
+
+integration.getMunitionParameter = function( fragorder )
+    return fragorder.source:Getmunition_()
 end
 
 integration.getMunitionsParameter = function( fragorder )

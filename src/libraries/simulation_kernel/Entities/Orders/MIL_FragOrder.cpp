@@ -92,6 +92,7 @@ void MIL_FragOrder::Register( directia::brain::Brain& brain )
     brain[ "CreateFragOrder" ] = &MIL_FragOrder::CreateFragOrder;
     brain.Register( "GetType", &MIL_FragOrder::GetDIAType );
     brain.Register( "GetambianceMission_", &MIL_FragOrder::GetAmbianceMission );
+    brain.Register( "Getmunition_", &MIL_FragOrder::GetMunition );
     brain.Register( "Getmunitions_", &MIL_FragOrder::GetMunitions );
     brain.Register( "GetnbIT_", &MIL_FragOrder::GetNbIT );
     brain.Register( "GetnbrAmbulances_", &MIL_FragOrder::GetNbrAmbulances );
@@ -233,10 +234,10 @@ int MIL_FragOrder::GetAmbianceMission() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FragOrder::GetMunitions
+// Name: MIL_FragOrder::GetMunition
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* MIL_FragOrder::GetMunitions() const
+const PHY_DotationCategory* MIL_FragOrder::GetMunition() const
 {
     unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
@@ -248,6 +249,27 @@ const PHY_DotationCategory* MIL_FragOrder::GetMunitions() const
                 return result;
             else
                 return 0;
+        }
+    }
+    throw std::runtime_error( "Unknown parameter munitions_" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetMunitions
+// Created: MMC 2013-01-21
+// -----------------------------------------------------------------------------
+std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetMunitions() const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == "munitions_" )
+        {
+            std::vector< const PHY_DotationCategory* > result;
+            if( parameters_[i]->ToDotationTypeList( result ) )
+                return result;
+            else
+                return std::vector< const PHY_DotationCategory* >();
         }
     }
     throw std::runtime_error( "Unknown parameter munitions_" );

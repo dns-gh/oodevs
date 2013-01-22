@@ -173,7 +173,7 @@ do
                                 local repOrdre_Tir = repOrdreCond
                                 Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
                                 Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
-                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
+                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunition_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
                             end
                         else
                             Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
@@ -263,7 +263,7 @@ do
                                 local repOrdre_Tir = repOrdreCond
                                 Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
                                 Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
-                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
+                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunition_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
                                 Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdreCond, } )
                             end
                         else
@@ -346,7 +346,7 @@ do
                                 local repOrdre_Tir = repOrdreCond
                                 Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
                                 Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
-                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
+                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunition_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:GetpointCible_(), } )
                                 Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdreCond, } )
                             end
                         else

@@ -84,7 +84,8 @@ public:
     //@{
     std::string GetDIAType() const;
     int GetAmbianceMission() const;
-    const PHY_DotationCategory* GetMunitions() const;
+    const PHY_DotationCategory* GetMunition() const;
+    std::vector< const PHY_DotationCategory* > GetMunitions() const;
     int GetNbIT() const;
     int GetNbrAmbulances() const;
     int GetNbrRemorqueurs() const;
