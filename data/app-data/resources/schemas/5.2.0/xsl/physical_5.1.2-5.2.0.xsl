@@ -10,6 +10,11 @@
                   <xsl:attribute name="file">Disasters.xml</xsl:attribute>
               </xsl:element>
           </xsl:if>
+          <xsl:if test="count( ./symbols-directory ) = 0">
+              <xsl:element name="symbols-directory">
+                  <xsl:attribute name="path">Symbols</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
       </xsl:copy>
   </xsl:template>
 

@@ -63,7 +63,7 @@ public:
     public:
         //! @name Constructors/Destructor
         //@{
-        UnitSymbolInfo( const std::string& name, const std::string& symbol );
+        UnitSymbolInfo( const std::string& name, const std::string& symbol, gui::GLSymbols& symbols );
         virtual ~UnitSymbolInfo();
         //@}
 
@@ -86,8 +86,7 @@ public:
         //@{
         gui::DrawingTemplate* template_;
         QPixmap* pixmap_;
-        std::auto_ptr< gui::SvglRenderer > guiSvgRender_;
-        std::auto_ptr< gui::GLSymbols > symbols_;
+        gui::GLSymbols& symbols_;
         //@}
 
     public:
@@ -115,10 +114,12 @@ public:
     //@{
     virtual void Reset();
     UnitSymbolInfo* const GetSymbol() const;
+    gui::GLSymbols& GetGlSymbols() const;
     T_UnitSymbolInfoVector& GetSymbols();
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
 protected:
@@ -131,6 +132,8 @@ private:
     //@{
     T_UnitSymbolInfoVector symbols_;
     kernel::SymbolFactory* pSymbolFactory_;
+    std::auto_ptr< gui::SvglRenderer > guiSvgRender_;
+    std::auto_ptr< gui::GLSymbols > glSymbols_;
     //@}
 };
 

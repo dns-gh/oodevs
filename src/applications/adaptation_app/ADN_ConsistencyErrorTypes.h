@@ -22,7 +22,8 @@ enum E_ConsistencyCheck
     eMissingEmat,
     eMissingPart,
     eMissingChoiceComposite,
-     eLowerCaseEmat,
+    eMissingSymbols,
+    eLowerCaseEmat,
 
     eMissingConvoy,
     eMissingConvoyMission,

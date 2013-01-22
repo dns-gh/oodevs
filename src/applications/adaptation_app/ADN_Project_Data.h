@@ -93,6 +93,8 @@ public:
         ADN_Type_String szAutomataMissionPath_;
         ADN_Type_String szCrowdsMissionPath_;
         ADN_Type_String szFragOrdersMissionPath_;
+        // $$$$ ABR 2013-01-21: Symbols directory
+        ADN_Type_String szSymbolsPath_;
 
     private:
         bool readOnlyEnabled_;

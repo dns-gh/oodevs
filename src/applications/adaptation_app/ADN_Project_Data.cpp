@@ -168,6 +168,8 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadOptionalPath( input, "automata-mission-sheets-directory", szAutomataMissionPath_ );
     ReadOptionalPath( input, "crowds-mission-sheets-directory", szCrowdsMissionPath_ );
     ReadOptionalPath( input, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
+    ReadPath( input, "symbols-directory", szSymbolsPath_ );
+
     input >> xml::end;
 }
 
@@ -227,6 +229,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WritePath( output, "automata-mission-sheets-directory", szAutomataMissionPath_ );
     WritePath( output, "crowds-mission-sheets-directory", szCrowdsMissionPath_ );
     WritePath( output, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
+    WritePath( output, "symbols-directory", szSymbolsPath_ );
     output << xml::end;
 }
 

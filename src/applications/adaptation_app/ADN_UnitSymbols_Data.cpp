@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_UnitSymbols_Data.h"
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Symbols_Data.h"
 #include "clients_gui/DrawingTemplate.h"
@@ -37,11 +38,10 @@
 // Name: ADN_UnitSymbols_Data::SymbolInfo::SymbolInfo
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
-ADN_UnitSymbols_Data::UnitSymbolInfo::UnitSymbolInfo( const std::string& name, const std::string& symbol )
+ADN_UnitSymbols_Data::UnitSymbolInfo::UnitSymbolInfo( const std::string& name, const std::string& symbol, gui::GLSymbols& symbols )
     : ADN_RefWithName( name )
     , fileName_( symbol )
-    , guiSvgRender_( new gui::SvglRenderer() )
-    , symbols_( new gui::GLSymbols( *guiSvgRender_ ) )
+    , symbols_( symbols )
     , template_( 0 )
 {
     std::replace( fileName_.begin(), fileName_.end(), '*', 'f' );
@@ -147,7 +147,7 @@ void ADN_UnitSymbols_Data::UnitSymbolInfo::Draw()
             glEnd();
 
             geometry::Rectangle2f viewPort( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
-            symbols_->PrintApp6( fileName_, gui::SvglRenderer::DefaultStyle(), viewPort, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
+            symbols_.PrintApp6( fileName_, gui::SvglRenderer::DefaultStyle(), viewPort, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
         glPopMatrix();
     glPopAttrib();
 }
@@ -163,6 +163,8 @@ void ADN_UnitSymbols_Data::UnitSymbolInfo::Draw()
 ADN_UnitSymbols_Data::ADN_UnitSymbols_Data()
     : ADN_Data_ABC( eUnitSymbols )
     , pSymbolFactory_( 0 )
+    , guiSvgRender_( new gui::SvglRenderer() )
+    , glSymbols_( new gui::GLSymbols( *guiSvgRender_ ) )
 {
     // NOTHING
 }
@@ -221,19 +223,21 @@ void ADN_UnitSymbols_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
 // -----------------------------------------------------------------------------
 void ADN_UnitSymbols_Data::Load( const tools::Loader_ABC& /*fileLoader*/ )
 {
+    glSymbols_->SetSymbolsPath( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbolsPath_.GetData() );
+
     if( ADN_Workspace::GetWorkspace().ShowSymbols() )
     {
         pSymbolFactory_ = &ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolFactory();
 
         const std::string strUndefined = "undefined";
-        symbols_.AddItem( new UnitSymbolInfo( strUndefined, pSymbolFactory_->CreateSymbol( strUndefined ) ) );
+        symbols_.AddItem( new UnitSymbolInfo( strUndefined, pSymbolFactory_->CreateSymbol( strUndefined ), *glSymbols_ ) );
         const std::vector< std::string >& symbols = pSymbolFactory_->GetAvailableSymbols();
         for( unsigned int i=0; i < symbols.size(); ++i )
         {
             std::string symbol = pSymbolFactory_->CreateSymbol( symbols[i] );
             if( symbol.empty() )
                 symbol = pSymbolFactory_->CreateSymbol( strUndefined );
-            symbols_.AddItem( new UnitSymbolInfo( symbols[i], symbol ) );
+            symbols_.AddItem( new UnitSymbolInfo( symbols[i], symbol, *glSymbols_ ) );
         }
     }
 }
@@ -263,4 +267,29 @@ void ADN_UnitSymbols_Data::ReadArchive( xml::xistream& /*input*/ )
 void ADN_UnitSymbols_Data::WriteArchive( xml::xostream& /*output*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_UnitSymbols_Data::GetGlSymbols
+// Created: ABR 2013-01-21
+// -----------------------------------------------------------------------------
+gui::GLSymbols& ADN_UnitSymbols_Data::GetGlSymbols() const
+{
+    return *glSymbols_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_UnitSymbols_Data::CheckDatabaseValidity
+// Created: ABR 2013-01-21
+// -----------------------------------------------------------------------------
+void ADN_UnitSymbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    const std::vector< std::string >& missingSymbols = glSymbols_->GetNotFoundSymbol();
+    if( !missingSymbols.empty() )
+    {
+        std::string errorMsg;
+        for( auto it = missingSymbols.begin(); it != missingSymbols.end(); ++it )
+            errorMsg += ( ( errorMsg.empty() ) ? "'" : ( it + 1 == missingSymbols.end() ) ? tr( " and '" ) : ", '" ) + ( *it ) + "'";
+        checker.AddError( eMissingSymbols, errorMsg, eNbrWorkspaceElements );
+    }
 }

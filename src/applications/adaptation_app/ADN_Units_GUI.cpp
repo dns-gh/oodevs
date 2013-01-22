@@ -148,7 +148,7 @@ void ADN_Units_GUI::Build()
         // Symbol
         Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
         QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
-        pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
+        pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout, ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData().GetGlSymbols() );
         pSymbolWidget_->setObjectName( strClassName_ + "_Symbols" );
         pSymbolWidget_->makeCurrent();
         pSymbolWidget_->initializeGL();

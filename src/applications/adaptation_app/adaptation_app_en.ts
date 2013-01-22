@@ -678,6 +678,10 @@ Parked engine running</translation>
         <source>%1 has lower case EMAT8 code.</source>
         <translation>%1 has lower case EMAT8 code.</translation>
     </message>
+    <message>
+        <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
+        <translation>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -5224,6 +5228,13 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
         <translation>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_UnitSymbols_Data</name>
+    <message>
+        <source> and &apos;</source>
+        <translation> and &apos;</translation>
     </message>
 </context>
 <context>

@@ -89,6 +89,8 @@
 #include <QtGui/qmessagebox.h>
 #include <QtGui/qlayout.h>
 #pragma warning( pop )
+#include "tools/GeneralConfig.h"
+#include "tools/ZipExtractor.h"
 
 namespace bfs = boost::filesystem;
 
@@ -428,20 +430,20 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toStdString() + filename );
     dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toStdString());
 
-    T_StringList uncopiedFiles;
+    T_StringList unchangedFiles;
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
     {
         const ADN_Project_Data::DataInfos& infos = projectData_->GetDataInfos();
-        uncopiedFiles.push_back( infos.szPathfinder_.GetData() );
-        uncopiedFiles.push_back( infos.szObjectNames_.GetData() );
-        uncopiedFiles.push_back( infos.szHumanProtections_.GetData() );
-        uncopiedFiles.push_back( infos.szMedicalTreatment_.GetData() );
-        uncopiedFiles.push_back( infos.szExtensions_.GetData() );
-        uncopiedFiles.push_back( infos.szDrawingTemplates_.GetData() );
-        uncopiedFiles.push_back( infos.szScores_.GetData() );
-        uncopiedFiles.push_back( infos.szSymbols_.GetData() );
-        uncopiedFiles.push_back( infos.szFilters_.GetData() );
-        files.insert( files.end(), uncopiedFiles.begin(), uncopiedFiles.end() );
+        unchangedFiles.push_back( infos.szPathfinder_.GetData() );
+        unchangedFiles.push_back( infos.szObjectNames_.GetData() );
+        unchangedFiles.push_back( infos.szHumanProtections_.GetData() );
+        unchangedFiles.push_back( infos.szMedicalTreatment_.GetData() );
+        unchangedFiles.push_back( infos.szExtensions_.GetData() );
+        unchangedFiles.push_back( infos.szDrawingTemplates_.GetData() );
+        unchangedFiles.push_back( infos.szScores_.GetData() );
+        unchangedFiles.push_back( infos.szSymbols_.GetData() );
+        unchangedFiles.push_back( infos.szFilters_.GetData() );
+        files.insert( files.end(), unchangedFiles.begin(), unchangedFiles.end() );
     }
 
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
@@ -461,10 +463,13 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
 
     /////////////////////////////////////
     // Save Data files in temporary folder
+    bfs::path tempDirectory;
     try
     {
         // saving in temporary files activated
         dirInfos.UseTempDirectory( true );
+        tempDirectory = dirInfos.GetTempDirectory().GetData();
+        assert( bfs::exists( tempDirectory ) && bfs::is_directory( tempDirectory ) );
         pProgressIndicator_->SetVisible( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
@@ -476,8 +481,8 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
             pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
         }
 
-        for( T_StringList::iterator it = uncopiedFiles.begin(); it != uncopiedFiles.end(); ++it )
-            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, dirInfos.GetTempDirectory().GetData() + *it );
+        for( T_StringList::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
+            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.string() + *it );
 
         dirInfos.UseTempDirectory( false );
     }
@@ -485,14 +490,15 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     {
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
         ResetProgressIndicator();
+        bfs::remove_all( tempDirectory );
         throw;
     }
 
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
-        if( !it->empty() && bfs::exists( dirInfos.GetTempDirectory().GetData() + *it ) )
-            if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
+        if( !it->empty() && bfs::exists( tempDirectory.string() + *it ) )
+            if( !ADN_Tools::CopyFileToFile( tempDirectory.string() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
             {
                 dirInfos.SetWorkingDirectory( szOldWorkDir );
                 ResetProgressIndicator();
@@ -501,6 +507,15 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
         CopyUnsavedFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ) );
+
+    // Unzip symbols.pak if not already in the working directory
+    if( !bfs::exists( dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() ) )
+        tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
+                                             dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() );
+
+    // Remove temp directory
+    bfs::remove_all( tempDirectory );
+
     pProgressIndicator_->Increment( "" );
     pProgressIndicator_->SetVisible( false );
 
@@ -563,8 +578,10 @@ void ADN_Workspace::OnUsersListRequested( const ADN_NavigationInfos::UsedBy& use
 // -----------------------------------------------------------------------------
 void ADN_Workspace::OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo )
 {
+    if( goToInfo.targetTab_ < 0 || goToInfo.targetTab_ >= eNbrWorkspaceElements )
+        return;
+
     emit ChangeTab( goToInfo.targetTab_ );
-    assert( elements_[ goToInfo.targetTab_ ] != 0 );
     if( goToInfo.subTargetTab_ != -1 )
         elements_[ goToInfo.targetTab_ ]->GetGuiABC().ChangeCurrentSubTab( goToInfo.subTargetTab_ );
     elements_[ goToInfo.targetTab_ ]->GetGuiABC().ClearFilters();

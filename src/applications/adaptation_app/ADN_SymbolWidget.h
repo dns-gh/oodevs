@@ -42,7 +42,7 @@ class ADN_SymbolWidget : public QGLWidget
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_SymbolWidget( QWidget* parent );
+    explicit ADN_SymbolWidget( QWidget* parent, gui::GLSymbols& symbols );
     virtual ~ADN_SymbolWidget();
     //@}
 
@@ -81,8 +81,7 @@ private:
     //! @name Member data
     //@{
     geometry::Rectangle2f viewPort_;
-    std::auto_ptr< gui::SvglRenderer > renderer_;
-    std::auto_ptr< gui::GLSymbols > symbols_;
+    gui::GLSymbols& symbols_;
     kernel::SymbolFactory* symbolFactory_;
     std::string currentSymbol_;
     //@}

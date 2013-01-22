@@ -29,11 +29,10 @@ namespace
 // Name: ADN_SymbolWidget constructor
 // Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_SymbolWidget::ADN_SymbolWidget( QWidget* parent )
+ADN_SymbolWidget::ADN_SymbolWidget( QWidget* parent, GLSymbols& symbols )
     : QGLWidget( parent )
     , ADN_Gfx_ABC()
-    , renderer_( new SvglRenderer() )
-    , symbols_ ( new GLSymbols( *renderer_ ) )
+    , symbols_ ( symbols )
     , symbolFactory_( 0 )
     , currentSymbol_()
     , viewPort_( 0, 0, 0, 0 )
@@ -115,7 +114,7 @@ void ADN_SymbolWidget::DisplaySymbol() const
 
     try
     {
-        symbols_->PrintApp6( currentSymbol_, SvglRenderer::DefaultStyle(), viewPort_, (int)viewPort_.Width(), (int)viewPort_.Height());
+        symbols_.PrintApp6( currentSymbol_, SvglRenderer::DefaultStyle(), viewPort_, (int)viewPort_.Width(), (int)viewPort_.Height());
     }
     catch( ... )
     {} // Don't crash if crappy graphics card.

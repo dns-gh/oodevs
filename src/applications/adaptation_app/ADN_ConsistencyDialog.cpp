@@ -69,7 +69,8 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingNNo     ]         = tr( "%1 has no NNO code defined." );
     errorDescriptions_[ eMissingEmat    ]         = tr( "%1 has no EMAT8 code defined." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
-    errorDescriptions_[ eLowerCaseEmat  ] = tr( "%1 has lower case EMAT8 code." );
+    errorDescriptions_[ eMissingSymbols ]         = tr( "The symbols %1 are defined in symbols.xml but not found in Symbols directory." );
+    errorDescriptions_[ eLowerCaseEmat  ]         = tr( "%1 has lower case EMAT8 code." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
     errorDescriptions_[ eObjectTypeUniqueness ]   = tr( "Duplicate type for objects %1" ) + error;
