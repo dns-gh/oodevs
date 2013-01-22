@@ -92,11 +92,19 @@ MIL_Config::~MIL_Config()
 void MIL_Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
-    bTestMode_ = IsSet( "test" );
+    bTestMode_ = IsSet( "test" ) || IsSet( "savecheckpoint" );
     bSaveCheckpointTestMode_ = IsSet( "savecheckpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     bDeleteCheckpointTestMode_ = IsSet( "deletecheckpoint" );
     ReadSessionFile( GetSessionFile() );
+    if( bTestMode_ )
+    {
+        bEmbeddedDispatcher_ = true;
+        bPausedAtStartup_ = false;
+        endTick_ = 8;
+        if( IsSaveCheckpointTestMode() )
+            checkPointsFrequency_ = endTick_ / 2 * timeStep_;
+    }
 }
 
 // -----------------------------------------------------------------------------

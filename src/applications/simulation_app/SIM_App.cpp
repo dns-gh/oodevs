@@ -294,7 +294,7 @@ void SIM_App::Run()
     tools::ipc::Watch watch( *quit_ );
     StartIconAnimation();
     while( !quit_->IsSignaled() )
-        if( MIL_AgentServer::GetWorkspace().Update() == MIL_AgentServer::eSimStopped )
+        if( !MIL_AgentServer::GetWorkspace().Update() )
             break;
     StopIconAnimation();
 }
@@ -307,8 +307,6 @@ void SIM_App::Execute()
 {
     Initialize();
     Run();
-    if( config_->IsSaveCheckpointTestMode() )
-        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointDirectory( config_->GetCheckpointNameTestMode() );
     if( config_->IsDeleteCheckpointTestMode() )
         boost::filesystem::remove_all( config_->GetCheckpointDirectory() );
 }

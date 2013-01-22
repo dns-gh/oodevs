@@ -51,7 +51,6 @@ public:
     bool               IsDecisionalProfilingEnabled() const;
     bool               IsHookProfilingEnabled      () const;
     bool               IsCommandProfilingEnabled   () const;
-    bool               IsTestMode                  () const;
     bool               IsSaveCheckpointTestMode    () const;
     bool               IsDeleteCheckpointTestMode  () const;
     bool               IsDispatcherEmbedded        () const;

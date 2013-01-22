@@ -55,19 +55,6 @@ class MIL_AgentServer : public NET_Simulation_ABC
                       , private MIL_Time_ABC
 {
 public:
-    //! @name Type
-    //@{
-    enum E_SimState
-    {
-        eSimRunning = 0,
-        eSimPaused  = 1,
-        eSimStopped = 2,
-        eSimLoading = 3,
-        eSimWait    = 4
-    };
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AgentServer( MIL_Config& config );
@@ -98,7 +85,7 @@ public:
 
     //! @name Simulation main loop
     //@{
-    E_SimState Update();
+    bool Update();
     void MainSimLoop();
     //@}
 
@@ -169,6 +156,18 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    enum E_SimState
+    {
+        eSimRunning,
+        eSimPaused,
+        eSimStopped,
+        eSimWait
+    };
+    //@}
+
+private:
     //! @name Member data
     //@{
     E_SimState nSimState_;
@@ -182,7 +181,6 @@ private:
     unsigned int nRealTime_;
     long lastStep_;
     unsigned int nextPause_;
-    double rWaitTime_;
     int waitTicks_;
     int waitLatency_;
     std::string localTime_;

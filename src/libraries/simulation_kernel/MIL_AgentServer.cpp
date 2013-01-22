@@ -43,7 +43,7 @@ MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 // Last modified: JVT 03-09-24
 //-----------------------------------------------------------------------------
 MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
-    : nSimState_            ( eSimLoading )
+    : nSimState_            ( eSimPaused )
     , config_               ( config )
     , settings_             ( new tools::ExerciseSettings() )
     , nTimeStepDuration_    ( 1 )
@@ -53,7 +53,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , nRealTime_            ( 0 )
     , lastStep_             ( clock() )
     , nextPause_            ( config_.GetPausedAtStartup() ? 1 : 0 )
-    , rWaitTime_            ( 0. )
     , waitTicks_            ( 0 )
     , waitLatency_          ( 0 )
     , pEffectManager_       ( new MIL_EffectManager() )
@@ -88,7 +87,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     {
         MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_ );
         pEntityManager_->Synchronize();
-        ++waitTicks_;
     }
     else
     {
@@ -99,9 +97,12 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
         pEntityManager_->Finalize();
-        Resume( nextPause_ );
     }
+    Resume( nextPause_ );
     timerManager_.Register( *this );
+    MT_LOG_INFO_MSG( "Tick duration : " << nTimeStepDuration_ << " seconds" );
+    MT_LOG_INFO_MSG( "Acceleration factor : " << nTimeFactor_ );
+    MT_LOG_INFO_MSG( "End tick : " << config_.GetEndTick() );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
@@ -140,11 +141,8 @@ MIL_AgentServer::~MIL_AgentServer()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::ReadStaticData()
 {
-    nSimState_ = eSimPaused;
     nTimeStepDuration_ = config_.GetTimeStep();
     nTimeFactor_ = config_.GetTimeFactor();
-    MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
     ReadTerData();
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     PHY_MeteoDataManager::Initialize();
@@ -169,11 +167,11 @@ void MIL_AgentServer::ReadTerData()
 // Name: MIL_AgentServer::Update
 // Created: NLD 2002-07-17
 //-----------------------------------------------------------------------------
-MIL_AgentServer::E_SimState MIL_AgentServer::Update()
+bool MIL_AgentServer::Update()
 {
     timerManager_.Update();
     WaitForNextStep();
-    return nSimState_;
+    return nSimState_ != MIL_AgentServer::eSimStopped;
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +210,6 @@ void MIL_AgentServer::OnTimer()
     ++nCurrentTimeStep_;
     if( config_.GetEndTick() == nCurrentTimeStep_ )
         nSimState_ = eSimStopped;
-
     if( nextPause_ > 0 && --nextPause_ == 0 )
         Pause();
 }
@@ -249,7 +246,7 @@ void MIL_AgentServer::MainSimLoop()
         nCurrentTimeStep_, lastTime, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
         pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(), sword::Brain::GetTotalTime(),
         pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
-        rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfindTime,
+        profiler_.GetLastTime(), waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfindTime,
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     pEntityManager_->LogInfo();
     sword::Brain::ResetProfiling( config_.IsDecisionalProfilingEnabled() );
@@ -304,8 +301,7 @@ void MIL_AgentServer::SendStateToNewClient() const
 void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 {
     const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
-    file << nSimState_
-         << nTimeFactor_
+    file << nTimeFactor_
          << nCurrentTimeStep_
          << nSimTime_
          << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
@@ -318,7 +314,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << nInitialRealTime_
          << nRealTime_
          << localTime;
-
     pBurningCells_->save( file );
 }
 
@@ -328,9 +323,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 {
-    E_SimState nSimState;
-    file >> nSimState
-         >> nTimeFactor_
+    file >> nTimeFactor_
          >> nCurrentTimeStep_
          >> nSimTime_
          >> pMeteoDataManager_
@@ -345,10 +338,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> localTime_;
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
-    MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
-    nSimState_ = eSimPaused;
-    if( nSimState == eSimRunning )
-        Resume( nextPause_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -379,6 +368,7 @@ void MIL_AgentServer::WriteWeather( xml::xostream& xos ) const
 {
     GetWorkspace().GetMeteoDataManager().WriteWeather( xos );
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::WriteUrban
 // Created: NPT 2012-09-06
@@ -506,7 +496,7 @@ void MIL_AgentServer::Continue()
     MT_LOG_DEBUG_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
     if( waitTicks_ == waitLatency_ )
     {
-        rWaitTime_ = profiler_.Stop();
+        profiler_.Stop();
         MT_Timer_ABC::Continue();
         MT_LOG_DEBUG_MSG( "Simulation stops waiting for dispatcher" );
     }

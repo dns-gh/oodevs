@@ -44,9 +44,9 @@ public:
 
     //! @name Main
     //@{
-    void Update                 ();
-    static void LoadCheckPoint  ( const MIL_Config& config, const ObjectTypeResolver_ABC& resolver );
-    void SaveCheckPointDirectory( const std::string& directoryName, const std::string& userName = "" );
+    void Update();
+
+    static void LoadCheckPoint( const MIL_Config& config, const ObjectTypeResolver_ABC& resolver );
     //@}
 
     //! @name Accessors
@@ -75,6 +75,7 @@ private:
     bool SaveCheckPoint          ( const std::string& name, const std::string& userName = "" );
     bool SaveOrbatCheckPoint     ( const std::string& name );
     bool SaveFullCheckPoint      ( const std::string& name, const std::string& userName = "" );
+    std::string BuildCheckPointName() const;
 
     void UpdateNextCheckPointTick();
     //@}
@@ -83,7 +84,6 @@ private:
     //@{
     static void                           CreateMetaData     ( const std::string& strPath, const std::string& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
     static boost::crc_32_type::value_type CreateData         ( const std::string& strFileName );
-    static const std::string              BuildCheckPointName();
 
     static void                           CheckCRC           ( const MIL_Config& config );
     static void                           CheckFilesCRC      ( const MIL_Config& config );
@@ -100,6 +100,7 @@ private:
     unsigned int         nCheckPointsFrequency_;
     unsigned int         nLastCheckPointTick_;
     unsigned int         nNextCheckPointTick_;
+    std::string          checkpointName_;
     T_CheckPointsQueue   currentCheckPoints_;
 };
 

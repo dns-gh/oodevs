@@ -49,6 +49,7 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
     , nCheckPointsFrequency_( config.GetCheckPointsFrequency() )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
+    , checkpointName_       ( config.GetCheckpointNameTestMode() )
 {
     boost::filesystem::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
@@ -76,7 +77,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const Obje
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
-    MT_LOG_INFO_MSG( "Loading SIM state from checkpoint '" << config.BuildCheckpointChildFile( "" ) << "'" );
+    MT_LOG_INFO_MSG( "Loading from checkpoint '" << config.BuildCheckpointChildFile( "" ) << "'" );
     if( config.UseCheckPointCRC() )
         CheckCRC( config );
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
@@ -88,18 +89,6 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const Obje
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
     delete pArchive;
 #endif
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::SaveCheckPointDirectory
-// Created: JSR 2010-03-10
-// -----------------------------------------------------------------------------
-void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, const std::string& userName )
-{
-    client::ControlCheckPointSaveNowAck asnReplyMsg;
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
-    SaveCheckPoint( name, userName );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,8 +124,10 @@ void MIL_CheckPointManager::UpdateNextCheckPointTick()
 // Name: MIL_CheckPointManager::BuildCheckPointName
 // Created: JVT 2005-02-28
 // -----------------------------------------------------------------------------
-const std::string MIL_CheckPointManager::BuildCheckPointName()
+std::string MIL_CheckPointManager::BuildCheckPointName() const
 {
+    if( ! checkpointName_.empty() )
+        return checkpointName_;
     // récupération du temps courrant
     time_t t;
     time( &t );
@@ -383,7 +374,9 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const sword::ControlC
     std::string name;
     if( msg.has_name() )
         name = msg.name();
-    SaveCheckPointDirectory( BuildCheckPointName(), name );
+    client::ControlCheckPointSaveNowAck asnReplyMsg;
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
+    SaveCheckPoint( BuildCheckPointName(), name );
 }
 
 // -----------------------------------------------------------------------------
