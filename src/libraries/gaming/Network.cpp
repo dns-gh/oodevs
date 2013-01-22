@@ -21,7 +21,6 @@
 #pragma warning( push )
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
-#include <boost/locale.hpp>
 #pragma warning( pop )
 
 using namespace kernel;
@@ -40,10 +39,7 @@ Network::Network( Services& services, Simulation& simu, kernel::Logger_ABC& logg
     , commands_( new CommandHandler() )
     , manager_ ( new AgentServerMsgMgr( *this, *this, services_, simu_, logger_, *commands_ ) )
 {
-    localEncoding_ = boost::locale::util::get_system_locale();
-    std::size_t pointPosition = localEncoding_.find_first_of( '.' );
-    if( pointPosition + 1 < localEncoding_.size() )
-        localEncoding_ = localEncoding_.substr( pointPosition + 1, localEncoding_.size() - pointPosition - 1 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +155,7 @@ void Network::ConnectionFailed( const std::string& address, const std::string& e
 {
     ClientNetworker::ConnectionFailed( address, error );
     session_.clear();
-    logger_.Warning() << tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << ConvertBoostError( error ) << ")";
+    logger_.Warning() << tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << error << ")";
     manager_->Disconnect();
     simu_.Disconnect();
 }
@@ -172,7 +168,7 @@ void Network::ConnectionError( const std::string& address, const std::string& er
 {
     ClientNetworker::ConnectionError( address, error );
     session_.clear();
-    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << ConvertBoostError( error ) << ")";
+    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << error << ")";
     manager_->Disconnect();
     simu_.Disconnect();
 }
@@ -184,16 +180,5 @@ void Network::ConnectionError( const std::string& address, const std::string& er
 void Network::ConnectionWarning( const std::string& address, const std::string& warning )
 {
     ClientNetworker::ConnectionWarning( address, warning );
-    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " warning (cause :" ) << ConvertBoostError( warning ) << ")";
-}
-
-// -----------------------------------------------------------------------------
-// Name: Network::ConvertBoostError
-// Created: ABR 2012-08-13
-// -----------------------------------------------------------------------------
-QString Network::ConvertBoostError( const std::string& error ) const
-{
-    if( localEncoding_ == "windows-1252" ) // $$$$ ABR 2012-08-13: Bad, but boost and std local are F..K..G shit. That should work for now, still need to test on Arabic OS.
-        return QString::fromLatin1( error.c_str() );
-    return QString( error.c_str() );
+    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " warning (cause :" ) << warning << ")";
 }

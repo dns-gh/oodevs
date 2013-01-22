@@ -68,7 +68,6 @@ private:
 
     //! @name Helpers
     //@{
-    QString ConvertBoostError( const std::string& error ) const;
     virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
     virtual void ConnectionError    ( const std::string& address, const std::string& error );
@@ -84,7 +83,6 @@ private:
     std::string session_;
     CommandHandler* commands_;
     AgentServerMsgMgr* manager_;
-    std::string localEncoding_;
     //@}
 };
 
