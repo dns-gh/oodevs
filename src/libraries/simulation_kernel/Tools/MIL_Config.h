@@ -51,7 +51,6 @@ public:
     bool               IsDecisionalProfilingEnabled() const;
     bool               IsHookProfilingEnabled      () const;
     bool               IsCommandProfilingEnabled   () const;
-    bool               IsDataTestMode              () const;
     bool               IsTestMode                  () const;
     bool               IsSaveCheckpointTestMode    () const;
     bool               IsDeleteCheckpointTestMode  () const;
@@ -146,7 +145,6 @@ private:
     bool           bDecisionalProfilingEnabled_;
     bool           bHookProfilingEnabled_;
     bool           bCommandProfilingEnabled_;
-    bool           bDataTestMode_;
     bool           bTestMode_;
     bool           bSaveCheckpointTestMode_;
     bool           bDeleteCheckpointTestMode_;

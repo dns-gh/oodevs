@@ -50,7 +50,6 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bDecisionalProfilingEnabled_( false )
     , bHookProfilingEnabled_( false )
     , bCommandProfilingEnabled_( false )
-    , bDataTestMode_( false )
     , bTestMode_( false )
     , bSaveCheckpointTestMode_( false )
     , bDeleteCheckpointTestMode_( false )
@@ -93,8 +92,7 @@ MIL_Config::~MIL_Config()
 void MIL_Config::Parse( int argc, char** argv )
 {
     tools::SessionConfig::Parse( argc, argv );
-    bDataTestMode_ = IsSet( "testdata" );
-    bTestMode_ = bDataTestMode_ || IsSet( "test" );
+    bTestMode_ = IsSet( "test" );
     bSaveCheckpointTestMode_ = IsSet( "savecheckpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
     bDeleteCheckpointTestMode_ = IsSet( "deletecheckpoint" );
