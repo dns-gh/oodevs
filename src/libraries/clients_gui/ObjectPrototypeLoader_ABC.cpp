@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "clients_gui_pch.h"
 #include "ObjectPrototypeLoader_ABC.h"
 
@@ -33,4 +29,3 @@ ObjectPrototypeLoader_ABC::~ObjectPrototypeLoader_ABC()
 {
     // NOTHING
 }
-

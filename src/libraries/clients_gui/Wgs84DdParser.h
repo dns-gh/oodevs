@@ -10,16 +10,13 @@
 #ifndef __Wgs84DdParser_h_
 #define __Wgs84DdParser_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "LocationParser_ABC.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
 }
+
 namespace gui
 {
 // =============================================================================
@@ -57,6 +54,7 @@ private:
     int numParameters_;
     //@}
 };
+
 }
 
 #endif // __Wgs84DdParser_h_

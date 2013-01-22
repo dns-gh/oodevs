@@ -10,10 +10,6 @@
 #ifndef __ObjectPrototypeLoader_ABC_h_
 #define __ObjectPrototypeLoader_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 namespace kernel
 {
     class Location_ABC;
@@ -21,7 +17,6 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  ObjectPrototypeLoader_ABC
     @brief  ObjectPrototypeLoader_ABC

@@ -19,10 +19,6 @@
 #ifndef __GQ_PlotData_h_
 #define __GQ_PlotData_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "GQ_PlotDataBBox.h"
 
 class GQ_Plot;

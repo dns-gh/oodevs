@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "clients_gui_pch.h"
 #include "ObjectPrototypeShapeFileLoader.h"
 #include "Tools.h"

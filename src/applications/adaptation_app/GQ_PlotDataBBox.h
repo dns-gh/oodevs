@@ -19,10 +19,6 @@
 #ifndef __GQ_PlotDataBBox_h_
 #define __GQ_PlotDataBBox_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 // =============================================================================
 /** @class  GQ_PlotDataBBox
     @brief  GQ_PlotDataBBox

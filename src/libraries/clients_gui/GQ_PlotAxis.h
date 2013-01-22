@@ -19,12 +19,7 @@
 #ifndef __GQ_PlotAxis_h_
 #define __GQ_PlotAxis_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "GQ_ValueConvertor.h"
-
 #include <vector>
 
 class QColorGroup;
@@ -33,7 +28,6 @@ class QPoint;
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  GQ_PlotAxis
     @brief  GQ_PlotAxis

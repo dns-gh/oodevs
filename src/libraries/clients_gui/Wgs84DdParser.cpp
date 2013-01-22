@@ -7,21 +7,18 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "clients_gui_pch.h"
 #include "Wgs84DdParser.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
 using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: Wgs84DdParser constructor
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
 Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter )
-    : converter_( converter )
+    : converter_    ( converter )
     , numParameters_( 2 )
 {
     // NOTHING

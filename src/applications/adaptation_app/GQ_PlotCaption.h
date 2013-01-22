@@ -19,10 +19,6 @@
 #ifndef __GQ_PlotCaption_h_
 #define __GQ_PlotCaption_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 class GQ_Plot;
 
 // =============================================================================

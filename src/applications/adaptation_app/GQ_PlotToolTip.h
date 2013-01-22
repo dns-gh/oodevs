@@ -19,10 +19,6 @@
 #ifndef __GQ_PlotToolTip_h_
 #define __GQ_PlotToolTip_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include <boost/noncopyable.hpp>
 
 class GQ_Plot;

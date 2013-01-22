@@ -10,12 +10,7 @@
 #ifndef __ObjectPrototypeShapeFileLoader_h_
 #define __ObjectPrototypeShapeFileLoader_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "ObjectPrototypeLoader_ABC.h"
-
 #include <boost/shared_ptr.hpp>
 
 class OGRDataSource;
@@ -31,7 +26,6 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  ObjectPrototypeShapeFileLoader
     @brief  ObjectPrototypeShapeFileLoader
