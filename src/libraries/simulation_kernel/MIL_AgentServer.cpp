@@ -161,7 +161,7 @@ void MIL_AgentServer::ReadTerData()
 {
     MT_LOG_INFO_MSG( "Initializing terrain" );
     config_.AddFileToCRC( config_.GetTerrainFile() );
-    MT_LOG_INFO_MSG( MT_FormatString( "Terrain: %s", config_.GetTerrainFile().c_str() ) );
+    MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
     TER_World::Initialize( config_ );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
 }

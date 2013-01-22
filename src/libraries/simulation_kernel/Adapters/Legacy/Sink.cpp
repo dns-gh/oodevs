@@ -199,7 +199,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Can't configure legacy sink ( '%s' )", tools::GetExceptionMsg( e ) ) );
+        MT_LOG_ERROR_MSG( "Can't configure legacy sink ( '" << tools::GetExceptionMsg( e ) << "' )" );
     }
 
     pion.RegisterRole( *new moving::PHY_RoleAction_Moving( pion ) );

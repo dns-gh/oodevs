@@ -48,6 +48,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
@@ -93,7 +94,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , jammedPion_         ( 0 )
 {
     if( ! type_ )
-        throw MASA_EXCEPTION( MT_FormatString( "Knowledge group '%d' cannot be created because its type does not exist: %s ", id_, xis.attribute< std::string >( "type" ).c_str() ) );
+        throw MASA_EXCEPTION( "Knowledge group '" + boost::lexical_cast< std::string >( id_ )
+            + "' cannot be created because its type does not exist: " + xis.attribute< std::string >( "type" ) );
     idManager_.Lock( id_ );
     if( parent_.get() )
         timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();

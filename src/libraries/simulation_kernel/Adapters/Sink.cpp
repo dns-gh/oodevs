@@ -629,7 +629,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Can't configure Sink ( '%s' )", tools::GetExceptionMsg( e ) ) );
+        MT_LOG_ERROR_MSG( "Can't configure sink ( '" << tools::GetExceptionMsg( e ) << "' )" );
     }
 
     pion.RegisterRole( *new sword::RoleAction_Moving( pion ) );

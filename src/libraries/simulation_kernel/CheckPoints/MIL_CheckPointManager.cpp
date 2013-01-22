@@ -310,7 +310,7 @@ bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
     catch( const xml::exception& e )
     {
         _clearfp();
-        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save backup checkpoint ( %s )", tools::GetExceptionMsg( e ) ) );
+        MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( " << tools::GetExceptionMsg( e ) << " )" );
         return false;
     }
     catch( ... )
@@ -342,7 +342,7 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", tools::GetExceptionMsg( e ) ) );
+        MT_LOG_ERROR_MSG( "Can't save checkpoint ( '" << tools::GetExceptionMsg( e ) << "' )" );
         return false;
     }
     catch( ... )

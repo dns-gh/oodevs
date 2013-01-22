@@ -44,7 +44,7 @@ void DEC_MiscFunctions::Debug( const T& caller, const std::string& callerType, c
 {
     if( !MIL_AgentServer::GetWorkspace().GetConfig().UseDecDebug() )
         return;
-    MT_LOG_INFO_MSG( MT_FormatString( "%s %d says : [%s]", callerType.c_str(), caller.GetID(), message.c_str() ).c_str() );
+    MT_LOG_INFO_MSG( callerType << " " << caller.GetID() << " says : [" << message << "]" );
 }
 
 // -----------------------------------------------------------------------------

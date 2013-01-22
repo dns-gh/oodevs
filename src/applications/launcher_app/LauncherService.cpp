@@ -102,7 +102,7 @@ namespace
     {
         if( handle == 0 )
         {
-            MT_LOG_INFO_MSG( message.c_str() );
+            MT_LOG_INFO_MSG( message );
             return false;
         }
         return true;
@@ -132,7 +132,7 @@ void LauncherService::Install() const
             SERVICE_DESCRIPTION sd;
             sd.lpDescription = desc;
             ChangeServiceConfig2( schService, SERVICE_CONFIG_DESCRIPTION, &sd );
-            MT_LOG_INFO_MSG( MT_FormatString( "Service %s installed", name_.c_str() ).c_str() );
+            MT_LOG_INFO_MSG( "Service " << name_ << " installed" );
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
@@ -210,13 +210,9 @@ void LauncherService::UnInstall()
         if( IsValid( schService, MT_FormatString( "OpenService failed, error code = %d", GetLastError() ) ) )
         {
             if( !DeleteService( schService  ))
-            {
-                MT_LOG_INFO_MSG( MT_FormatString( "Failed to delete service %s", name_.c_str() ).c_str() );
-            }
+                MT_LOG_INFO_MSG( "Failed to delete service " << name_ );
             else
-            {
-                MT_LOG_INFO_MSG( MT_FormatString( "Service %s removed", name_.c_str() ).c_str() );
-            }
+                MT_LOG_INFO_MSG( "Service " << name_ << " removed" );
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );

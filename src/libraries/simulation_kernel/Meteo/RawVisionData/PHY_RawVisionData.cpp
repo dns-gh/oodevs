@@ -209,10 +209,9 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 {
     tools::InputBinaryStream archive( strFile.c_str() );
     if( !archive )
-        throw MASA_EXCEPTION( MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
-
+        throw MASA_EXCEPTION( "Cannot open file " + strFile );
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
-       throw MASA_EXCEPTION( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+       throw MASA_EXCEPTION( "Error reading file " + strFile );
     const double halfCellSize = 0.5*rCellSize_;
     cell_[0] = MT_Vector2D(  halfCellSize,  halfCellSize );
     cell_[1] = MT_Vector2D( -halfCellSize,  halfCellSize );
@@ -233,7 +232,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
             pTmp->pEffects = 0;
             archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )
-                throw MASA_EXCEPTION( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+                throw MASA_EXCEPTION( "Error reading file " + strFile );
         }
     }
     CalcMinMaxAltitude();

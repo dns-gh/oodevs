@@ -296,7 +296,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     assert( pEphemeride_ );
     if( pEphemeride_->UpdateNight( date ) )
     {
-        MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
+        MT_LOG_INFO_MSG( "Ephemeris is now: " << pEphemeride_->GetLightingBase().GetName() );
         pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
         for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             ( *it )->Update( pEphemeride_->GetLightingBase() );
