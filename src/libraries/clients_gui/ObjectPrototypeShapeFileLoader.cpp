@@ -30,14 +30,14 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::CoordinateConverter_ABC& coordinateConverter, QWidget* parent, const QString& filename, const kernel::ObjectType& objectType )
-: currentFeature_( 0 )
-, objectType_( objectType )
-, coordinateConverter_( coordinateConverter )
+    : currentFeature_     ( 0 )
+    , objectType_         ( objectType )
+    , coordinateConverter_( coordinateConverter )
 {
     OGRRegisterAll();
     dataSource_.reset( OGRSFDriverRegistrar::Open( filename.toStdString().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
-    if( dataSource_ == NULL )
-        throw MASA_EXCEPTION( parent->tr( "Cannot load shapefile %1" ).arg( filename ).toStdString() );
+    if( ! dataSource_ )
+        throw MASA_EXCEPTION( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load shapefile %1" ).arg( filename ).toStdString() );
 
     QStringList loadableLayerNames;
     QString unloadableLayerExplanations;
@@ -52,7 +52,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     }
 
     if( loadableLayerNames.empty() )
-        throw MASA_EXCEPTION(  tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).toStdString() );
 
     QString layerName;
     if( loadableLayerNames.size() == 1 )
