@@ -263,6 +263,7 @@ void SIMControlToolbar::SlotStep()
 {
     if( hasReplay_ )
     {
+        gamingPaused_ = true;
         replayStepMode_ = true;
         replay::ControlResume message;
         message().set_tick( 1 );
