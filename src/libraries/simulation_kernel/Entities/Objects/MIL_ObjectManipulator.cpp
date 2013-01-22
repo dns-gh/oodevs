@@ -415,13 +415,13 @@ namespace
             if( capacity )
             {
                 const StructuralCapacity* structuralcapacity = object.Retrieve< StructuralCapacity >();
-            speed = capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. );
+                speed = capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. );
             }
             const CrowdCapacity* crowdcapacity = object.Retrieve< CrowdCapacity >();
             if( crowdcapacity )
                 speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( entity ) );
         }
-    return std::min( speed, rAgentSpeedWithinObject );
+        return std::min( speed, rAgentSpeedWithinObject );
     }
 }
 
