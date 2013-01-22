@@ -206,7 +206,7 @@ void SupplyConveyor::serialize( MIL_CheckPointInArchive& archive, const unsigned
     archive >> volumeCapacity_;
     size_t resourcesSize;
     archive >> resourcesSize;
-    for( int i = 0; i < resourcesSize; ++i )
+    for( size_t i = 0; i < resourcesSize; ++i )
     {
         unsigned int dotationId;
         archive >> dotationId;

@@ -303,13 +303,13 @@ void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const 
     archive >> dispatcher_;
     size_t requestsSize;
     archive >> requestsSize;
-    for( int i = 0; i < requestsSize; ++i )
+    for( size_t i = 0; i < requestsSize; ++i )
     {
         SupplyRecipient_ABC* recipient; 
         archive >> recipient;
         size_t requestSize;
         archive >> requestSize;
-        for( int j = 0; j < requestSize; ++j )
+        for( size_t j = 0; j < requestSize; ++j )
         {
             unsigned int dotationCategory;
             archive >> dotationCategory;
