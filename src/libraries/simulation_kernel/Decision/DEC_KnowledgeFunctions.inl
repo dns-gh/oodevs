@@ -104,7 +104,7 @@ template< typename T >
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsIntersectingInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
 {
     if( !pLoc )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
