@@ -130,18 +130,21 @@ target_link_libraries( mt_tools
 add_target( sword_tools common "libraries/tools" OPTIONS protocol )
 target_link_libraries( sword_tools
     mt_tools
-    ${QT_LIBRARIES}
+    ${QT_QTCORE_LIBRARY}
     ${XALAN_LIBRARIES}
     ${XERCES_LIBRARIES}
 )
 
 # ent
 add_target( ent common "libraries/ent" )
-target_link_libraries( ent ${QT_LIBRARIES} )
+target_link_libraries( ent ${QT_QTCORE_LIBRARY} )
 
 # meteo
 add_target( meteo common "libraries/meteo" OPTIONS protocol )
-target_link_libraries( meteo ${XERCES_LIBRARIES} )
+target_link_libraries( meteo
+    ${TOOLS_LIBRARIES}
+    ${XERCES_LIBRARIES}
+)
 
 # propagation
 add_target( propagation common "libraries/propagation" )
@@ -149,6 +152,8 @@ target_link_libraries( propagation
     ${GDAL_I_LIBRARIES}
     ${GDAL_OGR_LIBRARIES}
     ${OPENGL_LIBRARIES}
+    ${TOOLS_LIBRARIES}
+    ${XERCES_LIBRARIES}
 )
 
 # 3a
@@ -164,8 +169,9 @@ target_link_libraries( clients_kernel
     ent
     sword_tools
     ${GEOCOORD_LIBRARIES}
-    ${GLEW_LIBRARIES}
     ${GRAPHICS_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+    ${QT_QTGUI_LIBRARY}
 )
 
 # actions
@@ -183,8 +189,8 @@ target_link_libraries( indicators clients_kernel )
 # license_gui
 add_target( license_gui common "libraries/license_gui" )
 target_link_libraries( license_gui
-    mt_tools
     ${FLEX_LIBRARIES}
+    ${TOOLS_LIBRARIES}
     ${XERCES_LIBRARIES}
 )
 
@@ -199,7 +205,6 @@ masa_add_target_include( shield_app "${CMAKE_CURRENT_BINARY_DIR}/shield.out" )
 target_link_libraries( shield_app shield )
 
 # geostore
-# fixme not working in shared mode
 add_target( geostore common "libraries/geostore" )
 target_link_libraries( geostore
     libiconv
@@ -230,11 +235,7 @@ target_link_libraries( actions_test actions )
 
 # propagation_test
 add_target( propagation_test tests "tests/propagation_test" OPTIONS test )
-target_link_libraries( propagation_test
-    propagation
-    ${XERCES_LIBRARIES}
-    ${TOOLS_LIBRARIES}
-)
+target_link_libraries( propagation_test propagation )
 
 # protocol_test
 add_target( protocol_test tests "tests/protocol_test" OPTIONS protobuf protocol test )
@@ -280,7 +281,10 @@ target_link_libraries( web_control_plugin
 
 # positions_plugin_test
 add_target( positions_plugin_test tests "tests/positions_plugin_test" OPTIONS protocol test )
-target_link_libraries( positions_plugin_test positions_plugin ${TOOLS_LIBRARIES} )
+target_link_libraries( positions_plugin_test
+    positions_plugin
+    ${TOOLS_LIBRARIES}
+)
 
 # plugins_test
 add_target( plugins_test tests "tests/plugins_test" OPTIONS protocol test )
@@ -331,10 +335,7 @@ target_link_libraries( dispatcher_dll
 
 # dispatcher_test
 add_target( dispatcher_test tests "tests/dispatcher_test" OPTIONS protocol test )
-target_link_libraries( dispatcher_test
-    dispatcher
-    sword_tools
-)
+target_link_libraries( dispatcher_test dispatcher )
 
 # dis_plugin_dll
 add_target( dis_plugin_dll plugins "libraries/dis_plugin_dll" OPTIONS plugin shared )
@@ -409,8 +410,8 @@ target_link_libraries( simulation_kernel
     ${CORE_LIBRARIES}
     ${GEODATA_LIBRARIES}
     ${LOG4CXX_LIBRARIES}
-    ${TERRAIN_LIBRARIES}
     ${MASALLOC_LIBRARIES}
+    ${TERRAIN_LIBRARIES}
 )
 
 # simulation_kernel_test
@@ -515,6 +516,8 @@ target_link_libraries( clients_gui
     htmlhelp
     license_gui
     meteo
+    ${GDAL_I_LIBRARIES}
+    ${GLEW_LIBRARIES}
     ${SPATIALCONTAINER_LIBRARIES}
     ${SVGL_LIBRARIES}
     ${TERRAIN_LIBRARIES}
