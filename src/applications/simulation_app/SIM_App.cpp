@@ -307,8 +307,6 @@ void SIM_App::Execute()
 {
     Initialize();
     Run();
-    if( config_->IsDeleteCheckpointTestMode() )
-        boost::filesystem::remove_all( config_->GetCheckpointDirectory() );
 }
 
 namespace

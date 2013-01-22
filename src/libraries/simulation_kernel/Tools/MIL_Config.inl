@@ -90,16 +90,6 @@ bool MIL_Config::IsSaveCheckpointTestMode() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::IsDeleteCheckpointTestMode
-// Created: JSR 2010-03-11
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::IsDeleteCheckpointTestMode() const
-{
-    return bDeleteCheckpointTestMode_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::IsDispatcherEmbedded
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------

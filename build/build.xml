@@ -980,15 +980,15 @@
         <attribute name="session" default="default"/>
         <attribute name="checkpoint" default="tempcheckpoint"/>
         <sequential>
-            <echo message="running simulation_app --test --savecheckpoint=@{checkpoint} --legacy=@{legacy} --exercise=@{exercise} --session=@{session} --root-dir=${data.dir}"/>
+            <echo taskname="save-checkpoint" message='simulation_app --test --savecheckpoint=@{checkpoint} --legacy=@{legacy} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
             <run-one-simulation exercise="@{exercise}" legacy="@{legacy}">
                 <arg value="--savecheckpoint=@{checkpoint}"/>
             </run-one-simulation>
-            <echo message="running simulation_app --test --checkpoint=@{checkpoint} --deletecheckpoint --legacy=@{legacy} --exercise=@{exercise} --session=@{session} --root-dir=${data.dir}"/>
+            <echo taskname="load-checkpoint" message='simulation_app --test --checkpoint=@{checkpoint} --legacy=@{legacy} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
             <run-one-simulation exercise="scipio/CheckpointTests" legacy="@{legacy}">
                 <arg value="--checkpoint=@{checkpoint}"/>
-                <arg value="--deletecheckpoint"/>
             </run-one-simulation>
+            <delete dir="${data.dir}/exercises/@{exercise}/checkpoints/@{checkpoint}"/>
         </sequential>
     </macrodef>
 
@@ -1001,18 +1001,19 @@
     <macrodef name="test-scripts">
         <attribute name="dataset"/>
         <attribute name="physical"/>
+        <attribute name="exercise" default="scripts_test"/>
         <attribute name="simulation" default="simulation_app"/>
         <sequential>
-            <delete dir="${data.dir}/exercises/scripts_test"/>
-            <copy todir="${data.dir}/exercises/scripts_test" overwrite="true">
-                <fileset dir="${data.dir}/tests/scripts_test" includes="**/*.xml"/>
+            <delete dir="${data.dir}/exercises/@{exercise}"/>
+            <copy todir="${data.dir}/exercises/@{exercise}" overwrite="true">
+                <fileset dir="${data.dir}/tests/@{exercise}" includes="**/*.xml"/>
                 <filterset>
                     <filter token="DATASET" value="@{dataset}"/>
                     <filter token="PHYSICAL" value="@{physical}"/>
                 </filterset>
             </copy>
-            <run-simulation exercise="scripts_test" session="test-session"/>
-            <delete dir="${data.dir}/exercises/scripts_test"/>
+            <run-simulation exercise="@{exercise}" session="test-session"/>
+            <delete dir="${data.dir}/exercises/@{exercise}"/>
         </sequential>
     </macrodef>
 

@@ -52,7 +52,6 @@ public:
     bool               IsHookProfilingEnabled      () const;
     bool               IsCommandProfilingEnabled   () const;
     bool               IsSaveCheckpointTestMode    () const;
-    bool               IsDeleteCheckpointTestMode  () const;
     bool               IsDispatcherEmbedded        () const;
     unsigned short     GetNetworkPort              () const;
     unsigned long      GetNetworkTimeout           () const;
@@ -146,7 +145,6 @@ private:
     bool           bCommandProfilingEnabled_;
     bool           bTestMode_;
     bool           bSaveCheckpointTestMode_;
-    bool           bDeleteCheckpointTestMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
     bool           bLegacy_;
