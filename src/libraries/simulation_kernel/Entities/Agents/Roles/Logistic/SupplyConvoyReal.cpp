@@ -25,8 +25,6 @@ using namespace logistic;
 // Constructor / destructor 
 // =============================================================================
 
-static int count = 0;
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal constructor
 // Created: NLD 2011-08-01
@@ -35,7 +33,6 @@ SupplyConvoyReal::SupplyConvoyReal( SupplyConvoyEventsObserver_ABC& eventsObserv
     : SupplyConvoy      ( eventsObserver, supplier, parameters )
     , convoyPion_       ( 0 )
     , currentActionDone_( false )
-    , counter_( ++count )
 {
 }
 
@@ -47,7 +44,6 @@ SupplyConvoyReal::SupplyConvoyReal()
     : SupplyConvoy      ()
     , convoyPion_       ( 0 )
     , currentActionDone_( false )
-    , counter_ (++count )
 {
     // NOTHING
 }

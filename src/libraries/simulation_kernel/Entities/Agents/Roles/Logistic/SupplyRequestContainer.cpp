@@ -28,8 +28,6 @@
 
 using namespace logistic;
 
-static int count = 0;
-
 // -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer constructor
 // Created: NLD 2011-07-25
@@ -38,7 +36,6 @@ SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequest
     : builder_             ( builder )
     , transportersProvider_( 0 )
     , convoyFactory_       ( &SupplyConvoyVirtualFactory::Instance() )
-    , counter_( ++count )
 {
     // NOTHING
 }
@@ -50,7 +47,6 @@ SupplyRequestContainer::SupplyRequestContainer( boost::shared_ptr< SupplyRequest
 SupplyRequestContainer::SupplyRequestContainer()
     : transportersProvider_( 0 )
     , convoyFactory_       ( &SupplyConvoyRealFactory::Instance() ) // $$$$ LDC We are deserializing only real convoys for now
-    , counter_( ++count )
 {
     // NOTHING
 }

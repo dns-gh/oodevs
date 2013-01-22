@@ -112,7 +112,6 @@ private:
     T_PointVector transportersProviderPath_;
     T_PointVector supplierPath_;
     const SupplyConvoyFactory_ABC* convoyFactory_;
-    int counter_;
 };
 
 }

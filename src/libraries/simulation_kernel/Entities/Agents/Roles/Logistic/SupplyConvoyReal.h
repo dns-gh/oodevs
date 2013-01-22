@@ -87,7 +87,6 @@ private:
 private:
     MIL_AgentPion* convoyPion_;
     bool currentActionDone_;
-    int counter_;
 };
 
 } // end namespace logistic
