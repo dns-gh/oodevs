@@ -31,7 +31,7 @@ FullUpdateVisitor::FullUpdateVisitor( ClientPublisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 void FullUpdateVisitor::Visit( const kernel::EntityBase_ABC& entity )
 {
-    const_cast< kernel::EntityBase_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendFullUpdate, *publisher_ );
+    entity.GetInterfaces().Apply( &EntityPublisher_ABC::SendFullUpdate, *publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,5 +51,5 @@ CreationVisitor::CreationVisitor( ClientPublisher_ABC& publisher )
 void CreationVisitor::Visit( const kernel::EntityBase_ABC& entity )
 {
     if( entities_.insert( &entity ).second )
-        const_cast< kernel::EntityBase_ABC& >( entity ).Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
+        entity.GetInterfaces().Apply( &EntityPublisher_ABC::SendCreation, *publisher_ );
 }

@@ -69,7 +69,7 @@ void UrbanHierarchies::SerializeAttributes( xml::xostream& xos ) const
         {
             const Entity_ABC& entity = it.NextElement();
             xos << xml::start( "urban-object" );
-            entity.Interface().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
+            entity.GetInterfaces().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
             xos << xml::end; // urban-object
         }
         xos << xml::end; // urban-objects

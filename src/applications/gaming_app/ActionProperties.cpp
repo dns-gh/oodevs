@@ -52,7 +52,7 @@ void ActionProperties::NotifySelected( const actions::Action_ABC* action )
         selected_ = action;
         setVisible( selected_ != 0 );
         if( selected_ )
-            selected_->Interface().Apply( &kernel::Displayable_ABC::DisplayInSummary, *display_ );
+            selected_->GetInterfaces().Apply( &kernel::Displayable_ABC::DisplayInSummary, *display_ );
     }
 }
 

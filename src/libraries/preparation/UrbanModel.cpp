@@ -301,7 +301,7 @@ void UrbanModel::Serialize( const std::string& filename, const tools::SchemaWrit
         if( hierarchy.GetLevel() == eUrbanLevelCity ) // only city here, UrbanHierarchy proceed the recursion
         {
             xos << xml::start( "urban-object" );
-            it->second->Interface().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
+            it->second->GetInterfaces().Apply( &kernel::Serializable_ABC::SerializeAttributes, xos );
             xos << xml::end; // urban-object
         }
     }

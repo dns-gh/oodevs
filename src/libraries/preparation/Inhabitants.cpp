@@ -49,7 +49,7 @@ void Inhabitants::SerializeAttributes( xml::xostream& xos ) const
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "inhabitant" );
-        it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
+        it->second->GetInterfaces().Apply( &Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }
     xos << xml::end;

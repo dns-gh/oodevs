@@ -94,7 +94,7 @@ namespace
 
         void operator()( const Entity_ABC& object )
         {
-            object.Interface().Apply( &Pickable_ABC::TerrainPicked, terrainCoordinates_, infos_ );
+            object.GetInterfaces().Apply( &Pickable_ABC::TerrainPicked, terrainCoordinates_, infos_ );
         }
 
         QStringList infos_;

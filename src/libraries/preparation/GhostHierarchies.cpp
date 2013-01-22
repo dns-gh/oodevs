@@ -49,7 +49,7 @@ void GhostHierarchies::SerializeAttributes( xml::xostream& xos ) const
         if( dynamic_cast< const kernel::Ghost_ABC* >( child ) )
         {
             xos << xml::start( "phantom" );
-            it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+            it->second->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
             xos << xml::end;
         }
     }

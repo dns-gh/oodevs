@@ -92,5 +92,5 @@ void Object_ABC::Activate( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void Object_ABC::Finalize() const
 {
-    Interface().Apply( &Finalizable_ABC::Finalize );
+    GetInterfaces().Apply( &Finalizable_ABC::Finalize );
 }

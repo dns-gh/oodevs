@@ -90,10 +90,10 @@ namespace
 void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
 {
     for( auto it = toCreate_.begin(); it != toCreate_.end(); ++it )
-        (*it)->Apply( &EntityPublisher_ABC::SendCreation, publisher );
+        (*it)->GetInterfaces().Apply( &EntityPublisher_ABC::SendCreation, publisher );
 
     for( auto it = toUpdate_.begin(); it != toUpdate_.end(); ++it )
-        (*it)->Apply( &EntityPublisher_ABC::SendFullUpdate, publisher );
+        (*it)->GetInterfaces().Apply( &EntityPublisher_ABC::SendFullUpdate, publisher );
 
     Publisher p( publisher, model );
     size_t size = toDestroy_.size();

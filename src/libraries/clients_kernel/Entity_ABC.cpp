@@ -68,7 +68,7 @@ void Entity_ABC::AddExtension( Extension_ABC& ext )
 // -----------------------------------------------------------------------------
 void EntityBase_ABC::AddExtension( Extension_ABC& ext )
 {
-    tools::SortedInterfaceContainer< Extension_ABC >::Register( ext );
+    GetInterfaces().Register( ext );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,15 +78,6 @@ void EntityBase_ABC::AddExtension( Extension_ABC& ext )
 void Entity_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     drawer_->Draw( where, viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::Interface
-// Created: AGE 2006-05-02
-// -----------------------------------------------------------------------------
-tools::SortedInterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
-{
-    return *const_cast< Entity_ABC* >( this );
 }
 
 // -----------------------------------------------------------------------------

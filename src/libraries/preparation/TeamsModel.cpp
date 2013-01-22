@@ -127,14 +127,14 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "party" );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
+        it->second->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        it->second->GetInterfaces().Apply( & Serializable_ABC::SerializeLogistics, xos );
         xos << xml::end;
     }
     if( noSideTeam_->Get< Objects >().Count() )
     {
         xos << xml::start( "no-party" );
-        noSideTeam_->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        noSideTeam_->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }
     xos << xml::end;

@@ -60,7 +60,7 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
             xos << xml::start( "phantom" );
         else
             xos << xml::start( "automat" );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        it->second->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }
 }

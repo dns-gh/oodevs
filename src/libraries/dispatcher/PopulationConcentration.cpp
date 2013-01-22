@@ -31,7 +31,7 @@ PopulationConcentration::PopulationConcentration( const Population& population, 
     , nDeadHumans_        ( 0 )
     , nAttitude_          ( sword::agressive )
 {
-    Register( *this );
+    GetInterfaces().Register( *this );
 }
 
 // -----------------------------------------------------------------------------

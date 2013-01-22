@@ -45,7 +45,7 @@ void KnowledgeGroupCommunications::SerializeAttributes( xml::xostream& xos ) con
         if( element && dynamic_cast< const kernel::Automat_ABC* >( element ) == 0 && dynamic_cast< const kernel::Ghost_ABC* >( element ) == 0 )
         {
             xos << xml::start( "knowledge-group" );
-            element->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+            element->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
             xos << xml::end;
         }
     }

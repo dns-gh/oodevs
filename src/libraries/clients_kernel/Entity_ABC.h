@@ -41,16 +41,17 @@ namespace kernel
 // =============================================================================
 
 class EntityBase_ABC : public tools::Extendable< Extension_ABC >
-                     , public tools::SortedInterfaceContainer< Extension_ABC >
 {
 public:
              EntityBase_ABC() {}
     virtual ~EntityBase_ABC() {}
 
+    typedef public tools::SortedInterfaceContainer< Extension_ABC > T_Interfaces;
+
     template< typename T >
     void Update( const T& updateMessage )
     {
-        Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
+        GetInterfaces().Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
     }
     template< typename T >
     void Attach( T& extension )
@@ -60,6 +61,13 @@ public:
     }
     virtual void AddExtension( Extension_ABC& );
 
+    virtual T_Interfaces& GetInterfaces() const
+    {
+        return const_cast< T_Interfaces& >( interfaces_ );
+    }
+
+private:
+    T_Interfaces interfaces_;
 };
 
 class Entity_ABC : public EntityBase_ABC
@@ -87,8 +95,6 @@ public:
     virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
 
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
-
-    tools::SortedInterfaceContainer< Extension_ABC >& Interface() const;
 
     virtual void AddExtension( Extension_ABC& ext );
     //@}

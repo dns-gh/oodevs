@@ -233,7 +233,7 @@ bool EntityLayerBase::DisplayTooltip( std::size_t i, const geometry::Point2f& po
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
 {
-    entity.Interface().Apply( & Displayable_ABC::DisplayInTooltip, displayer );
+    entity.GetInterfaces().Apply( & Displayable_ABC::DisplayInTooltip, displayer );
     return true;
 }
 

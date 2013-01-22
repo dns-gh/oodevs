@@ -45,7 +45,7 @@ void TeamCommunications::SerializeAttributes( xml::xostream& xos ) const
     while( it.HasMoreElements() )
     {
         xos << xml::start( "knowledge-group" );
-        it.NextElement().Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        it.NextElement().GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }
     xos << xml::end;

@@ -109,7 +109,7 @@ void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanO
     for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
     {
         static const bool bTrue = true;
-         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+        ( *it )->GetInterfaces().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
         DoSelect( *it );
     }
     actualSelection_ = elements;
@@ -124,7 +124,7 @@ void UrbanLayer::DeselectAll()
 {
     static const bool bFalse = false;
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
-        ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
+        ( *it )->GetInterfaces().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
     actualSelection_.clear();
 }
 
@@ -142,7 +142,7 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
     // TODO hack for gaming before UrbanHierarchies are implemented
     if( !hierarchies )
     {
-        urbanObject->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+        urbanObject->GetInterfaces().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
         return;
     }
     //
@@ -152,7 +152,7 @@ void UrbanLayer::DoSelect( const kernel::Entity_ABC* urbanObject )
         while( it.HasMoreElements() )
             DoSelect( &it.NextElement() );
     else
-        urbanObject->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
+        urbanObject->GetInterfaces().Apply( &kernel::UrbanPositions_ABC::SetSelection, bTrue );
 }
 
 // -----------------------------------------------------------------------------

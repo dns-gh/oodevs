@@ -137,7 +137,7 @@ void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewpor
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor4f( 1.f, 1.f, 1.f, 1.f );
-        selected_->Interface().Apply( &Drawable_ABC::Draw, point, viewport, tools );
+        selected_->GetInterfaces().Apply( &Drawable_ABC::Draw, point, viewport, tools );
     glPopAttrib();
 }
 

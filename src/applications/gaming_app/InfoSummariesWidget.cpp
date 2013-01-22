@@ -65,7 +65,7 @@ void InfoSummariesWidget::NotifySelected( const Entity_ABC* entity )
         selected_ = entity;
         display_->Hide();
         if( selected_ )
-            entity->Interface().Apply( &Displayable_ABC::DisplayInSummary, *display_ );
+            entity->GetInterfaces().Apply( &Displayable_ABC::DisplayInSummary, *display_ );
     }
 }
 
@@ -77,7 +77,7 @@ void InfoSummariesWidget::NotifyUpdated( const Entity_ABC& entity )
 {
     if( !selected_ || selected_ != &entity )
         return;
-    entity.Interface().Apply( &Displayable_ABC::DisplayInSummary, *display_ );
+    entity.GetInterfaces().Apply( &Displayable_ABC::DisplayInSummary, *display_ );
 }
 
 // -----------------------------------------------------------------------------
