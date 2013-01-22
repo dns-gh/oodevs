@@ -210,9 +210,9 @@ void LauncherService::UnInstall()
         if( IsValid( schService, MT_FormatString( "OpenService failed, error code = %d", GetLastError() ) ) )
         {
             if( !DeleteService( schService  ))
-                MT_LOG_INFO_MSG( "Failed to delete service " << name_ );
+                MT_LOG_INFO_MSG( "Failed to delete service " << name_ )
             else
-                MT_LOG_INFO_MSG( "Service " << name_ << " removed" );
+                MT_LOG_INFO_MSG( "Service " << name_ << " removed" )
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
