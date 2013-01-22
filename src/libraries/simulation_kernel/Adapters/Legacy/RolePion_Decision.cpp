@@ -268,9 +268,9 @@ void RolePion_Decision::RegisterFire()
     RegisterFunction( "DEC_Tir_MunitionPourTirIndirect",
         boost::function< const PHY_DotationCategory* ( int, const MT_Vector2D* ) >( boost::bind( &DEC_FireFunctions::GetMunitionForIndirectFire, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Pion_InterdireMunition",
-        boost::function< void( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::ForbidAmmunition, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< void( const std::vector< const PHY_DotationCategory* >& ) >( boost::bind( &DEC_FireFunctions::ForbidAmmunition, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Pion_AutoriserMunition",
-        boost::function< void( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::AllowAmmunition, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< void( const std::vector< const PHY_DotationCategory* >& ) >( boost::bind( &DEC_FireFunctions::AllowAmmunition, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Pion_AutoriserToutesMunitions",
         boost::bind( &DEC_FireFunctions::AllowAllAmmunitions, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Tir_PorteeTheoriqueMaxTirIndirect",

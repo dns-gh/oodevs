@@ -249,18 +249,28 @@ const PHY_DotationCategory* DEC_FireFunctions::GetMunitionForIndirectFire( MIL_A
 // Name: DEC_FireFunctions::ForbidAmmunitions
 // Created: HBD 2010-04-20
 // -----------------------------------------------------------------------------
-void DEC_FireFunctions::ForbidAmmunition( MIL_AgentPion& callerAgent,  const PHY_DotationCategory* pDotationCategory )
+void DEC_FireFunctions::ForbidAmmunition( MIL_AgentPion& callerAgent, const std::vector< const PHY_DotationCategory* >& dotationCategories )
 {
-    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().SetForbiddenDotation( *pDotationCategory );
+    for( auto it = dotationCategories.begin(); it != dotationCategories.end(); ++it )
+    {
+        if( !*it )
+            throw std::runtime_error( "Invalid pion in DEC_FireFunctions::ForbidAmmunition" );
+        callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().SetForbiddenDotation( **it );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::AllowAmmunition
 // Created: HBD 2010-04-22
 // -----------------------------------------------------------------------------
-void DEC_FireFunctions::AllowAmmunition( MIL_AgentPion& callerAgent,  const PHY_DotationCategory* pDotationCategory )
+void DEC_FireFunctions::AllowAmmunition( MIL_AgentPion& callerAgent, const std::vector< const PHY_DotationCategory* >& dotationCategories )
 {
-    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().RemoveForbiddenDotation( *pDotationCategory );
+    for( auto it = dotationCategories.begin(); it != dotationCategories.end(); ++it )
+    {
+        if( !*it )
+            throw std::runtime_error( "Invalid pion in DEC_FireFunctions::AllowAmmunition" );
+        callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().RemoveForbiddenDotation( **it );
+    }
 }
 
 // -----------------------------------------------------------------------------
