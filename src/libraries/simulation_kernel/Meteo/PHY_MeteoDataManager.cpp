@@ -280,7 +280,10 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     if( pEphemeride_->UpdateNight( date ) )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
-        pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
+        const weather::PHY_Lighting& lighting = pEphemeride_->GetLightingBase();
+        pGlobalMeteo_->SetLighting( &lighting );
+        for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
+            ( *it )->UpdateBaseLighting( lighting );
     }
     pGlobalMeteo_->UpdateMeteoPatch( date, *pRawData_, boost::shared_ptr< weather::Meteo >() );
     for( auto it = meteos_.begin(); it != meteos_.end(); ++it )

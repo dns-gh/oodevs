@@ -229,16 +229,17 @@ void MagicActionType::Initialize()
             CreateOrderParameter( "ID", "identifier" );
 
             OrderParameter* lighting = CreateOrderParameter( "Lighting", "enumeration" );
-            lighting->AddValue( 0, "JourSansNuage"          );
-            lighting->AddValue( 1, "JourPeuNuageux"         );
-            lighting->AddValue( 2, "JourMoyennementNuageux" );
-            lighting->AddValue( 3, "JourAssezNuageux"       );
-            lighting->AddValue( 4, "JourTresNuageux"        );
-            lighting->AddValue( 5, "NuitPleineLune"         );
-            lighting->AddValue( 6, "NuitTroisQuartDeLune"   );
-            lighting->AddValue( 7, "NuitDemiLune"           );
-            lighting->AddValue( 8, "NuitQuartDeLune"        );
-            lighting->AddValue( 9, "NuitNouvelleLune"       );
+            lighting->AddValue( eLightingType_JourSansNuage, "JourSansNuage" );
+            lighting->AddValue( eLightingType_JourPeuNuageux, "JourPeuNuageux" );
+            lighting->AddValue( eLightingType_JourMoyennementNuageux, "JourMoyennementNuageux" );
+            lighting->AddValue( eLightingType_JourAssezNuageux, "JourAssezNuageux" );
+            lighting->AddValue( eLightingType_JourTresNuageux, "JourTresNuageux" );
+            lighting->AddValue( eLightingType_NuitPleineLune, "NuitPleineLune" );
+            lighting->AddValue( eLightingType_NuitTroisQuartDeLune, "NuitTroisQuartDeLune" );
+            lighting->AddValue( eLightingType_NuitDemiLune, "NuitDemiLune" );
+            lighting->AddValue( eLightingType_NuitQuartDeLune, "NuitQuartDeLune" );
+            lighting->AddValue( eLightingType_NuitNouvelleLune, "NuitNouvelleLune" );
+            lighting->AddValue( eNbrLightingType, "" ); // Values from E_LightingType
         }
     }
     else if( name == "local_weather_destruction" )

@@ -36,7 +36,7 @@ namespace
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const MeteoLocal& meteo )
-    : Meteo( meteo.GetId(), meteo.GetLighting(), meteo.GetPrecipitation(), 0, meteo.GetTemperature(), meteo.GetName() )
+    : Meteo( meteo.GetId(), &meteo.GetLighting(), meteo.GetPrecipitation(), 0, meteo.GetTemperature(), meteo.GetName() )
     , converter_( &meteo.GetCoordinateConverter() )
     , created_( false )
 {
@@ -80,6 +80,8 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
     const weather::PHY_Lighting* pLighting = weather::PHY_Lighting::FindLighting( lighting );
     if( pLighting )
         pLighting_ = pLighting;
+    else
+        localLighting_ = false;
     topLeft_ = converter_->ConvertToXY( topLeft );
     bottomRight_ = converter_->ConvertToXY( bottomRight );
     startTime_ = MakeDate( startTime );
@@ -130,14 +132,14 @@ MeteoLocal::~MeteoLocal()
 // -----------------------------------------------------------------------------
 void MeteoLocal::Serialize( xml::xostream& xos ) const
 {
-    assert( converter_ && pLighting_ );
     const QString start = ( startTime_.isValid() ? startTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
     const QString end   = ( endTime_.isValid() ? endTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
     xos << xml::attribute( "start-time", start.isNull() ? "19700101Thhmmss" : start.toAscii().constData() )
         << xml::attribute( "end-time", end.isNull() ? "19700101Thhmmss" : end.toAscii().constData() )
         << xml::attribute( "top-left", converter_->ConvertToMgrs( topLeft_ ) )
-        << xml::attribute( "bottom-right"  , converter_->ConvertToMgrs( bottomRight_ ) )
-        << xml::attribute( "lighting", pLighting_->GetName() );
+        << xml::attribute( "bottom-right", converter_->ConvertToMgrs( bottomRight_ ) );
+    if( localLighting_ && pLighting_ )
+        xos << xml::attribute( "lighting", pLighting_->GetName() );
     Meteo::Serialize( xos );
 }
 

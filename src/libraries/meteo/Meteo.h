@@ -83,7 +83,7 @@ public:
              Meteo( unsigned int id, unsigned int timeStep, const std::string& name = "" );
              Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, unsigned int timeStep,
                     const std::string& name = "" );
-             Meteo( unsigned int id, const PHY_Lighting& light, const PHY_Precipitation& precipitation,
+             Meteo( unsigned int id, const PHY_Lighting* light, const PHY_Precipitation& precipitation,
                     unsigned int timeStep, unsigned int temperature, const std::string& name = "" );
              Meteo( unsigned int id, const sword::WeatherAttributes&, unsigned int timeStep, const std::string& name = "" );
              Meteo( unsigned int id, const sword::MissionParameters&, const PHY_Lighting& light, unsigned int timeStep,
@@ -104,6 +104,7 @@ public:
     const std::string& GetName() const;
     const PHY_Precipitation& GetPrecipitation   () const;
     const PHY_Lighting&      GetLighting        () const;
+    const PHY_Lighting*      GetLocalLighting   () const;
     const sWindData&         GetWind            () const;
     int                      GetTemperature     () const;
     const sCloudData&        GetCloud           () const;
@@ -113,7 +114,8 @@ public:
     virtual bool             IsOlder( const weather::Meteo& other ) const;
 
     void SetPrecipitation( const PHY_Precipitation& precipitation );
-    void SetLighting     ( const PHY_Lighting& light );
+    void SetLighting     ( const PHY_Lighting* light );
+    void UpdateBaseLighting( const PHY_Lighting& light );
     void SetWind         ( const sWindData& wind );
     void SetTemperature  ( int temperature );
     void SetCloud        ( const sCloudData& cloud );
@@ -153,13 +155,14 @@ protected:
     const PHY_Lighting*      pLighting_;
     const PHY_Precipitation* pPrecipitation_;
     double                   conversionFactor_;
+    bool                     localLighting_;
     bool                     modified_;
     //@}
 };
 
-#include "Meteo.inl"
-
 }
+
+#include "Meteo.inl"
 
 // -----------------------------------------------------------------------------
 // Name: Meteo::serialize

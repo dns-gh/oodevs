@@ -12,7 +12,7 @@
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 inline
-unsigned long Meteo::GetId() const
+unsigned long weather::Meteo::GetId() const
 {
     return id_;
 }
@@ -22,20 +22,9 @@ unsigned long Meteo::GetId() const
 // Created: JSR 2011-11-22
 // -----------------------------------------------------------------------------
 inline
-const std::string& Meteo::GetName() const
+const std::string& weather::Meteo::GetName() const
 {
     return name_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Meteo::GetLighting
-// Created: JVT 03-08-05
-//-----------------------------------------------------------------------------
-inline
-const PHY_Lighting& Meteo::GetLighting() const
-{
-    assert( pLighting_ );
-    return *pLighting_;
 }
 
 //-----------------------------------------------------------------------------
@@ -43,7 +32,7 @@ const PHY_Lighting& Meteo::GetLighting() const
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
 inline
-const PHY_Precipitation& Meteo::GetPrecipitation() const
+const weather::PHY_Precipitation& weather::Meteo::GetPrecipitation() const
 {
     assert( pPrecipitation_ );
     return *pPrecipitation_;
@@ -54,7 +43,7 @@ const PHY_Precipitation& Meteo::GetPrecipitation() const
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
 inline
-const Meteo::sWindData& Meteo::GetWind() const
+const weather::Meteo::sWindData& weather::Meteo::GetWind() const
 {
     return wind_;
 }
@@ -64,7 +53,7 @@ const Meteo::sWindData& Meteo::GetWind() const
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 inline
-const Meteo::sCloudData& Meteo::GetCloud() const
+const weather::Meteo::sCloudData& weather::Meteo::GetCloud() const
 {
     return cloud_;
 }
@@ -74,7 +63,7 @@ const Meteo::sCloudData& Meteo::GetCloud() const
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 inline
-void Meteo::SetPrecipitation( const PHY_Precipitation& precipitation )
+void weather::Meteo::SetPrecipitation( const weather::PHY_Precipitation& precipitation )
 {
     if( pPrecipitation_ != &precipitation )
         modified_ = true;
@@ -82,23 +71,11 @@ void Meteo::SetPrecipitation( const PHY_Precipitation& precipitation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Meteo::SetLighting
-// Created: ABR 2011-06-01
-// -----------------------------------------------------------------------------
-inline
-void Meteo::SetLighting( const PHY_Lighting& light )
-{
-    if( pLighting_ != &light )
-        modified_ = true;
-    pLighting_ = &light;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Meteo::SetWind
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 inline
-void Meteo::SetWind( const sWindData& wind )
+void weather::Meteo::SetWind( const sWindData& wind )
 {
     if( wind_.eAngle_ != wind.eAngle_ || wind_.rSpeed_ != wind.rSpeed_ )
         modified_ = true;
@@ -110,7 +87,7 @@ void Meteo::SetWind( const sWindData& wind )
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
 inline
-void Meteo::SetCloud( const sCloudData& cloud )
+void weather::Meteo::SetCloud( const sCloudData& cloud )
 {
     if( cloud_.nCeiling_ != cloud.nCeiling_ || cloud_.nFloor_ != cloud.nFloor_ || cloud_.nDensityPercentage_ != cloud.nDensityPercentage_ || cloud_.rDensity_ != cloud.rDensity_ )
         modified_ = true;
@@ -122,7 +99,7 @@ void Meteo::SetCloud( const sCloudData& cloud )
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
 inline
-double Meteo::GetConversionFactor() const
+double weather::Meteo::GetConversionFactor() const
 {
     return conversionFactor_;
 }
@@ -132,7 +109,7 @@ double Meteo::GetConversionFactor() const
 // Created: ABR 2011-06-07
 // -----------------------------------------------------------------------------
 inline
-bool Meteo::IsModified() const
+bool weather::Meteo::IsModified() const
 {
     return modified_;
 }
@@ -142,7 +119,7 @@ bool Meteo::IsModified() const
 // Created: ABR 2011-06-07
 // -----------------------------------------------------------------------------
 inline
-void Meteo::SetModified( bool modified )
+void weather::Meteo::SetModified( bool modified )
 {
     modified_ = modified;
 }
@@ -152,7 +129,7 @@ void Meteo::SetModified( bool modified )
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
 inline
-bool Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
+bool weather::Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
 {
     return true;
 }
@@ -162,7 +139,7 @@ bool Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
 // Created: ABR 2012-03-21
 // -----------------------------------------------------------------------------
 inline
-bool Meteo::IsPatched() const
+bool weather::Meteo::IsPatched() const
 {
     return true;
 }
@@ -172,7 +149,7 @@ bool Meteo::IsPatched() const
 // Created: ABR 2012-03-23
 // -----------------------------------------------------------------------------
 inline
-bool Meteo::IsOlder( const weather::Meteo& /*other*/ ) const
+bool weather::Meteo::IsOlder( const weather::Meteo& /*other*/ ) const
 {
     return true;
 }

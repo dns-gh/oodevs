@@ -53,14 +53,17 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
         >> xml::attribute( "end-time", strEndTime )
         >> xml::attribute( "top-left", strTopLeftPos )
         >> xml::attribute( "bottom-right", strTopRightPos )
-        >> xml::optional >> xml::attribute( "lighting", lighting ); // $$$$ ABR 2012-10-19: Remove optional on the next version
+        >> xml::optional >> xml::attribute( "lighting", lighting );
     MIL_Tools::ConvertCoordMosToSim( strTopLeftPos, upLeft_ );
     MIL_Tools::ConvertCoordMosToSim( strTopRightPos, downRight_ );
     startTime_ = ( bpt::from_iso_string( strStartTime ) - bpt::from_time_t( 0 ) ).total_seconds();
     endTime_ = ( bpt::from_iso_string( strEndTime ) - bpt::from_time_t( 0 ) ).total_seconds();
     pLighting_ = weather::PHY_Lighting::FindLighting( lighting );
     if( !pLighting_ )
+    {
         pLighting_ = &light;
+        localLighting_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -73,6 +76,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters&
     , startTime_ ( 0 )
     , endTime_   ( 0 )
 {
+    localLighting_ = false;
     LocalUpdate( msg, true );
 }
 
@@ -115,8 +119,9 @@ void PHY_LocalMeteo::Serialize( xml::xostream& xos ) const
     xos << xml::attribute( "start-time", start )
         << xml::attribute( "end-time", end )
         << xml::attribute( "top-left", coordUpLeft )
-        << xml::attribute( "bottom-right", coordDownRight )
-        << xml::attribute( "lighting", pLighting_->GetName() );
+        << xml::attribute( "bottom-right", coordDownRight );
+    if( !localLighting_ && pLighting_ )
+        xos << xml::attribute( "lighting", pLighting_->GetName() );
     Meteo::Serialize( xos );
 }
 
@@ -169,7 +174,12 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
             throw std::exception( "Meteo : bad attribute for lighting" );
         const weather::PHY_Lighting* pLighting = weather::PHY_Lighting::FindLighting( (sword::WeatherAttributes::EnumLightingType ) lighting.value().Get(0).enumeration() );
         if( pLighting )
+        {
+            localLighting_ = true;
             pLighting_ = pLighting;
+        }
+        else
+            localLighting_ = false;
     }
 }
 

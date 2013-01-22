@@ -47,6 +47,7 @@ Meteo::Meteo( unsigned int id, unsigned int timeStep, const std::string& name /*
     , id_              ( id )
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
+    , localLighting_   ( true )
     , modified_        ( false )
     , temperature_     ( 20 )
 {
@@ -62,6 +63,7 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
     , id_              ( id )
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
+    , localLighting_   ( true )
     , modified_        ( false )
     , temperature_     ( 20 )
 {
@@ -131,9 +133,9 @@ Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Li
 // Name: Meteo constructor
 // Created: ABR 2011-06-01
 // -----------------------------------------------------------------------------
-Meteo::Meteo( unsigned int id, const PHY_Lighting& light, const PHY_Precipitation& precipitation,
+Meteo::Meteo( unsigned int id, const PHY_Lighting* light, const PHY_Precipitation& precipitation,
               unsigned int timeStep, unsigned int temperature, const std::string& name /*= ""*/ )
-    : pLighting_       ( &light )
+    : pLighting_       ( light )
     , pPrecipitation_  ( &precipitation )
     , id_              ( id )
     , name_            ( name )
@@ -283,12 +285,13 @@ void Meteo::Update( const PHY_Precipitation& precipitation)
 // -----------------------------------------------------------------------------
 void Meteo::Update( const Meteo& other )
 {
-    wind_             = other.GetWind();
-    cloud_            = other.GetCloud();
-    temperature_      = other.temperature_;
-    pLighting_        = &other.GetLighting();
-    pPrecipitation_   = &other.GetPrecipitation();
+    wind_ = other.GetWind();
+    cloud_ = other.GetCloud();
+    temperature_ = other.temperature_;
+    pLighting_ = &other.GetLighting();
+    pPrecipitation_ = &other.GetPrecipitation();
     conversionFactor_ = other.GetConversionFactor();
+    localLighting_ = other.localLighting_;
     modified_ = true;
 }
 
@@ -377,4 +380,48 @@ int Meteo::GetTemperature() const
 void Meteo::SetTemperature( int temperature )
 {
     temperature_ = temperature;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::SetLighting
+// Created: ABR 2011-06-01
+// -----------------------------------------------------------------------------
+void Meteo::SetLighting( const PHY_Lighting* light )
+{
+    localLighting_ = ( light != 0 );
+    if( pLighting_ != light )
+    {
+        modified_ = true;
+        if( light )
+            pLighting_ = light;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::UpdateBaseLighting
+// Created: LDC 2013-01-22
+// -----------------------------------------------------------------------------
+void Meteo::UpdateBaseLighting( const PHY_Lighting& light )
+{
+    if( !localLighting_ && ( pLighting_ != &light ) )
+        modified_ = true;
+    pLighting_ = &light;
+}
+
+//-----------------------------------------------------------------------------
+// Name: Meteo::GetLighting
+// Created: JVT 03-08-05
+//-----------------------------------------------------------------------------
+const PHY_Lighting& Meteo::GetLighting() const
+{
+    return *pLighting_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::GetLocalLighting
+// Created: LDC 2013-01-22
+// -----------------------------------------------------------------------------
+const PHY_Lighting* Meteo::GetLocalLighting() const
+{
+    return localLighting_ ? pLighting_ : 0;
 }
