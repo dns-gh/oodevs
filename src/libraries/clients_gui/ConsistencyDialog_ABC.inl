@@ -74,6 +74,7 @@ void ConsistencyDialog< EnumError, TargetItem >::AddItem( T data, QString text, 
     QVariant* errorType = new QVariant( type );
     item->setData( *errorType, Qt::UserRole + 1 );
     item->setData( data, Qt::UserRole + 2 );
+    item->setToolTip( text );
     items.push_back( item );
 }
 
