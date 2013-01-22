@@ -51,7 +51,12 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Initializing: " << tools::GetExceptionMsg( e ) );
+        MT_LOG_ERROR_MSG( "Dispatcher failed: " << tools::GetExceptionMsg( e ) );
+        throw;
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Dispatcher failed: Unknown error" );
         throw;
     }
 }
@@ -85,13 +90,9 @@ void* CreateDispatcherFacade( int argc, char** argv, int maxConnections )
     {
         return new DispatcherFacade( argc, argv, maxConnections );
     }
-    catch( const std::exception& e )
+    catch( ... ) // $$$$ MCO 2013-01-18: it's too late to log anything because the loggers have been unregistered in ~DispatcherFacade
     {
-        MT_LOG_ERROR_MSG( "Initializing: " << tools::GetExceptionMsg( e ) );
-    }
-    catch( ... )
-    {
-        MT_LOG_ERROR_MSG( "Initializing: Unknown error" );
+        // NOTHING
     }
     return 0;
 }

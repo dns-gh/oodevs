@@ -45,12 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    class DispatcherFacade;
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< dispatcher::DispatcherLoader > dispatcher_;
