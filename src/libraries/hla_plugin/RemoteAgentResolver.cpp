@@ -219,7 +219,7 @@ void RemoteAgentResolver::EmbeddedUnitListChanged( const std::string& /*identifi
 // Name: RemoteAgentResolver::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
+void RemoteAgentResolver::GeometryChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/, ObjectListener_ABC::GeometryType /*type*/ )
 {
     // NOTHING
 }

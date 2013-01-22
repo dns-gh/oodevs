@@ -89,7 +89,7 @@ private:
     virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
-    virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter );
+    virtual void GeometryChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter, ObjectListener_ABC::GeometryType type );
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );

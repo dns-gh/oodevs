@@ -72,7 +72,7 @@ void ReadPerimeter( ::hla::Deserializer_ABC& deserializer, const std::string& id
         geocoord::Geodetic geo( pc );
         wl.push_back( rpr::WorldLocation( geo.GetLatitude() / rPiOver180, geo.GetLongitude() / rPiOver180, 0 ) );
     }
-    listener.PerimeterChanged( identifier, wl );
+    listener.GeometryChanged( identifier, wl, ObjectListener_ABC::eGeometryType_Polygon );
 }
 }
 

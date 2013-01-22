@@ -286,7 +286,7 @@ void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, con
 // Name: UnitTeleporter::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void UnitTeleporter::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
+void UnitTeleporter::GeometryChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/, ObjectListener_ABC::GeometryType /*type*/ )
 {
     // NOTHING
 }

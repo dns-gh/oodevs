@@ -125,7 +125,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     
     sword::ClientToSim actual;
     MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( actual ) );
-    objectListener->PerimeterChanged( "an_object", v);
+    objectListener->GeometryChanged( "an_object", v, ObjectListener_ABC::eGeometryType_Polygon );
 
     BOOST_ASSERT( actual.message().has_object_magic_action() );
     const sword::ObjectMagicAction& action = actual.message().object_magic_action();
@@ -136,5 +136,46 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_polygon );
+    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), (int)v.size() );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_line_object, ControllerFixture )
+{
+    MockHlaClass clazz;
+    MockHlaObject object;
+    dispatcher::MockTeam team( 18 );
+    ObjectListener_ABC* objectListener = 0;
+    rpr::EntityType objectType("1 2 3 4 5 6 7");
+    std::vector< rpr::WorldLocation > v;
+    v.push_back( rpr::WorldLocation( 12.f, 13.f, 0.f ) ) ;
+    v.push_back( rpr::WorldLocation( 16.f, 17.f, 0.f ) ) ;
+    v.push_back( rpr::WorldLocation( 12.f, 13.f, 0.f ) ) ;
+
+    MOCK_EXPECT( logger.LogInfo ).exactly( 4 );
+
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
+    remoteListener->RemoteCreated( "an_object", clazz, object );
+    BOOST_CHECK( objectListener );
+
+    MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ), mock::assign( "an_object_type" ) ).returns( true );
+    objectListener->TypeChanged( "an_object", objectType );
+
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
+    objectListener->SideChanged( "an_object", rpr::Friendly );
+    objectListener->NameChanged( "an_object", "an_object_name");
+
+    sword::ClientToSim actual;
+    MOCK_EXPECT( publisher.SendClientToSim ).once().with( mock::retrieve( actual ) );
+    objectListener->GeometryChanged( "an_object", v, ObjectListener_ABC::eGeometryType_Line );
+
+    BOOST_ASSERT( actual.message().has_object_magic_action() );
+    const sword::ObjectMagicAction& action = actual.message().object_magic_action();
+    BOOST_CHECK_EQUAL( action.type(), sword::ObjectMagicAction::create );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 6 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).acharstr(), std::string( "an_object_type" ) );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), std::string( "an_object_name" ) );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
+    const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
+    BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_line );
     BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), (int)v.size() );
 }

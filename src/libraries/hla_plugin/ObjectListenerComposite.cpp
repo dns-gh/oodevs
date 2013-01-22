@@ -139,9 +139,9 @@ void ObjectListenerComposite::EmbeddedUnitListChanged( const std::string& identi
 // Name: ObjectListenerComposite::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void ObjectListenerComposite::PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter )
+void ObjectListenerComposite::GeometryChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter, ObjectListener_ABC::GeometryType type )
 {
-    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::PerimeterChanged, _1, identifier, perimeter ) );
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::GeometryChanged, _1, identifier, perimeter, type ) );
 }
 
 // -----------------------------------------------------------------------------

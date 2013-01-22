@@ -233,7 +233,7 @@ void SideChecker::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifi
 // Name: SideChecker::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void SideChecker::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/ )
+void SideChecker::GeometryChanged( const std::string& /*identifier*/, const std::vector< rpr::WorldLocation >& /*perimeter*/, ObjectListener_ABC::GeometryType /*type*/ )
 {
     // NOTHING
 }

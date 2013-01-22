@@ -139,6 +139,7 @@ void RemoteTacticalObjectController::Moved( const std::string& identifier, doubl
             message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_location();
 
     loc->set_type( sword::Location_Geometry_point );
+    loc->mutable_coordinates()->clear_elem();
     sword::CoordLatLong *elem = loc->mutable_coordinates()->add_elem();
     elem->set_latitude( latitude );
     elem->set_longitude( longitude );
@@ -250,7 +251,7 @@ namespace
 // Name: RemoteTacticalObjectController::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::PerimeterChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter )
+void RemoteTacticalObjectController::GeometryChanged( const std::string& identifier, const std::vector< rpr::WorldLocation >& perimeter, ObjectListener_ABC::GeometryType type )
 {
     T_ObjectCreations::iterator it( objectCreations_.find( identifier ) );
     if( objectCreations_.end() == it)
@@ -258,7 +259,10 @@ void RemoteTacticalObjectController::PerimeterChanged( const std::string& identi
     perimeters_[ identifier ] = perimeter;
     simulation::ObjectMagicAction& message = *it->second;
 
-    sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location();
+    sword::Location* loc = message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->size() == 0 ?
+            message().mutable_parameters()->mutable_elem( 1 )->mutable_value()->Add()->mutable_location() :
+            message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_location();
+    loc->mutable_coordinates()->clear_elem();
     if( perimeter.size() == 1 )
     {
         loc->set_type( sword::Location_Geometry_point );
@@ -268,7 +272,7 @@ void RemoteTacticalObjectController::PerimeterChanged( const std::string& identi
     }
     else
     {
-        loc->set_type( sword::Location_Geometry_polygon );
+        loc->set_type( type == ObjectListener_ABC::eGeometryType_Line ? sword::Location_Geometry_line : sword::Location_Geometry_polygon );
         std::for_each( perimeter.begin(), perimeter.end(), boost::bind( &fillCoord, _1, boost::ref( *loc->mutable_coordinates() ) ) );
     }
     Send( message, identifier );
