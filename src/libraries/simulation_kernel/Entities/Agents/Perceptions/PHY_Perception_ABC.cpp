@@ -83,6 +83,15 @@ void PHY_Perception_ABC::Execute( const TER_Object_ABC::T_ObjectVector& /*percei
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Perception_ABC::ExecuteCollisions
+// Created: LGY 2013-01-22
+// -----------------------------------------------------------------------------
+void PHY_Perception_ABC::ExecuteCollisions( const TER_Object_ABC::T_ObjectVector& /*perceivableObjects*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC::Compute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------

@@ -32,6 +32,7 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent );
 
     virtual void                       Execute( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
+    virtual void                       ExecuteCollisions( const TER_Object_ABC::T_ObjectVector& perceivableObjects );
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
 
     virtual void                       Execute( const TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivableFlows );

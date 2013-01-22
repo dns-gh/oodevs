@@ -16,9 +16,11 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "simulation_terrain/TER_World.h"
 #include "Entities/Objects/DisasterCapacity.h"
+#include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Stl.h"
 #include <boost/serialization/utility.hpp>
 #include <boost/serialization/vector.hpp>
@@ -112,6 +114,8 @@ DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectColli
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
 {
+    pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecuteCollisions();
+
     // Interaction with objects
     for( CIT_ObjectVector itInteraction = objectInteractions_.begin(); itInteraction != objectInteractions_.end(); ++itInteraction )
     {

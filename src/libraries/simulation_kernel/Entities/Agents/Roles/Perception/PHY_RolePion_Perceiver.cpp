@@ -978,6 +978,22 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::ExecuteCollisions
+// Created: LGY 2013-01-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::ExecuteCollisions()
+{
+    if( CanPerceive() )
+    {
+        const MT_Vector2D& position = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        TER_Object_ABC::T_ObjectVector perceivableObjects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, 1., perceivableObjects );
+        for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).ExecuteCollisions( perceivableObjects );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

@@ -245,6 +245,8 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
 {
     if( bIsEnabled_ )
     {
+        const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D& position = location.GetPosition();
         for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
@@ -252,20 +254,33 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
             if( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
                 perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
             else
-            {
-                const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
-                const MT_Vector2D& position = location.GetPosition();
-                // object detection
                 perceiver_.NotifyPerception( object, ::Compute( perceiver_, object, perceiver_.GetSurfacesObject(),
                                                                 position, bIsEnabled_, boost::bind( &ComputeObject, _1, _2, _4 ) ) );
-                // disaster detection
-                if( object.Retrieve< DisasterCapacity >() && object.IsInside( position ) )
-                {
-                    const PHY_PerceptionLevel& level = ::Compute( perceiver_, object, perceiver_.GetDisasterDetectors(),
-                                                                  position, bIsEnabled_, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
-                    if( level > PHY_PerceptionLevel::notSeen_ )
-                        perceiver_.NotifyPerception( object, position, location.GetDirection() );
-                }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionView::ExecuteCollisions
+// Created: LGY 2013-01-22
+// -----------------------------------------------------------------------------
+void PHY_PerceptionView::ExecuteCollisions( const TER_Object_ABC::T_ObjectVector& perceivableObjects )
+{
+    if( bIsEnabled_ )
+    {
+        const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D& position = location.GetPosition();
+        for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
+        {
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+
+            // disaster detection
+            if( object.Retrieve< DisasterCapacity >() && object.IsInside( position ) )
+            {
+                const PHY_PerceptionLevel& level = ::Compute( perceiver_, object, perceiver_.GetDisasterDetectors(),
+                    position, bIsEnabled_, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
+                if( level > PHY_PerceptionLevel::notSeen_ )
+                    perceiver_.NotifyPerception( object, position, location.GetDirection() );
             }
         }
     }

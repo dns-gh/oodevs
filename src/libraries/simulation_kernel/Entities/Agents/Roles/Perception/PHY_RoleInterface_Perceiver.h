@@ -93,6 +93,7 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual void ExecutePerceptions() = 0;
+    virtual void ExecuteCollisions() = 0;
     virtual const PHY_PerceptionLevel& ComputePerception( const MT_Vector2D& vPoint ) const = 0;
     virtual const PHY_PerceptionLevel& ComputePerception( const DEC_Knowledge_Object& knowledge ) const = 0;
 

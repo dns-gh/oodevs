@@ -30,6 +30,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( ExecutePerceptions, 0 );
+    MOCK_METHOD( ExecuteCollisions, 0 );
     MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const MT_Vector2D& ), ComputePointPerception );
     MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Object& ), ComputeObjectKnowledgePerception );
     MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Agent& ), ComputeAgentKnowledgePerception );
