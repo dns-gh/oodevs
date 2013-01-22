@@ -14,6 +14,11 @@
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace gui
 {
     class GLSymbols;
@@ -40,6 +45,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Load( const tools::ExerciseConfig& config );
     virtual boost::tuple< bool, bool, bool > UnSelect() const;
     virtual void Select( bool, bool, bool ) const;
 

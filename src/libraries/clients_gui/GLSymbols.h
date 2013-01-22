@@ -20,6 +20,11 @@ namespace zip
     class izipfile;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace gui
 {
     class SvglRenderer;
@@ -42,6 +47,9 @@ public:
     //! @name Operations
     //@{
     void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
+    void Load( const tools::ExerciseConfig& config );
+    void SetSymbolsPath( const std::string& symbolPath );
+    const std::vector< std::string >& GetNotFoundSymbol() const;
     //@}
 
 private:
@@ -53,7 +61,7 @@ private:
 
     //! @name Helpers
     //@{
-    svg::Node_ABC* Compile( const std::string& filename, float lod ) const;
+    svg::Node_ABC* Compile( std::string symbol, float lod, bool firstNode );
     //@}
 
     //! @name Types
@@ -68,8 +76,10 @@ private:
     //! @name Member data
     //@{
     SvglRenderer& renderer_;
+    std::string symbolsPath_;
     std::auto_ptr< zip::izipfile > zipFile_;
     T_Symbols                      symbols_;
+    std::vector< std::string >     notFoundSymbols_;
     //@}
 };
 

@@ -242,3 +242,12 @@ std::auto_ptr< GlTooltip_ABC > GlToolsBase::CreateTooltip() const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlToolsBase::Load
+// Created: ABR 2013-01-21
+// -----------------------------------------------------------------------------
+void GlToolsBase::Load( const tools::ExerciseConfig& config )
+{
+    symbols_->Load( config );
+}

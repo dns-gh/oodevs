@@ -10,12 +10,15 @@
 #include "clients_gui_pch.h"
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
 #pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <svgl/Node_ABC.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/filesystem/operations.hpp>
+
+namespace bfs = boost::filesystem;
 
 using namespace geometry;
 using namespace gui;
@@ -28,6 +31,7 @@ using namespace svg;
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
     , zipFile_ ( new zip::izipfile( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ).c_str() ) )
+    , symbolsPath_( "" )
 {
     // NOTHING
 }
@@ -56,16 +60,14 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     T_LodSymbol& node = symbols_[ key ];
     if( create )
     {
-        // $$$$ AGE 2006-09-11: error management !
-        const std::string filename = symbol + ".svg";
         try
         {
-            node.first  = Compile( filename, 10 );
-            node.second = Compile( filename, 100 );
+            node.first  = Compile( symbol, 10, true );
+            node.second = Compile( symbol, 100, false );
         }
         catch( ... )
         {
-            std::cout << "Could not open svg symbol '" << filename << "'" << std::endl;// $$$$ AGE 2006-10-23:
+            std::cout << "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." << std::endl;
         }
     }
     Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
@@ -77,9 +79,63 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
 // Name: GLSymbols::Compile
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
-svg::Node_ABC* GLSymbols::Compile( const std::string& filename, float lod ) const
+svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode )
 {
-    zip::izipstream zipStream( *zipFile_, filename.c_str() );
-    xml::xistreamstream xis( zipStream );
-    return renderer_.Compile( xis, lod );
+    bool firstTime = true;
+    while( symbol.size() )
+    {
+        try
+        {
+            const std::string symbolFile = symbol + ".svg";
+            if( !symbolsPath_.empty() && bfs::exists( symbolsPath_ ) )
+            {
+                bfs::path symbolPath = bfs::path( symbolsPath_ ) / symbolFile.c_str();
+                xml::xifstream xis( symbolPath.string() );
+                return renderer_.Compile( xis, lod );
+            }
+            else
+            {
+                zip::izipstream zipStream( *zipFile_, symbolFile.c_str() );
+                xml::xistreamstream xis( zipStream );
+                return renderer_.Compile( xis, lod );
+            }
+        }
+        catch( ... )
+        {
+            if( firstNode && firstTime )
+            {
+                notFoundSymbols_.push_back( symbol.substr( 8, symbol.size() - 8 ) );
+                firstTime = false;
+            }
+            symbol.pop_back();
+        }
+    }
+    throw;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLSymbols::SetSymbolsPath
+// Created: ABR 2013-01-22
+// -----------------------------------------------------------------------------
+void GLSymbols::SetSymbolsPath( const std::string& symbolPath )
+{
+    symbolsPath_ = symbolPath;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLSymbols::Load
+// Created: ABR 2013-01-21
+// -----------------------------------------------------------------------------
+void GLSymbols::Load( const tools::ExerciseConfig& config )
+{
+    SetSymbolsPath( config.GetPhysicalChildPath( "symbols-directory" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLSymbols::GetNotFoundSymbol
+// Created: ABR 2013-01-21
+// -----------------------------------------------------------------------------
+const std::vector< std::string >& GLSymbols::GetNotFoundSymbol() const
+{
+    return notFoundSymbols_;
 }
