@@ -313,6 +313,17 @@ QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Resources_Data::Categ
 void ADN_Breakdowns_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     for( ADN_Breakdowns_Data::CIT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+    {
         if( ( *it )->vRepairParts_.size() == 0 )
             checker.AddError( eMissingPart, ( *it )->strName_.GetData(), eBreakdowns );
+        else
+            for( auto itPart = ( *it )->vRepairParts_.begin(); itPart != ( *it )->vRepairParts_.end(); ++itPart )
+            {
+                if( ( *itPart )->nNbr_.GetData() == 0 )
+                {
+                    checker.AddError( eMissingPart, ( *it )->strName_.GetData(), eBreakdowns );
+                    break;
+                }
+            }
+    }
 }
