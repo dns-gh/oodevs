@@ -73,5 +73,5 @@ void BaseCondition::Trigger()
 // -----------------------------------------------------------------------------
 void BaseCondition::LogError( const std::exception& e )
 {
-    MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) )
+    MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) );
 }

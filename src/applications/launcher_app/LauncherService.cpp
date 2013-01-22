@@ -75,9 +75,7 @@ LauncherService::LauncherService( const boost::filesystem::path& path )
     const boost::filesystem::path configuration( boost::filesystem::path( path.parent_path() / "service-config.xml" ) );
     std::string port = "33000";
     if( !boost::filesystem::exists( configuration ) )
-    {
         MT_LOG_INFO_MSG( "Configuration file is not found!" );
-    }
     else
     {
         xml::xifstream xis( configuration.string() );
@@ -158,9 +156,7 @@ void LauncherService::RunService()
                 CloseServiceHandle( schSCManager );
             }
             else
-            {
                 MT_LOG_INFO_MSG( MT_FormatString( "StartService failed, error code = %d", GetLastError() ).c_str() );
-            }
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
@@ -187,9 +183,7 @@ void LauncherService::KillService()
                 CloseServiceHandle( schSCManager );
             }
             else
-            {
-                MT_LOG_INFO_MSG( MT_FormatString( "ControlService failed, error code = %d", GetLastError() ).c_str() );
-            }
+                MT_LOG_INFO_MSG( "ControlService failed, error code = " << GetLastError() );
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
@@ -209,10 +203,10 @@ void LauncherService::UnInstall()
         SC_HANDLE schService = OpenService( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
         if( IsValid( schService, MT_FormatString( "OpenService failed, error code = %d", GetLastError() ) ) )
         {
-            if( !DeleteService( schService  ))
-                MT_LOG_INFO_MSG( "Failed to delete service " << name_ )
+            if( !DeleteService( schService  ) )
+                MT_LOG_INFO_MSG( "Failed to delete service " << name_ );
             else
-                MT_LOG_INFO_MSG( "Service " << name_ << " removed" )
+                MT_LOG_INFO_MSG( "Service " << name_ << " removed" );
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
@@ -246,9 +240,7 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
     pInstance_->ServiceStatus_.dwCheckPoint   = 0;
     pInstance_->ServiceStatus_.dwWaitHint     = 0;
     if( !SetServiceStatus( pInstance_->hServiceStatusHandle_, &pInstance_->ServiceStatus_ ) )
-    {
         MT_LOG_INFO_MSG( MT_FormatString( "SetServiceStatus failed, error code = %d", GetLastError() ).c_str() );
-    }
 
     std::vector< char > appName = MakeArg( pInstance_->path_.filename().string() );
     std::vector< char > arg = MakeArg( std::string( "--launcher-port=" + pInstance_->port_ ) );

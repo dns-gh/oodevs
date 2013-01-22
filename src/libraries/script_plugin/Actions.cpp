@@ -131,7 +131,7 @@ void Actions::IssueOrderFromFile( const std::string& name, const std::string& fi
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) )
+        MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -156,7 +156,7 @@ void Actions::IssueXmlOrder( const std::string& name )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) )
+        MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -184,7 +184,7 @@ void Actions::StartScheduler( const std::string& filename )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) )
+        MT_LOG_ERROR_MSG( "Error in script: " << tools::GetExceptionMsg( e ) );
     }
 }
 

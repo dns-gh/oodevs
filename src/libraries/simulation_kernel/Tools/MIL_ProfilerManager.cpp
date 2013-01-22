@@ -28,7 +28,7 @@ MIL_ProfilerManager::MIL_ProfilerManager( const MIL_Config& config )
     : bEnabled_( config.IsDecisionalProfilingEnabled() )
 {
     if( bEnabled_ )
-        MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" )
+        MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" );
     else
         MT_LOG_INFO_MSG( "Profiling mode not enabled at startup time : dec functions won't be profiled" );
     _mkdir( "./Profiling/");

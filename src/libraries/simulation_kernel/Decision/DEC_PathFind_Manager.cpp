@@ -72,8 +72,7 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config,
     if( nMaxEndConnections_ <= 0 )
         throw MASA_EXCEPTION( "Pathfind configuration : max-end-connections <= 0" );
 
-    MT_LOG_INFO_MSG( MT_FormatString(
-        "Setting pathfind.max-calculation-time=%u", nMaxComputationDuration_))
+    MT_LOG_INFO_MSG( "Setting pathfind.max-calculation-time=" << nMaxComputationDuration_ );
     DEC_PathType   ::Initialize();
     DEC_Agent_PathClass::Initialize( xis, dangerousObjects );
     DEC_Population_PathClass::Initialize( xis, dangerousObjects );

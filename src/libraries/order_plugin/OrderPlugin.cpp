@@ -102,7 +102,7 @@ void OrderPlugin::Resolve( const sword::ClientToSim& message )
         }
         catch( const std::exception& e )
         {
-            MT_LOG_ERROR_MSG( "Error in OrderStream message: " << tools::GetExceptionMsg( e ) )
+            MT_LOG_ERROR_MSG( "Error in OrderStream message: " << tools::GetExceptionMsg( e ) );
         }
     }
 }

@@ -94,8 +94,7 @@ Queue::~Queue()
     }
     catch( const std::exception& err )
     {
-        MT_LOG_ERROR_MSG( std::string( "Unable to remove message queue " )
-                          + err.what() );
+        MT_LOG_ERROR_MSG( "Unable to remove message queue " << err.what() );
     }
 }
 
@@ -110,8 +109,7 @@ void Queue::Run()
         }
         catch( std::exception& err )
         {
-            MT_LOG_WARNING_MSG( std::string( "Skipping invalid command " )
-                                + err.what() );
+            MT_LOG_WARNING_MSG( "Skipping invalid command " << err.what() );
         }
 }
 
@@ -162,8 +160,7 @@ bool Queue::Update()
     if( read != sizeof buffer )
     {
         MT_LOG_WARNING_MSG( "Skipping invalid command ("
-                            + boost::lexical_cast< std::string >( read )
-                            + " bytes)" );
+            << read << " bytes)" );
         return false;
     }
     return Process( Unpack( buffer, sizeof buffer ) );
@@ -180,8 +177,7 @@ bool Queue::Process( Command cmd )
         case IPC_COMMAND_EXIT:
             return true;
     }
-    MT_LOG_WARNING_MSG( "Skipping invalid command "
-                        + boost::lexical_cast< std::string >( cmd ) );
+    MT_LOG_WARNING_MSG( "Skipping invalid command " << cmd );
     return false;
 }
 

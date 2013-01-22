@@ -43,7 +43,7 @@ PopulationKnowledgeNotifier::~PopulationKnowledgeNotifier()
 /*
 void PopulationKnowledgeNotifier::DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message )
 {
-MT_LOG_INFO_MSG( "PopulationKnowledgeNotifier::DoUpdate" )
+    MT_LOG_INFO_MSG( "PopulationKnowledgeNotifier::DoUpdate" );
     if( !created_ )
     {
         created_ = true;
