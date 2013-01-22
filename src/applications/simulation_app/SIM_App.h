@@ -45,16 +45,14 @@ public:
 
     //! @name Operations
     //@{
-    int Execute();
+    void Execute();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    int  Initialize    ();
-    void Run           ();
-    int  Test          ();
-    void CheckpointTest();
+    void Initialize();
+    void Run();
 
     void RunGUI();
     void RunDispatcher();
@@ -73,7 +71,7 @@ private:
     const bool verbose_;
 
     std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
-    std::auto_ptr< MIL_Config > startupConfig_;
+    std::auto_ptr< MIL_Config > config_;
     std::auto_ptr< tools::WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;

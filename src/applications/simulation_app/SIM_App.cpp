@@ -55,32 +55,32 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCm
     : maxConnections_( maxConnections )
     , verbose_       ( verbose )
     , observer_      ( new FileLoaderObserver() )
-    , startupConfig_ ( new MIL_Config( *observer_ ) )
+    , config_        ( new MIL_Config( *observer_ ) )
     , winArguments_  ( new tools::WinArguments( lpCmdLine ) )
     , quit_          ( new tools::WaitEvent() )
     , hWnd_          ( 0 )
     , hInstance_     ( hinstance )
     , nIconIndex_    ( 0 )
 {
-    startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
+    config_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
 
-    bool bClearPreviousLog = !startupConfig_->HasCheckpoint();
-    tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( startupConfig_.get() );
-    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(),
+    bool bClearPreviousLog = !config_->HasCheckpoint();
+    tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( config_.get() );
+    logger_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Sim.log" ).c_str(),
                                         exerciceConfig->GetSimLogFiles(), exerciceConfig->GetSimLogSize(),
                                         exerciceConfig->GetSimLogLevel(), bClearPreviousLog, MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
     console_.reset( new MT_ConsoleLogger() );
     MT_LOG_REGISTER_LOGGER( *console_ );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( ( "Sword(tm) Simulation - Version " + std::string( tools::AppProjectVersion() ) + " " + tools::AppVersion() + " - " MT_COMPILE_TYPE + ( startupConfig_->IsLegacy() ? " - Legacy mode" : "" ) ).c_str() );
+    MT_LOG_STARTUP_MESSAGE( ( "Sword(tm) Simulation - Version " + std::string( tools::AppProjectVersion() ) + " " + tools::AppVersion() + " - " MT_COMPILE_TYPE + ( config_->IsLegacy() ? " - Legacy mode" : "" ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( ( "Starting simulation - " + boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) ).c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    if( startupConfig_->UseNetworkLogger() )
+    if( config_->UseNetworkLogger() )
     {
         try
         {
-            pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(), MT_Logger_ABC::eLogLevel_All ) );
+            pNetworkLogger_.reset( new SIM_NetworkLogger( config_->GetNetworkLoggerPort(), MT_Logger_ABC::eLogLevel_All ) );
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
         catch( const std::exception& e )
@@ -108,33 +108,6 @@ SIM_App::~SIM_App()
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
     if( pNetworkLogger_.get() )
         MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::Initialize
-// Created: NLD 2004-01-27
-// -----------------------------------------------------------------------------
-int SIM_App::Initialize()
-{
-    MT_LOG_INFO_MSG( "Starting simulation GUI" );
-    gui_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
-    if( startupConfig_->IsDispatcherEmbedded() )
-    {
-        MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcher_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
-    }
-    MIL_Random::Initialize( startupConfig_->GetRandomSeed(), startupConfig_->GetRandomGaussian(), startupConfig_->GetRandomDeviation(), startupConfig_->GetRandomMean() );
-    try
-    {
-        MIL_AgentServer::CreateWorkspace( *startupConfig_ );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Error initializing workspace : '" << tools::GetExceptionMsg( e ) << "'" );
-        throw;
-        //return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
 }
 
 // -----------------------------------------------------------------------------
@@ -296,6 +269,23 @@ void SIM_App::AnimateIcon()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SIM_App::Initialize
+// Created: NLD 2004-01-27
+// -----------------------------------------------------------------------------
+void SIM_App::Initialize()
+{
+    MT_LOG_INFO_MSG( "Starting simulation GUI" );
+    gui_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
+    if( config_->IsDispatcherEmbedded() )
+    {
+        MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
+        dispatcher_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
+    }
+    MIL_Random::Initialize( config_->GetRandomSeed(), config_->GetRandomGaussian(), config_->GetRandomDeviation(), config_->GetRandomMean() );
+    MIL_AgentServer::CreateWorkspace( *config_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SIM_App::Run
 // Created: NLD 2004-01-27
 // -----------------------------------------------------------------------------
@@ -313,84 +303,14 @@ void SIM_App::Run()
 // Name: SIM_App::Execute
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-int SIM_App::Execute()
+void SIM_App::Execute()
 {
-    const int init = Initialize();
-    if( init != EXIT_SUCCESS )
-        return init;
-    if( startupConfig_->IsTestMode() )
-        return Test();
+    Initialize();
     Run();
-    return EXIT_SUCCESS;
-}
-
-namespace
-{
-    bool IsAlreadyWrapped( const std::string& content )
-    {
-        return content.find( "WARNING" ) != std::string::npos
-            || content.find( "ERROR" ) != std::string::npos
-            || content.find( "INFO" ) != std::string::npos;
-    }
-    std::string Wrap( const std::string& content, const std::string& prefix )
-    {
-        std::string result;
-        std::stringstream input( content );
-        std::string line;
-        bool first = true;
-        while( std::getline( input, line ) )
-        {
-            if( ! first )
-                result += '\n';
-            else
-                first = false;
-            if( ! IsAlreadyWrapped( line ) )
-                result += prefix;
-            result += line;
-        }
-        return result;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::Test
-// Created: MCO 2005-02-21
-// -----------------------------------------------------------------------------
-int SIM_App::Test()
-{
-    static const std::string prefix( "ERROR: " ); // $$$$ ABR 2012-12-10: Needed ?
-    try
-    {
-        CheckpointTest();
-        return EXIT_SUCCESS;
-    }
-    catch( const std::bad_alloc& /*exception*/ )
-    {
-        std::cerr << Wrap( "Allocation error : not enough memory", prefix )  << std::endl;
-    }
-    catch( const std::exception& e )
-    {
-        std::cerr << Wrap( tools::GetExceptionMsg( e ), prefix ) << std::endl;
-    }
-    return EXIT_FAILURE;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::SaveCheckpointTest
-// Created: JSR 2010-03-10
-// -----------------------------------------------------------------------------
-void SIM_App::CheckpointTest()
-{
-    if( startupConfig_->IsSaveCheckpointTestMode() == true && startupConfig_->IsTestMode() == true )
-    {
-        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointDirectory( startupConfig_->GetCheckpointNameTestMode() );
-    }
-    if( startupConfig_->IsDeleteCheckpointTestMode() == true && startupConfig_->IsTestMode() == true )
-    {
-        // Temporary checkpoint was loaded in Initialize, we can delete it now.
-        const boost::filesystem::path path( startupConfig_->GetCheckpointDirectory() );
-        boost::filesystem::remove_all( path );
-    }
+    if( config_->IsSaveCheckpointTestMode() )
+        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointDirectory( config_->GetCheckpointNameTestMode() );
+    if( config_->IsDeleteCheckpointTestMode() )
+        boost::filesystem::remove_all( config_->GetCheckpointDirectory() );
 }
 
 namespace

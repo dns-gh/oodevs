@@ -88,6 +88,10 @@ unsigned short Config::GetLauncherPort() const
     return launcherPort_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Config::IsTestMode
+// Created: SBO 2010-10-01
+// -----------------------------------------------------------------------------
 bool Config::IsTestMode() const
 {
     return IsSet( "test" );

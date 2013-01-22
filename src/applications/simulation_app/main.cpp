@@ -120,7 +120,8 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         GOOGLE_PROTOBUF_VERIFY_VERSION;
         app = new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections, verbose );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
-        nResult = app->Execute();
+        app->Execute();
+        nResult = EXIT_SUCCESS;
     }
     catch( const FlexLmLicense::LicenseError& e )
     {
@@ -151,12 +152,10 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         if( verbose )
             MessageBox( 0, tools::GetExceptionMsg( e ).c_str(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
-
     google::protobuf::ShutdownProtobufLibrary();
     delete app;
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );
-
     return nResult;
 }
 
