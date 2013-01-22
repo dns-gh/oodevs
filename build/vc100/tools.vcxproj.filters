@@ -138,6 +138,9 @@
     <ClCompile Include="..\..\src\libraries\tools\IpcQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\ZipExtractor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -324,6 +327,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ZipExtractor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "commands.h"
 #include "tools/GeneralConfig.h"
+#include "tools/ZipExtractor.h"
 #include "clients_gui/Tools.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 4245 4996 )
@@ -226,43 +227,9 @@ namespace frontend
             return list;
         }
 
-        bfs::path Normalize( bfs::path& p )
-        {
-            bfs::path result;
-            for( bfs::path::iterator it = p.begin(); it != p.end(); ++it )
-                if( *it == ".." ) // $$$$ SBO 2008-03-18: && !result.is_root()
-                    result.remove_leaf();
-                else
-                    result /= *it;
-            return result;
-        }
-
-        void Copy( std::istream& file, std::ostream& output )
-        {
-            std::istreambuf_iterator< char > it( file );
-            std::istreambuf_iterator< char > end;
-            std::ostreambuf_iterator< char > out( output );
-            std::copy( it, end, out );
-        }
-
-        void InstallPackageFile( zip::izipfile& archive, const char* inputName, const std::string& outputName, const std::string& destination )
-        {
-            bfs::path p = bfs::path( destination ) / outputName;
-            p = Normalize( p );
-            if( p.filename() == "." )
-                return;
-            zip::izipstream file( archive, inputName, std::ios_base::in | std::ios_base::binary );
-            if( file.good() )
-            {
-                bfs::create_directories( p.branch_path() );
-                std::ofstream output( p.string().c_str(), std::ios_base::out | std::ios_base::binary );
-                Copy( file, output );
-            }
-        }
-
         void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination )
         {
-            InstallPackageFile( archive, filename.c_str(), filename, destination );
+            tools::zipextractor::ExtractFile( archive, filename.c_str(), filename, destination );
         }
 
         void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback )
@@ -272,7 +239,7 @@ namespace frontend
                 const std::string name = archive.getCurrentFileName();
                 if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
                 {
-                    InstallPackageFile( archive, 0, name, destination );
+                    tools::zipextractor::ExtractFile( archive, 0, name, destination );
                     callback();
                 }
             }

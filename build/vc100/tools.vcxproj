@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\src\libraries\tools\FileMatcherNonVersionedSchema.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\FileMatcherRootNode.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\SchemaWriter.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\ZipExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="..\..\src\libraries\tools\FileMatcherRootNode.h" />
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter.h" />
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ZipExtractor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
