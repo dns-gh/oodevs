@@ -50,6 +50,9 @@
     <Filter Include="Source Files\Pathfind">
       <UniqueIdentifier>{c16ac569-3fc2-4a80-a8c0-933e2e78358a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Posture">
+      <UniqueIdentifier>{60fd6b12-7511-44ec-b387-43a6c57e709d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\PHY_RawVisionDataTest.cpp">
       <Filter>Source Files\Meteo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PostureComputerTest.cpp">
+      <Filter>Source Files\Posture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
