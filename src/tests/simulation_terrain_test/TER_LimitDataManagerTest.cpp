@@ -14,12 +14,12 @@
 BOOST_AUTO_TEST_CASE( TER_LimitDataLifecycle )
 {
     T_PointVector v1;
-    v1.push_back( MT_Vector2D( 1.0, 1.0 ));
-    v1.push_back( MT_Vector2D( 2.0, 1.0 ));
+    v1.push_back( MT_Vector2D( 1.0, 1.0 ) );
+    v1.push_back( MT_Vector2D( 2.0, 1.0 ) );
 
     T_PointVector v2;
-    v2.push_back( MT_Vector2D( 1.0, 2.0 ));
-    v2.push_back( MT_Vector2D( 2.0, 2.0 ));
+    v2.push_back( MT_Vector2D( 1.0, 2.0 ) );
+    v2.push_back( MT_Vector2D( 2.0, 2.0 ) );
 
     T_PointVector v3 = v2;
 
@@ -37,9 +37,9 @@ BOOST_AUTO_TEST_CASE( TER_LimitDataLifecycle )
     BOOST_CHECK_EQUAL( p2, p3 );
 
     // Test lifetime management logic
-    BOOST_CHECK( m.HasLimit( v2 ));
+    BOOST_CHECK( m.HasLimit( v2 ) );
     p2.reset();
-    BOOST_CHECK( m.HasLimit( v2 ));
+    BOOST_CHECK( m.HasLimit( v2 ) );
     p3.reset();
-    BOOST_CHECK( !m.HasLimit( v2 ));
+    BOOST_CHECK( !m.HasLimit( v2 ) );
 }

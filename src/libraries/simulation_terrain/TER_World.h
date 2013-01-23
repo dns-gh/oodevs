@@ -21,6 +21,7 @@
 
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_CoordinateManager.h"
+#include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
 
 class TerrainData;
@@ -59,7 +60,7 @@ namespace xml
 // =============================================================================
 // Created: AGE 2005-01-28
 // =============================================================================
-class TER_World
+class TER_World : boost::noncopyable
 {
 public:
     //! @name Types
@@ -101,16 +102,14 @@ public:
     TER_AgentManager&      GetAgentManager     () const;
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
-    TER_LimitDataManager* GetLimitManager() const;
+    TER_LimitDataManager& GetLimitManager() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
     explicit TER_World( const tools::ExerciseConfig& config );
-             TER_World( const TER_World& );            //!< Copy constructor
-    virtual ~TER_World();
-    TER_World& operator=( const TER_World& ); //!< Assignment operator
+            ~TER_World();
     //@}
 
 private:

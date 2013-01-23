@@ -104,7 +104,7 @@ bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& model, const
 // -----------------------------------------------------------------------------
 bool PathWalker::IsMovingOn( boost::shared_ptr< Path_ABC > path ) const
 {
-    return !path_.expired() && path == path_.lock();
+    return path == path_.lock();
 }
 
 //-----------------------------------------------------------------------------
@@ -599,7 +599,7 @@ void PathWalker::MoveSuspended( boost::shared_ptr< PathResult > path, const wrap
 {
     if( path_.expired() && !bForcePathCheck_ )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move cannot be suspended" );
-    if( !path_.expired() && path_.lock() == path )
+    if( path_.lock() == path )
         bForcePathCheck_ = true;
     speed_ = 0;
     MoveStopped( entity );

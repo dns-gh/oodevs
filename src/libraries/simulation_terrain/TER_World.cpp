@@ -78,7 +78,6 @@ TER_World::TER_World( const tools::ExerciseConfig& config )
 {
     MT_Rect extent;
     extent.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( config.GetTerrainWidth(), config.GetTerrainHeight() ) );
-
     pAgentManager_      = new TER_AgentManager     ( extent );
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
@@ -264,7 +263,7 @@ TER_PopulationManager& TER_World::GetPopulationManager() const
     return *pPopulationManager_;
 }
 
-TER_LimitDataManager* TER_World::GetLimitManager() const
+TER_LimitDataManager& TER_World::GetLimitManager() const
 {
-    return limitManager_.get();
+    return *limitManager_;
 }

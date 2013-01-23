@@ -10,50 +10,16 @@
 #include "simulation_terrain_pch.h"
 #include "TER_LimitDataManager.h"
 #include "TER_LimitData.h"
+#include <boost/bind.hpp>
 
-namespace
+boost::shared_ptr< TER_LimitData > TER_LimitDataManager::CreateLimit( const T_PointVector& points )
 {
-
-struct LimitDestructor
-{
-    LimitDestructor( TER_LimitDataManager* m ): manager_( m ) {}
-
-    void operator()( TER_LimitData* p )
+    boost::weak_ptr< TER_LimitData >& w = limits_[ points ];
+    boost::shared_ptr< TER_LimitData > p = w.lock();
+    if( ! p )
     {
-        manager_->DeleteLimit( p );
-    }
-
-private:
-    TER_LimitDataManager* manager_;
-};
-
-}  // namespace
-
-TER_LimitDataManager::TER_LimitDataManager()
-{
-}
-
-TER_LimitDataManager::~TER_LimitDataManager()
-{
-}
-
-TER_LimitDataManager::T_LimitDataPtr TER_LimitDataManager::CreateLimit(
-        const T_PointVector& points )
-{
-    T_LimitDataPtr p;
-    auto it = limits_.find( points );
-    if( it == limits_.end() )
-    {
-        p = boost::shared_ptr< TER_LimitData >(
-            new TER_LimitData( points ), LimitDestructor( this ));
-        limits_[ points ] = T_LimitDataWeakPtr( p );
-    }
-    else
-    {
-        p = it->second.lock();
-        if( !p )
-            throw std::logic_error( "TER_LimitData has been deallocated "
-                "without being unregistered" );
+        p.reset( new TER_LimitData( points ), boost::bind( &TER_LimitDataManager::DeleteLimit, this, _1 ) );
+        w = p;
     }
     return p;
 }

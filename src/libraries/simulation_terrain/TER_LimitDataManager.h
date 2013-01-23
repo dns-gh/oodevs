@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef TER_LIMITDATAMANAGER_H
-#define TER_LIMITDATAMANAGER_H
+#ifndef TER_LIMIT_DATA_MANAGER_H
+#define TER_LIMIT_DATA_MANAGER_H
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include <boost/noncopyable.hpp>
-#include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <map>
 
 class TER_LimitData;
@@ -22,31 +22,21 @@ class TER_LimitData;
 class TER_LimitDataManager : private boost::noncopyable
 {
 public:
-    typedef boost::shared_ptr< TER_LimitData > T_LimitDataPtr;
+    // Return a TER_LimitData built from the input points.
+    // If the manager already knows of an existing instance built from the very
+    // same points sequence, it returns it.
+    boost::shared_ptr< TER_LimitData > CreateLimit( const T_PointVector& points );
 
-public:
-             TER_LimitDataManager();
-    virtual ~TER_LimitDataManager();
-
-    // Return a T_LimitData built from the input points. If the manager already
-    // knows an existing instance built from the very same points sequence, it
-    // returns it.
-    T_LimitDataPtr CreateLimit( const T_PointVector& points );
-
-    // Unregister and delete the limit instance.
-    // DO NOT CALL this method manually, it will be executed by the shared_ptr
-    // machinery automatically when created T_LimitDataPtr have to be released.
-    void DeleteLimit( const TER_LimitData* limit );
-
-    // Return true if the manager knows a T_LimitData created from points. For
-    // tests purpose.
+    // Return true if the manager knows a TER_LimitData created from points.
+    // For tests purpose.
     bool HasLimit( const T_PointVector& points ) const;
 
 private:
-    typedef boost::weak_ptr< TER_LimitData > T_LimitDataWeakPtr;
+    // Unregister and delete the limit instance.
+    void DeleteLimit( const TER_LimitData* limit );
 
 private:
-    std::map< T_PointVector, T_LimitDataWeakPtr > limits_;
+    std::map< T_PointVector, boost::weak_ptr< TER_LimitData > > limits_;
 };
 
-#endif // TER_LIMITDATAMANAGER_H
+#endif // TER_LIMIT_DATA_MANAGER_H

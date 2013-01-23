@@ -14,7 +14,6 @@
 #include <boost/shared_ptr.hpp>
 
 class TER_DynamicData;
-class TER_LimitDataManager;
 
 //=============================================================================
 // Created: NLD 2002-08-06
@@ -22,10 +21,6 @@ class TER_LimitDataManager;
 //=============================================================================
 class TER_LimitData : private boost::noncopyable
 {
-    friend class TER_LimitDataManager;
-
-private:
-             TER_LimitData( const T_PointVector& points );
 public:
     virtual ~TER_LimitData();
 
@@ -43,9 +38,14 @@ public:
     //@}
 
 private:
+    friend class TER_LimitDataManager;
+
+    TER_LimitData( const T_PointVector& points );
+
+private:
     //! @name Tools
     //@{
-    double SquareDistance         ( const MT_Vector2D& p ) const;
+    double SquareDistance( const MT_Vector2D& p ) const;
     //@}
 
 private:

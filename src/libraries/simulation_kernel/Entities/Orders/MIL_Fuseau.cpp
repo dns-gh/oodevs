@@ -25,13 +25,11 @@
 
 namespace
 {
-
-boost::shared_ptr< TER_LimitData > CreateLimit( const T_PointVector& points )
-{
-    return TER_World::GetWorld().GetLimitManager()->CreateLimit( points );
+    boost::shared_ptr< TER_LimitData > CreateLimit( const T_PointVector& points )
+    {
+        return TER_World::GetWorld().GetLimitManager().CreateLimit( points );
+    }
 }
-
-}  // namespace
 
 unsigned int MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER
 
