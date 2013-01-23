@@ -38,7 +38,7 @@ int Run( LPSTR lpCmdLine )
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-    int maxConnections = 10;
+    int maxConnections = 1;
     int nResult = EXIT_FAILURE;
     try
     {

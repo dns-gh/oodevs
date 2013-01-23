@@ -85,7 +85,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     SIM_App* app = 0;
     int nResult = EXIT_FAILURE;
     bool verbose = false;
-    int maxConnections = 10;
+    int maxConnections = 1;
     try
     {
         // verbose mode
@@ -101,7 +101,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         }
         catch( const FlexLmLicense::LicenseError& )
         {
-            maxConnections = 10;
+            maxConnections = 1;
         }
 #endif
 
