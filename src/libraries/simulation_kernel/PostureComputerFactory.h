@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PostureComputer_ABC > Create( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+    virtual std::auto_ptr< PostureComputer_ABC > Create( const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                                          bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
                                                          double rTimingFactor ) const;
     //@}

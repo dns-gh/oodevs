@@ -13,7 +13,6 @@
 #include <boost/noncopyable.hpp>
 
 class PHY_Posture;
-class PHY_UnitType;
 
 namespace posture
 {

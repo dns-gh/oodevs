@@ -14,6 +14,7 @@
 
 namespace posture
 {
+    class PostureTime_ABC;
 
 // =============================================================================
 /** @class  DefaultPostureComputer
@@ -26,7 +27,7 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+             DefaultPostureComputer( const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                      bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
                                      double rTimingFactor );
     virtual ~DefaultPostureComputer();
@@ -52,7 +53,7 @@ private:
 private:
     //! @name Attribute
     //@{
-    const PHY_UnitType& unitType_;
+    const PostureTime_ABC& time_;
     const PHY_Posture& posture_;
     const bool bIsDead_;
     const bool bDiscreteModeEnabled_;

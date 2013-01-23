@@ -5429,5 +5429,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\EventListenerBase.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Postures\PostureTime_ABC.h">
+      <Filter>Source Files\Entities\Agents\Units\Postures</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

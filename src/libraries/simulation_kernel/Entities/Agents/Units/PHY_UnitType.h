@@ -12,6 +12,7 @@
 #ifndef __PHY_UnitType_h_
 #define __PHY_UnitType_h_
 
+#include "Postures/PostureTime_ABC.h"
 #include "Dotations/PHY_DotationCapacities.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 
@@ -31,7 +32,7 @@ class PHY_DotationLogisticType;
 // @class  PHY_UnitType
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_UnitType : private boost::noncopyable
+class PHY_UnitType : public posture::PostureTime_ABC
 {
 public:
     //! @name Types
@@ -55,7 +56,7 @@ public:
     //@{
     const PHY_DotationCapacities& GetTC1Capacities() const;
     const T_CommanderRepartitionMap& GetCommanderRepartition() const;
-    double GetPostureTime( const PHY_Posture& posture ) const;
+    virtual double GetPostureTime( const PHY_Posture& posture ) const;
     double GetInstallationTime() const;
     double GetUninstallationTime() const;
     double GetCoupDeSondeLength() const;

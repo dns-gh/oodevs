@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "simulation_kernel/DefaultPostureComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "simulation_kernel/Entities/Agents/Units/PHY_UnitType.h"
+#include "simulation_kernel/Entities/Agents/Units/Postures/PostureTime_ABC.h"
 #include "MIL_Random.h"
 
 using namespace posture;
@@ -19,10 +19,10 @@ using namespace posture;
 // Name: DefaultPostureComputer::DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultPostureComputer::DefaultPostureComputer( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+DefaultPostureComputer::DefaultPostureComputer( const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                                 bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
                                                 double rTimingFactor )
-    : unitType_             ( unitType )
+    : time_                 ( time )
     , posture_              ( posture )
     , bIsDead_              ( bIsDead )
     , bDiscreteModeEnabled_ ( bDiscreteModeEnabled )
@@ -166,7 +166,7 @@ void DefaultPostureComputer::Update()
 double DefaultPostureComputer::GetPostureTime() const
 {
     assert( rTimingFactor_ > 0. );
-    double postureTime = unitType_.GetPostureTime( posture_ );
+    double postureTime = time_.GetPostureTime( posture_ );
     for( auto it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
         postureTime *= *it;
     return postureTime / rTimingFactor_;

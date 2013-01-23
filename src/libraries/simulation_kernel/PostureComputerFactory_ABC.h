@@ -13,11 +13,11 @@
 #include <memory>
 
 class PHY_Posture;
-class PHY_UnitType;
 
 namespace posture
 {
     class PostureComputer_ABC;
+    class PostureTime_ABC;
 
 // =============================================================================
 /** @class  PostureComputerFactory_ABC
@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PostureComputer_ABC > Create( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+    virtual std::auto_ptr< PostureComputer_ABC > Create( const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                                          bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
                                                          double rTimingFactor ) const = 0;
     //@}
