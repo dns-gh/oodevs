@@ -398,6 +398,7 @@ void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transpo
 {
     ForceUnloadedState();
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::UnloadFromTransport
 // Created: AHC 2009-09-24

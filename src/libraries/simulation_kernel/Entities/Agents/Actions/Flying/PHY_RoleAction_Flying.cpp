@@ -217,6 +217,6 @@ void PHY_RoleAction_Flying::Execute( posture::PostureComputer_ABC& algorithm ) c
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Execute( moving::MoveComputer_ABC& algorithm ) const
 {
-    if(pActionFly_ == 0)
+    if( pActionFly_ == 0 )
         algorithm.NotifyCannotFly();
 }
