@@ -99,7 +99,7 @@ namespace
     template< typename T >
     bool CheckSerialization( ::hla::T_SerializerPtr serializer, const T& expected )
     {
-        std::vector< int8 > buffer( serializer->GetSize() );
+        std::vector< uint8_t > buffer( serializer->GetSize() );
         if( !buffer.empty() )
             serializer->CopyTo( &buffer[0] );
         ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
@@ -133,14 +133,14 @@ BOOST_FIXTURE_TEST_CASE( agent_unique_id_is_sword_plus_identifier, AggregateFixt
 
 BOOST_FIXTURE_TEST_CASE( agent_serializes_app6_symbol_with_unicode_string, AggregateFixture )
 {
-    MOCK_EXPECT( functor.Visit ).once().with( "Symbol", boost::bind( &CheckSize, _1, sizeof( int32 ) + 6 * sizeof( uint16 ) ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "Symbol", boost::bind( &CheckSize, _1, sizeof( int32_t ) + 6 * sizeof( uint16_t ) ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_callsign_is_its_name, AggregateFixture )
 {
-    MOCK_EXPECT( functor.Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32 ) + 4 * sizeof( uint16 ) ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32_t ) + 4 * sizeof( uint16_t ) ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
@@ -154,9 +154,9 @@ BOOST_FIXTURE_TEST_CASE( agent_higher_headquarters_uniqueid_is_its_own_identifie
 
 BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, AggregateFixture )
 {
-    const int8 platoonEchelon = 14;
+    const int8_t platoonEchelon = 14;
     hla::MockUpdateFunctor functor;
-    MOCK_EXPECT( functor.Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< int8 >, _1, platoonEchelon ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< int8_t >, _1, platoonEchelon ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
@@ -164,9 +164,9 @@ BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, AggregateFixture )
 BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, AggregateFixture )
 {
     const double percentMounted = 0.;
-    const int8 active = 1;
+    const int8_t active = 1;
     MOCK_EXPECT( functor.Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
-    MOCK_EXPECT( functor.Visit ).once().with( "Status", boost::bind( &CheckSerialization< int8 >, _1, active ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "Status", boost::bind( &CheckSerialization< int8_t >, _1, active ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
@@ -174,11 +174,11 @@ BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, AggregateFixtur
 BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, AggregateFixture )
 {
     const double percentMounted = 100.;
-    const int8 inactive = 2;
+    const int8_t inactive = 2;
     BOOST_REQUIRE( listener );
     listener->EmbarkmentChanged( true );
     MOCK_EXPECT( functor.Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
-    MOCK_EXPECT( functor.Visit ).once().with( "Status", boost::bind( &CheckSerialization< int8 >, _1, inactive ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "Status", boost::bind( &CheckSerialization< int8_t >, _1, inactive ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }

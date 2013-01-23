@@ -18,9 +18,9 @@ BOOST_FIXTURE_TEST_CASE( unicode_string_serializes_size_and_content, Serializati
     const std::string message = "message";
     const UnicodeString unicode( message );
     ::hla::Deserializer deserializer = Serialize( unicode,
-        static_cast< unsigned int >( sizeof( uint32 ) + message.size() * sizeof( uint16 ) ));
-    BOOST_CHECK_EQUAL( message.size(), Read< uint32 >( deserializer ) );
-    BOOST_CHECK_EQUAL( wchar_t( 'm' ), Read< uint16 >( deserializer ) );
+        static_cast< unsigned int >( sizeof( uint32_t ) + message.size() * sizeof( uint16_t ) ));
+    BOOST_CHECK_EQUAL( message.size(), Read< uint32_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( wchar_t( 'm' ), Read< uint16_t >( deserializer ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( unicode_string_deserializes, SerializationFixture )
@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_CASE( unicode_string_deserializes, SerializationFixture )
     const std::string message = "message";
     const UnicodeString serializedUnicode( message );
     ::hla::Deserializer deserializer = Serialize( serializedUnicode,
-        static_cast< unsigned int >( sizeof( uint32 ) + message.size() * sizeof( uint16 ) ));
+        static_cast< unsigned int >( sizeof( uint32_t ) + message.size() * sizeof( uint16_t ) ));
     UnicodeString deserializedUnicode;
     deserializedUnicode.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( message, deserializedUnicode.str() );

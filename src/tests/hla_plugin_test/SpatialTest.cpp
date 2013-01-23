@@ -17,10 +17,10 @@ using namespace plugins::hla;
 BOOST_FIXTURE_TEST_CASE( static_dead_reckoning_algorithm_serialization, SerializationFixture )
 {
     const Spatial spatial( true, 1., 2., 3., 4., 5. );
-    const unsigned int paddingSize = sizeof( int8 );
-    const unsigned int spatialStructHeaderSize = sizeof( int8 ) + 7 * paddingSize;
+    const unsigned int paddingSize = sizeof( int8_t );
+    const unsigned int spatialStructHeaderSize = sizeof( int8_t ) + 7 * paddingSize;
     const unsigned int worldLocationSize = 3 * sizeof( real64 );
-    const unsigned int isFrozenSize = sizeof( int8 ) + 3 * paddingSize;
+    const unsigned int isFrozenSize = sizeof( int8_t ) + 3 * paddingSize;
     const unsigned int orientationSize = 3 * sizeof( real32 );
     const unsigned int spatialSize = spatialStructHeaderSize
                                    + worldLocationSize
@@ -28,12 +28,12 @@ BOOST_FIXTURE_TEST_CASE( static_dead_reckoning_algorithm_serialization, Serializ
                                    + orientationSize;
     ::hla::Deserializer deserializer = Serialize( spatial, spatialSize );
 
-    const int8 staticAlgorithm = 1;
-    BOOST_CHECK_EQUAL( staticAlgorithm, Read< int8 >( deserializer ) );
+    const int8_t staticAlgorithm = 1;
+    BOOST_CHECK_EQUAL( staticAlgorithm, Read< int8_t >( deserializer ) );
     ReadPadding< 7 >( deserializer );
     Read< worldLocationSize >( deserializer );
-    const int8 notFrozen = 0;
-    BOOST_CHECK_EQUAL( notFrozen, Read< int8 >( deserializer ) );
+    const int8_t notFrozen = 0;
+    BOOST_CHECK_EQUAL( notFrozen, Read< int8_t >( deserializer ) );
     ReadPadding< 3 >( deserializer );
     Read< orientationSize >( deserializer );
 }
@@ -41,10 +41,10 @@ BOOST_FIXTURE_TEST_CASE( static_dead_reckoning_algorithm_serialization, Serializ
 BOOST_FIXTURE_TEST_CASE( static_dead_reckoning_algorithm_deserialization, SerializationFixture )
 {
     const Spatial serializedSpatial( true, 1., 2., 3., 4., 5. );
-    const unsigned int paddingSize = sizeof( int8 );
-    const unsigned int spatialStructHeaderSize = sizeof( int8 ) + 7 * paddingSize;
+    const unsigned int paddingSize = sizeof( int8_t );
+    const unsigned int spatialStructHeaderSize = sizeof( int8_t ) + 7 * paddingSize;
     const unsigned int worldLocationSize = 3 * sizeof( real64 );
-    const unsigned int isFrozenSize = sizeof( int8 ) + 3 * paddingSize;
+    const unsigned int isFrozenSize = sizeof( int8_t ) + 3 * paddingSize;
     const unsigned int orientationSize = 3 * sizeof( real32 );
     const unsigned int spatialSize = spatialStructHeaderSize
                                    + worldLocationSize
@@ -70,10 +70,10 @@ BOOST_FIXTURE_TEST_CASE( static_dead_reckoning_algorithm_deserialization, Serial
 BOOST_FIXTURE_TEST_CASE( fixed_rotation_and_rate_of_position_dead_reckoning_algorithm_serialization, SerializationFixture )
 {
     const Spatial spatial( false, 1., 2., 3., 4., 5. );
-    const unsigned int paddingSize = sizeof( int8 );
-    const unsigned int spatialStructHeaderSize = sizeof( int8 ) + 7 * paddingSize;
+    const unsigned int paddingSize = sizeof( int8_t );
+    const unsigned int spatialStructHeaderSize = sizeof( int8_t ) + 7 * paddingSize;
     const unsigned int worldLocationSize = 3 * sizeof( real64 );
-    const unsigned int isFrozenSize = sizeof( int8 ) + 3 * paddingSize;
+    const unsigned int isFrozenSize = sizeof( int8_t ) + 3 * paddingSize;
     const unsigned int orientationSize = 3 * sizeof( real32 );
     const unsigned int velocitySize = 3 * sizeof( real32 );
     const unsigned int spatialSize = spatialStructHeaderSize
@@ -83,12 +83,12 @@ BOOST_FIXTURE_TEST_CASE( fixed_rotation_and_rate_of_position_dead_reckoning_algo
                                    + velocitySize;
     ::hla::Deserializer deserializer = Serialize( spatial, spatialSize );
 
-    const int8 DRM_FPW_Algorithm = 2;
-    BOOST_CHECK_EQUAL( DRM_FPW_Algorithm, Read< int8 >( deserializer ) );
+    const int8_t DRM_FPW_Algorithm = 2;
+    BOOST_CHECK_EQUAL( DRM_FPW_Algorithm, Read< int8_t >( deserializer ) );
     ReadPadding< 7 >( deserializer );
     Read< worldLocationSize >( deserializer );
-    const int8 notFrozen = 0;
-    BOOST_CHECK_EQUAL( notFrozen, Read< int8 >( deserializer ) );
+    const int8_t notFrozen = 0;
+    BOOST_CHECK_EQUAL( notFrozen, Read< int8_t >( deserializer ) );
     ReadPadding< 3 >( deserializer );
     Read< orientationSize >( deserializer );
     Read< velocitySize >( deserializer );
@@ -97,10 +97,10 @@ BOOST_FIXTURE_TEST_CASE( fixed_rotation_and_rate_of_position_dead_reckoning_algo
 BOOST_FIXTURE_TEST_CASE( fixed_rotation_and_rate_of_position_dead_reckoning_algorithm_deserialization, SerializationFixture )
 {
     const Spatial serializedSpatial( false, 1., 2., 3., 4., 5. );
-    const unsigned int paddingSize = sizeof( int8 );
-    const unsigned int spatialStructHeaderSize = sizeof( int8 ) + 7 * paddingSize;
+    const unsigned int paddingSize = sizeof( int8_t );
+    const unsigned int spatialStructHeaderSize = sizeof( int8_t ) + 7 * paddingSize;
     const unsigned int worldLocationSize = 3 * sizeof( real64 );
-    const unsigned int isFrozenSize = sizeof( int8 ) + 3 * paddingSize;
+    const unsigned int isFrozenSize = sizeof( int8_t ) + 3 * paddingSize;
     const unsigned int orientationSize = 3 * sizeof( real32 );
     const unsigned int velocitySize = 3 * sizeof( real32 );
     const unsigned int spatialSize = spatialStructHeaderSize

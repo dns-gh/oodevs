@@ -39,7 +39,7 @@ static const double rPiOver180 = std::acos( -1. ) / 180.;
 
 void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
 {
-    int8 tmpForce;
+    int8_t tmpForce;
     deserializer >> tmpForce;
     listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
     force = static_cast< rpr::ForceIdentifier >( tmpForce );
@@ -170,12 +170,12 @@ void Minefield::RegisterAttributes()
 {
     attributes_->Register( "MinefieldType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
     attributes_->Register( "MinefieldIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ) ), entityIdentifier_ );
-    attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
+    attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8_t >( static_cast< int8_t >( force_ ) ) );
     attributes_->Register( "MinefieldLocation", boost::bind( &ReadWorldLocation, _1, _2, _3, boost::ref( center_ ) ), center_);
     //attributes_->Register( "MinefieldOrientation" ); // FIXME AHC
     attributes_->Register( "MineTypes", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< std::vector< rpr::EntityType > >( mineTypes_ ) );
     attributes_->Register( "PerimeterPointCoordinates", boost::bind( &ReadPerimeter, _1, _2, _3, boost::ref( perimeter_ ), boost::cref( center_ ) ), Wrapper< std::vector< rpr::PerimeterPoint > >( perimeter_ ) );
-    attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8 >( 0 ) ); // HearbeatMode
+    attributes_->Register( "ProtocolMode", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< uint8_t >( 0 ) ); // HearbeatMode
     attributes_->Register( "State", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( false ) ); // FIXME AHC
     attributes_->Register( "ActiveStatus", boost::bind( &ReadNothing, _1, _2, _3 ), Wrapper< bool >( true ) ); // FIXME AHC
 }

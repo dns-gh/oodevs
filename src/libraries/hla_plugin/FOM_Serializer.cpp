@@ -60,7 +60,7 @@ void FOM_Serializer::ReadSpatial( ::hla::Deserializer_ABC& deserializer, const s
 // -----------------------------------------------------------------------------
 void FOM_Serializer::ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
 {
-    int8 tmpForce;
+    int8_t tmpForce;
     deserializer >> tmpForce;
     listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
     force = static_cast< rpr::ForceIdentifier >( tmpForce );
@@ -199,7 +199,7 @@ void FOM_Serializer::ReadSymbol( ::hla::Deserializer_ABC& deserializer, const st
 // Name: FOM_Serializer::ReadStatus
 // Created: AHC 2012-09-03
 // -----------------------------------------------------------------------------
-void FOM_Serializer::ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, int8& status )
+void FOM_Serializer::ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, int8_t& status )
 {
     deserializer >> status;
 }
@@ -211,10 +211,10 @@ void FOM_Serializer::ReadStatus( ::hla::Deserializer_ABC& deserializer, const st
 void FOM_Serializer::ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
 {
     std::vector< ObjectListener_ABC::T_UniqueId > embeddedUnits;
-    uint32 size;
+    uint32_t size;
     deserializer >> size;
     embeddedUnits.resize(size);
-    for(uint32 i=0; i < size; ++i )
+    for(uint32_t i=0; i < size; ++i )
     {
         switch( netnVersion_ )
         {

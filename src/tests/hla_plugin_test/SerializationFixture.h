@@ -18,7 +18,7 @@
 
 namespace
 {
-    typedef std::vector< int8 > T_Buffer;
+    typedef std::vector< uint8_t > T_Buffer;
     class SerializationFixture
     {
     public:

@@ -265,3 +265,91 @@ BOOST_FIXTURE_TEST_CASE( culturefeature_builder_registers_attributes, Fixture )
     Check( builder, "BaseEntity.PhysicalEntity.CulturalFeature", true, true );
 }
 
+BOOST_FIXTURE_TEST_CASE( otherpointobject_builder_registers_attributes, Fixture )
+{
+    OtherPointObjectBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "ObjectIdentifier" )
+                                        ( "ReferencedObjectIdentifier" )
+                                        ( "ForceIdentifier" )
+                                        ( "ObjectType" )
+                                        ( "Flaming" )
+                                        ( "Smoking" )
+                                        ( "Deactivated" )
+                                        ( "ObjectPreDistributed" )
+                                        ( "PercentComplete" )
+                                        ( "DamagedAppearance" )
+                                        ( "Orientation" )
+                                        ( "Location" );
+    Check( builder, "EnvironmentObject.PointObject.OtherPointObject", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( breachablepointobject_builder_registers_attributes, Fixture )
+{
+    BreachablePointObjectBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "ObjectIdentifier" )
+                                        ( "ReferencedObjectIdentifier" )
+                                        ( "ForceIdentifier" )
+                                        ( "ObjectType" )
+                                        ( "Flaming" )
+                                        ( "Smoking" )
+                                        ( "Deactivated" )
+                                        ( "ObjectPreDistributed" )
+                                        ( "PercentComplete" )
+                                        ( "DamagedAppearance" )
+                                        ( "Orientation" )
+                                        ( "Location" )
+                                        ( "BreachedStatus" );
+    Check( builder, "EnvironmentObject.PointObject.BreachablePointObject", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( otherarealobject_builder_registers_attributes, Fixture )
+{
+    OtherArealObjectBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "ObjectIdentifier" )
+                                        ( "ReferencedObjectIdentifier" )
+                                        ( "ForceIdentifier" )
+                                        ( "ObjectType" )
+                                        ( "Flaming" )
+                                        ( "Smoking" )
+                                        ( "Deactivated" )
+                                        ( "ObjectPreDistributed" )
+                                        ( "PercentComplete" )
+                                        ( "DamagedAppearance" )
+                                        ( "PointsData" );
+    Check( builder, "EnvironmentObject.ArealObject.OtherArealObject", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( minefieldobject_builder_registers_attributes, Fixture )
+{
+    MinefieldObjectBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "ObjectIdentifier" )
+                                        ( "ReferencedObjectIdentifier" )
+                                        ( "ForceIdentifier" )
+                                        ( "ObjectType" )
+                                        ( "Flaming" )
+                                        ( "Smoking" )
+                                        ( "Deactivated" )
+                                        ( "ObjectPreDistributed" )
+                                        ( "PercentComplete" )
+                                        ( "DamagedAppearance" )
+                                        ( "PointsData" )
+                                        ( "MineCount" )
+                                        ( "BreachedStatus" );
+    Check( builder, "EnvironmentObject.ArealObject.MinefieldObject", true, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( breachablelinearobject_builder_registers_attributes, Fixture )
+{
+    BreachableLinearObjectBuilder builder;
+    attributes = boost::assign::list_of ( "HLAprivilegeToDeleteObject" )
+                                        ( "ObjectIdentifier" )
+                                        ( "ReferencedObjectIdentifier" )
+                                        ( "ForceIdentifier" )
+                                        ( "ObjectType" )
+                                        ( "SegmentRecords" );
+    Check( builder, "EnvironmentObject.LinearObject.BreachableLinearObject", true, true );
+}

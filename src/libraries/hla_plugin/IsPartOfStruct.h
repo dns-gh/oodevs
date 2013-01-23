@@ -80,7 +80,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint8 padding = 0;
+        const uint8_t padding = 0;
         unsigned short stationName = static_cast< unsigned short >( constituentPartStationName );
         disId_.Serialize( archive );
         rtiId_.Serialize( archive );
@@ -108,7 +108,7 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint8 padding = 0;
+        uint8_t padding = 0;
         unsigned short stationName = 0;
         disId_.Deserialize( archive );
         rtiId_.Deserialize( archive );

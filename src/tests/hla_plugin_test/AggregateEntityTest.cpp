@@ -119,7 +119,7 @@ namespace
     template< typename T >
     bool CheckSerialization( ::hla::T_SerializerPtr serializer, const T& expected )
     {
-        std::vector< int8 > buffer( serializer->GetSize() );
+        std::vector< uint8_t > buffer( serializer->GetSize() );
         if( !buffer.empty() )
             serializer->CopyTo( &buffer[0] );
         ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
@@ -134,7 +134,7 @@ namespace
         BOOST_CHECK_EQUAL( size, serializer->GetSize() );
         return true;
     }
-    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16 ) + 6 * sizeof( int8 ) + 1 * sizeof( int16 ) + sizeof( int32 );
+    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16_t ) + 6 * sizeof( int8_t ) + 1 * sizeof( int16_t ) + sizeof( int32_t );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_entity_identifier, RegisteredFixture )
@@ -155,24 +155,24 @@ BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, RegisteredFixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_has_no_sub_aggregate_identifiers, RegisteredFixture )
 {
-    const uint32 numberSubAggregateIdentifiers = 0u;
-    MOCK_EXPECT( functor.Visit ).once().with( "SubAggregateIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberSubAggregateIdentifiers ) );
+    const uint32_t numberSubAggregateIdentifiers = 0u;
+    MOCK_EXPECT( functor.Visit ).once().with( "SubAggregateIdentifiers", boost::bind( &CheckSerialization< uint32_t >, _1, numberSubAggregateIdentifiers ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_no_entity_identifiers, RegisteredFixture )
 {
-    const uint32 numberOfEntityIdentifiers = 0u;
-    MOCK_EXPECT( functor.Visit ).once().with( "EntityIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberOfEntityIdentifiers ) );
+    const uint32_t numberOfEntityIdentifiers = 0u;
+    MOCK_EXPECT( functor.Visit ).once().with( "EntityIdentifiers", boost::bind( &CheckSerialization< uint32_t >, _1, numberOfEntityIdentifiers ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_has_no_silent_aggregate, RegisteredFixture )
 {
-    const uint32 numberOfSilentAggregates = 0u;
-    MOCK_EXPECT( functor.Visit ).once().with( "SilentAggregates", boost::bind( &CheckSerialization< uint32 >, _1, numberOfSilentAggregates ) );
+    const uint32_t numberOfSilentAggregates = 0u;
+    MOCK_EXPECT( functor.Visit ).once().with( "SilentAggregates", boost::bind( &CheckSerialization< uint32_t >, _1, numberOfSilentAggregates ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }

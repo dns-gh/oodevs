@@ -27,7 +27,7 @@ using namespace plugins::hla;
 
 namespace
 {
-    typedef std::vector< int8 > T_Buffer;
+    typedef std::vector< uint8_t > T_Buffer;
     class Fixture
     {
     public:
@@ -70,7 +70,7 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_spatial_attribute_and_not
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_force_identifier_attribute_and_notifies_listener, Fixture )
 {
-    serializer << static_cast< int8 >( rpr::Friendly );
+    serializer << static_cast< int8_t >( rpr::Friendly );
     MOCK_EXPECT( listener.SideChanged ).once().with( "identifier", rpr::Friendly );
     ::hla::Deserializer deserializer( Deserialize() );
     aggregate.Deserialize( "ForceIdentifier", deserializer );
@@ -96,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_entity_type_attribute_and
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute_and_notifies_listener_for_each_entity, Fixture )
 {
-    const uint16 numberOfSilentEntities = 2;
+    const uint16_t numberOfSilentEntities = 2;
     serializer << numberOfSilentEntities;
     {
         ::hla::Deserializer deserializer( Deserialize() );

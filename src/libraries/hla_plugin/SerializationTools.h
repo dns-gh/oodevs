@@ -82,14 +82,14 @@ namespace hla
         template< typename Archive >
         void Serialize( Archive& archive ) const
         {
-            int32 size = static_cast< int32 >( list.size() );
+            int32_t size = static_cast< int32_t >( list.size() );
             archive << size
                     << list;
         }
         template< typename Archive >
         void Deserialize( Archive& archive )
         {
-            int32 size = 0;
+            int32_t size = 0;
             archive >> size;
             list.resize( size );
             archive >> list;

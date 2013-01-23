@@ -11,6 +11,7 @@
 #define __rpr_EntityType_h_
 
 #include <string>
+#include <cstdint>
 
 namespace rpr
 {

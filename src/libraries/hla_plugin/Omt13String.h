@@ -45,7 +45,7 @@ public:
     void Deserialize( Archive& archive )
     {
         data_.clear();
-        int8 data = -1;
+        int8_t data = -1;
         while( data != 0 )
         {
             archive >> data;
@@ -85,7 +85,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        uint32 sz = static_cast< uint32 >( values_.size() );
+        uint32_t sz = static_cast< uint32_t >( values_.size() );
         archive << sz;
         for( std::vector< Omt13String >::const_iterator it = values_.begin(); it != values_.end(); ++it )
             archive << *it;
@@ -93,7 +93,7 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32 sz = 0;
+        uint32_t sz = 0;
         archive >> sz;
         values_.resize( sz );
         for( std::vector< Omt13String >::iterator it = values_.begin(); it != values_.end(); ++it )

@@ -75,8 +75,8 @@ void RprTransferSender::RequestTransfer(const std::string& agentID, const Transf
     transfer.receivingEntity = rpr::EntityIdentifier( 0xFFFF, 0xFFFF, 0xFFFF );
     transfer.transferEntity = Omt13String(agentID);
     transfer.requestIdentifier = reqId;
-    transfer.transferType = type == E_EntityPush ? static_cast<uint8>( interactions::TransferControl::E_EntityPush )
-                                                 : static_cast<uint8>( interactions::TransferControl::E_EntityPull );
+    transfer.transferType = type == E_EntityPush ? static_cast<uint8_t>( interactions::TransferControl::E_EntityPush )
+                                                 : static_cast<uint8_t>( interactions::TransferControl::E_EntityPull );
     pTransferSender_->Send( transfer );
     callbacks_.insert( std::make_pair( reqId, T_RequestInfo( agentID, callback ) ) );
 }
@@ -100,7 +100,7 @@ void RprTransferSender::Receive( interactions::TransferControl& interaction )
         reply.receivingEntity = interaction.originatingEntity;
         reply.requestIdentifier = interaction.requestIdentifier;
         reply.acknowledgeFlag = 5;
-        reply.responseFlag =  static_cast<uint16>( resp ?
+        reply.responseFlag =  static_cast<uint16_t>( resp ?
                         interactions::Acknowledge::E_AbleToComply :
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );

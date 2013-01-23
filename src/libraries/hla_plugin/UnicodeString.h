@@ -35,19 +35,19 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << static_cast< uint32 >( data_.size() );
+        archive << static_cast< uint32_t >( data_.size() );
         for( std::wstring::size_type i = 0; i < data_.size(); ++i )
-            archive << static_cast< uint16 >( data_[ i ] );
+            archive << static_cast< uint16_t >( data_[ i ] );
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32 size;
+        uint32_t size;
         archive >> size;
         data_.resize( size );
         for( unsigned int i = 0; i < size; ++i )
         {
-            uint16 character;
+            uint16_t character;
             archive >> character;
             data_[ i ] = character;
         }

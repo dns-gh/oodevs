@@ -85,7 +85,7 @@ private:
     std::vector< char > uniqueId_;
     UnicodeString symbol_;
     double mounted_;
-    int8 status_;
+    int8_t status_;
     std::string identifier_;
 
     //@}

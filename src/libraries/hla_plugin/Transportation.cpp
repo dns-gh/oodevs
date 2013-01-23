@@ -257,7 +257,7 @@ NetnAppointmentStruct::NetnAppointmentStruct()
 // Name: NetnObjectFeatureStruct::NetnAppointmentStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-NetnAppointmentStruct::NetnAppointmentStruct( int64 dateTime, const rpr::WorldLocation& location )
+NetnAppointmentStruct::NetnAppointmentStruct( int64_t dateTime, const rpr::WorldLocation& location )
     : dateTime( dateTime )
     , location( location )
 {
@@ -370,7 +370,7 @@ NetnEventIdentifier::NetnEventIdentifier()
 // Name: NetnEventIdentifier::NetnEventIdentifier
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-NetnEventIdentifier::NetnEventIdentifier( int32 eventCount, const std::string& issuingObjectIdentifier )
+NetnEventIdentifier::NetnEventIdentifier( int32_t eventCount, const std::string& issuingObjectIdentifier )
     : eventCount             ( eventCount )
     , issuingObjectIdentifier( issuingObjectIdentifier )
 {

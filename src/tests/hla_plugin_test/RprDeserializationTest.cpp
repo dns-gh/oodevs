@@ -54,7 +54,7 @@ BOOST_FIXTURE_TEST_CASE( entity_type_deserialization, SerializationFixture )
 {
     const std::string type( "1 2 3 4 5 6 7" );
     const EntityType serializedType( type );
-    ::hla::Deserializer deserializer = Serialize( serializedType, 6 * sizeof( int8 ) + 1 * sizeof( int16 ) );
+    ::hla::Deserializer deserializer = Serialize( serializedType, 6 * sizeof( int8_t ) + 1 * sizeof( int16_t ) );
     EntityType deserializedType;
     deserializedType.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( type, deserializedType.str() );

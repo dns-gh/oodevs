@@ -69,7 +69,7 @@ void IndirectFireSender::Notify( const sword::StopUnitFire& message, int /*conte
     parameters.articulatedPartData.clear();  // empty array
     parameters.detonationLocation = rpr::WorldLocation( startMessage.target().position().latitude(), startMessage.target().position().longitude(), 0. );
     parameters.detonationResultCode = 3; // GroundImpact
-    parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
+    parameters.eventIdentifier.eventCount = static_cast< uint16_t >( fireIdentifier );
     parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( federateName_ );
     parameters.firingObjectIdentifier = Omt13String( localResolver_.Resolve( startMessage.firing_unit().id() ) );
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 400. );  // $$$$ _RC_ SLI 2011-09-23: Hardcoded

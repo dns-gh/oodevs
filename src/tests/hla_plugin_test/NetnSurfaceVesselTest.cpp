@@ -88,7 +88,7 @@ namespace
     template< typename T >
     bool CheckSerialization( ::hla::T_SerializerPtr serializer, const T& expected )
     {
-        std::vector< int8 > buffer( serializer->GetSize() );
+        std::vector< _t > buffer( serializer->GetSize() );
         if( !buffer.empty() )
             serializer->CopyTo( &buffer[0] );
         ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
@@ -122,7 +122,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_unique_id_is_sword_plus_identifier, Surf
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_callsign_is_its_name, SurfaceVesselFixture )
 {
-    MOCK_EXPECT( functor.Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32 ) + 4 * sizeof( uint16 ) ) );
+    MOCK_EXPECT( functor.Visit ).once().with( "Callsign", boost::bind( &CheckSize, _1, sizeof( uint32_t ) + 4 * sizeof( uint16_t ) ) );
     MOCK_EXPECT( functor.Visit );
     entity.Serialize( functor, true );
 }

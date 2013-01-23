@@ -53,10 +53,10 @@ public:
 public:
     //! @name Member data
     //@{
-    unsigned short numberOfEntitiesOfThisType_;
-    unsigned short numberOfAppearanceRecords_;
+    uint16_t numberOfEntitiesOfThisType_;
+    uint16_t numberOfAppearanceRecords_;
     rpr::EntityType entityType_;
-    unsigned long entityAppearance_;
+    uint32_t entityAppearance_;
     //@}
 };
 

@@ -25,13 +25,13 @@ namespace
     void Read( ::hla::Deserializer& deserializer )
     {
         for( unsigned int i = 0; i < N; ++i )
-            Read< int8 >( deserializer );
+            Read< int8_t >( deserializer );
     }
     template< unsigned N >
     void ReadPadding( ::hla::Deserializer& deserializer )
     {
         for( unsigned int i = 0; i < N; ++i )
-            BOOST_CHECK_EQUAL( 0, Read< int8 >( deserializer ) );
+            BOOST_CHECK_EQUAL( 0, Read< int8_t >( deserializer ) );
     }
 }
 

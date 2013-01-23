@@ -167,12 +167,12 @@ void Aircraft::RegisterAttributes( )
 {
     attributesUpdater_->Register( "EntityType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
     attributesUpdater_->Register( "EntityIdentifier", boost::bind( &FOM_Serializer_ABC::ReadEntityIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( entityIdentifier_ ), boost::ref( entityIdentifierResolver_ ) ), entityIdentifier_ );
-    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &FOM_Serializer_ABC::ReadForceIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
+    attributesUpdater_->Register( "ForceIdentifier", boost::bind( &FOM_Serializer_ABC::ReadForceIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8_t >( static_cast< int8_t >( force_ ) ) );
     attributesUpdater_->Register( "Marking", boost::bind( &FOM_Serializer_ABC::ReadMarking, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( marking_ ) ), marking_ );
     attributesUpdater_->Register( "Spatial", boost::bind( &FOM_Serializer_ABC::ReadSpatial, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
     attributesUpdater_->Register( "IsPartOf", boost::bind( &FOM_Serializer_ABC::ReadIsPartOf, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ );
     attributesUpdater_->Register( "IsConcealed", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< char >( 0 ) );
-    attributesUpdater_->Register( "DamageState", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ),  Wrapper< uint32 >( rpr::damageState_NoDamage ) );
+    attributesUpdater_->Register( "DamageState", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ),  Wrapper< uint32_t >( rpr::damageState_NoDamage ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,5 +239,5 @@ void Aircraft::ParentChanged( const std::string& parentId )
 // -----------------------------------------------------------------------------
 void Aircraft::StateChanged( rpr::DamageState32 state )
 {
-    attributesUpdater_->Update( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( state ) ) );
+    attributesUpdater_->Update( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( state ) ) );
 }

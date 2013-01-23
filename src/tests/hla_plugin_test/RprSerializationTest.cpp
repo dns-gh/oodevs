@@ -21,7 +21,7 @@ BOOST_FIXTURE_TEST_CASE( entity_identifier_serialization, SerializationFixture )
     const unsigned short application = 2;
     const unsigned short number = 3;
     const EntityIdentifier identifier( site, application, number );
-    ::hla::Deserializer deserializer = Serialize( identifier, 3 * sizeof( int16 ) );
+    ::hla::Deserializer deserializer = Serialize( identifier, 3 * sizeof( int16_t ) );
     BOOST_CHECK_EQUAL( site       , Read< unsigned short >( deserializer ) );
     BOOST_CHECK_EQUAL( application, Read< unsigned short >( deserializer ) );
     BOOST_CHECK_EQUAL( number     , Read< unsigned short >( deserializer ) );
@@ -37,7 +37,7 @@ BOOST_FIXTURE_TEST_CASE( entity_type_serialization, SerializationFixture )
     const unsigned char specific = 6;
     const unsigned char extra = 7;
     const EntityType type( "1 2 3 4 5 6 7" );
-    ::hla::Deserializer deserializer = Serialize( type, 6 * sizeof( int8 ) + 1 * sizeof( int16 ) );
+    ::hla::Deserializer deserializer = Serialize( type, 6 * sizeof( int8_t ) + 1 * sizeof( int16_t ) );
     BOOST_CHECK_EQUAL( entityKind,  Read< unsigned char >( deserializer ) );
     BOOST_CHECK_EQUAL( domain,      Read< unsigned char >( deserializer ) );
     BOOST_CHECK_EQUAL( countryCode, Read< unsigned short >( deserializer ) );
@@ -52,7 +52,7 @@ BOOST_FIXTURE_TEST_CASE( entity_type_can_be_truncated, SerializationFixture )
     const unsigned char entityKind = 1;
     const unsigned char domain = 2;
     const EntityType type( "1 2" );
-    ::hla::Deserializer deserializer = Serialize( type, 6 * sizeof( int8 ) + 1 * sizeof( int16 ) );
+    ::hla::Deserializer deserializer = Serialize( type, 6 * sizeof( int8_t ) + 1 * sizeof( int16_t ) );
     BOOST_CHECK_EQUAL( entityKind, Read< unsigned char >( deserializer ) );
     BOOST_CHECK_EQUAL( domain,     Read< unsigned char >( deserializer ) );
     BOOST_CHECK_EQUAL( 0, Read< unsigned short >( deserializer ) );

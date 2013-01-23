@@ -41,10 +41,10 @@ public:
         unsigned char padding[ 7 ] = { 0, 0, 0, 0, 0, 0, 0 };
         archive << deadReckoningAlgorithm_  << padding;
         worldLocation_.Serialize( archive );
-        archive << static_cast< uint8 >( isFrozen_ )
-                << static_cast< uint8 >( 0 )
-                << static_cast< uint8 >( 0 )
-                << static_cast< uint8 >( 0 );
+        archive << static_cast< uint8_t >( isFrozen_ )
+                << static_cast< uint8_t >( 0 )
+                << static_cast< uint8_t >( 0 )
+                << static_cast< uint8_t >( 0 );
         orientation_.Serialize( archive );
         if( !isStatic_ )
             velocityVector_.Serialize( archive );
@@ -53,11 +53,11 @@ public:
     void Deserialize( Archive& archive )
     {
         unsigned char padding[ 7 ] = { 0, 0, 0, 0, 0, 0, 0 };
-        uint8 junk;
+        uint8_t junk;
         archive >> deadReckoningAlgorithm_ >> padding;
         isStatic_ = ( deadReckoningAlgorithm_ == 1 );
         worldLocation_.Deserialize( archive );
-        uint8 isFrozen;
+        uint8_t isFrozen;
         archive >> isFrozen >> junk >> junk >> junk;
         isFrozen_ = ( isFrozen == 1 );
         orientation_.Deserialize( archive );

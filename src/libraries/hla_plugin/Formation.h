@@ -10,6 +10,8 @@
 #ifndef plugins_hla_Formation_h
 #define plugins_hla_Formation_h
 
+#include <cstdint>
+
 namespace hla
 {
     class UpdateFunctor_ABC;
@@ -46,7 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
-    long formation_;
+    uint32_t formation_;
     //@}
 };
 

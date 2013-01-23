@@ -42,7 +42,7 @@ namespace hla
     private:
         T value_;
     };
-    template< typename T, typename SzT = unsigned long >
+    template< typename T, typename SzT = uint32_t >
     struct VectorWrapper
     {
     public:

@@ -97,9 +97,9 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
     {
         transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
     }
-    transfer.capabilityType = static_cast< uint32 >( interactions::TMR::TotalTransfer );
-    transfer.transferType = type == E_EntityPush ? static_cast< uint32 >( interactions::TMR::Divest )
-                                                 : static_cast< uint32 >( interactions::TMR::Acquire );
+    transfer.capabilityType = static_cast< uint32_t >( interactions::TMR::TotalTransfer );
+    transfer.transferType = type == E_EntityPush ? static_cast< uint32_t >( interactions::TMR::Divest )
+                                                 : static_cast< uint32_t >( interactions::TMR::Acquire );
     pRequestSender_->Send( transfer );
     callbacks_.insert( std::make_pair( reqId, std::make_pair( agentID, callback ) ) );
 }
@@ -121,7 +121,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     if( request.instances.list.size() == 0 )
     {
         reply.isOffering = false;
-        reply.reason = static_cast< uint32 >( interactions::TMR::CapabilityDoesNotMatch );
+        reply.reason = static_cast< uint32_t >( interactions::TMR::CapabilityDoesNotMatch );
         pOfferSender_->Send( reply );
         return;
     }
@@ -150,7 +150,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     }
     reply.isOffering =  resp;
     if( !resp )
-        reply.reason = static_cast< uint32 >( interactions::TMR::Reason_Other );
+        reply.reason = static_cast< uint32_t >( interactions::TMR::Reason_Other );
     pOfferSender_->Send( reply );
 
     if( resp )

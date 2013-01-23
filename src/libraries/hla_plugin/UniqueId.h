@@ -115,7 +115,7 @@ public:
     template< typename Archive >
     void operator()( const boost::shared_ptr< VariableArray< std::vector< char > > >& id, Archive& serializer ) const
     {
-        serializer << static_cast< uint32 >( id->list.size() );
+        serializer << static_cast< uint32_t >( id->list.size() );
         BOOST_FOREACH( const std::vector< char >& v, id->list )
             Serialize( v, serializer );
     }

@@ -43,7 +43,7 @@ GroundVehicle::GroundVehicle( Agent_ABC& agent, const std::string& name,
     attributes_->Register( "Marking", markingFactory.CreateMarking( name, simId ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     attributes_->Register( "IsPartOf", isPartOf_ );
-    attributes_->Register( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( rpr::damageState_NoDamage ) ) );
+    attributes_->Register( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( rpr::damageState_NoDamage ) ) );
     attributes_->Register( "IsConcealed", Wrapper< char >( static_cast< char >( 0 ) ) );
     agent_.Register( *this );
 }
@@ -190,5 +190,5 @@ void GroundVehicle::ParentChanged( const std::string& parentId )
 // -----------------------------------------------------------------------------
 void GroundVehicle::StateChanged( rpr::DamageState32 state )
 {
-    attributes_->Update( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( state ) ) );
+    attributes_->Update( "DamageState", Wrapper< uint32_t >( static_cast< uint32_t >( state ) ) );
 }

@@ -37,7 +37,7 @@ namespace
 
 void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, rpr::ForceIdentifier& force )
 {
-    int8 tmpForce;
+    int8_t tmpForce;
     deserializer >> tmpForce;
     listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( tmpForce ) );
     force = static_cast< rpr::ForceIdentifier >( tmpForce );
@@ -156,7 +156,7 @@ void CulturalFeature::RegisterAttributes()
 {
     attributes_->Register( "EntityType", boost::bind( &ReadEntityType, _1, _2, _3, boost::ref( type_ ) ), type_ );
     attributes_->Register( "EntityIdentifier", boost::bind( &ReadEntityIdentifier, _1, _2, _3, boost::ref( entityIdentifier_ ) ), entityIdentifier_ );
-    attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
+    attributes_->Register( "ForceIdentifier", boost::bind( &ReadForceIdentifier, _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8_t >( static_cast< int8_t >( force_ ) ) );
     attributes_->Register( "Spatial", boost::bind( &ReadSpatial, _1, _2, _3, boost::ref( spatial_ ) ), spatial_);
 }
 

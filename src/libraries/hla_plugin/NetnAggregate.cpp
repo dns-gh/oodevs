@@ -121,7 +121,7 @@ void NetnAggregate::EquipmentChanged( unsigned int /*type*/, const rpr::EntityTy
 void NetnAggregate::EmbarkmentChanged( bool mounted )
 {
     attributesUpdater_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
-    attributesUpdater_->Update( "Status", Wrapper< int8 >( mounted ? 2 : 1 ) );
+    attributesUpdater_->Update( "Status", Wrapper< int8_t >( mounted ? 2 : 1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void NetnAggregate::RegisterAttributes()
     attributesUpdater_->Register( "UniqueID", boost::bind( &FOM_Serializer_ABC::ReadUniqueId, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( uniqueId_ ) ), uniqueId_, fomSerializer_.GetUniqueIdSerializer() );
     attributesUpdater_->Register( "HigherHeadquarters", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), uniqueId_, fomSerializer_.GetUniqueIdSerializer() );
     attributesUpdater_->Register( "Callsign", boost::bind( &FOM_Serializer_ABC::ReadCallsign, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( callsign_ ) ), callsign_ );
-    attributesUpdater_->Register( "Status", boost::bind( &FOM_Serializer_ABC::ReadStatus, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( status_ ) ), Wrapper< int8 >( status_ ) );
+    attributesUpdater_->Register( "Status", boost::bind( &FOM_Serializer_ABC::ReadStatus, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( status_ ) ), Wrapper< int8_t >( status_ ) );
     attributesUpdater_->Register( "Symbol", boost::bind( &FOM_Serializer_ABC::ReadSymbol, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( symbol_ ) ), symbol_ );
     attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &FOM_Serializer_ABC::ReadEmbeddedUnitList, boost::ref( fomSerializer_ ), _1, _2, _3 ), 
                                     VariableArray< std::vector< char > >( ) , fomSerializer_.GetUniqueIdSerializer() );

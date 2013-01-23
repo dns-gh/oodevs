@@ -98,7 +98,7 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.articulatedPartData.clear();  // empty array
     parameters.detonationLocation = positions_[ targetIdentifier ];
     parameters.detonationResultCode = 1; // EntityImpact
-    parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
+    parameters.eventIdentifier.eventCount = static_cast< uint16_t >( fireIdentifier );
     parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( firingRtiId );
     parameters.firingObjectIdentifier = Omt13String( firingRtiId );
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded

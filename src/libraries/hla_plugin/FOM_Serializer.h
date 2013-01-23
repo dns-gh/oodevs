@@ -48,7 +48,7 @@ public:
     virtual void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< char >& uniqueId );
     virtual void ReadMounted( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, double& mounted );
     virtual void ReadSymbol( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& symbol );
-    virtual void ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, int8& status );
+    virtual void ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, int8_t& status );
     virtual void ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener );
 
     virtual const UniqueIdSerializer& GetUniqueIdSerializer() ;

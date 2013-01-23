@@ -215,7 +215,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_target_location, ConfiguredFix
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_entity_impact, ConfiguredFixture )
 {
-    const int8 entityImpact = 1;
+    const int8_t entityImpact = 1;
     BOOST_CHECK_EQUAL( parameters.detonationResultCode, entityImpact );
 }
 
@@ -239,7 +239,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_constant_final_velocity_vector
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_other_fuse_type, ConfiguredFixture )
 {
-    const int16 other = 0;
+    const int16_t other = 0;
     BOOST_CHECK_EQUAL( parameters.fuseType, other );
 }
 
@@ -277,6 +277,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_target_object_identifier, Confi
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_constant_warhead_type_to_other, ConfiguredFixture )
 {
-    const int16 other = 0;
+    const int16_t other = 0;
     BOOST_CHECK_EQUAL( parameters.warheadType, other );
 }

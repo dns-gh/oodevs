@@ -20,7 +20,7 @@ BOOST_FIXTURE_TEST_CASE( netn_object_description_deserialization, SerializationF
     const std::string type = "type";
     NetnObjectDescription serializedDescription( weight, volume, type );
     const unsigned int descriptionSize = 
-        static_cast< unsigned int >( sizeof( real32 ) + sizeof( real32 ) + sizeof( int32 ) + sizeof( int8 ) * type.size() );
+        static_cast< unsigned int >( sizeof( real32 ) + sizeof( real32 ) + sizeof( int32_t ) + sizeof( int8_t ) * type.size() );
     ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
     NetnObjectDescription deserializedDescription;
     deserializedDescription.Deserialize( deserializer );
@@ -32,10 +32,10 @@ BOOST_FIXTURE_TEST_CASE( netn_object_description_deserialization, SerializationF
 BOOST_FIXTURE_TEST_CASE( netn_human_description_deserialization, SerializationFixture )
 {
     const rpr::EntityType humanType( "1 2 3 0 0" );
-    const int16 quantity = 1;
-    const int16 injury = 3;
+    const int16_t quantity = 1;
+    const int16_t injury = 3;
     NetnHumanDescription serializedDescription( humanType, quantity, injury );
-    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int16 ) + sizeof( int16 );
+    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int16_t ) + sizeof( int16_t );
     ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
     NetnHumanDescription deserializedDescription;
     deserializedDescription.Deserialize( deserializer );
@@ -47,10 +47,10 @@ BOOST_FIXTURE_TEST_CASE( netn_human_description_deserialization, SerializationFi
 BOOST_FIXTURE_TEST_CASE( netn_equip_description_deserialization, SerializationFixture )
 {
     const rpr::EntityType equipType( "1 2 3 0 0" );
-    const int32 quantity = 1;
-    const int32 damageState = 3;
+    const int32_t quantity = 1;
+    const int32_t damageState = 3;
     NetnEquipDescription serializedDescription( equipType, quantity, damageState );
-    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int32 ) + sizeof( int32 );
+    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int32_t ) + sizeof( int32_t );
     ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
     NetnEquipDescription deserializedDescription;
     deserializedDescription.Deserialize( deserializer );
@@ -61,9 +61,9 @@ BOOST_FIXTURE_TEST_CASE( netn_equip_description_deserialization, SerializationFi
 BOOST_FIXTURE_TEST_CASE( netn_platform_description_deserialization, SerializationFixture )
 {
     const rpr::EntityType plateformType( "1 2 3 0 0" );
-    const int32 damageState = 3;
+    const int32_t damageState = 3;
     NetnPlateformDescription serializedDescription( plateformType, damageState );
-    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int32 );
+    const unsigned int descriptionSize = 6 * sizeof( char ) + sizeof( short ) + sizeof( int32_t );
     ::hla::Deserializer deserializer = Serialize( serializedDescription, descriptionSize );
     NetnPlateformDescription deserializedDescription;
     deserializedDescription.Deserialize( deserializer );
@@ -74,11 +74,11 @@ BOOST_FIXTURE_TEST_CASE( netn_platform_description_deserialization, Serializatio
 BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_no_detail_deserialization, SerializationFixture )
 {
     NetnObjectFeatureStruct serializedFeature;
-    const unsigned int discriminantTypeSize = sizeof( int32 );
+    const unsigned int discriminantTypeSize = sizeof( int32_t );
     ::hla::Deserializer deserializer = Serialize( serializedFeature, discriminantTypeSize );
     NetnObjectFeatureStruct deserializedFeature;
     deserializedFeature.Deserialize( deserializer );
-    const int32 noDetail = 0;
+    const int32_t noDetail = 0;
     BOOST_CHECK_EQUAL( noDetail, deserializedFeature.featureLevel );
 }
 
@@ -90,7 +90,7 @@ BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_with_aggregate_deserializati
     ::hla::Deserializer deserializer = Serialize( serializedFeature );
     NetnObjectFeatureStruct deserializedFeature;
     deserializedFeature.Deserialize( deserializer );
-    const int32 aggregateDetail = 5;
+    const int32_t aggregateDetail = 5;
     BOOST_CHECK_EQUAL( aggregateDetail, deserializedFeature.featureLevel );
     BOOST_CHECK_EQUAL( 1u, deserializedFeature.subObjectList.size() );
     BOOST_CHECK_EQUAL( "callsign", deserializedFeature.subObjectList.at( 0 ).callsign.str() );
@@ -116,11 +116,11 @@ BOOST_FIXTURE_TEST_CASE( netn_object_definition_struct_deserialization, Serializ
 {
     const std::string callsign = "callsign";
     const std::vector< char > uniqueId ( MakeUniqueId( "uniqueId" ) );
-    const unsigned int padding = sizeof( int8 );
+    const unsigned int padding = sizeof( int8_t );
     const NetnObjectDefinitionStruct serializedObjectDefinition( callsign, uniqueId, NetnObjectFeatureStruct() );
-    const unsigned int callsignSize = static_cast< unsigned int >( sizeof( uint32 ) + callsign.size() * sizeof( int16 ) );
-    const unsigned int uniqueIdSize = 11 * sizeof( int8 ) + padding;
-    const unsigned int objectFeatureSize = sizeof( int32 );
+    const unsigned int callsignSize = static_cast< unsigned int >( sizeof( uint32_t ) + callsign.size() * sizeof( int16_t ) );
+    const unsigned int uniqueIdSize = 11 * sizeof( int8_t ) + padding;
+    const unsigned int objectFeatureSize = sizeof( int32_t );
     ::hla::Deserializer deserializer = Serialize( serializedObjectDefinition, callsignSize + uniqueIdSize + objectFeatureSize );
     NetnObjectDefinitionStruct deserializedObjectDefinition;
     deserializedObjectDefinition.Deserialize( deserializer );
@@ -130,10 +130,10 @@ BOOST_FIXTURE_TEST_CASE( netn_object_definition_struct_deserialization, Serializ
 
 BOOST_FIXTURE_TEST_CASE( netn_appointment_struct_deserialization, SerializationFixture )
 {
-    const int64 dateTime = 10021123;
+    const int64_t dateTime = 10021123;
     const rpr::WorldLocation location( 1., 2., 3. );
     const NetnAppointmentStruct serializedAppointmentStruct( dateTime, location );
-    const unsigned int dateTimeSize = sizeof( int64 );
+    const unsigned int dateTimeSize = sizeof( int64_t );
     const unsigned int worldLocationSize = 3 * sizeof( real64 );
     ::hla::Deserializer deserializer = Serialize( serializedAppointmentStruct, dateTimeSize + worldLocationSize );
     NetnAppointmentStruct deserializedAppointmentStruct;
@@ -152,12 +152,12 @@ BOOST_FIXTURE_TEST_CASE( netn_datat_struct_deserialization, SerializationFixture
     const NetnAppointmentStruct appointment;
     const NetnAppointmentStruct finalAppointment;
     const NetnDataTStruct serializedNetnDataTStruct( objectToManage, appointment, finalAppointment );
-    const unsigned int padding = sizeof( int8 );
-    const unsigned int objectToManageVectorSize = sizeof( int32 );
+    const unsigned int padding = sizeof( int8_t );
+    const unsigned int objectToManageVectorSize = sizeof( int32_t );
     const unsigned int objectDefinitionStructSize = static_cast< unsigned int >( 
-        sizeof( int32 ) + callsign.size() * sizeof( int16 ) + 11 * sizeof( int8 ) + padding + 2 * padding + sizeof( int32 ) );
-    const unsigned int appointmentStructSize = sizeof( int64 ) + 3 * sizeof( real64 );
-    const unsigned int alignment  = ( ( objectToManageVectorSize + 1 * objectDefinitionStructSize) % sizeof( int64 ) ) * padding;
+        sizeof( int32_t ) + callsign.size() * sizeof( int16_t ) + 11 * sizeof( int8_t ) + padding + 2 * padding + sizeof( int32_t ) );
+    const unsigned int appointmentStructSize = sizeof( int64_t ) + 3 * sizeof( real64 );
+    const unsigned int alignment  = ( ( objectToManageVectorSize + 1 * objectDefinitionStructSize) % sizeof( int64_t ) ) * padding;
     ::hla::Deserializer deserializer = Serialize( serializedNetnDataTStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + alignment + 2 * appointmentStructSize );
     NetnDataTStruct deserializedNetnDataTStruct;
     deserializedNetnDataTStruct.Deserialize( deserializer );
@@ -173,12 +173,12 @@ BOOST_FIXTURE_TEST_CASE( netn_dataed_struct_deserialization, SerializationFixtur
     objectToManage.push_back( NetnObjectDefinitionStruct( callsign, MakeUniqueId( "42" ), NetnObjectFeatureStruct() ) );
     const NetnAppointmentStruct appointment;
     const NetnDataEDStruct serializedNetnDataEDStruct( objectToManage, appointment );
-    const unsigned int padding = sizeof( int8 );
-    const unsigned int objectToManageVectorSize = sizeof( int32 );
+    const unsigned int padding = sizeof( int8_t );
+    const unsigned int objectToManageVectorSize = sizeof( int32_t );
     const unsigned int objectDefinitionStructSize = static_cast< unsigned int >(
-        sizeof( int32 ) + callsign.size() * sizeof( int16 ) + 11 * sizeof( int8 ) + padding + 2 * padding + sizeof( int32 ) );
-    const unsigned int appointmentStructSize = sizeof( int64 ) + 3 * sizeof( real64 );
-    const unsigned int alignment  = ( ( objectToManageVectorSize + 1 * objectDefinitionStructSize) % sizeof( int64 ) ) * padding;
+        sizeof( int32_t ) + callsign.size() * sizeof( int16_t ) + 11 * sizeof( int8_t ) + padding + 2 * padding + sizeof( int32_t ) );
+    const unsigned int appointmentStructSize = sizeof( int64_t ) + 3 * sizeof( real64 );
+    const unsigned int alignment  = ( ( objectToManageVectorSize + 1 * objectDefinitionStructSize) % sizeof( int64_t ) ) * padding;
     ::hla::Deserializer deserializer = Serialize( serializedNetnDataEDStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + alignment + appointmentStructSize );
     NetnDataEDStruct deserializedNetnDataEDStruct;
     deserializedNetnDataEDStruct.Deserialize( deserializer );
@@ -189,10 +189,10 @@ BOOST_FIXTURE_TEST_CASE( netn_dataed_struct_deserialization, SerializationFixtur
 
 BOOST_FIXTURE_TEST_CASE( netn_event_identifier_deserialization, SerializationFixture )
 {
-    const int32 eventCount = 42;
+    const int32_t eventCount = 42;
     const std::string callsign( "callsign" );
-    const unsigned int eventCountSize = sizeof( int32 );
-    const unsigned int callsignSize = static_cast< unsigned int >( sizeof( int32 ) + sizeof( int16 ) * callsign.size() );
+    const unsigned int eventCountSize = sizeof( int32_t );
+    const unsigned int callsignSize = static_cast< unsigned int >( sizeof( int32_t ) + sizeof( int16_t ) * callsign.size() );
     const NetnEventIdentifier serializedEventIdentifier( eventCount, callsign );
     ::hla::Deserializer deserializer = Serialize( serializedEventIdentifier, eventCountSize + callsignSize );
     NetnEventIdentifier deserializedEventIdentifier;

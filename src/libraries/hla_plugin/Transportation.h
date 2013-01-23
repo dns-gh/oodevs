@@ -101,8 +101,8 @@ public:
     //! @name Member data
     //@{
     rpr::EntityType humanType;
-    int16 quantity;
-    int16 injury;
+    int16_t quantity;
+    int16_t injury;
     //@}
 };
 
@@ -143,8 +143,8 @@ public:
     //! @name Member data
     //@{
     rpr::EntityType equipType;
-    int32 quantity;
-    int32 damageState;
+    int32_t quantity;
+    int32_t damageState;
     //@}
 };
 
@@ -183,7 +183,7 @@ public:
     //! @name Member data
     //@{
     rpr::EntityType plateformType;
-    int32 damageState;
+    int32_t damageState;
     //@}
 };
 
@@ -225,7 +225,7 @@ public:
             archive << plateformDetail;
         if( featureLevel == 5 )
         {
-            uint32 size = static_cast< uint32 >( subObjectList.size() );
+            uint32_t size = static_cast< uint32_t >( subObjectList.size() );
             archive << size
                     << subObjectList;
         }
@@ -244,7 +244,7 @@ public:
             archive >> plateformDetail;
         if( featureLevel == 5 )
         {
-            uint32 size = 0;
+            uint32_t size = 0;
             archive >> size;
             subObjectList.resize( size );
             archive >> subObjectList;
@@ -254,7 +254,7 @@ public:
 
     //! @name Member data
     //@{
-    int32 featureLevel;
+    int32_t featureLevel;
     std::vector< NetnObjectDefinitionStruct > subObjectList;
     NetnObjectDescription objectDetail;
     NetnHumanDescription humanDetail;
@@ -285,7 +285,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint8 padding = 0;
+        const uint8_t padding = 0;
         archive << callsign
                 << uniqueId << padding;
         if( callsign.str().size() % 2 )
@@ -295,7 +295,7 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint8 padding = 0;
+        uint8_t padding = 0;
         archive >> callsign
                 >> uniqueId >> padding;
         if( callsign.str().size() % 2 )
@@ -325,7 +325,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnAppointmentStruct();
-             NetnAppointmentStruct( int64 dateTime, const rpr::WorldLocation& location );
+             NetnAppointmentStruct( int64_t dateTime, const rpr::WorldLocation& location );
              NetnAppointmentStruct( const NetnAppointmentStruct& other );
     virtual ~NetnAppointmentStruct();
     //@}
@@ -350,7 +350,7 @@ public:
 public:
     //! @name Member data
     //@{
-    int64 dateTime;
+    int64_t dateTime;
     rpr::WorldLocation location;
     //@}
 };
@@ -378,27 +378,27 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint32 size = static_cast< uint32 >( objectToManage.size() );
+        const uint32_t size = static_cast< uint32_t >( objectToManage.size() );
         archive << size
                 << objectToManage;
-        const unsigned int padding = archive.GetSize() % 8;
-        for( unsigned int i = 0; i < padding; ++i )
-            archive << static_cast< int8 >( 0 );
+        const std::size_t padding = archive.GetSize() % 8;
+        for( std::size_t i = 0; i < padding; ++i )
+            archive << static_cast< int8_t >( 0 );
         archive << appointment
                 << finalAppointment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        const unsigned int start = archive.GetSize();
-        uint32 size = 0;
+        const std::size_t start = archive.GetSize();
+        uint32_t size = 0;
         archive >> size;
         objectToManage.resize( size );
         if( size != 0 )
             archive >> objectToManage;
-        const unsigned int padding = ( archive.GetSize() - start ) % 8;
-        int8 junk;
-        for( unsigned int i = 0; i < padding; ++i )
+        const std::size_t padding = ( archive.GetSize() - start ) % 8;
+        int8_t junk;
+        for( std::size_t i = 0; i < padding; ++i )
             archive >> junk;
         archive >> appointment
                 >> finalAppointment;
@@ -437,29 +437,29 @@ public:
     void Serialize( Archive& archive ) const
     {
         // TODO AHC padding
-        const uint32 size = static_cast< uint32 >( objectToManage.size() );
+        const uint32_t size = static_cast< uint32_t >( objectToManage.size() );
         archive << size
                 << objectToManage;
 
-        const unsigned int padding = archive.GetSize() % 8;
-        for( unsigned int i = 0; i < padding; ++i )
-            archive << static_cast< int8 >( 0 );
+        const std::size_t padding = archive.GetSize() % 8;
+        for( std::size_t i = 0; i < padding; ++i )
+            archive << static_cast< int8_t >( 0 );
 
         archive << appointment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        const unsigned int start = archive.GetSize();
-        uint32 size = 0;
+        const std::size_t start = archive.GetSize();
+        uint32_t size = 0;
         archive >> size;
         objectToManage.resize( size );
         if( size != 0 )
             archive >> objectToManage;
 
-        const unsigned int padding = ( archive.GetSize() - start ) % 8;
-        int8 junk;
-        for( unsigned int i = 0; i < padding; ++i )
+        const std::size_t padding = ( archive.GetSize() - start ) % 8;
+        int8_t junk;
+        for( std::size_t i = 0; i < padding; ++i )
             archive >> junk;
 
         archive >> appointment;
@@ -486,7 +486,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnEventIdentifier();
-             NetnEventIdentifier( int32 eventCount, const std::string& issuingObjectIdentifier );
+             NetnEventIdentifier( int32_t eventCount, const std::string& issuingObjectIdentifier );
     virtual ~NetnEventIdentifier();
     //@}
 
@@ -509,7 +509,7 @@ public:
 public:
     //! @name Member data
     //@{
-    int32 eventCount;
+    int32_t eventCount;
     UnicodeString issuingObjectIdentifier;
     //@}
 };
@@ -543,8 +543,8 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint32 padding = 0;
-        archive << static_cast<int32>(convoyType) << padding;
+        const uint32_t padding = 0;
+        archive << static_cast<int32_t>(convoyType) << padding;
         if( convoyType == E_Transport )
             archive << dataTransport;
         if( convoyType == E_Embarkment )
@@ -555,8 +555,8 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32 padding = 0;
-        int32 convoy;
+        uint32_t padding = 0;
+        int32_t convoy;
         archive >> convoy >> padding;
         convoyType = static_cast<ConvoyType>( convoy );
         if( convoyType == E_Transport )
@@ -597,26 +597,26 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint32 size = static_cast< uint32 >( objectToManage.size() );
+        const uint32_t size = static_cast< uint32_t >( objectToManage.size() );
         archive << size
                 << objectToManage;
         const unsigned int padding = archive.GetSize() % 8;
         for( unsigned int i = 0; i < padding; ++i )
-            archive << static_cast< int8 >( 0 );
+            archive << static_cast< int8_t >( 0 );
         archive << appointment
                 << finalAppointment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        const unsigned int start = archive.GetSize();
-        uint32 size = 0;
+        const std::size_t start = archive.GetSize();
+        uint32_t size = 0;
         archive >> size;
         objectToManage.resize( size );
         archive >> objectToManage;
-        const unsigned int padding = ( archive.GetSize() - start ) % 8;
-        int8 junk;
-        for( unsigned int i = 0; i < padding; ++i )
+        const std::size_t padding = ( archive.GetSize() - start ) % 8;
+        int8_t junk;
+        for( std::size_t i = 0; i < padding; ++i )
             archive >> junk;
         archive >> appointment
                 >> finalAppointment;
@@ -648,28 +648,28 @@ public:
     void Serialize( Archive& archive ) const
     {
         // TODO AHC padding
-        const uint32 size = static_cast< uint32 >( objectToManage.size() );
+        const uint32_t size = static_cast< uint32_t >( objectToManage.size() );
         archive << size
                 << objectToManage;
 
         const unsigned int padding = archive.GetSize() % 8;
         for( unsigned int i = 0; i < padding; ++i )
-            archive << static_cast< int8 >( 0 );
+            archive << static_cast< int8_t >( 0 );
 
         archive << appointment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        const unsigned int start = archive.GetSize();
-        uint32 size = 0;
+        const std::size_t start = archive.GetSize();
+        uint32_t size = 0;
         archive >> size;
         objectToManage.resize( size );
         archive >> objectToManage;
 
-        const unsigned int padding = ( archive.GetSize() - start ) % 8;
-        int8 junk;
-        for( unsigned int i = 0; i < padding; ++i )
+        const std::size_t padding = ( archive.GetSize() - start ) % 8;
+        int8_t junk;
+        for( std::size_t i = 0; i < padding; ++i )
             archive >> junk;
 
         archive >> appointment;
@@ -707,8 +707,8 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        const uint32 padding = 0;
-        archive << static_cast<int32>( transportType ) << padding;
+        const uint32_t padding = 0;
+        archive << static_cast<int32_t>( transportType ) << padding;
         if( transportType == E_Transport )
             archive << dataTransport;
         if( transportType == E_Embarkment )
@@ -719,8 +719,8 @@ public:
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32 padding = 0;
-        int32 convoy;
+        uint32_t padding = 0;
+        int32_t convoy;
         archive >> convoy >> padding;
         transportType = static_cast<TransportType>( convoy );
         if( transportType == E_Transport )

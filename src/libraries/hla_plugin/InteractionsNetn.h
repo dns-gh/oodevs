@@ -33,21 +33,21 @@ struct NetnService
     NetnEventIdentifier serviceId;
     UnicodeString consumer;
     UnicodeString provider;
-    int8 serviceType;
+    int8_t serviceType;
 };
 
 struct NetnRequestConvoy : public NetnService
 {
-    int64 requestTimeOut;
+    int64_t requestTimeOut;
     NetnTransportStruct transportData;
 };
 
 struct NetnOfferConvoy : public NetnService
 {
-    int32 isOffering;
-    int64 requestTimeOut;
+    int32_t isOffering;
+    int64_t requestTimeOut;
     NetnTransportStruct transportData;
-    int32 offerType;
+    int32_t offerType;
     ListOfUnits listOfTransporters;
 };
 
@@ -108,7 +108,7 @@ struct TransactionId
         archive >> transactionCounter;
         federateName.Deserialize( archive );
     }
-    uint32 transactionCounter;
+    uint32_t transactionCounter;
     UnicodeString federateName;
 };
 struct TMR
@@ -145,7 +145,7 @@ struct TMR
 struct TMR_OfferTransferModellingResponsibility : public TMR
 {
     bool isOffering;
-    uint32 reason; // type is NoofferReasonEnum32
+    uint32_t reason; // type is NoofferReasonEnum32
 };
 
 struct AttributeValueStruct
@@ -154,38 +154,38 @@ struct AttributeValueStruct
     void Serialize( Archive& archive ) const
     {
         name.Serialize( archive );
-        archive << static_cast< uint32 >( value.size() )
+        archive << static_cast< uint32_t >( value.size() )
                 << value;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
         name.Deserialize( archive );
-        uint32 sz = 0;
+        uint32_t sz = 0;
         archive >> sz;
         value.resize( sz );
         archive >> value;
     }
     UnicodeString name;
-    std::vector< uint8 > value;
+    std::vector< uint8_t > value;
 };
 
 struct TMR_InitiateTransferModellingResponsibility : public TMR
 {
-    uint32 transferType; // TMR::TransferTypeEnum32
+    uint32_t transferType; // TMR::TransferTypeEnum32
     VariableArray< NETN_UUID > instances;
     VariableArray< UnicodeString > attributes;
     UnicodeString intiating;
-    uint32 capabilityType; // TMR::CapabilityTypeEnum32
+    uint32_t capabilityType; // TMR::CapabilityTypeEnum32
     VariableArray< AttributeValueStruct >attributeValues;
 };
 
 struct TMR_RequestTransferModellingResponsibility : public TMR
 {
-    uint32 transferType; // TMR::TransferTypeEnum32
+    uint32_t transferType; // TMR::TransferTypeEnum32
     VariableArray< NETN_UUID > instances;
     VariableArray< UnicodeString > attributes;
-    uint32 capabilityType; // TMR::CapabilityTypeEnum32
+    uint32_t capabilityType; // TMR::CapabilityTypeEnum32
     VariableArray< AttributeValueStruct > attributeValues;
 };
 

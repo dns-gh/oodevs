@@ -17,39 +17,39 @@ using namespace plugins::hla;
 BOOST_FIXTURE_TEST_CASE( aggregate_marking_serializes_in_ascii_on_first_byte, SerializationFixture )
 {
     const AggregateMarking marking( "name", 42 );
-    ::hla::Deserializer deserializer = Serialize( marking, 32 * sizeof( int8 ) );
-    const int8 asciiEncoding = 1;
-    BOOST_CHECK_EQUAL( asciiEncoding, Read< int8 >( deserializer ) );
+    ::hla::Deserializer deserializer = Serialize( marking, 32 * sizeof( int8_t ) );
+    const int8_t asciiEncoding = 1;
+    BOOST_CHECK_EQUAL( asciiEncoding, Read< int8_t >( deserializer ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( aggregate_marking_serializes_name_in_a_31_characters_buffer, SerializationFixture )
 {
     const AggregateMarking marking( "name", 42 );
-    ::hla::Deserializer deserializer = Serialize( marking, 32 * sizeof( int8 ) );
-    Read< int8 >( deserializer );
-    BOOST_CHECK_EQUAL( 'n', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( 'a', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( 'm', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( 'e', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( '4', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( '2', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL(  0 , Read< int8 >( deserializer ) );
+    ::hla::Deserializer deserializer = Serialize( marking, 32 * sizeof( int8_t ) );
+    Read< int8_t >( deserializer );
+    BOOST_CHECK_EQUAL( 'n', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( 'a', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( 'm', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( 'e', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( '4', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( '2', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL(  0 , Read< int8_t >( deserializer ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( aggregate_marking_truncates_name_over_31_characters_and_always_add_identifier, SerializationFixture )
 {
     const AggregateMarking marking( "big_name_too_long_for_a_small_buffer", 42 );
-    ::hla::Deserializer deserializer = Serialize( marking, 32 * sizeof( int8 ) );
+    ::hla::Deserializer deserializer = Serialize( marking, 32 * sizeof( int8_t ) );
     for( unsigned int i = 0; i < 30; ++i )
-        Read< int8 >( deserializer );
-    BOOST_CHECK_EQUAL( '4', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( '2', Read< int8 >( deserializer ) );
+        Read< int8_t >( deserializer );
+    BOOST_CHECK_EQUAL( '4', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( '2', Read< int8_t >( deserializer ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( aggregate_marking_deserializes_to_string, SerializationFixture )
 {
     const AggregateMarking serializedMarking( "name", 42 );
-    ::hla::Deserializer deserializer = Serialize( serializedMarking, 32 * sizeof( int8 ) );
+    ::hla::Deserializer deserializer = Serialize( serializedMarking, 32 * sizeof( int8_t ) );
     AggregateMarking deserializedMarking;
     deserializedMarking.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( "name42", deserializedMarking.str() );
@@ -58,7 +58,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_marking_deserializes_to_string, Serialization
 BOOST_FIXTURE_TEST_CASE( marking_deserializes_truncated_string, SerializationFixture )
 {
     const Marking serializedMarking( "big_name_too_long_for_a_small_buffer", 42 );
-    ::hla::Deserializer deserializer = Serialize( serializedMarking, 12 * sizeof( int8 ) );
+    ::hla::Deserializer deserializer = Serialize( serializedMarking, 12 * sizeof( int8_t ) );
     Marking deserializedMarking;
     deserializedMarking.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( "big_name_42", deserializedMarking.str() );
@@ -67,9 +67,9 @@ BOOST_FIXTURE_TEST_CASE( marking_deserializes_truncated_string, SerializationFix
 BOOST_FIXTURE_TEST_CASE( marking_truncates_name_over_11_characters, SerializationFixture )
 {
     const Marking marking( "big_name_too_long_for_a_small_buffer", 42 );
-    ::hla::Deserializer deserializer = Serialize( marking, 12 * sizeof( int8 ) );
+    ::hla::Deserializer deserializer = Serialize( marking, 12 * sizeof( int8_t ) );
     for( unsigned int i = 0; i < 10; ++i )
-        Read< int8 >( deserializer );
-    BOOST_CHECK_EQUAL( '4', Read< int8 >( deserializer ) );
-    BOOST_CHECK_EQUAL( '2', Read< int8 >( deserializer ) );
+        Read< int8_t >( deserializer );
+    BOOST_CHECK_EQUAL( '4', Read< int8_t >( deserializer ) );
+    BOOST_CHECK_EQUAL( '2', Read< int8_t >( deserializer ) );
 }

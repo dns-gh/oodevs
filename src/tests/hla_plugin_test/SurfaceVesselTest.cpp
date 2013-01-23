@@ -109,7 +109,7 @@ namespace
     template< typename T >
     bool CheckSerialization( ::hla::T_SerializerPtr serializer, const T& expected )
     {
-        std::vector< int8 > buffer( serializer->GetSize() );
+        std::vector< uint8_t > buffer( serializer->GetSize() );
         if( !buffer.empty() )
             serializer->CopyTo( &buffer[0] );
         ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
@@ -124,7 +124,7 @@ namespace
         BOOST_CHECK_EQUAL( size, serializer->GetSize() );
         return true;
     }
-    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16 ) + 6 * sizeof( int8 ) + 1 * sizeof( int16 ) + sizeof( int32 );
+    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16_t ) + 6 * sizeof( int8_t ) + 1 * sizeof( int16_t ) + sizeof( int32_t );
 }
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_has_entity_identifier, RegisteredFixture )

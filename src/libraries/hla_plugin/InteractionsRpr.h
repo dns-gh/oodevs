@@ -39,43 +39,43 @@ struct EventIdentifierStruct
         archive >> eventCount;
         issuingObjectIdentifier.Deserialize( archive );
     }
-    uint16 eventCount;
+    uint16_t eventCount;
     Omt13String issuingObjectIdentifier;
 };
 
 struct MunitionDetonation
 {
-    std::vector< int8 > articulatedPartData;
+    std::vector< int8_t > articulatedPartData;
     rpr::WorldLocation detonationLocation;
-    int8 detonationResultCode;
+    int8_t detonationResultCode;
     EventIdentifierStruct eventIdentifier;
     Omt13String firingObjectIdentifier;
     rpr::VelocityVector finalVelocityVector;
-    int16 fuseType;
+    int16_t fuseType;
     Omt13String munitionObjectIdentifier;
     rpr::EntityType munitionType;
-    uint16 quantityFired;
-    uint16 rateOfFire;
+    uint16_t quantityFired;
+    uint16_t rateOfFire;
     rpr::VelocityVector relativeDetonationLocation; // RelativePositionStruct
     Omt13String targetObjectIdentifier;
-    int16 warheadType;
+    int16_t warheadType;
 };
 
 struct WeaponFire
 {
     EventIdentifierStruct eventIdentifier;
     float fireControlSolutionRange;
-    uint32 fireMissionIndex;
+    uint32_t fireMissionIndex;
     rpr::WorldLocation firingLocation;
     Omt13String firingObjectIdentifier;
-    int16 fuseType;
+    int16_t fuseType;
     rpr::VelocityVector initialVelocityVector;
     Omt13String munitionObjectIdentifier;
     rpr::EntityType munitionType;
-    uint16 quantityFired;
-    uint16 rateOfFire;
+    uint16_t quantityFired;
+    uint16_t rateOfFire;
     Omt13String targetObjectIdentifier;
-    int16 warheadType;
+    int16_t warheadType;
 };
 
 struct Acknowledge
@@ -96,9 +96,9 @@ struct Acknowledge
 
     rpr::EntityIdentifier originatingEntity;
     rpr::EntityIdentifier receivingEntity;
-    uint32 requestIdentifier;
-    uint16 acknowledgeFlag;
-    uint16 responseFlag;
+    uint32_t requestIdentifier;
+    uint16_t acknowledgeFlag;
+    uint16_t responseFlag;
 };
 
 struct SupplyStruct
@@ -131,7 +131,7 @@ struct ServiceRequest
 
     Omt13String requestingObject;
     Omt13String servicingObject;
-    uint8 serviceType;
+    uint8_t serviceType;
     std::vector< SupplyStruct > suppliesData;
 };
 
@@ -162,7 +162,7 @@ struct RecordSet
         template< typename Archive >
         void Serialize( Archive& archive ) const
         {
-            int32 size = static_cast< int32 >( data.size() );
+            int32_t size = static_cast< int32_t >( data.size() );
             archive << numberOfBits
                     << size
                     << data;
@@ -170,19 +170,19 @@ struct RecordSet
         template< typename Archive >
         void Deserialize( Archive& archive )
         {
-            int32 size = 0;
+            int32_t size = 0;
             archive >> numberOfBits
                     >> size;
             data.resize( size );
             archive >> data;
         }
-        uint32 numberOfBits;
+        uint32_t numberOfBits;
         std::vector<char> data;
     };
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        int32 size = static_cast< int32 >( values.size() );
+        int32_t size = static_cast< int32_t >( values.size() );
         archive << recordSetIdentifier
                 << recordSetSerialNumber
                 << size
@@ -191,15 +191,15 @@ struct RecordSet
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        int32 size = 0;
+        int32_t size = 0;
         archive >> recordSetIdentifier
                 >> recordSetSerialNumber
                 >> size;
         values.resize( size );
         archive >> values;
     }
-    uint32 recordSetIdentifier;
-    uint32 recordSetSerialNumber;
+    uint32_t recordSetIdentifier;
+    uint32_t recordSetSerialNumber;
     std::vector<RecordStruct> values;
 };
 
@@ -208,14 +208,14 @@ struct RecordSetList
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        int32 size = static_cast< int32 >( values.size() );
+        int32_t size = static_cast< int32_t >( values.size() );
         archive << size
                 << values;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        int32 size = 0;
+        int32_t size = 0;
         archive >> size;
         values.resize( size );
         archive >> values;
@@ -239,8 +239,8 @@ struct TransferControl
 
     rpr::EntityIdentifier originatingEntity;
     rpr::EntityIdentifier receivingEntity;
-    uint32 requestIdentifier;
-    uint8 transferType;
+    uint32_t requestIdentifier;
+    uint8_t transferType;
     Omt13String transferEntity;
     RecordSetList recordSetData;
 };
@@ -969,11 +969,11 @@ struct VariableDatum
     };
 
 
-    VariableDatum( DatumIdentifierEnum32 datum = Unknown ) : datumID( static_cast<int32>( datum ) ) {}
+    VariableDatum( DatumIdentifierEnum32 datum = Unknown ) : datumID( static_cast<int32_t>( datum ) ) {}
     VariableDatum( const std::string& strVal, DatumIdentifierEnum32 datum = Other )
-        : datumID( static_cast<int32>( datum ) )
+        : datumID( static_cast<int32_t>( datum ) )
     {
-        value.resize( strVal.length() % sizeof( int64 ) == 0 ? strVal.length() : ( strVal.length() / sizeof( int64 ) + 1 ) * sizeof( int64 ), 0 );
+        value.resize( strVal.length() % sizeof( int64_t ) == 0 ? strVal.length() : ( strVal.length() / sizeof( int64_t ) + 1 ) * sizeof( int64_t ), 0 );
         std::copy( strVal.begin(), strVal.end(), value.begin() );
     }
     std::string ToString() const
@@ -984,10 +984,10 @@ struct VariableDatum
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        uint32 lengthInBits = static_cast< uint32 >( 8 * value.size() );
+        uint32_t lengthInBits = static_cast< uint32_t >( 8 * value.size() );
         /*
-        uint32 datumSize = value.size();
-        uint32 padding = 0;
+        uint32_t datumSize = value.size();
+        uint32_t padding = 0;
         archive << datumID
                 << lengthInBits
                 << datumSize
@@ -1000,10 +1000,10 @@ struct VariableDatum
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32 lengthInBits = 0;
+        uint32_t lengthInBits = 0;
         /*
-        uint32 datumSize = 0;
-        uint32 padding = 0;
+        uint32_t datumSize = 0;
+        uint32_t padding = 0;
         archive >> datumID
                 >> lengthInBits
                 >> datumSize
@@ -1011,12 +1011,12 @@ struct VariableDatum
                 */
         archive >> lengthInBits; // FIXME check GRIM
         lengthInBits /= 8 ; // length in bytes
-        value.resize( lengthInBits % sizeof( int64 ) == 0 ? lengthInBits : ( lengthInBits / sizeof( int64 ) + 1 ) * sizeof( int64 ), 0 );
+        value.resize( lengthInBits % sizeof( int64_t ) == 0 ? lengthInBits : ( lengthInBits / sizeof( int64_t ) + 1 ) * sizeof( int64_t ), 0 );
         for( std::vector< char >::iterator it=value.begin(); lengthInBits>0; ++it, --lengthInBits )
             archive >> *it;
     }
-    int32 datumID;
-    std::vector< char > value; // invariant : value.size()%sizeof(int64) == 0
+    int32_t datumID;
+    std::vector< char > value; // invariant : value.size()%sizeof(int64_t) == 0
 };
 
 struct VariableDatumSet
@@ -1024,8 +1024,8 @@ struct VariableDatumSet
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        uint32 nbDatums = static_cast< uint32 >( variableDatums.size() );
-        uint32 padding = 0;
+        uint32_t nbDatums = static_cast< uint32_t >( variableDatums.size() );
+        uint32_t padding = 0;
         archive << nbDatums
                 << padding;
         for( std::vector< VariableDatum >::const_iterator it=variableDatums.begin(); variableDatums.end()!=it; ++it )
@@ -1034,8 +1034,8 @@ struct VariableDatumSet
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        uint32 nbDatums = 0;
-        uint32 padding = 0;
+        uint32_t nbDatums = 0;
+        uint32_t padding = 0;
         archive >> nbDatums
                 >> padding;
         variableDatums.resize( nbDatums );

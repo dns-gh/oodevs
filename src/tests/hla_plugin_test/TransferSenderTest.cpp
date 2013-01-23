@@ -75,19 +75,19 @@ namespace
         {
         }
         template <typename T>
-        void FillParameter( std::list< std::vector<int8> >& bufVect, ::hla::Interaction_ABC::T_Parameters& p,
+        void FillParameter( std::list< std::vector<uint8_t> >& bufVect, ::hla::Interaction_ABC::T_Parameters& p,
                 const std::string& paramName, const T& value )
         {
             ::hla::Serializer ser;
             ser << value;
-            std::vector<int8> buff(ser.GetSize(), 0 );
+            std::vector<uint8_t> buff(ser.GetSize(), 0 );
             ser.CopyTo( &buff[0] );
             bufVect.push_back( buff );
             p.push_back( std::make_pair( ::hla::ParameterIdentifier( paramName ), new ::hla::Deserializer( &(bufVect.back()[0]), ser.GetSize() ) ) );
         }
-        void ReceiveAck( uint32 requestId, interactions::Acknowledge::ResponseFlagEnum16 resp )
+        void ReceiveAck( uint32_t requestId, interactions::Acknowledge::ResponseFlagEnum16 resp )
         {
-            std::list< std::vector<int8> > bufVect;
+            std::list< std::vector<uint8_t> > bufVect;
             ::hla::Interaction_ABC::T_Parameters params;
             FillParameter( bufVect, params, "ReceivingEntity", federateID );
             FillParameter( bufVect, params, "RequestIdentifier", requestId );
@@ -95,15 +95,15 @@ namespace
             ackInteraction->Create( params );
             ackInteraction->Flush();
         }
-        void ReceiveTransfer( uint32 requestId, interactions::TransferControl::TransferTypeEnum8 type, const std::string& agent )
+        void ReceiveTransfer( uint32_t requestId, interactions::TransferControl::TransferTypeEnum8 type, const std::string& agent )
         {
             static const rpr::EntityIdentifier destFederate( 0xFFFF, 0xFFFF, 0xFFFF );
-            std::list< std::vector<int8> > bufVect;
+            std::list< std::vector<uint8_t> > bufVect;
             ::hla::Interaction_ABC::T_Parameters params;
             FillParameter( bufVect, params, "OriginatingEntity", federateID );
             FillParameter( bufVect, params, "ReceivingEntity", destFederate );
             FillParameter( bufVect, params, "RequestIdentifier", requestId );
-            FillParameter( bufVect, params, "TransferType", static_cast<uint8>( type ) );
+            FillParameter( bufVect, params, "TransferType", static_cast<uint8_t>( type ) );
             FillParameter( bufVect, params, "TransferEntity", Omt13String( agent ) );
             transferInteraction->Create( params );
             transferInteraction->Flush();
@@ -112,38 +112,38 @@ namespace
         void CheckParameter( const ::hla::ParameterIdentifier& , ::hla::T_SerializerPtr serializer, const T& ref )
         {
             T value;
-            std::vector<int8> buff( serializer->GetSize(), 0 );
+            std::vector<uint8_t> buff( serializer->GetSize(), 0 );
             serializer->CopyTo( &buff[0] );
             ::hla::Deserializer deser( &buff[0], serializer->GetSize() );
             deser >> value;
             BOOST_CHECK( value == ref );
         }
-        void CheckTransfer( const std::string& agentID, TransferSender_ABC::TransferType type, uint32 requestId )
+        void CheckTransfer( const std::string& agentID, TransferSender_ABC::TransferType type, uint32_t requestId )
         {
             mock::sequence s;
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "OriginatingEntity" ), mock::any ) ; 
                 //calls( boost::bind( &RprSenderFixture::CheckParameter<rpr::EntityIdentifier>, this, _1, _2, federateID ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ReceivingEntity" ), mock::any );        
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RequestIdentifier" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint32>, this, _1, _2, requestId ) );
+                calls( boost::bind( &RprSenderFixture::CheckParameter<uint32_t>, this, _1, _2, requestId ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransferType" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint8>, this, _1, _2, 
-                    static_cast<uint8>(type == TransferSender_ABC::E_EntityPull ? interactions::TransferControl::E_EntityPull : interactions::TransferControl::E_EntityPush ) ) );
+                calls( boost::bind( &RprSenderFixture::CheckParameter<uint8_t>, this, _1, _2, 
+                    static_cast<uint8_t>(type == TransferSender_ABC::E_EntityPull ? interactions::TransferControl::E_EntityPull : interactions::TransferControl::E_EntityPush ) ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransferEntity" ), mock::any ).
                 calls( boost::bind( &RprSenderFixture::CheckParameter<Omt13String>, this, _1, _2, Omt13String( agentID ) ) );
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RecordSetData" ), mock::any );
             MOCK_EXPECT( transferHandler->End ).once();
         }
-        void CheckAck( interactions::Acknowledge::ResponseFlagEnum16 resp, uint32 requestId )
+        void CheckAck( interactions::Acknowledge::ResponseFlagEnum16 resp, uint32_t requestId )
         {
             mock::sequence s;
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "OriginatingEntity" ), mock::any );
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ReceivingEntity" ), mock::any );        
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RequestIdentifier" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint32>, this, _1, _2, requestId ) );
+                calls( boost::bind( &RprSenderFixture::CheckParameter<uint32_t>, this, _1, _2, requestId ) );
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "AcknowledgeFlag" ), mock::any );
             MOCK_EXPECT( ackHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ResponseFlag" ), mock::any ).
-                calls( boost::bind( &RprSenderFixture::CheckParameter<uint16>, this, _1, _2, static_cast<uint16>( resp ) ) );;
+                calls( boost::bind( &RprSenderFixture::CheckParameter<uint16_t>, this, _1, _2, static_cast<uint16_t>( resp ) ) );;
             MOCK_EXPECT( ackHandler->End ).once();
         }
         typedef T SenderType;        
@@ -349,12 +349,12 @@ namespace
         }
         
         template <typename T>
-        void FillParameter( std::list< std::vector<int8> >& bufVect, ::hla::Interaction_ABC::T_Parameters& p,
+        void FillParameter( std::list< std::vector<uint8_t> >& bufVect, ::hla::Interaction_ABC::T_Parameters& p,
                 const std::string& paramName, const T& value )
         {
             ::hla::Serializer ser;
             ser << value;
-            std::vector<int8> buff(ser.GetSize(), 0 );
+            std::vector<uint8_t> buff(ser.GetSize(), 0 );
             ser.CopyTo( &buff[0] );
             bufVect.push_back( buff );
             p.push_back( std::make_pair( ::hla::ParameterIdentifier( paramName ), new ::hla::Deserializer( &(bufVect.back()[0]), ser.GetSize() ) ) );
@@ -363,13 +363,13 @@ namespace
         void CheckParameter( const ::hla::ParameterIdentifier& , ::hla::T_SerializerPtr serializer, const T& ref )
         {
             T value;
-            std::vector<int8> buff( serializer->GetSize(), 0 );
+            std::vector<uint8_t> buff( serializer->GetSize(), 0 );
             serializer->CopyTo( &buff[0] );
             ::hla::Deserializer deser( &buff[0], serializer->GetSize() );
             deser >> value;
             BOOST_CHECK( value == ref );
         }
-        void CheckTransfer( const NETN_UUID& uniqueId, TransferSender_ABC::TransferType type, uint32 requestId )
+        void CheckTransfer( const NETN_UUID& uniqueId, TransferSender_ABC::TransferType type, uint32_t requestId )
         {
             interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
             VariableArray< NETN_UUID > instances; instances.list.push_back( uniqueId );
@@ -382,31 +382,31 @@ namespace
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ResponseFederate" ), mock::any ).
                 calls( boost::bind( &NetnTransferFixture::CheckParameter< UnicodeString >, this, _1, _2, UnicodeString( "" ) ) );
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransferType" ), mock::any ).
-                calls( boost::bind( &NetnTransferFixture::CheckParameter< uint32 >, this, _1, _2, 
-                                    type == TransferSender_ABC::E_EntityPull ? static_cast< uint32 >( interactions::TMR::Acquire ) : static_cast< uint32 >( interactions::TMR::Divest ) ) );
+                calls( boost::bind( &NetnTransferFixture::CheckParameter< uint32_t >, this, _1, _2,
+                                    type == TransferSender_ABC::E_EntityPull ? static_cast< uint32_t >( interactions::TMR::Acquire ) : static_cast< uint32_t >( interactions::TMR::Divest ) ) );
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Instances" ), mock::any ).
                 calls( boost::bind( &NetnTransferFixture::CheckParameter< VariableArray< NETN_UUID > >, this, _1, _2, instances ) ); 
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Attributes" ), mock::any );
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "CapabilityType" ), mock::any ).
-                calls( boost::bind( &NetnTransferFixture::CheckParameter< uint32 >, this, _1, _2, static_cast< uint32 >( interactions::TMR::TotalTransfer ) ) ); 
+                calls( boost::bind( &NetnTransferFixture::CheckParameter< uint32_t >, this, _1, _2, static_cast< uint32_t >( interactions::TMR::TotalTransfer ) ) );
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "InstanceAttributeValues" ), mock::any );
             MOCK_EXPECT( requestHandler->End ).once();
         }
-        void ReceiveAnswer( uint32 requestId, bool ok, interactions::TMR::NoofferReasonEnum32 reason )
+        void ReceiveAnswer( uint32_t requestId, bool ok, interactions::TMR::NoofferReasonEnum32 reason )
         {
             interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
 
-            std::list< std::vector<int8> > bufVect;
+            std::list< std::vector<uint8_t> > bufVect;
             ::hla::Interaction_ABC::T_Parameters params;
             FillParameter( bufVect, params, "TransactionID", trId );
             FillParameter( bufVect, params, "RequestFederate", UnicodeString( "federateName" ) );
             FillParameter( bufVect, params, "ResponseFederate", UnicodeString( "federateName2" ) );
             FillParameter( bufVect, params, "isOffering", ok );
-            FillParameter( bufVect, params, "Reason", static_cast< uint32 >( reason ) );
+            FillParameter( bufVect, params, "Reason", static_cast< uint32_t >( reason ) );
             offerInteraction->Create( params );
             offerInteraction->Flush();
         }
-        void ReceiveRequest( uint32 requestId, interactions::TMR::TransferTypeEnum32 type, const std::string& agent )
+        void ReceiveRequest( uint32_t requestId, interactions::TMR::TransferTypeEnum32 type, const std::string& agent )
         {
             static const rpr::EntityIdentifier destFederate( 0xFFFF, 0xFFFF, 0xFFFF );
             
@@ -415,20 +415,20 @@ namespace
             VariableArray< UnicodeString > attributes;
             VariableArray< interactions::AttributeValueStruct > attributeValues;
 
-            std::list< std::vector<int8> > bufVect;
+            std::list< std::vector<uint8_t> > bufVect;
             ::hla::Interaction_ABC::T_Parameters params;
             FillParameter( bufVect, params, "TransactionID", trId );
             FillParameter( bufVect, params, "RequestFederate", UnicodeString( "federateName2" ) );
             FillParameter( bufVect, params, "ResponseFederate", UnicodeString( "federateName" ) );
-            FillParameter( bufVect, params, "TransferType", static_cast< uint32 >( type ) );
+            FillParameter( bufVect, params, "TransferType", static_cast< uint32_t >( type ) );
             FillParameter( bufVect, params, "Instances", instances );
             FillParameter( bufVect, params, "Attributes", attributes );
-            FillParameter( bufVect, params, "CapabilityType", static_cast< uint32 >( interactions::TMR::TotalTransfer ) );
+            FillParameter( bufVect, params, "CapabilityType", static_cast< uint32_t >( interactions::TMR::TotalTransfer ) );
             FillParameter( bufVect, params, "InstanceAttributeValues", attributeValues );
             requestInteraction->Create( params );
             requestInteraction->Flush();
         }
-        void CheckOffer( uint32 requestId, bool isOffering )
+        void CheckOffer( uint32_t requestId, bool isOffering )
         {
             mock::sequence s;
             interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;

@@ -77,7 +77,7 @@ void NullTransferSender::Receive( interactions::TransferControl& interaction )
         reply.receivingEntity = interaction.originatingEntity;
         reply.requestIdentifier = interaction.requestIdentifier;
         reply.acknowledgeFlag = 5;
-        reply.responseFlag =  static_cast<uint16>( resp ?
+        reply.responseFlag =  static_cast< uint16_t >( resp ?
                         interactions::Acknowledge::E_AbleToComply :
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );

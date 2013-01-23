@@ -22,7 +22,7 @@ using namespace plugins::hla;
 
 namespace
 {
-    typedef std::vector< int8 > T_Buffer;
+    typedef std::vector< uint8_t > T_Buffer;
     class Fixture
     {
     public:
@@ -55,7 +55,7 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_aggregate_deserialize_also_rpr_remote_aggre
 {
     mock::sequence s;
     MOCK_EXPECT( rprRemote->Deserialize ).once().in( s );
-    const int8 buffer = 0;
+    const uint8_t buffer = 0;
     ::hla::Deserializer deserializer( &buffer );
     netnRemote.Deserialize( "attribute", deserializer );
 }
