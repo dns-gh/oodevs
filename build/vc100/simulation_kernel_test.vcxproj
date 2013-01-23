@@ -222,7 +222,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubPHY_RoleInterface_Dotation.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubTER_World.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestIndirectFireModifier.h" />
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPhDirectFire.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\DEC_GeometryFunctionsTest.cpp" />

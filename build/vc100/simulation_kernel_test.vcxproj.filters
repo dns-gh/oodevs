@@ -214,9 +214,6 @@
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestIndirectFireModifier.h">
       <Filter>Source Files\Firing</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPhDirectFire.h">
-      <Filter>Source Files\Firing</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectTypeResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>

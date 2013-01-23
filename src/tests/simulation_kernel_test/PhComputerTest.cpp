@@ -32,7 +32,6 @@
 #include "MockPHY_RoleInterface_ActiveProtection.h"
 #include "MockPHY_RoleInterface_HumanFactors.h"
 #include "MockRoleLocation.h"
-#include "TestPhDirectFire.h"
 #include "StubTER_World.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
