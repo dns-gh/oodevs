@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LAUNCHER_SWORDFACADE_H__
-#define __LAUNCHER_SWORDFACADE_H__
+#ifndef LAUNCHER_SWORD_FACADE_H
+#define LAUNCHER_SWORD_FACADE_H
 
 #include "MessageHandler_ABC.h"
 #include "client_proxy/SwordConnectionHandler_ABC.h"
@@ -88,7 +88,8 @@ public:
     void Send( const sword::ClientToAuthentication& message ) const;
     bool IsRunning() const;
     void Update() const;
-    const frontend::ProcessWrapper* GetProcess();
+
+    boost::shared_ptr< frontend::ProcessWrapper > GetProcess();
     //@}
 
 private:
@@ -120,4 +121,4 @@ private:
 
 }
 
-#endif // __LAUNCHER_SWORDFACADE_H__
+#endif // LAUNCHER_SWORD_FACADE_H

@@ -50,7 +50,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 {
     if( ! config.GetTestMode() )
     {
-        boost::shared_ptr<frontend::ProcessWrapper> wrapper( new frontend::ProcessWrapper( observer, command ) );
+        boost::shared_ptr< frontend::ProcessWrapper > wrapper( new frontend::ProcessWrapper( observer, command ) );
         wrapper->Start();
         process_ = wrapper;
     }
@@ -68,16 +68,16 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 // -----------------------------------------------------------------------------
 void SwordFacade::Stop()
 {
-    if( !process_.expired() )
+    boost::shared_ptr< frontend::ProcessWrapper > process = process_.lock();
+    if( ! process )
+        return;
+    if( IsConnected() && client_ )
     {
-        if( IsConnected() && client_.get() )
-        {
-            client_->Disconnect();
-            client_->UnregisterMessageHandler( this );
-            client_.reset();
-        }
-        process_.lock()->Stop();
+        client_->Disconnect();
+        client_->UnregisterMessageHandler( this );
+        client_.reset();
     }
+    process->Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ void SwordFacade::AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC 
 // -----------------------------------------------------------------------------
 void SwordFacade::Send( const sword::ClientToSim& message ) const
 {
-    if( client_.get() && IsConnected() )
+    if( client_ && IsConnected() )
         client_->Send( message );
 }
 
@@ -167,7 +167,7 @@ void SwordFacade::Send( const sword::ClientToSim& message ) const
 // -----------------------------------------------------------------------------
 void SwordFacade::Send( const sword::ClientToAuthentication& message ) const
 {
-    if( client_.get() && IsConnected() )
+    if( client_ && IsConnected() )
         client_->Send( message );
 }
 
@@ -240,7 +240,7 @@ bool SwordFacade::IsRunning() const
 // -----------------------------------------------------------------------------
 void SwordFacade::Update() const
 {
-    if( client_.get() )
+    if( client_ )
         client_->Update();
 }
 
@@ -248,7 +248,7 @@ void SwordFacade::Update() const
 // Name: SwordFacade::GetProcess
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
-const frontend::ProcessWrapper* SwordFacade::GetProcess()
+boost::shared_ptr< frontend::ProcessWrapper > SwordFacade::GetProcess()
 {
-    return process_.lock().get();
+    return process_.lock();
 }

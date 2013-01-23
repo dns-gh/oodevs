@@ -57,20 +57,16 @@ ProcessService::~ProcessService()
 {
     while( ! processes_.empty() )
     {
-        boost::shared_ptr< SwordFacade > process;
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); )
         {
             if( it->second->IsRunning() )
             {
-                process = it->second;
+                it->second->Stop();
                 break;
             }
-            else
-                it = processes_.erase( it );
+            it = processes_.erase( it );
         }
-        if( process.get() )
-            process->Stop();
     }
 }
 
