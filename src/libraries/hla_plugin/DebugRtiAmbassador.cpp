@@ -127,11 +127,11 @@ bool DebugRtiAmbassador::Destroy( const std::string& federation )
 // Name: DebugRtiAmbassador::Join
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-bool DebugRtiAmbassador::Join( const std::string& federate, const std::string& federation )
+bool DebugRtiAmbassador::Join( const std::string& federate, const std::string& federateType, const std::string& federation )
 {
     Flush();
     logger_.LogInfo( "-> Join federate " + federate + " federation " + federation );
-    return ambassador_->Join( federate, federation );
+    return ambassador_->Join( federate, federateType, federation );
 }
 
 // -----------------------------------------------------------------------------

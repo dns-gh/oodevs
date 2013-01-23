@@ -53,7 +53,7 @@ public:
     virtual bool Create( const std::string& federation, const T_FomFiles& fomFiles );
     virtual bool Destroy( const std::string& federation );
 
-    virtual bool Join  ( const std::string& federate, const std::string& federation );
+    virtual bool Join  ( const std::string& federate, const std::string& federateType, const std::string& federation );
     virtual void Resign();
     //@}
 
