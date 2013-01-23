@@ -13,6 +13,7 @@
 #define __PHY_UnitType_h_
 
 #include "Dotations/PHY_DotationCapacities.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 
 namespace xml
 {
@@ -25,8 +26,6 @@ class PHY_RolePion_Composantes;
 class PHY_HumanRank;
 class PHY_NbcSuit;
 class PHY_DotationLogisticType;
-enum E_PionEfficiency;
-enum E_CrossingHeight;
 
 // =============================================================================
 // @class  PHY_UnitType
@@ -38,7 +37,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_HumanRank*, unsigned int > T_CommanderRepartitionMap;
-    typedef T_CommanderRepartitionMap::const_iterator    CIT_CommanderRepartitionMap;
     //@}
 
 public:
@@ -85,12 +83,8 @@ private:
         unsigned int nNbrHumanInCrew_;
     };
     typedef std::map< const PHY_ComposanteTypePion*, sComposanteTypeData > T_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                          CIT_ComposanteTypeMap;
-
     typedef std::vector< unsigned int > T_PostureTimesVector;
-
     typedef std::map< const PHY_DotationLogisticType*, double > T_StockLogisticThresholdRatios;
-    typedef T_StockLogisticThresholdRatios::const_iterator      CIT_StockLogisticThresholdRatios;
     //@}
 
 private:

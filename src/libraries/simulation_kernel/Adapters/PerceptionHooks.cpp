@@ -277,7 +277,7 @@ namespace
     }
     DEFINE_HOOK( GetPostureIdentifier, 2, bool, ( const char* type, size_t* identifier ) )
     {
-        PHY_Posture::CIT_PostureMap it = PHY_Posture::GetPostures().find( type );
+        auto it = PHY_Posture::GetPostures().find( type );
         if( it == PHY_Posture::GetPostures().end() )
             return false;
         *identifier = it->second->GetID();
@@ -285,7 +285,7 @@ namespace
     }
     DEFINE_HOOK( PostureCanModifyDetection, 1, bool, ( const char* type ) )
     {
-        PHY_Posture::CIT_PostureMap it = PHY_Posture::GetPostures().find( type );
+        auto it = PHY_Posture::GetPostures().find( type );
         if( it != PHY_Posture::GetPostures().end() )
             return it->second->CanModifyDetection();
         return false;

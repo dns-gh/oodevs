@@ -58,7 +58,7 @@ void PHY_SensorTypeObjectData::ReadPosture( xml::xistream& xis, const PHY_Postur
     std::string postureType;
     xis >> xml::attribute( "type", postureType );
 
-    PHY_Posture::CIT_PostureMap it = container.find( postureType );
+    auto it = container.find( postureType );
     if( it != container.end() )
     {
         if( !it->second->CanModifyDetection() )

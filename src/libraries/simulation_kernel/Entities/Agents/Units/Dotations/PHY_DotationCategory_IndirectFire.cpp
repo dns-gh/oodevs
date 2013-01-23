@@ -79,7 +79,7 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
 void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
 {
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    PHY_Posture::CIT_PostureMap it = postures.find( xis.attribute< std::string >( "target-posture" ) );
+    auto it = postures.find( xis.attribute< std::string >( "target-posture" ) );
     const PHY_Posture& posture = *it->second;
     assert( phs_.size() > posture.GetID() );
     phs_[ posture.GetID() ] = xis.attribute< double >( "value" );

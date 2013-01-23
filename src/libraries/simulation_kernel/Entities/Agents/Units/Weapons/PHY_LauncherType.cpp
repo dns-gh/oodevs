@@ -121,7 +121,7 @@ void PHY_LauncherType::ReadDirect( xml::xistream& xis )
     std::string postureType;
 
     xis >> xml::attribute( "posture", postureType );
-    PHY_Posture::CIT_PostureMap it = postures.find( postureType );
+    auto it = postures.find( postureType );
     const PHY_Posture& postureSource = *it->second;
     if( !postureSource.CanModifyPH() )
         return;
@@ -138,7 +138,7 @@ void PHY_LauncherType::ReadModifier( xml::xistream& xis, const PHY_Posture& post
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
     std::string targetType;
     xis >> xml::attribute( "target-posture", targetType );
-    PHY_Posture::CIT_PostureMap it = postures.find( targetType );
+    auto it = postures.find( targetType );
     const PHY_Posture& postureTarget = *it->second;
     if( !postureTarget.CanModifyPH() )
         return;

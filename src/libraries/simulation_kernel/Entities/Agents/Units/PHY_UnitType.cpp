@@ -262,7 +262,7 @@ void PHY_UnitType::InitializePostureTimes( xml::xistream& xis )
 void PHY_UnitType::ReadPosture( xml::xistream& xis )
 {
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    PHY_Posture::CIT_PostureMap it = postures.find( xis.attribute< std::string >( "name" ) );
+    auto it = postures.find( xis.attribute< std::string >( "name" ) );
     const PHY_Posture& posture = *it->second;
     assert( postureTimes_.size() > posture.GetID() );
     double rTime;
@@ -336,7 +336,7 @@ double PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
 // -----------------------------------------------------------------------------
 double PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticType& type ) const
 {
-    CIT_StockLogisticThresholdRatios it = stockLogisticThresholdRatios_.find( &type );
+    auto it = stockLogisticThresholdRatios_.find( &type );
     return it == stockLogisticThresholdRatios_.end() ? 0.1 : it->second;
 }
 
@@ -364,7 +364,7 @@ double PHY_UnitType::GetDefaultLogisticThreshold( const PHY_DotationCategory& ca
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InstanciateComposantes( PHY_RolePion_Composantes& role ) const
 {
-    for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
+    for( auto itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
     {
         const PHY_ComposanteTypePion& compType = *itComposanteType->first;
         const sComposanteTypeData& compData = itComposanteType->second;

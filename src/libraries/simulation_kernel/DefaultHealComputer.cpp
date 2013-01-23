@@ -50,7 +50,7 @@ void DefaultHealComputer::Heal( const PHY_HumanRank& rank, unsigned int nNbrToCh
 {
     PHY_ComposantePion::T_ComposantePionVector components = components_;
     MIL_Random::random_shuffle( components, MIL_Random::eWounds );
-    PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = components.begin();
+    auto itCurrentComp = components.begin();
     while( nNbrToChange && itCurrentComp != components.end() )
     {
         unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
@@ -75,7 +75,7 @@ void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToC
     PHY_ComposantePion::T_ComposantePionVector composantes = components_;
     MIL_Random::random_shuffle( composantes, MIL_Random::eWounds );
 
-    PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = composantes.begin();
+    auto itCurrentComp = composantes.begin();
     while( nNbrToChange && itCurrentComp != composantes.end() )
     {
         unsigned int nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
@@ -97,7 +97,7 @@ void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToC
 // -----------------------------------------------------------------------------
 void DefaultHealComputer::HealAll() const
 {
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
+    for( auto it = components_.begin(); it != components_.end(); ++it )
         (**it).HealAllHumans();
 }
 
@@ -107,7 +107,7 @@ void DefaultHealComputer::HealAll() const
 // -----------------------------------------------------------------------------
 void DefaultHealComputer::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
+    for( auto it = components_.begin(); it != components_.end(); ++it )
         (**it).EvacuateWoundedHumans( destinationTC2 );
 }
 
@@ -117,7 +117,7 @@ void DefaultHealComputer::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
 // -----------------------------------------------------------------------------
 bool DefaultHealComputer::HasWoundedHumansToEvacuate() const
 {
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
+    for( auto it = components_.begin(); it != components_.end(); ++it )
         if( (**it).HasWoundedHumansToEvacuate() )
             return true;
     return false;

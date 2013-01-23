@@ -117,7 +117,7 @@ bool PHY_Posture::IsInstantaneous() const
 // -----------------------------------------------------------------------------
 const PHY_Posture* PHY_Posture::FindPosture( const std::string& strName )
 {
-    CIT_PostureMap it = postures_.find( strName );
+    auto it = postures_.find( strName );
     return it == postures_.end() ? 0: it->second;
 }
 
@@ -127,7 +127,7 @@ const PHY_Posture* PHY_Posture::FindPosture( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_Posture* PHY_Posture::FindPosture( unsigned int nID )
 {
-    CIT_PostureMap it = std::find_if( postures_.begin(), postures_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Posture::GetID ), std::select2nd< T_PostureMap::value_type >() ) ) );
+    auto it = std::find_if( postures_.begin(), postures_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Posture::GetID ), std::select2nd< T_PostureMap::value_type >() ) ) );
     return it == postures_.end() ? 0: it->second;
 }
 

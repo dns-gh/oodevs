@@ -83,7 +83,7 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public WoundEffectsHandler_ABC
 {
 public:
-    explicit PHY_RolePion_Composantes();
+             PHY_RolePion_Composantes();
     explicit PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialize = true );
     virtual ~PHY_RolePion_Composantes();
 

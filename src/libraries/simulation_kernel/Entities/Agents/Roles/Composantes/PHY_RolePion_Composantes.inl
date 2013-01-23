@@ -18,7 +18,7 @@
 template< typename T > 
 inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 {
-    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         ( **it ).ApplyOnWeapons( t );
 }
 
@@ -30,7 +30,7 @@ template < typename T >
 unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
-    for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
+    for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeLent() && funcPredicate( &composante ) )
@@ -60,7 +60,7 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& b
             return nNbrDone;
         PHY_ComposantePion* pComposante = 0;
         const PHY_ComposantePion::T_ComposantePionVector& lentComps = it->second;
-        for( PHY_ComposantePion::CIT_ComposantePionVector it = lentComps.begin(); it != lentComps.end(); ++it )
+        for( auto it = lentComps.begin(); it != lentComps.end(); ++it )
         {
             PHY_ComposantePion* composante = *it;
             if( funcPredicate( composante ) )
@@ -85,7 +85,7 @@ unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_A
     unsigned int nTime = 0;
     const MT_Vector2D& srcPos = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& destPos = borrower.GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
-    for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
+    for( auto it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeLent() && funcPredicate( &composante ) )

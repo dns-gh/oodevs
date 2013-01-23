@@ -32,7 +32,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_Posture* > T_PostureMap;
-    typedef T_PostureMap::const_iterator              CIT_PostureMap;
     //@}
 
 public:
@@ -60,11 +59,11 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                                  GetName           () const;
-          unsigned int                                  GetID             () const;
-          sword::UnitAttributes_Posture    GetAsnID          () const;
-    const PHY_Posture*                                  GetNextAutoPosture() const;
-    const PHY_ConsumptionType&                          GetConsumptionMode() const;
+    const std::string&                  GetName           () const;
+          unsigned int                  GetID             () const;
+          sword::UnitAttributes_Posture GetAsnID          () const;
+    const PHY_Posture*                  GetNextAutoPosture() const;
+    const PHY_ConsumptionType&          GetConsumptionMode() const;
 
     bool CanModifyPH       () const;
     bool CanModifyDetection() const;

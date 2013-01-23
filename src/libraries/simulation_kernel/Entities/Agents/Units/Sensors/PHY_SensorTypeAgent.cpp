@@ -85,7 +85,7 @@ namespace
             std::string containerType;
             xis >> xml::attribute( "type", containerType );
 
-            PHY_Posture::CIT_PostureMap it = container_.find( containerType );
+            auto it = container_.find( containerType );
             if( it != container_.end() )
             {
                 if( !it->second->CanModifyDetection() )
