@@ -11,6 +11,7 @@
 #include "simulation_kernel/DefaultPostureComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PostureTime_ABC.h"
+#include "MIL_Random_ABC.h"
 #include "MIL_Random.h"
 
 using namespace posture;
@@ -19,10 +20,11 @@ using namespace posture;
 // Name: DefaultPostureComputer::DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultPostureComputer::DefaultPostureComputer( const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
+DefaultPostureComputer::DefaultPostureComputer( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                                 bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
                                                 double rTimingFactor )
-    : time_                 ( time )
+    : random_               ( random )
+    , time_                 ( time )
     , posture_              ( posture )
     , bIsDead_              ( bIsDead )
     , bDiscreteModeEnabled_ ( bDiscreteModeEnabled )
@@ -118,7 +120,7 @@ void DefaultPostureComputer::Update()
     }
 
     // Mode furtif
-    results_.bIsStealth_ = !( MIL_Random::rand_oi( 0., 1., MIL_Random::ePerception ) <= rStealthFactor_ );
+    results_.bIsStealth_ = random_.rand_oi( 0., 1., MIL_Random::ePerception ) > rStealthFactor_;
 
     if( bForceMovement_ )
     {

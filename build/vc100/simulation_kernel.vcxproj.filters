@@ -5432,5 +5432,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Postures\PostureTime_ABC.h">
       <Filter>Source Files\Entities\Agents\Units\Postures</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random_ABC.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

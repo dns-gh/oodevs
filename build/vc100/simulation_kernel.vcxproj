@@ -972,6 +972,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_LogisticVisitors.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.h" />

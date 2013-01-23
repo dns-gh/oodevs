@@ -12,6 +12,8 @@
 
 #include "simulation_kernel/PostureComputer_ABC.h"
 
+class MIL_Random_ABC;
+
 namespace posture
 {
     class PostureTime_ABC;
@@ -27,7 +29,7 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer( const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
+             DefaultPostureComputer( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                      bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
                                      double rTimingFactor );
     virtual ~DefaultPostureComputer();
@@ -53,6 +55,7 @@ private:
 private:
     //! @name Attribute
     //@{
+    const MIL_Random_ABC& random_;
     const PostureTime_ABC& time_;
     const PHY_Posture& posture_;
     const bool bIsDead_;

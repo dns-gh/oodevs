@@ -22,6 +22,8 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
+#include "MIL_Random_ABC.h"
+#include "MIL_Random.h"
 
 using namespace posture;
 
@@ -146,6 +148,17 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
     bPercentageHasChanged_ = true;
 }
 
+namespace
+{
+    struct Random : public MIL_Random_ABC
+    {
+        virtual double rand_oi( double min, double max, int ctxt ) const
+        {
+            return MIL_Random::rand_oi( min, max, ctxt );
+        }
+    } const random;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Update
 // Created: NLD 2004-09-07
@@ -153,7 +166,7 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     Uninstall();
-    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( owner_.GetType().GetUnitType(), *pCurrentPosture_, bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_, rStealthFactor_, rTimingFactor_ ) );
+    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( random, owner_.GetType().GetUnitType(), *pCurrentPosture_, bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_, rStealthFactor_, rTimingFactor_ ) );
     owner_.Execute( *computer );
     PostureComputer_ABC::Results& result = computer->Result();
     if( result.newPosture_ )
