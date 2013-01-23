@@ -173,6 +173,7 @@ void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireRe
         PullHumans( nHit );
         fireResult.GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit );
     }
+    fireResult.Hit( nHit );
 }
 
 // -----------------------------------------------------------------------------

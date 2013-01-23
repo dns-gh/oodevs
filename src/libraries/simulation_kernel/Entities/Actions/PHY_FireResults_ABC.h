@@ -46,11 +46,8 @@ public:
     void IncRef();
     void DecRef();
     //@}
-
-    //! @name Refs
-    //@{
-    virtual void Hit();
-    //@}
+    virtual void Hit( unsigned int hits );
+    virtual const std::string& GetSourceName() const;
 
 protected:
     //! @name Types
@@ -63,7 +60,7 @@ protected:
     //@}
 
 protected:
-    //! @name Accessors $$$ A VIRER
+    //! @name Accessors
     //@{
     const T_PopulationDamagesMap& GetPopulationDamages() const;
     //@}

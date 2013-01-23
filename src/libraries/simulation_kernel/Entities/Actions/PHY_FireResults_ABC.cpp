@@ -162,8 +162,17 @@ const PHY_FireResults_ABC::T_PopulationDamagesMap& PHY_FireResults_ABC::GetPopul
 // Name: PHY_FireResults_ABC::GetPopulationDamages
 // Created: NLD 2006-04-26
 // -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::Hit()
+void PHY_FireResults_ABC::Hit( unsigned int )
 {
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_FireResults_ABC::GetSourceName
+// Created: LDC 2013-01-23
+// -----------------------------------------------------------------------------
+const std::string& PHY_FireResults_ABC::GetSourceName() const
+{
+    static const std::string empty;
+    return empty;
+}

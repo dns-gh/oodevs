@@ -69,11 +69,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    bool HasInteractionCapabilities( const MIL_Object_ABC& object ) const;
-    //@}
-
     //! @name types
     //@{
     struct PopulationAttrition
