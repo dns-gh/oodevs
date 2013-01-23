@@ -24,7 +24,7 @@
 #include "DEC_KS_KnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/MIL_Army.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>

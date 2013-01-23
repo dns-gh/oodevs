@@ -10,7 +10,7 @@
 #ifndef __DEC_ResourceNetworkFunctions_h_
 #define __DEC_ResourceNetworkFunctions_h_
 
-#include "knowledge/DEC_Knowledge_Def.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;

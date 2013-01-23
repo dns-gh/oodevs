@@ -10,7 +10,7 @@
 #ifndef __weather_MeteoLocal_h_
 #define __weather_MeteoLocal_h_
 
-#include "Meteo/Meteo.h"
+#include "Meteo.h"
 #include <boost/date_time.hpp>
 
 namespace sword

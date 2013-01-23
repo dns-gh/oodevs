@@ -15,7 +15,7 @@
 #include "MIL_IntoxicationEffect.h"
 #include "MIL_ContaminationEffect.h"
 #include "MIL_DecontaminationEffect.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

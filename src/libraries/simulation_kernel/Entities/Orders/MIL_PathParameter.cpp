@@ -12,7 +12,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PathParameter )

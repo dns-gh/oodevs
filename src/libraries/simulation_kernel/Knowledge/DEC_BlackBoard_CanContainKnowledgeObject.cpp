@@ -16,7 +16,7 @@
 #include "DEC_Knowledge_Object.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "MIL_AgentServer.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"

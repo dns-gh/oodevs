@@ -17,7 +17,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 MIL_IDManager MIL_Effect_Fire_ABC::idManager_;
 

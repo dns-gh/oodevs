@@ -15,7 +15,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Line.h"
 #include "MIL.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 
 unsigned int MIL_LimaOrder::nNextID_ = 0;

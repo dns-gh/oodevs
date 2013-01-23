@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
-#include "knowledge/DEC_Knowledge_Def.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;

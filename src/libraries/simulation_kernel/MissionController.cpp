@@ -13,7 +13,7 @@
 #include "PopulationFactory_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MissionController )

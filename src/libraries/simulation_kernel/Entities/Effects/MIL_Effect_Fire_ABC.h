@@ -14,7 +14,7 @@
 
 #include "MIL_Effect_ABC.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace sword
 {

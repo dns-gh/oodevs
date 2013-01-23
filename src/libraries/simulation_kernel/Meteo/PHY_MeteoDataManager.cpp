@@ -10,17 +10,17 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
 #include "MIL_AgentServer.h"
-#include "Meteo/PHY_Lighting.h"
 #include "Meteo/PHY_LocalMeteo.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Network/NET_Publisher_ABC.h"
-
 #include "Tools/MIL_Config.h"
+
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
+#include "meteo/PHY_Lighting.h"
 
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>

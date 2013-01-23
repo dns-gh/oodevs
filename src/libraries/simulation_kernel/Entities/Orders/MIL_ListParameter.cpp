@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ListParameter.h"
 #include "MIL_MissionParameterFactory.h"
-#include "knowledge/DEC_KnowledgeResolver_ABC.h"
-#include "Checkpoints/SerializationTools.h"
+#include "Knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "CheckPoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 #include "MIL.h"
 

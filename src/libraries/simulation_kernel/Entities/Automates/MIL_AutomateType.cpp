@@ -20,7 +20,7 @@
 #include "Entities/Specialisations/ASA/MIL_AutomateTypeASA.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeBaseLOG.h"
-#include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
+#include "Entities/Specialisations/Refugie/MIL_AutomateTypeREFUGIE.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"

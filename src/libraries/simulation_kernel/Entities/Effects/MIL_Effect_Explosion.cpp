@@ -17,7 +17,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Explosion constructor

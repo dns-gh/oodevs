@@ -12,7 +12,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PolygonParameter )

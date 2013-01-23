@@ -12,7 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>

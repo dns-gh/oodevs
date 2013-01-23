@@ -21,7 +21,7 @@
 #include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Mission_ABC )
 

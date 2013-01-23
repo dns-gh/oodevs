@@ -12,7 +12,7 @@
 
 #include "MIL_AutomateLOG.h"
 #include "ObjectLogisticLink.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "tools/iterator.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( logistic::ObjectLogisticHierarchy )

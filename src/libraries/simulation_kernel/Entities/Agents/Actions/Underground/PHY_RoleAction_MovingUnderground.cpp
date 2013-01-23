@@ -12,7 +12,7 @@
 #include "DetectionComputer_ABC.h"
 #include "MIL_Time_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

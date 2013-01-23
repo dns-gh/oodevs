@@ -15,7 +15,7 @@
 #include "LogisticHierarchyOwner_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "tools/iterator.h"
 #include <boost/serialization/deque.hpp>
 #include <boost/foreach.hpp>

@@ -14,7 +14,7 @@
 #include "MIL_Time_ABC.h"
 #include "SpeedComputer_ABC.h"
 #include "WeaponReloadingComputer_ABC.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"

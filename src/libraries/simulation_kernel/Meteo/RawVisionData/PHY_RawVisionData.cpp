@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
-#include "meteo/PHY_MeteoDataManager.h"
+#include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"

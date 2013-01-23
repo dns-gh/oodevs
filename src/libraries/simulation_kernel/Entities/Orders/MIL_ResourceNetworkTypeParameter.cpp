@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ResourceNetworkTypeParameter.h"
 #include "MIL.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "protocol/protocol.h"
 #include "Urban/PHY_ResourceNetworkType.h"
 

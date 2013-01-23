@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "StockAttribute.h"
 #include "Object.h"
-#include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
-#include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>

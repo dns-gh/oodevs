@@ -10,7 +10,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "KnowledgeGroupFactory.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/MIL_Army_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )

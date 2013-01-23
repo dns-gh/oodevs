@@ -19,7 +19,7 @@
 #include "Entities/Specialisations/LOG/ObjectLogisticHierarchy.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "protocol/Protocol.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include <boost/assign/list_of.hpp>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>

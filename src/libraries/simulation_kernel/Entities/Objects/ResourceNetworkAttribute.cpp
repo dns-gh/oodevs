@@ -11,7 +11,7 @@
 #include "ResourceNetworkAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "ResourceNetworkCapacity.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"

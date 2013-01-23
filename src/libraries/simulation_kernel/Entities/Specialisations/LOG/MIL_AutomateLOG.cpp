@@ -16,7 +16,7 @@
 #include "LogisticHierarchy.h"
 #include "LogisticLink_ABC.h"
 #include "MIL_LogisticVisitors.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Formation.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"

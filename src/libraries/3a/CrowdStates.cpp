@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "CrowdStates.h"
-#include "MT_Tools\MT_Logger.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace sword;
 using namespace extractors;

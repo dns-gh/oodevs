@@ -10,8 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ContaminationEffect.h"
 #include "MIL_PopulationHumans.h"
-#include "Checkpoints/MIL_CheckPointInArchive.h"
-#include "Checkpoints/MIL_CheckPointOutArchive.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ContaminationEffect constructor

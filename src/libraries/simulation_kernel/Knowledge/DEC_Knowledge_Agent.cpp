@@ -14,7 +14,7 @@
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_AgentComposante.h"
 #include "MIL_Time_ABC.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"

@@ -14,7 +14,7 @@
 #include "meteo/MeteoManager_ABC.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/Meteo.h"
-#include "meteo/PHY_GlobalMeteo.h"
+#include "Meteo/PHY_GlobalMeteo.h"
 #include "PHY_Ephemeride.h"
 
 namespace sword

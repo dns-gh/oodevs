@@ -10,8 +10,8 @@
 #include "clients_gui_pch.h"
 #include "Logger.h"
 #include "moc_Logger.cpp"
-#include "clients_kernel\Time_ABC.h"
-#include "clients_kernel\ContextMenu.h"
+#include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
 

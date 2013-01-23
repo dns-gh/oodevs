@@ -9,11 +9,11 @@
 
 #include "PerceptionFlyingShell.h"
 #include "PerceptionLevel.h"
-#include "Tools/MIL_Tools.h"
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
 #include "wrapper/Event.h"
+#include "simulation_kernel/Tools/MIL_Tools.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <set>

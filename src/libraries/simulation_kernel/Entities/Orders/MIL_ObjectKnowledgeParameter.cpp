@@ -15,7 +15,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectKnowledgeParameter )
 

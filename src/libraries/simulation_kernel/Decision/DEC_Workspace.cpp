@@ -26,7 +26,7 @@
 #include "tools/Codec.h"
 #include "tools/InputBinaryStream.h"
 #include "tools/Loader_ABC.h"
-#include "tools/MIL_AffinitiesMap.h"
+#include "Tools/MIL_AffinitiesMap.h"
 #include "tools/Version.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>

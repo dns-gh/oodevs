@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoEffect.h"
 #include "meteo/PHY_Lighting.h"
-#include "Meteo/PHY_Precipitation.h"
+#include "meteo/PHY_Precipitation.h"
 
 //-----------------------------------------------------------------------------
 // Name: PHY_AmmoEffect constructor

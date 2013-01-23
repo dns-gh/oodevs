@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "WeatherListView.h"
 #include "moc_WeatherListView.cpp"
-#include "Meteo/Meteo.h"
+#include "meteo/Meteo.h"
 #include <boost/shared_ptr.hpp>
 #include "clients_kernel/ContextMenu.h"
 

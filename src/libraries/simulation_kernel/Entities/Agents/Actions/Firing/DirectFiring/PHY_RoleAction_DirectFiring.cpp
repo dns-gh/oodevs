@@ -30,7 +30,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "Knowledge/MIL_Knowledgegroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 
 using namespace firing;
 

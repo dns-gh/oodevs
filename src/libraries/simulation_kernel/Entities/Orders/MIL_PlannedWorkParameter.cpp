@@ -11,7 +11,7 @@
 #include "MIL_PlannedWorkParameter.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "protocol/Protocol.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PlannedWorkParameter )
 

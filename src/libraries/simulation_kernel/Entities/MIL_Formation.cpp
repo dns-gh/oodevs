@@ -26,7 +26,7 @@
 #include "Tools/MIL_Color.h"
 
 #include "Tools/MIL_IDManager.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>

@@ -12,7 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "KnowledgeGroupFactory_ABC.h" // LTO
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h" // LTO

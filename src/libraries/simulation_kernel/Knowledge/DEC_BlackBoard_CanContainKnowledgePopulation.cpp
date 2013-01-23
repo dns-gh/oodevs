@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_Knowledge_Population.h"
-#include "Checkpoints/SerializationTools.h"
+#include "CheckPoints/SerializationTools.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MT_Tools/MT_Logger.h"

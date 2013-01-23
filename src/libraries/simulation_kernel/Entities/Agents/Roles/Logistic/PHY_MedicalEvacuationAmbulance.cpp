@@ -16,7 +16,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationAmbulance )

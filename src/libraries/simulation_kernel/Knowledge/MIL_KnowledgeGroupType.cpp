@@ -10,10 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_KnowledgeGroupType.h"
 #include "MIL_KnowledgeGroup.h"
-#include "tools/MIL_Tools.h"
-#include "tools/Codec.h"
+#include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
+#include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;

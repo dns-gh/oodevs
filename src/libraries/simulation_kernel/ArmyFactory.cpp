@@ -17,7 +17,7 @@
 #include "FormationFactory_ABC.h"
 #include "PopulationFactory_ABC.h"
 #include "InhabitantFactory_ABC.h"
-#include "knowledge/KnowledgeGroupFactory_ABC.h" // LTO
+#include "Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>

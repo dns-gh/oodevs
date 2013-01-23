@@ -12,7 +12,7 @@
 #include "ObjectPrototype.h"
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
-#include "Entities\Agents\Units\Dotations\PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

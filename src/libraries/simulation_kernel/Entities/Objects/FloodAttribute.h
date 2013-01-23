@@ -13,7 +13,7 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "propagation/ElevationGetter_ABC.h"
-#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
