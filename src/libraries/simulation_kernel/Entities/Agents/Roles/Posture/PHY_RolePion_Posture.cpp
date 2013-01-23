@@ -34,7 +34,7 @@ static const double rDeltaPercentageForNetwork = 0.05; //$$$ DEGUEU
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
-    : owner_                                ( pion )
+    : owner_                               ( pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
     , rPostureCompletionPercentage_        ( 1. )
@@ -116,7 +116,7 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
 // Name: PHY_RolePion_Posture::ChangePostureCompletionPercentage
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::ChangePostureCompletionPercentage( const double rNewPercentage )
+void PHY_RolePion_Posture::ChangePostureCompletionPercentage( double rNewPercentage )
 {
     if( rPostureCompletionPercentage_ == rNewPercentage )
         return;

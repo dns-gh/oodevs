@@ -20,11 +20,11 @@ using namespace posture;
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 DefaultPostureComputer::DefaultPostureComputer( Parameters& params )
-    : params_( &params )
+    : params_        ( &params )
     , bForceMovement_( false )
-    , bForceStop_( false )
-    , bIsLoaded_( false )
-    , results_( params.rCompletionPercentage_ )
+    , bForceStop_    ( false )
+    , bIsLoaded_     ( false )
+    , results_       ( params.rCompletionPercentage_ )
 {
     // NOTHING
 }
@@ -158,11 +158,8 @@ void DefaultPostureComputer::Update()
 double DefaultPostureComputer::GetPostureTime() const
 {
     assert( params_->rTimingFactor_ > 0. );
-
     double postureTime = params_->unitType_.GetPostureTime( params_->posture_ );
-    for( std::vector< double >::const_iterator it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
-    {
+    for( auto it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
         postureTime *= *it;
-    }
     return postureTime / params_->rTimingFactor_;
 }

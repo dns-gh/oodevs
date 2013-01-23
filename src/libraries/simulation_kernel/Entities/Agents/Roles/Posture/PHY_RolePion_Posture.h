@@ -17,6 +17,11 @@
 
 class MIL_Agent_ABC;
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 namespace dotation
 {
     class ConsumptionComputer_ABC;
@@ -112,7 +117,7 @@ private:
     //@{
     bool HasChanged() const;
     void ChangePosture( const PHY_Posture& newPosture );
-    void ChangePostureCompletionPercentage( const double rNewPercentage );
+    void ChangePostureCompletionPercentage( double rNewPercentage );
     void Uninstall();
     //@}
 

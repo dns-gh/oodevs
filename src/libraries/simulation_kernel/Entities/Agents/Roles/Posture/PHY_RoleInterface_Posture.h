@@ -15,11 +15,6 @@
 #include "MT_Tools/Role_ABC.h"
 #include <boost/serialization/access.hpp>
 
-namespace client
-{
-    class UnitAttributes;
-}
-
 class PHY_Posture;
 
 // =============================================================================
