@@ -48,7 +48,6 @@ ProgressPage::ProgressPage( Application& app, QStackedWidget* pages, Page_ABC& p
 ProgressPage::~ProgressPage()
 {
     timer_->stop();
-    process_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,15 +71,12 @@ void ProgressPage::Attach( boost::shared_ptr< frontend::Process_ABC > process )
 void ProgressPage::UpdateProgress()
 {
     unsigned int percentage = 0;
-    std::string message = "";
-    if( ! process_.expired() )
+    std::string message;
+    boost::shared_ptr< frontend::Process_ABC > process( process_ );
+    if( process )
     {
-        boost::shared_ptr< frontend::Process_ABC > weak( process_ );
-        if( weak.get() )
-        {
-            percentage = weak->GetPercentage();
-            message = weak->GetStatus().toStdString();
-        }
+        percentage = process->GetPercentage();
+        message = process->GetStatus().toStdString();
     }
     label_->setText( message.c_str() );
     progressBar_->setValue( percentage );
