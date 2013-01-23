@@ -14,7 +14,7 @@
 
 MOCK_BASE_CLASS( MockPHY_FireResults_ABC, PHY_FireResults_ABC )
 {
-    MOCK_METHOD( Hit, 0 );
+    MOCK_METHOD( Hit, 1 );
 };
 
 #endif // __MockPHY_FireResults_ABC_h_
