@@ -145,6 +145,18 @@ integration.communication.OrderMoveToFromCommander = function( missionName, wayp
     DEC_DonnerMissionPion( mission ) -- Issue the mission
 end
 
+integration.communication.OrderPerformWorkFromCommander = function( missionName, works, instantaneously )
+    local mission = DEC_CreerMissionPion( missionName )
+    local tempSimObjects = {}
+    for i = 1, #works do
+        tempSimObjects[ i ] = DEC_AssignMissionGenObjectListParameter( works[ i ].source )
+    end
+    DEC_AssignMissionListParameter( mission, "works", tempSimObjects )
+    DEC_AssignMissionBoolParameter( mission, "instantaneously", instantaneously )
+    DEC_DonnerMissionPion( mission ) -- Issue the mission
+end
+
+
 integration.communication.StartMissionAutomate = function( content )
   local mission = DEC_CreerMissionAutomate( content.entity.source, content.taskName )
   fillParameters( mission, content.params ) 
