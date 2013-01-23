@@ -44,8 +44,6 @@ public:
     unsigned long rand32_oo( unsigned long min, unsigned long max ); // ] min, max [
     unsigned long rand32_oi( unsigned long min, unsigned long max ); // ] min, max ]
 
-    double rand53();                            // [ 0., 1. [ ( 53-bit resolution )
-
     double rand_ii();                           // [ 0.  , 1.   ]
     double rand_io();                           // [ 0.  , 1.   [
     double rand_oo();                           // ] 0.  , 1.   [

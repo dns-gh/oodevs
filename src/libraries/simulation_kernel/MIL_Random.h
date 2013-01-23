@@ -41,8 +41,6 @@ public:
     static unsigned long rand32_oo( unsigned long min, unsigned long max, int ctxt = -1 ); // ] min, max [
     static unsigned long rand32_oi( unsigned long min, unsigned long max, int ctxt = -1 ); // ] min, max ]
 
-    static double rand53();                            // [ 0., 1. [ ( 53-bit resolution )
-
     static double rand_ii( int ctxt = -1 );                           // [ 0.  , 1.   ]
     static double rand_io( int ctxt = -1 );                           // [ 0.  , 1.   [
     static double rand_oo( int ctxt = -1 );                           // ] 0.  , 1.   [

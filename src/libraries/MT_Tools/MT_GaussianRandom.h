@@ -20,7 +20,7 @@
 class MT_GaussianRandom
 {
 public:
-    explicit MT_GaussianRandom();
+             MT_GaussianRandom();
              MT_GaussianRandom( double rMean, double rVariance );
     explicit MT_GaussianRandom( const MT_GaussianRandom& );
     virtual ~MT_GaussianRandom() {}
