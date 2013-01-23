@@ -13,9 +13,9 @@
 #include "Adapters/Sink_ABC.h"
 #include <memory>
 
-namespace
+namespace propagation
 {
-    class ElevationGetter;
+    class ElevationGetter_ABC;
 }
 
 namespace sword
@@ -92,7 +92,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< ElevationGetter > pElevation_;
+    std::auto_ptr< propagation::ElevationGetter_ABC > pElevation_;
     AgentFactory_ABC& factory_;
     const unsigned int gcPause_;
     unsigned int gcMult_;
