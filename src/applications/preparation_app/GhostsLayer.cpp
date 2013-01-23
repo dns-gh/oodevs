@@ -206,14 +206,12 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
         kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
-        // $$$$ NPT 2013-01-11: The following lines have to be done after creating agent AND BEFORE deleting the ghost in order to prevent a crash on QTreeView (takeItem on the selectedItem crash in this case)
-        // $$$$ ABR 2013-01-14: Oddly, the crash on the tree view doesn't occur with automat ghost
+        delete currentGhost;
+        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         agent->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( agent );
         agent->MultipleSelect( controllers_.actions_, list );
-        //---------------------------------------------------
-        delete currentGhost;
         selectedGhost_ = 0;
         highLightedGhost_ = 0;
         return true;
@@ -229,8 +227,13 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Ghost_ABC* currentGhost = ( fromHighLight ) ? highLightedGhost_.ConstCast() : selectedGhost_.ConstCast();
         assert( currentGhost && currentGhost->Retrieve< kernel::Positions >() );
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
-        model_.agents_.CreateAutomatInsteadOf( *currentGhost, *automatType, position );
-        delete static_cast< const kernel::Ghost_ABC* >( currentGhost );
+        kernel::Automat_ABC* automat = model_.agents_.CreateAutomatInsteadOf( *currentGhost, *automatType, position );
+        delete currentGhost;
+        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
+        automat->Select( controllers_.actions_ );
+        kernel::ActionController::T_Selectables list;
+        list.push_back( automat );
+        automat->MultipleSelect( controllers_.actions_, list );
         selectedGhost_ = 0;
         highLightedGhost_ = 0;
         return true;

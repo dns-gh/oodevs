@@ -204,12 +204,13 @@ void TacticalTreeView::Drop( const kernel::AgentType& item, kernel::Entity_ABC& 
     const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
     if( kernel::Entity_ABC* result = model_.agents_.CreateAgent( static_cast< kernel::Ghost_ABC& >( target ), item, position ) )
     {
+        delete &target;
+        setFocus();
+        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         result->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( result );
         result->MultipleSelect( controllers_.actions_, list );
-        delete static_cast< const kernel::Ghost_ABC* >( &target );
-        setFocus(); // utile ?
     }
 }
 
@@ -222,9 +223,13 @@ void TacticalTreeView::Drop( const kernel::AutomatType& item, kernel::Entity_ABC
     const geometry::Point2f position = target.Get< kernel::Positions >().GetPosition();
     if( kernel::Entity_ABC* result = model_.agents_.CreateAutomatInsteadOf( target, item, position ) )
     {
-        delete static_cast< const kernel::Ghost_ABC* >( &target );
+        delete &target;
         setFocus();
+        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         result->Select( controllers_.actions_ );
+        kernel::ActionController::T_Selectables list;
+        list.push_back( result );
+        result->MultipleSelect( controllers_.actions_, list );
     }
 }
 
