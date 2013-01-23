@@ -26,7 +26,9 @@ class DefaultPostureComputer : public PostureComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultPostureComputer( Parameters& param );
+             DefaultPostureComputer( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+                                     bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
+                                     double rTimingFactor );
     virtual ~DefaultPostureComputer();
     //@}
 
@@ -50,7 +52,13 @@ private:
 private:
     //! @name Attribute
     //@{
-    Parameters* params_;
+    const PHY_UnitType& unitType_;
+    const PHY_Posture& posture_;
+    const bool bIsDead_;
+    const bool bDiscreteModeEnabled_;
+    const double rCompletionPercentage_;
+    const double rStealthFactor_;
+    const double rTimingFactor_;
     std::vector< double > coefficientsModifier_;
     bool bForceMovement_;
     bool bForceStop_;

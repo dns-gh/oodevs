@@ -19,12 +19,20 @@ using namespace posture;
 // Name: DefaultPostureComputer::DefaultPostureComputer
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-DefaultPostureComputer::DefaultPostureComputer( Parameters& params )
-    : params_        ( &params )
-    , bForceMovement_( false )
-    , bForceStop_    ( false )
-    , bIsLoaded_     ( false )
-    , results_       ( params.rCompletionPercentage_ )
+DefaultPostureComputer::DefaultPostureComputer( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+                                                bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
+                                                double rTimingFactor )
+    : unitType_             ( unitType )
+    , posture_              ( posture )
+    , bIsDead_              ( bIsDead )
+    , bDiscreteModeEnabled_ ( bDiscreteModeEnabled )
+    , rCompletionPercentage_( rCompletionPercentage )
+    , rStealthFactor_       ( rStealthFactor )
+    , rTimingFactor_        ( rTimingFactor )
+    , bForceMovement_       ( false )
+    , bForceStop_           ( false )
+    , bIsLoaded_            ( false )
+    , results_              ( rCompletionPercentage )
 {
     // NOTHING
 }
@@ -81,7 +89,7 @@ void DefaultPostureComputer::AddCoefficientModifier( double coef )
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::AddUrbanCoefficientModifier( double coef )
 {
-    if( &( params_->posture_ ) == &PHY_Posture::poste_ )
+    if( &( posture_ ) == &PHY_Posture::poste_ )
         coefficientsModifier_.push_back( coef );
 }
 
@@ -101,7 +109,7 @@ PostureComputer_ABC::Results& DefaultPostureComputer::Result()
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::Update()
 {
-    if( params_->bIsDead_ )
+    if( bIsDead_ )
     {
         results_.newPosture_ = &PHY_Posture::arret_;
         results_.postureCompletionPercentage_ = 1.;
@@ -110,26 +118,26 @@ void DefaultPostureComputer::Update()
     }
 
     // Mode furtif
-    results_.bIsStealth_ = !( MIL_Random::rand_oi( 0., 1., MIL_Random::ePerception ) <= params_->rStealthFactor_ );
+    results_.bIsStealth_ = !( MIL_Random::rand_oi( 0., 1., MIL_Random::ePerception ) <= rStealthFactor_ );
 
     if( bForceMovement_ )
     {
         if( !bIsLoaded_ )
             results_.newPosture_ = &PHY_Posture::posteReflexe_;
-        else if( params_->bDiscreteModeEnabled_ )
+        else if( bDiscreteModeEnabled_ )
             results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
         else
             results_.newPosture_ = &PHY_Posture::mouvement_;
         return;
     }
 
-    if( bForceStop_ && ( &params_->posture_ == &PHY_Posture::mouvement_
-                      || &params_->posture_ == &PHY_Posture::mouvementDiscret_ ) )
+    if( bForceStop_ && ( &posture_ == &PHY_Posture::mouvement_
+                      || &posture_ == &PHY_Posture::mouvementDiscret_ ) )
             results_.newPosture_ = &PHY_Posture::arret_;
 
     if( results_.postureCompletionPercentage_ == 1. )
     {
-        const PHY_Posture* pNextAutoPosture = params_->posture_.GetNextAutoPosture();
+        const PHY_Posture* pNextAutoPosture = posture_.GetNextAutoPosture();
         if( !pNextAutoPosture )
             return;
         results_.newPosture_ = pNextAutoPosture;
@@ -157,9 +165,9 @@ void DefaultPostureComputer::Update()
 // -----------------------------------------------------------------------------
 double DefaultPostureComputer::GetPostureTime() const
 {
-    assert( params_->rTimingFactor_ > 0. );
-    double postureTime = params_->unitType_.GetPostureTime( params_->posture_ );
+    assert( rTimingFactor_ > 0. );
+    double postureTime = unitType_.GetPostureTime( posture_ );
     for( auto it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
         postureTime *= *it;
-    return postureTime / params_->rTimingFactor_;
+    return postureTime / rTimingFactor_;
 }

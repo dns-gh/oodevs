@@ -153,14 +153,7 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     Uninstall();
-
-    PostureComputer_ABC::Parameters params( owner_.GetType().GetUnitType(), *pCurrentPosture_ );
-    params.bIsDead_ = bIsDead;
-    params.rCompletionPercentage_ = rPostureCompletionPercentage_;
-    params.bDiscreteModeEnabled_ = bDiscreteModeEnabled_;
-    params.rStealthFactor_ = rStealthFactor_;
-    params.rTimingFactor_ = rTimingFactor_;
-    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( params ) );
+    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( owner_.GetType().GetUnitType(), *pCurrentPosture_, bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_, rStealthFactor_, rTimingFactor_ ) );
     owner_.Execute( *computer );
     PostureComputer_ABC::Results& result = computer->Result();
     if( result.newPosture_ )

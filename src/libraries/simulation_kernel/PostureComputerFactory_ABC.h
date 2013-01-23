@@ -10,13 +10,15 @@
 #ifndef __PostureComputerFactory_ABC_h_
 #define __PostureComputerFactory_ABC_h_
 
-#include "simulation_kernel/PostureComputer_ABC.h"
+#include <memory>
 
 class PHY_Posture;
 class PHY_UnitType;
 
 namespace posture
 {
+    class PostureComputer_ABC;
+
 // =============================================================================
 /** @class  PostureComputerFactory_ABC
     @brief  PostureComputerFactory_ABC
@@ -34,7 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PostureComputer_ABC > Create( PostureComputer_ABC::Parameters& params ) const = 0;
+    virtual std::auto_ptr< PostureComputer_ABC > Create( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+                                                         bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
+                                                         double rTimingFactor ) const = 0;
     //@}
 };
 

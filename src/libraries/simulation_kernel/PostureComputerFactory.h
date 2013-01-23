@@ -11,7 +11,6 @@
 #define __PostureComputerFactory_h_
 
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
 
 namespace posture
 {
@@ -32,7 +31,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< PostureComputer_ABC > Create( PostureComputer_ABC::Parameters& params ) const;
+    virtual std::auto_ptr< PostureComputer_ABC > Create( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+                                                         bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
+                                                         double rTimingFactor ) const;
     //@}
 };
 

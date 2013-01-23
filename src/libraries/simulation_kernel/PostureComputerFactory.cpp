@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/PostureComputerFactory.h"
 #include "simulation_kernel/DefaultPostureComputer.h"
 
@@ -36,7 +35,10 @@ PostureComputerFactory::~PostureComputerFactory()
 // Name: PostureComputerFactory destructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( PostureComputer_ABC::Parameters& params ) const
+std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( const PHY_UnitType& unitType, const PHY_Posture& posture, bool bIsDead,
+                                                                     bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
+                                                                     double rTimingFactor ) const
 {
-    return std::auto_ptr< PostureComputer_ABC >( new DefaultPostureComputer( params ) );
+    return std::auto_ptr< PostureComputer_ABC >( new DefaultPostureComputer( unitType, posture, bIsDead, bDiscreteModeEnabled, rCompletionPercentage,
+                                                                             rStealthFactor, rTimingFactor ) );
 }

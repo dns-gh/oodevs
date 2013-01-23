@@ -10,6 +10,8 @@
 #ifndef __PostureComputer_ABC_h_
 #define __PostureComputer_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 class PHY_Posture;
 class PHY_UnitType;
 
@@ -21,34 +23,11 @@ namespace posture
 */
 // Created: MGD 2009-09-15
 // =============================================================================
-class PostureComputer_ABC
+class PostureComputer_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
     //@{
-    struct Parameters
-    {
-        Parameters( const PHY_UnitType& unitType, const PHY_Posture& posture )
-            : unitType_( unitType )
-            , posture_( posture )
-            , bIsDead_( false )
-            , bDiscreteModeEnabled_( false )
-            , rCompletionPercentage_( 0. )
-            , rStealthFactor_( 0. )
-            , rTimingFactor_( 0. )
-        {
-            // NOTHING
-        }
-        Parameters& operator=( const Parameters& ); //!< Assignment operator
-        const PHY_UnitType& unitType_;
-        const PHY_Posture& posture_;
-        bool bIsDead_;
-        bool bDiscreteModeEnabled_;
-        double rCompletionPercentage_;
-        double rStealthFactor_;
-        double rTimingFactor_;
-    };
-
     struct Results
     {
         explicit Results( double completion = 0. )
