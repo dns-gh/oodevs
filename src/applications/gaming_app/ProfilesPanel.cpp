@@ -60,12 +60,7 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
     tableView_->verticalHeader()->setVisible( false );
     tableView_->horizontalHeader()->setVisible( false );
-    tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
-    tableView_->setColumnWidth( 0, 20 );
-    tableView_->setColumnWidth( 2, 25 );
-    tableView_->setColumnWidth( 3, 25 );
-    tableView_->setColumnWidth( 4, 25 );
-    tableView_->setColumnWidth( 5, 25 );
+
     mainLayout->addWidget( tableView_ );
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
@@ -248,7 +243,9 @@ void ProfilesPanel::AddProfile( unsigned int index )
     dataModel_->setItem( index, 2, CreateItem( "" ) );
     dataModel_->setItem( index, 3, CreateItem( "" ) );
     dataModel_->setItem( index, 4, CreateItem( red_ ) );
-    dataModel_->setItem( index, 5, CreateItem( "(0)" ) );
+    QStandardItem* item = CreateItem( "(0)" );
+    item->setTextAlignment( Qt::AlignCenter );
+    dataModel_->setItem( index, 5, item );
     proxyModel_->sort( 1 );
 }
 
@@ -278,10 +275,10 @@ void ProfilesPanel::Clean()
 {
     dataModel_->clear();
     dataModel_->setColumnCount( 6 );
-    tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     tableView_->setColumnWidth( 0, 20 );
+    tableView_->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     tableView_->setColumnWidth( 2, 25 );
     tableView_->setColumnWidth( 3, 25 );
     tableView_->setColumnWidth( 4, 25 );
-    tableView_->setColumnWidth( 5, 25 );
+    tableView_->horizontalHeader()->setResizeMode( 5, QHeaderView::ResizeToContents );
 }
