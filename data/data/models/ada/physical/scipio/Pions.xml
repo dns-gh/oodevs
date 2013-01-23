@@ -1725,7 +1725,7 @@
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="59" name="GEN . Groupe Disperseur" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer"/>
     <equipments>
-      <equipment count="2" crew="2" major="true" type="MINOTAURE"/>
+      <equipment count="2" crew="2" major="true" type="MINOTAUR"/>
       <equipment count="2" crew="3" type="TRM 10000 12,7"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -1911,9 +1911,10 @@
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Char AMX 30 B2 DT"/>
-      <equipment count="2" crew="8" type="VAB GEN 12,7"/>
-      <equipment count="1" crew="2" type="VTC P4"/>
-      <equipment count="3" crew="3" type="TRM 10000 12,7"/>
+      <equipment count="1" crew="2" type="VAB GEN 12,7"/>
+      <equipment count="2" crew="1" type="VTC P4"/>
+      <equipment count="3" crew="2" type="TRM 10000 12,7"/>
+      <equipment count="2" crew="2" type="GBC 8 KT"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="1200"/>
@@ -1961,17 +1962,18 @@
   <unit decisional-model="Masalife.Genie.MADEZ" id="69" name="GEN . Groupe MADEZ" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer"/>
     <equipments>
-      <equipment count="2" crew="2" major="true" type="MADEZ"/>
-      <equipment count="1" crew="8" type="VAB GEN 12,7"/>
-      <equipment count="2" crew="3" type="TRM 10000 12,7"/>
-      <equipment count="1" crew="2" type="VTC P4"/>
-      <equipment count="2" crew="1" type="TRM 4000 12.7"/>
+      <equipment count="2" crew="1" major="true" type="MADEZ"/>
+      <equipment count="1" crew="2" type="VAB GEN 12,7"/>
+      <equipment count="2" crew="2" type="TRM 10000 12,7"/>
+      <equipment count="1" crew="1" type="VTC P4"/>
+      <equipment count="2" crew="1" type="VTL R"/>
+      <equipment count="1" crew="2" type="GBC 180"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="1000"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
-      <crew-rank count="2" type="SousOfficier"/>
+      <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
@@ -18072,4 +18074,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1108086622" -->
+<!-- signature="1081301277" -->
