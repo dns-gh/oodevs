@@ -273,7 +273,7 @@ std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetMunitions() const
                 return std::vector< const PHY_DotationCategory* >();
         }
     }
-    throw std::runtime_error( "Unknown parameter munitions_" );
+    throw MASA_EXCEPTION( "Unknown parameter munitions_" );
 }
 
 // -----------------------------------------------------------------------------
