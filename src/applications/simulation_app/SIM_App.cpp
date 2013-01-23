@@ -32,8 +32,6 @@
 
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/convenience.hpp>
-#include <boost/filesystem/path.hpp>
 #include <xeumeuleu/xml.hpp>
 
 #include <csignal>
