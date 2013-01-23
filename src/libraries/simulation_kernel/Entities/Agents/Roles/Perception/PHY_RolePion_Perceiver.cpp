@@ -985,7 +985,7 @@ void PHY_RolePion_Perceiver::ExecuteCollisions()
 {
     if( CanPerceive() )
     {
-        const MT_Vector2D& position = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        const MT_Vector2D& position = owner_->GetRole< PHY_RoleInterface_Location >().GetPosition();
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, 1., perceivableObjects );
         for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
