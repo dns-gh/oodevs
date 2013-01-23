@@ -188,7 +188,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResu
     pointsPassed_ = 0;
     PathWalker::E_ReturnCode rc = eRunning;
     path_ = path;
-    boost::shared_ptr< PathResult > currentPath = path_.lock();
+    boost::shared_ptr< PathResult > currentPath( path_ );
     currentPath->InsertDecPoints(); // $$$ HIDEUX
     PostPath( entity );
     bForcePathCheck_ = false;
