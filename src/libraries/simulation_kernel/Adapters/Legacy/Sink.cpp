@@ -21,7 +21,6 @@
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
-#include "MT_Tools/MT_FormatString.h"
 
 using namespace sword::legacy;
 

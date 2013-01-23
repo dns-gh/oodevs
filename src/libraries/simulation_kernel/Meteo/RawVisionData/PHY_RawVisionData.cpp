@@ -11,7 +11,6 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"

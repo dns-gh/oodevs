@@ -15,7 +15,6 @@
 #include "tools/Codec.h"
 #include "tools/Loader.h"
 #include "tools/ExerciseConfig.h"
-#include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>

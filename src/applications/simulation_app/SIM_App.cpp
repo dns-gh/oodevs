@@ -16,7 +16,6 @@
 #include "FileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
-#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Version.h"
 #include "resource.h"
 #include "SIM_NetworkLogger.h"

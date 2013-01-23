@@ -73,7 +73,6 @@
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
-#include "MT_Tools/MT_FormatString.h"
 #include "tools/Loader_ABC.h"
 #include <core/Facade.h>
 #include <core/Model.h>

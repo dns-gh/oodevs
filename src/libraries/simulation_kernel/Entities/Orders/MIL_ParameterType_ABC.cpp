@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ParameterType_ABC.h"
-#include "MT_Tools/MT_FormatString.h"
 
 // =============================================================================
 // FACTORY

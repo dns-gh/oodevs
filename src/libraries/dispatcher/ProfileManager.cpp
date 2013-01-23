@@ -17,7 +17,6 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/DictionaryType.h"
-#include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "tools/SchemaWriter.h"

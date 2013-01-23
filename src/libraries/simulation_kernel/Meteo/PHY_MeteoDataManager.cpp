@@ -16,7 +16,6 @@
 #include "Tools/MIL_Config.h"
 
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_FormatString.h"
 
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"

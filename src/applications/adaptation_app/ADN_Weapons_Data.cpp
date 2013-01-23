@@ -20,7 +20,6 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
-#include "MT_Tools/MT_FormatString.h"
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::PhInfos
