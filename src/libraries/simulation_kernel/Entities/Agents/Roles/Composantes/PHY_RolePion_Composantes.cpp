@@ -873,8 +873,9 @@ void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
         {
-            fireResult.Hit();
-            composante.ApplyExplosion( capacity, fireDamages );
+            fireResult.Hit( 1 );
+            composante.ApplyExplosion( capacity, fireDamages );            
+            MIL_Report::PostEvent( *pion_, MIL_Report::eRC_ExplosionSurBouchonMine, fireResult.GetSourceName() );
             return;
         }
     }

@@ -122,21 +122,26 @@ void AttritionCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AttritionCapacity::HasInteractionCapabilities
-// Created: JCR 2008-08-11
-// -----------------------------------------------------------------------------
-bool AttritionCapacity::HasInteractionCapabilities( const MIL_Object_ABC& object ) const
+namespace
 {
-    // Is Bypassed
+    // contract of explosable = has a method ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
+    template< typename T > void ApplyExplosion( AttritionCapacity& attrition, MIL_Object_ABC& object, const PHY_DotationCategory* dotation, T& explosable )
+    {
     const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
     if( bypass && bypass->IsBypassed() )
-        return false;
-    // Is Activated
+            return;
     const ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
     if( obstacle && !obstacle->IsActivated() )
-        return false;
-    return true;
+            return;
+        ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
+        if( ! ( construction && construction->HasDotation( *dotation ) && dotation->HasAttritions() ) )
+            return;
+        PHY_ObjectExplosionFireResult fireResult( object );
+        explosable.ApplyExplosion( attrition, fireResult );
+        unsigned int hits = fireResult.GetHits();
+        if( hits > 0 )
+            construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -145,20 +150,9 @@ bool AttritionCapacity::HasInteractionCapabilities( const MIL_Object_ABC& object
 // -----------------------------------------------------------------------------
 void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    if( !object.GetArmy() || object.GetArmy()->GetID() == agent.GetArmy().GetID() || !HasInteractionCapabilities( object ) )
+    if( object.GetArmy() && object.GetArmy()->GetID() == agent.GetArmy().GetID() )
         return;
-    ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
-    if( ! ( construction && construction->HasDotation( *dotation_ ) && dotation_->HasAttritions() ) )
-        return;
-    PHY_ObjectExplosionFireResult fireResult( object );
-    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *this, fireResult );
-    unsigned int hits = fireResult.GetHits();
-    if( hits > 0 )
-    {
-        const std::string name = MIL_ObjectLoader::GetLoader().GetType(  object.GetType().GetName() ).GetRealName();
-        MIL_Report::PostEvent( agent, MIL_Report::eRC_ExplosionSurBouchonMine, name );
-        construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
-    }
+    ApplyExplosion< PHY_RoleInterface_Composantes >( *this, object, dotation_, agent.GetRole< PHY_RoleInterface_Composantes >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,22 +161,9 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 // -----------------------------------------------------------------------------
 void AttritionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
-    if( !HasInteractionCapabilities( object ) )
+    if( population_.surface_ <= 0. )
         return;
-    if( population_.surface_ > 0. )
-    {
-        PHY_ObjectExplosionFireResult fireResult( object );
-        if( dotation_->HasAttritions() )
-        {
-            ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
-            if( ! ( construction && construction->HasDotation( *dotation_ ) ) )
-                return;
-            population.ApplyExplosion( *this, fireResult );
-            unsigned int hits = fireResult.GetHits();
-            if( hits > 0 )
-                construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
-        }
-    }
+    ApplyExplosion< MIL_PopulationElement_ABC >( *this, object, dotation_, population );
 }
 
 // -----------------------------------------------------------------------------

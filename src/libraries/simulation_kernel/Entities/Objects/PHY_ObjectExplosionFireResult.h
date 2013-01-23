@@ -26,8 +26,9 @@ public:
     explicit PHY_ObjectExplosionFireResult( const MIL_Object_ABC& object );
     virtual ~PHY_ObjectExplosionFireResult();
 
-    void    Hit();
-    unsigned int    GetHits() const;
+    virtual void Hit( unsigned int hits );
+    unsigned int GetHits() const;
+    virtual const std::string& GetSourceName() const;
 
 private:
     const MIL_Object_ABC& object_;

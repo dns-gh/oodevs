@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ObjectExplosionFireResult.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -48,8 +49,12 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
     {
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
+        int dead = damages.GetNbrKilledHumans();
+        int wounded = damages.GetNbrWoundedHumans();
+        int scattered = damages.GetNbrScatteredHumans();
 
-        MIL_Report::PostEvent( population, MIL_Report::eRC_PopulationVictimeExplosionMines, damages.GetNbrKilledHumans(), damages.GetNbrWoundedHumans() );
+        if( dead + wounded + scattered > 0 )
+            MIL_Report::PostEvent( population, MIL_Report::eRC_PopulationVictimeExplosionMines, dead, wounded );
     }
 }
 
@@ -57,16 +62,25 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 // Name: PHY_ObjectExplosionFireResult::Hit
 // Created: JCR 2008-08-08
 // -----------------------------------------------------------------------------
-void PHY_ObjectExplosionFireResult::Hit()
+void PHY_ObjectExplosionFireResult::Hit( unsigned int hits)
 {
-    ++hits_;
+    hits_ += hits;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ObjectExplosionFireResult::Hit
+// Name: PHY_ObjectExplosionFireResult::GetHits
 // Created: JCR 2008-08-08
 // -----------------------------------------------------------------------------
 unsigned int PHY_ObjectExplosionFireResult::GetHits() const
 {
     return hits_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ObjectExplosionFireResult::GetSourceName
+// Created: JSR 2013-01-23
+// -----------------------------------------------------------------------------
+const std::string& PHY_ObjectExplosionFireResult::GetSourceName() const
+{
+    return object_.GetType().GetRealName();
 }
