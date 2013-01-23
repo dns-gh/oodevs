@@ -167,6 +167,8 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
 // -----------------------------------------------------------------------------
 void AttritionCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
+    if( !HasInteractionCapabilities( object ) )
+        return;
     if( population_.surface_ > 0. )
     {
         PHY_ObjectExplosionFireResult fireResult( object );
