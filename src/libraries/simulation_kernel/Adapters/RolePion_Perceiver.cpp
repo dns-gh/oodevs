@@ -501,6 +501,15 @@ void RolePion_Perceiver::ExecutePerceptions()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::ExecuteCollisions
+// Created: LGY 2013-01-23
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::ExecuteCollisions()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::ComputePerception
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
