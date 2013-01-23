@@ -13,6 +13,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "Simulation.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_array.hpp>
 #include <vector>
@@ -31,9 +32,9 @@ namespace kernel
     class ObjectType;
     class DisasterTypes;
     class DisasterType;
+    class Time_ABC;
 }
 
-class Simulation;
 class Propagation;
 class PropagationManager;
 
@@ -46,13 +47,14 @@ class PropagationManager;
 class PropagationAttribute : public kernel::DisasterAttribute_ABC
                            , public kernel::Drawable_ABC
                            , public tools::Observer_ABC
-                           , public tools::ElementObserver_ABC< Simulation >
+                           , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              PropagationAttribute( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                                   const kernel::ObjectType& type, const kernel::DisasterTypes& disasterTypes );
+                                   const kernel::ObjectType& type, const kernel::DisasterTypes& disasterTypes,
+                                   const kernel::Time_ABC& simulation );
     virtual ~PropagationAttribute();
     //@}
 
@@ -70,7 +72,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
     //@}
 
@@ -86,6 +88,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::Time_ABC& simulation_;
     const kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< PropagationManager > pManager_;
     const kernel::DisasterType& disasterType_;

@@ -39,7 +39,8 @@ class ObjectKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             ObjectKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                     const kernel::Time_ABC& simulation );
     virtual ~ObjectKnowledgeFactory();
     //@}
 

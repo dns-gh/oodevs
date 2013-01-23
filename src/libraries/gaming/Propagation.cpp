@@ -24,7 +24,7 @@
 Propagation::Propagation( const std::string& file, const PropagationManager& manager,
                           const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType )
 {
-     ASCExtractor extractor( file, manager.GetProjectionFile() );
+    ASCExtractor extractor( file, manager.GetProjectionFile() );
     const ASCExtractor::T_Values& values = extractor.GetValues();
     std::vector< unsigned char > rgba( values.size() * 4 );
     const int rowsCount = extractor.GetRows();

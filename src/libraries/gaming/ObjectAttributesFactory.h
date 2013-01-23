@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controllers;
     class Object_ABC;
+    class Time_ABC;
     class ObjectKnowledge_ABC;
 }
 
@@ -37,7 +38,8 @@ class ObjectAttributesFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectAttributesFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             ObjectAttributesFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                      const kernel::Time_ABC& simulation );
     virtual ~ObjectAttributesFactory();
     //@}
 
@@ -57,6 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::Time_ABC& simulation_;
     Model& model_;
     const StaticModel& static_;
     //@}

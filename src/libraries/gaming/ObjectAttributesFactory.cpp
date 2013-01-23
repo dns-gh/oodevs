@@ -49,10 +49,12 @@
 // Name: ObjectAttributesFactory constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectAttributesFactory::ObjectAttributesFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
+ObjectAttributesFactory::ObjectAttributesFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                                  const kernel::Time_ABC& simulation )
     : controllers_( controllers )
-    , model_( model )
-    , static_( staticModel )
+    , simulation_ ( simulation )
+    , model_      ( model )
+    , static_     ( staticModel )
 {
     // NOTHING
 }
@@ -75,7 +77,7 @@ void ObjectAttributesFactory::Register( kernel::Object_ABC& entity, const sword:
     Register( *static_cast< kernel::Entity_ABC* >( &entity ), attributes );
     if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
         entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_,
-                                                                                   entity.GetType(), static_.disasterTypes_ ) );
+                                                                                   entity.GetType(), static_.disasterTypes_, simulation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +92,7 @@ void ObjectAttributesFactory::Register( kernel::ObjectKnowledge_ABC& entity, con
         const kernel::Object_ABC* object = entity.GetEntity();
         if( object )
             entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_,
-                                                                                       object->GetType(), static_.disasterTypes_ ) );
+                                                                                       object->GetType(), static_.disasterTypes_, simulation_ ) );
     }
 }
 

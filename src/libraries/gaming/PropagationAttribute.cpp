@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "PropagationAttribute.h"
-#include "Simulation.h"
 #include "Propagation.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
@@ -29,10 +28,12 @@ using namespace kernel;
 // Created: LGY 2012-10-12
 // -----------------------------------------------------------------------------
 PropagationAttribute::PropagationAttribute( Controller& controller, const CoordinateConverter_ABC& converter,
-                                            const kernel::ObjectType& type, const kernel::DisasterTypes& disasterTypes )
+                                            const kernel::ObjectType& type, const kernel::DisasterTypes& disasterTypes,
+                                            const kernel::Time_ABC& simulation )
     : controller_  ( controller )
     , converter_   ( converter )
     , pManager_    ( new PropagationManager() )
+    , simulation_  ( simulation )
     , disasterType_( disasterTypes.Get( type.GetDisasterType() ) )
 {
     controller_.Register( *this );
@@ -64,9 +65,9 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // Name: PropagationAttribute::NotifyUpdated
 // Created: LGY 2012-10-16
 // -----------------------------------------------------------------------------
-void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
+void PropagationAttribute::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 {
-    PropagationManager::T_Files files = pManager_->GetFiles( simulation.GetDateTime()
+    PropagationManager::T_Files files = pManager_->GetFiles( simulation_.GetDateTime()
                                                             .toString(  "yyyyMMdd'T'HHmmss" ).toStdString() );
     if( files_ != files )
     {

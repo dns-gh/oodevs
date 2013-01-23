@@ -38,7 +38,8 @@ class ObjectFactory : public ObjectFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                            const kernel::Time_ABC& simulation );
     virtual ~ObjectFactory();
     //@}
 

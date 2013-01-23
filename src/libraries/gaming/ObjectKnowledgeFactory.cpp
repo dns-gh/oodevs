@@ -24,8 +24,9 @@
 // Name: ObjectKnowledgeFactory constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledgeFactory::ObjectKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
-    : attributesFactory_( controllers, model, staticModel )
+ObjectKnowledgeFactory::ObjectKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+                                                const kernel::Time_ABC& simulation )
+    : attributesFactory_( controllers, model, staticModel, simulation )
     , controllers_      ( controllers )
     , model_            ( model )
     , static_           ( staticModel )
