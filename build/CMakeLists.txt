@@ -52,7 +52,7 @@ masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
 masa_set_internal_library( GLEW_LIBRARIES             glew )
-masa_set_internal_library( TERRAINEXTRACTOR_LIBRARIES terrainextractor )
+masa_set_internal_library( EXTRACTOR_LIBRARIES        extractor_d extractor )
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -592,7 +592,7 @@ target_link_libraries( preparation_app
     actions_gui
     frontend
     preparation
-    ${TERRAINEXTRACTOR_LIBRARIES}
+    ${EXTRACTOR_LIBRARIES}
 )
 
 # selftraining_app

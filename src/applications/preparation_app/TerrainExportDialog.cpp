@@ -12,7 +12,7 @@
 #include "moc_TerrainExportDialog.cpp"
 #include "preparation/UrbanModel.h"
 #include "clients_gui/resources.h"
-#include "terrainextractor/TerrainExtractionManager.h"
+#include "extractor/TerrainExtractionManager.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 
