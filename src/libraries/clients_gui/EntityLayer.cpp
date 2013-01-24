@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "EntityLayer.h"
+
+#include "DrawVisitor.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/OptionVariant.h"
@@ -100,7 +102,9 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, kernel::Viewport_ABC& view
         const Positions& positions = entity.Get< Positions >();
         const geometry::Point2f position = positions.GetPosition();
         viewport.SetHotpoint( position );
-        entity.Draw( position, viewport, tools_ );
+        DrawVisitor drawer;
+        entity.Apply( drawer );
+        drawer.Draw( position, viewport, tools_ );
     }
 }
 

@@ -9,17 +9,24 @@
 
 #include "clients_kernel_pch.h"
 #include "Entity_ABC.h"
-#include "Drawable_ABC.h"
-#include "Drawer.h"
+#include "ExtensionVisitor_ABC.h"
 
 using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: EntityBase_ABC::AddExtension
+// Created: LDC 2012-08-20
+// -----------------------------------------------------------------------------
+void EntityBase_ABC::AddExtension( Extension_ABC& ext )
+{
+    GetInterfaces().Register( ext );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC constructor
 // Created: AGE 2006-02-07
 // -----------------------------------------------------------------------------
 Entity_ABC::Entity_ABC()
-    : drawer_( new Drawer() )
 {
     // NOTHING
 }
@@ -39,7 +46,7 @@ Entity_ABC::~Entity_ABC()
 // -----------------------------------------------------------------------------
 const std::string& Entity_ABC::GetTypeName() const
 {
-    static std::string entity( "entity" );
+    static const std::string entity( "entity" );
     return entity;
 }
 
@@ -59,25 +66,17 @@ QString Entity_ABC::GetTooltip() const
 void Entity_ABC::AddExtension( Extension_ABC& ext )
 {
     EntityBase_ABC::AddExtension( ext );
-    drawer_->Register( ext );
+    extensions_.push_back( &ext );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityBase_ABC::AddExtension
-// Created: LDC 2012-08-20
+// Name: Entity_ABC::Apply
+// Created: BAX 2013-01-22
 // -----------------------------------------------------------------------------
-void EntityBase_ABC::AddExtension( Extension_ABC& ext )
+void Entity_ABC::Apply( ExtensionVisitor_ABC< Extension_ABC >& visitor ) const
 {
-    GetInterfaces().Register( ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::Draw
-// Created: AGE 2006-03-31
-// -----------------------------------------------------------------------------
-void Entity_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
-{
-    drawer_->Draw( where, viewport, tools );
+    for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
+        visitor.Visit( **it );
 }
 
 // -----------------------------------------------------------------------------

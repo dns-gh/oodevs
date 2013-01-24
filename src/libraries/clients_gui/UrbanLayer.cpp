@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
+
+#include "DrawVisitor.h"
 #include "View_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
@@ -217,7 +219,9 @@ void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& v
             SelectColor( entity );
             const geometry::Point2f position = positions->Barycenter();
             viewport.SetHotpoint( position );
-            entity.Draw( position, viewport, tools_ );
+            DrawVisitor drawer;
+            entity.Apply( drawer );
+            drawer.Draw( position, viewport, tools_ );
         }
     }
 }

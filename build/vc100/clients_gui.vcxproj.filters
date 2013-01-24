@@ -1419,6 +1419,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Roles.h">
       <Filter>Source Files\MVC\Model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DrawVisitor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">

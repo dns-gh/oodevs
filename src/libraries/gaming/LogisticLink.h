@@ -22,6 +22,8 @@ namespace sword
 namespace kernel
 {
     class Entity_ABC;
+    class Viewport_ABC;
+    class GlTools_ABC;
 }
 
 // =============================================================================

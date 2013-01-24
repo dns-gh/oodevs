@@ -13,6 +13,7 @@
 #include "PopulationConcentration.h"
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
+#include "clients_gui/DrawVisitor.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
@@ -249,18 +250,17 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 // -----------------------------------------------------------------------------
 void Population::Draw( const Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
+
     if( viewport.IsVisible( boundingBox_ ) )
     {
-        {
-            tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
-            while( it.HasMoreElements() )
-                it.NextElement().Draw( where, viewport, tools );
-        }
-        {
-            tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
-            while( it.HasMoreElements() )
-                it.NextElement().Draw( where, viewport, tools );
-        }
+        gui::DrawVisitor drawer;
+        auto concentrations = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
+        while( concentrations.HasMoreElements() )
+            concentrations.NextElement().Apply( drawer );
+        auto flows = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
+        while( flows.HasMoreElements() )
+            flows.NextElement().Apply( drawer );
+        drawer.Draw( where, viewport, tools );
     }
 }
 

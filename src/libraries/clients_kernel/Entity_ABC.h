@@ -29,9 +29,7 @@ namespace kernel
 {
     class Controller;
     class ActionController;
-    class GlTools_ABC;
-    class Drawer;
-    class Viewport_ABC;
+    template< typename T > class ExtensionVisitor_ABC;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -88,15 +86,16 @@ public:
     virtual QString GetTooltip() const;
     //@}
 
-    //! @name Operations
+    //! @name GUI methods
     //@{
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
     virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
 
-    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
-
+    //! @name Extension methods
+    //@{
     virtual void AddExtension( Extension_ABC& ext );
+    virtual void Apply( ExtensionVisitor_ABC< Extension_ABC >& visitor ) const;
     //@}
 
 private:
@@ -109,7 +108,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Drawer > drawer_;
+    std::vector< Extension_ABC* > extensions_;
     //@}
 };
 
