@@ -11,7 +11,6 @@
 #include "Path.h"
 #include "LocationVisitor_ABC.h"
 #include "Positions.h"
-#include "GlTools_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;

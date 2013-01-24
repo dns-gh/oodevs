@@ -10,9 +10,11 @@
 #include "preparation_app_pch.h"
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
+
 #include "ScoreVariableCreationWizard.h"
+
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_gui/UtmParser.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
 #include "indicators/DataTypeFactory.h"
@@ -20,6 +22,7 @@
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
 #include "preparation/StaticModel.h"
+
 #include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -155,7 +158,7 @@ void ScoreVariablesList::Draw( gui::Viewport_ABC& viewport )
     wizard_->Draw( viewport );
     if( location_.get() && isVisible() )
     {
-        kernel::SimpleLocationDrawer drawer( tools_ );
+        gui::SimpleLocationDrawer drawer( tools_ );
         location_->Accept( drawer );
     }
 }

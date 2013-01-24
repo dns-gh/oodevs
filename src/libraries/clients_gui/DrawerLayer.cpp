@@ -119,8 +119,9 @@ void DrawerLayer::NotifySelectionChanged( const std::vector< const kernel::Drawi
 // -----------------------------------------------------------------------------
 void DrawerLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& )
 {
+    assert( dynamic_cast< const Drawing* >( &entity ) );
     if( ShouldDisplay( entity ) )
-        static_cast< const kernel::Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
+        static_cast< const Drawing& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
 }
 
 // -----------------------------------------------------------------------------

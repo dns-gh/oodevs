@@ -10,15 +10,16 @@
 #include "preparation_app_pch.h"
 #include "InhabitantCreationPanel.h"
 #include "moc_InhabitantCreationPanel.cpp"
+
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichSpinBox.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/InhabitantType.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/InhabitantType.h"
+#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "preparation/AgentsModel.h"
 
 #pragma warning( disable : 4355 )
@@ -92,7 +93,7 @@ void InhabitantCreationPanel::Draw( gui::Viewport_ABC& /*viewport*/ )
 {
     if( location_ )
     {
-        SimpleLocationDrawer visitor( tools_ );
+        gui::SimpleLocationDrawer visitor( tools_ );
         location_->Accept( visitor );
     }
 }

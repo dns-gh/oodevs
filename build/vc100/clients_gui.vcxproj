@@ -166,6 +166,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SimpleLocationDrawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StandardModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
@@ -958,6 +959,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SimpleLocationDrawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

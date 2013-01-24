@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "TacticalGraphics.h"
+
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "SvgLocationDrawer.h"
+
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
 
 using namespace gui;
 
@@ -93,18 +95,18 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
         renderer->Draw( location, viewport, tools, color_, overlined, zoom );
     else
     {
-        kernel::SimpleLocationDrawer drawer( tools );
+        gui::SimpleLocationDrawer drawer( tools );
         glPushAttrib( GL_LINE_BIT );
-            if( overlined )
-            {
-                glPushAttrib( GL_CURRENT_BIT );
-                    glColor4f( 0, 0, 0, 0.5f );
-                    glLineWidth( 6.f );
-                    location.Accept( drawer );
-                glPopAttrib();
-            }
-            glLineWidth( 2.f );
-            location.Accept( drawer );
+        if( overlined )
+        {
+            glPushAttrib( GL_CURRENT_BIT );
+                glColor4f( 0, 0, 0, 0.5f );
+                glLineWidth( 6.f );
+                location.Accept( drawer );
+            glPopAttrib();
+        }
+        glLineWidth( 2.f );
+        location.Accept( drawer );
         glPopAttrib();
     }
 }

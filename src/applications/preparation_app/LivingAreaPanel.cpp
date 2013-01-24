@@ -10,15 +10,16 @@
 #include "preparation_app_pch.h"
 #include "LivingAreaPanel.h"
 #include "moc_LivingAreaPanel.cpp"
-#include "preparation/InhabitantPositions.h"
+
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/Options.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
-#include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/tools.h"
+#include "preparation/InhabitantPositions.h"
 
 namespace
 {
@@ -138,7 +139,7 @@ void LivingAreaPanel::Handle( kernel::Location_ABC& location )
 // -----------------------------------------------------------------------------
 void LivingAreaPanel::Draw( gui::Viewport_ABC& /*viewport*/ )
 {
-    kernel::SimpleLocationDrawer visitor( tools_ );
+    gui::SimpleLocationDrawer visitor( tools_ );
     if( location_ )
         location_->Accept( visitor );
 }

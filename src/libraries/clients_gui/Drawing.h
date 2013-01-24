@@ -50,6 +50,7 @@ public:
 
     virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Edit( ParametersLayer& parameters ) = 0;
+    virtual void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const = 0;
     //@}
 
 protected:

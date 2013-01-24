@@ -154,9 +154,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\LocationProximityComputer.cpp">
       <Filter>Source Files\Tools\Locations\Visitors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.cpp">
-      <Filter>Source Files\Tools\Locations\Visitors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\AccommodationType.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
@@ -616,9 +613,6 @@
       <Filter>Source Files\Tools\Locations\Visitors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\LocationVisitor_ABC.h">
-      <Filter>Source Files\Tools\Locations\Visitors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleLocationDrawer.h">
       <Filter>Source Files\Tools\Locations\Visitors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\AccommodationType.h">

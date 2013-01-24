@@ -7,27 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __SimpleLocationDrawer_h_
-#define __SimpleLocationDrawer_h_
+#ifndef CLIENTS_GUI_SIMPLELOCATIONDRAWER_H__
+#define CLIENTS_GUI_SIMPLELOCATIONDRAWER_H__
 
-#include "LocationVisitor_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 
 namespace kernel
 {
     class GlTools_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  SimpleLocationDrawer
     @brief  SimpleLocationDrawer
 */
 // Created: SBO 2008-05-30
 // =============================================================================
-class SimpleLocationDrawer : public LocationVisitor_ABC
+class SimpleLocationDrawer : public kernel::LocationVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SimpleLocationDrawer( const GlTools_ABC& tools );
+    explicit SimpleLocationDrawer( const kernel::GlTools_ABC& tools );
     virtual ~SimpleLocationDrawer();
     //@}
 
@@ -51,10 +54,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const GlTools_ABC& tools_;
+    const kernel::GlTools_ABC& tools_;
     //@}
 };
 
 }
 
-#endif // __SimpleLocationDrawer_h_
+#endif // CLIENTS_GUI_SIMPLELOCATIONDRAWER_H__

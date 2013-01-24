@@ -9,7 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "ShapeHandler_ABC.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
+
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Location_ABC.h"
 
 using namespace gui;
@@ -38,6 +39,6 @@ ShapeHandler_ABC::~ShapeHandler_ABC()
 // -----------------------------------------------------------------------------
 void ShapeHandler_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const kernel::GlTools_ABC& tools ) const
 {
-    kernel::SimpleLocationDrawer drawer( tools );
+    gui::SimpleLocationDrawer drawer( tools );
     location.Accept( drawer );
 }

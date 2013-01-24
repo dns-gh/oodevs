@@ -9,11 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "Gl3dWidget.h"
+
 #include "EntityLayer.h"
+
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_kernel/UrbanColor_ABC.h"
+
 #include <graphics/Compass.h>
 #include <graphics/Visitor3d.h>
 #include <graphics/ViewFrustum.h>
@@ -540,9 +543,9 @@ void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kern
 {
     // $$$$ SBO 2009-05-29: TODO: use SVG renderer instead
     glPushAttrib( GL_LINE_BIT );
-        glLineWidth( 3.f );
-        kernel::SimpleLocationDrawer drawer( *this );
-        location.Accept( drawer );
+    glLineWidth( 3.f );
+    gui::SimpleLocationDrawer drawer( *this );
+    location.Accept( drawer );
     glPopAttrib();
 }
 

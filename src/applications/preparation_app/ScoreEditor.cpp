@@ -10,13 +10,15 @@
 #include "preparation_app_pch.h"
 #include "ScoreEditor.h"
 #include "moc_ScoreEditor.cpp"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
+
 #include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
 #include "ScoreProfilesPage.h"
 #include "ScoreVariablesList.h"
 #include "ScoreSyntaxHighlighter.h"
+
+#include "clients_gui/SimpleLocationDrawer.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
 #include "indicators/Primitive.h"
 #include "indicators/Variables.h"
@@ -24,6 +26,7 @@
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/ProfileSelection.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

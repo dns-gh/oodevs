@@ -9,7 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "Rectangle.h"
-#include "GlTools_ABC.h"
 #include "LocationVisitor_ABC.h"
 #include "Tools.h"
 

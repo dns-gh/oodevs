@@ -12,7 +12,7 @@
 #include "ScoreList.h"
 #include "moc_ScoreDialog.cpp"
 #include "actions_gui/InterfaceBuilder.h"
-#include "clients_kernel/SimpleLocationDrawer.h"
+#include "clients_gui/SimpleLocationDrawer.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 

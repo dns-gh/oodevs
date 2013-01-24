@@ -15,7 +15,6 @@
 namespace kernel
 {
 class Location_ABC;
-class GlTools_ABC;
 
 // =============================================================================
 /** @class  Drawing_ABC
@@ -45,7 +44,6 @@ public:
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const = 0;
     virtual void NotifyDestruction() const = 0;
     virtual const kernel::Location_ABC& GetLocation() const = 0;
-    virtual void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const = 0;
     //@}
 };
 

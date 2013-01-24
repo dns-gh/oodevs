@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "SimpleLocationDrawer.h"
-#include "GlTools_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: SimpleLocationDrawer constructor
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools )
+SimpleLocationDrawer::SimpleLocationDrawer( const kernel::GlTools_ABC& tools )
     : tools_( tools )
 {
     // NOTHING
