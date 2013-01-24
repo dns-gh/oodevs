@@ -110,7 +110,7 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
             symbol.pop_back();
         }
     }
-    throw;
+    throw MASA_EXCEPTION( "Symbol not found" );
 }
 
 // -----------------------------------------------------------------------------
