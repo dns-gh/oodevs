@@ -77,7 +77,7 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
 // -----------------------------------------------------------------------------
 void MoveCommand::CreateNewPath( const wrapper::View& entity ) const
 {
-    auto mainPath = mainPath_.lock();
+    boost::shared_ptr< Agent_Path > mainPath = mainPath_.lock();
     assert( mainPath->GetState() != Path_ABC::eComputing );
     const T_PointVector& nextWaypoints = mainPath->GetNextWaypoints();
     const PathType& pathType = mainPath->GetPathType();
@@ -150,7 +150,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     if( mainPath_.expired() )
         return PostCallback( PathWalker::eNotAllowed );
 
-    boost::shared_ptr< PathResult > mainPath( mainPath_ );
+    boost::shared_ptr< PathResult > mainPath = mainPath_.lock();
     if( ( AvoidObstacles( model, entity, position ) && GET_HOOK( EntityManagerFindObject )( obstacleId_ ) ) ||
         ( executionSuspended_ && mainPath->GetState() != Path_ABC::eComputing &&
         ( mainPath->GetCurrentKeyOnPath() == mainPath->GetResult().end() || position != (*mainPath->GetCurrentKeyOnPath())->GetPos() ) ) )

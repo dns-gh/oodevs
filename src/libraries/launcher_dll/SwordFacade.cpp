@@ -68,7 +68,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 // -----------------------------------------------------------------------------
 void SwordFacade::Stop()
 {
-    boost::shared_ptr< frontend::ProcessWrapper > process( process_ );
+    boost::shared_ptr< frontend::ProcessWrapper > process = process_.lock();
     if( ! process )
         return;
     if( IsConnected() && client_ )

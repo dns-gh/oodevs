@@ -15,7 +15,7 @@
 boost::shared_ptr< TER_LimitData > TER_LimitDataManager::CreateLimit( const T_PointVector& points )
 {
     boost::weak_ptr< TER_LimitData >& w = limits_[ points ];
-    boost::shared_ptr< TER_LimitData > p( w );
+    boost::shared_ptr< TER_LimitData > p = w.lock();
     if( ! p )
     {
         p.reset( new TER_LimitData( points ), boost::bind( &TER_LimitDataManager::DeleteLimit, this, _1 ) );
