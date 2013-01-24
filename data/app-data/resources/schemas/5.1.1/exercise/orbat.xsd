@@ -1065,10 +1065,28 @@
 							<xs:documentation xml:lang="fr">Vrai si l'unité est un poste de commande.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
+					<xs:attribute name="nature" type="app6SymbolType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the nature of the automaton following APP6 symbology.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit la nature de l'automat suivant la symbologie APP6.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="level" type="hierarchicalLevelType" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines the hierarchical level of the formation.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit le niveau hiérarchique de la formation.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 					<xs:attribute name="color" type="T_ColorRGB" use="optional">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
 							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="overridden-symbol" type="xs:boolean" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Defines if the symbol has been manually overridden in preparation.</xs:documentation>
+							<xs:documentation xml:lang="fr">Définit si le symbole a été surchargé en préparation.</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
