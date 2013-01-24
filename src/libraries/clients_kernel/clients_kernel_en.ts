@@ -47,86 +47,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>PhysicalFeatures/Architecture/trafficability</source>
-        <translation>PhysicalFeatures/Architecture/trafficability</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/Height</source>
-        <translation>PhysicalFeatures/Architecture/Height</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/floorNumber</source>
-        <translation>PhysicalFeatures/Architecture/floorNumber</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/parkingFloors</source>
-        <translation>PhysicalFeatures/Architecture/parkingFloors</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/roofShape</source>
-        <translation>PhysicalFeatures/Architecture/roofShape</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/material</source>
-        <translation>PhysicalFeatures/Architecture/material</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/occupation</source>
-        <translation>PhysicalFeatures/Architecture/occupation</translation>
-    </message>
-    <message>
-        <source>Info/Template</source>
-        <translation>Info/Template</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture</source>
-        <translation>PhysicalFeatures/Architecture</translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation>Density:</translation>
-    </message>
-    <message>
-        <source>Total of inhabitants:</source>
-        <translation>Total of inhabitants:</translation>
-    </message>
-    <message>
-        <source>Occupation rate (%L1):</source>
-        <translation>Occupation rate (%L1):</translation>
-    </message>
-    <message>
-        <source>Populations/</source>
-        <translation>Populations/</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation>Resident</translation>
-    </message>
-    <message>
-        <source>Occupation rate</source>
-        <translation>Occupation rate</translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation>Alerted</translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation>Confined</translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation>Evacuated</translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation>Angriness</translation>
-    </message>
-    <message>
-        <source>Occupations/</source>
-        <translation>Occupations/</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Motivations/</source>
         <translation>PhysicalFeatures/Motivations/</translation>
     </message>
@@ -516,13 +436,6 @@
     <message>
         <source>mines/m</source>
         <translation>mines/m</translation>
-    </message>
-</context>
-<context>
-    <name>Urban</name>
-    <message>
-        <source>Urban block[%L1]</source>
-        <translation>Urban block[%L1]</translation>
     </message>
 </context>
 <context>

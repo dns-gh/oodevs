@@ -47,78 +47,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>Density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total of inhabitants:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Occupation rate (%L1):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Populations/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Occupation rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Occupations/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/floorNumber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/parkingFloors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/roofShape</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/material</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/occupation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/trafficability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Motivations/</source>
         <translation type="unfinished"></translation>
     </message>
@@ -136,14 +64,6 @@
     </message>
     <message>
         <source>/Maximal capacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Template</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -516,13 +436,6 @@
     <message>
         <source>mines/m</source>
         <translation>minas/m</translation>
-    </message>
-</context>
-<context>
-    <name>Urban</name>
-    <message>
-        <source>Urban block[%L1]</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

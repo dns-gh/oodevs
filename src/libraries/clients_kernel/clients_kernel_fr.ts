@@ -47,78 +47,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>Density:</source>
-        <translation>Densité :</translation>
-    </message>
-    <message>
-        <source>Total of inhabitants:</source>
-        <translation>Population totale:</translation>
-    </message>
-    <message>
-        <source>Occupation rate (%L1):</source>
-        <translation>&gt;Taux d&apos;occupation (%L1):</translation>
-    </message>
-    <message>
-        <source>Populations/</source>
-        <translation>Populations/</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation>Résident</translation>
-    </message>
-    <message>
-        <source>Occupation rate</source>
-        <translation>Taux d&apos;occupation</translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation>Alerté</translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation>Confiné</translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation>Evacué</translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation>Colère</translation>
-    </message>
-    <message>
-        <source>Occupations/</source>
-        <translation>Occupations/</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/Height</source>
-        <translation>Eléments physiques/Architecture/Hauteur</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/floorNumber</source>
-        <translation>Eléments physiques/Architecture/Nombre d&apos;étages</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/roofShape</source>
-        <translation>Eléments physiques/Architecture/Toit</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/material</source>
-        <translation>Eléments physiques/Architecture/Matériau</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/occupation</source>
-        <translation>Eléments physiques/Architecture/Densité du bâti au sol</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/trafficability</source>
-        <translation>Eléments physiques/Architecture/Traficabilité</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/parkingFloors</source>
-        <translation>Eléments physiques/Architecture/Etages de parking</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Motivations/</source>
         <translation>Eléments physiques/Motivations/</translation>
     </message>
@@ -137,14 +65,6 @@
     <message>
         <source>/Maximal capacity</source>
         <translation>/Capacité maximale</translation>
-    </message>
-    <message>
-        <source>Info/Template</source>
-        <translation>Info/Patron</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture</source>
-        <translation>Eléments physiques/Architecture</translation>
     </message>
 </context>
 <context>
@@ -516,13 +436,6 @@
     <message>
         <source>mines/m</source>
         <translation>mines/m</translation>
-    </message>
-</context>
-<context>
-    <name>Urban</name>
-    <message>
-        <source>Urban block[%L1]</source>
-        <translation>Bloc urbain[%L1]</translation>
     </message>
 </context>
 <context>

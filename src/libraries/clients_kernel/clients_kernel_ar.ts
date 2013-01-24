@@ -47,86 +47,6 @@
 <context>
     <name>Block</name>
     <message>
-        <source>PhysicalFeatures/Architecture/trafficability</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/ترافيكابيليتي</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/Height</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/الارتفاع</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/floorNumber</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/فلورنومبير</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/parkingFloors</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/باركينجفلورس</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/roofShape</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/روفشابي</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/material</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/المواد</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/occupation</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية/الاحتلال</translation>
-    </message>
-    <message>
-        <source>Info/Template</source>
-        <translation type="unfinished">معلومات/قالب</translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture</source>
-        <translation type="unfinished">فيسيكالفيتوريس/الهندسة المعمارية</translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation type="unfinished">الكثافة:</translation>
-    </message>
-    <message>
-        <source>Total of inhabitants:</source>
-        <translation type="unfinished">مجموع السكان:</translation>
-    </message>
-    <message>
-        <source>Occupation rate (%L1):</source>
-        <translation type="unfinished">معدل أشغال (% L1):</translation>
-    </message>
-    <message>
-        <source>Populations/</source>
-        <translation type="unfinished">السكان/</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation type="unfinished">المقيم</translation>
-    </message>
-    <message>
-        <source>Occupation rate</source>
-        <translation type="unfinished">معدل أشغال</translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation type="unfinished">نبهت</translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation type="unfinished">تقتصر</translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation type="unfinished">تم إجلاء</translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation type="unfinished">أنجرينيس</translation>
-    </message>
-    <message>
-        <source>Occupations/</source>
-        <translation type="unfinished">مهن/</translation>
-    </message>
-    <message>
         <source>PhysicalFeatures/Motivations/</source>
         <translation type="unfinished">فيسيكالفيتوريس/الدوافع/</translation>
     </message>
@@ -516,13 +436,6 @@
     <message>
         <source>mines/m</source>
         <translation type="unfinished">الألغام/م</translation>
-    </message>
-</context>
-<context>
-    <name>Urban</name>
-    <message>
-        <source>Urban block[%L1]</source>
-        <translation type="unfinished">كتلة حضرية [% L1]</translation>
     </message>
 </context>
 <context>
