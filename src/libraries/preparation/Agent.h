@@ -11,7 +11,7 @@
 #define __Agent_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -43,7 +43,7 @@ namespace tools
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
+class Agent : public gui::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Displayable_ABC
             , public gui::Drawable_ABC

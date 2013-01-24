@@ -7,15 +7,17 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Team.h"
-#include "CommunicationHierarchies.h"
-#include "Controllers.h"
-#include "PropertiesDictionary.h"
-#include "TacticalHierarchies.h"
-#include "Tools.h"
+
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Team::Team

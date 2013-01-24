@@ -11,8 +11,8 @@
 #define __Automat_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ namespace tools
 */
 // Created: AGE 2006-10-06
 // =============================================================================
-class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
+class Automat : public gui::EntityImplementation< kernel::Automat_ABC >
               , public kernel::Extension_ABC
               , public gui::Drawable_ABC
 {

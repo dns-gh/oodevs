@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "Controller.h"
-#include "InstanciationComplete.h"
-#include "PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/InstanciationComplete.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Tools.h"
 
-namespace kernel
+namespace gui
 {
 // -----------------------------------------------------------------------------
 // Name: EntityImplementation destructor
@@ -51,7 +51,7 @@ unsigned long EntityImplementation< I >::GetId() const
 template< typename I >
 void EntityImplementation< I >::Polish()
 {
-    Update( InstanciationComplete() );
+    Update( kernel::InstanciationComplete() );
     controller_.Create( This() );
     controller_.Create( *(Entity_ABC*)this );
 }

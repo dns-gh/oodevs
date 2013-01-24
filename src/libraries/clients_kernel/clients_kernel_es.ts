@@ -280,17 +280,6 @@
     </message>
 </context>
 <context>
-    <name>EntityImplementation</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EntityType</name>
     <message>
         <source>Info/Type</source>

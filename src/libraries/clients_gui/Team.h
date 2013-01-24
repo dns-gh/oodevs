@@ -11,28 +11,31 @@
 #define __clientskernel_Team_h_
 
 #include "EntityImplementation.h"
-#include "OptionsObserver_ABC.h"
-#include "Team_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 namespace kernel
 {
     class OptionVariant;
     class Controllers;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Team
     @brief  Team
 */
 // Created: LDC 2012-05-07
 // =============================================================================
-class Team : public EntityImplementation< Team_ABC >
+class Team : public gui::EntityImplementation< kernel::Team_ABC >
            , public kernel::OptionsObserver_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( Controllers& controller, unsigned long id, const QString& name );
+             Team( kernel::Controllers& controller, unsigned long id, const QString& name );
     virtual ~Team();
     //@}
 

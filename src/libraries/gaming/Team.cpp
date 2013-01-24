@@ -38,7 +38,7 @@ namespace
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
 Team::Team( const sword::PartyCreation& message, kernel::Controllers& controllers )
-    : kernel::Team( controllers, message.party().id(), QString( message.name().c_str() ) )
+    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ) )
     , karma_      ( MakeKarma( message.type() ) )
 {
     controllers_.Register( *this );

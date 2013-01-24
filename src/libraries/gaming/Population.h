@@ -11,7 +11,7 @@
 #define __Population_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -40,7 +40,7 @@ namespace sword
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class Population : public kernel::EntityImplementation< kernel::Population_ABC >
+class Population : public gui::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Updatable_ABC< sword::CrowdFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
                  , public kernel::Updatable_ABC< sword::CrowdFlowUpdate >
                  , public kernel::Updatable_ABC< sword::CrowdFlowDestruction >

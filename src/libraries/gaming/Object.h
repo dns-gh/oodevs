@@ -10,8 +10,8 @@
 #ifndef __Object_h_
 #define __Object_h_
 
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Types.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -36,7 +36,7 @@ namespace kernel
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object : public kernel::EntityImplementation< kernel::Object_ABC >
+class Object : public gui::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
              , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {

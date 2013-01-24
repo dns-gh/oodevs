@@ -10,8 +10,8 @@
 #ifndef CLIENTS_GUI_URBANOBJECT_H__
 #define CLIENTS_GUI_URBANOBJECT_H__
 
+#include "EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/HumanDefs.h"
 #include "clients_kernel/StructuralStateAttribute_ABC.h"
@@ -50,7 +50,7 @@ namespace gui
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanObject : public kernel::EntityImplementation< kernel::UrbanObject_ABC >
+class UrbanObject : public gui::EntityImplementation< kernel::UrbanObject_ABC >
                   , public kernel::Extension_ABC
                   , public kernel::Displayable_ABC
                   , public kernel::Updatable_ABC< sword::UrbanUpdate >

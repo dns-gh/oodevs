@@ -11,8 +11,8 @@
 #define __TacticalLine_ABC_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Types.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
@@ -43,7 +43,7 @@ namespace tools
 */
 // Created: APE 2004-04-14
 // =============================================================================
-class TacticalLine_ABC : public kernel::EntityImplementation< kernel::TacticalLine_ABC >
+class TacticalLine_ABC : public gui::EntityImplementation< kernel::TacticalLine_ABC >
                        , public kernel::Extension_ABC
                        , public gui::Drawable_ABC
 {

@@ -11,7 +11,7 @@
 #define __Inhabitant_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -42,7 +42,7 @@ class UrbanModel;
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
+class Inhabitant : public gui::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Updatable_ABC< sword::PopulationUpdate >
                  , public kernel::Positions
                  , public tools::Observer_ABC

@@ -155,7 +155,7 @@
     </message>
     <message>
         <source>PhysicalFeatures/Architecture</source>
-        <translation>>Eléments physiques/Architecture</translation>
+        <translation>Eléments physiques/Architecture</translation>
     </message>
 </context>
 <context>
@@ -163,6 +163,10 @@
     <message>
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identifiant</translation>
     </message>
 </context>
 <context>

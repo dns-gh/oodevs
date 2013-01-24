@@ -10,7 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "clients_kernel/Team.h"
+#include "clients_gui/Team.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -36,7 +36,7 @@ namespace tools
 */
 // Created: SBO 2006-08-29
 // =============================================================================
-class Team : public kernel::Team
+class Team : public gui::Team
            , public kernel::Extension_ABC
            , public tools::Observer_ABC
 {

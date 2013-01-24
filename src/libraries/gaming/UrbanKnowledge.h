@@ -11,12 +11,12 @@
 #define __UrbanKnowledge_h_
 
 #include "tools/Resolver.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 
 namespace kernel
 {
@@ -37,7 +37,7 @@ namespace sword
 */
 // Created: MGD 2009-12-10
 // =============================================================================
-class UrbanKnowledge : public kernel::EntityImplementation< kernel::UrbanKnowledge_ABC >
+class UrbanKnowledge : public gui::EntityImplementation< kernel::UrbanKnowledge_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
                      , public kernel::Displayable_ABC

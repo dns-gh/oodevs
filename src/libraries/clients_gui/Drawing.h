@@ -11,8 +11,8 @@
 #define __gui_Drawing_h_
 
 #include "ShapeHandler_ABC.h"
+#include "EntityImplementation.h"
 #include "clients_kernel/Drawing_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 
 namespace xml
 {
@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2008-05-29
 // =============================================================================
-class Drawing : public kernel::EntityImplementation< kernel::Drawing_ABC >
+class Drawing : public EntityImplementation< kernel::Drawing_ABC >
               , public ShapeHandler_ABC
 {
 public:

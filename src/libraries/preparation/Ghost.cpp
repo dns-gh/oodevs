@@ -51,7 +51,7 @@ using namespace kernel;
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
 Ghost::Ghost( kernel::Controller& controller, const Model& model, tools::IdManager& idManager, const kernel::CoordinateConverter_ABC& converter, const GhostPrototype& prototype )
-    : EntityImplementation< Ghost_ABC >( controller, idManager.GetNextId(), prototype.name_.c_str() )
+    : gui::EntityImplementation< Ghost_ABC >( controller, idManager.GetNextId(), prototype.name_.c_str() )
     , model_             ( model )
     , converter_         ( converter )
     , ghostType_         ( prototype.ghostType_ )
@@ -204,7 +204,7 @@ void Ghost::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Ghost::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::Ghost_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::Ghost_ABC >::SerializeAttributes( xos );
     assert( ghostType_ != eGhostType_Invalid );
     xos << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
         << xml::attribute( "type", type_.toStdString() )

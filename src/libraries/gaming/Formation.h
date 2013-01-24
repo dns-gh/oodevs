@@ -11,8 +11,8 @@
 #define __Formation_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword
@@ -33,7 +33,7 @@ namespace kernel
 */
 // Created: AGE 2006-10-19
 // =============================================================================
-class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
+class Formation : public gui::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Updatable_ABC< sword::FormationUpdate >
                 , public kernel::Extension_ABC
                 , public gui::Drawable_ABC

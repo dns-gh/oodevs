@@ -156,7 +156,7 @@ void Formation::SetLevel( E_NatureLevel level )
 // -----------------------------------------------------------------------------
 void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::Formation_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::Formation_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );
 }
 

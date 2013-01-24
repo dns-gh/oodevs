@@ -13,7 +13,6 @@
 #include "AgentHierarchies.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/App6Symbol.h"
@@ -154,7 +153,7 @@ void Agent::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::Agent_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::Agent_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "type", type_.GetName() );
     if( level_ != ENT_Tr::ConvertToNatureLevel( type_.GetNature().GetLevel() ) )
         xos << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( level_ ) );

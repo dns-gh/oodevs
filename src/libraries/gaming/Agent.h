@@ -11,7 +11,7 @@
 #define __Agent_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
@@ -37,7 +37,7 @@ class Equipments;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
+class Agent : public gui::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Displayable_ABC
             , public tools::Observer_ABC

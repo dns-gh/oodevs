@@ -11,9 +11,9 @@
 #define __PopulationKnowledge_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 
@@ -43,7 +43,7 @@ class PopulationFlowKnowledge;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public kernel::EntityImplementation< kernel::PopulationKnowledge_ABC >
+class PopulationKnowledge : public gui::EntityImplementation< kernel::PopulationKnowledge_ABC >
                           , public tools::Resolver< PopulationFlowKnowledge >
                           , public tools::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Extension_ABC

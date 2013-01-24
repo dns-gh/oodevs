@@ -25,7 +25,7 @@ using namespace kernel;
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 Object::Object( const sword::ObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
-    : EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), true )
+    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), true )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
 {

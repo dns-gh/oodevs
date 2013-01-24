@@ -10,7 +10,7 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -39,7 +39,7 @@ namespace tools
 */
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object : public kernel::EntityImplementation< kernel::Object_ABC >
+class Object : public gui::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
 {
 public:

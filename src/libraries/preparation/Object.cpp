@@ -101,7 +101,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::Object_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::Object_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "type", type_.GetType() );
 }
 

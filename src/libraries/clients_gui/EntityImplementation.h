@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef kernel_EntityImplementation_h
-#define kernel_EntityImplementation_h
+#ifndef CLIENTS_GUI_ENTITY_IMPLEMENTATION_H__
+#define CLIENTS_GUI_ENTITY_IMPLEMENTATION_H__
 
-#include "Serializable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
@@ -20,7 +20,10 @@ namespace kernel
 {
     class Controller;
     class PropertiesDictionary;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  EntityImplementation
     @brief  Entity implementation
@@ -29,13 +32,13 @@ namespace kernel
 // =============================================================================
 template< typename I >
 class EntityImplementation : public I
-                           , public Serializable_ABC
-                           , private boost::noncopyable
+                           , public kernel::Serializable_ABC
+                           , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityImplementation( Controller& controller, unsigned long id, const QString& name, bool readOnly = false );
+             EntityImplementation( kernel::Controller& controller, unsigned long id, const QString& name, bool readOnly = false );
     virtual ~EntityImplementation();
     //@}
 
@@ -69,8 +72,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    PropertiesDictionary* dictionary_;
+    kernel::Controller& controller_;
+    kernel::PropertiesDictionary* dictionary_;
     //@}
 
 protected:
@@ -86,11 +89,11 @@ protected:
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
 template< typename I >
-EntityImplementation< I >::EntityImplementation( Controller& controller, unsigned long id, const QString& name, bool readOnly = false )
+EntityImplementation< I >::EntityImplementation( kernel::Controller& controller, unsigned long id, const QString& name, bool readOnly = false )
     : controller_( controller )
     , id_        ( id )
     , name_      ( name )
-    , dictionary_( new PropertiesDictionary( controller ) )
+    , dictionary_( new kernel::PropertiesDictionary( controller ) )
 {
     Attach( *dictionary_ );
     dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), id_ );
@@ -101,4 +104,4 @@ EntityImplementation< I >::EntityImplementation( Controller& controller, unsigne
 
 #include "EntityImplementation.inl"
 
-#endif // kernel_EntityImplementation_h
+#endif // CLIENTS_GUI_ENTITY_IMPLEMENTATION_H__

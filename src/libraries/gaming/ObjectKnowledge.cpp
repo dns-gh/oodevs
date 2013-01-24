@@ -30,7 +30,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller,
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
-    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", true )
+    : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", true )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )

@@ -11,8 +11,8 @@
 #define __Ghost_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
@@ -52,7 +52,7 @@ class StaticModel;
 */
 // Created: ABR 2011-10-14
 // =============================================================================
-class Ghost : public kernel::EntityImplementation< kernel::Ghost_ABC >
+class Ghost : public gui::EntityImplementation< kernel::Ghost_ABC >
             , public kernel::Extension_ABC
             , public kernel::Displayable_ABC
             , public gui::Drawable_ABC

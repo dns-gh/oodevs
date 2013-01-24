@@ -10,7 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "clients_kernel/Team.h"
+#include "clients_gui/Team.h"
 #include "clients_kernel/Karma.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ namespace sword
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Team : public kernel::Team
+class Team : public gui::Team
            , public tools::Observer_ABC
 {
 public:

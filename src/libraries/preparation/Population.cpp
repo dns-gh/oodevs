@@ -177,7 +177,7 @@ void Population::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Population::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::Population_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::Population_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "attitude", attitude_.ToXml() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )

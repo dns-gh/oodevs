@@ -21,7 +21,7 @@
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, tools::IdManager& idManager )
-    : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
+    : gui::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
     , healthNeed_( 0 )
     , text_      ( "" )
 {
@@ -39,7 +39,7 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager )
-    : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    : gui::EntityImplementation< kernel::Inhabitant_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
 {
     xis >> xml::start( "composition" )
             >> xml::attribute( "healthy", healthy_ )
@@ -91,7 +91,7 @@ void Inhabitant::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::Inhabitant_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::Inhabitant_ABC >::SerializeAttributes( xos );
     xos << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )
             << xml::attribute( "wounded", wounded_ )

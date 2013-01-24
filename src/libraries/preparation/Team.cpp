@@ -20,7 +20,7 @@
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 Team::Team( kernel::Controllers& controllers, tools::IdManager& idManager )
-    : kernel::Team( controllers, idManager.GetNextId(), "" )
+    : gui::Team( controllers, idManager.GetNextId(), "" )
 {
     name_ = tools::translate( "Preparation", "Army %L1" ).arg( id_ );
     AddExtension( *this );
@@ -32,7 +32,7 @@ Team::Team( kernel::Controllers& controllers, tools::IdManager& idManager )
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Team::Team( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager )
-    : kernel::Team( controllers, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    : gui::Team( controllers, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
 {
     AddExtension( *this );
     idManager.Lock( id_ );

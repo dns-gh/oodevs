@@ -21,7 +21,7 @@
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, tools::IdManager& idManager )
-    : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     AddExtension( *this );
     name_ = ( baseName + " %L1" ).arg( id_ );
@@ -32,7 +32,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QStrin
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, tools::IdManager& idManager )
-    : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     AddExtension( *this );
     std::string name;

@@ -12,8 +12,8 @@
 
 #include "EnumTypes.h"
 #include "PopulationRepartition.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -41,7 +41,7 @@ namespace tools
 */
 // Created: SBO 2006-11-08
 // =============================================================================
-class Population : public kernel::EntityImplementation< kernel::Population_ABC >
+class Population : public gui::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Displayable_ABC
 {

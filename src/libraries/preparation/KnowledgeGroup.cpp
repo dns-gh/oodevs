@@ -128,7 +128,7 @@ void KnowledgeGroup::SetType( KnowledgeGroupType* const& type )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
-    kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >::SerializeAttributes( xos );
+    gui::EntityImplementation< kernel::KnowledgeGroup_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "type", type_->GetName() ); // type_ cannot be null (else, exception thrown in constructor)
 }
 

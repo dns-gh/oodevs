@@ -17,7 +17,7 @@ using namespace gui;
 // Created: SBO 2008-05-29
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controller& controller, unsigned long id, const QString& name )
-    : kernel::EntityImplementation< Drawing_ABC >( controller, id, name )
+    : gui::EntityImplementation< Drawing_ABC >( controller, id, name )
 {
     // NOTHING
 }

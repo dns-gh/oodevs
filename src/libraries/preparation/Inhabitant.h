@@ -10,7 +10,7 @@
 #ifndef __Inhabitant_h_
 #define __Inhabitant_h_
 
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ namespace tools
 */
 // Created: SBO 2006-11-08
 // =============================================================================
-class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
+class Inhabitant : public gui::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Extension_ABC
 {
 public:

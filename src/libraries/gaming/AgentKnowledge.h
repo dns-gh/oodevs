@@ -11,9 +11,9 @@
 #define __AgentKnowledge_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Types.h"
 #include "protocol/Protocol.h"
@@ -33,7 +33,7 @@ namespace kernel
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowledge_ABC >
+class AgentKnowledge : public gui::EntityImplementation< kernel::AgentKnowledge_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
                      , public kernel::Displayable_ABC

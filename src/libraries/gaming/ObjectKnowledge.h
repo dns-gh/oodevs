@@ -10,12 +10,12 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "tools/Resolver.h"
 
 namespace sword
@@ -39,7 +39,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public kernel::EntityImplementation< kernel::ObjectKnowledge_ABC >
+class ObjectKnowledge : public gui::EntityImplementation< kernel::ObjectKnowledge_ABC >
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
                       , public kernel::Displayable_ABC

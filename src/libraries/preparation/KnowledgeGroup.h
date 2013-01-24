@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
 
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "tools/Resolver_ABC.h"
@@ -36,7 +36,7 @@ namespace tools
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
+class KnowledgeGroup : public gui::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC
 {
 public:

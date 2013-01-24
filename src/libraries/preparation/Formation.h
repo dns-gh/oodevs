@@ -11,7 +11,7 @@
 #define __Formation_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
+#include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 
@@ -42,7 +42,7 @@ namespace tools
 */
 // Created: SBO 2006-09-19
 // =============================================================================
-class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
+class Formation : public gui::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Extension_ABC
                 , public gui::Drawable_ABC
 {
