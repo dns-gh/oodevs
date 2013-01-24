@@ -90,12 +90,14 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\rpr\BreachableSegmentStruct.cpp" />
     <ClCompile Include="..\..\src\libraries\rpr\Coordinates.cpp" />
     <ClCompile Include="..\..\src\libraries\rpr\EntityIdentifier.cpp" />
     <ClCompile Include="..\..\src\libraries\rpr\EntityType.cpp" />
     <ClCompile Include="..\..\src\libraries\rpr\EntityTypeResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\rpr\BreachableSegmentStruct.h" />
     <ClInclude Include="..\..\src\libraries\rpr\Coordinates.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityIdentifier.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityType.h" />

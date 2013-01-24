@@ -21,6 +21,9 @@
     <ClCompile Include="..\..\src\libraries\rpr\EntityTypeResolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\rpr\BreachableSegmentStruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\rpr\Coordinates.h">
@@ -42,6 +45,9 @@
       <Filter>Source Files\enum</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\rpr\Enums.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\rpr\BreachableSegmentStruct.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
