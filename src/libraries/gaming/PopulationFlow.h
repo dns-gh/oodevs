@@ -10,9 +10,9 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ namespace sword
 class PopulationFlow : public kernel::PopulationFlow_ABC
                      , public kernel::Positions
                      , public kernel::Updatable_ABC< sword::CrowdFlowUpdate >
-                     , public kernel::Drawable_ABC
+                     , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

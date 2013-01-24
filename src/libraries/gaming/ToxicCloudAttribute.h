@@ -10,9 +10,9 @@
 #ifndef __ToxicCloudAttribute_h_
 #define __ToxicCloudAttribute_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "tools/Resolver_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include <geometry/Types.h>
 #include <limits>
 
@@ -37,7 +37,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class ToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
-                          , public kernel::Drawable_ABC
+                          , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

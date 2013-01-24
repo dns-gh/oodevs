@@ -10,10 +10,10 @@
 #ifndef __ObjectPositions_h_
 #define __ObjectPositions_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -35,8 +35,8 @@ namespace xml
 // Created: AGE 2006-03-22
 // =============================================================================
 class ObjectPositions : public kernel::Moveable_ABC
-                      , public kernel::Drawable_ABC
                       , public kernel::LocationVisitor_ABC
+                      , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -11,9 +11,9 @@
 #define __LogisticLinks_h_
 
 #include "Dotation.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
@@ -49,8 +49,8 @@ class LogisticLink;
 class LogisticLinks : public kernel::LogisticLinks_ABC
                     , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
                     , public kernel::Updatable_ABC< sword::LogSupplyQuotas >
-                    , public kernel::Drawable_ABC
-                    , private boost::noncopyable
+                    , public gui::Drawable_ABC
+                    , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

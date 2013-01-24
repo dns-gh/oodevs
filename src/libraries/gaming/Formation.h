@@ -10,9 +10,9 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword
@@ -36,7 +36,7 @@ namespace kernel
 class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Updatable_ABC< sword::FormationUpdate >
                 , public kernel::Extension_ABC
-                , public kernel::Drawable_ABC
+                , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

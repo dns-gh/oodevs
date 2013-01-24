@@ -13,9 +13,9 @@
 #define __PopulationConcentrationKnowledge_h_
 
 #include "PopulationPartKnowledge_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
@@ -37,8 +37,8 @@ namespace sword
 // Created: APE 2004-03-10
 // =============================================================================
 class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
-                                       , public kernel::Drawable_ABC
                                        , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeUpdate >
+                                       , public gui::Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor

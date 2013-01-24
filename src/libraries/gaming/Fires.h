@@ -10,9 +10,9 @@
 #ifndef __Fires_h_
 #define __Fires_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver.h"
 
 namespace sword
@@ -44,7 +44,7 @@ class Fires : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< sword::StartCrowdFire >
             , public kernel::Updatable_ABC< sword::StopCrowdFire >
             , public tools::Resolver< Fire_ABC >
-            , public kernel::Drawable_ABC
+            , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

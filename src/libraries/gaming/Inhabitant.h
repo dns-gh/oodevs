@@ -10,10 +10,10 @@
 #ifndef __Inhabitant_h_
 #define __Inhabitant_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "tools/Resolver.h"
 
@@ -40,9 +40,9 @@ class UrbanModel;
 // =============================================================================
 class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Updatable_ABC< sword::PopulationUpdate >
-                 , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
+                 , public gui::Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor

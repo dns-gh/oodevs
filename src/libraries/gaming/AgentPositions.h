@@ -10,8 +10,8 @@
 #ifndef __AgentPositions_h_
 #define __AgentPositions_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
 
@@ -34,8 +34,8 @@ namespace kernel
 // =============================================================================
 class AgentPositions : public kernel::Positions
                      , public kernel::Updatable_ABC< sword::UnitAttributes >
-                     , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
+                     , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

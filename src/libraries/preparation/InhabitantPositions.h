@@ -10,7 +10,7 @@
 #ifndef __InhabitantPositions_h_
 #define __InhabitantPositions_h_
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "InhabitantPositions_ABC.h"
 #include "geometry/types.h"
@@ -43,7 +43,7 @@ class UrbanModel;
 // =============================================================================
 class InhabitantPositions : public InhabitantPositions_ABC
                           , public kernel::Serializable_ABC
-                          , public kernel::Drawable_ABC
+                          , public gui::Drawable_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
 {

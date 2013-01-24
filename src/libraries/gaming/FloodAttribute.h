@@ -10,8 +10,8 @@
 #ifndef __FloodAttribute_h_
 #define __FloodAttribute_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -30,10 +30,10 @@ class FloodProxy;
 // Created: JSR 2010-12-15
 // =============================================================================
 class FloodAttribute : public kernel::FloodAttribute_ABC
-                     , public kernel::Drawable_ABC
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< kernel::AltitudeModified >
-                     , private boost::noncopyable
+                     , public gui::Drawable_ABC
+                     , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

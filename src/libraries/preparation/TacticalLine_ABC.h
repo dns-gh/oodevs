@@ -10,11 +10,11 @@
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -41,7 +41,7 @@ namespace tools
 // =============================================================================
 class TacticalLine_ABC : public kernel::EntityImplementation< kernel::TacticalLine_ABC >
                        , public kernel::Extension_ABC
-                       , public kernel::Drawable_ABC
+                       , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

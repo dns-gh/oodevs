@@ -10,9 +10,9 @@
 #ifndef __DecisionalStates_h_
 #define __DecisionalStates_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include <boost/noncopyable.hpp>
@@ -32,10 +32,10 @@ namespace sword
 class DecisionalStates : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< sword::DecisionalState >
                        , public kernel::Updatable_ABC< sword::UnitAttributes >
-                       , public kernel::Drawable_ABC
                        , public kernel::Displayable_ABC
                        , public kernel::Aggregatable_ABC
-                       , private boost::noncopyable
+                       , public gui::Drawable_ABC
+                       , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

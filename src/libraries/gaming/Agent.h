@@ -10,9 +10,9 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -29,7 +29,7 @@ namespace kernel
     class AgentType;
 }
 
-class Equipments; 
+class Equipments;
 
 // =============================================================================
 /** @class  Agent
@@ -39,10 +39,10 @@ class Equipments;
 // =============================================================================
 class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
-            , public kernel::Drawable_ABC
             , public kernel::Displayable_ABC
             , public tools::Observer_ABC
             , public tools::ElementObserver_ABC< Equipments >
+            , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

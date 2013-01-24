@@ -10,8 +10,8 @@
 #ifndef __LogSupplyConsign_h_
 #define __LogSupplyConsign_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Types.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver.h"
 #include <boost/function.hpp>
 
@@ -46,7 +46,7 @@ class LogConsignDisplayer_ABC;
 // $$$$ AGE 2006-04-21: factorisations entre types de consignes
 // =============================================================================
 class LogSupplyConsign : public tools::Resolver< SupplyRecipientResourcesRequest >
-                       , public kernel::Drawable_ABC
+                       , public gui::Drawable_ABC
 {
 public:
     //! @name Constructor / Destructor

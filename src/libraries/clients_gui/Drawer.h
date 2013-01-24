@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class Drawable_ABC;
     class Extension_ABC;
     class GlTools_ABC;
     class Viewport_ABC;
@@ -22,6 +21,8 @@ namespace kernel
 
 namespace gui
 {
+    class Drawable_ABC;
+
 // =============================================================================
 /** @class  Drawer
     @brief  Drawer implementation
@@ -52,13 +53,13 @@ private:
 
     //! @name Helpers
     //@{
-    void Add( const kernel::Drawable_ABC& extension );
+    void Add( const Drawable_ABC& extension );
     std::string Strip( const std::string& name );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< const kernel::Drawable_ABC* > T_Drawables;
+    typedef std::vector< const Drawable_ABC* > T_Drawables;
     //@}
 
 private:

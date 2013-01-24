@@ -10,8 +10,8 @@
 #ifndef __Lives_ABC_h_
 #define __Lives_ABC_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 // =============================================================================
 /** @class  Lives_ABC
@@ -20,7 +20,7 @@
 // Created: LGY 2011-03-08
 // =============================================================================
 class Lives_ABC : public kernel::Extension_ABC
-                , public kernel::Drawable_ABC
+                , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

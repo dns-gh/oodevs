@@ -10,10 +10,10 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
 #include "ENT/ENT_Enums_Gen.h"
@@ -45,8 +45,8 @@ namespace tools
 // =============================================================================
 class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
-            , public kernel::Drawable_ABC
             , public kernel::Displayable_ABC
+            , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

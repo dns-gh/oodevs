@@ -10,8 +10,8 @@
 #ifndef CLIENTS_GUI_TACTICALLINEPOSITIONS_ABC_H__
 #define CLIENTS_GUI_TACTICALLINEPOSITIONS_ABC_H__
 
+#include "Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -28,7 +28,7 @@ namespace gui
 // Created: MMC 2012-05-11
 // =============================================================================
 class TacticalLinePositions_ABC : public kernel::Positions
-                                , public kernel::Drawable_ABC
+                                , public Drawable_ABC
 {
 protected:
     //! @name Constructors/Destructor

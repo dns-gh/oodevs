@@ -10,11 +10,11 @@
 #ifndef __Param_ABC_h_
 #define __Param_ABC_h_
 
-#include "tools/Observer_ABC.h"
-#include "clients_kernel/ContextMenu.h"
-#include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/OrderParameter.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/RichGroupBox.h"
+#include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/OrderParameter.h"
+#include "tools/Observer_ABC.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -62,7 +62,7 @@ namespace actions
 // =============================================================================
 class Param_ABC : public QObject
                 , public tools::Observer_ABC
-                , public kernel::Drawable_ABC
+                , public ::gui::Drawable_ABC
 {
     Q_OBJECT
 

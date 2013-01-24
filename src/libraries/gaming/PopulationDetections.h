@@ -10,9 +10,9 @@
 #ifndef __PopulationDetections_h_
 #define __PopulationDetections_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -39,7 +39,7 @@ namespace sword
 class PopulationDetections : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< sword::CrowdConcentrationDetection >
                            , public kernel::Updatable_ABC< sword::CrowdFlowDetection >
-                           , public kernel::Drawable_ABC
+                           , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

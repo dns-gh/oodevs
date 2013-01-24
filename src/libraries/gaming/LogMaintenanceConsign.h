@@ -10,8 +10,8 @@
 #ifndef __LogMaintenanceConsign_h_
 #define __LogMaintenanceConsign_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Types.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/function.hpp>
 
@@ -39,7 +39,7 @@ class LogConsignDisplayer_ABC;
 */
 // Created: AGE 2006-02-28
 // =============================================================================
-class LogMaintenanceConsign : public kernel::Drawable_ABC
+class LogMaintenanceConsign : public gui::Drawable_ABC
 {
 public:
     //! @name Constructor / Destructor

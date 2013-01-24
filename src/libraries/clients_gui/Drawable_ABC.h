@@ -7,14 +7,17 @@
 //
 // *****************************************************************************
 
-#ifndef __Drawable_ABC_h_
-#define __Drawable_ABC_h_
+#ifndef CLIENTS_GUI_DRAWABLE_ABC_H__
+#define CLIENTS_GUI_DRAWABLE_ABC_H__
 
 namespace kernel
 {
     class GlTools_ABC;
     class Viewport_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Drawable_ABC
     @brief  Drawable extension definition
@@ -32,10 +35,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 };
 
 }
 
-#endif // __Drawable_ABC_h_
+#endif // CLIENTS_GUI_DRAWABLE_ABC_H__

@@ -10,8 +10,8 @@
 #ifndef __CommandPostAttributes_h_
 #define __CommandPostAttributes_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/noncopyable.hpp>
 
@@ -35,7 +35,7 @@ namespace kernel
 // =============================================================================
 class CommandPostAttributes : public kernel::CommandPostAttributes_ABC
                             , public kernel::Updatable_ABC< sword::UnitAttributes >
-                            , public kernel::Drawable_ABC
+                            , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

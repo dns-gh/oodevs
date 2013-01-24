@@ -10,9 +10,9 @@
 #ifndef __Attributes_h_
 #define __Attributes_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Aggregatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/SubTypes.h"
 #include "clients_kernel/Types.h"
@@ -43,7 +43,7 @@ namespace kernel
 // =============================================================================
 class Attributes : public kernel::Attributes_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
-                 , public kernel::Drawable_ABC
+                 , public gui::Drawable_ABC
                  , public kernel::Aggregatable_ABC
 {
 public:

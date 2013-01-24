@@ -10,8 +10,8 @@
 #ifndef __LogisticConsigns_h_
 #define __LogisticConsigns_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -31,7 +31,7 @@ class LogFuneralConsign;
 // =============================================================================
 template< typename ConcreteExtension, typename Consign >
 class LogisticConsigns_ABC : public kernel::Extension_ABC
-                           , public kernel::Drawable_ABC
+                           , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

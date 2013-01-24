@@ -10,8 +10,8 @@
 #ifndef __CommandPostAttributes_h_
 #define __CommandPostAttributes_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -33,8 +33,8 @@ namespace xml
 // Created: SBO 2007-03-27
 // =============================================================================
 class CommandPostAttributes : public kernel::CommandPostAttributes_ABC
-                            , public kernel::Drawable_ABC
                             , public kernel::Serializable_ABC
+                            , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

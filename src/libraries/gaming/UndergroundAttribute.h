@@ -10,8 +10,8 @@
 #ifndef __UndergroundAttribute_h_
 #define __UndergroundAttribute_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {

@@ -10,9 +10,9 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 
 namespace kernel
@@ -32,7 +32,7 @@ namespace sword
 class PopulationConcentration : public kernel::PopulationConcentration_ABC
                               , public kernel::Positions
                               , public kernel::Updatable_ABC< sword::CrowdConcentrationUpdate >
-                              , public kernel::Drawable_ABC
+                              , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -10,9 +10,9 @@
 #ifndef __DebugPoints_h_
 #define __DebugPoints_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ namespace sword
 // =============================================================================
 class DebugPoints : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::DebugPoints >
-                  , public kernel::Drawable_ABC
+                  , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

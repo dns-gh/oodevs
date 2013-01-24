@@ -10,9 +10,9 @@
 #ifndef __MissionParameters_h_
 #define __MissionParameters_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -46,7 +46,7 @@ class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< sword::CrowdOrder >
                         , public kernel::Updatable_ABC< sword::FragOrder >
                         , public tools::Resolver< actions::Action_ABC >
-                        , public kernel::Drawable_ABC
+                        , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -897,9 +897,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Dotations_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawable_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHierarchies.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>

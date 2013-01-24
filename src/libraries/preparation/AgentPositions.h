@@ -10,7 +10,7 @@
 #ifndef __AgentPositions_h_
 #define __AgentPositions_h_
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
@@ -35,9 +35,9 @@ namespace xml
 // Created: AGE 2006-03-16
 // =============================================================================
 class AgentPositions : public kernel::Moveable_ABC
-                     , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
+                     , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

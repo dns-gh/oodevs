@@ -10,8 +10,8 @@
 #ifndef __PopulationKnowledge_h_
 #define __PopulationKnowledge_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
@@ -47,7 +47,6 @@ class PopulationKnowledge : public kernel::EntityImplementation< kernel::Populat
                           , public tools::Resolver< PopulationFlowKnowledge >
                           , public tools::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Extension_ABC
-                          , public kernel::Drawable_ABC
                           , public kernel::Updatable_ABC< sword::CrowdKnowledgeUpdate >
                           , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeCreation >
                           , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeUpdate >
@@ -56,6 +55,7 @@ class PopulationKnowledge : public kernel::EntityImplementation< kernel::Populat
                           , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeUpdate >
                           , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeDestruction >
                           , public kernel::Displayable_ABC
+                          , public gui::Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor

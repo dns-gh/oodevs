@@ -10,7 +10,7 @@
 #ifndef __ResourceNetwork_h_
 #define __ResourceNetwork_h_
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "tools/Resolver.h"
 

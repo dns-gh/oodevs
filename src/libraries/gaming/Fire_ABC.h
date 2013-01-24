@@ -10,8 +10,8 @@
 #ifndef __Fire_ABC_h_
 #define __Fire_ABC_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ namespace sword
 // =============================================================================
 class Fire_ABC : public kernel::Updatable_ABC< sword::StopUnitFire >
                , public kernel::Updatable_ABC< sword::StopCrowdFire >
-               , public kernel::Drawable_ABC
+               , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

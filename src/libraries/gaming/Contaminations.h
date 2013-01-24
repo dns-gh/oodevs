@@ -10,10 +10,10 @@
 #ifndef __Contaminations_h_
 #define __Contaminations_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace sword
 {
@@ -38,7 +38,7 @@ namespace kernel
 // =============================================================================
 class Contaminations : public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< sword::UnitAttributes >
-                     , public kernel::Drawable_ABC
+                     , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

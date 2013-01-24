@@ -10,11 +10,11 @@
 #ifndef __Decisions_h_
 #define __Decisions_h_
 
+#include "Decisions_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "Decisions_ABC.h"
 
 namespace tools
 {
@@ -45,7 +45,7 @@ class Decisions : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< sword::UnitOrder >
                 , public kernel::Updatable_ABC< sword::UnitAttributes >
                 , public kernel::Displayable_ABC
-                , public kernel::Drawable_ABC
+                , public gui::Drawable_ABC
                 , public Decisions_ABC
 {
 public:

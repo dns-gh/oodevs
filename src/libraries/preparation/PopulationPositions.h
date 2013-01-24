@@ -10,8 +10,8 @@
 #ifndef __PopulationPositions_h_
 #define __PopulationPositions_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -35,8 +35,8 @@ class Population;
 // Created: SBO 2006-11-08
 // =============================================================================
 class PopulationPositions : public kernel::Moveable_ABC
-                          , public kernel::Drawable_ABC
                           , public kernel::Serializable_ABC
+                          , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

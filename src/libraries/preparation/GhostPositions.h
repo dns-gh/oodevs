@@ -10,7 +10,7 @@
 #ifndef __GhostPositions_h_
 #define __GhostPositions_h_
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
@@ -36,10 +36,10 @@ namespace xml
 // Created: ABR 2011-10-19
 // =============================================================================
 class GhostPositions : public kernel::Moveable_ABC
-                     , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
-                     , private boost::noncopyable
+                     , public gui::Drawable_ABC
+                     , public boost::noncopyable
 {
 
 public:

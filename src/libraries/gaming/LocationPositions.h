@@ -10,8 +10,8 @@
 #ifndef __LocationPositions_h_
 #define __LocationPositions_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace sword
 {
@@ -31,7 +31,7 @@ namespace kernel
 // Created: AGE 2006-05-18
 // =============================================================================
 class LocationPositions : public kernel::Positions
-                        , public kernel::Drawable_ABC
+                        , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

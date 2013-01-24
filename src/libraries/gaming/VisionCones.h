@@ -10,9 +10,9 @@
 #ifndef __VisionCones_h_
 #define __VisionCones_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -40,7 +40,7 @@ class VisionMap;
 class VisionCones : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::UnitVisionCones >
                   , public kernel::Updatable_ABC< sword::UnitAttributes >
-                  , public kernel::Drawable_ABC
+                  , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

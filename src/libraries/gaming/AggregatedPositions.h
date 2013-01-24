@@ -10,8 +10,8 @@
 #ifndef __AggregatedPositions_h_
 #define __AggregatedPositions_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include <boost/function.hpp>
 
@@ -27,8 +27,8 @@ namespace kernel
 // Created: AGE 2006-10-06
 // =============================================================================
 class AggregatedPositions : public kernel::Positions
-                          , public kernel::Drawable_ABC
                           , public kernel::Aggregatable_ABC
+                          , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -437,7 +437,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Diplomacies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Displayable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Dotations_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Drawable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Extension_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Hierarchies.h" />

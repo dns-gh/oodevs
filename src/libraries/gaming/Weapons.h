@@ -10,7 +10,7 @@
 #ifndef __Weapons_h_
 #define __Weapons_h_
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -37,8 +37,8 @@ class Equipment;
 // Created: SBO 2008-08-06
 // =============================================================================
 class Weapons : public kernel::Extension_ABC
-              , public kernel::Drawable_ABC
               , public kernel::Updatable_ABC< sword::UnitAttributes >
+              , public gui::Drawable_ABC
               , public tools::Resolver< Equipment >
               , public tools::Observer_ABC
               , public kernel::OptionsObserver_ABC

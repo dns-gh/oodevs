@@ -12,9 +12,9 @@
 
 #include "tools/Resolver.h"
 #include "LogisticHierarchiesBase.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/SubTypes.h"
 #include <boost/noncopyable.hpp>
 
@@ -37,9 +37,9 @@ class DotationsItem;
 // =============================================================================
 class LogisticBaseStates : public kernel::EntityHierarchies< LogisticHierarchiesBase >
                          , public kernel::Serializable_ABC
-                         , public kernel::Drawable_ABC
                          , public tools::Resolver< Dotation >
-                         , private boost::noncopyable
+                         , public gui::Drawable_ABC
+                         , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

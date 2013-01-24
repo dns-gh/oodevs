@@ -10,8 +10,8 @@
 #ifndef __DelayAttribute_h_
 #define __DelayAttribute_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {

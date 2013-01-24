@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "Drawer.h"
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 
 #include <map>
@@ -52,7 +52,7 @@ Drawer::~Drawer()
 // -----------------------------------------------------------------------------
 void Drawer::Register( const kernel::Extension_ABC& extension )
 {
-    auto drawable = dynamic_cast< const kernel::Drawable_ABC* >( &extension );
+    auto drawable = dynamic_cast< const Drawable_ABC* >( &extension );
     if( drawable )
         Add( *drawable );
 }
@@ -61,7 +61,7 @@ void Drawer::Register( const kernel::Extension_ABC& extension )
 // Name: Drawer::Add
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-void Drawer::Add( const kernel::Drawable_ABC& extension )
+void Drawer::Add( const Drawable_ABC& extension )
 {
     const std::string name = Strip( typeid( extension ).name() );
     auto it = positions.find( name );

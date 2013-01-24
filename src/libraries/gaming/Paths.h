@@ -10,9 +10,9 @@
 #ifndef __Paths_h_
 #define __Paths_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 
 namespace sword
 {
@@ -36,7 +36,7 @@ class Paths : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< sword::UnitPathFind >
             , public kernel::Updatable_ABC< sword::UnitAttributes >
             , public kernel::Updatable_ABC< sword::UnitMagicAction >
-            , public kernel::Drawable_ABC
+            , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

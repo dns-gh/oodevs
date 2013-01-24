@@ -10,10 +10,10 @@
 #ifndef __Population_h_
 #define __Population_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
 
@@ -48,9 +48,9 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
                  , public kernel::Updatable_ABC< sword::CrowdConcentrationUpdate >
                  , public kernel::Updatable_ABC< sword::CrowdConcentrationDestruction >
-                 , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
+                 , public gui::Drawable_ABC
 {
 public:
     //! @name Constructor/Destructor

@@ -100,7 +100,7 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
     {
         glPushAttrib( GL_CURRENT_BIT );
             glColor4f( 1, 0, 0, 0.5f );
-            selectedLine_->GetInterfaces().Apply( &kernel::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
+            selectedLine_->GetInterfaces().Apply( &::gui::Drawable_ABC::Draw, point, viewport, tools ); // $$$$ SBO 2007-05-02:
             // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
             glColor3f( 0.7f, 0, 0 );
             QStringList functions;

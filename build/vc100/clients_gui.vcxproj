@@ -659,6 +659,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Drawable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Drawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawVisitor.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DummyModelObserver.h" />

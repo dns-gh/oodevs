@@ -10,8 +10,8 @@
 #ifndef CLIENTS_GUI_URBANPOSITION_H__
 #define CLIENTS_GUI_URBANPOSITION_H__
 
+#include "Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/UrbanTypes.h"
 
@@ -30,7 +30,7 @@ namespace gui
 // =============================================================================
 class UrbanPositions : public kernel::UrbanPositions_ABC
                      , public kernel::Displayable_ABC
-                     , public kernel::Drawable_ABC
+                     , public Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

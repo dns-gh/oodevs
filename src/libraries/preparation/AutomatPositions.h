@@ -10,7 +10,7 @@
 #ifndef __AutomatPositions_h_
 #define __AutomatPositions_h_
 
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 
@@ -26,8 +26,8 @@ namespace kernel
 // Created: AGE 2006-10-06
 // =============================================================================
 class AutomatPositions : public kernel::Moveable_ABC
-                       , public kernel::Drawable_ABC
                        , public kernel::Aggregatable_ABC
+                       , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

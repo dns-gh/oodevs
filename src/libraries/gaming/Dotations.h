@@ -11,10 +11,10 @@
 #define __Dotations_h_
 
 #include "HierarchicExtension_ABC.h"
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Dotations_ABC.h"
+#include "tools/Resolver.h"
 
 namespace sword
 {
@@ -41,7 +41,7 @@ class Dotations : public kernel::Dotations_ABC
                 , public HierarchicExtension_ABC
                 , public kernel::Updatable_ABC< sword::UnitAttributes >
                 , public tools::Resolver< Dotation >
-                , public kernel::Drawable_ABC
+                , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor

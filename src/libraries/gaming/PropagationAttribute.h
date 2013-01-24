@@ -10,8 +10,8 @@
 #ifndef __PropagationAttribute_h_
 #define __PropagationAttribute_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "Simulation.h"
 #include <boost/filesystem/path.hpp>
@@ -45,7 +45,7 @@ class PropagationManager;
 // Created: LGY 2012-10-12
 // =============================================================================
 class PropagationAttribute : public kernel::DisasterAttribute_ABC
-                           , public kernel::Drawable_ABC
+                           , public gui::Drawable_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {

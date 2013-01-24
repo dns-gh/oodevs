@@ -10,9 +10,9 @@
 #ifndef __AgentDetections_h_
 #define __AgentDetections_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
@@ -36,10 +36,10 @@ namespace kernel
 // =============================================================================
 class AgentDetections : public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< sword::UnitDetection >
-                      , public kernel::Drawable_ABC
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< kernel::Agent_ABC >
-                      , private boost::noncopyable
+                      , public gui::Drawable_ABC
+                      , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
