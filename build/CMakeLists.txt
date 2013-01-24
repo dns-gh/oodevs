@@ -164,7 +164,7 @@ target_link_libraries( 3a
 )
 
 # clients_kernel
-add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 protocol )
+add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 qt protocol )
 target_link_libraries( clients_kernel
     ent
     sword_tools
@@ -174,7 +174,7 @@ target_link_libraries( clients_kernel
 )
 
 # actions
-add_target( actions common "libraries/actions" OPTIONS qt3 protocol )
+add_target( actions common "libraries/actions" OPTIONS qt3 qt protocol )
 target_link_libraries( actions
     clients_gui
     clients_kernel
@@ -541,7 +541,7 @@ target_link_libraries( actions_gui
 )
 
 # gaming
-add_target( gaming clients "libraries/gaming" OPTIONS qt3 protocol )
+add_target( gaming clients "libraries/gaming" OPTIONS qt3 qt protocol )
 target_link_libraries( gaming
     actions
     clients_gui
@@ -621,7 +621,7 @@ add_target( package_app clients "applications/package_app" OPTIONS executable )
 target_link_libraries( package_app ${TOOLS_LIBRARIES} )
 
 # clients_test
-add_target( clients_test tests "tests/clients_test" OPTIONS qt3 test )
+add_target( clients_test tests "tests/clients_test" OPTIONS qt3 qt test )
 target_link_libraries( clients_test preparation )
 
 # client_sample_app
