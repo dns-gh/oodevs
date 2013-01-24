@@ -9,21 +9,24 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainLayer.h"
+
+#include "GlTools_ABC.h"
 #include "GraphicPreferences.h"
 #include "TerrainPicker.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/Controllers.h"
+
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
 #include "tools/ExerciseConfig.h"
-#include <graphics/RawShapeLayer.h>
-#include <graphics/NoVBOShapeLayer.h>
-#include <graphics/ShapeCollector.h>
-#include <graphics/extensions.h>
-#include <graphics/DataFactory.h>
 
 #include <boost/filesystem/operations.hpp>
+#include <graphics/DataFactory.h>
+#include <graphics/extensions.h>
+#include <graphics/NoVBOShapeLayer.h>
+#include <graphics/RawShapeLayer.h>
+#include <graphics/ShapeCollector.h>
+
 namespace bfs = boost::filesystem;
 
 using namespace kernel;

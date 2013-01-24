@@ -10,9 +10,11 @@
 #include "clients_gui_pch.h"
 #include "ResourceLinksDialog_ABC.h"
 #include "moc_ResourceLinksDialog_ABC.cpp"
+
+#include "ResourceNetwork_ABC.h"
 #include "RichSpinBox.h"
 #include "tools.h"
-#include "clients_gui/ResourceNetwork_ABC.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Object_ABC.h"

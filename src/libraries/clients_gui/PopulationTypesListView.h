@@ -10,7 +10,8 @@
 #ifndef __PopulationTypesListView_h_
 #define __PopulationTypesListView_h_
 
-#include "clients_gui/RichTreeView.h"
+#include "RichTreeView.h"
+
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 

@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
-#include "clients_gui/GlTools_ABC.h"
+
+#include "GlTools_ABC.h"
+#include "Tools.h"
+
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;

@@ -9,7 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "SelectionLayer.h"
-#include "clients_gui/GlTools_ABC.h"
+
+#include "GlTools_ABC.h"
+
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 

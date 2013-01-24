@@ -11,10 +11,10 @@
 #include "UrbanLayer.h"
 
 #include "DrawVisitor.h"
+#include "Infrastructure_ABC.h"
+#include "ResourceNetwork_ABC.h"
 #include "View_ABC.h"
-#include "clients_gui/Infrastructure_ABC.h"
-#include "clients_gui/ResourceNetwork_ABC.h"
-#include "clients_gui/Viewport_ABC.h"
+#include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"

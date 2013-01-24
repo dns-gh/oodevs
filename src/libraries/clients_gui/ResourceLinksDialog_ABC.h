@@ -10,12 +10,15 @@
 #ifndef __ResourceLinksDialog_ABC_h_
 #define __ResourceLinksDialog_ABC_h_
 
+#include "ResourceNetwork_ABC.h"
 #include "RichDockWidget.h"
-#include "clients_gui/ResourceNetwork_ABC.h"
+
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
+
+#include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+
 #include <boost/noncopyable.hpp>
 
 namespace kernel

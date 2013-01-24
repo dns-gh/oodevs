@@ -10,16 +10,19 @@
 #include "clients_gui_pch.h"
 #include "GradientWidget.h"
 #include "moc_GradientWidget.cpp"
-#include "GradientButton.h"
+
 #include "ColorButton.h"
+#include "Gradient.h"
+#include "GradientButton.h"
 #include "GradientPreferences.h"
-#include "resources.h"
 #include "PresetDialog.h"
-#include "clients_gui/Gradient.h"
+#include "resources.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
+
 #include <boost/bind.hpp>
 
 using namespace gui;

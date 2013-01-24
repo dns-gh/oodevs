@@ -11,6 +11,7 @@
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"
 
+#include "GlTools_ABC.h"
 #include "LoadableLineEdit.h"
 #include "LocationCreator.h"
 #include "ObjectAttributePrototypeContainer.h"
@@ -20,7 +21,6 @@
 #include "RichLabel.h"
 #include "Tools.h"
 
-#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"

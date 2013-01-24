@@ -10,8 +10,9 @@
 #include "clients_gui_pch.h"
 #include "GradientButton.h"
 #include "moc_GradientButton.cpp"
+
 #include "GradientItem.h"
-#include "clients_gui/Gradient.h"
+#include "Gradient.h"
 
 using namespace gui;
 

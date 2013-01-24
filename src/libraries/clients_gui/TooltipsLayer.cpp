@@ -9,8 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "TooltipsLayer.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/Viewport_ABC.h"
+
+#include "GlTools_ABC.h"
+#include "Viewport_ABC.h"
 
 using namespace gui;
 

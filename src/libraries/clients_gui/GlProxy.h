@@ -11,7 +11,7 @@
 #define __GlProxy_h_
 
 #include "View_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "GlTools_ABC.h"
 
 namespace kernel
 {

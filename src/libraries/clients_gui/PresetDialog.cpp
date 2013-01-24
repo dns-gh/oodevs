@@ -10,7 +10,9 @@
 #include "clients_gui_pch.h"
 #include "PresetDialog.h"
 #include "moc_PresetDialog.cpp"
-#include "clients_gui/Gradient.h"
+
+#include "Gradient.h"
+
 #include "clients_kernel/Options.h"
 
 using namespace gui;

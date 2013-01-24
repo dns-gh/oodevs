@@ -9,15 +9,18 @@
 
 #include "clients_gui_pch.h"
 #include "Elevation2dLayer.h"
-#include "clients_gui/GLTools_ABC.h"
-#include "clients_gui/Gradient.h"
+
+#include "GLTools_ABC.h"
+#include "Gradient.h"
+#include "ElevationExtrema.h"
+
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
-#include "ElevationExtrema.h"
-#include <graphics/ElevationTextureSet.h>
-#include <graphics/FixedElevationTextureSet.h>
+
 #include <graphics/ElevationShader.h>
+#include <graphics/ElevationTextureSet.h>
 #include <graphics/extensions.h>
+#include <graphics/FixedElevationTextureSet.h>
 #include <graphics/Visitor2d.h>
 
 using namespace kernel;

@@ -10,8 +10,8 @@
 #ifndef __clients_gui_ColorController_h_
 #define __clients_gui_ColorController_h_
 
+#include "ColorModifier_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/ColorModifier_ABC.h"
 
 namespace kernel
 {

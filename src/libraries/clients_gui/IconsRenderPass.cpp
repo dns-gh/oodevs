@@ -9,8 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "IconsRenderPass.h"
+
+#include "GlTools_ABC.h"
 #include "IconHandler_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
 
 using namespace gui;
 

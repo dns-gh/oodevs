@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 
 namespace gui
 {

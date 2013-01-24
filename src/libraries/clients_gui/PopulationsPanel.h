@@ -10,10 +10,11 @@
 #ifndef __PopulationsPanel_h_
 #define __PopulationsPanel_h_
 
+#include "InfoPanel_ABC.h"
+
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include "clients_gui/InfoPanel_ABC.h"
 
 namespace kernel
 {
@@ -48,7 +49,6 @@ public:
              PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types );
     virtual ~PopulationsPanel();
     //@}
-
 
 private:
     //! @name Helpers

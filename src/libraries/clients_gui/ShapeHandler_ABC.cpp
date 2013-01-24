@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ShapeHandler_ABC.h"
 
-#include "clients_gui/SimpleLocationDrawer.h"
+#include "SimpleLocationDrawer.h"
 #include "clients_kernel/Location_ABC.h"
 
 using namespace gui;

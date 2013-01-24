@@ -9,7 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "SelectionColorModifier.h"
-#include "clients_gui/GlTools_ABC.h"
+
+#include "GlTools_ABC.h"
+
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"

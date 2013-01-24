@@ -10,12 +10,13 @@
 #include "clients_gui_pch.h"
 #include "UnitsPanel.h"
 #include "moc_UnitsPanel.cpp"
-#include "clients_gui/DragAndDropHelpers.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/AgentTypes.h"
+
+#include "DragAndDropHelpers.h"
+#include "Tools.h"
 #include "UnitTreeView.h"
 #include "UnitPreviewIcon.h"
-#include "Tools.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/AgentTypes.h"
 
 using namespace kernel;
 using namespace gui;

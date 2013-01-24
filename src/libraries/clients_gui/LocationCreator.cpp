@@ -10,10 +10,12 @@
 #include "clients_gui_pch.h"
 #include "LocationCreator.h"
 #include "moc_LocationCreator.cpp"
+
+#include "GlTools_ABC.h"
 #include "ParametersLayer.h"
-#include "Tools.h"
 #include "ShapeHandler_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "Tools.h"
+
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Point.h"

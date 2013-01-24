@@ -10,7 +10,8 @@
 #include "clients_gui_pch.h"
 #include "Panels.h"
 #include "moc_Panels.cpp"
-#include "clients_gui/InfoPanel_ABC.h"
+
+#include "InfoPanel_ABC.h"
 #include "resources.h"
 
 using namespace gui;

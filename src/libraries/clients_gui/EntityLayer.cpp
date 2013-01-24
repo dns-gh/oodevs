@@ -11,17 +11,18 @@
 #include "EntityLayer.h"
 
 #include "DrawVisitor.h"
-#include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/Positions.h"
-#include "View_ABC.h"
 #include "GlTooltip.h"
+#include "View_ABC.h"
+#include "Viewport_ABC.h"
+
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 using namespace gui;

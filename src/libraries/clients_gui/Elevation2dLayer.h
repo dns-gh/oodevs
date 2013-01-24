@@ -10,9 +10,10 @@
 #ifndef __Elevation2dLayer_h_
 #define __Elevation2dLayer_h_
 
+#include "Gradient.h"
 #include "Layer_ABC.h"
+
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/Gradient.h"
 
 class TextureSet;
 class ElevationShader;

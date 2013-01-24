@@ -10,10 +10,12 @@
 #ifndef __gui_CriticalIntelligenceDialog_h_
 #define __gui_CriticalIntelligenceDialog_h_
 
-#include <boost/noncopyable.hpp>
-#include "clients_gui/PropertyDialog.h"
+#include "PropertyDialog.h"
+
 #include "clients_kernel/SubTypes.h"
 #include "clients_kernel/ValueEditor.h"
+
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {

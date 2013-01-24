@@ -9,7 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "SimpleLocationDrawer.h"
-#include "clients_gui/GlTools_ABC.h"
+
+#include "GlTools_ABC.h"
 
 using namespace gui;
 

@@ -11,16 +11,16 @@
 #include "Gl3dWidget.h"
 
 #include "EntityLayer.h"
+#include "SimpleLocationDrawer.h"
 
-#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 
 #include <graphics/Compass.h>
-#include <graphics/Visitor3d.h>
-#include <graphics/ViewFrustum.h>
 #include <graphics/EventStrategy_ABC.h>
+#include <graphics/ViewFrustum.h>
+#include <graphics/Visitor3d.h>
 
 using namespace geometry;
 using namespace kernel;

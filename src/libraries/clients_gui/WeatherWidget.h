@@ -10,7 +10,7 @@
 #ifndef __gui_WeatherWidget_h_
 #define __gui_WeatherWidget_h_
 
-#include "clients_gui/ValuedComboBox.h"
+#include "ValuedComboBox.h"
 #include "clients_kernel/Types.h"
 
 namespace weather

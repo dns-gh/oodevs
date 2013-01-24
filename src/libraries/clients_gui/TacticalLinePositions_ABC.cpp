@@ -10,13 +10,14 @@
 #include "clients_gui_pch.h"
 #include "TacticalLinePositions_ABC.h"
 
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/TacticalLine_ABC.h"
+#include "GlTools_ABC.h"
+#include "Viewport_ABC.h"
+
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 
 using namespace kernel;
 using namespace gui;

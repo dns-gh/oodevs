@@ -10,7 +10,7 @@
 #ifndef __ObjectAttributePrototype_ABC_h_
 #define __ObjectAttributePrototype_ABC_h_
 
-#include "clients_gui/RichGroupBox.h"
+#include "RichGroupBox.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel

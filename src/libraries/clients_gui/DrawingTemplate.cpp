@@ -9,13 +9,16 @@
 
 #include "clients_gui_pch.h"
 #include "DrawingTemplate.h"
+
 #include "DrawingCategory.h"
+#include "GlTools_ABC.h"
 #include "resources.h"
-#include "clients_gui/GlTools_ABC.h"
+
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
+
 #include <svgl/svgl.h>
 #include <xeumeuleu/xml.hpp>
 

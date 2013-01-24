@@ -8,10 +8,12 @@
 // *****************************************************************************
 
 #include "ColorStrategy_ABC.h"
+
 #include "Drawable_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/Controllers.h"
+#include "GlTools_ABC.h"
+
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Positions.h"
 
 #include <graphics/MapWidget.h>

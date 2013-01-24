@@ -10,7 +10,7 @@
 #ifndef __Viewport2d_h_
 #define __Viewport2d_h_
 
-#include "clients_gui/Viewport_ABC.h"
+#include "Viewport_ABC.h"
 
 namespace gui
 {

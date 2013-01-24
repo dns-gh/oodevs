@@ -11,6 +11,7 @@
 #define __Gui_AgentsLayer_h_
 
 #include "EntityLayer.h"
+
 #include "clients_kernel/Agent_ABC.h"
 
 namespace gui

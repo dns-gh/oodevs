@@ -9,27 +9,30 @@
 
 #include "clients_gui_pch.h"
 #include "ColorStrategy.h"
+
 #include "ColorModifier_ABC.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/Drawing_ABC.h"
+#include "GlTools_ABC.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include <numeric>
+
 #include <boost/bind.hpp>
+#include <numeric>
 
 using namespace kernel;
 using namespace gui;

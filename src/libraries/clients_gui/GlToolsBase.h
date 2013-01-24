@@ -10,7 +10,8 @@
 #ifndef __GlToolsBase_h_
 #define __GlToolsBase_h_
 
-#include "clients_gui/GlTools_ABC.h"
+#include "GlTools_ABC.h"
+
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 

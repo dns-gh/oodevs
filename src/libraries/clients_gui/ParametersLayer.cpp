@@ -9,17 +9,19 @@
 
 #include "clients_gui_pch.h"
 #include "ParametersLayer.h"
-#include "ShapeHandler_ABC.h"
-#include "LocationEditor_ABC.h"
+
 #include "CursorStrategy.h"
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/Point.h"
-#include "clients_kernel/Lines.h"
-#include "clients_kernel/Rectangle.h"
-#include "clients_kernel/Polygon.h"
-#include "clients_kernel/Circle.h"
-#include "clients_kernel/Path.h"
+#include "GlTools_ABC.h"
+#include "LocationEditor_ABC.h"
 #include "resources.h"
+#include "ShapeHandler_ABC.h"
+
+#include "clients_kernel/Circle.h"
+#include "clients_kernel/Lines.h"
+#include "clients_kernel/Path.h"
+#include "clients_kernel/Point.h"
+#include "clients_kernel/Polygon.h"
+#include "clients_kernel/Rectangle.h"
 
 using namespace kernel;
 using namespace gui;

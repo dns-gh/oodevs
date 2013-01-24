@@ -10,8 +10,8 @@
 #include "clients_gui_pch.h"
 #include "WeatherLayer.h"
 
-#include "clients_gui/GlTools_ABC.h"
-#include "clients_gui/ExclusiveEventStrategy.h"
+#include "ExclusiveEventStrategy.h"
+#include "GlTools_ABC.h"
 #include "meteo/MeteoLocal.h"
 
 using namespace gui;

@@ -10,13 +10,16 @@
 #include "clients_gui_pch.h"
 #include "DensityWidget.h"
 #include "moc_DensityWidget.cpp"
+
 #include "ColorButton.h"
+#include "Gradient.h"
 #include "GradientButton.h"
 #include "Painter_ABC.h"
-#include "clients_gui/Gradient.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+
 #include <boost/lexical_cast.hpp>
 
 using namespace gui;

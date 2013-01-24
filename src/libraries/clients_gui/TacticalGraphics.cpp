@@ -12,9 +12,9 @@
 
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
+#include "SimpleLocationDrawer.h"
 #include "SvgLocationDrawer.h"
 
-#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
 

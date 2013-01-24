@@ -10,7 +10,7 @@
 #ifndef __CursorStrategy_h_
 #define __CursorStrategy_h_
 
-#include "clients_gui/CursorStrategy_ABC.h"
+#include "CursorStrategy_ABC.h"
 
 namespace gui
 {

@@ -9,18 +9,21 @@
 
 #include "clients_gui_pch.h"
 #include "DrawerShape.h"
-#include "SvgLocationDrawer.h"
-#include "DrawingTypes.h"
+
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
+#include "DrawingTypes.h"
+#include "GlTools_ABC.h"
 #include "ParametersLayer.h"
-#include "clients_gui/GlTools_ABC.h"
+#include "SvgLocationDrawer.h"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;

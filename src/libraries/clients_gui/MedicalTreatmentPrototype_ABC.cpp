@@ -9,10 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "MedicalTreatmentPrototype_ABC.h"
+
+#include "LoadableLineEdit.h"
+#include "Tools.h"
+
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "tools/Iterator.h"
-#include "clients_gui/LoadableLineEdit.h"
-#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;

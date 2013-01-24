@@ -9,12 +9,14 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationsPanel.h"
+
 #include "PopulationTypesListView.h"
+#include "RichSpinBox.h"
+#include "Tools.h"
+
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_gui/RichSpinBox.h"
-#include "Tools.h"
 
 using namespace gui;
 

@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "WatershedLayer.h"
-#include "clients_gui/GLTools_ABC.h"
+#include "GLTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/OptionVariant.h"

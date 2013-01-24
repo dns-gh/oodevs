@@ -9,9 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "GradientPreferences.h"
-#include "clients_gui/Gradient.h"
+
+#include "Gradient.h"
+
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;

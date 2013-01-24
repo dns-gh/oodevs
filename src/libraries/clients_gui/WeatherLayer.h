@@ -10,7 +10,7 @@
 #ifndef __gui_WeatherLayer_h_
 #define __gui_WeatherLayer_h_
 
-#include "clients_gui/Layer_ABC.h"
+#include "Layer_ABC.h"
 
 namespace gui
 {
