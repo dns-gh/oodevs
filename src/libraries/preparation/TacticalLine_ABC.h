@@ -18,7 +18,6 @@
 
 namespace kernel
 {
-    class GlTools_ABC;
     class Controller;
 }
 
@@ -26,6 +25,11 @@ namespace xml
 {
     class xistream;
     class xostream;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace tools
@@ -60,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 };

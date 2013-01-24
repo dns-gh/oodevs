@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "WeatherLayer.h"
 
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "meteo/MeteoLocal.h"
 
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: WeatherLayer constructor
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy )
+WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy )
     : tools_( tools )
     , eventStrategy_( eventStrategy )
     , displaying_( false )

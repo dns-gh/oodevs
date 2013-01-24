@@ -10,11 +10,11 @@
 #include "preparation_pch.h"
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -287,7 +287,7 @@ void ObjectPositions::VisitPath( const geometry::Point2f& first, const T_PointVe
 // Name: ObjectPositions::Draw
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() ) // $$$$ SBO 2009-05-29: location_->IsValid()
         return;

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AmmoEffect.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "meteo/Meteo.h"
 #include "meteo/PHY_Lighting.h"
@@ -43,7 +43,7 @@ AmmoEffect::~AmmoEffect()
 // Name: AmmoEffect::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void AmmoEffect::Draw( const GlTools_ABC& tools ) const
+void AmmoEffect::Draw( const gui::GlTools_ABC& tools ) const
 {
     switch( type_ )
     {

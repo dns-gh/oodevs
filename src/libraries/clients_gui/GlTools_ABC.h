@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __GlTools_ABC_h_
-#define __GlTools_ABC_h_
+#ifndef CLIENTS_GUI_GLTOOLS_ABC_H__
+#define CLIENTS_GUI_GLTOOLS_ABC_H__
 
-#include "GLToolColors.h"
-#include "Types.h"
+#include "clients_kernel/GLToolColors.h"
+#include "clients_kernel/Types.h"
 
 #pragma warning( push, 0 )
 #include <QtGui/qfont.h>
@@ -28,7 +28,10 @@ namespace kernel
     class GlTooltip_ABC;
     class Location_ABC;
     class UrbanColor_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  GlTools_ABC
     @brief  GlTools definition
@@ -74,7 +77,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< GlTooltip_ABC > CreateTooltip() const = 0;
+    virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const = 0;
 
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 ) = 0;
     virtual void SetCurrentCursor ( const QCursor& cursor ) = 0;
@@ -108,4 +111,4 @@ public:
 
 }
 
-#endif // __GlTools_ABC_h_
+#endif // CLIENTS_GUI_GLTOOLS_ABC_H__

@@ -48,7 +48,7 @@ public:
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
     const kernel::Location_ABC* GetLocation() const;
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Draw( const kernel::GlTools_ABC& tools ) const;
+    void Draw( const gui::GlTools_ABC& tools ) const;
     void AddLocation( const sword::Location& message );
     void AddPoint( const geometry::Point2f& point );
     //@}

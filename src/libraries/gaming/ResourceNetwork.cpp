@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "ResourceNetwork.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/ResourceNetworkType.h"
@@ -104,7 +104,7 @@ const Entity_ABC* ResourceNetwork::FindEntity( unsigned int id ) const
 // Name: ResourceNetwork::Draw
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Draw( const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void ResourceNetwork::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off

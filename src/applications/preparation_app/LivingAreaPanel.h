@@ -20,12 +20,12 @@ namespace kernel
 {
     class Controllers;
     class Inhabitant_ABC;
-    class GlTools_ABC;
     class Location_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -48,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
-                              const kernel::GlTools_ABC& tools );
+                              const gui::GlTools_ABC& tools );
     virtual ~LivingAreaPanel();
     //@}
 
@@ -100,7 +100,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Inhabitant_ABC > selected_;
     gui::ParametersLayer& paramLayer_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     Mode mode_;
     kernel::Location_ABC* location_;
     QLabel* text_;

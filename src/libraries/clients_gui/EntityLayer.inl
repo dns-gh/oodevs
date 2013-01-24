@@ -9,10 +9,11 @@
 
 #include "ColorStrategy_ABC.h"
 #include "Drawable_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/GlTools_ABC.h"
+
 #include <graphics/MapWidget.h>
 
 namespace gui
@@ -23,7 +24,7 @@ namespace gui
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
+EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayerBase( controllers, tools, strategy, view, profile )
     , controllers_( controllers )
     , strategy_( strategy )

@@ -12,7 +12,7 @@
 
 #include "clients_gui/CursorStrategy_ABC.h"
 
-namespace kernel
+namespace gui
 {
     class GlTools_ABC;
 }
@@ -31,7 +31,7 @@ class CursorStrategy : public CursorStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CursorStrategy( kernel::GlTools_ABC& tools );
+    explicit CursorStrategy( GlTools_ABC& tools );
     virtual ~CursorStrategy();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::GlTools_ABC& tools_;
+    GlTools_ABC& tools_;
     QCursor selectedTool_;
     QCursor selectedContext_;
     //@}

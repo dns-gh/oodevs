@@ -14,13 +14,13 @@
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "ParametersLayer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -164,7 +164,7 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 // Name: DrawerShape::Draw
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const
+void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const
 {
     drawer_->Draw( location_, viewport, tools, color_, overlined, tools.GetAdaptiveZoomFactor() );
 }
@@ -173,7 +173,7 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const kernel::GlT
 // Name: DrawerShape::Draw
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ SBO 2008-06-03: check viewport
     drawer_->Draw( location, viewport, tools, color_, true );

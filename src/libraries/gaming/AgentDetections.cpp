@@ -9,10 +9,10 @@
 
 #include "gaming_pch.h"
 #include "AgentDetections.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "protocol/Protocol.h"
 
@@ -64,7 +64,7 @@ void AgentDetections::NotifyDeleted( const kernel::Agent_ABC& agent )
 // Name: AgentDetections::Draw
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , const GlTools_ABC& tools ) const
+void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , const gui::GlTools_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() )
         return;

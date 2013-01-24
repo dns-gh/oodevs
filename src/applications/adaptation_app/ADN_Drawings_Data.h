@@ -21,14 +21,13 @@ namespace xml
 {
     class xistream;
 }
+
 namespace gui
 {
     class DrawingTemplate;
-}
-namespace kernel
-{
     class GlTools_ABC;
 }
+
 namespace
 {
     class GlToolsSymbols;
@@ -48,7 +47,7 @@ public:
     public:
         //! @name Constructors/Destructor
         //@{
-                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category );
+                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, gui::GlTools_ABC& tools, const std::string& category );
         virtual ~DrawingInfo();
         //@}
 
@@ -76,7 +75,7 @@ public:
         //! @name Private member data
         //@{
         gui::DrawingTemplate* template_;
-        kernel::GlTools_ABC& tools_;
+        gui::GlTools_ABC& tools_;
         QPixmap* pixmap_;
         std::string category_;
         //@}

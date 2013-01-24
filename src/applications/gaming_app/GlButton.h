@@ -10,13 +10,9 @@
 #ifndef __GlButton_h_
 #define __GlButton_h_
 
-namespace kernel
-{
-    class GlTools_ABC;
-}
-
 namespace gui
 {
+    class GlTools_ABC;
     class GlTooltip;
 }
 
@@ -31,7 +27,7 @@ class GlButton
 public:
     //! @name Constructors/Destructor
     //@{
-             GlButton( const QString& label, const kernel::GlTools_ABC& tools );
+             GlButton( const QString& label, const gui::GlTools_ABC& tools );
     virtual ~GlButton();
     //@}
 
@@ -66,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     QString label_;
     std::auto_ptr< gui::GlTooltip > default_;
     std::auto_ptr< gui::GlTooltip > hover_;

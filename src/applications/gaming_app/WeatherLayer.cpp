@@ -12,8 +12,8 @@
 #include "clients_gui/TerrainPicker.h"
 #include "gaming/AmmoEffect.h"
 #include "gaming/MeteoModel.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 
@@ -21,7 +21,7 @@
 // Name: WeatherLayer constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker )
+WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker )
     : gui::WeatherLayer( tools, eventStrategy )
     , controllers_ ( controllers )
     , meteoModel_  ( meteoModel )

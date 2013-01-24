@@ -27,11 +27,11 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -61,7 +61,7 @@ public:
     //@{
              ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
-                          const kernel::GlTools_ABC& tools );
+                          const gui::GlTools_ABC& tools );
     virtual ~ScoreDialog();
     //@}
 
@@ -93,7 +93,7 @@ private:
     ScoreList* scores_;
     QLineEdit* editor_;
     QPushButton* createButton_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     //@}
 };
 

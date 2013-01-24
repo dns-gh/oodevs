@@ -10,13 +10,13 @@
 #include "preparation_pch.h"
 #include "AgentPositions.h"
 #include "MoveableProxy.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -146,7 +146,7 @@ void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: AgentPositions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE );

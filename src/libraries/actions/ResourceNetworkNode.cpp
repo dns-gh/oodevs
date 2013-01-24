@@ -11,8 +11,8 @@
 #include "ResourceNetworkNode.h"
 #include "ParameterVisitor_ABC.h"
 #include "Resource.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -107,7 +107,7 @@ void ResourceNetworkNode::DisplayInToolTip( kernel::Displayer_ABC& displayer ) c
 // Name: ResourceNetworkNode::Draw
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-void ResourceNetworkNode::Draw( const geometry::Point2f&, const gui::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
+void ResourceNetworkNode::Draw( const geometry::Point2f&, const gui::Viewport_ABC&, const gui::GlTools_ABC& tools ) const
 {
     const bool selected = tools.ShouldDisplay();
     GLfloat color[4];

@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainProfilerLayer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -23,7 +23,7 @@ namespace
 // Name: TerrainProfilerLayer constructor
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-TerrainProfilerLayer::TerrainProfilerLayer( const kernel::GlTools_ABC& tools )
+TerrainProfilerLayer::TerrainProfilerLayer( const gui::GlTools_ABC& tools )
     : tools_( tools )
     , from_ ( notSet )
     , to_   ( notSet )

@@ -14,16 +14,16 @@
 
 namespace kernel
 {
-    class GlTools_ABC;
     class Positions;
     class Location_ABC;
 }
 
 namespace gui
 {
-    class ShapeHandler_ABC;
-    class LocationEditor_ABC;
     class CursorStrategy_ABC;
+    class GlTools_ABC;
+    class LocationEditor_ABC;
+    class ShapeHandler_ABC;
 }
 
 namespace gui
@@ -39,7 +39,7 @@ class ParametersLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParametersLayer( kernel::GlTools_ABC& tools );
+             ParametersLayer( GlTools_ABC& tools );
     virtual ~ParametersLayer();
     //@}
 
@@ -78,7 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::GlTools_ABC& tools_;
+    GlTools_ABC& tools_;
     std::auto_ptr< CursorStrategy_ABC > cursors_;
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;

@@ -816,9 +816,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\GLToolColors.h">
       <Filter>Source Files\Display</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\GlTools_ABC.h">
-      <Filter>Source Files\Display</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\GlTooltip_ABC.h">
       <Filter>Source Files\Display</Filter>
     </ClInclude>

@@ -30,7 +30,7 @@ class LimitsLayer : public gui::TacticalLinesLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             LimitsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     TacticalLineFactory& factory_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     kernel::FourStateOption drawLines_;

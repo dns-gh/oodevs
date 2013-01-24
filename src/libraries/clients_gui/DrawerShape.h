@@ -31,8 +31,12 @@ namespace gui
 {
     class DrawingTemplate;
     class DrawingTypes;
+    class GlTools_ABC;
     class SvgLocationDrawer;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  DrawerShape
     @brief  DrawerShape
@@ -65,9 +69,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const;
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const;
     virtual void Handle( kernel::Location_ABC& location );
-    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f&, const GlTools_ABC& tools ) const;
 
     virtual void ChangeColor( const QColor& color );
     virtual void Edit( ParametersLayer& parameters );

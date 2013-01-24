@@ -39,7 +39,7 @@ class AutomatsLayer : public gui::AutomatsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             AutomatsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                             gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
     virtual ~AutomatsLayer();
@@ -64,7 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;

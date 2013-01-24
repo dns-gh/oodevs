@@ -682,6 +682,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlTools_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyTreeView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

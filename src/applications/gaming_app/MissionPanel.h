@@ -24,7 +24,6 @@ namespace kernel
     class Entity_ABC;
     class Controllers;
     class CoordinateConverter_ABC;
-    class GlTools_ABC;
     class Mission;
     class FragOrder;
     class Profile_ABC;
@@ -35,6 +34,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -80,7 +80,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
-                  const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+                  const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                   const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                   const tools::ExerciseConfig& config );
     virtual ~MissionPanel();
@@ -136,7 +136,7 @@ private:
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     std::auto_ptr< Publisher_ABC > publisher_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
     const kernel::Time_ABC& simulation_;

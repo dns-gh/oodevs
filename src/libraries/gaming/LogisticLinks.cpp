@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "LogisticLinks.h"
 #include "LogisticLink.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
@@ -178,7 +178,7 @@ const kernel::Entity_ABC& LogisticLinks::GetEntity() const
 // Name: LogisticLinks::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();

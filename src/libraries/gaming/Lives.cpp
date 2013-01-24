@@ -9,8 +9,8 @@
 
 #include "gaming_pch.h"
 #include "Lives.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
 
@@ -40,7 +40,7 @@ Lives::~Lives()
 // Name: Lives::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Lives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Lives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( ! viewport.IsHotpointVisible() )
         return;

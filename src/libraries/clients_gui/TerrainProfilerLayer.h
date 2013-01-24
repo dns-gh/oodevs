@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 
-namespace kernel
+namespace gui
 {
     class GlTools_ABC;
 }
@@ -30,7 +30,7 @@ class TerrainProfilerLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TerrainProfilerLayer( const kernel::GlTools_ABC& tools );
+    explicit TerrainProfilerLayer( const GlTools_ABC& tools );
     virtual ~TerrainProfilerLayer();
     //@}
 
@@ -44,7 +44,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC& tools_;
     geometry::Point2f from_;
     geometry::Point2f to_;
     //@}

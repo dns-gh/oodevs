@@ -20,7 +20,6 @@
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class Team_ABC;
     class InhabitantType;
     class ModelLoaded;
@@ -30,6 +29,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
@@ -57,7 +57,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& types,
-                                      AgentsModel& agentsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+                                      AgentsModel& agentsModel, gui::ParametersLayer& layer, const gui::GlTools_ABC& tools );
     virtual ~InhabitantCreationPanel();
     //@}
 
@@ -104,7 +104,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     const tools::Resolver_ABC< kernel::InhabitantType >& resolver_;
     AgentsModel& agentsModel_;
     kernel::Location_ABC* location_;

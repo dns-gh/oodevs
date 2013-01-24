@@ -248,7 +248,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 // Name: Population::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
 
     if( viewport.IsVisible( boundingBox_ ) )

@@ -23,11 +23,11 @@ namespace kernel
     class ActionController;
     class Entity_ABC;
     class OrderType;
-    class GlTools_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class Viewport_ABC;
 }
 
@@ -68,7 +68,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const kernel::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
+    void Draw( const ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
     void ChangeOkValueButton( bool planningMode );

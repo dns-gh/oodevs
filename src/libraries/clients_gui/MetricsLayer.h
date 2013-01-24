@@ -15,8 +15,12 @@
 namespace kernel
 {
     class DetectionMap;
-    class GlTools_ABC;
     class GlTooltip_ABC;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace gui
@@ -32,7 +36,7 @@ class MetricsLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MetricsLayer( const kernel::DetectionMap& elevation, kernel::GlTools_ABC& tools  );
+    explicit MetricsLayer( const kernel::DetectionMap& elevation, gui::GlTools_ABC& tools  );
     virtual ~MetricsLayer();
     //@}
 
@@ -67,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::GlTools_ABC& tools_;
+    gui::GlTools_ABC& tools_;
     const kernel::DetectionMap& elevation_;
     std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
     bool multiRulingMode_;

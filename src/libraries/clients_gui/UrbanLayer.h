@@ -16,11 +16,11 @@
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class View_ABC;
 }
 
@@ -37,7 +37,7 @@ class UrbanLayer : public EntityLayer< kernel::UrbanObject_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             UrbanLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                          View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~UrbanLayer();
     //@}

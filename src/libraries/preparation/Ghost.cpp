@@ -22,6 +22,7 @@
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 #include "UserProfile.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -32,7 +33,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GhostPrototype.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -164,7 +164,7 @@ void Ghost::InitializeSymbol() const
 // Name: Ghost::Draw
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {

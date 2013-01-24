@@ -52,7 +52,7 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
-    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #include "MissionPanel.h"
 #include "moc_MissionPanel.cpp"
 
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -21,7 +22,6 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
@@ -53,7 +53,7 @@ using namespace kernel;
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
-                            const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+                            const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                             const tools::ExerciseConfig& config )
     : QDockWidget              ( "mission", pParent )

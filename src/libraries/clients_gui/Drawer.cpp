@@ -89,7 +89,7 @@ std::string Drawer::Strip( const std::string& name )
 // -----------------------------------------------------------------------------
 void Drawer::Draw( const geometry::Point2f& where,
                    const Viewport_ABC& viewport,
-                   const kernel::GlTools_ABC& tools ) const
+                   const GlTools_ABC& tools ) const
 {
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         (*it)->Draw( where, viewport, tools );

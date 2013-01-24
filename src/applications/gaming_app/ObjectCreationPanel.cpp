@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
                                           const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
-                                          gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config )
+                                          gui::ParametersLayer& layer, const gui::GlTools_ABC& tools, const tools::GeneralConfig& config )
     : gui::InfoPanel_ABC( parent, panel, tools::translate( "ObjectCreationPanel", "Objects" ), "ObjectCreationPanel" )
     , controllers_ ( controllers )
     , actionsModel_( actionsModel )

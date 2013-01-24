@@ -18,8 +18,12 @@
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     template< typename T > class SafePointer;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 // =============================================================================
@@ -34,7 +38,7 @@ class ActionsLayer : public gui::Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
+             ActionsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools );
     virtual ~ActionsLayer();
     //@}
 
@@ -53,7 +57,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     kernel::SafePointer< actions::Action_ABC > current_;
     //@}
 };

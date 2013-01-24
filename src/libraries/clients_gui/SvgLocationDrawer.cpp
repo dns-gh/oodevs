@@ -87,7 +87,7 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 // Name: SvgLocationDrawer::Draw
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined, float zoom )
+void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, const QColor& color, bool overlined, float zoom )
 {
     SetColor( color );
     viewport_ = viewport;

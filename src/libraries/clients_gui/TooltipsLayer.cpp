@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "TooltipsLayer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -18,7 +18,7 @@ using namespace gui;
 // Name: TooltipsLayer constructor
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-TooltipsLayer::TooltipsLayer( kernel::GlTools_ABC& tools )
+TooltipsLayer::TooltipsLayer( gui::GlTools_ABC& tools )
     : tools_( tools )
 {
     // NOTHING

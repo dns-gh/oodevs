@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "Contaminations.h"
 #include "Tools.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/AgentType.h"
@@ -112,7 +112,7 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 // Name: Contaminations::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Contaminations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Contaminations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( contaminated_ && viewport.IsHotpointVisible() )
         tools.DrawIcon( xpm_nbc, where, 150.f );

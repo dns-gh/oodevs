@@ -13,8 +13,8 @@
 #include "DirectFire.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -111,7 +111,7 @@ void Fires::DoUpdate( const sword::StopCrowdFire& message )
 // Name: Fires::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Fires::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Fires::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( ! elements_.empty() )
     {

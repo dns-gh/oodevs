@@ -15,7 +15,6 @@
 #include "Layer_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "resources.h"
 
@@ -303,7 +302,7 @@ void LayersPanel::OnSelectionChanged()
         if( it != layers_.end() )
         {
             currentLayer_ = static_cast< int >( it - layers_.begin() );
-            transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) ); 
+            transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) );
             for( T_Names::const_iterator nIT = names_.begin(); nIT != names_.end(); ++nIT )
                 if( item->text().contains( *nIT ) )
                 {

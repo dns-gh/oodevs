@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "SimpleLocationDrawer.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -17,7 +17,7 @@ using namespace gui;
 // Name: SimpleLocationDrawer constructor
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-SimpleLocationDrawer::SimpleLocationDrawer( const kernel::GlTools_ABC& tools )
+SimpleLocationDrawer::SimpleLocationDrawer( const GlTools_ABC& tools )
     : tools_( tools )
 {
     // NOTHING

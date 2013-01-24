@@ -9,8 +9,8 @@
 
 #include "gaming_pch.h"
 #include "PopulationConcentration.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
@@ -181,7 +181,7 @@ namespace
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& , const GlTools_ABC& tools ) const
+void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& , const gui::GlTools_ABC& tools ) const
 {
     tools.DrawDisc( position_, radius_ );
     glPushAttrib( GL_CURRENT_BIT );

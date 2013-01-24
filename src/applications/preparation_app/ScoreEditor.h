@@ -28,11 +28,11 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -58,7 +58,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreEditor( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
-                          const ::StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                          const ::StaticModel& staticModel, const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreEditor();
     //@}
 
@@ -107,7 +107,7 @@ private:
     ScoreVariablesList* variables_;
     ScoreGaugeConfiguration* gauge_;
     ScoreProfilesPage* profiles_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     bool nameChanged_;
     //@}
 };

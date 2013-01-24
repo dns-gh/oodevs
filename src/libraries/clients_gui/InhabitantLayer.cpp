@@ -15,7 +15,7 @@ using namespace gui;
 // Name: EntityLayerBase::InhabitantLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
+InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const GlTools_ABC& tools,
                                   ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile )
 {

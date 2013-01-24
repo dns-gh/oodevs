@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "LogoLayer.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -17,7 +17,7 @@ using namespace gui;
 // Name: LogoLayer constructor
 // Created: AGE 2007-02-12
 // -----------------------------------------------------------------------------
-LogoLayer::LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha /* = -1*/ )
+LogoLayer::LogoLayer( const gui::GlTools_ABC& tools, const QImage& image, float alpha /* = -1*/ )
     : tools_( tools )
     , image_( image )
 {

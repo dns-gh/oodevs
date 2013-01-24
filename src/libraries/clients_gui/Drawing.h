@@ -14,11 +14,6 @@
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 
-namespace kernel
-{
-    class GlTools_ABC;
-}
-
 namespace xml
 {
     class xostream;
@@ -26,8 +21,12 @@ namespace xml
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Drawing
     @brief  Drawing
@@ -50,7 +49,7 @@ public:
 
     virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Edit( ParametersLayer& parameters ) = 0;
-    virtual void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const = 0;
+    virtual void Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const = 0;
     //@}
 
 protected:

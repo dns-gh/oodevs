@@ -42,7 +42,7 @@ namespace
 // -----------------------------------------------------------------------------
 ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const ::StaticModel& staticModel, const tools::ExerciseConfig& config,
-                          const kernel::GlTools_ABC& tools)
+                          const gui::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
     , builder_( new actions::gui::InterfaceBuilder( controllers, layer, staticModel ) )
     , model_  ( model )

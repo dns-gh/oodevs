@@ -24,7 +24,7 @@ class ObjectsLayer : public gui::ObjectsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
+             ObjectsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
 
@@ -50,7 +50,7 @@ private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Object_ABC > selected_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f oldPosition_;
     std::auto_ptr< QWidget > dummy_;

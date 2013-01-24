@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 
-namespace kernel
+namespace gui
 {
     class GlTools_ABC;
 }
@@ -31,7 +31,7 @@ class LogoLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha = -1 );
+             LogoLayer( const gui::GlTools_ABC& tools, const QImage& image, float alpha = -1 );
     virtual ~LogoLayer();
     //@}
 
@@ -45,7 +45,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     QImage image_;
     //@}
 };

@@ -29,7 +29,7 @@ public:
 
     void Draw( const geometry::Point2f& where,
                const Viewport_ABC& viewport,
-               const kernel::GlTools_ABC& tools )
+               const GlTools_ABC& tools )
     {
         drawer.Draw( where, viewport, tools );
     }

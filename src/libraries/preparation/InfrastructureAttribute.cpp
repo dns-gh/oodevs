@@ -10,11 +10,11 @@
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -167,7 +167,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( type_ && viewport.IsHotpointVisible() )
         tools.DrawApp6Symbol( type_->GetSymbol(), position_, 0.1f, 0.1f );

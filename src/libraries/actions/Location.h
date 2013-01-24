@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
     using LocationBase::CommitTo;

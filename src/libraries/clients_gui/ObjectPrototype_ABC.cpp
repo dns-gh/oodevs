@@ -11,21 +11,22 @@
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"
 
+#include "LoadableLineEdit.h"
 #include "LocationCreator.h"
-#include "ParametersLayer.h"
-#include "Tools.h"
-#include "RichLabel.h"
-#include "ObjectPrototypeShapeFileLoader.h"
 #include "ObjectAttributePrototypeContainer.h"
 #include "ObjectAttributePrototypeFactory_ABC.h"
+#include "ObjectPrototypeShapeFileLoader.h"
+#include "ParametersLayer.h"
+#include "RichLabel.h"
+#include "Tools.h"
+
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "tools/Iterator.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
-#include "LoadableLineEdit.h"
+#include "tools/Iterator.h"
 
 using namespace kernel;
 using namespace gui;
@@ -316,7 +317,7 @@ void ObjectPrototype_ABC::ResetLocation()
 // Name: ObjectPrototype_ABC::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::Draw( const kernel::GlTools_ABC& tools ) const
+void ObjectPrototype_ABC::Draw( const GlTools_ABC& tools ) const
 {
     if( location_ )
         Draw( *location_, geometry::Rectangle2f(), tools );
@@ -326,7 +327,7 @@ void ObjectPrototype_ABC::Draw( const kernel::GlTools_ABC& tools ) const
 // Name: ObjectPrototype_ABC::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& /*viewport*/, const GlTools_ABC& tools ) const
 {
     if( isVisible() )
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )

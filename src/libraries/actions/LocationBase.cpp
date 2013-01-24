@@ -9,11 +9,11 @@
 
 #include "actions_pch.h"
 #include "LocationBase.h"
+#include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include <windows.h>
@@ -225,7 +225,7 @@ geometry::Point2f LocationBase::GetPosition() const
 // Name: LocationBase::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     const bool isPoint = !points_.empty() && boundingBox_.IsEmpty();
     if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )
@@ -252,7 +252,7 @@ void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& vi
 // Name: LocationBase::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LocationBase::Draw( const kernel::GlTools_ABC& tools ) const
+void LocationBase::Draw( const gui::GlTools_ABC& tools ) const
 {
     if( points_.size() > 1 )
         tools.DrawLines( points_ );

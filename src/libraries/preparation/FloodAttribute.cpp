@@ -9,12 +9,12 @@
 
 #include "preparation_pch.h"
 #include "FloodAttribute.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "propagation/FloodDrawer.h"
@@ -98,7 +98,7 @@ void FloodAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: FloodAttribute::Draw
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
+void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& /*tools*/ ) const
 {
     floodDrawer_->Draw();
 }

@@ -12,14 +12,10 @@
 
 #include "clients_gui/Layer_ABC.h"
 
-namespace kernel
-{
-    class GlTools_ABC;
-}
-
 namespace gui
 {
     class ExclusiveEventStrategy;
+    class GlTools_ABC;
 }
 
 namespace weather
@@ -43,7 +39,7 @@ class WeatherLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherLayer( kernel::GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy );
+             WeatherLayer( GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy );
     virtual ~WeatherLayer();
     //@}
 
@@ -66,8 +62,8 @@ private:
 protected:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC&  tools_;
-    bool                        displaying_;
+    const GlTools_ABC&  tools_;
+    bool                displaying_;
     //@}
 
 private:

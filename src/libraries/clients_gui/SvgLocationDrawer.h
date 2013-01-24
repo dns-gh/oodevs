@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Location_ABC;
-    class GlTools_ABC;
 }
 
 namespace svg
@@ -26,7 +25,11 @@ namespace svg
 namespace gui
 {
     class DrawingTemplate;
+    class GlTools_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  SvgLocationDrawer
     @brief  SvgLocationDrawer
@@ -44,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined, float zoom = 1.f );
+    void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, const QColor& color, bool overlined, float zoom = 1.f );
     //@}
 
 private:
@@ -80,7 +83,7 @@ private:
     std::auto_ptr< svg::RenderingContext > context_;
     geometry::Rectangle2f viewport_;
     const DrawingTemplate& style_;
-    const kernel::GlTools_ABC* tools_;
+    const GlTools_ABC* tools_;
     QColor color_;
     QColor complement_;
     float zoom_;

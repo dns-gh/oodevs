@@ -12,7 +12,7 @@
 
 #include "clients_kernel/LocationVisitor_ABC.h"
 
-namespace kernel
+namespace gui
 {
     class GlTools_ABC;
 }
@@ -30,7 +30,7 @@ class SimpleLocationDrawer : public kernel::LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SimpleLocationDrawer( const kernel::GlTools_ABC& tools );
+    explicit SimpleLocationDrawer( const GlTools_ABC& tools );
     virtual ~SimpleLocationDrawer();
     //@}
 
@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC& tools_;
     //@}
 };
 

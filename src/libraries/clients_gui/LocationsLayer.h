@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 
-namespace kernel
+namespace gui
 {
     class GlTools_ABC;
 }
@@ -30,7 +30,7 @@ class LocationsLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocationsLayer( const kernel::GlTools_ABC& tools );
+    explicit LocationsLayer( const gui::GlTools_ABC& tools );
     virtual ~LocationsLayer();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     T_Locations locations_;
     //@}
 };

@@ -22,11 +22,11 @@ namespace sword
 namespace kernel
 {
     class Entity_ABC;
-    class GlTools_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class Viewport_ABC;
 }
 
@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw  ( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw  ( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void Update( const sword::SeqOfDotationQuota& msg, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
     //@}
 

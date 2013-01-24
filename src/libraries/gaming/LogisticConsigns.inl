@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "LogSupplyConsign.h"
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
@@ -108,7 +108,7 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::TerminateConsign( Consi
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 template< typename ConcreteExtension, typename Consign >
-void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "RealTimeLogistic" ) || ( handled_.empty() && requested_.empty() ) )
         return;

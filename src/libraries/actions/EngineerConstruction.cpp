@@ -212,7 +212,7 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
 // Name: Obstacle::Draw
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void EngineerConstruction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void EngineerConstruction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     Parameter< std::string >::Draw( where, viewport, tools );
 //    if( const kernel::Location_ABC* location = GetLocation() && type_ ) // $$$$ SBO 2009-06-05: TODO

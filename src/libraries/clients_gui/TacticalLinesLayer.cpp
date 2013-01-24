@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: TacticalLinesLayer constructor
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                         ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile )
     , controllers_ ( controllers )

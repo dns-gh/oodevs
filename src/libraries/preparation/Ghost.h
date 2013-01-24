@@ -21,7 +21,6 @@ namespace kernel
     class Controller;
     class CoordinateConverter_ABC;
     class GhostPrototype;
-    class GlTools_ABC;
     class Entity_ABC;
     class LogisticLevel;
     class SymbolFactory;
@@ -29,6 +28,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
     class Viewport_ABC;
 }
 
@@ -68,7 +68,7 @@ public:
 
     //! @name Ghost_ABC Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void ReadGhostAttributes( xml::xistream& xis );

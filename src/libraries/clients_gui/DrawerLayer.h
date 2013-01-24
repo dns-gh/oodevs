@@ -16,15 +16,18 @@
 
 namespace kernel
 {
-    class GlTools_ABC;
     class Controllers;
     class Drawing_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  DrawerLayer
     @brief  DrawerLayer
@@ -40,7 +43,7 @@ class DrawerLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             DrawerLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~DrawerLayer();
     //@}
@@ -67,7 +70,7 @@ private:
     //! @name Member data
     //@{
     ParametersLayer& parameters_;
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC& tools_;
     geometry::Rectangle2f viewport_;
     const kernel::Drawing_ABC* selected_;
     //@}

@@ -15,6 +15,10 @@
 namespace kernel
 {
     class Controllers;
+}
+
+namespace gui
+{
     class GlTools_ABC;
 }
 
@@ -31,7 +35,7 @@ class SelectionLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
+             SelectionLayer( kernel::Controllers& controllers, const GlTools_ABC& tools );
     virtual ~SelectionLayer();
     //@}
 
@@ -52,7 +56,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC& tools_;
     bool displaying_;
     bool firstPointSet_;
     geometry::Point2f topLeft_;

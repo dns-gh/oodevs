@@ -22,15 +22,18 @@ class TerrainData;
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class ModelLoaded;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class GraphicPreferences;
     class TerrainPicker;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  TerrainLayer
     @brief  TerrainLayer
@@ -44,7 +47,7 @@ class TerrainLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker );
+             TerrainLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker );
     virtual ~TerrainLayer();
     //@}
 
@@ -75,7 +78,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC& tools_;
     GraphicPreferences& setup_;
     TerrainPicker& picker_;
     bool pickingEnabled_;

@@ -9,14 +9,14 @@
 
 #include "gaming_app_pch.h"
 #include "ActionsLayer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionsLayer constructor
 // Created: SBO 2010-04-30
 // -----------------------------------------------------------------------------
-ActionsLayer::ActionsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools )
+ActionsLayer::ActionsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools )
     : controllers_( controllers )
     , tools_( tools )
     , current_( controllers_ )

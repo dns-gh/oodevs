@@ -12,7 +12,7 @@
 #include "Surface.h"
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Workers.h"
 #include "clients_kernel/WorkerTask_ABC.h"
 #include "protocol/Protocol.h"
@@ -170,7 +170,7 @@ void VisionCones::Update() const
 // Name: VisionCones::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void VisionCones::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )

@@ -9,8 +9,8 @@
 
 #include "actions_pch.h"
 #include "Direction.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -76,7 +76,7 @@ Direction::~Direction()
 // Name: Direction::Draw
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {

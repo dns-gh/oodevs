@@ -27,7 +27,7 @@ using namespace gui;
 // Name: UrbanLayer::UrbanLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile )
     , view_          ( view )
@@ -49,7 +49,7 @@ namespace
 {
     struct DrawExtensionsFunctor : boost::noncopyable
     {
-        DrawExtensionsFunctor( Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, bool drawInfrastructure )
+        DrawExtensionsFunctor( Viewport_ABC& viewport, const GlTools_ABC& tools, bool drawInfrastructure )
             : viewport_          ( viewport )
             , tools_             ( tools )
             , drawInfrastructure_( drawInfrastructure )
@@ -60,7 +60,7 @@ namespace
             if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
             {
                 auto resource = object.Retrieve< ResourceNetwork_ABC >();
-                auto infra = drawInfrastructure_ ? object.Retrieve< gui::Infrastructure_ABC >() : 0;
+                auto infra = drawInfrastructure_ ? object.Retrieve< Infrastructure_ABC >() : 0;
                 if( resource ||  infra )
                 {
                     viewport_.SetHotpoint( positions->Barycenter() );
@@ -72,7 +72,7 @@ namespace
             }
         }
         Viewport_ABC& viewport_;
-        const kernel::GlTools_ABC& tools_;
+        const GlTools_ABC& tools_;
         bool drawInfrastructure_;
     };
 }

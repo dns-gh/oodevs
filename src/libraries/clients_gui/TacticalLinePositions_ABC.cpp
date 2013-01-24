@@ -10,10 +10,10 @@
 #include "clients_gui_pch.h"
 #include "TacticalLinePositions_ABC.h"
 
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -125,7 +125,7 @@ void TacticalLinePositions_ABC::Accept( kernel::LocationVisitor_ABC& visitor ) c
 // Name: TacticalLinePositions_ABC::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( pointList_.empty() || !viewport.IsVisible( boundingBox_ ) )
         return;
@@ -145,7 +145,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
     }
     if( tools.ShouldDisplay() )
         for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
-            tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
+            tools.DrawDisc( *it, 5.f, GlTools_ABC::pixels );
     glPopAttrib();
 
     if( !symbol.empty() )

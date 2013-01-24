@@ -21,13 +21,13 @@ namespace tools
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class ModelLoaded;
     class Team_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class ObjectPrototype_ABC;
     class PanelStack_ABC;
     class ParametersLayer;
@@ -53,7 +53,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const kernel::Team_ABC& noSideTeam, gui::ParametersLayer& layer, const gui::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     gui::ObjectPrototype_ABC* created_;
     //@}
 };

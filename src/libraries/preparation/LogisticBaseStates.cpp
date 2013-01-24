@@ -13,13 +13,13 @@
 #include "Dotation.h"
 #include "DotationsItem.h"
 #include "LogisticLevelAttribute.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "MT_Tools/MT_Logger.h"
@@ -69,7 +69,7 @@ void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, k
 // Name: MaintenanceStates::Draw
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LogisticBaseStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
@@ -192,7 +192,7 @@ bool LogisticBaseStates::HasMissingLogisticLinks() const
 // Name: LogisticBaseStates::DrawLink
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
+void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const gui::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const
 {
     if( superior_ && displayLinks )
         tools.DrawCurvedArrow( where, superior_->Get< kernel::Positions >().GetPosition(), curve );

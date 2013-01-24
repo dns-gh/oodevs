@@ -17,8 +17,12 @@ namespace sword
 
 namespace kernel
 {
-    class GlTools_ABC;
     class CoordinateConverter_ABC;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 // =============================================================================
@@ -38,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::GlTools_ABC& tools ) const;
     virtual bool IsInside( geometry::Point2f point ) const;
     //@}
 

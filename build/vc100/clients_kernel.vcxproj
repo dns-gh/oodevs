@@ -409,7 +409,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Displayer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Formatter.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GLToolColors.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\GlTools_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GlTooltip_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Logger_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\NullDisplayer.h" />

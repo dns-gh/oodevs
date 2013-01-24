@@ -24,14 +24,14 @@ namespace kernel
     class ModelLoaded;
     class ModelUnLoaded;
     class Time_ABC;
-    class GlTools_ABC;
     class Location_ABC;
 }
 
 namespace gui
 {
-    class PanelStack_ABC;
+    class GlTools_ABC;
     class LocationCreator;
+    class PanelStack_ABC;
     class ParametersLayer;
     class Viewport_ABC;
 }
@@ -70,7 +70,7 @@ public:
     //@{
              FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
                               , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
-                              , gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools );
+                              , gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools );
     virtual ~FireCreationPanel();
     //@}
 
@@ -119,7 +119,7 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
 
     gui::ValuedComboBox< E_StrikeType >* strikeCombo_;
     Q3HBox* locationBox_;

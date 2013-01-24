@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "AgentKnowledge.h"
 #include "Diplomacies.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -19,7 +20,6 @@
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
@@ -236,7 +236,7 @@ void AgentKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // Name: AgentKnowledge::Draw
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {

@@ -73,7 +73,7 @@ protected:
     //! @name Operations
     //@{
     virtual void UpdateRouteDrawpoints() = 0;
-    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void Handle( kernel::Location_ABC& location );
     virtual void ClearCarriersData();
     virtual void ClearRouteData();

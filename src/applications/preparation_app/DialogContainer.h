@@ -13,7 +13,6 @@
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class Profile_ABC;
     class SymbolFactory;
 }
@@ -25,6 +24,7 @@ namespace gui
     class ColorEditor_ABC;
     class ConsistencyDialog_ABC;
     class EntitySymbols;
+    class GlTools_ABC;
     class GlSelector;
     class LightingProxy;
     class Painter_ABC;
@@ -64,7 +64,7 @@ public:
              DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const kernel::Profile_ABC& profile,
                               gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                               const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                              gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools, gui::GlSelector& selector );
+                              gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools, gui::GlSelector& selector );
     virtual ~DialogContainer();
     //@}
 

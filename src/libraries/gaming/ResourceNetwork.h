@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
     //@}
 

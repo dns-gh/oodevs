@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "LocationPositions.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -116,7 +116,7 @@ void LocationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
@@ -140,7 +140,7 @@ void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Vie
 // Name: LocationPositions::Draw
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const kernel::GlTools_ABC& tools ) const
+void LocationPositions::Draw( const gui::GlTools_ABC& tools ) const
 {
     if( points_.size() >= 2 )
         tools.DrawLines( points_ );

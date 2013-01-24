@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "IconsRenderPass.h"
 #include "IconHandler_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -18,7 +18,7 @@ using namespace gui;
 // Name: IconsRenderPass constructor
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-IconsRenderPass::IconsRenderPass( kernel::GlTools_ABC& tools )
+IconsRenderPass::IconsRenderPass( gui::GlTools_ABC& tools )
     : tools_    ( tools )
     , viewport_ ( 0, 0, 600, 600 )
     , firstPass_( true )

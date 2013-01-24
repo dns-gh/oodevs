@@ -24,7 +24,7 @@ class FogLayer : public gui::EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             FogLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             FogLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                        gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~FogLayer();
     //@}

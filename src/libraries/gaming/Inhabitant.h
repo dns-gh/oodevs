@@ -22,9 +22,13 @@ namespace kernel
     class Controller;
     class DotationType;
     class Displayer_ABC;
-    class GlTools_ABC;
     class InhabitantType;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace sword
@@ -56,7 +60,7 @@ public:
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
 
     virtual geometry::Point2f GetPosition( bool aggregated = false ) const;
     virtual float GetHeight( bool aggregated ) const;

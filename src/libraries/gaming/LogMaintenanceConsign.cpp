@@ -13,13 +13,13 @@
 #include "Simulation.h"
 #include "LogConsignDisplayer_ABC.h"
 #include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
@@ -120,7 +120,7 @@ void LogMaintenanceConsign::Display( LogConsignDisplayer_ABC& displayer, kernel:
 // Name: LogMaintenanceConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;

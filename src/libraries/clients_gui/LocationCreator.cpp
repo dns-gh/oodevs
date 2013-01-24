@@ -13,10 +13,10 @@
 #include "ParametersLayer.h"
 #include "Tools.h"
 #include "ShapeHandler_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Point.h"
-#include "clients_kernel/GlTools_ABC.h"
 
 using namespace kernel;
 using namespace gui;

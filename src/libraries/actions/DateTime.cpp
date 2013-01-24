@@ -9,7 +9,7 @@
 
 #include "actions_pch.h"
 #include "DateTime.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )

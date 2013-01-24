@@ -37,7 +37,7 @@ namespace
 // Created: LGY 2012-01-05
 // -----------------------------------------------------------------------------
 LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
-                                  const kernel::GlTools_ABC& tools )
+                                  const gui::GlTools_ABC& tools )
     : gui::RichDockWidget( controllers, parent, "livingArea", tools::translate( "LivingAreaPanel", "Living Area" ) )
     , controllers_  ( controllers )
     , selected_     ( controllers )

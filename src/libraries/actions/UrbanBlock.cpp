@@ -10,9 +10,9 @@
 #include "actions_pch.h"
 #include "UrbanBlock.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <windows.h>
 #include <gl/gl.h>
@@ -86,7 +86,7 @@ void UrbanBlock::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: UrbanBlock::Draw
 // Created: LGY 2011-02-04
 // -----------------------------------------------------------------------------
-void UrbanBlock::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void UrbanBlock::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
 {
     const bool selected = tools.ShouldDisplay();
     GLfloat color[4];

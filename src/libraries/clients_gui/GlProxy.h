@@ -11,7 +11,7 @@
 #define __GlProxy_h_
 
 #include "View_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/GlTools_ABC.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class GlProxy : public View_ABC
-              , public kernel::GlTools_ABC
+              , public GlTools_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -116,7 +116,7 @@ private:
     //! @name Member data
     //@{
     View_ABC*    view_;
-    kernel::GlTools_ABC* tools_;
+    GlTools_ABC* tools_;
     T_Layers layers_;
     TooltipsLayer_ABC* tooltipLayer_;
     //@}

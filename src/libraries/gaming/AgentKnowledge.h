@@ -52,7 +52,7 @@ public:
     virtual void Display         ( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors

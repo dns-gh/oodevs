@@ -71,7 +71,7 @@ void Param_ABC::RegisterIn( kernel::ActionController& controller )
 // Name: Param_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void Param_ABC::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC&, const kernel::GlTools_ABC& ) const
+void Param_ABC::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC&, const gui::GlTools_ABC& ) const
 {
     // NOTHING
 }

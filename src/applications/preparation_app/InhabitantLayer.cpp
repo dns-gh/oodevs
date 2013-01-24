@@ -16,7 +16,7 @@
 // Name: EntityLayerBase::InhabitantLayer
 // Created: LGY 2012-01-10
 // -----------------------------------------------------------------------------
-InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
+InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools,
                                   gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
                                   LivingAreaEditor_ABC& editor )
     : gui::InhabitantLayer( controllers, tools, strategy, view, profile )

@@ -22,7 +22,6 @@
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class GlTooltip_ABC;
     class Entity_ABC;
     class Team_ABC;
@@ -33,8 +32,9 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class View_ABC;
+    class GlTools_ABC;
     class LayerFilter_ABC;
+    class View_ABC;
 }
 
 namespace gui
@@ -50,7 +50,7 @@ class EntityLayerBase : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             EntityLayerBase( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayerBase();
     //@}
 
@@ -110,7 +110,7 @@ protected:
     //! @name Protected member data
     //@{
     const kernel::Profile_ABC& profile_;
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC&         tools_;
     T_Entities                 entities_;
     geometry::Rectangle2f      world_;
     //@}
@@ -143,7 +143,7 @@ class EntityLayer : public EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayer();
     //@}
 

@@ -9,10 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "ParametersLayer.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
 #include "LocationEditor_ABC.h"
 #include "CursorStrategy.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Rectangle.h"

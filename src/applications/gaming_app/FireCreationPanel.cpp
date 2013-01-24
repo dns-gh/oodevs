@@ -18,13 +18,13 @@
 #include "actions/MagicAction.h"
 #include "actions/Numeric.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -40,7 +40,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& panel, kernel::Controllers& controllers
                                     , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
-                                    , ::gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools )
+                                    , ::gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools )
     : ::gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )

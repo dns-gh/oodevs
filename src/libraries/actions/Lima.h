@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void AddFunction( unsigned int i );
-    virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
     void CommitTo( sword::PhaseLineOrder& message ) const;

@@ -13,10 +13,10 @@
 #include "ParamDateTime.h"
 #include "ListParameter.h"
 #include "actions/Lima.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -94,7 +94,7 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
 // Created: SBO 2007-05-02
 // Modified: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( selectedLine_ )
     {

@@ -62,7 +62,7 @@ public:
     virtual std::string GetType() const;
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void DisplayTooltip( const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
     //virtual void Serialize( xml::xostream& xos ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual void CommitTo( std::string& content ) const;

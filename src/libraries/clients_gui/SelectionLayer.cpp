@@ -9,9 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "SelectionLayer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: SelectionLayer constructor
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-SelectionLayer::SelectionLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools )
+SelectionLayer::SelectionLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools )
     : controllers_  ( controllers )
     , tools_        ( tools )
     , displaying_   ( false )

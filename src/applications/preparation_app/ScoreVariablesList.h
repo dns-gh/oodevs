@@ -20,6 +20,7 @@ namespace actions
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
     class UtmParser;
     class Viewport_ABC;
@@ -34,7 +35,6 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class Location_ABC;
 }
 
@@ -55,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
-                                 const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                                 const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariablesList();
     //@}
 
@@ -93,7 +93,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
     QTreeWidget* list_;
     std::auto_ptr< kernel::Location_ABC > location_;

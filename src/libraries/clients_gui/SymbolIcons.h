@@ -13,16 +13,15 @@
 #include "IconHandler_ABC.h"
 #include "SymbolIcon.h"
 
-namespace kernel
+namespace gui
 {
     class GlTools_ABC;
+    class GlWidget;
+    class IconsRenderPass;
 }
 
 namespace gui
 {
-    class GlWidget;
-    class IconsRenderPass;
-
 // =============================================================================
 /** @class  SymbolIcons
     @brief  SymbolIcons
@@ -37,7 +36,7 @@ class SymbolIcons : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             SymbolIcons( QObject* parent, kernel::GlTools_ABC& tools );
+             SymbolIcons( QObject* parent, GlTools_ABC& tools );
     virtual ~SymbolIcons();
     //@}
 

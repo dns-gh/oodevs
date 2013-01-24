@@ -10,9 +10,9 @@
 #include "preparation_pch.h"
 #include "AutomatPositions.h"
 #include "AgentPositions.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -134,7 +134,7 @@ void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: AutomatPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE );

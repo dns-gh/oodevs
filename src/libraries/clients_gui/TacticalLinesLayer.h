@@ -27,7 +27,10 @@ namespace kernel
 namespace gui
 {
     class ParametersLayer;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  TacticalLinesLayer
     @brief  TacticalLinesLayer
@@ -46,7 +49,7 @@ class TacticalLinesLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             TacticalLinesLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                  ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~TacticalLinesLayer();
     //@}
@@ -94,7 +97,7 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
+    const GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
     bool isLimit_;

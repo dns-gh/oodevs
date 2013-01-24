@@ -11,9 +11,9 @@
 #include "ADN_Drawings_Data.h"
 #include "ADN_Project_Data.h"
 #include "clients_gui/DrawingTemplate.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/GlTooltip.h"
 #include "clients_gui/TooltipsLayer.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "svgl/Color.h"
 #include "svgl/RenderingContext.h"
 #include "svgl/TextRenderer.h"
@@ -24,7 +24,7 @@ namespace
 {
     class GlTooltip_ABC;
 
-    class GlToolsSymbols : public kernel::GlTools_ABC
+    class GlToolsSymbols : public gui::GlTools_ABC
     {
     public:
         //! @name Constructors/Destructor
@@ -90,7 +90,7 @@ namespace
 // Name: ADN_Drawings_Data::DrawingInfo::DrawingInfo
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category )
+ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, gui::GlTools_ABC& tools, const std::string& category )
     : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
     , tools_   ( tools )
     , category_( category )

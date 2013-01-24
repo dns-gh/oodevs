@@ -11,37 +11,40 @@
 #define __ObjectPrototype_ABC_h_
 
 #include "clients_kernel/Entity_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/tools.h"
-#include "ShapeHandler_ABC.h"
-#include "ValuedComboBox.h"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "ShapeHandler_ABC.h"
+#include "tools/ElementObserver_ABC.h"
+#include "tools/Observer_ABC.h"
+#include "tools/Resolver_ABC.h"
+#include "ValuedComboBox.h"
 
 namespace kernel
 {
     class Controllers;
-    class Team_ABC;
-    class ObjectType;
+    class CoordinateConverter_ABC;
     class ModelLoaded;
     class ModelUnLoaded;
-    class GlTools_ABC;
-    class CoordinateConverter_ABC;
+    class ObjectType;
+    class Team_ABC;
     class Team_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
+    class LoadableLineEdit;
+    class LocationCreator;
+    class ObjectAttributePrototype_ABC;
     class ObjectAttributePrototypeContainer;
     class ObjectAttributePrototypeFactory_ABC;
-    class ObjectAttributePrototype_ABC;
-    class LocationCreator;
     class ParametersLayer;
     class RichLabel;
     class SymbolIcons;
-    class LoadableLineEdit;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  ObjectPrototype_ABC
     @brief  Object prototype base class
@@ -72,8 +75,8 @@ public:
     virtual bool CheckValidity() const;
     virtual void Clean();
     virtual void Handle( kernel::Location_ABC& location );
-    void Draw( const kernel::GlTools_ABC& tools ) const;
-    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Draw( const GlTools_ABC& tools ) const;
+    virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 public slots:

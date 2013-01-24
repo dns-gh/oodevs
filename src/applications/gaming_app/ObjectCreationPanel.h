@@ -21,7 +21,6 @@ namespace actions
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class ModelLoaded;
     class Team_ABC;
     class Time_ABC;
@@ -29,6 +28,7 @@ namespace kernel
 
 namespace gui
 {
+    class GlTools_ABC;
     class ParametersLayer;
     class PanelStack_ABC;
     class Viewport_ABC;
@@ -60,7 +60,7 @@ public:
              ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
                                   actions::ActionsModel& actionsModel, const StaticModel& staticModel,
                                   const kernel::Time_ABC& simulation, const kernel::Team_ABC& noSideTeam,
-                                  gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
+                                  gui::ParametersLayer& layer, const gui::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -94,7 +94,7 @@ private:
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
-    const kernel::GlTools_ABC& tools_;
+    const gui::GlTools_ABC& tools_;
     ObjectPrototype* created_;
     //@}
 };

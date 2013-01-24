@@ -9,10 +9,10 @@
 
 #include "gaming_pch.h"
 #include "ConvexHulls.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include <numeric>
 
 using namespace kernel;
@@ -42,7 +42,7 @@ ConvexHulls::~ConvexHulls()
 // Name: ConvexHulls::Draw
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void ConvexHulls::Draw( const Point2f& , const gui::Viewport_ABC& , const GlTools_ABC& tools ) const
+void ConvexHulls::Draw( const Point2f& , const gui::Viewport_ABC& , const gui::GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "ConvexHulls" ) )
     {

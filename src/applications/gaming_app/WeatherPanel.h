@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class Location_ABC;
     class ModelLoaded;
     class Time_ABC;

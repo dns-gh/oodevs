@@ -12,7 +12,7 @@
 #include <graphics/TextureTree.h>
 #include <graphics/Visitor3d.h>
 #include <graphics/ElevationFactory.h>
-#include "clients_kernel/GLTools_ABC.h"
+#include "clients_gui/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ModelLoaded.h"

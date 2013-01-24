@@ -23,13 +23,13 @@ namespace kernel
 {
     class SensorType;
     class Agent_ABC;
-    class GlTools_ABC;
     class DetectionMap;
     class CoordinateConverter_ABC;
 }
 
 namespace gui
 {
+    class GlTools_ABC;
     class Viewport_ABC;
 }
 
@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     void DrawFill( const gui::Viewport_ABC& viewport ) const;
     void Initialize( VisionMap& map );
     void Update( VisionMap& map );

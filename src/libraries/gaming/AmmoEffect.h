@@ -16,9 +16,13 @@
 
 namespace kernel
 {
-    class GlTools_ABC;
     class CoordinateConverter_ABC;
     class Controller;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace weather
@@ -43,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     void ApplyEffect( weather::Meteo& meteo ) const;
     //@}

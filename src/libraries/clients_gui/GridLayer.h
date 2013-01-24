@@ -15,8 +15,12 @@
 
 namespace kernel
 {
-    class GlTools_ABC;
     class Controllers;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace gui
@@ -33,7 +37,7 @@ class GridLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GridLayer( kernel::Controllers& controllers, kernel::GlTools_ABC& tools );
+             GridLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools );
     virtual ~GridLayer();
     //@}
 
@@ -55,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::GlTools_ABC& tools_;
+    gui::GlTools_ABC& tools_;
 
     geometry::Rectangle2f extent_;
     float gridSize_;

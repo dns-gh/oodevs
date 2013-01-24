@@ -21,11 +21,15 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class Location_ABC;
-    class GlTools_ABC;
     class Inhabitant_ABC;
     class PropertiesDictionary;
     class Controller;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class GlTools_ABC;
 }
 
 namespace xml
@@ -75,7 +79,7 @@ public:
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void Add( const kernel::Location_ABC& location );
     virtual void Remove( const kernel::Location_ABC& location );
 

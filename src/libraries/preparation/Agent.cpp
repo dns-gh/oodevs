@@ -11,6 +11,7 @@
 #include "Agent.h"
 #include "tools/IdManager.h"
 #include "AgentHierarchies.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/AgentNature.h"
@@ -18,7 +19,6 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Diplomacies_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
@@ -118,7 +118,7 @@ void Agent::InitializeSymbol() const
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {

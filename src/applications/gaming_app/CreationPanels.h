@@ -21,7 +21,6 @@ namespace tools
 namespace kernel
 {
     class Controllers;
-    class GlTools_ABC;
     class ModelLoaded;
     class ModelUnLoaded;
     class Time_ABC;
@@ -32,6 +31,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class DrawerPanel;
+    class GlTools_ABC;
     class ParametersLayer;
     class PopulationsPanel;
     class SymbolIcons;
@@ -62,7 +62,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
-                    const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons,
+                    const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, gui::GlTools_ABC& tools, gui::SymbolIcons& icons,
                     gui::ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config );
     virtual ~CreationPanels();
     //@}

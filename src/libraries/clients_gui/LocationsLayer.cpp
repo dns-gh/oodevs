@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "LocationsLayer.h"
+#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -18,7 +18,7 @@ using namespace gui;
 // Name: LocationsLayer constructor
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-LocationsLayer::LocationsLayer( const kernel::GlTools_ABC& tools )
+LocationsLayer::LocationsLayer( const gui::GlTools_ABC& tools )
     : tools_( tools )
 {
     // NOTHING
