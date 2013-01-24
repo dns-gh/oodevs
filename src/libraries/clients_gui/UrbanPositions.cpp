@@ -7,17 +7,22 @@
 //
 // *****************************************************************************_
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "UrbanPositions.h"
-#include "GlTools_ABC.h"
-#include "Hierarchies.h"
-#include "UrbanColor_ABC.h"
-#include "UrbanObject_ABC.h"
-#include "Viewport_ABC.h"
+
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
+using namespace gui;
 
-float UrbanPositions::epsilon_ = 0.0001f;
+namespace
+{
+    const float epsilon = 0.0001f;
+}
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
@@ -226,8 +231,8 @@ void UrbanPositions::ComputeCachedValues( std::vector< geometry::Point2f >& poin
             points.pop_back();
         polygon_ = geometry::Polygon2f( points );
 
-        EliminateRedundantVertices( points, epsilon_ );
-        ChopSpikes( epsilon_ );
+        EliminateRedundantVertices( points, epsilon );
+        ChopSpikes( epsilon );
 
         boundingBox_ = polygon_.BoundingBox();
         barycenter_ = polygon_.Barycenter();

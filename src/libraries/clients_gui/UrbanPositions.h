@@ -7,29 +7,38 @@
 //
 // *****************************************************************************_
 
-#ifndef __kernel_UrbanPositions_h_
-#define __kernel_UrbanPositions_h_
+#ifndef CLIENTS_GUI_URBANPOSITION_H__
+#define CLIENTS_GUI_URBANPOSITION_H__
 
-#include "UrbanPositions_ABC.h"
-#include "UrbanTypes.h"
+#include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/UrbanTypes.h"
 
 namespace kernel
 {
-class UrbanObject_ABC;
+    class UrbanObject_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  UrbanPositions
     @brief  Urban positions
 */
 // Created: LGY 2011-04-15
 // =============================================================================
-class UrbanPositions : public UrbanPositions_ABC
+class UrbanPositions : public kernel::UrbanPositions_ABC
+                     , public kernel::Displayable_ABC
+                     , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object );
-             UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object, std::vector< geometry::Point2f > positions );
+             UrbanPositions( EUrbanLevel level,
+                             const kernel::UrbanObject_ABC& object );
+             UrbanPositions( EUrbanLevel level,
+                             const kernel::UrbanObject_ABC& object, std::vector< geometry::Point2f > positions );
     virtual ~UrbanPositions();
     //@}
 
@@ -67,7 +76,7 @@ protected:
     //! @name Member Data
     //@{
     EUrbanLevel level_;
-    const UrbanObject_ABC& object_;
+    const kernel::UrbanObject_ABC& object_;
     bool selected_;
     bool hasInfrastructure_;
     float area_;
@@ -75,13 +84,8 @@ protected:
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f barycenter_;
     //@}
-
-    //! @name Static Member
-    //@{
-    static float epsilon_;
-    //@}
 };
 
 }
 
-#endif // __kernel_UrbanPositions_h_
+#endif // CLIENTS_GUI_URBANPOSITION_H__

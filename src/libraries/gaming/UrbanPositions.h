@@ -10,12 +10,11 @@
 #ifndef __gaming_UrbanPositions_h_
 #define __gaming_UrbanPositions_h_
 
-#include "clients_kernel/UrbanPositions.h"
+#include "clients_gui/UrbanPositions.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class UrbanObject_ABC;
 }
 
 namespace sword
@@ -29,7 +28,7 @@ namespace sword
 */
 // Created: LGY 2011-04-15
 // =============================================================================
-class UrbanPositions : public kernel::UrbanPositions
+class UrbanPositions : public gui::UrbanPositions
 {
 public:
     //! @name Constructors/Destructor

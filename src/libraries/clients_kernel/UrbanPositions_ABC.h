@@ -10,9 +10,7 @@
 #ifndef __kernel_UrbanPositions_ABC_h_
 #define __kernel_UrbanPositions_ABC_h_
 
-#include "Displayable_ABC.h"
 #include "Extension_ABC.h"
-#include "Drawable_ABC.h"
 #include "UrbanSelection_ABC.h"
 
 namespace kernel
@@ -24,8 +22,6 @@ namespace kernel
 // Created: LGY 2011-04-15
 // =============================================================================
 class UrbanPositions_ABC : public Extension_ABC
-                         , public Displayable_ABC
-                         , public Drawable_ABC
                          , public UrbanSelection_ABC
 {
 public:

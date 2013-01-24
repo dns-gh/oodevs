@@ -10,8 +10,8 @@
 #ifndef __UrbanPositions_h_
 #define __UrbanPositions_h_
 
+#include "clients_gui/UrbanPositions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/UrbanPositions.h"
 #include "clients_kernel/UrbanTypes.h"
 
 namespace xml
@@ -32,7 +32,7 @@ namespace kernel
 */
 // Created: JSR 2010-09-06
 // =============================================================================
-class UrbanPositions : public kernel::UrbanPositions
+class UrbanPositions : public gui::UrbanPositions
                      , public kernel::Serializable_ABC
 {
 public:

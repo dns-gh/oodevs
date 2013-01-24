@@ -148,7 +148,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UserRights.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Usages.cpp" />
@@ -327,7 +326,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanDisplayOptions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UserRights.h" />

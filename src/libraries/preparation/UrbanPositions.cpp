@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanPositions.h"
+
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
@@ -42,7 +43,7 @@ namespace
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : kernel::UrbanPositions( level, object )
+    : gui::UrbanPositions( level, object )
     , converter_( converter )
     , level_( level )
 {
@@ -55,7 +56,7 @@ UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrban
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : kernel::UrbanPositions( level, object, location.Vertices() )
+    : gui::UrbanPositions( level, object, location.Vertices() )
     , converter_( converter )
     , level_( level )
 {
@@ -68,7 +69,7 @@ UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::Pro
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
-    : kernel::UrbanPositions( level, object, Convert( xis, level, converter ) )
+    : gui::UrbanPositions( level, object, Convert( xis, level, converter ) )
     , converter_( converter )
     , level_( level )
 {
