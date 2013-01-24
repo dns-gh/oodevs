@@ -24,8 +24,12 @@ namespace kernel
     class GlTools_ABC;
     class Entity_ABC;
     class LogisticLevel;
-    class Viewport_ABC;
     class SymbolFactory;
+}
+
+namespace gui
+{
+    class Viewport_ABC;
 }
 
 namespace xml
@@ -64,7 +68,7 @@ public:
 
     //! @name Ghost_ABC Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void ReadGhostAttributes( xml::xistream& xis );

@@ -14,13 +14,13 @@
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
 #include "clients_gui/DrawVisitor.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/EntityType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
@@ -248,7 +248,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 // Name: Population::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void Population::Draw( const Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
 
     if( viewport.IsVisible( boundingBox_ ) )

@@ -21,14 +21,13 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  GridLayer
     @brief  GridLayer
 */
 // Created: AGE 2006-08-22
 // =============================================================================
-class GridLayer : public gui::Layer2d_ABC
+class GridLayer : public Layer2d_ABC
                 , public kernel::OptionsObserver_ABC
 {
 public:
@@ -42,7 +41,7 @@ public:
     //@{
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     //@}
 
 private:

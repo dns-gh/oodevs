@@ -21,7 +21,6 @@ namespace kernel
 {
     class ActionController;
     class GlTools_ABC;
-    class Viewport_ABC;
     class AgentKnowledgeConverter_ABC;
     class CoordinateConverter_ABC;
     class OrderParameter;
@@ -29,6 +28,11 @@ namespace kernel
     class Controller;
     class ObjectTypes;
     class Object_ABC;
+}
+
+namespace gui
+{
+    class Viewport_ABC;
 }
 
 namespace actions
@@ -81,7 +85,7 @@ public:
     virtual void NotifyChanged( Param_ABC& param );
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual bool InternalCheckValidity() const;

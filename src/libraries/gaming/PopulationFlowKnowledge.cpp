@@ -11,13 +11,13 @@
 
 #include "gaming_pch.h"
 #include "PopulationFlowKnowledge.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -146,7 +146,7 @@ namespace
 // Name: PopulationFlowKnowledge::Draw
 // Created: SBO 2007-02-27
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !viewport.IsVisible( boundingBox_ ) )
         return;

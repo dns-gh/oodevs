@@ -26,13 +26,13 @@ namespace actions
 namespace gui
 {
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
-    class Viewport_ABC;
 }
 
 namespace indicators
@@ -64,7 +64,7 @@ public:
     //! @name Operations
     //@{
     void Create();
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
     //! @name ParamInterface_ABC implementation

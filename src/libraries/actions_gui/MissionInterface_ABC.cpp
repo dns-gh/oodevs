@@ -11,10 +11,10 @@
 #include "actions_gui/resources.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "ParamComboBox.h"
 
 #include "tools/ExerciseConfig.h"
@@ -85,7 +85,7 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
         if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
         {
             std::ifstream file( fileName.c_str() );
-            std::stringstream buffer; 
+            std::stringstream buffer;
             buffer << file.rdbuf();
             missionSheet = std::string( buffer.str() );
             file.close();
@@ -214,7 +214,7 @@ void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
 // Name: MissionInterface_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const
+void MissionInterface_ABC::Draw( const kernel::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
 {
     for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {

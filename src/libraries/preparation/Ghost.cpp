@@ -22,6 +22,7 @@
 #include "ProfilesModel.h"
 #include "StaticModel.h"
 #include "UserProfile.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/App6Symbol.h"
@@ -41,7 +42,6 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;
@@ -164,7 +164,7 @@ void Ghost::InitializeSymbol() const
 // Name: Ghost::Draw
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Ghost::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {

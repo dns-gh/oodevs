@@ -86,7 +86,7 @@ void UrbanBlock::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: UrbanBlock::Draw
 // Created: LGY 2011-02-04
 // -----------------------------------------------------------------------------
-void UrbanBlock::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void UrbanBlock::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     const bool selected = tools.ShouldDisplay();
     GLfloat color[4];

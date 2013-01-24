@@ -84,7 +84,7 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( QWidget* parent )
     Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     Q3VBox* vbox = new Q3VBox( parent );
-    
+
     //list of parameters
     list_ = new QTreeView( vbox );
     list_->setModel( &model_ );
@@ -344,7 +344,7 @@ void ListParameter< ConcreteElement >::CommitTo( actions::ParameterContainer_ABC
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !list_ )
         return;

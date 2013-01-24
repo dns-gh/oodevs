@@ -344,7 +344,7 @@ void FireCreationPanel::Reset()
 // Name: FireCreationPanel::Draw
 // Created: ABR 2011-01-18
 // -----------------------------------------------------------------------------
-void FireCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
+void FireCreationPanel::Draw( gui::Viewport_ABC& /*viewport*/ )
 {
     if( isVisible() && location_ && location_->IsValid() )
     {

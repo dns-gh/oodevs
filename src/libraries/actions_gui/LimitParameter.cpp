@@ -131,7 +131,7 @@ void LimitParameter::Display( const QString& what )
 // Name: LimitParameter::Draw
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void LimitParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LimitParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !selected_ )
         return;

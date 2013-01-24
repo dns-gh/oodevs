@@ -10,11 +10,11 @@
 #include "clients_gui_pch.h"
 #include "UrbanPositions.h"
 
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -166,7 +166,7 @@ bool UrbanPositions::IsSelected() const
 // Name: UrbanPositions::Draw
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
-void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !viewport.IsHotpointVisible() && ( level_ == eUrbanLevelBlock || !polygon_.IsEmpty() ) )
         return;

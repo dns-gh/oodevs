@@ -11,6 +11,7 @@
 #include "EntityLayer.h"
 
 #include "DrawVisitor.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/OptionVariant.h"
@@ -18,7 +19,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
@@ -65,7 +65,7 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 // Name: EntityLayerBase::Paint
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
+void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
     for( unsigned i = 0; i < entities_.size(); ++i )
@@ -94,7 +94,7 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 // Name: EntityLayerBase::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Draw( const Entity_ABC& entity, kernel::Viewport_ABC& viewport )
+void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport )
 {
     if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
     {

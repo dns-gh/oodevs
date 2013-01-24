@@ -11,6 +11,7 @@
 #include "LivingAreaPanel.h"
 #include "moc_LivingAreaPanel.cpp"
 #include "preparation/InhabitantPositions.h"
+#include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/Options.h"
@@ -18,7 +19,6 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/tools.h"
-#include "clients_gui/ParametersLayer.h"
 
 namespace
 {
@@ -136,7 +136,7 @@ void LivingAreaPanel::Handle( kernel::Location_ABC& location )
 // Name: LivingAreaPanel::Draw
 // Created: LGY 2012-01-11
 // -----------------------------------------------------------------------------
-void LivingAreaPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
+void LivingAreaPanel::Draw( gui::Viewport_ABC& /*viewport*/ )
 {
     kernel::SimpleLocationDrawer visitor( tools_ );
     if( location_ )

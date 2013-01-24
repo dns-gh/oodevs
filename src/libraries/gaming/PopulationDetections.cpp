@@ -10,12 +10,12 @@
 #include "gaming_pch.h"
 #include "PopulationDetections.h"
 #include "Attr_def.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/protocol.h"
 
@@ -73,7 +73,7 @@ void PopulationDetections::DoUpdate( const sword::CrowdFlowDetection& message )
 // Name: PopulationDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void PopulationDetections::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void PopulationDetections::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "VisionLines" ) )
     {

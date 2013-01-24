@@ -20,7 +20,6 @@ namespace kernel
 {
     class Controllers;
     class Inhabitant_ABC;
-    class Viewport_ABC;
     class GlTools_ABC;
     class Location_ABC;
 }
@@ -28,6 +27,7 @@ namespace kernel
 namespace gui
 {
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 // =============================================================================
@@ -64,7 +64,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );
-    virtual void Draw( kernel::Viewport_ABC& viewport );
+    virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 private slots:

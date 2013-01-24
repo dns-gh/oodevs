@@ -24,7 +24,10 @@ namespace gui
     class ShapeHandler_ABC;
     class LocationEditor_ABC;
     class CursorStrategy_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  ParametersLayer
     @brief  ParametersLayer
@@ -57,7 +60,7 @@ public:
     bool IsInsideWorld( const geometry::Point2f& point ) const;
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     virtual void Paint( const geometry::Rectangle2f& viewport );
     //@}
 

@@ -9,13 +9,13 @@
 
 #include "gaming_pch.h"
 #include "InfrastructureAttribute.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
@@ -107,7 +107,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {

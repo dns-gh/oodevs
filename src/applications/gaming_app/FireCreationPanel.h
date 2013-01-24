@@ -26,7 +26,6 @@ namespace kernel
     class Time_ABC;
     class GlTools_ABC;
     class Location_ABC;
-    class Viewport_ABC;
 }
 
 namespace gui
@@ -34,6 +33,7 @@ namespace gui
     class PanelStack_ABC;
     class LocationCreator;
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 namespace actions
@@ -79,7 +79,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& kn, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 private slots:

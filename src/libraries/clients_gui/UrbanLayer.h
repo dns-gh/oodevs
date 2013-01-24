@@ -17,13 +17,15 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
-    class Viewport_ABC;
 }
 
 namespace gui
 {
     class View_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  UrbanLayer
     @brief  UrbanLayer
@@ -42,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     virtual void Reset2d();
     //@}
 
@@ -53,7 +55,7 @@ protected:
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );

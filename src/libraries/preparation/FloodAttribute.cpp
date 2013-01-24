@@ -98,7 +98,7 @@ void FloodAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: FloodAttribute::Draw
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
+void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
 {
     floodDrawer_->Draw();
 }

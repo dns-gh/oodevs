@@ -55,7 +55,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void RemoveFromController();
 
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     virtual bool CheckValidity();

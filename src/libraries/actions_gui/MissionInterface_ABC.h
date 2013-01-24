@@ -24,6 +24,10 @@ namespace kernel
     class Entity_ABC;
     class OrderType;
     class GlTools_ABC;
+}
+
+namespace gui
+{
     class Viewport_ABC;
 }
 
@@ -51,7 +55,7 @@ namespace actions
 // =============================================================================
 class MissionInterface_ABC : public Q3VBox
                            , public ParamInterface_ABC
-                           , private boost::noncopyable
+                           , public boost::noncopyable
 {
     Q_OBJECT
 
@@ -64,7 +68,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
+    void Draw( const kernel::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
     void ChangeOkValueButton( bool planningMode );

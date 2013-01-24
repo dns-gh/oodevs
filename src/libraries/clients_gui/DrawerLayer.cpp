@@ -117,7 +117,7 @@ void DrawerLayer::NotifySelectionChanged( const std::vector< const kernel::Drawi
 // Name: DrawerLayer::Draw
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void DrawerLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& )
+void DrawerLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& )
 {
     if( ShouldDisplay( entity ) )
         static_cast< const kernel::Drawing_ABC& >( entity ).Draw( viewport_, tools_, &entity == selected_ );

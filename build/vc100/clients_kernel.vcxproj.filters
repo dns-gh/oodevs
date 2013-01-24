@@ -349,9 +349,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\NullDisplayer.cpp">
       <Filter>Source Files\Display</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Viewport_ABC.cpp">
-      <Filter>Source Files\Display</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -835,9 +832,6 @@
       <Filter>Source Files\Display</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\NullDisplayer.h">
-      <Filter>Source Files\Display</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Viewport_ABC.h">
       <Filter>Source Files\Display</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledgeConverter_ABC.h">

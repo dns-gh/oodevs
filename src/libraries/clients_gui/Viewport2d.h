@@ -10,7 +10,7 @@
 #ifndef __Viewport2d_h_
 #define __Viewport2d_h_
 
-#include "clients_kernel/Viewport_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 
 namespace gui
 {
@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: AGE 2007-02-23
 // =============================================================================
-class Viewport2d : public kernel::Viewport_ABC
+class Viewport2d : public Viewport_ABC
 {
 public:
     //! @name Constructors/Destructor

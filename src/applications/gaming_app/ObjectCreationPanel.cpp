@@ -67,7 +67,7 @@ void ObjectCreationPanel::Commit()
 // Name: ObjectCreationPanel::Draw
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void ObjectCreationPanel::Draw( const kernel::Viewport_ABC& /*viewport*/ )
+void ObjectCreationPanel::Draw( const gui::Viewport_ABC& /*viewport*/ )
 {
     created_->Draw( tools_ );
 }

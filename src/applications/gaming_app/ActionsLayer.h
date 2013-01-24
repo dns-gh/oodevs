@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( gui::Viewport_ABC& viewport );
     //@}
 
 private:

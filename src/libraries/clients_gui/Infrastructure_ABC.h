@@ -16,6 +16,10 @@ namespace kernel
 {
     class GlTools_ABC;
     class InfrastructureType;
+}
+
+namespace gui
+{
     class Viewport_ABC;
 }
 
@@ -48,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 };
 

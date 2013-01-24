@@ -12,7 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -225,7 +225,7 @@ geometry::Point2f LocationBase::GetPosition() const
 // Name: LocationBase::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LocationBase::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const bool isPoint = !points_.empty() && boundingBox_.IsEmpty();
     if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )

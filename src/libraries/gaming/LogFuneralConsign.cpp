@@ -13,6 +13,7 @@
 #include "Simulation.h"
 #include "LogConsignDisplayer_ABC.h"
 #include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -21,7 +22,6 @@
 #include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -141,7 +141,7 @@ void LogFuneralConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::Dis
 // Name: LogFuneralConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogFuneralConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void LogFuneralConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! handler_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;

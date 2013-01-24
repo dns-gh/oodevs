@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "AutomatLives.h"
 #include "Lives.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 
@@ -40,7 +40,7 @@ AutomatLives::~AutomatLives()
 // Name: AutomatLives::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatLives::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! viewport.IsHotpointVisible() )
         return;

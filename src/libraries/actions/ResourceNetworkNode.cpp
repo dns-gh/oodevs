@@ -107,7 +107,7 @@ void ResourceNetworkNode::DisplayInToolTip( kernel::Displayer_ABC& displayer ) c
 // Name: ResourceNetworkNode::Draw
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-void ResourceNetworkNode::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
+void ResourceNetworkNode::Draw( const geometry::Point2f&, const gui::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
     const bool selected = tools.ShouldDisplay();
     GLfloat color[4];

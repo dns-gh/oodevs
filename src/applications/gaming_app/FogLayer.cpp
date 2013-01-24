@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "FogLayer.h"
 #include "gaming/VisionCones.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "clients_gui/Viewport2d.h"
+#include "clients_kernel/Agent_ABC.h"
 #include <graphics/extensions.h>
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void FogLayer::Paint( const geometry::Rectangle2f& rect )
 // Name: FogLayer::Draw
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void FogLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport )
+void FogLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport )
 {
     if( ShouldDisplay( entity ) )
         if( const VisionCones* extension = entity.Retrieve< VisionCones >() )

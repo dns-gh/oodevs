@@ -16,13 +16,16 @@ namespace kernel
 {
     class Extension_ABC;
     class GlTools_ABC;
-    class Viewport_ABC;
 }
 
 namespace gui
 {
     class Drawable_ABC;
+    class Viewport_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Drawer
     @brief  Drawer implementation
@@ -41,7 +44,7 @@ public:
     //! @name Operations
     //@{
     void Register( const kernel::Extension_ABC& extension );
-    void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

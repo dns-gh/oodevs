@@ -33,7 +33,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( const ViewFrustum& frustum );
-    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport );
     virtual void Reset2d();
     //@}
 

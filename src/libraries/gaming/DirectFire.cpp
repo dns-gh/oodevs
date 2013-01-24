@@ -9,13 +9,13 @@
 
 #include "gaming_pch.h"
 #include "DirectFire.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationPart_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -74,7 +74,7 @@ DirectFire::~DirectFire()
 // Name: DirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DirectFire::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( !position_.IsZero() && viewport.IsVisible( geometry::Rectangle2f( where, position_ ) ))
     {

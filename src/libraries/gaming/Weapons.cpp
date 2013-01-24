@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "Weapons.h"
 #include "Equipment.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Options.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/WeaponSystemType.h"
 #include "protocol/Protocol.h"
 
@@ -45,7 +45,7 @@ Weapons::~Weapons()
 // Name: Weapons::Draw
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-void Weapons::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Weapons::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "WeaponRanges" ) && viewport.IsVisible( where )
       && ( efficientRange_ > 0 || maxRange_ > 0 || ( minRange_ > 0 && minRange_ < std::numeric_limits< unsigned int >::max() ) ) )

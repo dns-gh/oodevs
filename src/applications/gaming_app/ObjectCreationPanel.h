@@ -25,13 +25,13 @@ namespace kernel
     class ModelLoaded;
     class Team_ABC;
     class Time_ABC;
-    class Viewport_ABC;
 }
 
 namespace gui
 {
     class ParametersLayer;
     class PanelStack_ABC;
+    class Viewport_ABC;
 }
 
 namespace tools
@@ -66,7 +66,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const kernel::Viewport_ABC& viewport );
+    void Draw( const gui::Viewport_ABC& viewport );
     //@}
 
 private slots:

@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "LocationsLayer.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 using namespace gui;
 
@@ -37,7 +37,7 @@ LocationsLayer::~LocationsLayer()
 // Name: LocationsLayer::Paint
 // Created: SBO 2007-03-28
 // -----------------------------------------------------------------------------
-void LocationsLayer::Paint( kernel::Viewport_ABC& viewport )
+void LocationsLayer::Paint( Viewport_ABC& viewport )
 {
     glPushAttrib( GL_CURRENT_BIT );
         glColor4f( 0, 0, 0, 1 ); // $$$$ SBO 2007-03-28: hard coded, put color in preferences

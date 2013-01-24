@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __Viewport_ABC_h_
-#define __Viewport_ABC_h_
+#ifndef CLIENTS_GUI_VIEWPORT_ABC_H__
+#define CLIENTS_GUI_VIEWPORT_ABC_H__
 
-namespace kernel
+namespace gui
 {
 
 // =============================================================================
@@ -53,4 +53,4 @@ private:
 
 }
 
-#endif // __Viewport_ABC_h_
+#endif // CLIENTS_GUI_VIEWPORT_ABC_H__

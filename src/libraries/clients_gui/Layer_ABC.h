@@ -22,14 +22,17 @@ namespace kernel
 {
     class Controllers;
     class Selectable_ABC;
-    class Viewport_ABC;
 }
 
 namespace gui
 {
     class GlWidget;
     class Gl3dWidget;
+    class Viewport_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Layer_ABC
     @brief  Layer_ABC
@@ -39,7 +42,7 @@ namespace gui
 class Layer_ABC : public MapLayer_ABC
                 , public tools::Observer_ABC
                 , public kernel::DisplayableModesObserver_ABC
-                , private boost::noncopyable
+                , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -52,7 +55,7 @@ public:
     //@{
     virtual void Paint( const ViewFrustum& frustum );
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
 
     virtual void RegisterIn( Gl3dWidget& widget );
     virtual void RegisterIn( GlWidget& widget );

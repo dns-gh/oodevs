@@ -25,7 +25,6 @@ namespace kernel
     class ModelLoaded;
     class ModelUnLoaded;
     class Time_ABC;
-    class Viewport_ABC;
     class Profile_ABC;
 }
 
@@ -37,6 +36,7 @@ namespace gui
     class PopulationsPanel;
     class SymbolIcons;
     class UnitsPanel;
+    class Viewport_ABC;
 }
 
 class FireCreationPanel;
@@ -69,7 +69,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( kernel::Viewport_ABC& viewport ) const;
+    void Draw( gui::Viewport_ABC& viewport ) const;
     //@}
 
 private:

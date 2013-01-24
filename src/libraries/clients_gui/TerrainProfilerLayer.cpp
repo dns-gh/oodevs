@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainProfilerLayer.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 using namespace gui;
 
@@ -44,7 +44,7 @@ TerrainProfilerLayer::~TerrainProfilerLayer()
 // Name: TerrainProfilerLayer::Paint
 // Created: SBO 2010-03-31
 // -----------------------------------------------------------------------------
-void TerrainProfilerLayer::Paint( kernel::Viewport_ABC& viewport )
+void TerrainProfilerLayer::Paint( Viewport_ABC& viewport )
 {
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;

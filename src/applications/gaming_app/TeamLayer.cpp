@@ -133,7 +133,7 @@ void TeamLayer::Paint( const geometry::Rectangle2f& )
 // Name: TeamLayer::Paint
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-void TeamLayer::Paint( kernel::Viewport_ABC& )
+void TeamLayer::Paint( gui::Viewport_ABC& )
 {
     // NOTHING
 }

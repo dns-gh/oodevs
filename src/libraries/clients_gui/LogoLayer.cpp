@@ -40,7 +40,7 @@ LogoLayer::~LogoLayer()
 // Name: LogoLayer::Paint
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void LogoLayer::Paint( kernel::Viewport_ABC& )
+void LogoLayer::Paint( Viewport_ABC& )
 {
     if( ! image_.bits() )
         return;

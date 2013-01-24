@@ -48,7 +48,7 @@ void AgentConvexHulls::DoUpdate( const sword::UnitAttributes& attributes )
 // Name: AgentConvexHulls::Draw
 // Created: AGE 2007-06-14
 // -----------------------------------------------------------------------------
-void AgentConvexHulls::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const kernel::GlTools_ABC& ) const
+void AgentConvexHulls::Draw( const geometry::Point2f& , const gui::Viewport_ABC& , const kernel::GlTools_ABC& ) const
 {
     // NOTHING
 }

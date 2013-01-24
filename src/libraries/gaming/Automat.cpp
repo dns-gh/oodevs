@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Automat.h"
 #include "Diplomacies.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -19,7 +20,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -64,7 +64,7 @@ void Automat::CreateDictionary( const kernel::AutomatType& type )
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {

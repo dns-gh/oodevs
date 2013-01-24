@@ -19,7 +19,6 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  TooltipsLayer
     @brief  TooltipsLayer
@@ -37,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     virtual void Draw( const geometry::Point2f& position, const QImage& image );
     //@}
 

@@ -11,13 +11,13 @@
 
 #include "Surface.h"
 #include "VisionMap.h"
+#include "clients_gui/Viewport_ABC.h"
+#include "clients_gui/VisionLine.h"
 #include "clients_kernel/SensorType.h"
 #include "clients_kernel/DetectionMap.h"
-#include "clients_gui/VisionLine.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
 #include "UrbanModel.h"
@@ -59,7 +59,7 @@ Surface::~Surface()
 // Name: Surface::Draw
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void Surface::Draw( const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Surface::Draw( const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( Extent() ) )
         return;
@@ -71,7 +71,7 @@ void Surface::Draw( const kernel::Viewport_ABC& viewport, const GlTools_ABC& too
 // Name: Surface::DrawFill
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void Surface::DrawFill( const kernel::Viewport_ABC& viewport ) const
+void Surface::DrawFill( const gui::Viewport_ABC& viewport ) const
 {
     if( ! viewport.IsVisible( Extent() ) )
         return;

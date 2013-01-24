@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Viewport_ABC.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Viewport_ABC constructor

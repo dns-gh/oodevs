@@ -10,10 +10,10 @@
 #include "preparation_pch.h"
 #include "CommandPostAttributes.h"
 #include "LogisticBaseStates.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void CommandPostAttributes::CreateDictionary( kernel::PropertiesDictionary& dict
 // Name: CommandPostAttributes::Draw
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( commandPost_ )
     {

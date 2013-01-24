@@ -9,10 +9,10 @@
 
 #include "gaming_pch.h"
 #include "PopulationFlow.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -198,7 +198,7 @@ namespace
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::Draw( const Point2f& /*where*/, const Viewport_ABC& , const GlTools_ABC& tools ) const
+void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_LINE_BIT );
         glLineWidth( 10.f );

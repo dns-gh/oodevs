@@ -62,7 +62,7 @@ void ObjectCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
 // Name: ObjectCreationPanel::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
+void ObjectCreationPanel::Draw( gui::Viewport_ABC& /*viewport*/ )
 {
     created_->Draw( tools_ );
 }

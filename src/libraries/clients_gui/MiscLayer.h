@@ -12,13 +12,8 @@
 
 #include "Layer_ABC.h"
 
-namespace kernel
-{
-    class Viewport_ABC;
-}
 namespace gui
 {
-
 // =============================================================================
 /** @class  MiscLayer
     @brief  MiscLayer
@@ -38,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport )
+    virtual void Paint( Viewport_ABC& viewport )
     {
         panel_.Draw( viewport );
     }

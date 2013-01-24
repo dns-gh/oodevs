@@ -27,13 +27,13 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
-    class Viewport_ABC;
     class GlTools_ABC;
 }
 
 namespace gui
 {
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 namespace tools
@@ -68,7 +68,7 @@ public:
     //! @name Operations
     //@{
     void Load();
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 private slots:

@@ -21,8 +21,12 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class Location_ABC;
-    class Viewport_ABC;
     class GlTools_ABC;
+}
+
+namespace gui
+{
+    class Viewport_ABC;
 }
 
 namespace xml
@@ -56,7 +60,7 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     geometry::Point2f GetPosition() const;
-    void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void CommitTo( std::string& content ) const;
     void CommitTo( sword::Location& message ) const;

@@ -57,7 +57,7 @@ public:
     virtual void Move( const geometry::Point2f& position );
     void Translate( const geometry::Point2f& position, const geometry::Vector2f& translation, float precision);
 
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
 

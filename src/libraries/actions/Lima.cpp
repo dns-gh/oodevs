@@ -129,7 +129,7 @@ void Lima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& con
 // Name: Lima::DisplayTooltip
 // Created: SBO 2008-04-16
 // -----------------------------------------------------------------------------
-void Lima::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Lima::DisplayTooltip( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
 }

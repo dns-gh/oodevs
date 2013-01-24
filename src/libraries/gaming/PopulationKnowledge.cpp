@@ -11,6 +11,7 @@
 #include "PopulationKnowledge.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -18,7 +19,6 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -226,7 +226,7 @@ const kernel::KnowledgeGroup_ABC& PopulationKnowledge::GetOwner() const
 // Name: PopulationKnowledge::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void PopulationKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     const kernel::Positions& positions = Get< kernel::Positions >();
     if( viewport.IsVisible( positions.GetBoundingBox() ) )

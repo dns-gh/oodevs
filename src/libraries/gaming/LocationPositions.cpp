@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "LocationPositions.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Circle.h"
@@ -17,7 +18,6 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Rectangle.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -116,7 +116,7 @@ void LocationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;

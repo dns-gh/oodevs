@@ -138,7 +138,7 @@ void ScoreDialog::Load()
 // Name: ScoreDialog::Draw
 // Created: FPO 2011-07-18
 // -----------------------------------------------------------------------------
-void ScoreDialog::Draw( kernel::Viewport_ABC& viewport )
+void ScoreDialog::Draw( gui::Viewport_ABC& viewport )
 {
     scores_->Draw( viewport );
 }

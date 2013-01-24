@@ -13,7 +13,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -90,7 +90,7 @@ bool Parameter_ABC::IsOptional() const
 // Name: Parameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void Parameter_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     geometry::Point2f point = GetPosition();
     point = point.IsZero() ? where : point;
@@ -102,7 +102,7 @@ void Parameter_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& vi
 // Name: Parameter_ABC::DisplayTooltip
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void Parameter_ABC::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !toolTip_.get() )
     {
@@ -116,7 +116,7 @@ void Parameter_ABC::DisplayTooltip( const kernel::Viewport_ABC& viewport, const 
 // Name: Parameter_ABC::DrawToolTip
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Parameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( !viewport.IsVisible( GetPosition() ) )
         return;

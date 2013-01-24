@@ -44,7 +44,7 @@ MetricsLayer::~MetricsLayer()
 // Name: MetricsLayer::Paint
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void MetricsLayer::Paint( kernel::Viewport_ABC& )
+void MetricsLayer::Paint( Viewport_ABC& )
 {
     if( multiRulingMode_ && !metricPoints_.empty() )
     {

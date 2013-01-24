@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "GhostPositions.h"
 #include "MoveableProxy.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -18,7 +19,6 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -146,7 +146,7 @@ void GhostPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: GhostPositions::Draw
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-void GhostPositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void GhostPositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE );

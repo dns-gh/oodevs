@@ -21,7 +21,6 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  MetricsLayer
     @brief  MetricsLayer
@@ -39,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
     //@}

@@ -10,15 +10,15 @@
 #include "preparation_app_pch.h"
 #include "InhabitantCreationPanel.h"
 #include "moc_InhabitantCreationPanel.cpp"
+#include "clients_gui/LocationCreator.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_gui/RichSpinBox.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
-#include "clients_gui/LocationCreator.h"
-#include "clients_gui/RichLabel.h"
-#include "clients_gui/RichSpinBox.h"
 #include "preparation/AgentsModel.h"
 
 #pragma warning( disable : 4355 )
@@ -88,7 +88,7 @@ InhabitantCreationPanel::~InhabitantCreationPanel()
 // Name: InhabitantCreationPanel::Draw
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-void InhabitantCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
+void InhabitantCreationPanel::Draw( gui::Viewport_ABC& /*viewport*/ )
 {
     if( location_ )
     {

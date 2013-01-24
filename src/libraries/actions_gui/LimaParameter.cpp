@@ -94,7 +94,7 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
 // Created: SBO 2007-05-02
 // Modified: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void LimaParameter::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( selectedLine_ )
     {

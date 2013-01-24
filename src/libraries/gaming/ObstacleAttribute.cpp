@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "ObstacleAttribute.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
@@ -110,7 +110,7 @@ void ObstacleAttribute::UpdateData( const T& message )
 // Name: ObstacleAttribute::Draw
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( obstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {

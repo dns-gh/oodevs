@@ -11,10 +11,10 @@
 #include "ScoreVariablesList.h"
 #include "moc_ScoreVariablesList.cpp"
 #include "ScoreVariableCreationWizard.h"
+#include "clients_gui/UtmParser.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
-#include "clients_gui/UtmParser.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Element_ABC.h"
 #include "indicators/Variable.h"
@@ -150,7 +150,7 @@ void ScoreVariablesList::OnPaste()
 // Name: ScoreVariablesList::Draw
 // Created: FPO 2011-07-19
 // -----------------------------------------------------------------------------
-void ScoreVariablesList::Draw( kernel::Viewport_ABC& viewport )
+void ScoreVariablesList::Draw( gui::Viewport_ABC& viewport )
 {
     wizard_->Draw( viewport );
     if( location_.get() && isVisible() )

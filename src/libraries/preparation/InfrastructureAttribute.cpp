@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -19,7 +20,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -79,7 +79,7 @@ InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Co
     std::string type;
     std::string role;
     float threshold = static_cast< float >( threshold_ ) / 100.f;
-    xis >> xml::optional 
+    xis >> xml::optional
             >> xml::start( "infrastructures" )
                 >> xml::start( "infrastructure" )
                     >> xml::optional >> xml::attribute( "type", type )
@@ -167,7 +167,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( type_ && viewport.IsHotpointVisible() )
         tools.DrawApp6Symbol( type_->GetSymbol(), position_, 0.1f, 0.1f );

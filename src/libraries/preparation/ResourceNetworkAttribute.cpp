@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "ResourceNetworkAttribute.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -19,7 +20,6 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
@@ -105,7 +105,7 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 // Name: ResourceNetworkAttribute::Draw
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off

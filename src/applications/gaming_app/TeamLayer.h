@@ -49,7 +49,7 @@ public:
     //@{
     virtual void Paint( const ViewFrustum& frustum );
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( gui::Viewport_ABC& viewport );
 
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );

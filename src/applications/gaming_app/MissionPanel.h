@@ -25,7 +25,6 @@ namespace kernel
     class Controllers;
     class CoordinateConverter_ABC;
     class GlTools_ABC;
-    class Viewport_ABC;
     class Mission;
     class FragOrder;
     class Profile_ABC;
@@ -37,6 +36,7 @@ namespace kernel
 namespace gui
 {
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 namespace actions
@@ -88,7 +88,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 public slots:

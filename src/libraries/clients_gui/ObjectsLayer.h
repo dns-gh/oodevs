@@ -16,7 +16,10 @@
 namespace gui
 {
     class TerrainPicker;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  ObjectsLayer
     @brief  ObjectsLayer
@@ -42,7 +45,7 @@ private:
     //! @name Helpers
     //@{
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     //@}
 };
 

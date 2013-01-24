@@ -61,7 +61,7 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void Update( xml::xistream& xis );
     //@}
 

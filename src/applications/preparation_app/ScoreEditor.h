@@ -28,13 +28,13 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
-    class Viewport_ABC;
     class GlTools_ABC;
 }
 
 namespace gui
 {
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 class Score_ABC;
@@ -65,7 +65,7 @@ public:
     //! @name Operations
     //@{
     void StartEdit( Score_ABC& score );
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 signals:

@@ -10,8 +10,8 @@
 #include "actions_pch.h"
 #include "Location.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
@@ -77,7 +77,7 @@ Location::~Location()
 // Name: Location::Draw
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-void Location::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Location::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     LocationBase::Draw( where, viewport, tools );
     Parameter< QString >::Draw( where, viewport, tools );

@@ -391,7 +391,7 @@ QSize ScoreVariableCreationWizard::sizeHint() const
 // Name: ScoreVariableCreationWizard::Draw
 // Created: FPO 2011-07-19
 // -----------------------------------------------------------------------------
-void ScoreVariableCreationWizard::Draw( Viewport_ABC& viewport )
+void ScoreVariableCreationWizard::Draw( gui::Viewport_ABC& viewport )
 {
     if( parameter_ && isVisible() )
         parameter_->Draw( geometry::Point2f(), viewport, tools_ );

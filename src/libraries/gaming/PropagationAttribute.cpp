@@ -82,7 +82,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 // Name: PropagationAttribute::Draw
 // Created: LGY 2012-10-12
 // -----------------------------------------------------------------------------
-void PropagationAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
+void PropagationAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
     for( auto it = propagations_.begin(); it != propagations_.end(); ++it )
         (*it)->Draw();

@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "TooltipsLayer.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 using namespace gui;
 
@@ -37,7 +37,7 @@ TooltipsLayer::~TooltipsLayer()
 // Name: TooltipsLayer::Paint
 // Created: SBO 2008-04-11
 // -----------------------------------------------------------------------------
-void TooltipsLayer::Paint( kernel::Viewport_ABC& viewport )
+void TooltipsLayer::Paint( Viewport_ABC& viewport )
 {
     if( !ShouldDrawPass() )
         return;

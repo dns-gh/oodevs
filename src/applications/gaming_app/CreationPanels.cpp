@@ -62,7 +62,7 @@ CreationPanels::~CreationPanels()
 // Name: CreationPanels::Draw
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-void CreationPanels::Draw( Viewport_ABC& viewport ) const
+void CreationPanels::Draw( gui::Viewport_ABC& viewport ) const
 {
     objects_->Draw( viewport );
     fires_->Draw( viewport );

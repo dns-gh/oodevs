@@ -39,7 +39,7 @@ DefaultLayer::~DefaultLayer()
 // Name: DefaultLayer::Paint
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void DefaultLayer::Paint( kernel::Viewport_ABC& )
+void DefaultLayer::Paint( Viewport_ABC& )
 {
     // NOTHING
 }

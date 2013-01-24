@@ -68,7 +68,7 @@ void Layer_ABC::Paint( const geometry::Rectangle2f& rectangle )
 // Name: Layer_ABC::Paint
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer_ABC::Paint( kernel::Viewport_ABC& )
+void Layer_ABC::Paint( Viewport_ABC& )
 {
     // NOTHING
 }

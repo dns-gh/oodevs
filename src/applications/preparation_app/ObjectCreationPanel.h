@@ -24,7 +24,6 @@ namespace kernel
     class GlTools_ABC;
     class ModelLoaded;
     class Team_ABC;
-    class Viewport_ABC;
 }
 
 namespace gui
@@ -32,6 +31,7 @@ namespace gui
     class ObjectPrototype_ABC;
     class PanelStack_ABC;
     class ParametersLayer;
+    class Viewport_ABC;
 }
 
 class StaticModel;
@@ -59,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( kernel::Viewport_ABC& viewport );
+    virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 private:

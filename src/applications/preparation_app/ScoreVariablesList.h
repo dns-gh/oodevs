@@ -22,6 +22,7 @@ namespace gui
 {
     class ParametersLayer;
     class UtmParser;
+    class Viewport_ABC;
 }
 
 namespace indicators
@@ -35,7 +36,6 @@ namespace kernel
     class Controllers;
     class GlTools_ABC;
     class Location_ABC;
-    class Viewport_ABC;
 }
 
 class ScoreVariableCreationWizard;
@@ -61,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     void StartEdit( const indicators::Variables& variables );
     indicators::Variables GetValue() const;
     //@}

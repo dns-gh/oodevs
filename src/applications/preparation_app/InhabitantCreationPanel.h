@@ -25,7 +25,6 @@ namespace kernel
     class InhabitantType;
     class ModelLoaded;
     class ModelUnLoaded;
-    class Viewport_ABC;
     class AgentTypes;
 }
 
@@ -34,6 +33,7 @@ namespace gui
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
+    class Viewport_ABC;
 }
 
 class AgentsModel;
@@ -63,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( kernel::Viewport_ABC& viewport );
+    virtual void Draw( gui::Viewport_ABC& viewport );
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 

@@ -77,7 +77,7 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
 // Name: GridLayer::Paint
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void GridLayer::Paint( kernel::Viewport_ABC& )
+void GridLayer::Paint( Viewport_ABC& )
 {
     // NOTHING
 }

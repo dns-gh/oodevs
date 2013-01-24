@@ -298,7 +298,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
 // Name: ParamObstacle::Draw
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ParamObstacle::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     location_->Draw( point, viewport, tools );
 }

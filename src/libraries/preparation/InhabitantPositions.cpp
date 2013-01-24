@@ -239,7 +239,7 @@ bool InhabitantPositions::IsAggregated() const
 // Name: InhabitantPositions::Draw
 // Created: JSR 2011-01-13
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )

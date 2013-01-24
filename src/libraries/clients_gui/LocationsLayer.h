@@ -19,7 +19,6 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  LocationsLayer
     @brief  LocationsLayer
@@ -37,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     void AddLocation( const geometry::Point2f& point );
     void Reset();
     //@}

@@ -167,7 +167,7 @@ void ScoreList::Load()
 // Name: ScoreList::Draw
 // Created: FPO 2011-07-19
 // -----------------------------------------------------------------------------
-void ScoreList::Draw( kernel::Viewport_ABC& viewport )
+void ScoreList::Draw( gui::Viewport_ABC& viewport )
 {
     editor_->Draw( viewport );
 }

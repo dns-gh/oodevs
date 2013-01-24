@@ -235,6 +235,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Viewport_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\WatershedLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\WeatherLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MiniView.cpp" />
@@ -1186,6 +1187,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanPositions.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Viewport_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\View_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\AgentsLayer.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>

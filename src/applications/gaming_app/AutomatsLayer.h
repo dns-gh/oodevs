@@ -55,7 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements );
     void RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type );
     void RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type );

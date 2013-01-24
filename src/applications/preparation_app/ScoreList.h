@@ -35,6 +35,10 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
+}
+
+namespace gui
+{
     class Viewport_ABC;
 }
 
@@ -70,7 +74,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( kernel::Viewport_ABC& viewport );
+    void Draw( gui::Viewport_ABC& viewport );
     void Load();
     //@}
 

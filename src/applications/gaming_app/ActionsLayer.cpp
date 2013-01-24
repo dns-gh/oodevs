@@ -37,7 +37,7 @@ ActionsLayer::~ActionsLayer()
 // Name: ActionsLayer::Paint
 // Created: SBO 2010-05-03
 // -----------------------------------------------------------------------------
-void ActionsLayer::Paint( kernel::Viewport_ABC& viewport )
+void ActionsLayer::Paint( gui::Viewport_ABC& viewport )
 {
     if( current_ != 0 )
         current_->Draw( viewport, tools_ );

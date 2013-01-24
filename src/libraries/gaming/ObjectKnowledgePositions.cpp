@@ -47,7 +47,7 @@ void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& mes
 // Name: ObjectKnowledgePositions::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
         tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay() );

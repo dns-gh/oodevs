@@ -14,11 +14,11 @@
 #include "View_ABC.h"
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include <graphics/extensions.h>
 
 using namespace gui;
@@ -49,7 +49,7 @@ namespace
 {
     struct DrawExtensionsFunctor : boost::noncopyable
     {
-        DrawExtensionsFunctor( kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, bool drawInfrastructure )
+        DrawExtensionsFunctor( Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, bool drawInfrastructure )
             : viewport_          ( viewport )
             , tools_             ( tools )
             , drawInfrastructure_( drawInfrastructure )
@@ -71,7 +71,7 @@ namespace
                 }
             }
         }
-        kernel::Viewport_ABC& viewport_;
+        Viewport_ABC& viewport_;
         const kernel::GlTools_ABC& tools_;
         bool drawInfrastructure_;
     };
@@ -81,7 +81,7 @@ namespace
 // Name: UrbanLayer::Paint
 // Created: SLG 2006-03-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
+void UrbanLayer::Paint( Viewport_ABC& viewport )
 {
     gl::Initialize();
     // dessin des blocs urbains
@@ -209,7 +209,7 @@ bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rec
 // Name: UrbanLayer::Draw
 // Created: LGY 2011-04-18
 // -----------------------------------------------------------------------------
-void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport )
+void UrbanLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport )
 {
     if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
     {

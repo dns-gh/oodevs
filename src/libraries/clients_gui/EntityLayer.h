@@ -35,7 +35,10 @@ namespace gui
     class ColorStrategy_ABC;
     class View_ABC;
     class LayerFilter_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  EntityLayerBase
     @brief  Entity layer base
@@ -53,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     //@}
 
 protected:
@@ -69,7 +72,7 @@ protected:
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
-    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport );
 
     template< typename Functor >
     void Apply( Functor& functor ) const

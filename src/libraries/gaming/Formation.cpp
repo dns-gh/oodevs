@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Formation.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -17,7 +18,6 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
@@ -99,7 +99,7 @@ void Formation::InitializeSymbol() const
 // Name: Formation::Draw
 // Created: LGY 2011-03-08
 // -----------------------------------------------------------------------------
-void Formation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
     {

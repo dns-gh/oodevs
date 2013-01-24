@@ -110,7 +110,7 @@ void Mission::Serialize( xml::xostream& xos ) const
 // Name: Mission::Draw
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void Mission::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void Mission::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( !tooltip_.get() )
     {

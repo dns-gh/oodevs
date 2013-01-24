@@ -28,7 +28,7 @@ public:
     }
 
     void Draw( const geometry::Point2f& where,
-               const kernel::Viewport_ABC& viewport,
+               const Viewport_ABC& viewport,
                const kernel::GlTools_ABC& tools )
     {
         drawer.Draw( where, viewport, tools );

@@ -88,7 +88,7 @@ std::string Drawer::Strip( const std::string& name )
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
 void Drawer::Draw( const geometry::Point2f& where,
-                   const kernel::Viewport_ABC& viewport,
+                   const Viewport_ABC& viewport,
                    const kernel::GlTools_ABC& tools ) const
 {
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )

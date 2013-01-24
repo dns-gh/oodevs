@@ -58,7 +58,7 @@ void ObjectDetections::DoUpdate( const sword::ObjectDetection& message )
 // Name: ObjectDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void ObjectDetections::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
+void ObjectDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "VisionLines" ) || perceivedObjects_.empty() )
         return;

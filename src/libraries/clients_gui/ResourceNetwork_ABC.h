@@ -15,8 +15,12 @@
 
 namespace kernel
 {
-class GlTools_ABC;
-class Viewport_ABC;
+    class GlTools_ABC;
+}
+
+namespace gui
+{
+    class Viewport_ABC;
 }
 
 namespace gui
@@ -97,7 +101,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const = 0;
-    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource )
     {
         auto it = resourceNodes_.find( resource );

@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "VisionMap.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 
@@ -44,7 +44,7 @@ VisionMap::~VisionMap()
 // Name: VisionMap::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionMap::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void VisionMap::Draw( const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     static const float colors[3][4] =
     {
@@ -166,7 +166,7 @@ void VisionMap::Update( const std::pair< unsigned, unsigned >& cell, E_Perceptio
 // Name: VisionMap::IsVisible
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-bool VisionMap::IsVisible( const kernel::Viewport_ABC& viewport ) const
+bool VisionMap::IsVisible( const gui::Viewport_ABC& viewport ) const
 {
     return viewport.IsVisible( boundingBox_ );
 }

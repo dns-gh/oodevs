@@ -11,6 +11,7 @@
 #include "Agent.h"
 #include "tools/IdManager.h"
 #include "AgentHierarchies.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
@@ -23,7 +24,6 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
@@ -118,7 +118,7 @@ void Agent::InitializeSymbol() const
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {

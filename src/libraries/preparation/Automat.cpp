@@ -11,6 +11,7 @@
 #include "Automat.h"
 #include "LogisticLevelAttribute.h"
 #include "tools/IdManager.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -20,7 +21,6 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -62,7 +62,7 @@ Automat::~Automat()
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {

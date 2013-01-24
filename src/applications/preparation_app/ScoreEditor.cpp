@@ -371,7 +371,7 @@ void ScoreEditor::NameChanged()
 // Name: ScoreEditor::Draw
 // Created: FPO 2011-07-18
 // -----------------------------------------------------------------------------
-void ScoreEditor::Draw( kernel::Viewport_ABC& viewport )
+void ScoreEditor::Draw( gui::Viewport_ABC& viewport )
 {
     variables_->Draw( viewport );
 }

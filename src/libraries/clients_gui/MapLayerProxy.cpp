@@ -80,7 +80,7 @@ void MapLayerProxy::Paint( const geometry::Rectangle2f& viewport )
 // Name: MapLayerProxy::Paint
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void MapLayerProxy::Paint( kernel::Viewport_ABC& viewport )
+void MapLayerProxy::Paint( Viewport_ABC& viewport )
 {
     try
     {

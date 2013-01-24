@@ -69,7 +69,7 @@ void ParametersLayer::Paint( const geometry::Rectangle2f& viewport )
 // Name: ParametersLayer::Paint
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ParametersLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
+void ParametersLayer::Paint( Viewport_ABC& /*viewport*/ )
 {
     if( ! current_ || !handler_ )
         return;

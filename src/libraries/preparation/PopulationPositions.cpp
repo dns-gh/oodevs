@@ -11,12 +11,12 @@
 #include "PopulationPositions.h"
 #include "Population.h"
 #include "MoveableProxy.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/EntityType.h"
 #include "clients_kernel/PopulationType.h"
@@ -78,7 +78,6 @@ geometry::Point2f PopulationPositions::ReadPosition( xml::xistream& xis, const k
     xis >> xml::attribute( "position", mgrs );
     return converter.ConvertToXY( mgrs );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions::UpdatePosition
@@ -167,7 +166,7 @@ void PopulationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: PopulationPositions::Draw
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-void PopulationPositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void PopulationPositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const_cast< PopulationPositions* >( this )->UpdatePosition(); // $$$$ SBO 2006-11-09:
     if( viewport.IsVisible( where ) )

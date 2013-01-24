@@ -363,7 +363,7 @@ void MissionPanel::ActivateFragOrder( int id )
 // Name: MissionPanel::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionPanel::Draw( Viewport_ABC& viewport )
+void MissionPanel::Draw( gui::Viewport_ABC& viewport )
 {
     if( pMissionInterface_ && isVisible() )
     {

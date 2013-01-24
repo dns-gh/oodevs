@@ -14,7 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "clients_kernel/Viewport_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
@@ -54,7 +54,7 @@ AutomatsLayer::~AutomatsLayer()
 // Name: AutomatsLayer::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport )
+void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport )
 {
     gui::AutomatsLayer::Draw( entity, viewport );
     if( !ShouldDisplay( entity ) && selected_ == &entity )

@@ -10,7 +10,8 @@
 #ifndef __Viewport3d_h_
 #define __Viewport3d_h_
 
-#include "clients_kernel/Viewport_ABC.h"
+#include "clients_gui/Viewport_ABC.h"
+
 class ViewFrustum;
 
 namespace gui
@@ -22,7 +23,7 @@ namespace gui
 */
 // Created: AGE 2007-02-23
 // =============================================================================
-class Viewport3d : public kernel::Viewport_ABC
+class Viewport3d : public Viewport_ABC
 {
 public:
     //! @name Constructors/Destructor
