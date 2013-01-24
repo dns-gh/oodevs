@@ -116,7 +116,10 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::MessengerToClien
         sword::LauncherToAdmin adminMessage;
         sword::SessionNotification* notification = adminMessage.mutable_message()->mutable_session_notification();
         notification->set_exercise( request.exercise() );
-        notification->set_session( request.session() );
+        std::string session;
+        if( request.has_session() )
+            session = request.session();
+        notification->set_session( session.empty() ? session_ : session );
         notification->mutable_notification()->mutable_log_history_request_for_play()->set_profile( request.profile() );
         notification->mutable_notification()->mutable_log_history_request_for_play()->mutable_date_time()->set_data( request.date_time().data() );
         SendWithContext( adminMessage, 0 );
@@ -127,7 +130,8 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::MessengerToClien
         auto notification = adminMessage.mutable_message()->mutable_session_notification();
         notification->mutable_notification()->mutable_log_history_request_for_replay_ack();
         notification->set_exercise( message.message().log_history_request_for_replay_ack().exercise() );
-        notification->set_session( message.message().log_history_request_for_replay_ack().session() );
+        std::string session = message.message().log_history_request_for_replay_ack().session();
+        notification->set_session( session.empty() ? session_ : session );
         SendWithContext( adminMessage, 0 );
     }
     return false;

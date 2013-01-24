@@ -74,11 +74,9 @@ protected:
     //@}
     
 protected:
-    const std::string exercise_;
-
-private:
     //! @name Member data
     //@{
+    const std::string exercise_;
     boost::shared_ptr< LauncherPublisher > publisher_;
     const std::string session_;
     //@}

@@ -138,7 +138,7 @@ void LogisticPlugin::OnReceive( const sword::ClientToSim& message )
         answer->mutable_date_time()->set_data( request.date_time().data() );
         answer->set_profile( request.profile() );
         answer->set_exercise( request.exercise() );
-        answer->set_session( request.session() );
+        answer->set_session( request.has_session() ? request.session() : std::string() );
         clients_.Send( messageToLauncher );
     }
 }
@@ -155,7 +155,7 @@ void LogisticPlugin::OnReceiveClientToMessenger( const sword::ClientToMessenger&
         sword::SimToClient answer;
         auto redirectedMessage = answer.mutable_message()->mutable_log_history_request_for_play_ack();
         redirectedMessage->set_exercise( request.exercise() );
-        redirectedMessage->set_session( request.session() );
+        redirectedMessage->set_session( request.has_session() ? request.session() : std::string() );
         redirectedMessage->set_profile( request.profile() );
         redirectedMessage->mutable_date_time()->set_data( request.date_time().data() );
         clients_.Send( answer );
@@ -167,7 +167,7 @@ void LogisticPlugin::OnReceiveClientToMessenger( const sword::ClientToMessenger&
             (*r)->ForceNewFile();
         sword::MessengerToClient answer;
         answer.mutable_message()->mutable_log_history_request_for_replay_ack()->set_exercise( request.exercise() );
-        answer.mutable_message()->mutable_log_history_request_for_replay_ack()->set_session( request.session() );
+        answer.mutable_message()->mutable_log_history_request_for_replay_ack()->set_session( request.has_session() ? request.session() : std::string() );
         clients_.Send( answer );        
     }
 }
