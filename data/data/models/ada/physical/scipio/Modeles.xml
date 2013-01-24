@@ -75,8 +75,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -123,8 +123,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -192,8 +192,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -241,8 +241,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -279,8 +279,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -319,8 +319,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -360,8 +360,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -401,8 +401,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -445,8 +445,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -525,8 +525,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -564,8 +564,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -625,8 +625,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -667,8 +667,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -707,8 +707,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -750,8 +750,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -797,8 +797,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -843,8 +843,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -893,8 +893,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -936,8 +936,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -979,8 +979,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1033,8 +1033,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1109,8 +1109,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1146,6 +1146,7 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Desactiver Point Du Reseau"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1157,8 +1158,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1192,8 +1193,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1272,8 +1273,8 @@
         <fragorder name="Arreter Silence Radio"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1304,8 +1305,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1350,8 +1351,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1396,8 +1397,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1440,8 +1441,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1480,8 +1481,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1519,8 +1520,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1566,8 +1567,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1600,8 +1601,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1630,8 +1631,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1669,8 +1670,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1709,8 +1710,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1754,8 +1755,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1794,8 +1795,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1826,8 +1827,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1868,8 +1869,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1920,8 +1921,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -1978,8 +1979,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2031,8 +2032,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2094,8 +2095,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2158,8 +2159,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2219,8 +2220,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2297,8 +2298,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2373,8 +2374,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2420,8 +2421,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2474,8 +2475,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2536,8 +2537,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2582,8 +2583,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2620,8 +2621,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2660,8 +2661,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2701,8 +2702,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2752,8 +2753,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2794,8 +2795,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2843,8 +2844,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2884,8 +2885,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2925,8 +2926,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -2964,8 +2965,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3011,8 +3012,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3058,8 +3059,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3097,8 +3098,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3136,8 +3137,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3175,8 +3176,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3214,8 +3215,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3256,8 +3257,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3297,8 +3298,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3356,8 +3357,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3397,8 +3398,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3436,8 +3437,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3470,8 +3471,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3501,8 +3502,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3532,8 +3533,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3563,8 +3564,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3591,6 +3592,7 @@
         <mission name="PION JOINT Reconnaitre">
           <fragorder name="Modifier altitude"/>
         </mission>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3601,8 +3603,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3623,6 +3625,7 @@
           <fragorder name="Modifier altitude"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -3633,8 +3636,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3652,6 +3655,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION LOGISTIQUE Transporter Unites"/>
         <mission name="PION LOGISTIQUE Transporter Foule"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -3666,8 +3670,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3704,8 +3708,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3746,8 +3750,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3785,8 +3789,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3833,8 +3837,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3877,8 +3881,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3911,8 +3915,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -3930,6 +3934,7 @@
           <fragorder name="Rejoindre point de lancement"/>
         </mission>
         <mission name="PION AIR Faire Mouvement"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
@@ -3948,6 +3953,7 @@
         </mission>
         <mission name="PION AIR Faire Mouvement"/>
         <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Arreter Silence Radio"/>
@@ -3986,8 +3992,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
@@ -4019,8 +4025,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
@@ -4049,8 +4055,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4090,8 +4096,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4126,8 +4132,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4162,8 +4168,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4197,8 +4203,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4236,8 +4242,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4275,8 +4281,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4316,8 +4322,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4355,8 +4361,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4388,8 +4394,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4420,8 +4426,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4455,8 +4461,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4494,8 +4500,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4535,8 +4541,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4578,8 +4584,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4621,8 +4627,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4660,8 +4666,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4753,8 +4759,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4798,8 +4804,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4841,8 +4847,8 @@
         <fragorder name="Recuperer Transporteurs"/>
         <fragorder name="Attendre Se Poster"/>
         <fragorder name="S'arreter"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Pion Observer"/>
@@ -4948,8 +4954,8 @@
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Deposer Unite Capturee"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
       </fragorders>
     </automat>
@@ -5082,8 +5088,8 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
       </fragorders>
     </automat>
@@ -5442,8 +5448,8 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
       </fragorders>
     </automat>
@@ -6725,8 +6731,8 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
-        <fragorder name="Interdire Munition"/>
-        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Interdire Munitions"/>
+        <fragorder name="Autoriser Munitions"/>
         <fragorder name="Autoriser Toutes Munitions"/>
       </fragorders>
     </automat>
@@ -7564,4 +7570,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0791784945" -->
+<!-- signature="2396311381" -->
