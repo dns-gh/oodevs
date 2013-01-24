@@ -97,8 +97,8 @@ namespace rpr
     {
         id.Deserialize( archive );
     }
-    std::ostream& operator << ( std::ostream& os, const EntityIdentifier& id );
-    std::ostream& operator << ( std::ostream& os, const WorldLocation& loc )
+    std::ostream& operator<< ( std::ostream& os, const EntityIdentifier& id );
+    std::ostream& operator<< ( std::ostream& os, const WorldLocation& loc )
     {
         return os << "(" << loc.X() << "," << loc.Y() << ","<< loc.Z() << ")";
     }
@@ -110,6 +110,10 @@ namespace rpr
     bool operator== (const WorldLocation& lhs, const WorldLocation& rhs )
     {
         return fequal( lhs.X(), rhs.X(), 1e-6) && fequal( lhs.Y(), rhs.Y(), 1e-6) && fequal( lhs.Z(), rhs.Z(), 1e-6);
+    }
+    bool operator== (const Orientation& lhs, const Orientation& rhs )
+    {
+        return fequal( lhs.Psi(), rhs.Psi(), 1e-6) && fequal( lhs.Theta(), rhs.Theta(), 1e-6) && fequal( lhs.Psi(), rhs.Psi(), 1e-6);
     }
 }
 
