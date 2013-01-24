@@ -74,21 +74,21 @@ private:
     QLabel*                     pausedLabel_;
     QCheckBox*                  pausedCheckBox_;
 
-    QGroupBox*                  pathfindBox_;
     QLabel*                     pathThreadsLabel_;
     QSpinBox*                   pathThreadsSpin_;
 
-    QGroupBox*                  recordBox_;
     QLabel*                     fragmentsFrequencyLabel_;
     QSpinBox*                   fragmentsFrequencySpin_;
 
-    QGroupBox*                  clientBox_;
     QLabel*                     noClientLabel_;
     QCheckBox*                  noClientCheckBox_;
 
 	QGroupBox*                  legacyBox_;
     QLabel*                     legacyLabel_;
     QCheckBox*                  legacyCheckBox_;
+
+    QLabel*                     reportsFrequencyLabel_;
+    QSpinBox*                   reportsFrequencySpin_;
     //@}
 };
 }

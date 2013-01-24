@@ -232,7 +232,11 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_control_information() )
         simulation_->Update( message.control_information() );
     else if( message.has_control_begin_tick() )
-        simulation_->Update( message.control_begin_tick() );
+    {
+        const sword::ControlBeginTick& beginTick = message.control_begin_tick();
+        simulation_->Update( beginTick );
+        ClearOldReports( beginTick.current_tick() );
+    }
     else if( message.has_control_end_tick() )
     {
         const sword::ControlEndTick& endTick = message.control_end_tick();
@@ -254,11 +258,10 @@ void Model::Update( const sword::SimToClient& wrapper )
         message.has_control_checkpoint_set_frequency_ack() ||
         message.has_control_checkpoint_save_now_ack() ||
         message.has_control_send_current_state_begin() ||
-        message.has_control_send_current_state_end() )
+        message.has_control_send_current_state_end() ||
+        message.has_control_checkpoint_save_end() )
         { // NOTHING // $$$$ AGE 2007-04-18: messages vides...
         }
-    else if( message.has_control_checkpoint_save_end() )
-        ClearReports();
     else if( message.has_control_checkpoint_save_delete() )
         DeleteCheckpoint( message.control_checkpoint_save_delete().name() );
     else if( message.has_unit_knowledge_creation() )
@@ -689,10 +692,11 @@ void Model::DeleteCheckpoint( const std::string& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Model::ClearReports
+// Name: Model::ClearOldReports
 // Created: LDC 2011-09-13
 // -----------------------------------------------------------------------------
-void Model::ClearReports()
+void Model::ClearOldReports( unsigned int tick )
 {
-    reports_.DeleteAll();
+    if( tick % config_.GetReportsClearFrequency() == 0 )
+        reports_.DeleteAll();
 }

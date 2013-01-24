@@ -20,22 +20,6 @@
         <translation>End tick:</translation>
     </message>
     <message>
-        <source>Pathfind</source>
-        <translation>Pathfind</translation>
-    </message>
-    <message>
-        <source>Number of threads:</source>
-        <translation>Number of threads:</translation>
-    </message>
-    <message>
-        <source>Recorder</source>
-        <translation>Recorder</translation>
-    </message>
-    <message>
-        <source>Fragmentation frequency: </source>
-        <translation>Fragmentation frequency: </translation>
-    </message>
-    <message>
         <source>Advanced</source>
         <translation>Advanced</translation>
     </message>
@@ -44,12 +28,20 @@
         <translation>Paused at startup:</translation>
     </message>
     <message>
-        <source>Client</source>
-        <translation>Client</translation>
-    </message>
-    <message>
         <source>Do not start gaming client</source>
         <translation>Do not start gaming client</translation>
+    </message>
+    <message>
+        <source>Report clean frequency: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of pathfind threads:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recorder fragmentation frequency: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

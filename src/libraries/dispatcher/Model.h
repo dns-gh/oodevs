@@ -152,7 +152,7 @@ private:
     void AddExtensions( T& , void* ) {}
 
     void DeleteCheckpoint( const std::string& name );
-    void ClearReports();
+    void ClearOldReports( unsigned int tick );
     //@}
 
 private:

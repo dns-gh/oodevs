@@ -49,20 +49,22 @@ public:
     unsigned int       GetKeyFramesFrequency() const;
     unsigned int       GetReplayFragmentsFrequency() const;
     unsigned int       GetTickDuration() const;
+    unsigned int       GetReportsClearFrequency() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string    networkSimulationParameters_;
+    std::string networkSimulationParameters_;
     unsigned short networkSimulationPort_;
     unsigned short networkClientsParameters_;
     unsigned short networkShieldParameters_;
-    unsigned long  networkTimeout_;
-    bool           useShieldUtf8Encoding_;
-    unsigned int   keyFramesFrequency_;
-    unsigned int   replayFragmentsFrequency_;
-    unsigned int   timeStep_;
+    unsigned long networkTimeout_;
+    unsigned int keyFramesFrequency_;
+    unsigned int replayFragmentsFrequency_;
+    unsigned int timeStep_;
+    unsigned int reportsClearFrequency_;
+    bool useShieldUtf8Encoding_;
     //@}
 };
 

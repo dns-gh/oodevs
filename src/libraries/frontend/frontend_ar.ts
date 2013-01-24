@@ -20,22 +20,6 @@
         <translation type="unfinished">نهاية التجزئة:</translation>
     </message>
     <message>
-        <source>Pathfind</source>
-        <translation type="unfinished">باثفيند</translation>
-    </message>
-    <message>
-        <source>Number of threads:</source>
-        <translation type="unfinished">عدد مؤشرات الترابط:</translation>
-    </message>
-    <message>
-        <source>Recorder</source>
-        <translation type="unfinished">مسجل</translation>
-    </message>
-    <message>
-        <source>Fragmentation frequency: </source>
-        <translation type="unfinished">تجزئة التردد:</translation>
-    </message>
-    <message>
         <source>Advanced</source>
         <translation type="unfinished">متقدم</translation>
     </message>
@@ -44,12 +28,20 @@
         <translation type="unfinished">توقف مؤقت عند بدء التشغيل:</translation>
     </message>
     <message>
-        <source>Client</source>
-        <translation type="unfinished">العميل</translation>
-    </message>
-    <message>
         <source>Do not start gaming client</source>
         <translation type="unfinished">لا تقم بتشغيل عميل الألعاب</translation>
+    </message>
+    <message>
+        <source>Report clean frequency: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of pathfind threads:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recorder fragmentation frequency: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

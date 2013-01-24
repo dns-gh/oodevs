@@ -31,6 +31,21 @@ namespace
         QSettings settings( "MASA Group", "SWORD" );
         settings.setValue( ( "/sword/" + key ).c_str(), value );
     }
+    void AddSpinBox( QVBoxLayout* boxLayout, QLabel*& label, QSpinBox*& spin, int rangeMin, int rangeMax, int step, int spinValue )
+    {
+        label = new QLabel();
+        spin = new QSpinBox();
+        spin->setRange(rangeMin, rangeMax );
+        spin->setSingleStep( step );
+        spin->setValue( spinValue );
+
+        QWidget* innerBox = new QWidget();
+        QHBoxLayout* innerBoxLayout = new QHBoxLayout( innerBox );
+        innerBoxLayout->addWidget( label );
+        innerBoxLayout->addWidget( spin );
+
+        boxLayout->addWidget( innerBox );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,60 +95,32 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     timeBoxLayout->addWidget( endtickSpin_, 1, 1, 1, 1 );
     timeBoxLayout->addWidget( pausedLabel_, 1, 2, 1, 1 );
     timeBoxLayout->addWidget( pausedCheckBox_, 1, 3, 1, 1 );
-
-
-    // pathfind box
-    pathThreadsLabel_ = new QLabel();
-    pathThreadsSpin_ = new QSpinBox();
-    pathThreadsSpin_->setRange( 0, 4 );
-    pathThreadsSpin_->setSingleStep( 1 );
-    pathThreadsSpin_->setValue( 1 );
-
-    QWidget* threadBox = new QWidget();
-    QHBoxLayout* threadBoxLayout = new QHBoxLayout( threadBox );
-    threadBoxLayout->addWidget( pathThreadsLabel_ );
-    threadBoxLayout->addWidget( pathThreadsSpin_ );
-
-    pathfindBox_ = new QGroupBox();
-    QHBoxLayout* pathfindBoxLayout = new QHBoxLayout( pathfindBox_ );
-    pathfindBoxLayout->addWidget( threadBox );
-
-    //record box
-    fragmentsFrequencyLabel_ = new QLabel();
-    fragmentsFrequencySpin_ = new QSpinBox();
-    stepSpin_->setRange( 0, std::numeric_limits< int >::max() );
-    stepSpin_->setSingleStep( 1 );
-    fragmentsFrequencySpin_->setValue( 200 );
-
-    QWidget* freqBox = new QWidget();
-    QHBoxLayout* freqBoxLayout = new QHBoxLayout( freqBox );
-    freqBoxLayout->addWidget( fragmentsFrequencyLabel_ );
-    freqBoxLayout->addWidget( fragmentsFrequencySpin_ );
-
-    recordBox_ = new QGroupBox();
-    QHBoxLayout* recordBoxLayout = new QHBoxLayout( recordBox_ );
-    recordBoxLayout->addWidget( freqBox );
+    
+    QGroupBox* miscellaneousBox = new QGroupBox();
+    QVBoxLayout* miscellaneousBoxLayout = new QVBoxLayout( miscellaneousBox );
+    miscellaneousBoxLayout->setMargin( 5 );
+    AddSpinBox( miscellaneousBoxLayout, pathThreadsLabel_, pathThreadsSpin_, 0, 4, 1, 1 );
+    AddSpinBox( miscellaneousBoxLayout, fragmentsFrequencyLabel_, fragmentsFrequencySpin_, 0, std::numeric_limits< int >::max(), 1, 200 );
 
     //client box
+    QWidget* clientBox = new QWidget();
+    QHBoxLayout* clientBoxLayout = new QHBoxLayout( clientBox );
     noClientLabel_ = new QLabel();
-
     noClientCheckBox_ = new QCheckBox();
     noClientCheckBox_->setChecked( false );
     connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( NoClientChecked( int ) ) );
 
-    clientBox_ = new QGroupBox();
-    QHBoxLayout* clientBoxLayout = new QHBoxLayout( clientBox_ );
     clientBoxLayout->addWidget( noClientLabel_ );
     clientBoxLayout->addWidget( noClientCheckBox_ );
-    clientBoxLayout->setMargin( 5 );
+    miscellaneousBoxLayout->addWidget( clientBox );
+
+    AddSpinBox( miscellaneousBoxLayout, reportsFrequencyLabel_, reportsFrequencySpin_, 1, std::numeric_limits< int >::max(), 1, 100 );
 
     //general panel
     QVBoxLayout* boxLayout = new QVBoxLayout( this );
     boxLayout->setMargin( 5 );
     boxLayout->addWidget( timeBox_ );
-    boxLayout->addWidget( pathfindBox_ );
-    boxLayout->addWidget( recordBox_ );
-    boxLayout->addWidget( clientBox_ );
+    boxLayout->addWidget( miscellaneousBox );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,14 +144,10 @@ void AdvancedConfigPanel::OnLanguageChanged()
     endtickLabel_->setText( tools::translate( "AdvancedConfigPanel", "End tick:" ) );
     pausedLabel_->setText( tools::translate( "AdvancedConfigPanel", "Paused at startup:" ) );
 
-    pathfindBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Pathfind" ) );
-    pathThreadsLabel_->setText( tools::translate( "AdvancedConfigPanel", "Number of threads:" ) );
-
-    recordBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Recorder" ) );
-    fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ) );
-
-    clientBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Client" ) );
+    pathThreadsLabel_->setText( tools::translate( "AdvancedConfigPanel", "Number of pathfind threads:" ) );
+    fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Recorder fragmentation frequency: " ) );
     noClientLabel_->setText( tools::translate( "AdvancedConfigPanel", "Do not start gaming client" ) );
+    reportsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Report clean frequency: " ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,6 +172,7 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
     action.SetOption( "session/config/simulation/time/@paused", pausedCheckBox_->isChecked() );
     action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreadsSpin_->value() );
     action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequencySpin_->value() );
+    action.SetOption( "session/config/dispatcher/reports/@frequency", reportsFrequencySpin_->value() );
     action.Commit();
 }
 

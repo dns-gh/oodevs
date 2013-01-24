@@ -32,6 +32,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
+    , reportsClearFrequency_   ( 100 )
     , useShieldUtf8Encoding_   ( true )
 {
     po::options_description desc( "Dispatcher/replayer options" );
@@ -100,7 +101,12 @@ void Config::Parse( int argc, char** argv )
                             >> xml::optional >> xml::attribute( "logfiles", logShield.files_ )
                             >> xml::optional >> xml::attribute( "logsize", logShield.fileSize_ )
                             >> xml::optional >> xml::attribute( "sizeunit", logShield.sizeUnit_ )
-                            >> xml::optional >> xml::attribute( "use-utf8-string-encoding", useShieldUtf8Encoding_ );
+                            >> xml::optional >> xml::attribute( "use-utf8-string-encoding", useShieldUtf8Encoding_ )
+                        >> xml::end
+                    >> xml::end
+                    >> xml::optional >> xml::start( "reports" )
+                        >> xml::attribute( "frequency", reportsClearFrequency_ )
+                    >> xml::end;
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
@@ -183,4 +189,13 @@ unsigned int Config::GetReplayFragmentsFrequency() const
 unsigned int Config::GetTickDuration() const
 {
     return timeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetReportsClearFrequency
+// Created: LDC 2013-01-23
+// -----------------------------------------------------------------------------
+unsigned int Config::GetReportsClearFrequency() const
+{
+    return reportsClearFrequency_;
 }
