@@ -170,13 +170,15 @@ target_link_libraries( clients_kernel
     sword_tools
     ${GEOCOORD_LIBRARIES}
     ${GRAPHICS_LIBRARIES}
-    ${OPENGL_LIBRARIES}
     ${QT_QTGUI_LIBRARY}
 )
 
 # actions
 add_target( actions common "libraries/actions" OPTIONS qt3 protocol )
-target_link_libraries( actions clients_kernel )
+target_link_libraries( actions
+    clients_gui
+    clients_kernel
+)
 
 # reports
 add_target( reports common "libraries/reports" OPTIONS protocol )
@@ -518,6 +520,7 @@ target_link_libraries( clients_gui
     meteo
     ${GDAL_I_LIBRARIES}
     ${GLEW_LIBRARIES}
+    ${OPENGL_LIBRARIES}
     ${SPATIALCONTAINER_LIBRARIES}
     ${SVGL_LIBRARIES}
     ${TERRAIN_LIBRARIES}
