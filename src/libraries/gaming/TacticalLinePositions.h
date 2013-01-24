@@ -10,7 +10,7 @@
 #ifndef __TacticalLinePositions_h_
 #define __TacticalLinePositions_h_
 
-#include "clients_kernel/TacticalLinePositions_ABC.h"
+#include "clients_gui/TacticalLinePositions_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
 namespace sword
@@ -19,7 +19,6 @@ namespace sword
     class LimitUpdate;
     class Location;
     class PhaseLineUpdate;
-    // class TacticalLine;
 }
 
 namespace kernel
@@ -34,7 +33,7 @@ namespace kernel
 */
 // Created: SBO 2006-11-06
 // =============================================================================
-class TacticalLinePositions : public kernel::TacticalLinePositions_ABC
+class TacticalLinePositions : public gui::TacticalLinePositions_ABC
                             , public kernel::Updatable_ABC< sword::PhaseLineUpdate >
                             , public kernel::Updatable_ABC< sword::LimitUpdate >
 {

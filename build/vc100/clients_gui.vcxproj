@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp" />
@@ -980,6 +981,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\StandardModelVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h" />

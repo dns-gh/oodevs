@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "TacticalLinePositions_ABC.h"
 
-#include "TacticalLine_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
@@ -19,6 +19,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions_ABC constructor

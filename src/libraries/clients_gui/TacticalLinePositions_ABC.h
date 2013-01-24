@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_TacticalLinePositions_ABC_h_
-#define __kernel_TacticalLinePositions_ABC_h_
+#ifndef CLIENTS_GUI_TACTICALLINEPOSITIONS_ABC_H__
+#define CLIENTS_GUI_TACTICALLINEPOSITIONS_ABC_H__
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -17,7 +17,10 @@ namespace kernel
 {
     class TacticalLine_ABC;
     class CoordinateConverter_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  TacticalLinePositions
     @brief  TacticalLine Positions
@@ -30,8 +33,11 @@ class TacticalLinePositions_ABC : public kernel::Positions
 protected:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinePositions_ABC( const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
-             TacticalLinePositions_ABC( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
+             TacticalLinePositions_ABC( const kernel::CoordinateConverter_ABC& converter,
+                                        const kernel::TacticalLine_ABC& owner );
+             TacticalLinePositions_ABC( const T_PointVector& pointList,
+                                        const kernel::CoordinateConverter_ABC& converter,
+                                        const kernel::TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions_ABC();
     //@}
 
@@ -71,11 +77,11 @@ protected:
 private:
     //! @name Member data
     //@{
-    const TacticalLine_ABC& owner_;
+    const kernel::TacticalLine_ABC& owner_;
     geometry::Rectangle2f boundingBox_;
     //@}
 };
 
 }
 
-#endif // __kernel_TacticalLinePositions_ABC_h_
+#endif // CLIENTS_GUI_TACTICALLINEPOSITIONS_ABC_H__

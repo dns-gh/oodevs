@@ -889,6 +889,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Drawer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1426,6 +1429,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Drawer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

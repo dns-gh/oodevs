@@ -10,7 +10,7 @@
 #ifndef __TacticalLinePositions_h_
 #define __TacticalLinePositions_h_
 
-#include "clients_kernel/TacticalLinePositions_ABC.h"
+#include "clients_gui/TacticalLinePositions_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -29,7 +29,7 @@ namespace xml
 */
 // Created: SBO 2006-11-06
 // =============================================================================
-class TacticalLinePositions : public kernel::TacticalLinePositions_ABC
+class TacticalLinePositions : public gui::TacticalLinePositions_ABC
                             , public kernel::Serializable_ABC
 {
 public:
