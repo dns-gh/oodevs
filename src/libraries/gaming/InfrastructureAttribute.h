@@ -10,9 +10,9 @@
 #ifndef __InfrastructureAttribute_h_
 #define __InfrastructureAttribute_h_
 
-#include "clients_kernel/Infrastructure_ABC.h"
-#include "tools/Resolver.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/OptionalValue.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -29,7 +29,7 @@ namespace kernel
 */
 // Created: JSR 2010-09-01
 // =============================================================================
-class InfrastructureAttribute : public kernel::Infrastructure_ABC
+class InfrastructureAttribute : public gui::Infrastructure_ABC
 {
 public:
     //! @name Constructors/Destructor

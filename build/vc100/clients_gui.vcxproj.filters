@@ -1452,6 +1452,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworkSelectionObserver.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Infrastructure_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">

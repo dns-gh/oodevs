@@ -348,7 +348,7 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
     else if( capacity == "medical-treatment" )
         UpdateCapacity< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( xis, object );
     else if( capacity == "infrastructure" )
-        UpdateCapacity< InfrastructureAttribute, kernel::Infrastructure_ABC >( xis, object );
+        UpdateCapacity< InfrastructureAttribute, gui::Infrastructure_ABC >( xis, object );
 }
 
 // -----------------------------------------------------------------------------

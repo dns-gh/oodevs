@@ -695,6 +695,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Infrastructure_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemDecorationGetter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemFactory_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\Logger.h">

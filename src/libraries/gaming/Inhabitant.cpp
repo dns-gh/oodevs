@@ -10,12 +10,12 @@
 #include "gaming_pch.h"
 #include "Inhabitant.h"
 #include "UrbanModel.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -296,7 +296,7 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
         nominalCapacity_ += static_cast< unsigned int >( pObject->GetNominalCapacity() );
         if( pObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
             ++medicalInfrastructures_;
-        else if( const kernel::Infrastructure_ABC* infra = pObject->Retrieve< kernel::Infrastructure_ABC >() )
+        else if( auto infra = pObject->Retrieve< gui::Infrastructure_ABC >() )
             if( infra->GetType() != 0 )
                 ++infrastructures_;
         const kernel::AccommodationTypes& accommodations = pObject->GetAccommodations();

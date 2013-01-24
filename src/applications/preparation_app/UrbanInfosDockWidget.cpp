@@ -10,9 +10,9 @@
 #include "preparation_app_pch.h"
 #include "UrbanInfosDockWidget.h"
 
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -145,7 +145,7 @@ namespace
                               std::map< std::string, unsigned int >& motivationsCapacities, std::map< std::string, unsigned int >& resourcesProd, std::map< std::string, unsigned int >& resourceConso )
     {
         // Infra
-        const kernel::Infrastructure_ABC* infrastructure = urbanObject.Retrieve< kernel::Infrastructure_ABC >();
+        auto infrastructure = urbanObject.Retrieve< gui::Infrastructure_ABC >();
         if( infrastructure )
         {
             const kernel::InfrastructureType* infraType = infrastructure->GetType();

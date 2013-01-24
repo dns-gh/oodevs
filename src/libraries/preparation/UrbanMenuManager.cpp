@@ -12,9 +12,9 @@
 #include "moc_UrbanMenuManager.cpp"
 #include "UrbanHierarchies.h"
 #include "UrbanModel.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
@@ -108,9 +108,9 @@ void UrbanMenuManager::CreateInfrastructuresMenu( kernel::ContextMenu& menu ) co
     bool hasInfra = false;
     if( element_ )
     {
-        if( element_->Retrieve< kernel::Infrastructure_ABC >() )
+        if( element_->Retrieve< gui::Infrastructure_ABC >() )
         {
-            infraType = element_->Get< kernel::Infrastructure_ABC >().GetType();
+            infraType = element_->Get< gui::Infrastructure_ABC >().GetType();
             hasInfra = infraType != 0;
         }
     }
@@ -119,9 +119,9 @@ void UrbanMenuManager::CreateInfrastructuresMenu( kernel::ContextMenu& menu ) co
         bool noInfrastructureDetected = false;
         for( auto it = selected_.begin(); it != selected_.end(); ++it )
         {
-            if( ( *it )->Retrieve< kernel::Infrastructure_ABC >() )
+            if( ( *it )->Retrieve< gui::Infrastructure_ABC >() )
             {
-                const kernel::InfrastructureType* type = ( *it )->Get< kernel::Infrastructure_ABC >().GetType();
+                const kernel::InfrastructureType* type = ( *it )->Get< gui::Infrastructure_ABC >().GetType();
                 if( type )
                 {
                     hasInfra = true;
@@ -281,7 +281,7 @@ void UrbanMenuManager::OnCreateInfrastructure( const QString& name )
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::DoApplyInfrastructure( kernel::Entity_ABC& object, kernel::InfrastructureType* type ) const
 {
-    kernel::Infrastructure_ABC* infra = object.Retrieve< kernel::Infrastructure_ABC >();
+    auto* infra = object.Retrieve< gui::Infrastructure_ABC >();
     if( infra )
         infra->SetType( type );
     tools::Iterator< const kernel::Entity_ABC& > it = object.Get< kernel::Hierarchies >().CreateSubordinateIterator();

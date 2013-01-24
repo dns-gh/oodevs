@@ -11,10 +11,10 @@
 #include "InhabitantPositions.h"
 #include "UrbanHierarchies.h"
 #include "UrbanModel.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -258,7 +258,7 @@ void InhabitantPositions::UpdateDictionary()
     {
         const kernel::UrbanObject* pProxy = static_cast< const kernel::UrbanObject* >( it->get< 2 >() );
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
-        if( const kernel::Infrastructure_ABC* infra = pProxy->Retrieve< kernel::Infrastructure_ABC >() )
+        if( auto infra = pProxy->Retrieve< gui::Infrastructure_ABC >() )
         {
             if( infra->GetType() && infra->GetType()->IsMedical() )
                 ++medicalInfrastructures_;

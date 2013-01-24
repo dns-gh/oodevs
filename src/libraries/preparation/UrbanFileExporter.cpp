@@ -11,9 +11,9 @@
 #include "UrbanFileExporter.h"
 #include "UrbanModel.h"
 #include "UrbanHierarchies.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Architecture_ABC.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
@@ -219,7 +219,7 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
 
     // Infrastructure
     {
-        const kernel::Infrastructure_ABC& infra = urbanObject.Get< kernel::Infrastructure_ABC >();
+        const auto& infra = urbanObject.Get< gui::Infrastructure_ABC >();
         if( infra.GetType() )
             pFeature->SetField( "INFRAS", infra.GetType()->GetName().c_str() );
     }

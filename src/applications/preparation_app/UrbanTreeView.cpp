@@ -11,6 +11,7 @@
 #include "UrbanTreeView.h"
 #include "moc_UrbanTreeView.cpp"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ItemPixmapDelegate.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
@@ -23,7 +24,6 @@
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -160,7 +160,7 @@ void UrbanTreeView::OnCreateCity()
 std::vector< const QPixmap* > UrbanTreeView::GetEntityPixmap( const kernel::Entity_ABC& object )
 {
     std::vector< const QPixmap* > ret;
-    if( const kernel::Infrastructure_ABC* infra = object.Retrieve< kernel::Infrastructure_ABC >() )
+    if( auto infra = object.Retrieve< gui::Infrastructure_ABC >() )
     {
         const kernel::InfrastructureType* infraType = infra->GetType();
         if( infraType )
@@ -186,7 +186,7 @@ namespace
         const UrbanHierarchies& urbanHierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
         if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
         {
-            const kernel::Infrastructure_ABC& infra = object.Get< kernel::Infrastructure_ABC >();
+            const auto& infra = object.Get< gui::Infrastructure_ABC >();
             if( infra.GetType() )
                 return infra.GetType()->GetName();
             else

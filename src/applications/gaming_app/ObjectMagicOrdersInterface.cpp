@@ -12,9 +12,9 @@
 #include "moc_ObjectMagicOrdersInterface.cpp"
 #include "actions/ActionsModel.h"
 #include "actions/ParameterList.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -163,7 +163,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const kernel::UrbanObject_AB
     AddMagic( tr( "Stop confine" ), SLOT( StopConfine() ), magicMenu );
     AddMagic( tr( "Evacuate" ), SLOT( Evacuate() ), magicMenu );
     AddMagic( tr( "Stop evacuate" ), SLOT( StopEvacuate() ), magicMenu );
-    if( const Infrastructure_ABC* infrastructure = entity.Retrieve< Infrastructure_ABC >() )
+    if( auto infrastructure = entity.Retrieve< gui::Infrastructure_ABC >() )
     {
         AddIntValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ), infrastructure->GetThreshold() );
         AddMagic( tr( "Disable" ), SLOT( DisableInfrastructure() ), magicMenu );
@@ -367,7 +367,7 @@ void ObjectMagicOrdersInterface::ChangeThreshold()
     if( !selectedEntity_ )
         return;
     if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
-        if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
+        if( auto infrastructure = selectedEntity_->Retrieve< gui::Infrastructure_ABC >() )
         {
             ParameterList& list = *new ParameterList( OrderParameter( "Infrastructure", "list", false ) );
             list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::infrastructure );

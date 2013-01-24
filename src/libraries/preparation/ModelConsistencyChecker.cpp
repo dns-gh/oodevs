@@ -29,6 +29,7 @@
 #include "TeamsModel.h"
 #include "UrbanModel.h"
 #include "UserProfile.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -50,7 +51,6 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Inhabitant_ABC.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/LogisticSupplyClass.h"
@@ -763,7 +763,7 @@ void ModelConsistencyChecker::CheckUrban()
     while( it.HasMoreElements() )
     {
         const kernel::UrbanObject_ABC& object = it.NextElement();
-        if( const kernel::Infrastructure_ABC* infrastructure = object.Retrieve< kernel::Infrastructure_ABC >() )
+        if( auto infrastructure = object.Retrieve< gui::Infrastructure_ABC >() )
             if( !infrastructure->GetInvalidType().empty() )
                 AddError( eUnknownInfrastructure, &object, infrastructure->GetInvalidType() );
         if( const auto* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< gui::ResourceNetwork_ABC >() ) )

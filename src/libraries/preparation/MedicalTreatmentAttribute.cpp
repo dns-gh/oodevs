@@ -9,10 +9,10 @@
 
 #include "preparation_pch.h"
 #include "MedicalTreatmentAttribute.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -175,9 +175,9 @@ bool MedicalTreatmentAttribute::IsSet() const
 {
     if( !owner_ )
         return true;
-    if( const kernel::UrbanObject_ABC* urbanObject = dynamic_cast< const kernel::UrbanObject_ABC* >( owner_ ) )
-        if( const kernel::Infrastructure_ABC* infra = owner_->Retrieve< kernel::Infrastructure_ABC >() )
-            if( const kernel::InfrastructureType* type = infra->GetType() )
+    if( auto urbanObject = dynamic_cast< const kernel::UrbanObject_ABC* >( owner_ ) )
+        if( auto infra = owner_->Retrieve< gui::Infrastructure_ABC >() )
+            if( auto type = infra->GetType() )
                 return type->IsMedical();
     return false;
 }
@@ -206,7 +206,7 @@ void MedicalTreatmentAttribute::SerializeObjectAttributes( xml::xostream& xos ) 
     xos     << xml::start( "bed-capacities" );
     for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
         xos     << xml::start( "bed-capacity" )
-                    << xml::attribute( "type", it->first ) 
+                    << xml::attribute( "type", it->first )
                     << xml::attribute( "baseline", it->second )
                 << xml::end;
     xos     << xml::end // bed-capacities

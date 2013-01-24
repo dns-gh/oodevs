@@ -7,24 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __Infrastructure_ABC_h_
-#define __Infrastructure_ABC_h_
+#ifndef CLIENTS_GUI_INFRASTRUCTURE_ABC_H__
+#define CLIENTS_GUI_INFRASTRUCTURE_ABC_H__
 
-#include "UrbanExtensions.h"
+#include "clients_kernel/UrbanExtensions.h"
 
 namespace kernel
 {
     class GlTools_ABC;
     class InfrastructureType;
     class Viewport_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Infrastructure_ABC
     @brief  Infrastructure_ABC
 */
 // Created: JSR 2010-08-19
 // =============================================================================
-class Infrastructure_ABC : public InfrastructureAttribute_ABC
+class Infrastructure_ABC : public kernel::InfrastructureAttribute_ABC
 {
 
 public:
@@ -39,16 +42,16 @@ public:
     virtual bool IsEnabled() const = 0;
     virtual const std::string& GetInvalidType() const = 0;
     virtual unsigned int GetThreshold() const = 0;
-    virtual const InfrastructureType* GetType() const = 0;
-    virtual void SetType( InfrastructureType* infrastructure ) = 0;
+    virtual const kernel::InfrastructureType* GetType() const = 0;
+    virtual void SetType( kernel::InfrastructureType* infrastructure ) = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 };
 
 }
 
-#endif // __Infrastructure_ABC_h_
+#endif // CLIENTS_GUI_INFRASTRUCTURE_ABC_H__

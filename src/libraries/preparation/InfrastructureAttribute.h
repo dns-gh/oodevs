@@ -10,7 +10,7 @@
 #ifndef __InfrastructureAttribute_h_
 #define __InfrastructureAttribute_h_
 
-#include "clients_kernel/Infrastructure_ABC.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
 
@@ -35,7 +35,7 @@ namespace xml
 */
 // Created: SLG 2011-01-11
 // =============================================================================
-class InfrastructureAttribute : public kernel::Infrastructure_ABC
+class InfrastructureAttribute : public gui::Infrastructure_ABC
                               , public kernel::Serializable_ABC
 {
 public:

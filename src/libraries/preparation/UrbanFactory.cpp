@@ -19,6 +19,7 @@
 #include "UrbanHierarchies.h"
 #include "UrbanObject.h"
 #include "UrbanPositions.h"
+#include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/UrbanColor_ABC.h"
@@ -27,7 +28,6 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/Infrastructure_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanFactory constructor
@@ -77,7 +77,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( xml::xistream& xis, kernel::Entit
             return 0;
         }
         pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( xis, *pTerrainObject, dictionary ) );
-        pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( xis, controllers_, *pTerrainObject, dictionary, staticModel_.objectTypes_ ) );
+        pTerrainObject->Attach< gui::Infrastructure_ABC >( *new InfrastructureAttribute( xis, controllers_, *pTerrainObject, dictionary, staticModel_.objectTypes_ ) );
         pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( xis, staticModel_.objectTypes_, dictionary, &controllers_, pTerrainObject ) );
         pTerrainObject->Attach< gui::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis, true, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_ ) );
     }
@@ -121,7 +121,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& locati
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( parent, dictionary, staticModel_.accommodationTypes_, *pTerrainObject, controllers_, staticModel_.objectTypes_ ) );
 
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( *pTerrainObject, dictionary ) );
-    pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, dictionary ) );
+    pTerrainObject->Attach< gui::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, dictionary ) );
     pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( staticModel_.objectTypes_, dictionary, &controllers_, pTerrainObject ) );
     pTerrainObject->Attach< gui::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, true, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), urbanObjects_, objects_, staticModel_.objectTypes_ ) );
 
