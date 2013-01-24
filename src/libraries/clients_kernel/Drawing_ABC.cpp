@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "Drawing_ABC.h"
-#include "clients_kernel/ActionController.h"
+#include "ActionController.h"
 
 using namespace kernel;
 

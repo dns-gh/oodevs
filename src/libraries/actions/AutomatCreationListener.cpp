@@ -9,10 +9,12 @@
 
 #include "actions_pch.h"
 #include "AutomatCreationListener.h"
-#include "actions/Action_ABC.h"
-#include "actions/ActionsModel.h"
-#include "actions/ActionTasker.h"
-#include "actions/ActionTiming.h"
+
+#include "Action_ABC.h"
+#include "ActionsModel.h"
+#include "ActionTasker.h"
+#include "ActionTiming.h"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentType.h"

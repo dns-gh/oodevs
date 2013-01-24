@@ -12,7 +12,7 @@
 
 #include "Displayable_ABC.h"
 #include "Extension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
+#include "Updatable_ABC.h"
 
 namespace sword
 {

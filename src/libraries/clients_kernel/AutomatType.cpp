@@ -8,7 +8,7 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatType.h"
-#include "clients_kernel/App6Symbol.h"
+#include "App6Symbol.h"
 #include "tools/Iterator.h"
 #include "AutomatComposition.h"
 #include "AgentType.h"

@@ -9,13 +9,13 @@
 
 #include "clients_kernel_pch.h"
 #include "UrbanTemplateType.h"
-#include "clients_kernel/Architecture_ABC.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "clients_kernel/MaterialCompositionType.h"
-#include "clients_kernel/RoofShapeType.h"
-#include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/Usages_ABC.h"
+#include "Architecture_ABC.h"
+#include "ObjectTypes.h"
+#include "PhysicalAttribute_ABC.h"
+#include "MaterialCompositionType.h"
+#include "RoofShapeType.h"
+#include "UrbanObject_ABC.h"
+#include "Usages_ABC.h"
 
 using namespace kernel;
 

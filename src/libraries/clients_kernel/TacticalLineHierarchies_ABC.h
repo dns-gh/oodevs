@@ -10,8 +10,8 @@
 #ifndef __TacticalLineHierarchies_ABC_h_
 #define __TacticalLineHierarchies_ABC_h_
 
-#include "clients_kernel/SimpleHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "SimpleHierarchies.h"
+#include "TacticalHierarchies.h"
 
 namespace kernel
 {

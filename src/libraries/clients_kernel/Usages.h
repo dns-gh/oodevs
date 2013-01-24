@@ -10,7 +10,7 @@
 #ifndef __kernel_Usages_h_
 #define __kernel_Usages_h_
 
-#include "clients_kernel/Usages_ABC.h"
+#include "Usages_ABC.h"
 
 namespace kernel
 {

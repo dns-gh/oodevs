@@ -11,7 +11,7 @@
 #define __DisplayExtractor_ABC_h_
 
 #include "tools/VirtualTemplate.h"
-#include "clients_kernel/Tools.h"
+#include "Tools.h"
 
 namespace kernel
 {

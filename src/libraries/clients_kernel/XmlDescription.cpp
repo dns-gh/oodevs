@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "XmlDescription.h"
 
-#include "clients_kernel/Tools.h"
+#include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;

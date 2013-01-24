@@ -10,7 +10,7 @@
 #ifndef __EntityResolverFacade_h_
 #define __EntityResolverFacade_h_
 
-#include "clients_kernel/EntityResolver_ABC.h"
+#include "EntityResolver_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel

@@ -9,12 +9,12 @@
 
 #include "clients_kernel_pch.h"
 #include "UserRights.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Ghost_ABC.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "Automat_ABC.h"
+#include "Entity_ABC.h"
+#include "Formation_ABC.h"
+#include "Ghost_ABC.h"
+#include "Population_ABC.h"
+#include "Team_ABC.h"
 
 using namespace kernel;
 

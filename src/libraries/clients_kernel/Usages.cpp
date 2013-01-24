@@ -14,7 +14,7 @@
 #include "DictionaryUpdated.h"
 #include "PropertiesDictionary.h"
 #include "Tools.h"
-#include "clients_kernel/Controller.h"
+#include "Controller.h"
 
 using namespace kernel;
 
