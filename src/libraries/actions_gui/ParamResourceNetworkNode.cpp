@@ -97,7 +97,7 @@ void ParamResourceNetworkNode::CreateInternalMenu( kernel::ContextMenu& menu )
     const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes = resource.GetResourceNodes();
     int index = 0;
     actions_.clear();
-    for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it, ++index )
+    for( auto it = nodes.begin(); it != nodes.end(); ++it, ++index )
         actions_.push_back( internalMenu->InsertItem( "", it->first.c_str(), index ) );
     QObject::connect( internalMenu, SIGNAL( triggered( QAction* ) ), this, SLOT( OnMenuClick( QAction* ) ) );
     internalMenu_ = internalMenu;

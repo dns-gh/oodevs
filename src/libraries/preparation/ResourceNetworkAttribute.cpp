@@ -117,11 +117,11 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
 
-    for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         SetColor( node->second.resource_ );
         if( node->second.links_.size() > 0 )
-            for( ResourceNetwork_ABC::CIT_ResourceLinks link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
+            for( auto link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
                 kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbans_.Find( link->id_ ) ) : objects_.Find( link->id_ );
                 if( !target )
@@ -147,7 +147,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                     else
                         continue;
                 }
-                
+
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );
             }
@@ -182,7 +182,7 @@ namespace
 bool ResourceNetworkAttribute::CleanLinksToDeletedUrbanBlocks()
 {
     bool cleaned = false;
-    for( IT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         T_ResourceLinks& links = node->second.links_;
         size_t size = links.size();

@@ -15,9 +15,6 @@
 
 namespace kernel
 {
-class GlTools_ABC;
-class Viewport_ABC;
-
 // =============================================================================
 /** @class  ResourceNetwork_ABC
     @brief  ResourceNetwork_ABC
@@ -45,9 +42,7 @@ public:
         unsigned int flow_;
     };
 
-    typedef std::vector< ResourceLink >       T_ResourceLinks;
-    typedef T_ResourceLinks::iterator        IT_ResourceLinks;
-    typedef T_ResourceLinks::const_iterator CIT_ResourceLinks;
+    typedef std::vector< ResourceLink > T_ResourceLinks;
 
     struct ResourceNode
     {
@@ -77,8 +72,6 @@ public:
     };
 
     typedef std::map< std::string, ResourceNode > T_ResourceNodes;
-    typedef T_ResourceNodes::iterator            IT_ResourceNodes;
-    typedef T_ResourceNodes::const_iterator     CIT_ResourceNodes;
 
     struct Deletion
     {
@@ -101,7 +94,7 @@ public:
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource )
     {
-        IT_ResourceNodes it = resourceNodes_.find( resource );
+        auto it = resourceNodes_.find( resource );
         if( it == resourceNodes_.end() )
         {
             resourceNodes_[ resource ].resource_ = resource;
@@ -120,21 +113,21 @@ public:
     T_ResourceNodes& GetResourceNodes() { return resourceNodes_; }
     const ResourceNode* FindResourceNode( std::string resource ) const
     {
-        CIT_ResourceNodes it = resourceNodes_.find( resource );
+        auto it = resourceNodes_.find( resource );
         if( it == resourceNodes_.end() )
             return 0;
         return &it->second;
     }
     void RemoveLinks( bool urban, unsigned int id, const std::string& resource = std::string() )
     {
-        for( IT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+        for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
             if( !resource.empty() && resource != it->first )
                 continue;
             T_ResourceLinks& links = it->second.links_;
             if( !links.empty() )
             {
-                IT_ResourceLinks link = links.begin();
+                auto link = links.begin();
                 while( link != links.end() )
                 {
                     if( link->id_ == id && link->urban_ == urban )

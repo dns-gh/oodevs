@@ -70,7 +70,7 @@ void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
     action->AddParameter( *new Identifier( it.NextElement(), id ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );
     action->AddParameter( *nodes );
-    for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes.begin(); it != resourceNodes.end(); ++it )
+    for( auto it = resourceNodes.begin(); it != resourceNodes.end(); ++it )
     {
         const ResourceNetwork_ABC::ResourceNode& resource = it->second;
         ParameterList& node = nodes->AddList( "Node" );

@@ -410,7 +410,7 @@ void ResourceLinksDialog_ABC::Show()
     if( selected_.size() != 1 )
         return;
     resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
-    for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+    for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         if( it == resourceNodes_.begin() )
         {
             selectedItem_ = new QListWidgetItem( it->second.resource_.c_str(), dotationList_ );
@@ -467,7 +467,7 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
                 dest.Get< ResourceNetwork_ABC >().FindOrCreateResourceNode( resource.GetName() );
                 bool destUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( &dest ) != 0 );
                 unsigned long destId = dest.GetId();
-                ResourceNetwork_ABC::IT_ResourceLinks itLink;
+                ResourceNetwork_ABC::T_ResourceLinks::iterator itLink;
                 for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
                     if( itLink->urban_ == destUrban && itLink->id_ == destId )
                         break;

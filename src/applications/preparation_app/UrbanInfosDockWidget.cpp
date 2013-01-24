@@ -174,8 +174,8 @@ namespace
         const kernel::ResourceNetwork_ABC* resourceAttribute = urbanObject.Retrieve< kernel::ResourceNetwork_ABC >();
         if( resourceAttribute )
         {
-            const kernel::ResourceNetwork_ABC::T_ResourceNodes& resourceNodes = resourceAttribute->GetResourceNodes();
-            for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes itResource = resourceNodes.begin(); itResource != resourceNodes.end(); ++itResource )
+            const auto& resourceNodes = resourceAttribute->GetResourceNodes();
+            for( auto itResource = resourceNodes.begin(); itResource != resourceNodes.end(); ++itResource )
             {
                 const kernel::ResourceNetwork_ABC::ResourceNode& resourceNode = itResource->second;
                 resourcesProd[ itResource->first ] += resourceNode.production_;

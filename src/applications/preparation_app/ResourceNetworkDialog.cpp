@@ -111,7 +111,7 @@ namespace
 bool ResourceNetworkDialog::IsNetworkValid( const ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array )
 {
     // Depth-first search algorithm to find back edges (cycles in graph)
-    for( ResourceNetwork_ABC::CIT_ResourceLinks link = node.links_.begin(); link != node.links_.end(); ++link )
+    for( auto link = node.links_.begin(); link != node.links_.end(); ++link )
         if( const Entity_ABC* object = FindObject( link->id_, resolver_ ) )
         {
             if( array.insert( object->GetId() ).second == false )
@@ -153,7 +153,7 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
     {
         consumption += node->consumption_;
         unsigned int childMaxConsumption = 0;
-        for( ResourceNetwork_ABC::CIT_ResourceLinks link = node->links_.begin(); link != node->links_.end(); ++link )
+        for( auto link = node->links_.begin(); link != node->links_.end(); ++link )
             childMaxConsumption = std::max( ComputeConsumption( link->id_, resource, inhabitantConsumption ), childMaxConsumption );
         consumption = std::max( static_cast< int >( consumption + childMaxConsumption * node->links_.size() - node->production_ ), 0 );
     }

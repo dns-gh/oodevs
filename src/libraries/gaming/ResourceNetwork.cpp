@@ -114,13 +114,13 @@ void ResourceNetwork::Draw( const Viewport_ABC& viewport, const GlTools_ABC& too
     Point2f from = GetPosition( entity_ );
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
-    for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         SetColor( node->second.resource_ );
         if( node->second.links_.size() > 0 )
         {
             glEnable( GL_LINE_STIPPLE );
-            for( ResourceNetwork_ABC::CIT_ResourceLinks link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
+            for( auto link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
                 const Entity_ABC* target = FindEntity( link->id_ );
                 if( !target )
@@ -262,7 +262,7 @@ void ResourceNetwork::UpdateStipple( int value ) const
 // -----------------------------------------------------------------------------
 void ResourceNetwork::CreateDictionary( PropertiesDictionary& dico ) const
 {
-    for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + node->second.resource_.c_str() + "/";
         dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );

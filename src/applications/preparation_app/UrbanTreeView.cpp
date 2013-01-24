@@ -255,7 +255,7 @@ namespace
             if( nodes.empty() )
                 empty = true;
             else
-                for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+                for( auto it = nodes.begin(); it != nodes.end(); ++it )
                     result += result.empty() ? it->first : ";" + it->first;
         }
         else
