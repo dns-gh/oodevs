@@ -78,102 +78,102 @@
 <context>
     <name>Block</name>
     <message>
-        <source>PhysicalFeatures/Architecture/trafficability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/floorNumber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/parkingFloors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/roofShape</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/material</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture/occupation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Template</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhysicalFeatures/Architecture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
+        <translation>Densité :</translation>
     </message>
     <message>
         <source>Total of inhabitants:</source>
-        <translation type="unfinished"></translation>
+        <translation>Population totale:</translation>
     </message>
     <message>
         <source>Occupation rate (%L1):</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;Taux d&apos;occupation (%L1):</translation>
     </message>
     <message>
         <source>Populations/</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations/</translation>
     </message>
     <message>
         <source>Resident</source>
-        <translation type="unfinished"></translation>
+        <translation>Résident</translation>
     </message>
     <message>
         <source>Occupation rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Taux d&apos;occupation</translation>
     </message>
     <message>
         <source>Alerted</source>
-        <translation type="unfinished"></translation>
+        <translation>Alerté</translation>
     </message>
     <message>
         <source>Confined</source>
-        <translation type="unfinished"></translation>
+        <translation>Confiné</translation>
     </message>
     <message>
         <source>Evacuated</source>
-        <translation type="unfinished"></translation>
+        <translation>Evacué</translation>
     </message>
     <message>
         <source>Angriness</source>
-        <translation type="unfinished"></translation>
+        <translation>Colère</translation>
     </message>
     <message>
         <source>Occupations/</source>
-        <translation type="unfinished"></translation>
+        <translation>Occupations/</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/Height</source>
+        <translation>Eléments physiques/Architecture/Hauteur</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/floorNumber</source>
+        <translation>Eléments physiques/Architecture/Nombre d&apos;étages</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/roofShape</source>
+        <translation>Eléments physiques/Architecture/Toit</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/material</source>
+        <translation>Eléments physiques/Architecture/Matériau</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/occupation</source>
+        <translation>Eléments physiques/Architecture/Densité du bâti au sol</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/trafficability</source>
+        <translation>Eléments physiques/Architecture/Traficabilité</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/parkingFloors</source>
+        <translation>Eléments physiques/Architecture/Etages de parking</translation>
+    </message>
+    <message>
+        <source>Info/Template</source>
+        <translation>Info/Patron</translation>
+    </message>
+    <message>
+        <source>PhysicalFeatures/Architecture</source>
+        <translation>>Eléments physiques/Architecture</translation>
     </message>
 </context>
 <context>
     <name>EntityImplementation</name>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Nom</translation>
     </message>
 </context>
 <context>
     <name>NumericLimitsEditor</name>
     <message>
         <source>Min</source>
-        <translation type="unfinished"></translation>
+        <translation>Min</translation>
     </message>
     <message>
         <source>Max</source>
-        <translation type="unfinished"></translation>
+        <translation>Max</translation>
     </message>
 </context>
 <context>
@@ -198,7 +198,7 @@
     <name>Urban</name>
     <message>
         <source>Urban block[%L1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloc urbain[%L1]</translation>
     </message>
 </context>
 <context>
@@ -1348,24 +1348,25 @@ Voulez-vous le supprimer?</translation>
     <name>gui::ObjectPrototypeShapeFileLoader</name>
     <message>
         <source>Cannot load shapefile %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le shapefile %1</translation>
     </message>
     <message>
         <source>Cannot load layer %1 : %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le calque %1 : %2</translation>
     </message>
     <message>
         <source>No layer to load.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun calque à charger.
+%1</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectionner un layer</translation>
     </message>
     <message>
         <source>Cannot read layer %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lire le calque %1</translation>
     </message>
     <message>
         <source>no spatial reference</source>
@@ -1686,11 +1687,11 @@ Voulez-vous le supprimer?</translation>
     <name>gui::SearchTreeView_ABC</name>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtres</translation>
     </message>
 </context>
 <context>
