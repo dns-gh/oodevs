@@ -57,10 +57,10 @@
         <xs:element name="logistic-supply-classes" type="FileReference"/>
         <xs:element name="funeral" type="FileReference"/>
         <xs:element name="disasters" type="FileReference"/>
-........<xs:element name="units-mission-sheets-directory" type="PathReference"/>
-........<xs:element name="automata-mission-sheets-directory" type="PathReference"/>
-........<xs:element name="crowds-mission-sheets-directory" type="PathReference"/>
-........<xs:element name="fragorders-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="units-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="automata-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="crowds-mission-sheets-directory" type="PathReference"/>
+        <xs:element name="fragorders-mission-sheets-directory" type="PathReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
       <xs:attribute name="read-only" type="xs:boolean" use="optional"/>
