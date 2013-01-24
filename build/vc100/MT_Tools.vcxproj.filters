@@ -60,9 +60,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_InterpolatedFunction.h">
       <Filter>Source Files\Function Interpolation</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LinearInterpolation.h">
-      <Filter>Source Files\Function Interpolation</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.h">
       <Filter>Source Files\Random</Filter>
     </ClInclude>

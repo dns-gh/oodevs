@@ -3701,9 +3701,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectType_ABC.h">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectTypeHandler_ABC.h">
-      <Filter>Source Files\Entities\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_StructuralStateNotifier_ABC.h">
       <Filter>Source Files\Entities\Objects</Filter>
     </ClInclude>

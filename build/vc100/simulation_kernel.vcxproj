@@ -1332,7 +1332,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectManipulator_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectType_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_ObjectTypeHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_StructuralStateNotifier_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\Object.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectAttribute_ABC.h" />
