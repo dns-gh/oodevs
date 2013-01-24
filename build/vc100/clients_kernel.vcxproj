@@ -138,7 +138,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Styles.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Team.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
@@ -309,7 +308,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\SubTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SymbolHierarchy_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Team.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
@@ -447,7 +445,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledge_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Automat_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Entity_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityImplementation.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Formation_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Inhabitant_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Knowledge_ABC.h" />
@@ -479,7 +476,6 @@
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\ModeController.inl" />
     <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl" />
-    <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_fr.ts" />
   </ItemGroup>

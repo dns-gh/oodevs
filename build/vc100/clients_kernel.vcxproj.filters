@@ -439,9 +439,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.cpp">
       <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Team.cpp">
-      <Filter>Source Files\Model\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\UserRights.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -1011,9 +1008,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Team.h">
-      <Filter>Source Files\Model\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\UserRights.h">
       <Filter>Source Files\Model</Filter>
     </ClInclude>
@@ -1113,9 +1107,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h">
       <Filter>Source Files\Model\Properties</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityImplementation.h">
-      <Filter>Source Files\Model\Entities\Properties</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h">
       <Filter>Source Files\Model\Entities\Properties</Filter>
     </ClInclude>
@@ -1180,9 +1171,6 @@
     </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_ar.ts">
       <Filter>Translations</Filter>
-    </None>
-    <None Include="..\..\src\libraries\clients_kernel\EntityImplementation.inl">
-      <Filter>Source Files\Model\Entities\Properties</Filter>
     </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_en.ts">
       <Filter>Translations</Filter>

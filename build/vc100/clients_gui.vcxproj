@@ -187,6 +187,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalTreeView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Team.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp" />
@@ -671,6 +672,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Drawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawVisitor.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DummyModelObserver.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntityImplementation.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityTreeView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -999,6 +1001,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\StandardModelVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalTreeView.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Team.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Types.h" />
@@ -2463,6 +2466,7 @@
     <None Include="..\..\src\libraries\clients_gui\clients_gui_en.ts" />
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
+    <None Include="..\..\src\libraries\clients_gui\EntityImplementation.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />

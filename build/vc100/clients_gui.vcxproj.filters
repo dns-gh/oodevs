@@ -916,6 +916,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Team.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1494,6 +1497,12 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Team.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntityImplementation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">
@@ -1537,6 +1546,9 @@
     </None>
     <None Include="..\..\src\libraries\clients_gui\clients_gui_fr.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\EntityImplementation.inl">
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
