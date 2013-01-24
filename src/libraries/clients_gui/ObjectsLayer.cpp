@@ -9,11 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
-#include "clients_kernel/ObjectType.h"
 #include "TerrainPicker.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
+#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Pickable_ABC.h"
-#include <boost/noncopyable.hpp>
 
 using namespace kernel;
 using namespace gui;

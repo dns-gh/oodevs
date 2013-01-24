@@ -20,7 +20,6 @@ namespace kernel
 {
     class Controllers;
     class KnowledgeGroupFactory_ABC; // LTO
-    class ResourceNetworkSelectionObserver;
     class SymbolFactory;
 }
 
@@ -34,6 +33,7 @@ namespace gui
 {
     class DrawingFactory_ABC;
     class DrawerModel;
+    class ResourceNetworkSelectionObserver;
 }
 
 class StaticModel;
@@ -133,7 +133,7 @@ private:
     SuccessFactorFactory_ABC& successFactorFactory_;
     gui::DrawingFactory_ABC& drawingFactory_;
     GhostFactory_ABC& ghostFactory_;
-    kernel::ResourceNetworkSelectionObserver& resourceObserver_;
+    gui::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
     bool consistencyErrorsOnLoad_;

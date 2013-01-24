@@ -17,7 +17,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include <tools/Resolver.h>
 
-namespace kernel
+namespace gui
 {
     class ResourceNetworkSelectionObserver;
 }
@@ -57,7 +57,7 @@ private:
     kernel::Controllers& controllers_;
     const Model& model_;
     const StaticModel& staticModel_;
-    std::auto_ptr< kernel::ResourceNetworkSelectionObserver > observer_;
+    std::auto_ptr< gui::ResourceNetworkSelectionObserver > observer_;
     //@}
 };
 
@@ -66,7 +66,7 @@ void ResourceNetworkModel::Create( kernel::Entity_ABC& entity, const T& msg )
 {
     kernel::PropertiesDictionary* dico = entity.Retrieve< kernel::PropertiesDictionary >();
     ResourceNetwork* element = new ResourceNetwork( controllers_, entity, model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, msg, dico );
-    entity.Attach< kernel::ResourceNetwork_ABC >( *element );
+    entity.Attach< gui::ResourceNetwork_ABC >( *element );
 }
 
 #endif // __ResourceNetworkModel_h_

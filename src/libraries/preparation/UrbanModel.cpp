@@ -344,7 +344,7 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
     if( capacity == "structural-state" )
         UpdateCapacity< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( xis, object );
     else if( capacity == "resources" )
-        UpdateCapacity< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( xis, object );
+        UpdateCapacity< ResourceNetworkAttribute, gui::ResourceNetwork_ABC >( xis, object );
     else if( capacity == "medical-treatment" )
         UpdateCapacity< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( xis, object );
     else if( capacity == "infrastructure" )
@@ -621,7 +621,7 @@ void UrbanModel::CleanLinks()
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         kernel::Entity_ABC& entity = *it->second;
-        kernel::ResourceNetwork_ABC* abstractExtension = entity.Retrieve< kernel::ResourceNetwork_ABC >();
+        auto* abstractExtension = entity.Retrieve< gui::ResourceNetwork_ABC >();
         if( !abstractExtension )
             continue;
         ResourceNetworkAttribute* extension = static_cast< ResourceNetworkAttribute* >( abstractExtension );

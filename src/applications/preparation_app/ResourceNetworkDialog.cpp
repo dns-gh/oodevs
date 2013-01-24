@@ -55,11 +55,11 @@ void ResourceNetworkDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
         return;
     if( element )
     {
-        kernel::ResourceNetwork_ABC& network = element->Get< kernel::ResourceNetwork_ABC >();
+        auto& network = element->Get< gui::ResourceNetwork_ABC >();
         static_cast< ResourceNetworkAttribute& >( network ).Update( network.GetResourceNodes() );
     }
     else
-        static_cast< ResourceNetworkAttribute& >( selected_.front()->Get< ResourceNetwork_ABC >() ).Update( resourceNodes_ );
+        static_cast< ResourceNetworkAttribute& >( selected_.front()->Get< gui::ResourceNetwork_ABC >() ).Update( resourceNodes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,9 +96,9 @@ namespace
         return object;
     }
 
-    const ResourceNetwork_ABC::ResourceNode* FindNode( const Entity_ABC& object, const std::string& resource )
+    const gui::ResourceNetwork_ABC::ResourceNode* FindNode( const Entity_ABC& object, const std::string& resource )
     {
-        if( const ResourceNetwork_ABC* blockNodes = object.Retrieve< ResourceNetwork_ABC >() )
+        if( auto blockNodes = object.Retrieve< gui::ResourceNetwork_ABC >() )
             return blockNodes->FindResourceNode( resource );
         return 0;
     }
@@ -108,7 +108,7 @@ namespace
 // Name: ResourceNetworkDialog::IsNetworkValid
 // Created: JSR 2011-09-20
 // -----------------------------------------------------------------------------
-bool ResourceNetworkDialog::IsNetworkValid( const ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array )
+bool ResourceNetworkDialog::IsNetworkValid( const gui::ResourceNetwork_ABC::ResourceNode& node, unsigned int id, const std::string& resource, std::set< unsigned int >& array )
 {
     // Depth-first search algorithm to find back edges (cycles in graph)
     for( auto link = node.links_.begin(); link != node.links_.end(); ++link )
@@ -121,7 +121,7 @@ bool ResourceNetworkDialog::IsNetworkValid( const ResourceNetwork_ABC::ResourceN
                 return false;
             }
             // Apply to children
-            if( const ResourceNetwork_ABC::ResourceNode* blockNode = FindNode( *object, resource ) )
+            if( auto blockNode = FindNode( *object, resource ) )
                 if( !IsNetworkValid( *blockNode, object->GetId(), resource, array ) )
                     return false;
         }
@@ -149,7 +149,7 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
                 return std::numeric_limits< int >::max();
             consumption = static_cast< int >( tmp );
         }
-    if( const ResourceNetwork_ABC::ResourceNode* node = FindNode( *object, resource ) )
+    if( auto node = FindNode( *object, resource ) )
     {
         consumption += node->consumption_;
         unsigned int childMaxConsumption = 0;

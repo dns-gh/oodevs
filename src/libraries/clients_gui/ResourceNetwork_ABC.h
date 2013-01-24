@@ -7,13 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef __ResourceNetwork_ABC_h_
-#define __ResourceNetwork_ABC_h_
+#ifndef CLIENTS_GUI_RESOURCE_NETWORK_H__
+#define CLIENTS_GUI_RESOURCE_NETWORK_H__
 
-#include "Extension_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
+{
+class GlTools_ABC;
+class Viewport_ABC;
+}
+
+namespace gui
 {
 // =============================================================================
 /** @class  ResourceNetwork_ABC
@@ -21,8 +27,8 @@ namespace kernel
 */
 // Created: JSR 2010-08-19
 // =============================================================================
-class ResourceNetwork_ABC : public Extension_ABC
-                          , private boost::noncopyable
+class ResourceNetwork_ABC : public kernel::Extension_ABC
+                          , public boost::noncopyable
 {
 public:
     //! @name Types
@@ -150,4 +156,4 @@ protected:
 
 }
 
-#endif // __ResourceNetwork_ABC_h_
+#endif // CLIENTS_GUI_RESOURCE_NETWORK_H__

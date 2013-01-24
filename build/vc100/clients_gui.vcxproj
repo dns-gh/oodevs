@@ -153,6 +153,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyTreeView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ResourceNetworkSelectionObserver.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichAction.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDockWidget.cpp" />
@@ -773,6 +774,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyTreeView.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworkSelectionObserver.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetwork_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\resources.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\StatusBar.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>

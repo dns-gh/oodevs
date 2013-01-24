@@ -7,12 +7,14 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "ResourceNetworkSelectionObserver.h"
-#include "Controllers.h"
-#include "Entity_ABC.h"
-#include "ResourceNetwork_ABC.h"
 
+#include "ResourceNetwork_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+
+using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

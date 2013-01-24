@@ -322,9 +322,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\ContextMenu.cpp">
       <Filter>Source Files\kernel\Observer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.cpp">
-      <Filter>Source Files\kernel\Observer\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.cpp">
       <Filter>Source Files\kernel\Observer\Helpers</Filter>
     </ClCompile>
@@ -798,9 +795,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ContextMenuObserver_ABC.h">
       <Filter>Source Files\kernel\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetworkSelectionObserver.h">
-      <Filter>Source Files\kernel\Observer\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\TeamSelectionObserver.h">
       <Filter>Source Files\kernel\Observer\Helpers</Filter>
     </ClInclude>
@@ -931,9 +925,6 @@
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Positions.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ResourceNetwork_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Serializable_ABC.h">

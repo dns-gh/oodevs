@@ -12,11 +12,11 @@
 #include "moc_ResourceLinksDialog_ABC.cpp"
 #include "RichSpinBox.h"
 #include "tools.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 
@@ -445,7 +445,7 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
 {
     if( sourceNode_ == 0 )
         return;
-    kernel::ResourceNetwork_ABC* node = sourceNode_->Retrieve< kernel::ResourceNetwork_ABC >();
+    auto* node = sourceNode_->Retrieve< gui::ResourceNetwork_ABC >();
     if( !node )
         return;
     typedef ResourceNetwork_ABC::ResourceNode ResourceNode;
@@ -464,10 +464,10 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
                 kernel::Entity_ABC& dest = **it;
                 if( dest.Retrieve< ResourceNetwork_ABC >() == node )
                     continue;
-                dest.Get< ResourceNetwork_ABC >().FindOrCreateResourceNode( resource.GetName() );
+                dest.Get< gui::ResourceNetwork_ABC >().FindOrCreateResourceNode( resource.GetName() );
                 bool destUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( &dest ) != 0 );
                 unsigned long destId = dest.GetId();
-                ResourceNetwork_ABC::T_ResourceLinks::iterator itLink;
+                gui::ResourceNetwork_ABC::T_ResourceLinks::iterator itLink;
                 for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
                     if( itLink->urban_ == destUrban && itLink->id_ == destId )
                         break;

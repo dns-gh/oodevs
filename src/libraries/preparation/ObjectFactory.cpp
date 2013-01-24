@@ -157,7 +157,7 @@ namespace
     };
 
     template<>
-    struct AttributeBuilder< ResourceNetwork_ABC >
+    struct AttributeBuilder< gui::ResourceNetwork_ABC >
     {
         template< typename T  >
         static void Attach( Object_ABC& result, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbans
@@ -165,7 +165,7 @@ namespace
                                               , const tools::StringResolver< ResourceNetworkType >& resources
                                               , xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach< ResourceNetwork_ABC >( *new T( controllers, xis, false, result.Get< Positions >().GetPosition(), urbans, objects, resources ) );
+            result.Attach< gui::ResourceNetwork_ABC >( *new T( controllers, xis, false, result.Get< Positions >().GetPosition(), urbans, objects, resources ) );
         }
     };
 }
@@ -238,7 +238,7 @@ void ObjectFactory::Initialize()
     factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
     factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "resources"          ,
-                       boost::bind( &AttributeBuilder< ResourceNetwork_ABC >::Attach< ResourceNetworkAttribute >, _1, boost::cref( model_.urban_), boost::cref( model_.objects_ ), boost::cref( staticModel_.objectTypes_ ), _3, boost::ref( controllers_ ) ) );
+                       boost::bind( &AttributeBuilder< gui::ResourceNetwork_ABC >::Attach< ResourceNetworkAttribute >, _1, boost::cref( model_.urban_), boost::cref( model_.objects_ ), boost::cref( staticModel_.objectTypes_ ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "underground"        , BIND_ATTACH_ATTRIBUTE_CONTROLLER( UndergroundAttribute, _1, _2, boost::ref( controllers_.controller_ ), _3 ) );
 
     factory_.reset( factory );

@@ -11,7 +11,7 @@
 #define __ResourceLinksDialog_ABC_h_
 
 #include "RichDockWidget.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
@@ -101,7 +101,7 @@ protected:
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
     kernel::Entity_ABC* sourceNode_;
     unsigned int id_;
-    kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
+    gui::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     Q3VBox* pMainLayout_;
     QListWidget* dotationList_;
     Q3GroupBox* groupBox_;

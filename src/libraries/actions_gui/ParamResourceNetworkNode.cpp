@@ -15,10 +15,10 @@
 #include "actions/ResourceNetworkNode.h"
 #include "actions/String.h"
 #include "actions_gui/MissionInterface_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 
@@ -93,8 +93,8 @@ void ParamResourceNetworkNode::CreateInternalMenu( kernel::ContextMenu& menu )
 {
     kernel::ContextMenu* internalMenu = new kernel::ContextMenu( &menu );
     internalMenu->setTitle( GetMenuName() );
-    const kernel::ResourceNetwork_ABC& resource = current_->Get< kernel::ResourceNetwork_ABC >();
-    const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes = resource.GetResourceNodes();
+    const auto& resource = current_->Get< ::gui::ResourceNetwork_ABC >();
+    const auto& nodes = resource.GetResourceNodes();
     int index = 0;
     actions_.clear();
     for( auto it = nodes.begin(); it != nodes.end(); ++it, ++index )
@@ -155,10 +155,10 @@ void ParamResourceNetworkNode::DoNotifyContextMenu( const kernel::Entity_ABC& en
 {
     // $$$$ JSR 2011-05-02: TODO gérer Deleted
     current_ = 0;
-    const kernel::ResourceNetwork_ABC* resource = entity.Retrieve< kernel::ResourceNetwork_ABC >();
+    const auto* resource = entity.Retrieve< ::gui::ResourceNetwork_ABC >();
     if( resource )
     {
-        const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes = resource->GetResourceNodes();
+        const auto& nodes = resource->GetResourceNodes();
         if( nodes.size() > 0 )
         {
             current_ = &entity;

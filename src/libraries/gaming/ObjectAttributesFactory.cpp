@@ -147,7 +147,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
     if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
         entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if( attributes.has_resource_networks() && entity.Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
+    if( attributes.has_resource_networks() && entity.Retrieve< gui::ResourceNetwork_ABC >() == 0 )
         model_.resourceNetwork_.Create( entity, attributes.resource_networks() );
 
     if( attributes.has_flood() && entity.Retrieve< kernel::FloodAttribute_ABC >() == 0 )

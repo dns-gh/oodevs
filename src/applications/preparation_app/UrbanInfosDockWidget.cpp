@@ -10,11 +10,11 @@
 #include "preparation_app_pch.h"
 #include "UrbanInfosDockWidget.h"
 
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanTypes.h"
 #include "clients_kernel/Usages.h"
@@ -171,13 +171,13 @@ namespace
                 }
         }
         // Resource Network
-        const kernel::ResourceNetwork_ABC* resourceAttribute = urbanObject.Retrieve< kernel::ResourceNetwork_ABC >();
+        auto resourceAttribute = urbanObject.Retrieve< gui::ResourceNetwork_ABC >();
         if( resourceAttribute )
         {
             const auto& resourceNodes = resourceAttribute->GetResourceNodes();
             for( auto itResource = resourceNodes.begin(); itResource != resourceNodes.end(); ++itResource )
             {
-                const kernel::ResourceNetwork_ABC::ResourceNode& resourceNode = itResource->second;
+                const auto& resourceNode = itResource->second;
                 resourcesProd[ itResource->first ] += resourceNode.production_;
                 resourceConso[ itResource->first ] += resourceNode.consumption_;
             }

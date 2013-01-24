@@ -14,13 +14,13 @@
 #include "actions/Identifier.h"
 #include "actions/ParameterList.h"
 #include "actions/MagicAction.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "gaming/StaticModel.h"
 
@@ -57,11 +57,11 @@ ResourceLinksDialog::~ResourceLinksDialog()
 void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
 {
     unsigned int id = id_;
-    ResourceNetwork_ABC::T_ResourceNodes resourceNodes = resourceNodes_;
+    auto resourceNodes = resourceNodes_;
     if( element )
     {
         id = element->GetId();
-        resourceNodes = element->Get< kernel::ResourceNetwork_ABC >().GetResourceNodes();
+        resourceNodes = element->Get< gui::ResourceNetwork_ABC >().GetResourceNodes();
     }
     // $$$$ _RC_ JSR 2011-02-24: TODO passer dans la factory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_resource_links" );
@@ -72,7 +72,7 @@ void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
     action->AddParameter( *nodes );
     for( auto it = resourceNodes.begin(); it != resourceNodes.end(); ++it )
     {
-        const ResourceNetwork_ABC::ResourceNode& resource = it->second;
+        const auto& resource = it->second;
         ParameterList& node = nodes->AddList( "Node" );
         node.AddString( "Resource", resource.resource_ );
         node.AddQuantity( "Consumption", resource.consumption_ );

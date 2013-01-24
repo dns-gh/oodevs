@@ -736,7 +736,7 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
             AddError( eBadLogisticSubordinate, &automat );
             model_.SetConsistencyErrorsOnLoad();
         }
-    }    
+    }
     Iterator< const Formation_ABC& > itFormations = model_.GetFormationResolver().CreateIterator();
     while( itFormations.HasMoreElements() )
     {
@@ -766,7 +766,7 @@ void ModelConsistencyChecker::CheckUrban()
         if( const kernel::Infrastructure_ABC* infrastructure = object.Retrieve< kernel::Infrastructure_ABC >() )
             if( !infrastructure->GetInvalidType().empty() )
                 AddError( eUnknownInfrastructure, &object, infrastructure->GetInvalidType() );
-        if( const ResourceNetworkAttribute* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< kernel::ResourceNetwork_ABC >() ) )
+        if( const auto* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< gui::ResourceNetwork_ABC >() ) )
             if( !network->GetInvalidResources().empty() )
                 for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
                     unknownNetworks.insert( *itResource );
@@ -775,7 +775,7 @@ void ModelConsistencyChecker::CheckUrban()
     while( itObject.HasMoreElements() )
     {
         const kernel::Object_ABC& object = itObject.NextElement();
-        if( const ResourceNetworkAttribute* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< kernel::ResourceNetwork_ABC >() ) )
+        if( const auto* network = static_cast< const ResourceNetworkAttribute* >( object.Retrieve< gui::ResourceNetwork_ABC >() ) )
             if( !network->GetInvalidResources().empty() )
                 for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
                     unknownNetworks.insert( *itResource );

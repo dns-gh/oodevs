@@ -11,7 +11,7 @@
 #define __ResourceNetwork_h_
 
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "tools/Resolver.h"
 
 namespace sword
@@ -38,7 +38,7 @@ namespace kernel
 */
 // Created: JSR 2010-08-19
 // =============================================================================
-class ResourceNetwork : public kernel::ResourceNetwork_ABC
+class ResourceNetwork : public gui::ResourceNetwork_ABC
                       , public kernel::Updatable_ABC< sword::ObjectUpdate >
                       , public kernel::Updatable_ABC< sword::UrbanUpdate >
 {

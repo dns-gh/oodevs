@@ -13,6 +13,7 @@
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/ItemPixmapDelegate.h"
 #include "clients_gui/ModelObserver_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_gui/StandardModelVisitor_ABC.h"
 #include "clients_gui/SearchTreeView.h"
 #include "clients_gui/SymbolIcon.h"
@@ -27,7 +28,6 @@
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -250,8 +250,8 @@ namespace
         std::string result = "";
         if( urbanHierarchies.GetLevel() == eUrbanLevelBlock )
         {
-            const kernel::ResourceNetwork_ABC& resourceAttribute = object.Get< kernel::ResourceNetwork_ABC >();
-            const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes = resourceAttribute.GetResourceNodes();
+            const auto& resourceAttribute = object.Get< gui::ResourceNetwork_ABC >();
+            const auto& nodes = resourceAttribute.GetResourceNodes();
             if( nodes.empty() )
                 empty = true;
             else

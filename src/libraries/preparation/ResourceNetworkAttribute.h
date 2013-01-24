@@ -10,7 +10,7 @@
 #ifndef __ResourceNetworkAttribute_h_
 #define __ResourceNetworkAttribute_h_
 
-#include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include <tools/Resolver.h>
 #include <tools/ElementObserver_ABC.h>
@@ -20,7 +20,6 @@ namespace kernel
     class Controllers;
     class Object_ABC;
     class ResourceNetworkType;
-    class ResourceNetwork_ABC;
     class UrbanObject_ABC;
 }
 
@@ -35,12 +34,12 @@ namespace xml
 */
 // Created: JSR 2010-09-07
 // =============================================================================
-class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
+class ResourceNetworkAttribute : public gui::ResourceNetwork_ABC
                                , public kernel::Serializable_ABC
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< kernel::Object_ABC >
                                , public tools::ElementObserver_ABC< kernel::UrbanObject_ABC >
-                               , public tools::ElementObserver_ABC< kernel::ResourceNetwork_ABC::Deletion >
+                               , public tools::ElementObserver_ABC< gui::ResourceNetwork_ABC::Deletion >
 {
 public:
     //! @name Types
@@ -65,10 +64,10 @@ public:
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void Update( xml::xistream& xis );
-    void Update( const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes );
+    void Update( const gui::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
-    virtual void NotifyUpdated( const kernel::ResourceNetwork_ABC::Deletion& deletion );
+    virtual void NotifyUpdated( const gui::ResourceNetwork_ABC::Deletion& deletion );
     const std::set< std::string >& GetInvalidResources() const;
     bool CleanLinksToDeletedUrbanBlocks();
     //@}

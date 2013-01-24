@@ -12,15 +12,14 @@
 
 #include "DrawVisitor.h"
 #include "View_ABC.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <graphics/extensions.h>
-#include <boost/noncopyable.hpp>
 
 using namespace gui;
 
@@ -60,8 +59,8 @@ namespace
         {
             if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
             {
-                const kernel::ResourceNetwork_ABC* resource = object.Retrieve< kernel::ResourceNetwork_ABC >();
-                const kernel::Infrastructure_ABC* infra = drawInfrastructure_ ? object.Retrieve< kernel::Infrastructure_ABC >() : 0;
+                auto resource = object.Retrieve< ResourceNetwork_ABC >();
+                auto infra = drawInfrastructure_ ? object.Retrieve< kernel::Infrastructure_ABC >() : 0;
                 if( resource ||  infra )
                 {
                     viewport_.SetHotpoint( positions->Barycenter() );

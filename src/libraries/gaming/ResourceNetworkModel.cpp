@@ -10,8 +10,8 @@
 #include "gaming_pch.h"
 #include "ResourceNetworkModel.h"
 #include "ResourceNetwork.h"
+#include "clients_gui/ResourceNetworkSelectionObserver.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/ResourceNetworkSelectionObserver.h"
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel constructor
@@ -21,7 +21,7 @@ ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, co
     : controllers_ ( controllers )
     , model_       ( model )
     , staticModel_ ( staticModel )
-    , observer_    ( new kernel::ResourceNetworkSelectionObserver( controllers ) )
+    , observer_    ( new gui::ResourceNetworkSelectionObserver( controllers ) )
 {
     // NOTHING
 }
@@ -43,5 +43,5 @@ void ResourceNetworkModel::Create( kernel::Entity_ABC& entity )
 {
     kernel::PropertiesDictionary* dico = entity.Retrieve< kernel::PropertiesDictionary >();
     ResourceNetwork* element = new ResourceNetwork( controllers_, entity, model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, dico );
-    entity.Attach< kernel::ResourceNetwork_ABC >( *element );
+    entity.Attach< gui::ResourceNetwork_ABC >( *element );
 }

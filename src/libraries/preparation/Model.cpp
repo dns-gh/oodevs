@@ -34,6 +34,9 @@
 #include "SuccessFactorsModel.h"
 #include "SuccessFactorFactory.h"
 #include "UrbanModel.h"
+#include "clients_gui/DrawerFactory.h"
+#include "clients_gui/DrawerModel.h"
+#include "clients_gui/ResourceNetworkSelectionObserver.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -41,10 +44,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
-#include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/DrawerFactory.h"
-#include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/ExerciseSettings.h"
@@ -80,7 +80,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , successFactorFactory_ ( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
     , drawingFactory_       ( *new gui::DrawerFactory( controllers, staticModel.drawings_, staticModel.coordinateConverter_ ) )
     , ghostFactory_         ( *new GhostFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_, symbolsFactory_ ) )
-    , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
+    , resourceObserver_     ( *new gui::ResourceNetworkSelectionObserver( controllers ) )
     , loaded_               ( false )
     , consistencyErrorsOnLoad_( false )
     , oldUrbanMode_         ( false )

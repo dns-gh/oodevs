@@ -11,12 +11,12 @@
 #include "UrbanFileExporter.h"
 #include "UrbanModel.h"
 #include "UrbanHierarchies.h"
+#include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_kernel/Architecture_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -133,7 +133,7 @@ void UrbanFileExporter::CreateStructure()
     OGRFieldDefn* oFieldMaterial = new OGRFieldDefn( "MATERIAL", OFTString );
     oFieldMaterial->SetWidth( 255 );
     CreateField( oFieldMaterial );
-   
+
     OGRFieldDefn* oFieldTrafficability = new OGRFieldDefn( "TRAFFIC", OFTReal );
     oFieldTrafficability->SetWidth( 10 );
     oFieldTrafficability->SetPrecision( 6 );
@@ -264,7 +264,7 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
 
     // Resource network
     {
-        const kernel::ResourceNetwork_ABC& resourceNetwork = urbanObject.Get< kernel::ResourceNetwork_ABC>();
+        const auto& resourceNetwork = urbanObject.Get< gui::ResourceNetwork_ABC>();
         if ( resourceNetwork.FindResourceNode( "carburant" ) )
             pFeature->SetField( "RES_FUEL", "Yes" );
         if ( resourceNetwork.FindResourceNode( "eau courante" ) )
