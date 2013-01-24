@@ -50,7 +50,14 @@ enum StanceCodeEnum32
     stance_Detained    = 15
 };
 
+enum BreachedStatusEnum8
+{
+    breachedStatus_NoBreaching = 0,
+    breachedStatus_SlightBreaching     = 1,
+    breachedStatus_ModerateBreaching   = 2,
+    breachedStatus_Cleared     = 3
 };
 
+}
 
 #endif // __rpr_Enums_h_

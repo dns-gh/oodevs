@@ -281,6 +281,95 @@ namespace hla
                                                                                  ( "State" ) ) )
         {}
     };
+    class OtherPointObjectBuilder : public ClassBuilder
+    {
+    public:
+        OtherPointObjectBuilder( bool isHla13 = false )
+            : ClassBuilder( "EnvironmentObject.PointObject.OtherPointObject", true, true
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "ObjectIdentifier" )
+                                                                                  ( "ReferencedObjectIdentifier" )
+                                                                                  ( "ForceIdentifier" )
+                                                                                  ( "ObjectType" )
+                                                                                  ( "Flaming" )
+                                                                                  ( "Smoking" )
+                                                                                  ( "Deactivated" )
+                                                                                  ( "ObjectPreDistributed" )
+                                                                                  ( "PercentComplete" )
+                                                                                  ( "DamagedAppearance" )
+                                                                                  ( "Orientation" )
+                                                                                  ( "Location" ) ) )
+        {}
+    };
+    class BreachablePointObjectBuilder : public ClassBuilder
+    {
+    public:
+        BreachablePointObjectBuilder( bool isHla13 = false )
+            : ClassBuilder( "EnvironmentObject.PointObject.BreachablePointObject", true, true
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "ObjectIdentifier" )
+                                                                                  ( "ReferencedObjectIdentifier" )
+                                                                                  ( "ForceIdentifier" )
+                                                                                  ( "ObjectType" )
+                                                                                  ( "Flaming" )
+                                                                                  ( "Smoking" )
+                                                                                  ( "Deactivated" )
+                                                                                  ( "ObjectPreDistributed" )
+                                                                                  ( "PercentComplete" )
+                                                                                  ( "DamagedAppearance" )
+                                                                                  ( "Orientation" )
+                                                                                  ( "Location" )
+                                                                                  ( "BreachedStatus" ) ) )
+        {}
+    };
+    class OtherArealObjectBuilder : public ClassBuilder
+    {
+    public:
+        OtherArealObjectBuilder( bool isHla13 = false )
+            : ClassBuilder( "EnvironmentObject.ArealObject.OtherArealObject", true, true
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "ObjectIdentifier" )
+                                                                                  ( "ReferencedObjectIdentifier" )
+                                                                                  ( "ForceIdentifier" )
+                                                                                  ( "ObjectType" )
+                                                                                  ( "Flaming" )
+                                                                                  ( "Smoking" )
+                                                                                  ( "Deactivated" )
+                                                                                  ( "ObjectPreDistributed" )
+                                                                                  ( "PercentComplete" )
+                                                                                  ( "DamagedAppearance" )
+                                                                                  ( "PointsData" ) ) )
+        {}
+    };
+    class MinefieldObjectBuilder : public ClassBuilder
+    {
+    public:
+        MinefieldObjectBuilder( bool isHla13 = false )
+            : ClassBuilder( "EnvironmentObject.ArealObject.MinefieldObject", true, true
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "ObjectIdentifier" )
+                                                                                  ( "ReferencedObjectIdentifier" )
+                                                                                  ( "ForceIdentifier" )
+                                                                                  ( "ObjectType" )
+                                                                                  ( "Flaming" )
+                                                                                  ( "Smoking" )
+                                                                                  ( "Deactivated" )
+                                                                                  ( "ObjectPreDistributed" )
+                                                                                  ( "PercentComplete" )
+                                                                                  ( "DamagedAppearance" )
+                                                                                  ( "PointsData" )
+                                                                                  ( "MineCount" )
+                                                                                  ( "BreachedStatus" ) ) )
+        {}
+    };
+    class BreachableLinearObjectBuilder : public ClassBuilder
+    {
+    public:
+        BreachableLinearObjectBuilder( bool isHla13 = false )
+            : ClassBuilder( "EnvironmentObject.LinearObject.BreachableLinearObject", true, true
+                    , details::BuildAttributeList( isHla13, boost::assign::list_of( "ObjectIdentifier" )
+                                                                                  ( "ReferencedObjectIdentifier" )
+                                                                                  ( "ForceIdentifier" )
+                                                                                  ( "ObjectType" )
+                                                                                  ( "SegmentRecords" ) ) )
+        {}
+    };
 }
 }
 

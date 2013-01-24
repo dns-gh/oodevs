@@ -343,6 +343,15 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\CulturalFeature.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\BreachablePointObject.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\OtherPointObject.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\BreachableLinearObject.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -817,6 +826,15 @@
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\CulturalFeature.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\BreachablePointObject.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OtherPointObject.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\BreachableLinearObject.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
   </ItemGroup>
