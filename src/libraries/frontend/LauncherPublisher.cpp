@@ -61,15 +61,6 @@ void LauncherPublisher::Send( const sword::AdminToLauncher& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LauncherPublisher::Send
-// Created: SBO 2010-09-29
-// -----------------------------------------------------------------------------
-void LauncherPublisher::Send( const sword::LauncherToAdmin& message )
-{
-    sender_.Send( endpoint_, message );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LauncherPublisher::Endpoint
 // Created: AHC 2011-05-27
 // -----------------------------------------------------------------------------

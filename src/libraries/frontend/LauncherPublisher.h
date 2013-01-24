@@ -50,7 +50,6 @@ public:
     //! @name Operations
     //@{
     void Send( const sword::AdminToLauncher& message );
-    void Send( const sword::LauncherToAdmin& message );
     //@}
 
 private:
