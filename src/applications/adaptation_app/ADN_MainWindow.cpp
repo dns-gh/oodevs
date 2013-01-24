@@ -98,6 +98,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , nIdSaveTable_( 0 )
     , nIdPrint_( 0 )
     , nIdChangeOpenMode_( 0 )
+    , bSkipSave_( false )
 {
     generalConfig_->Parse( argc, argv );
     setMinimumSize( 640, 480 );
@@ -395,7 +396,7 @@ void ADN_MainWindow::OpenProject()
         QApplication::restoreOverrideCursor();    // restore original cursor
         workspace_.ResetProgressIndicator();
         QMessageBox::critical( 0, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
-        CloseProject();
+        CloseApplication( false );  // workspace_.Reset must be fixed (return to a consistent 'cleaned memory' state) to call CloseProject instead of CloseApplication
     }
 }
 
@@ -470,6 +471,19 @@ void ADN_MainWindow::CloseProject()
     workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
     mainTabWidget_->hide();
 }
+
+//-----------------------------------------------------------------------------
+// Name: ADN_MainWindow::CloseApplication
+// Created: MMC 2013-01-23
+//-----------------------------------------------------------------------------
+void ADN_MainWindow::CloseApplication( bool bAskSave /*= true*/ )
+{
+    if( !bAskSave )
+        bSkipSave_ = true;
+    workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
+    close();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::TestData
@@ -619,9 +633,10 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
 // -----------------------------------------------------------------------------
 bool ADN_MainWindow::OfferToSave()
 {
+    if( bSkipSave_ )
+        return true;
     if( !isWindowModified() )
         return true;
-
     QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );
     int nResult = QMessageBox::information( this, tr( "Sword Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
     switch( nResult )

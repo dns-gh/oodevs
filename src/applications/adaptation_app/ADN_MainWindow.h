@@ -89,6 +89,7 @@ private:
     void SetMenuEnabled( bool bEnable );
     bool OfferToSave();
     void DoSaveProject();
+    void CloseApplication( bool bAskSave = true );
 
 private:
     typedef std::pair< QString, ADN_Callback_ABC<ADN_Table*>* > T_TableRegistrationItem;
@@ -123,6 +124,7 @@ private:
     int             nIdChangeOpenMode_;
     T_TableRegistrationMap      vTableRegistrations_;
     T_ListViewRegistrationMap   vListViewRegistrations_;
+    bool            bSkipSave_;
 };
 
 #endif // __ADN_MainWindow_h_
