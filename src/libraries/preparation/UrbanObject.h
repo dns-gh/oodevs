@@ -10,14 +10,18 @@
 #ifndef __UrbanObject_h_
 #define __UrbanObject_h_
 
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/UrbanObject.h"
 
 namespace kernel
 {
     class AccommodationTypes;
     class Controllers;
+}
+
+namespace gui
+{
     class UrbanDisplayOptions;
 }
 
@@ -37,7 +41,7 @@ namespace tools
 */
 // Created: ABR 2012-05-23
 // =============================================================================
-class UrbanObject : public kernel::UrbanObject
+class UrbanObject : public gui::UrbanObject
                   , public kernel::ModesObserver_ABC
 {
 
@@ -45,9 +49,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              UrbanObject( kernel::Controllers& controllers, tools::IdManager& idManager, const std::string& name, const kernel::ObjectType& type,
-                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options );
+                          const kernel::AccommodationTypes& accommodations, gui::UrbanDisplayOptions& options );
              UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager, const kernel::ObjectType& type,
-                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options );
+                          const kernel::AccommodationTypes& accommodations, gui::UrbanDisplayOptions& options );
     virtual ~UrbanObject();
     //@}
 

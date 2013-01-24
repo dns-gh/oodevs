@@ -10,7 +10,7 @@
 #ifndef __Architecture_h_
 #define __Architecture_h_
 
-#include "clients_kernel/Architecture.h"
+#include "clients_gui/Architecture.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
@@ -32,7 +32,7 @@ namespace xml
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Architecture : public kernel::Architecture
+class Architecture : public gui::Architecture
                    , public tools::Observer_ABC
                    , public kernel::ModesObserver_ABC
 {

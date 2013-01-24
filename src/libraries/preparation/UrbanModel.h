@@ -10,7 +10,7 @@
 #ifndef __preparation_UrbanModel_h_
 #define __preparation_UrbanModel_h_
 
-#include "clients_kernel/UrbanDisplayOptions.h"
+#include "clients_gui/UrbanDisplayOptions.h"
 #include "spatialcontainer/SpatialContainer.h"
 #include "geostore/SpatialIndexer.h"
 #include <boost/noncopyable.hpp>
@@ -110,17 +110,17 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                            controllers_;
-    const StaticModel&                              staticModel_;
-    const tools::Resolver< kernel::Object_ABC >&    objects_;
-    std::auto_ptr< kernel::UrbanDisplayOptions >    urbanDisplayOptions_;
-    std::auto_ptr< UrbanFactory_ABC >               factory_;
-    std::auto_ptr< geostore::GeoStoreManager >      geostore_;
-    std::auto_ptr< T_QuadTree >                     quadTree_;
-    std::auto_ptr< UrbanMenuManager >               menuManager_;
-    float                                           precision_;
-    float                                           maxElementSize_;
-    bool                                            cleanedLinks_;
+    kernel::Controllers&                         controllers_;
+    const StaticModel&                           staticModel_;
+    const tools::Resolver< kernel::Object_ABC >& objects_;
+    std::auto_ptr< gui::UrbanDisplayOptions >    urbanDisplayOptions_;
+    std::auto_ptr< UrbanFactory_ABC >            factory_;
+    std::auto_ptr< geostore::GeoStoreManager >   geostore_;
+    std::auto_ptr< T_QuadTree >                  quadTree_;
+    std::auto_ptr< UrbanMenuManager >            menuManager_;
+    float                                        precision_;
+    float                                        maxElementSize_;
+    bool                                         cleanedLinks_;
     //@}
 };
 

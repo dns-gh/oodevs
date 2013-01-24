@@ -15,17 +15,21 @@
 namespace kernel
 {
     class Controllers;
-    class Gradient;
     class Options;
 }
 
 namespace gui
 {
-    class GradientButton;
     class ColorButton;
+    class Gradient;
+    class GradientButton;
     class GradientPreferences;
     class GradientsCombo;
     class Painter_ABC;
+}
+
+namespace gui
+{
 // =============================================================================
 /** @class  GradientWidget
     @brief  GradientWidget
@@ -56,7 +60,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void GradientChanged( kernel::Gradient& );
+    void GradientChanged( Gradient& );
     void ToggleVariableGradient( bool state );
     //@}
 
@@ -66,7 +70,7 @@ private slots:
     void OnSelectionChanged( const QColor& color );
     void OnEnableVariableGradient( bool state );
     void OnColorChanged( const QColor& color );
-    void OnGradientEdited( kernel::Gradient& gradient );
+    void OnGradientEdited( Gradient& gradient );
 
     void OnPresetChanged();
     void OnPresetCopied();
@@ -83,14 +87,14 @@ private:
 
     //! @name Helpers
     //@{
-    kernel::Gradient* CurrentPreset() const;
+    Gradient* CurrentPreset() const;
     void Clear();
     void Select( const QString& presetName );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< kernel::Gradient* > T_Gradients;
+    typedef std::vector< Gradient* > T_Gradients;
     //@}
 
 private:

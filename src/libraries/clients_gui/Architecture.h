@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_Architecture_h_
-#define __kernel_Architecture_h_
+#ifndef CLIENTS_GUI_ARCHITECTURE_H__
+#define CLIENTS_GUI_ARCHITECTURE_H__
 
-#include "Architecture_ABC.h"
-#include "Units.h"
+#include "clients_kernel/Architecture_ABC.h"
+#include "clients_kernel/Units.h"
 
 namespace kernel
 {
@@ -20,19 +20,22 @@ namespace kernel
     class RoofShapeType;
     class ObjectTypes;
     class UrbanObject_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Architecture
     @brief  Architecture
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Architecture : public Architecture_ABC
+class Architecture : public kernel::Architecture_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary, const ObjectTypes& objectTypes );
+             Architecture( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}
 
@@ -41,8 +44,8 @@ public:
     virtual bool IsDefault() const;
     virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, float occupation,
                              float trafficability, const std::string& material = "", const std::string& roofShape = "" );
-    virtual const MaterialCompositionType& GetMaterial() const;
-    virtual const RoofShapeType& GetRoofShape() const;
+    virtual const kernel::MaterialCompositionType& GetMaterial() const;
+    virtual const kernel::RoofShapeType& GetRoofShape() const;
     virtual unsigned int GetFloorNumber() const;
     virtual unsigned int GetParkingFloors() const;
     virtual unsigned int GetOccupation() const;
@@ -59,19 +62,19 @@ protected:
 protected:
     //! @name Member Data
     //@{
-    kernel::UrbanObject_ABC&    object_;
-    PropertiesDictionary&       dictionary_;
-    const ObjectTypes&          objectTypes_;
-    MaterialCompositionType*    material_;
-    RoofShapeType*              roofShape_;
-    UnitedValue< unsigned int > height_;
-    unsigned int                floorNumber_;
-    unsigned int                parkingFloors_;
-    UnitedValue< unsigned int > occupation_;
-    UnitedValue< float >        trafficability_;
+    kernel::UrbanObject_ABC&            object_;
+    kernel::PropertiesDictionary&       dictionary_;
+    const kernel::ObjectTypes&          objectTypes_;
+    kernel::MaterialCompositionType*    material_;
+    kernel::RoofShapeType*              roofShape_;
+    kernel::UnitedValue< unsigned int > height_;
+    unsigned int                        floorNumber_;
+    unsigned int                        parkingFloors_;
+    kernel::UnitedValue< unsigned int > occupation_;
+    kernel::UnitedValue< float >        trafficability_;
     //@}
 };
 
 } //! namespace kernel
 
-#endif // __kernel_Architecture_h_
+#endif // CLIENTS_GUI_ARCHITECTURE_H__

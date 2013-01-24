@@ -7,18 +7,20 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "UrbanDisplayOptions.h"
-#include "AccommodationTypes.h"
-#include "AccommodationType.h"
-#include "ChangePopulationDisplay.h"
-#include "Controller.h"
-#include "Controllers.h"
-#include "OptionVariant.h"
-#include "Usages_ABC.h"
-#include "UrbanColor_ABC.h"
+
+#include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/ChangePopulationDisplay.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Usages_ABC.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanDisplayOptions constructor

@@ -904,6 +904,18 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SimpleLocationDrawer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1469,6 +1481,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\GlTools_ABC.h">
       <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

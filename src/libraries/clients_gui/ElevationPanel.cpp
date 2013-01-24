@@ -52,7 +52,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
 
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), gradient_, SLOT( OnEnableVariableGradient( bool ) ) );
-        connect( gradient_, SIGNAL( GradientChanged( kernel::Gradient& ) ), SLOT( OnGradientChanged( kernel::Gradient& ) ) );
+        connect( gradient_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientChanged( Gradient& ) ) );
     }
     {
         hsBox_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Hillshade" ), container );
@@ -87,7 +87,7 @@ ElevationPanel::~ElevationPanel()
 // Name: ElevationPanel::OnGradientChanged
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void ElevationPanel::OnGradientChanged( kernel::Gradient& gradient )
+void ElevationPanel::OnGradientChanged( Gradient& gradient )
 {
     layer_.SetGradient( gradient );
 }

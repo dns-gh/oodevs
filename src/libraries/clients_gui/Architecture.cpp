@@ -7,24 +7,27 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Architecture.h"
-#include "PropertiesDictionary.h"
-#include "Tools.h"
-#include "ObjectTypes.h"
+
 #include "UrbanObject.h"
-#include "MaterialCompositionType.h"
-#include "RoofShapeType.h"
-#include "PhysicalAttribute_ABC.h"
-#include "Usages.h"
+
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/RoofShapeType.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/Usages.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-Architecture::Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary, const ObjectTypes& objectTypes )
+Architecture::Architecture( UrbanObject_ABC& object, PropertiesDictionary& dictionary, const ObjectTypes& objectTypes )
     : object_        ( object )
     , dictionary_    ( dictionary )
     , objectTypes_   ( objectTypes )

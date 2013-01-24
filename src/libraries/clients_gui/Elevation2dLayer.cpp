@@ -10,9 +10,9 @@
 #include "clients_gui_pch.h"
 #include "Elevation2dLayer.h"
 #include "clients_gui/GLTools_ABC.h"
+#include "clients_gui/Gradient.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/Gradient.h"
 #include "ElevationExtrema.h"
 #include <graphics/ElevationTextureSet.h>
 #include <graphics/FixedElevationTextureSet.h>

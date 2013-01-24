@@ -18,6 +18,10 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Object_ABC;
+}
+
+namespace gui
+{
     class UrbanDisplayOptions;
 }
 
@@ -40,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UrbanFactory( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects, const StaticModel& staticModel,
-                           tools::IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options );
+                           tools::IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, gui::UrbanDisplayOptions& options );
     virtual ~UrbanFactory();
     //@}
 
@@ -57,9 +61,9 @@ private:
     kernel::Controllers&                                  controllers_;
     const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects_;
     const StaticModel&                                    staticModel_;
-    tools::IdManager&                                            idManager_;
+    tools::IdManager&                                     idManager_;
     const tools::Resolver< kernel::Object_ABC >&          objects_;
-    kernel::UrbanDisplayOptions&                          options_;
+    gui::UrbanDisplayOptions&                             options_;
     //@}
 };
 

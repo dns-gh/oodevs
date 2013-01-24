@@ -10,7 +10,7 @@
 #ifndef __Architecture_h_
 #define __Architecture_h_
 
-#include "clients_kernel/Architecture.h"
+#include "clients_gui/Architecture.h"
 
 namespace sword
 {
@@ -30,7 +30,7 @@ namespace kernel
 */
 // Created: LGY 2011-04-15
 // =============================================================================
-class Architecture : public kernel::Architecture
+class Architecture : public gui::Architecture
 {
 public:
     //! @name Constructors/Destructor

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_Gradient_h_
-#define __kernel_Gradient_h_
+#ifndef CLIENTS_GUI_GRADIENT_H__
+#define CLIENTS_GUI_GRADIENT_H__
 
 namespace xml
 {
@@ -19,7 +19,10 @@ namespace kernel
 {
     class Options;
     class OptionVariant;
+}
 
+namespace gui
+{
 class GradientVisitor_ABC
 {
 public:
@@ -76,7 +79,6 @@ private:
     //@{
     typedef std::pair< float, QColor > T_Color;
     typedef std::vector< T_Color >     T_Colors;
-    typedef T_Colors::const_iterator CIT_Colors;
     //@}
 
 private:

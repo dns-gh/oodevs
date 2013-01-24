@@ -10,16 +10,15 @@
 #ifndef __GradientButton_h_
 #define __GradientButton_h_
 
-namespace kernel
+namespace gui
 {
     class Gradient;
+    class GradientItem;
+    class Painter_ABC;
 }
 
 namespace gui
 {
-    class GradientItem;
-    class Painter_ABC;
-
 // =============================================================================
 /** @class  GradientButton
     @brief  GradientButton
@@ -39,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void LoadGradient( const kernel::Gradient& gradient );
+    void LoadGradient( const Gradient& gradient );
     void SetSelectedColor( const QColor& color );
     GradientItem* AddItem( unsigned int percentage, const QColor& color );
     //@}
@@ -48,7 +47,7 @@ signals:
     //! @name Signals
     //@{
     void SelectionChanged( const QColor& );
-    void GradientChanged( kernel::Gradient& );
+    void GradientChanged( Gradient& );
     //@}
 
 private slots:

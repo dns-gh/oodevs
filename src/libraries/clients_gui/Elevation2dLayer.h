@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/Gradient.h"
+#include "clients_gui/Gradient.h"
 
 class TextureSet;
 class ElevationShader;
@@ -27,7 +27,10 @@ namespace kernel
 namespace gui
 {
     class ElevationExtrema;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Elevation2dLayer
     @brief  Elevation2dLayer
@@ -50,7 +53,7 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
 
-    void SetGradient( const kernel::Gradient& gradient );
+    void SetGradient( const Gradient& gradient );
     void SetHillShadeDirection( int angle );
     void EnableVariableGradient( bool enable );
     void SetHillShadeStrength( float strength );
@@ -79,7 +82,7 @@ private:
     bool reset_;
     bool modelLoaded_;
     bool ignore_;
-    kernel::Gradient gradient_;
+    Gradient gradient_;
     bool updateGradient_;
     unsigned gradientTexture_;
     float hsx_, hsy_;

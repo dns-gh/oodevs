@@ -18,8 +18,8 @@
 #include "StructuralStateAttribute.h"
 #include "UrbanColor.h"
 #include "UrbanPositions.h"
-#include "clients_kernel/UrbanObject.h"
-#include "clients_kernel/UrbanDisplayOptions.h"
+#include "clients_gui/UrbanObject.h"
+#include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
@@ -32,7 +32,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& 
     : controllers_        ( controllers )
     , resourceNetwork_    ( resourceNetwork )
     , static_             ( staticModel )
-    , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
 {
     // NOTHING
 }
@@ -61,7 +61,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
         return;
     }
     const kernel::ObjectType& type = static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" );
-    kernel::UrbanObject* pTerrainObject = new kernel::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
+    gui::UrbanObject* pTerrainObject = new gui::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, *pTerrainObject ) );

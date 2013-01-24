@@ -7,31 +7,34 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "UrbanObject.h"
-#include "Controllers.h"
-#include "PhysicalAttribute_ABC.h"
-#include "UrbanColor_ABC.h"
 #include "UrbanDisplayOptions.h"
-#include "Usages_ABC.h"
-#include "Tools.h"
-#include "AccommodationType.h"
-#include "AccommodationTypes.h"
-#include "Architecture_ABC.h"
-#include "DictionaryUpdated.h"
-#include "PhysicalAttribute_ABC.h"
-#include "PropertiesDictionary.h"
-#include "ObjectTypes.h"
-#include "UrbanColor_ABC.h"
-#include "StructuralStateAttribute_ABC.h"
-#include "UrbanPositions_ABC.h"
-#include "UrbanTemplateType.h"
-#include "Usages_ABC.h"
+
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/Usages_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/Architecture_ABC.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/PhysicalAttribute_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/StructuralStateAttribute_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/UrbanTemplateType.h"
+#include "clients_kernel/Usages_ABC.h"
+
 #include "protocol/Simulation.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
+using namespace gui;
 
 #pragma warning( disable : 4355 )
 

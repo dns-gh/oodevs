@@ -20,20 +20,23 @@ namespace xml
 
 namespace kernel
 {
-    class Gradient;
     class Options;
 }
 
 namespace gui
 {
+    class Gradient;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  GradientPreferences
     @brief  GradientPreferences
 */
 // Created: SBO 2007-07-03
 // =============================================================================
-class GradientPreferences : public tools::Resolver< kernel::Gradient, QString >
+class GradientPreferences : public tools::Resolver< Gradient, QString >
 {
 public:
     //! @name Constructors/Destructor
@@ -44,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( const std::vector< kernel::Gradient* >& presets );
+    void Commit( const std::vector< Gradient* >& presets );
     void Reset();
     void SetGradient( const QString& name, const QString& values );
     //@}

@@ -9,8 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "ResourceNetworkDialog.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
@@ -142,7 +142,7 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
         return 0;
     int consumption = 0;
     if( inhabitantConsumption > 0)
-        if( const kernel::UrbanObject* block = dynamic_cast< const kernel::UrbanObject* >( object ) )
+        if( auto block = dynamic_cast< const gui::UrbanObject* >( object ) )
         {
             double tmp = inhabitantConsumption * block->GetNominalCapacity();
             if( tmp >= std::numeric_limits< int >::max() )

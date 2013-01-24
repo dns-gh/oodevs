@@ -16,7 +16,7 @@
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
 Architecture::Architecture( const sword::UrbanAttributes& message, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
-    : kernel::Architecture( object, dictionary, objectTypes )
+    : gui::Architecture( object, dictionary, objectTypes )
 {
     if( message.has_architecture() )
     {

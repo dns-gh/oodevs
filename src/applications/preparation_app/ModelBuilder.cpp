@@ -27,12 +27,12 @@
 #include "preparation/Agent.h"
 #include "preparation/Ghost.h"
 #include "preparation/Object.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/UrbanObject.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -499,7 +499,7 @@ void ModelBuilder::OnRename( kernel::Entity_ABC& entity, const QString& newName 
     Rename< KnowledgeGroup >( &entity, newName, controllers_, property_ );
     Rename< Ghost >( &entity, newName, controllers_, property_ );
     Rename< Object >( &entity, newName, controllers_, property_ );
-    Rename< kernel::UrbanObject >( &entity, newName, controllers_, property_ );
+    Rename< gui::UrbanObject >( &entity, newName, controllers_, property_ );
 }
 
 // -----------------------------------------------------------------------------

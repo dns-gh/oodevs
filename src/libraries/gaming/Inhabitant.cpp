@@ -12,6 +12,7 @@
 #include "UrbanModel.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Infrastructure_ABC.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -21,7 +22,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/foreach.hpp>
@@ -155,7 +155,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
         auto it = livingUrbanObject_.find( occupation.object().id() );
         if( it != livingUrbanObject_.end() )
-            static_cast< kernel::UrbanObject* >( it->second )->UpdateHumans( name_.toStdString(), occupation );
+            static_cast< gui::UrbanObject* >( it->second )->UpdateHumans( name_.toStdString(), occupation );
     }
     if( msg.has_motivation() )
         motivation_ = msg.motivation();
@@ -290,7 +290,7 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const kernel::UrbanObject* pObject = static_cast< const kernel::UrbanObject* >( it->second );
+        auto pObject = static_cast< const gui::UrbanObject* >( it->second );
         if( !pObject )
             continue;
         nominalCapacity_ += static_cast< unsigned int >( pObject->GetNominalCapacity() );

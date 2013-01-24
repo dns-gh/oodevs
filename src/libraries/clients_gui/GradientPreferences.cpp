@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "GradientPreferences.h"
-#include "clients_kernel/Gradient.h"
+#include "clients_gui/Gradient.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include <xeumeuleu/xml.hpp>
@@ -39,11 +39,11 @@ GradientPreferences::~GradientPreferences()
 // Name: GradientPreferences::Commit
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientPreferences::Commit( const std::vector< kernel::Gradient* >& presets )
+void GradientPreferences::Commit( const std::vector< Gradient* >& presets )
 {
     DeleteAll();
-    for( std::vector< kernel::Gradient* >::const_iterator it = presets.begin(); it != presets.end(); ++it )
-        Register( (*it)->GetName(), *new kernel::Gradient( **it ) );
+    for( auto it = presets.begin(); it != presets.end(); ++it )
+        Register( (*it)->GetName(), *new Gradient( **it ) );
     Save();
 }
 
@@ -85,7 +85,7 @@ void GradientPreferences::Save() const
 // -----------------------------------------------------------------------------
 void GradientPreferences::ReadGradient( xml::xistream& xis )
 {
-    kernel::Gradient* gradient = new kernel::Gradient( xis );
+    Gradient* gradient = new Gradient( xis );
     Register( gradient->GetName(), *gradient );
 }
 
@@ -95,10 +95,10 @@ void GradientPreferences::ReadGradient( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void GradientPreferences::SetGradient( const QString& name, const QString& values )
 {
-    kernel::Gradient* gradient = Find( name );
+    Gradient* gradient = Find( name );
     if( !gradient )
     {
-        gradient = new kernel::Gradient( name, values );
+        gradient = new Gradient( name, values );
         Register( gradient->GetName(), *gradient );
     }
     else

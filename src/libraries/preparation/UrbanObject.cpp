@@ -19,8 +19,8 @@
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( kernel::Controllers& controllers, tools::IdManager& idManager, const std::string& name, const kernel::ObjectType& type,
-                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
-    : kernel::UrbanObject( controllers, name, idManager.GetNextId(), type, accommodations, options )
+                          const kernel::AccommodationTypes& accommodations, gui::UrbanDisplayOptions& options )
+    : gui::UrbanObject( controllers, name, idManager.GetNextId(), type, accommodations, options )
 {
     name_ = QString( "%1 [%2]" ).arg( name.c_str() ).arg( id_ );
     controllers_.Update( *this );
@@ -31,8 +31,8 @@ UrbanObject::UrbanObject( kernel::Controllers& controllers, tools::IdManager& id
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, tools::IdManager& idManager, const kernel::ObjectType& type,
-                          const kernel::AccommodationTypes& accommodations, kernel::UrbanDisplayOptions& options )
-    : kernel::UrbanObject( xis, controllers, type, accommodations, options )
+                          const kernel::AccommodationTypes& accommodations, gui::UrbanDisplayOptions& options )
+    : gui::UrbanObject( xis, controllers, type, accommodations, options )
 {
     controllers_.Update( *this );
     idManager.Lock( id_ );

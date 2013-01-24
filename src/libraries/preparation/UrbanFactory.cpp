@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanFactory.h"
+
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "PhysicalAttribute.h"
@@ -19,22 +20,23 @@
 #include "UrbanHierarchies.h"
 #include "UrbanObject.h"
 #include "UrbanPositions.h"
+
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/UrbanColor_ABC.h"
-#include "clients_kernel/UrbanObject.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanFactory constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 UrbanFactory::UrbanFactory( kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanObjects, const StaticModel& staticModel,
-                            tools::IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, kernel::UrbanDisplayOptions& options )
+                            tools::IdManager& idManager, const tools::Resolver< kernel::Object_ABC >& objects, gui::UrbanDisplayOptions& options )
     : controllers_ ( controllers )
     , urbanObjects_( urbanObjects )
     , staticModel_ ( staticModel )

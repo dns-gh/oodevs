@@ -11,7 +11,7 @@
 #include "GradientButton.h"
 #include "moc_GradientButton.cpp"
 #include "GradientItem.h"
-#include "clients_kernel/Gradient.h"
+#include "clients_gui/Gradient.h"
 
 using namespace gui;
 
@@ -217,7 +217,7 @@ void GradientButton::keyPressEvent( QKeyEvent* event )
 
 namespace
 {
-    class GradientBuilder : public kernel::GradientVisitor_ABC
+    class GradientBuilder : public GradientVisitor_ABC
     {
     public:
         explicit GradientBuilder( GradientButton& gradient ) : gradient_( &gradient ) {}
@@ -237,7 +237,7 @@ namespace
 // Name: GradientButton::LoadGradient
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientButton::LoadGradient( const kernel::Gradient& gradient )
+void GradientButton::LoadGradient( const Gradient& gradient )
 {
     ClearSelection();
     for( auto it = colors_.begin(); it != colors_.end(); ++it )
@@ -296,7 +296,7 @@ void GradientButton::ClearSelection()
 void GradientButton::Update()
 {
     canvas()->setAllChanged();
-    kernel::Gradient gradient;
+    Gradient gradient;
     Q3CanvasItemList list = canvas()->allItems();
     for( Q3CanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
     {

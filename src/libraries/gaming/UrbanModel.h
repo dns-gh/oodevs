@@ -23,8 +23,12 @@ namespace sword
 namespace kernel
 {
     class Controllers;
-    class UrbanDisplayOptions;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class UrbanDisplayOptions;
 }
 
 class ResourceNetworkModel;
@@ -63,7 +67,7 @@ private:
     kernel::Controllers& controllers_;
     ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
-    std::auto_ptr< kernel::UrbanDisplayOptions > urbanDisplayOptions_;
+    std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
     //@}
 };
 

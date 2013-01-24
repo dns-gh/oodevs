@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanModel.h"
+
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "ResourceNetworkAttribute.h"
@@ -17,20 +18,22 @@
 #include "UrbanFactory.h"
 #include "UrbanHierarchies.h"
 #include "UrbanMenuManager.h"
+
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
-#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "geometry/Types.h"
 #include "geostore/GeoStoreManager.h"
 #include "preparation/UrbanExportManager.h"
-#include "terrain/Translator.h"
-#include "terrain/TerrainExportManager.h"
 #include "terrain/PlanarCartesianProjector.h"
-#include "tools/SchemaWriter_ABC.h"
+#include "terrain/TerrainExportManager.h"
+#include "terrain/Translator.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/SchemaWriter_ABC.h"
+
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/ref.hpp>
@@ -139,7 +142,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     : controllers_        ( controllers )
     , staticModel_        ( staticModel )
     , objects_            ( objects )
-    , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
     , menuManager_        ( new UrbanMenuManager( controllers, *this, staticModel_ ) )
 {
@@ -231,7 +234,7 @@ void UrbanModel::ReadCity( xml::xistream& xis )
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, 0 ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
+        auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
         xis >> xml::optional
                 >> xml::start( "urban-objects" )
@@ -249,7 +252,7 @@ void UrbanModel::ReadDistrict( xml::xistream& xis, kernel::UrbanObject_ABC* pare
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
+        auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
         xis >> xml::optional
             >> xml::start( "urban-objects" )
@@ -267,7 +270,7 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( xis, parent ) );
     if( pTerrainObject.get() && !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
+        auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
     }
 }
@@ -372,7 +375,7 @@ void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
     std::auto_ptr< kernel::UrbanObject_ABC > pTerrainObject( factory_->Create( parent ) );
     if( !Find( pTerrainObject->GetId() ) )
     {
-        kernel::UrbanObject* ptr = static_cast< kernel::UrbanObject* >( pTerrainObject.release() );
+        auto ptr = static_cast< gui::UrbanObject* >( pTerrainObject.release() );
         Register( ptr->GetId(), *ptr );
     }
 }

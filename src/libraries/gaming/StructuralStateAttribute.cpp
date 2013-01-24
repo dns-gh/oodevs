@@ -13,7 +13,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 

@@ -12,8 +12,12 @@
 
 namespace kernel
 {
-    class Gradient;
     class Options;
+}
+
+namespace gui
+{
+    class Gradient;
 }
 
 namespace gui
@@ -31,7 +35,7 @@ class PresetDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PresetDialog( QWidget* parent, kernel::Gradient& gradient, kernel::Options& options,
+             PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options& options,
                            const std::vector< std::string >& presets );
     virtual ~PresetDialog();
     //@}
@@ -64,7 +68,7 @@ private:
     QLineEdit* pLineEdit_;
     QPushButton* pAcceptButton_;
     QPushButton* pRejectButton_;
-    kernel::Gradient& gradient_;
+    Gradient& gradient_;
     kernel::Options& options_;
     const std::vector< std::string >& presets_;
     //@}

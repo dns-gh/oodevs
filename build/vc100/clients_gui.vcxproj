@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\AggregateToolbar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ApplicationMonitor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Application_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Architecture.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ClearButton.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Drawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HtmlEditor.cpp" />
@@ -233,7 +235,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalLinesLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TerrainLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TooltipsLayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanLayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Viewport_ABC.cpp" />
@@ -458,6 +462,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Architecture.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -683,6 +688,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GlTools_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyTreeView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -1188,6 +1194,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanPositions.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Viewport_ABC.h" />

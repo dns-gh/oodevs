@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_UrbanDisplayOptions_h_
-#define __kernel_UrbanDisplayOptions_h_
+#ifndef CLIENTS_GUI_URBANDISPLAYOPTIONS_H__
+#define CLIENTS_GUI_URBANDISPLAYOPTIONS_H__
 
 #include "Gradient.h"
-#include "HumanDefs.h"
-#include "OptionsObserver_ABC.h"
+#include "clients_kernel/HumanDefs.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 #include <boost/noncopyable.hpp>
@@ -24,7 +24,10 @@ namespace kernel
     class Controllers;
     class UrbanColor_ABC;
     class Usages_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  UrbanDisplayOptions
     @brief  UrbanDisplayOptions
@@ -32,21 +35,21 @@ namespace kernel
 // Created: LDC 2011-03-25
 // =============================================================================
 class UrbanDisplayOptions : public tools::Observer_ABC
-                          , public OptionsObserver_ABC
+                          , public kernel::OptionsObserver_ABC
                           , public tools::ElementObserver_ABC< kernel::ChangePopulationDisplay >
-                          , private boost::noncopyable
+                          , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanDisplayOptions( Controllers& controllers, const AccommodationTypes& accommodationTypes );
+             UrbanDisplayOptions( kernel::Controllers& controllers, const kernel::AccommodationTypes& accommodationTypes );
     virtual ~UrbanDisplayOptions();
     //@}
 
     //! @name Operations
     //@{
-    void OptionChanged( const std::string& name, const OptionVariant& value );
-    bool SetColor( UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const Usages_ABC& usages, unsigned int structuralState );
+    void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    bool SetColor( kernel::UrbanColor_ABC& color, float livingSpace, const kernel::T_HumansStrMap& humans, const kernel::Usages_ABC& usages, unsigned int structuralState );
     void ChangePopulationDisplay( const std::string& name, bool visible );
     void NotifyUpdated( const kernel::ChangePopulationDisplay& population );
     //@}
@@ -54,8 +57,8 @@ public:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
-    const AccommodationTypes& accommodationTypes_;
+    kernel::Controllers& controllers_;
+    const kernel::AccommodationTypes& accommodationTypes_;
     bool densityColor_;
     bool accommodationColor_;
     QString accommodationDisplayed_;
@@ -73,4 +76,4 @@ private:
 
 } //! namespace kernel
 
-#endif // __kernel_UrbanDisplayOptions_h_
+#endif // CLIENTS_GUI_URBANDISPLAYOPTIONS_H__

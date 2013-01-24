@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Gradient.h"
 #include "clients_kernel/Options.h"
 #include <graphics/extensions.h>
@@ -19,6 +19,7 @@
 #include <boost/bind.hpp>
 
 using namespace kernel;
+using namespace gui;
 
 namespace
 {

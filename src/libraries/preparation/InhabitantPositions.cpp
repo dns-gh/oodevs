@@ -9,23 +9,26 @@
 
 #include "preparation_pch.h"
 #include "InhabitantPositions.h"
+
 #include "UrbanHierarchies.h"
 #include "UrbanModel.h"
+
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Infrastructure_ABC.h"
-#include "clients_kernel/AccommodationTypes.h"
+#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/UrbanObject.h"
 #include "clients_kernel/Tools.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/function.hpp>
+#include "clients_kernel/UrbanPositions_ABC.h"
+
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -256,7 +259,7 @@ void InhabitantPositions::UpdateDictionary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const kernel::UrbanObject* pProxy = static_cast< const kernel::UrbanObject* >( it->get< 2 >() );
+        auto pProxy = static_cast< const gui::UrbanObject* >( it->get< 2 >() );
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
         if( auto infra = pProxy->Retrieve< gui::Infrastructure_ABC >() )
         {
