@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __Drawer_h_
-#define __Drawer_h_
+#ifndef CLIENTS_GUI_DRAWER_H__
+#define CLIENTS_GUI_DRAWER_H__
+
+#include <vector>
 
 namespace kernel
 {
@@ -16,7 +18,10 @@ namespace kernel
     class Extension_ABC;
     class GlTools_ABC;
     class Viewport_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Drawer
     @brief  Drawer implementation
@@ -34,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( const Extension_ABC& extension );
-    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
+    void Register( const kernel::Extension_ABC& extension );
+    void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -47,28 +52,22 @@ private:
 
     //! @name Helpers
     //@{
-    void Add( const Drawable_ABC& extension );
+    void Add( const kernel::Drawable_ABC& extension );
     std::string Strip( const std::string& name );
-    static bool InitializePositions();
-    static void SetPosition( const std::string& name, unsigned pos );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< std::string, unsigned >   T_Positions;
-    typedef T_Positions::const_iterator       CIT_Positions;
-    typedef std::vector< const Drawable_ABC* >  T_Drawables;
-    typedef T_Drawables::const_iterator       CIT_Drawables;
+    typedef std::vector< const kernel::Drawable_ABC* > T_Drawables;
     //@}
 
 private:
     //! @name Member data
     //@{
-    static T_Positions positions_;
     T_Drawables extensions_;
     //@}
 };
 
 }
 
-#endif // __Drawer_h_
+#endif // CLIENTS_GUI_DRAWER_H__

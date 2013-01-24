@@ -7,14 +7,26 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Drawer.h"
-#include "Drawable_ABC.h"
-#include "Extension_ABC.h"
 
-using namespace kernel;
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 
-Drawer::T_Positions Drawer::positions_;
+#include <map>
+#include <boost/assign/list_of.hpp>
+
+using namespace gui;
+
+namespace
+{
+    const std::map< std::string, unsigned > positions = boost::assign::map_list_of
+        ( "Lives",      0 )
+        ( "Positions",  1 )
+        ( "Object",     2 )
+        ( "Agent",      2 )
+        ( "Attributes", 3 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Drawer constructor
@@ -22,7 +34,7 @@ Drawer::T_Positions Drawer::positions_;
 // -----------------------------------------------------------------------------
 Drawer::Drawer()
 {
-    static bool bDenis = InitializePositions();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,35 +47,12 @@ Drawer::~Drawer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Drawer::InitializePositions
-// Created: AGE 2007-06-19
-// -----------------------------------------------------------------------------
-bool Drawer::InitializePositions()
-{
-    SetPosition( "Lives",      0 );
-    SetPosition( "Positions",  1 );
-    SetPosition( "Object",     2 );
-    SetPosition( "Agent",      2 );
-    SetPosition( "Attributes", 3 );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawer::SetPosition
-// Created: AGE 2006-08-10
-// -----------------------------------------------------------------------------
-void Drawer::SetPosition( const std::string& name, unsigned pos )
-{
-    positions_[ name ] = pos;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Drawer::Register
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-void Drawer::Register( const Extension_ABC& extension )
+void Drawer::Register( const kernel::Extension_ABC& extension )
 {
-    const Drawable_ABC* drawable = dynamic_cast< const Drawable_ABC* >( &extension );
+    auto drawable = dynamic_cast< const kernel::Drawable_ABC* >( &extension );
     if( drawable )
         Add( *drawable );
 }
@@ -72,11 +61,11 @@ void Drawer::Register( const Extension_ABC& extension )
 // Name: Drawer::Add
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-void Drawer::Add( const Drawable_ABC& extension )
+void Drawer::Add( const kernel::Drawable_ABC& extension )
 {
     const std::string name = Strip( typeid( extension ).name() );
-    CIT_Positions it = positions_.find( name );
-    if( it != positions_.end() && it->second < extensions_.size() )
+    auto it = positions.find( name );
+    if( it != positions.end() && it->second < extensions_.size() )
         extensions_.insert( extensions_.begin() + it->second, &extension );
     else
         extensions_.push_back( &extension );
@@ -98,7 +87,9 @@ std::string Drawer::Strip( const std::string& name )
 // Name: Drawer::Draw
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-void Drawer::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Drawer::Draw( const geometry::Point2f& where,
+                   const kernel::Viewport_ABC& viewport,
+                   const kernel::GlTools_ABC& tools ) const
 {
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         (*it)->Draw( where, viewport, tools );

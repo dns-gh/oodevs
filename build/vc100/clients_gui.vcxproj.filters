@@ -886,6 +886,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Tools.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Drawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1420,6 +1423,9 @@
       <Filter>Source Files\MVC\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawVisitor.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Drawer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

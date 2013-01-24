@@ -128,6 +128,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListEditor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DisplayExtractor.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Drawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
@@ -656,6 +657,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Drawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawVisitor.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DummyModelObserver.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityTreeView.h" />

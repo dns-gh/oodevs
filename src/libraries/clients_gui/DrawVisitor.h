@@ -10,7 +10,7 @@
 #ifndef CLIENTS_GUI_DRAWVISITOR_H
 #define CLIENTS_GUI_DRAWVISITOR_H
 
-#include "clients_kernel/Drawer.h"
+#include "clients_gui/Drawer.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/ExtensionVisitor_ABC.h"
 
@@ -35,7 +35,7 @@ public:
     }
 
 private:
-    kernel::Drawer drawer;
+    Drawer drawer;
 };
 }
 
