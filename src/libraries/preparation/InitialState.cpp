@@ -58,6 +58,7 @@ InitialState::InitialState( xml::xistream& xis, const StaticModel& staticModel, 
         xis >> xml::start( "equipments" )
                 >> xml::list( "equipment", *this, &InitialState::ReadEquipment )
             >> xml::end;
+        UpdateEquipmentsWithOriginal();
     }
     if( xis.has_child( "resources" ) )
     {
@@ -150,7 +151,8 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
     {
         xos.start( "equipments" );
         for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
-            it->Serialize( xos );
+            if( it->state_ != eEquipmentState_Available )
+                it->Serialize( xos );
         xos.end();
     }
     if( IsCrewsSaveNeeded() )
@@ -359,4 +361,28 @@ void InitialState::UpdateResourceMaximum()
                 resources_[ i ].maximum_ = originalResources_[ j ].maximum_;
                 break;
             }
+}
+
+namespace
+{
+    InitialState::T_Equipments::const_iterator FindName( const InitialState::T_Equipments& eq, const QString& name )
+    {
+        for( auto it = eq.begin(); it != eq.end(); ++it )
+            if( it->name_ == name )
+                return it;
+        return eq.end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::UpdateEquipmentsWithOriginal
+// Created: JSR 2013-01-22
+// -----------------------------------------------------------------------------
+void InitialState::UpdateEquipmentsWithOriginal()
+{
+    T_Equipments toAppend = originalEquipments_;
+    for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
+        toAppend.erase( FindName( toAppend, it->name_ ) );
+    for( auto it = toAppend.begin(); it != toAppend.end(); ++it )
+        equipments_.insert( FindName( equipments_, it->name_ ), *it );
 }
