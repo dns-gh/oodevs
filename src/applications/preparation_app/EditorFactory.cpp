@@ -23,6 +23,7 @@
 #include "clients_gui/CriticalIntelligenceDialog.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Karma.h"
@@ -122,8 +123,9 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 {
-    typedef tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string > T_Resolver;
-    SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >* editor = new SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.types_ ) );
+    typedef tools::StringResolver< kernel::KnowledgeGroupType > T_Resolver;
+    tools::StringResolver< kernel::KnowledgeGroupType >& types = static_cast< tools::StringResolver< kernel::KnowledgeGroupType >& >( staticModel_.types_ );
+    SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >* editor = new SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >( parent_, types );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
