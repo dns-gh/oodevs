@@ -48,6 +48,7 @@ public:
     E_EquipmentState state_;
     QStringList      breakdowns_;
     unsigned int     currentBreakdown_;
+    unsigned int     borrower_;
     //@}
 };
 

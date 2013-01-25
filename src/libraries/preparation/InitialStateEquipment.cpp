@@ -21,6 +21,7 @@ InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentSt
     , state_           ( state )
     , breakdowns_      ( breakdowns )
     , currentBreakdown_( currentBreakdown )
+    , borrower_        ( 0 )
 {
     // NOTHING
 }
@@ -32,12 +33,9 @@ InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentSt
 InitialStateEquipment::InitialStateEquipment( xml::xistream& xis )
     : currentBreakdown_( 0 )
 {
-    std::string name;
-    std::string state;
-    xis >> xml::attribute( "type", name )
-        >> xml::attribute( "state", state );
-    name_ = name.c_str();
-    state_ = ENT_Tr::ConvertToEquipmentState( state );
+    name_ = xis.attribute< std::string >( "type" ).c_str();
+    state_ = ENT_Tr::ConvertToEquipmentState( xis.attribute< std::string >( "state" ) );
+    borrower_ = xis.attribute< unsigned int >( "borrower", 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +57,9 @@ void InitialStateEquipment::Serialize( xml::xostream& xos ) const
         << xml::attribute( "type", name_ )
         << xml::attribute( "state", ENT_Tr::ConvertFromEquipmentState( state_, ENT_Tr_ABC::eToSim ) );
     if( state_ == eEquipmentState_RepairableWithEvacuation && !breakdowns_.isEmpty() && static_cast< int >( currentBreakdown_ ) < breakdowns_.size() )
-        xos << xml::attribute( "breakdown", breakdowns_[ currentBreakdown_ ] );
+        xos.attribute( "breakdown", breakdowns_[ currentBreakdown_ ] );
+    if( borrower_ > 0 )
+        xos.attribute( "borrower", borrower_ );
     xos << xml::end;
 }
 

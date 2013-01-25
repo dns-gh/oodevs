@@ -151,7 +151,7 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
     {
         xos.start( "equipments" );
         for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
-            if( it->state_ != eEquipmentState_Available )
+            if( it->state_ != eEquipmentState_Available || it->borrower_ > 0 )
                 it->Serialize( xos );
         xos.end();
     }
@@ -181,7 +181,7 @@ bool InitialState::IsEquipmentsSaveNeeded() const
     if( originalEquipments_.size() != equipments_.size() )
         return true;
     for( unsigned int i = 0; i < equipments_.size(); ++i )
-        if( originalEquipments_[ i ] != equipments_[ i ] )
+        if( originalEquipments_[ i ] != equipments_[ i ] || equipments_[ i ].borrower_ > 0 )
             return true;
     return false;
 }
