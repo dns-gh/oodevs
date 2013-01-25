@@ -11,8 +11,6 @@
 #include <google/protobuf/stubs/common.h>
 #include <string>
 
-#pragma warning( disable : 4996 ) // 'std::_Swap_ranges': Function call with parameters that may be unsafe
-
 namespace
 {
     std::string data_directory;
