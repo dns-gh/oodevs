@@ -12,7 +12,6 @@
 #include "moc_TerrainExportDialog.cpp"
 #include "preparation/UrbanModel.h"
 #include "clients_gui/resources.h"
-#include "extractor/TerrainExtractionManager.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 
@@ -112,7 +111,7 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainExportDialog::OnOk
+// Name: TerrainExportDialog::accept
 // Created: AME 2010-10-15
 // -----------------------------------------------------------------------------
 void TerrainExportDialog::accept()
@@ -129,17 +128,12 @@ void TerrainExportDialog::accept()
     try
     {
         if( shapeCheck_->isChecked() )
-        {
             urbanModel_.ExportShapeFile( path, config_, progressDialog );
-        }
-        if( rasterCheck_->isChecked() || elevationCheck_->isChecked() )
-        {
-            bfs::path terrainPath( config_.GetTerrainFile() );
-            TerrainExtractionManager manager( terrainPath.parent_path(), path );
-            manager.SetRasterExportEnabled( rasterCheck_->isChecked() );
-            manager.SetElevationExportEnabled( elevationCheck_->isChecked() );
-            manager.Run();
-        }
+        extractor::TerrainExtractionManager extractor( bfs::path( config_.GetTerrainFile() ).parent_path() );
+        if( rasterCheck_->isChecked() )
+            extractor.ExportRaster( path );
+        if( elevationCheck_->isChecked() )
+            extractor.ExportElevation( path );
         QMessageBox::information( this, tr( "Terrain export" ), tr( "Export successful." ) );
     }
     catch( const std::exception& e )
@@ -150,7 +144,7 @@ void TerrainExportDialog::accept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainExportDialog::OnBrowseExportShp
+// Name: TerrainExportDialog::OnBrowseExport
 // Created: AME 2010-10-15
 // -----------------------------------------------------------------------------
 void TerrainExportDialog::OnBrowseExport()
@@ -160,6 +154,10 @@ void TerrainExportDialog::OnBrowseExport()
     CheckExportReady();
 }
 
+// -----------------------------------------------------------------------------
+// Name: TerrainExportDialog::OnBrowseExport
+// Created: AME 2010-10-15
+// -----------------------------------------------------------------------------
 void TerrainExportDialog::CheckExportReady()
 {
     const QString newDirectory = exportPathEditor_->text();

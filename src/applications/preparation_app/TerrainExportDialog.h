@@ -10,8 +10,8 @@
 #ifndef __TerrainExportDialog_h_
 #define __TerrainExportDialog_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_gui/ModalDialog.h"
+#include <extractor/TerrainExtractionManager.h>
 
 namespace tools
 {
@@ -54,13 +54,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const UrbanModel&               urbanModel_;
-    const tools::ExerciseConfig&    config_;
-    QLineEdit*                      exportPathEditor_;
-    QCheckBox*                      shapeCheck_;
-    QCheckBox*                      elevationCheck_;
-    QCheckBox*                      rasterCheck_;
-    QPushButton*                    okButton_;
+    const UrbanModel&            urbanModel_;
+    const tools::ExerciseConfig& config_;
+    QLineEdit*                   exportPathEditor_;
+    QCheckBox*                   shapeCheck_;
+    QCheckBox*                   elevationCheck_;
+    QCheckBox*                   rasterCheck_;
+    QPushButton*                 okButton_;
     //@}
 };
 
