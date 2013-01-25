@@ -17,19 +17,18 @@
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( const PopulationType& type, int number, Controller& controller, tools::IdManager& idManager )
+Population::Population( const kernel::PopulationType& type, int number, kernel::Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, idManager.GetNextId(), "" )
+    , type_            ( type )
     , healthy_         ( number )
     , wounded_         ( 0 )
     , dead_            ( 0 )
     , contaminated_    ( 0 )
-    , armedIndividuals_( static_cast< unsigned int >( type.GetArmedIndividuals() * 100 ), Units::percentage )
+    , armedIndividuals_( static_cast< unsigned int >( type.GetArmedIndividuals() * 100 ), kernel::Units::percentage )
     , repartition_     ( new PopulationRepartition() )
     , attitude_        ( ePopulationAttitude_Calme )
 {
@@ -45,9 +44,10 @@ Population::Population( const PopulationType& type, int number, Controller& cont
 // Name: Population constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-Population::Population( xml::xistream& xis, const kernel::PopulationType& type, Controller& controller, tools::IdManager& idManager )
+Population::Population( xml::xistream& xis, const kernel::PopulationType& type, kernel::Controller& controller, tools::IdManager& idManager )
     : EntityImplementation< Population_ABC >( controller, xis.attribute< int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , armedIndividuals_( 0, Units::percentage )
+    , type_            ( type )
+    , armedIndividuals_( 0, kernel::Units::percentage )
     , repartition_     ( new PopulationRepartition() )
     , attitude_        ( xis.attribute< std::string >( "attitude" ).c_str() )
 {
@@ -141,7 +141,7 @@ unsigned int Population::GetTotalLivingHumans() const
 void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
     QString id = QString( "[%L1]" ).arg( GetId() );
-    displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< const Population_ABC* >( this ) ).AddToDisplay( id );
+    displayer.Item( "" ).Start( kernel::Styles::bold ).Add( static_cast< const kernel::Population_ABC* >( this ) ).AddToDisplay( id );
     displayer.End();
     displayer.Display( tools::translate( "Crowd", "Healthy:" ), healthy_ );
     displayer.Display( tools::translate( "Crowd", "Contaminated:" ), contaminated_ );
@@ -155,8 +155,8 @@ void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Population::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
+    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
+    const kernel::Entity_ABC& constEntity = *static_cast< const kernel::Entity_ABC* >( this );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Mood" ), attitude_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Armed-Individuals" ), armedIndividuals_ );
 
@@ -189,7 +189,10 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "armed-individuals" )
                 << xml::attribute( "value", armedIndividuals_.value_ / 100.f )
             << xml::end;
-    if( repartition_->male_ != 100 )
+
+    if( repartition_->male_ != static_cast< unsigned int >( type_.GetMale() * 100 )
+     || repartition_->female_ != static_cast< unsigned int >( type_.GetFemale() * 100 )
+     || repartition_->children_ != static_cast< unsigned int >( type_.GetChildren() * 100 ) )
         xos << xml::start( "repartition" )
                 << xml::attribute( "male", repartition_->male_ / 100.f )
                 << xml::attribute( "female", repartition_->female_ / 100.f )

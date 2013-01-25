@@ -108,10 +108,13 @@ void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 // -----------------------------------------------------------------------------
 void Object::WriteODB( xml::xostream& xos ) const
 {
+    const std::string type = GetType().GetName();
+    if( type == "population moving" )
+        return;
     xos << xml::start( "object" )
             << xml::attribute( "id"  , GetID() )
             << xml::attribute( "name", name_ )
-            << xml::attribute( "type", GetType().GetName() );
+            << xml::attribute( "type", type );
     GetLocalisation().Write( xos );
     MIL_Object::WriteODB( xos );
     xos << xml::end; // object

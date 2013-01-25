@@ -103,18 +103,16 @@ void InteractionHeightAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void InteractionHeightAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_interaction_height()->set_height( float( height_ ) );
+    asn.mutable_interaction_height()->set_height( static_cast< float >( height_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InteractionHeightAttribute::WriteODB
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-void InteractionHeightAttribute::WriteODB( xml::xostream& xos ) const
+void InteractionHeightAttribute::WriteODB( xml::xostream& /*xos*/ ) const
 {
-    xos << xml::start( "max-interaction-height" )
-            << xml::attribute( "height", height_ )
-        << xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

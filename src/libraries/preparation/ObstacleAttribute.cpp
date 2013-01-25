@@ -140,16 +140,20 @@ namespace
 void ObstacleAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "obstacle" )
-        << xml::attribute( "type", type_.ToXml() )
-        << xml::attribute( "activated", bActivated_ );
+            << xml::attribute( "type", type_.ToXml() )
+            << xml::attribute( "activated", bActivated_ );
     if( type_.GetValue() == eDemolitionTargetType_Preliminary )
     {
-        xos << xml::start( "activation-time" )
-            << xml::attribute( "value", Convert( activationTime_ ) )
-            << xml::end
-            << xml::start( "activity-time" )
-            << xml::attribute( "value", Convert( activityTime_ ) )
-            << xml::end;
+        unsigned int time = Convert( activationTime_ );
+        if( time > 0 )
+            xos << xml::start( "activation-time" )
+                    << xml::attribute( "value", time )
+                << xml::end;
+        time = Convert( activityTime_);
+        if( time > 0 )
+            xos << xml::start( "activity-time" )
+                    << xml::attribute( "value", Convert( activityTime_ ) )
+                << xml::end;
     }
     xos << xml::end;
 }

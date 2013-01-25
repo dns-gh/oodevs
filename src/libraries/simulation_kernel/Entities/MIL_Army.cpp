@@ -314,30 +314,30 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     pColor_->WriteODB( xos );
     pExtensions_->WriteODB( xos );
 
+    xos << xml::start( "objects" );
+    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref( xos ) ) );
+    xos << xml::end;
+
+    xos << xml::start( "tactical" );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref( xos ) ) );
+    xos << xml::end;
+
     xos << xml::start( "communication" );
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         if( !it->second->IsJammed() )
             it->second->WriteODB( xos );
     xos << xml::end;
 
-    xos << xml::start( "tactical" );
-    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
-    xos << xml::end;
-
-    xos << xml::start( "logistics" );
-    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
-    xos << xml::end;
-
-    xos << xml::start( "objects" );
-    tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );
-    xos << xml::end;
-
     xos << xml::start( "populations" );
-    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::WriteODB, _1, boost::ref(xos) ) );
+    tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::WriteODB, _1, boost::ref( xos ) ) );
     xos << xml::end;
 
     xos << xml::start( "inhabitants" );
-    tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::WriteODB, _1, boost::ref(xos) ) );
+    tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::WriteODB, _1, boost::ref( xos ) ) );
+    xos << xml::end;
+
+    xos << xml::start( "logistics" );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref( xos ) ) );
     xos << xml::end;
 
     xos << xml::end;

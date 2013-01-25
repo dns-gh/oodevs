@@ -73,6 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::PopulationType& type_;
     unsigned long healthy_;
     unsigned long wounded_;
     unsigned long dead_;

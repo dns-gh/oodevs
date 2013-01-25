@@ -202,10 +202,10 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "healthy", nNbrHealthyHumans_ )
             << xml::attribute( "wounded", nNbrWoundedHumans_ )
             << xml::attribute( "dead", nNbrDeadHumans_ )
-        << xml::end
-        << xml::content( "information", text_ );
-    pLivingArea_->WriteODB( xos );
+        << xml::end;
     pSatisfactions_->WriteODB( xos );
+    xos << xml::content( "information", text_ );
+    pLivingArea_->WriteODB( xos );
     pAffinities_->WriteODB( xos );
     pExtensions_->WriteODB( xos );
     xos << xml::end;
