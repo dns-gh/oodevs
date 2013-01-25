@@ -135,7 +135,6 @@ void WorldParameters::ReadPopulation( const std::string& populationFile, xml::xi
     xis >> xml::start( "configuration" )
                 >> xml::start( "graph" )
                     >> xml::attribute( "file", populationGraph_ );
-
     populationGraph_ = BuildChildPath( populationFile, populationGraph_ );
 }
 

@@ -15,7 +15,6 @@
 #include "ColorEditor.h"
 #include "ExerciseDialog.h"
 #include "FileLoaderObserver.h"
-#include "FilterDialog.h"
 #include "FilterDialogs.h"
 #include "SymbolDialog.h"
 #include "LogisticStockEditor.h"

@@ -26,27 +26,17 @@ namespace bfs = boost::filesystem;
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
 GeoStoreManager::GeoStoreManager( const bfs::path& path, const SpatialIndexer& index )
-    : index_( index )
+    : index_    ( index )
+    , spatialDb_( new Database( path ) )
 {
-    Initialize( path );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoStoreManager::Initialize
-// Created: AME 2010-07-27
-// -----------------------------------------------------------------------------
-void GeoStoreManager::Initialize( const bfs::path& path )
-{
-    path_ = path;
     try
     {
-        InitProjector( path_ / "terrain.xml" );
+        InitProjector( path / "terrain.xml" );
     }
     catch( ... )
     {
-        InitProjectorOld( path_ / "World.xml" );
+        InitProjectorOld( path / "World.xml" );
     }
-    spatialDb_.reset( new Database( path_ ) );
     spatialDb_->LoadLayers( *trans_ );
 }
 
@@ -86,10 +76,10 @@ void GeoStoreManager::InitProjectorOld( const bfs::path& worldfile )
     xml::xifstream xis( worldfile.string() );
     float latitude, longitude, width, height;
     xis >> xml::start( "World" )
-        >> xml::content( "Latitude", latitude )
-        >> xml::content( "Longitude", longitude )
-        >> xml::content( "Width", width )
-        >> xml::content( "Height", height );
+            >> xml::content( "Latitude", latitude )
+            >> xml::content( "Longitude", longitude )
+            >> xml::content( "Width", width )
+            >> xml::content( "Height", height );
     proj_.reset( new PlanarCartesianProjector( latitude, longitude ) );
     trans_.reset( new Translator( *proj_, geometry::Vector2d( 0.5 * width, 0.5 * height ) ) );
 }

@@ -14,7 +14,6 @@
 #include <memory>
 #include <vector>
 #include <map>
-#include <vector>
 
 namespace xml
 {
