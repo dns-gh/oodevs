@@ -207,7 +207,6 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
         kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
         delete currentGhost;
-        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         agent->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( agent );
@@ -229,7 +228,6 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         const geometry::Point2f position = ( fromHighLight ) ? currentGhost->Retrieve< kernel::Positions >()->GetPosition() : point;
         kernel::Automat_ABC* automat = model_.agents_.CreateAutomatInsteadOf( *currentGhost, *automatType, position );
         delete currentGhost;
-        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         automat->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( automat );

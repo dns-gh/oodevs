@@ -97,7 +97,10 @@ void EntityTreeView_ABC::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::NotifyDeleted( const kernel::Entity_ABC& /* team */ )
 {
+    QAbstractItemView::SelectionMode mode = selectionMode();
+    setSelectionMode( QAbstractItemView::ExtendedSelection );
     dataModel_.PurgeObsoleteSafeItem< kernel::Entity_ABC >();
+    setSelectionMode( mode );
 }
 
 // -----------------------------------------------------------------------------

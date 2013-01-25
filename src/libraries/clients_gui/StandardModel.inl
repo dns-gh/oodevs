@@ -218,9 +218,8 @@ namespace
                 const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
                 if( childEntity && *childEntity == 0 )
                 {
-                    QList< QStandardItem* > rowItems = root->takeRow( row );
-                    for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-                        delete *it;
+                    delete childEntity;
+                    root->removeRow( row );
                 }
                 else
                     ++row;

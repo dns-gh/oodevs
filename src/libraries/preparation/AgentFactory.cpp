@@ -70,12 +70,11 @@
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, tools::IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
+AgentFactory::AgentFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, tools::IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
     , idManager_( idManager )
-    , knowledgeGroupFactory_( knowledgeGroupFactory )
     , symbolsFactory_( symbolsFactory )
 {
     // NOTHING
@@ -128,7 +127,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( controllers_.controller_, *result ) );
-    kernel::Entity_ABC* kg = FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
+    kernel::Entity_ABC* kg = FindOrCreateKnowledgeGroup( parent, model_ );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = type.IsTC2(); //$$ NAZE
@@ -201,10 +200,10 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFactory::FindKnowledgeGroup
+// Name: AgentFactory::FindOrCreateKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent, kernel::KnowledgeGroupFactory_ABC& knowledgeFactory )
+kernel::Entity_ABC* AgentFactory::FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent, Model& model )
 {
     const kernel::Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const kernel::CommunicationHierarchies& teamHierarchy = team.Get< kernel::CommunicationHierarchies >();
@@ -218,7 +217,7 @@ kernel::Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Enti
     // LTO begin
     kernel::Team_ABC* teamtop = dynamic_cast< kernel::Team_ABC* >( const_cast< kernel::Entity_ABC* >(&team) );
     if( teamtop )
-        return knowledgeFactory.Create( *teamtop );
+        return model.knowledgeGroups_.Create( *teamtop );
     // LTO end
     return const_cast< kernel::Entity_ABC* >( &team );
 }

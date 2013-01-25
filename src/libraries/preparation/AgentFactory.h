@@ -16,7 +16,6 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class KnowledgeGroupFactory_ABC; // LTO
     class SymbolFactory;
 }
 
@@ -39,7 +38,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, tools::IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, tools::IdManager& idManager, kernel::SymbolFactory& symbolsFactory );
     virtual ~AgentFactory();
     //@}
 
@@ -62,7 +61,7 @@ public:
 public:
     //! @name Helpers
     //@{
-    static kernel::Entity_ABC* FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent, kernel::KnowledgeGroupFactory_ABC& knowledgeFactory );
+    static kernel::Entity_ABC* FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent, Model& model );
     //@}
 
 private:
@@ -72,7 +71,6 @@ private:
     Model& model_;
     const StaticModel& static_;
     tools::IdManager& idManager_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     kernel::SymbolFactory& symbolsFactory_;
     //@}
 };

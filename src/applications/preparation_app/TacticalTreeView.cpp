@@ -206,7 +206,6 @@ void TacticalTreeView::Drop( const kernel::AgentType& item, kernel::Entity_ABC& 
     {
         delete &target;
         setFocus();
-        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         result->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( result );
@@ -225,7 +224,6 @@ void TacticalTreeView::Drop( const kernel::AutomatType& item, kernel::Entity_ABC
     {
         delete &target;
         setFocus();
-        // $$$$ ABR 2013-01-23: Select the newly created item, it's better and it's prevent an odd crash on QTreeView (takeItem on the selectedItem crash in this case)
         result->Select( controllers_.actions_ );
         kernel::ActionController::T_Selectables list;
         list.push_back( result );

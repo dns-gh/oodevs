@@ -41,12 +41,11 @@
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
 GhostFactory::GhostFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel,
-                            tools::IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
+                            tools::IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
     : controllers_          ( controllers )
     , model_                ( model )
     , staticModel_          ( staticModel )
     , idManager_            ( idManager )
-    , knowledgeGroupFactory_( knowledgeGroupFactory )
     , symbolsFactory_       ( symbolsFactory )
 {
     // NOTHING
@@ -80,7 +79,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
-        kernel::Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
+        kernel::Entity_ABC* kg = AgentFactory::FindOrCreateKnowledgeGroup( parent, model_ );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
         result->Attach( *new LogisticLevelAttribute( controllers_.controller_, *result, dictionary ) );
         result->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, staticModel_.objectTypes_, dictionary, false ) );

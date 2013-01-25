@@ -50,10 +50,11 @@ void KnowledgeGroupsModel::Purge()
 // Name: void KnowledgeGroupsModel::Create
 // Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::Create( kernel::Team_ABC& parent )
+kernel::KnowledgeGroup_ABC* KnowledgeGroupsModel::Create( kernel::Team_ABC& parent )
 {
     KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( parent );
     Register( knowledgegroup->GetId(), *knowledgegroup );
+    return knowledgegroup;
 }
 
 // -----------------------------------------------------------------------------

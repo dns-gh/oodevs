@@ -312,7 +312,13 @@ void ModelBuilder::Delete( const kernel::Entity_ABC& entity )
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         std::vector< const kernel::Entity_ABC* > subordinate;
         while( it.HasMoreElements() )
-            subordinate.push_back( &it.NextElement() );
+        {
+            const kernel::Entity_ABC& subEntity = it.NextElement();
+            if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &subEntity ) )
+                Delete( subEntity );
+            else
+                subordinate.push_back( &subEntity );
+        }
         EntityToDelete( subordinate );   // $$$$ _RC_ SLG 2010-11-12: supprime les automates d'automates afin d'éviter un crash de la sim
         const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity );
         kernel::KnowledgeGroup_ABC* kgTarget = 0;
