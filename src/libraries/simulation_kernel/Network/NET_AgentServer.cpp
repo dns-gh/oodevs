@@ -144,35 +144,35 @@ void NET_AgentServer::OnReceiveClient( const std::string& /*from*/, const sword:
     else if( wrapper.message().has_control_change_time_factor() )
         simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_date_time_change() )
-        simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() );
+        simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data(), nCtx );
     else if( wrapper.message().has_control_checkpoint_save_now() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( wrapper.message().control_checkpoint_save_now() );
+        workspace.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow( wrapper.message().control_checkpoint_save_now() );
     else if( wrapper.message().has_control_checkpoint_set_frequency() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      ( wrapper.message().control_checkpoint_set_frequency() );
+        workspace.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency( wrapper.message().control_checkpoint_set_frequency() );
     else if( wrapper.message().has_control_checkpoint_delete_request() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointDeleteRequest     ( wrapper.message().control_checkpoint_delete_request() );
+        workspace.GetCheckPointManager().OnReceiveMsgCheckPointDeleteRequest( wrapper.message().control_checkpoint_delete_request() );
     else if( wrapper.message().has_control_export() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgControlExportRequest        ( wrapper.message().control_export() );
+        workspace.GetCheckPointManager().OnReceiveMsgControlExportRequest( wrapper.message().control_export() );
     else if( wrapper.message().has_control_toggle_vision_cones() )
         SetMustSendUnitVisionCones( wrapper.message().control_toggle_vision_cones().vision_cones() );
     else if( wrapper.message().has_unit_order() )
-        workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order(), nCtx );
+        workspace.GetEntityManager().OnReceiveUnitOrder( wrapper.message().unit_order(), nCtx );
     else if( wrapper.message().has_automat_order() )
-        workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order(), nCtx );
+        workspace.GetEntityManager().OnReceiveAutomatOrder( wrapper.message().automat_order(), nCtx );
     else if( wrapper.message().has_crowd_order() )
-        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order(), nCtx );
+        workspace.GetEntityManager().OnReceiveCrowdOrder( wrapper.message().crowd_order(), nCtx );
     else if( wrapper.message().has_frag_order() )
-        workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order(), nCtx );
+        workspace.GetEntityManager().OnReceiveFragOrder( wrapper.message().frag_order(), nCtx );
     else if( wrapper.message().has_set_automat_mode() )
-        workspace.GetEntityManager        ().OnReceiveSetAutomateMode                ( wrapper.message().set_automat_mode(), nCtx );
+        workspace.GetEntityManager().OnReceiveSetAutomateMode( wrapper.message().set_automat_mode(), nCtx );
     else if( wrapper.message().has_unit_creation_request() )
-        workspace.GetEntityManager        ().OnReceiveUnitCreationRequest            ( wrapper.message().unit_creation_request(), nCtx );
+        workspace.GetEntityManager().OnReceiveUnitCreationRequest( wrapper.message().unit_creation_request(), nCtx );
     else if( wrapper.message().has_knowledge_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action(), nCtx );
+        workspace.GetEntityManager().OnReceiveKnowledgeMagicAction( wrapper.message().knowledge_magic_action(), nCtx );
     else if( wrapper.message().has_unit_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action(), nCtx );
+        workspace.GetEntityManager().OnReceiveUnitMagicAction( wrapper.message().unit_magic_action(), nCtx );
     else if( wrapper.message().has_object_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveObjectMagicAction              ( wrapper.message().object_magic_action(), nCtx );
+        workspace.GetEntityManager().OnReceiveObjectMagicAction( wrapper.message().object_magic_action(), nCtx );
     else if( wrapper.message().has_burning_cell_request() )
         workspace.GetEntityManager().OnReceiveBurningCellRequest( wrapper.message().burning_cell_request(), nCtx );
     else if( wrapper.message().has_magic_action() )

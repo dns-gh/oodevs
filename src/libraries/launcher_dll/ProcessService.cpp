@@ -490,7 +490,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
             runningExercises_.erase( message.exercise() );
         ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), *client );
     }
-    if( message.has_save_checkpoint() )
+    else if( message.has_save_checkpoint() )
     {
         SaveCheckpoint( message.save_checkpoint(), *client );
         SessionCommandExecutionResponse response;
@@ -501,11 +501,12 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         response().set_running( IsRunning( message.exercise() ) );
         response.Send( *server_.ResolveClient( endpoint ) );
     }
-    if( message.has_time_change() )
+    else if( message.has_time_change() )
     {
         ExecuteChangeTime( endpoint, message.exercise(), message.session(), message.time_change().data(), context, *client );
         ++context;
     }
+    //else Should send a SessionCommandExecutionResponse response with an error but there's no appropriate error code.
 }
 
 // -----------------------------------------------------------------------------

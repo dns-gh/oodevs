@@ -48,5 +48,12 @@ bool TimeMessageHandler::OnReceiveMessage( const sword::SimToClient& message )
         response().set_running( service_->IsRunning( exercise_ ) );
         Send( response );
     }
+    else
+    {
+        SessionCommandExecutionResponse response;
+        response().set_error_code( sword::SessionCommandExecutionResponse::invalid_date_time );
+        response().set_running( service_->IsRunning( exercise_ ) );
+        Send( response );
+    }
     return true;
 }

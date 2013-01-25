@@ -100,7 +100,7 @@ public:
     virtual void Continue();
     virtual void Resume( unsigned int ticks );
     virtual void SetTimeFactor( unsigned timeFactor );
-    virtual void SetRealTime( const std::string& realTime );
+    virtual void SetRealTime( const std::string& realTime, unsigned int context );
     //@}
 
     //! @name Simulation main loop
