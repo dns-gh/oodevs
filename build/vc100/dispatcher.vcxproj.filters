@@ -162,9 +162,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\Report.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\SimpleEntity.cpp">
-      <Filter>Source Files\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\SimulationModel.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
@@ -394,9 +391,6 @@
       <Filter>Source Files\Model\Logistic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\DotationQuota.cpp">
-      <Filter>Source Files\Model\Logistic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\EquipmentAvailability.cpp">
       <Filter>Source Files\Model\Logistic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\LogisticEntity.cpp">

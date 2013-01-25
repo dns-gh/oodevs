@@ -127,7 +127,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\DecisionalState.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Model.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Report.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\SimpleEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\SimulationModel.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Agent.cpp" />
@@ -207,7 +206,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogMedical.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\AgentLogSupply.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\DotationQuota.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\EquipmentAvailability.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogisticEntity.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogisticHierarchy.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogisticLink.cpp" />
