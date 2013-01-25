@@ -12,7 +12,6 @@
 #include "Config.h"
 #include "Model.h"
 #include "EntityPublisher.h"
-#include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "meteo/Meteo.h"
 #include "meteo/MeteoLocal.h"

@@ -15,7 +15,6 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "protocol/ClientSenders.h"
 
 using namespace dispatcher;

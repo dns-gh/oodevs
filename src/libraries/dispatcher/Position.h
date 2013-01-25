@@ -10,13 +10,17 @@
 #ifndef __Position_h_
 #define __Position_h_
 
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include <geometry/Types.h>
 #include <vector>
 
 namespace sword
 {
     class CoordLatLong;
+}
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
 }
 
 namespace dispatcher

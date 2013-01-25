@@ -11,7 +11,6 @@
 #include "ReplaySynchronisations.h"
 #include "Synchroniser.h"
 #include "ReplayModel_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 
 using namespace dispatcher;
 

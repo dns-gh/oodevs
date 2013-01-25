@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Position.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 

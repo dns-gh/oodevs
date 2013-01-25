@@ -19,7 +19,6 @@
 #include "StaticModel.h"
 #include "Shield.h"
 #include "LogFactory.h"
-#include "clients_kernel/Tools.h"
 #include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
 

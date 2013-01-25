@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "FormationSymbols.h"
-#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "Formation.h"
 #include "Automat.h"
 #include "Side.h"

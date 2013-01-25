@@ -13,7 +13,6 @@
 #include "Model_ABC.h"
 #include "UrbanObject_ABC.h"
 #include "Side.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"

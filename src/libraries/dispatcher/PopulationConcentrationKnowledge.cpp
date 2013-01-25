@@ -14,7 +14,6 @@
 #include "PopulationConcentration.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 

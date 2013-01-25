@@ -22,11 +22,8 @@
 #include "AgentOrder.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "clients_kernel/StaticModel.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
 
