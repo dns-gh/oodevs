@@ -238,7 +238,7 @@ void RemoveBlocksDialog::OnItemChanged( QStandardItem* item )
         else
         {
             assert( item->checkState() == Qt::Unchecked );
-            kernel::ActionController::IT_Selectables it = std::find( selectables_.begin(), selectables_.end(), &urbanObject );
+            auto it = std::find( selectables_.begin(), selectables_.end(), &urbanObject );
             assert( it != selectables_.end() );
             selectables_.erase( it );
         }

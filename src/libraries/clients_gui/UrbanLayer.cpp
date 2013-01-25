@@ -239,14 +239,14 @@ namespace
 {
     void Append( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
     {
-        kernel::ActionController::CIT_Selectables it = std::find( vector.begin(), vector.end(), element );
+        auto it = std::find( vector.begin(), vector.end(), element );
         if( it == vector.end() )
             vector.push_back( element );
     }
 
     void Remove( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
     {
-        kernel::ActionController::IT_Selectables it = std::find( vector.begin(), vector.end(), element );
+        auto it = std::find( vector.begin(), vector.end(), element );
         if( it != vector.end() )
             vector.erase( it );
     }

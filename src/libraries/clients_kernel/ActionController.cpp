@@ -110,7 +110,7 @@ void ActionController::Unregister( tools::Observer_ABC& observer )
 // -----------------------------------------------------------------------------
 bool ActionController::HasMultipleSelection() const
 {
-    CIT_MultipleMode it = multipleModes_.find( currentMode_ );
+    auto it = multipleModes_.find( currentMode_ );
     return it != multipleModes_.end() && it->second.size() > 0;
 }
 
@@ -156,10 +156,10 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
         // Déselection d'un éventuel élément simple
         ClearSingleSelection();
         // Sélection multiple
-        IT_SelectedMap it = selectedMap_.find( selectionner );
+        auto it = selectedMap_.find( selectionner );
         if( it != selectedMap_.end() )
         {
-            IT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
+            auto itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
             if( itSelectable != it->second.end() )
             {
                 if( it->second.size() == 1 )
@@ -264,10 +264,10 @@ void ActionController::SetMultipleSelection( const T_Selectables& selectables )
 bool ActionController::IsSelected( Selectable_ABC* selectable ) const
 {
     const Selectionner_ABC* selectionner = GetSelectionner( selectable );
-    for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+    for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
     {
         if( it->first == selectionner )
-            for( CIT_Selectables it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+            for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
                 if( *it2 == selectable )
                     return true;
     }
@@ -280,7 +280,7 @@ bool ActionController::IsSelected( Selectable_ABC* selectable ) const
 // -----------------------------------------------------------------------------
 bool ActionController::IsSingleSelection( const Selectable_ABC* selectable ) const
 {
-    CIT_MultipleMode it = multipleModes_.find( currentMode_ );
+    auto it = multipleModes_.find( currentMode_ );
     const Selectionner_ABC* selectionner = GetSelectionner( selectable );
     return !selectionner || it == multipleModes_.end() || std::find( it->second.begin(), it->second.end(), selectionner ) == it->second.end();
 }
@@ -302,8 +302,8 @@ void ActionController::ClearSingleSelection()
 {
     if( !selectedMap_.empty() )
     {
-        IT_SelectedMap it = selectedMap_.begin();
-        CIT_MultipleMode mode = multipleModes_.find( currentMode_ );
+        auto it = selectedMap_.begin();
+        auto mode = multipleModes_.find( currentMode_ );
         while( it!= selectedMap_.end() )
         {
             if( it->second.empty() || mode == multipleModes_.end() || std::find( mode->second.begin(), mode->second.end(), it->first ) == mode->second.end() )
@@ -335,7 +335,7 @@ void ActionController::CleanSelectedMap()
 {
     if( selectedMap_.empty() )
         return;
-    IT_SelectedMap it = selectedMap_.begin();
+    auto it = selectedMap_.begin();
     while( it != selectedMap_.end() )
     {
         if( it->second.empty() )

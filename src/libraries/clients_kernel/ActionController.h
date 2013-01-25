@@ -58,21 +58,10 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::vector< const Selectable_ABC* > T_Selectables;
-    typedef T_Selectables::iterator             IT_Selectables;
-    typedef T_Selectables::const_iterator      CIT_Selectables;
-
-    typedef std::map< const Selectionner_ABC*, T_Selectables > T_SelectedMap;
-    typedef T_SelectedMap::iterator                           IT_SelectedMap;
-    typedef T_SelectedMap::const_iterator                    CIT_SelectedMap;
-
-    typedef std::vector< const Selectionner_ABC* > T_Selectionners;
-    typedef T_Selectionners::iterator             IT_Selectionners;
-    typedef T_Selectionners::const_iterator      CIT_Selectionners;
-
-    typedef std::map< int, T_Selectionners >          T_MultipleMode;
-    typedef T_MultipleMode::iterator                 IT_MultipleMode;
-    typedef T_MultipleMode::const_iterator          CIT_MultipleMode;
+    typedef std::vector< const Selectable_ABC* >                T_Selectables;
+    typedef std::map< const Selectionner_ABC*, T_Selectables >  T_SelectedMap;
+    typedef std::vector< const Selectionner_ABC* >              T_Selectionners;
+    typedef std::map< int, T_Selectionners >                    T_MultipleMode;
     //@}
 
 public:
