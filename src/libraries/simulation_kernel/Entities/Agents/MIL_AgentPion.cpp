@@ -368,6 +368,15 @@ void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::Finalize
+// Created: JSR 2013-01-22
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::Finalize()
+{
+    GetRole< PHY_RolePion_Composantes >().Finalize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion destructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------

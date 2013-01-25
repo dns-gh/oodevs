@@ -105,6 +105,7 @@ public:
     //@{
     void ReadOverloading ( xml::xistream& xis );
     void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
+    void Finalize();
     //@}
 
     //! @name Accessors

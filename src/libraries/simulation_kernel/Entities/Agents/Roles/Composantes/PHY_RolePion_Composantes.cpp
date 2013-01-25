@@ -12,9 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Composantes.h"
 #include "MIL_Time_ABC.h"
-#include "Entities/Orders/MIL_Report.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
@@ -31,6 +31,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeObject.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -280,37 +281,80 @@ void PHY_RolePion_Composantes::DistributeCommanders()
     }
 }
 
+namespace
+{
+    void WriteEquipment( xml::xostream& xos, const PHY_ComposantePion& composante, unsigned int id = 0 )
+    {
+        xos << xml::start( "equipment" )
+                << xml::attribute( "state", composante.GetState().GetName() )
+                << xml::attribute( "type", composante.GetType().GetName() );
+        if( composante.GetState() == PHY_ComposanteState::repairableWithEvacuation_ )
+        {
+            const PHY_Breakdown* breakdown = composante.GetBreakdown();
+            assert( breakdown );
+            xos.attribute( "breakdown", breakdown->GetType().GetName() );
+        }
+        if( id )
+            xos.attribute( "borrower", id );
+        xos.end(); // equipment
+    }
+
+    bool IsLoanedEquipment( const PHY_ComposantePion& composante, const PHY_RoleInterface_Composantes::T_LoanMap& loanMap )
+    {
+        for( auto it = loanMap.begin(); it != loanMap.end(); ++it )
+        {
+            for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
+            {
+                if( *itComposante == &composante )
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    class WriteEquipmentsTag : boost::noncopyable
+    {
+    public:
+        WriteEquipmentsTag( xml::xostream& xos ) : xos_( xos )
+        {
+            xos_.start( "equipments" );
+        }
+        ~WriteEquipmentsTag()
+        {
+            xos_.end();
+        }
+    private:
+        xml::xostream& xos_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 {
-    bool found = false;
+    std::auto_ptr< WriteEquipmentsTag > tag;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante = **it;
+        if( IsLoanedEquipment( composante, borrowedComposantes_) )
+            continue;
         if( &composante.GetState() != &PHY_ComposanteState::undamaged_ )
         {
-            if( !found )
-            {
-                found = true;
-                xos.start( "equipments" );
-            }
-            xos.start( "equipment" );
-            xos.attribute( "state", composante.GetState().GetName() );
-            xos.attribute( "type", composante.GetType().GetName() );
-            if( composante.GetState() == PHY_ComposanteState::repairableWithEvacuation_ )
-            {
-                const PHY_Breakdown* breakdown = composante.GetBreakdown();
-                assert( breakdown );
-                xos.attribute( "breakdown", breakdown->GetType().GetName() );
-            }
-            xos.end(); // equipment
+            if( tag.get() == 0 )
+                tag.reset( new WriteEquipmentsTag( xos ) );
+            WriteEquipment( xos, composante );
         }
     }
-    if ( found )
-        xos.end(); // equipments
+    for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
+    {
+        if( tag.get() == 0 )
+            tag.reset( new WriteEquipmentsTag( xos ) );
+        unsigned int id = it->first->GetID();
+        for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
+            WriteEquipment( xos, **itComposante, id );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -321,6 +365,19 @@ void PHY_RolePion_Composantes::ReadOverloading( xml::xistream& xis )
 {
     ReadComposantesOverloading( xis );
     ReadHumansOverloading( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Finalize
+// Created: JSR 2013-01-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::Finalize()
+{
+    for( auto it = borrowedComposantesFromXML_.begin(); it != borrowedComposantesFromXML_.end(); ++it )
+        if( MIL_Agent_ABC* borrower = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( it->first ) )
+            for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++ itComposante )
+                LendComposante( *borrower, **itComposante );
+    borrowedComposantesFromXML_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -341,14 +398,18 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadEquipment( xml::xistream& xis )
 {
+    int borrowerId = xis.attribute< unsigned int >( "borrower", 0 );
+
     const PHY_ComposanteState* pState = PHY_ComposanteState::Find( xis.attribute< std::string >( "state" ) );
     if( !pState )
         xis.error( "Unknown composante state" );
-    if( *pState == PHY_ComposanteState::undamaged_ )
+    if( *pState == PHY_ComposanteState::undamaged_ && borrowerId == 0 )
         return;
+
     const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown composante type" );
+
     const PHY_BreakdownType* pBreakdownType = PHY_BreakdownType::Find( xis.attribute( "breakdown", "" ) );
     if( *pState == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdownType )
         xis.error( "Unknown breakdown type" );
@@ -356,10 +417,18 @@ void PHY_RolePion_Composantes::ReadEquipment( xml::xistream& xis )
     for( auto itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
         PHY_ComposantePion& composante = **itComposante;
-        if( !( composante.GetType() == *pType && composante.GetState() == PHY_ComposanteState::undamaged_ ) )
-            continue;
-        composante.ReinitializeState( *pState, pBreakdownType );
-        break;
+        if( composante.GetType() == *pType && composante.GetState() == PHY_ComposanteState::undamaged_ )
+        {
+            auto it = borrowedComposantesFromXML_.find( borrowerId );
+            if( it == borrowedComposantesFromXML_.end() || std::find( it->second.begin(), it->second.end(), &composante ) == it->second.end() )
+            {
+                if( *pState != PHY_ComposanteState::undamaged_ )
+                    composante.ReinitializeState( *pState, pBreakdownType );
+                if( borrowerId > 0 )
+                    borrowedComposantesFromXML_[ borrowerId ].push_back( &composante );
+                break;
+            }
+        }
     }
 }
 
@@ -1371,7 +1440,6 @@ void PHY_RolePion_Composantes::NotifyLentComposanteReturned( MIL_Agent_ABC& lend
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::LendComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante )
 {
-    assert( composante.CanBeLent() );
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) != composantes_.end() );
     lentComposantes_[ &borrower ].push_back( &composante );
     composante.TransferComposante( borrower.GetRole< PHY_RoleInterface_Composantes >() );

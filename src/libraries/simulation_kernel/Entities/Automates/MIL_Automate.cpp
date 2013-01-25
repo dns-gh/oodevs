@@ -462,6 +462,16 @@ void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::Finalize
+// Created: JSR 2013-01-22
+// -----------------------------------------------------------------------------
+void MIL_Automate::Finalize()
+{
+    for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        ( *itPion )->Finalize();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::CheckComposition
 // Created: NLD 2003-11-21
 // -----------------------------------------------------------------------------

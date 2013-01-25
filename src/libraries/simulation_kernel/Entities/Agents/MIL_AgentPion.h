@@ -77,6 +77,7 @@ public:
     //! @name Init
     //@{
     void ReadOverloading( xml::xistream& xis );
+    void Finalize();
     //@}
 
     //! @name Accessors

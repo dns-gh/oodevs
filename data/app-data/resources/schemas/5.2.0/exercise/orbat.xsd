@@ -901,31 +901,11 @@
 							</xs:annotation>
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="equipment" minOccurs="0" maxOccurs="unbounded">
+									<xs:element name="equipment" type="equipmentType" minOccurs="0" maxOccurs="unbounded">
 										<xs:annotation>
 											<xs:documentation xml:lang="en">Defines overloaded status for specified equipment.</xs:documentation>
 											<xs:documentation xml:lang="fr">Redéfinit l'état initial de l'équipement spécifié.</xs:documentation>
 										</xs:annotation>
-										<xs:complexType>
-											<xs:attribute name="type" type="xs:string" use="required">
-												<xs:annotation>
-													<xs:documentation xml:lang="en">Defines the type of equipment to define overloaded status for. References existing equipment from "Composantes.xml".</xs:documentation>
-													<xs:documentation xml:lang="fr">Définit le type d'équipement dont on va redéfinir l'état initial. Renvoie vers "Composantes.xml".</xs:documentation>
-												</xs:annotation>
-											</xs:attribute>
-											<xs:attribute name="state" type="equipmentStateType" use="required">
-												<xs:annotation>
-													<xs:documentation xml:lang="en">Defines the state of the equipment to define overloaded status for.</xs:documentation>
-													<xs:documentation xml:lang="fr">Définit l'état de l'équipement dont on va redéfinir l'état initial.</xs:documentation>
-												</xs:annotation>
-											</xs:attribute>
-											<xs:attribute name="breakdown" type="xs:string" use="optional">
-												<xs:annotation>
-													<xs:documentation xml:lang="en">Defines the breakdown of the equipment to define overloaded status for. References existing breakdown from "Pannes.xml".</xs:documentation>
-													<xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
-												</xs:annotation>
-											</xs:attribute>
-										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -1134,6 +1114,32 @@
 			<xs:enumeration value="conscrit"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="equipmentType">
+		<xs:attribute name="type" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the type of equipment to define overloaded status for. References existing equipment from "Composantes.xml".</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit le type d'équipement dont on va redéfinir l'état initial. Renvoie vers "Composantes.xml".</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="state" type="equipmentStateType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the state of the equipment to define overloaded status for.</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit l'état de l'équipement dont on va redéfinir l'état initial.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="breakdown" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the breakdown of the equipment to define overloaded status for. References existing breakdown from "Pannes.xml".</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="borrower" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines the unit id of the equipment borrower if any</xs:documentation>
+				<xs:documentation xml:lang="fr">Definit l'id de l'unité emprunteuse de l'équipement si elle existe</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
 	<xs:simpleType name="equipmentStateType">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Defines list of equipment states.</xs:documentation>

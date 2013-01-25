@@ -96,6 +96,7 @@ public:
     //! @name Init
     //@{
     void ReadOverloading( xml::xistream& xis );
+    void Finalize();
     //@}
 
     //! @name Operations
@@ -267,6 +268,7 @@ public:
     PHY_DotationStock& GetOrAddStock( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation );
     bool CanStockMoreOf( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation ) const;
     //@}
+
 private:
     //! @name Types
     //@{
@@ -280,6 +282,8 @@ private:
         std::vector< unsigned int > nbrsPerState_;
         bool bHasChanged_;
     };
+
+    typedef std::map< unsigned int, PHY_ComposantePion::T_ComposantePionVector > T_LoanMapFromXML;
     //@}
 
 public:
@@ -334,6 +338,7 @@ private:
 
     T_LoanMap lentComposantes_;
     T_LoanMap borrowedComposantes_;
+    T_LoanMapFromXML borrowedComposantesFromXML_;
 
     bool bOperationalStateChanged_;
     bool bLoansChanged_;

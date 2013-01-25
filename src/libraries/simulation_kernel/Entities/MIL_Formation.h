@@ -102,8 +102,9 @@ public:
 
     //! @name TMP - Renettoyer les boucles d'updates .. Cf. Scipio
     //@{
-    void UpdateNetwork   ();
-    void Clean           ();
+    void UpdateNetwork();
+    void Clean();
+    void Finalize();
     //@}
 
 private:

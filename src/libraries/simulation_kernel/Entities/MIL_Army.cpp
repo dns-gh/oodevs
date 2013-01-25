@@ -662,6 +662,7 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::Finalize()
 {
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::Finalize, _1 ) );
     pKnowledgeBlackBoard_->Finalize();
 }
 

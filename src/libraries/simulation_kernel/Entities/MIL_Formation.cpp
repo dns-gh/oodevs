@@ -491,6 +491,16 @@ void MIL_Formation::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Formation::Finalize
+// Created: JSR 2013-01-22
+// -----------------------------------------------------------------------------
+void MIL_Formation::Finalize()
+{
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::Finalize, _1 ) );
+    tools::Resolver< MIL_Automate  >::Apply( boost::bind( &MIL_Automate::Finalize, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Formation::SetExtensions
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
