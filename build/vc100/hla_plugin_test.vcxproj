@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AggregateMarkingTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatCreaterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\AutomatDisengagerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\BreachableLinearObjectTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ClassBuildersTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\ContextHandlerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\DimensionTest.cpp" />

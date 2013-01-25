@@ -120,13 +120,19 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
     {
         T_Objects::iterator itObject( objects_.insert( T_Objects::value_type( object.GetId(), T_Object( new TacticalObjectProxy( object, dotationResolver_ ) ) ) ).first );
         const kernel::ObjectType& objectType = object.GetType();
-        const std::string typeName = objectType.GetName();
+        const std::string typeName = objectType.GetType();
         rpr::EntityType entityType;
         if( !objectResolver_.Find( typeName, entityType ) )
             logger_.LogWarning( std::string( "Could not find EntityType for object type " ) + typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( object );
+        TacticalObjectListener_ABC::GeometryType geom = TacticalObjectListener_ABC::eGeometryType_Polygon;
+        if( object.GetLocalisation().GetTypeName()  == "line" )
+            geom = TacticalObjectListener_ABC::eGeometryType_Polygon;
+        else if(object.GetLocalisation().GetTypeName() == "point" )
+            geom = TacticalObjectListener_ABC::eGeometryType_Point;
+        bool isBreachable = object.GetType().CanBeBypassed();
         for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
-            (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType );
+            (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType, isBreachable, geom );
     }
 }
 

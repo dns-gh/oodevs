@@ -352,6 +352,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\BreachableLinearObject.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\OtherArealObject.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -835,6 +838,9 @@
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\BreachableLinearObject.h">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OtherArealObject.h">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
   </ItemGroup>

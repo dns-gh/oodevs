@@ -167,6 +167,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NullTransferSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\OtherArealObject.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\OtherPointObject.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipStrategy.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Omt13String.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\OtherArealObject.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\OtherPointObject.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipController_ABC.h" />

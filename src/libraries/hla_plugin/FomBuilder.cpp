@@ -24,6 +24,10 @@
 #include "NetnHuman.h"
 #include "Minefield.h"
 #include "CulturalFeature.h"
+#include "BreachableLinearObject.h"
+#include "BreachablePointObject.h"
+#include "OtherPointObject.h"
+#include "OtherArealObject.h"
 
 #include "Federate_ABC.h"
 #include "MarkingFactory.h"
@@ -232,3 +236,34 @@ std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateCulturalFeatureClass()
                                         CreateClassBuilder< CulturalFeaturedBuilder, CulturalFeaturedBuilder >( false, isHla13( xis_ ) ) ) );
 }
 
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateBreachablePointObjectClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< BreachablePointObject >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< BreachablePointObject >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< BreachablePointObjectBuilder, BreachablePointObjectBuilder >( false, isHla13( xis_ ) ) ) );
+}
+
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateBreachableLinearObjectClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< BreachableLinearObject >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< BreachableLinearObject >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< BreachableLinearObjectBuilder, BreachableLinearObjectBuilder >( false, isHla13( xis_ ) ) ) );
+}
+
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateOtherPointObjectClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< OtherPointObject >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< OtherPointObject >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< OtherPointObjectBuilder, OtherPointObjectBuilder >( false, isHla13( xis_ ) ) ) );
+}
+
+std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateOtherArealObjectClass()
+{
+    return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
+                                        std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< OtherArealObject >( entityIdentifierResolver_ ) ) ,
+                                        std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< OtherArealObject >( entityIdentifierResolver_, fomSerializer_ ) ),
+                                        CreateClassBuilder< OtherArealObjectBuilder, OtherArealObjectBuilder >( false, isHla13( xis_ ) ) ) );
+}

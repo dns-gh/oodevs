@@ -69,6 +69,10 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "Minefield", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.CulturalFeature", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "EnvironmentObject.LinearObject.BreachableLinearObject", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "EnvironmentObject.PointObject.BreachablePointObject", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "EnvironmentObject.PointObject.OtherPointObject", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "EnvironmentObject.ArealObject.OtherArealObject", mock::any, true, true );
 
     MOCK_EXPECT( subject.Register ).once();
     MOCK_EXPECT( tacticalObjectSubject.Register ).once();
@@ -92,10 +96,14 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
-    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", mock::any, true, false );
-    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Lifeform.Human", mock::any, true, false );
-    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "Minefield", mock::any, true, true );
-    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.CulturalFeature", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", mock::any, true, false );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Lifeform.Human", mock::any, true, false );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "Minefield", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.CulturalFeature", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "EnvironmentObject.LinearObject.BreachableLinearObject", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "EnvironmentObject.PointObject.BreachablePointObject", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "EnvironmentObject.PointObject.OtherPointObject", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().with( "EnvironmentObject.ArealObject.OtherArealObject", mock::any, true, true );
     MOCK_EXPECT( subject.Register ).once();
     MOCK_EXPECT( tacticalObjectSubject.Register ).once();
     MOCK_EXPECT( controller.Register ).once();
@@ -120,7 +128,7 @@ namespace
             MOCK_EXPECT( tacticalObjectSubject.Unregister ).once();
             MOCK_EXPECT( controller.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( controller.Unregister ).once();
-            MOCK_EXPECT( federate->RegisterClass ).exactly( 8 );
+            MOCK_EXPECT( federate->RegisterClass ).exactly( 12 );
             MOCK_EXPECT( federate->Connect ).once().returns( true );
         }
     };

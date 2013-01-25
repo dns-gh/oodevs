@@ -33,6 +33,8 @@ LinearSegmentStruct::~LinearSegmentStruct()
 }
 
 BreachableSegmentStruct::BreachableSegmentStruct()
+    : breachedLength_( 0 )
+    , breachedState_( breachedStatus_NoBreaching )
 {
     // NOTHING
 }

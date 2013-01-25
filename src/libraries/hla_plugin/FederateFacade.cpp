@@ -92,6 +92,10 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , rprAircraftClass_  ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprAircraftClass() : std::auto_ptr< HlaClass >( 0 ) )
     , minefieldClass_    ( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateMinefieldClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
     , culturalFeatureClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateCulturalFeatureClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , breachableLinearObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateBreachableLinearObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , breachablePointObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateBreachablePointObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , otherPointObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateOtherPointObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
+    , otherArealObjectClass_( xis.attribute< bool >( "handle-objects", true ) ? fomBuilder_->CreateOtherArealObjectClass() : std::auto_ptr< HlaTacticalObjectClass >( 0 ) )
 {
     subject_.Register( *this );
     tacticalObjectSubject_.Register( *this );
@@ -116,6 +120,10 @@ FederateFacade::~FederateFacade()
     aggregateClass_.reset( 0 );
     minefieldClass_.reset( 0 );
     culturalFeatureClass_.reset( 0 );
+    breachableLinearObjectClass_.reset( 0 );
+    breachablePointObjectClass_.reset( 0 );
+    otherPointObjectClass_.reset( 0 );
+    otherArealObjectClass_.reset( 0 );
     destructor_.reset( 0 );
     federate_.reset( 0 );
     rtiFactory_.DeleteAmbassador( ambassador_ );
@@ -361,10 +369,45 @@ void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier,
 // Name: FederateFacade::ObjectCreated
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
-void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
+void FederateFacade::ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
+    bool isBreachable, TacticalObjectListener_ABC::GeometryType geometry )
 {
-    if( minefieldClass_.get() )
-        minefieldClass_->Created( object, identifier, name, force, type );
+    if( isBreachable )
+    {
+        switch( geometry )
+        {
+            case TacticalObjectListener_ABC::eGeometryType_Point:
+                if( breachablePointObjectClass_.get() )
+                    breachablePointObjectClass_->Created( object, identifier, name, force, type );
+                break;
+            case TacticalObjectListener_ABC::eGeometryType_Line:
+                if( breachableLinearObjectClass_.get() )
+                    breachableLinearObjectClass_->Created( object, identifier, name, force, type );
+                break;
+            case TacticalObjectListener_ABC::eGeometryType_Polygon:
+                if( minefieldClass_.get() )
+                    minefieldClass_->Created( object, identifier, name, force, type );
+                break;
+        }
+    }
+    else
+    {
+        switch( geometry )
+        {
+            case TacticalObjectListener_ABC::eGeometryType_Point:
+                if( otherPointObjectClass_.get() )
+                    otherPointObjectClass_->Created( object, identifier, name, force, type );
+                break;
+            case TacticalObjectListener_ABC::eGeometryType_Line:
+                if( breachableLinearObjectClass_.get() ) // TODO replace when available in RPR-FOM
+                    breachableLinearObjectClass_->Created( object, identifier, name, force, type );
+                break;
+            case TacticalObjectListener_ABC::eGeometryType_Polygon:
+                if( otherArealObjectClass_.get() )
+                    otherArealObjectClass_->Created( object, identifier, name, force, type );
+                break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -375,6 +418,14 @@ void FederateFacade::RegisterTactical( ClassListener_ABC& listener )
 {
     if( minefieldClass_.get() )
         minefieldClass_->Register( listener );
+    if( breachableLinearObjectClass_.get() )
+        breachableLinearObjectClass_->Register( listener );
+    if( breachablePointObjectClass_.get() )
+        breachablePointObjectClass_->Register( listener );
+    if( otherPointObjectClass_.get() )
+        otherPointObjectClass_->Register( listener );
+    if( otherArealObjectClass_.get() )
+        otherArealObjectClass_->Register( listener );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,4 +436,12 @@ void FederateFacade::UnregisterTactical( ClassListener_ABC& listener )
 {
     if( minefieldClass_.get() )
         minefieldClass_->Unregister( listener );
+    if( breachableLinearObjectClass_.get() )
+        breachableLinearObjectClass_->Unregister( listener );
+    if( breachablePointObjectClass_.get() )
+        breachablePointObjectClass_->Unregister( listener );
+    if( otherPointObjectClass_.get() )
+        otherPointObjectClass_->Unregister( listener );
+    if( otherArealObjectClass_.get() )
+        otherArealObjectClass_->Unregister( listener );
 }

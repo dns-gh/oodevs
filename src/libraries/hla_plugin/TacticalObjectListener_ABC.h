@@ -34,6 +34,15 @@ namespace hla
 class TacticalObjectListener_ABC : private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    enum GeometryType
+    {
+        eGeometryType_Point,
+        eGeometryType_Line,
+        eGeometryType_Polygon,
+    };
+    //@}
     //! @name Constructors/Destructor
     //@{
             TacticalObjectListener_ABC() {}
@@ -42,7 +51,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type ) = 0;
+    virtual void ObjectCreated( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
+            bool isBreachable, GeometryType geometry ) = 0;
     //@}
 };
 

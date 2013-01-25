@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_BreachableLinearObject_H_
-#define plugins_hla_BreachableLinearObject_H_
+#ifndef plugins_hla_OtherArealObject_H_
+#define plugins_hla_OtherPointObject_H_
 
 #include "HlaObject_ABC.h"
 #include "TacticalObjectEventListener_ABC.h"
@@ -17,8 +17,6 @@
 #include "rpr/EntityType.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/Coordinates.h"
-#include "rpr/BreachableSegmentStruct.h"
-#include <vector>
 
 namespace hla
 {
@@ -42,16 +40,16 @@ namespace hla
     class EntityIdentifierResolver_ABC;
     class FOM_Serializer_ABC;
 
-class BreachableLinearObject : public HlaObject_ABC
+class OtherArealObject : public HlaObject_ABC
     , private TacticalObjectEventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    BreachableLinearObject( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
-        const rpr::EntityIdentifier& entityId, const std::string& rtiId );
-    BreachableLinearObject( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
-    virtual  ~BreachableLinearObject();
+    OtherArealObject( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
+                const rpr::EntityIdentifier& entityId, const std::string& rtiId );
+    OtherArealObject( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+    virtual  ~OtherArealObject();
     //@}
 
     //! @name Operations
@@ -81,10 +79,10 @@ private:
     rpr::EntityType type_;
     rpr::EntityIdentifier entityIdentifier_;
     rpr::ForceIdentifier force_;
-    std::vector< rpr::BreachableSegmentStruct > segments_;
+    std::vector< rpr::WorldLocation > points_;
     //@}
 };
 
 }
 }
-#endif // plugins_hla_BreachableLinearObject_H_
+#endif // plugins_hla_OtherPointObject_H_
