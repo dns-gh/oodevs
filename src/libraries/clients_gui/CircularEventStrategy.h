@@ -55,12 +55,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CircularEventStrategy( const CircularEventStrategy& );            //!< Copy constructor
-    CircularEventStrategy& operator=( const CircularEventStrategy& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename It, typename Functor >
@@ -77,8 +71,7 @@ private:
     MapLayer_ABC* default_;
     bool reverse_;
     bool exclusive_;
-    CIT_MapLayers last_;
-    CRIT_MapLayers rlast_;
+    T_MapLayers::const_reverse_iterator rlast_;
     //@}
 };
 

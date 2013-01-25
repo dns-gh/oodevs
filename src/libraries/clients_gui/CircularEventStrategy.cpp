@@ -19,7 +19,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 CircularEventStrategy::CircularEventStrategy()
     : default_  ( 0 )
-    , reverse_  ( true )
     , exclusive_( true )
 {
     // NOTHING
@@ -32,15 +31,6 @@ CircularEventStrategy::CircularEventStrategy()
 CircularEventStrategy::~CircularEventStrategy()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::SetReverse
-// Created: AGE 2006-08-21
-// -----------------------------------------------------------------------------
-void CircularEventStrategy::SetReverse( bool b )
-{
-    reverse_ = b;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +58,6 @@ void CircularEventStrategy::SetDefault( MapLayer_ABC& layer )
 void CircularEventStrategy::Register( MapLayer_ABC& layer )
 {
     layers_.push_back( &layer );
-    last_ = layers_.begin();
     rlast_ = layers_.rbegin();
 }
 
@@ -78,10 +67,9 @@ void CircularEventStrategy::Register( MapLayer_ABC& layer )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::Remove( MapLayer_ABC& layer )
 {
-    IT_MapLayers it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
         layers_.erase( it );
-    last_ = layers_.begin();
     rlast_ = layers_.rbegin();
 }
 
@@ -183,16 +171,7 @@ bool CircularEventStrategy::Apply( Functor functor )
 {
     const T_MapLayers& layers = layers_;
     functor.SetExclusive( exclusive_ );
-    if( reverse_ )
-    {
-        CRIT_MapLayers first = rlast_;
-        return Loop( rlast_, first, layers.rbegin(), layers.rend(), functor );
-    }
-    else
-    {
-        CIT_MapLayers first = last_;
-        return Loop( last_, first, layers.begin(), layers.end(), functor );
-    }
+    return Loop( rlast_, rlast_, layers.rbegin(), layers.rend(), functor );
 }
 
 // -----------------------------------------------------------------------------
