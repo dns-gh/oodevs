@@ -488,7 +488,7 @@ class SupplyConvoyCapacityVisitor : public MIL_LogisticEntitiesVisitor
             PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
             tmp.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
             int nNewScore = 0;
-            for( PHY_RolePion_Composantes::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+            for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
                 nNewScore += it->second.nNbrTotal_;
             if( nNewScore > nScore_ )
             {

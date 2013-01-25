@@ -649,7 +649,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const Human_ABC&
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
     unsigned int nNbrAvailableAllowedToWork = 0;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     return nNbrAvailableAllowedToWork;
 }
@@ -679,7 +679,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
     unsigned int nNbrAvailableAllowedToWork = 0;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     return nNbrAvailableAllowedToWork;
 }
@@ -706,7 +706,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting() const
     PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanSortHumans, &PHY_ComposanteTypePion::CanSortHumans );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
     unsigned int nNbrDoctorsAvailable = 0;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     int nScore = nNbrDoctorsAvailable;
     for( CIT_CollectionAmbulancesSet itReservation = reservations_.begin(); itReservation != reservations_.end(); ++itReservation )
@@ -739,7 +739,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
     unsigned int nNbrAllowedToWork = 0;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAllowedToWork += ( it->second.nNbrAvailable_  - it->second.nNbrUsed_ );
     return nNbrAllowedToWork;
 }
@@ -812,7 +812,7 @@ double PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate
     unsigned int nNbrAvailableAllowedToWork = 0;
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal += it->second.nNbrTotal_;
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -860,7 +860,7 @@ namespace
     {
         if( data.empty() )
             return;
-        for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
+        for( auto itData = data.begin(); itData != data.end(); ++itData )
         {
             sword::LogMedicalEquipmentAvailability& data = *asn.add_elem();
             data.mutable_equipment()->set_id( itData->first->GetMosID().id() );

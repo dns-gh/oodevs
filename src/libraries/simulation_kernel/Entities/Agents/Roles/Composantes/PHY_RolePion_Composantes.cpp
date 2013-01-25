@@ -167,7 +167,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for(  PHY_RolePion_Composantes::CIT_LoanMap it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 file << it->second;
@@ -1634,7 +1634,7 @@ void PHY_RolePion_Composantes::Execute( OnComponentComputer_ABC& algorithm ) con
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( OnComponentLendedFunctorComputer_ABC& algorithm ) const
 {
-    for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
+    for( auto itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
     {
         const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
         for( auto it = composantes.begin(); it != composantes.end(); ++it )
@@ -1798,7 +1798,7 @@ void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& com
                     ++data.nNbrUsed_;
             }
         }
-    for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
+    for( auto itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
     {
         const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
         for( auto it = composantes.begin(); it != composantes.end(); ++it )

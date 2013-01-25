@@ -39,7 +39,6 @@ public:
     };
 
     typedef std::map< const PHY_ComposanteType_ABC*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                       CIT_ComposanteUseMap;
     //@}
 
     //! @name Constructors/Destructor

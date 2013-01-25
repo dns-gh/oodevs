@@ -55,7 +55,7 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& b
     unsigned int nNbrDone = 0;
     while( nNbrDone < nNbr )
     {
-        IT_LoanMap it = lentComposantes_.find( &borrower );
+        auto it = lentComposantes_.find( &borrower );
         if( it == lentComposantes_.end() )
             return nNbrDone;
         PHY_ComposantePion* pComposante = 0;

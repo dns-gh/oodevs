@@ -232,7 +232,7 @@ double PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredi
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComponent( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     owner_.Execute( *lendedComponent );
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal += it->second.nNbrTotal_;
         if( pWorkRate )
@@ -347,7 +347,7 @@ unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork(
     owner_.Execute( *lendedComputer );
     unsigned int nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         const unsigned int nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
         if( nNbrAllowedToWork > it->second.nNbrUsed_ )
@@ -581,7 +581,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     owner_.Execute( *lendedComputer );
     unsigned int nNbrHaulersAvailable = 0;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrHaulersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     return nNbrHaulersAvailable;
 }
@@ -683,7 +683,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
     if( data.empty() )
         return;
 
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
+    for( auto itData = data.begin(); itData != data.end(); ++itData )
     {
         sword::LogMaintenanceEquipmentAvailability& data = *asn.add_elem();
         data.mutable_equipment()->set_id( itData->first->GetMosID().id() );

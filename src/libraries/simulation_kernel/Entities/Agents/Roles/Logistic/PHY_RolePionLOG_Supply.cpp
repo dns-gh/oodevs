@@ -357,7 +357,7 @@ double PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
     owner_.Execute( *lendedComputer );
 
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
+    for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal                  += it->second.nNbrTotal_;
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -575,7 +575,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
 {
     if( data.empty() )
         return;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
+    for( auto itData = data.begin(); itData != data.end(); ++itData )
     {
         sword::LogSupplyEquimentAvailability& data = *asn.add_elem();
         data.mutable_equipment()->set_id( itData->first->GetMosID().id() );

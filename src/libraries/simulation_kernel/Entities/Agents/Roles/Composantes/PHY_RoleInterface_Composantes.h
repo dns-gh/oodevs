@@ -49,18 +49,10 @@ public:
         unsigned int nNbrLent_;
     };
 
-    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                       CIT_ComposanteUseMap;
-
     typedef PHY_RoleInterface_Composantes RoleInterface;
-
-    typedef std::set< PHY_MaintenanceComposanteState* >       T_MaintenanceComposanteStateSet;
-    typedef T_MaintenanceComposanteStateSet::iterator        IT_MaintenanceComposanteStateSet;
-    typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
-
+    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
+    typedef std::set< PHY_MaintenanceComposanteState* > T_MaintenanceComposanteStateSet;
     typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
-    typedef T_LoanMap::iterator                                                          IT_LoanMap;
-    typedef T_LoanMap::const_iterator                                                    CIT_LoanMap;
     //@}
 
 public:
