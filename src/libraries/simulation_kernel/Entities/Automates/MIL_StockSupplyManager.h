@@ -93,7 +93,6 @@ private:
     //@{
     typedef std::list< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
     typedef std::set< boost::shared_ptr< const logistic::SupplyConsign_ABC > > T_Supplies;
-    typedef std::map< const PHY_DotationCategory*, T_Requesters > T_Notifications;
     //@}
 
 private:
