@@ -70,14 +70,14 @@ namespace
     }
     void Populate( OptionMenu< kernel::FourStateOption >& menu, const kernel::FourStateOption& state )
     {
-        int index = menu.AddItem( kernel::FourStateOption::ControlledName(), kernel::FourStateOption::Controlled() );
-        if( state == kernel::FourStateOption::Controlled() )
-            menu.OnSelected( index );
-        index = menu.AddItem( kernel::FourStateOption::SelectedName(), kernel::FourStateOption::Selected() );
+        int index = menu.AddItem( kernel::FourStateOption::SelectedName(), kernel::FourStateOption::Selected() );
         if( state == kernel::FourStateOption::Selected() )
             menu.OnSelected( index );
         index = menu.AddItem( kernel::FourStateOption::SuperiorSelectedName(), kernel::FourStateOption::SuperiorSelected() );
         if( state == kernel::FourStateOption::SuperiorSelected() )
+            menu.OnSelected( index );
+        index = menu.AddItem( kernel::FourStateOption::ControlledName(), kernel::FourStateOption::Controlled() );
+        if( state == kernel::FourStateOption::Controlled() )
             menu.OnSelected( index );
         index = menu.AddItem( kernel::FourStateOption::OnName(), kernel::FourStateOption::On() );
         if( state == kernel::FourStateOption::On() )
