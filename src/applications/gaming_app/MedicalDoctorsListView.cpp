@@ -75,3 +75,32 @@ void MedicalDoctorsListView::NotifyUpdated( const MedicalStates& a )
     logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
     DisplayModelWithAvailabilities( merged.availabilities_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MedicalDoctorsListView::NotifyUpdated
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+void MedicalDoctorsListView::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    UpdateSelected( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalDoctorsListView::NotifyUpdated
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+void MedicalDoctorsListView::UpdateSelected( const kernel::Entity_ABC* entity )
+{
+    selected_ = entity;
+    if( !entity )
+        return;
+    if( !HasRetrieveForLogistic( *selected_ ) )
+    {
+        hide();
+        return;
+    }
+    MergeAvailabilities merged;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
+    DisplayModelWithAvailabilities( merged.availabilities_ );
+    show();
+}

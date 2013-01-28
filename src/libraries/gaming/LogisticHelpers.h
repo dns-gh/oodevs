@@ -66,6 +66,26 @@ namespace logistic_helpers
         }
         return false;
     }
+
+    template< typename Extension >
+    bool HasRetrieveEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity )
+    {
+        if( entity.Retrieve< Extension >() )
+            return true;
+        if( entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                if( !kernel::EntityHelpers::IsLogisticBase( child ) )
+                    if( HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( child ) )
+                        return true;
+            }
+        }
+        return false;
+    }
+
 } // namespace
 
 #endif // __LogisticTools_h_

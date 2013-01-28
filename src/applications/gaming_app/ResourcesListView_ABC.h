@@ -59,6 +59,7 @@ protected:
     virtual void polish();
     virtual void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Extension& a ) = 0;
+    bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity );
     bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a );
     void DisplayModelWithAvailabilities( const std::map< std::string, kernel::Availability >& availabilities );
     //@}
@@ -190,6 +191,16 @@ void ResourcesListView_ABC< Extension >::ResizeModelOnNewContent( int wantedSize
 // Created: MMC 2013-01-23
 // -----------------------------------------------------------------------------
 template< typename Extension >
+bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::Entity_ABC& entity )
+{
+    return logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HasRetrieveForLogistic
+// Created: MMC 2013-01-23
+// -----------------------------------------------------------------------------
+template< typename Extension >
 bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a )
 {
     return logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( entity, a );
@@ -202,19 +213,16 @@ bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::E
 template< typename Extension >
 void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities( const std::map< std::string, kernel::Availability >& availabilities )
 {
-    if( !availabilities.empty() )
+    ResizeModelOnNewContent( static_cast< int >( availabilities.size() ) );
+    unsigned int index = 0;
+    for( auto it = availabilities.begin(); it != availabilities.end(); ++it )
     {
-        ResizeModelOnNewContent( static_cast< int >( availabilities.size() ) );
-        unsigned int index = 0;
-        for( auto it = availabilities.begin(); it != availabilities.end(); ++it )
-        {
-            model_.item( index, 0 )->setText( QString( it->first.c_str() ) );
-            model_.item( index, 1 )->setText( QString::number( it->second.total_ ) );
-            model_.item( index, 2 )->setText( QString::number( it->second.available_ ) );
-            model_.item( index, 3 )->setText( QString::number( it->second.atWork_ ) );
-            model_.item( index, 4 )->setText( QString::number( it->second.atRest_ ) );
-            ++index;
-        }
+        model_.item( index, 0 )->setText( QString( it->first.c_str() ) );
+        model_.item( index, 1 )->setText( QString::number( it->second.total_ ) );
+        model_.item( index, 2 )->setText( QString::number( it->second.available_ ) );
+        model_.item( index, 3 )->setText( QString::number( it->second.atWork_ ) );
+        model_.item( index, 4 )->setText( QString::number( it->second.atRest_ ) );
+        ++index;
     }
 }
 

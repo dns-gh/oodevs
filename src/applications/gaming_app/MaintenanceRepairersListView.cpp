@@ -97,3 +97,32 @@ void MaintenanceRepairersListView::NotifyUpdated( const kernel::MaintenanceState
     logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
     DisplayModelWithAvailabilities( merged.availabilities_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceRepairersListView::NotifyUpdated
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+void MaintenanceRepairersListView::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    UpdateSelected( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceRepairersListView::NotifyUpdated
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+void MaintenanceRepairersListView::UpdateSelected( const kernel::Entity_ABC* entity )
+{
+    selected_ = entity;
+    if( !entity )
+        return;
+    if( !HasRetrieveForLogistic( *selected_ ) )
+    {
+        hide();
+        return;
+    }
+    MergeAvailabilities merged;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
+    DisplayModelWithAvailabilities( merged.availabilities_ );
+    show();
+}

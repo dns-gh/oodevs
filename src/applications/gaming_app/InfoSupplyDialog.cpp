@@ -87,7 +87,7 @@ void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
 {
     if( entity )
     {
-        if( kernel::EntityHelpers::IsLogisticBase( *entity ) )      
+        if( kernel::EntityHelpers::IsLogisticBase( *entity ) )
         {
             if( tabs_->widget( 2 ) != supplyQuotasWidget_ )
                 tabs_->insertTab( 2, supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
