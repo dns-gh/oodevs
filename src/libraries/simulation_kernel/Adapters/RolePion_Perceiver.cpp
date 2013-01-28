@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -574,7 +575,7 @@ bool RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-    return owner_->GetArmy().GetKnowledge().IsKnown( object );
+    return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------

@@ -18,8 +18,10 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Sharing.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion
@@ -77,7 +79,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( filters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
+    caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
     return knowledges;
 }
 
@@ -107,7 +109,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsIntersectingInZon
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
-    caller.GetArmy().GetKnowledge().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
+    caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsIntersectingInZone( knowledges, filter, *pLoc );
     return knowledges;
 }
 

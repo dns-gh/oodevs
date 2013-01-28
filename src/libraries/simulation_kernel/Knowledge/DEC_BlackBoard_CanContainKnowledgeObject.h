@@ -22,6 +22,8 @@ class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 class MIL_ObjectFilter;
+class TER_Localisation;
+class TER_Polygon;
 class KnowledgesVisitor_ABC;
 
 // =============================================================================
@@ -65,6 +67,17 @@ public:
     void UpdateUniversalObjects( const MIL_Army_ABC& team );
     void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup );
     void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter );
+    void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles );
+    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
+    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
+    void GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
+    void GetObjects( T_KnowledgeObjectVector& container ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter, const MIL_Army_ABC& army ) const;
+    void GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string& type = std::string() );
+    bool IsPositionInsideObjectOfType( const std::string& capacity, const MT_Vector2D& loc );
+    void GetObjectsWithCapacityInZone( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone );
+    void GetObjectsIntersectingInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
     //@}
 
     //! @name Queries

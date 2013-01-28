@@ -439,7 +439,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObje
     std::vector< std::string > typeList;
     typeList.push_back( type );
     const MIL_ObjectFilter filter( typeList );
-    return callerAgent.GetArmy().GetKnowledge().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
+    return callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetClosestObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
 }
 
 // -----------------------------------------------------------------------------
@@ -451,7 +451,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestFrie
     std::vector< std::string > typeList;
     typeList.push_back( type );
     const MIL_ObjectFilter filter( typeList );
-    return callerAgent.GetArmy().GetKnowledge().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter );
+    return callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetClosestFriendObject( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), filter, callerAgent.GetArmy() );
 }
 
 // -----------------------------------------------------------------------------
@@ -532,7 +532,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsWithCapacityInZon
     if( !pLoc || !callerAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
     T_KnowledgeObjectDiaIDVector knowledges;
-    callerAgent->GetPion().GetArmy().GetKnowledge().GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
+    callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
     return knowledges;
 }
 
@@ -544,7 +544,7 @@ bool DEC_KnowledgeFunctions::IsPositionInsideObjectOfType( const DEC_Decision_AB
 {
     if( !callerAgent || !pCenter )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerAgent->GetPion().GetArmy().GetKnowledge().IsPositionInsideObjectOfType( capacity, *pCenter );
+    return callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().IsPositionInsideObjectOfType( capacity, *pCenter );
 }
 
 // -----------------------------------------------------------------------------

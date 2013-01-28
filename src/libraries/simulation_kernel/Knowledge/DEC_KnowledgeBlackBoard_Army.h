@@ -93,24 +93,13 @@ public:
     //! @name Queries
     //@{
     void Finalize();
-    bool IsKnown( const MIL_Object_ABC& oject ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromObjectID( unsigned int nID ) const;
+    void GetObjects( T_KnowledgeObjectVector& container ) const; // only for population
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const; ; // only for population
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromObjectID( unsigned int nID ) const; // only for population
+    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone ); // only for population
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const; // only for population
     void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const MIL_Object_ABC& object ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const;
-    void GetObjects( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter ) const;
-    void GetObjects( T_KnowledgeObjectVector& container ) const;
-    void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles );
-    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
-    void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );
-    void GetObjectsIntersectingInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
-    void GetObjectsWithCapacityInZone( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone );
-    bool IsPositionInsideObjectOfType( const std::string& capacity, const MT_Vector2D& loc );
-    boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
-    boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
     void GetUrbanObjects( T_UrbanObjectVector& container ) const;
-    void GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string& type = std::string() );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 

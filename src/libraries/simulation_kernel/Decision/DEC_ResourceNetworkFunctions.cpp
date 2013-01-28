@@ -24,6 +24,8 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Urban/PHY_ResourceNetworkType.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 
 namespace
 {
@@ -150,7 +152,7 @@ T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZone(
     T_ResourceNetworkVector result;
     if( !caller || !pLocalisation )
         return result;
-    caller->GetPion().GetArmy().GetKnowledge().GetResourceNetworksInZone( result, *pLocalisation );
+    caller->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetResourceNetworksInZone( result, *pLocalisation );
     return result;
 }
 
@@ -163,7 +165,7 @@ T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZoneB
     T_ResourceNetworkVector result;
     if( !caller || !pLocalisation )
         return result;
-    caller->GetPion().GetArmy().GetKnowledge().GetResourceNetworksInZone( result, *pLocalisation, type );
+    caller->GetPion().GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetResourceNetworksInZone( result, *pLocalisation, type );
     return result;
 }
 

@@ -47,6 +47,8 @@
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Objects )
@@ -168,7 +170,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
         pKnowledge.reset();
         return eImpossible;
     }
-    pKnowledge = owner_->GetArmy().GetKnowledge().GetKnowledgeObject( *pObject );
+    pKnowledge = owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetKnowledgeObject( *pObject );
     if( instantaneous )
         return pKnowledge.get() ? eFinished : eRunning;
     else

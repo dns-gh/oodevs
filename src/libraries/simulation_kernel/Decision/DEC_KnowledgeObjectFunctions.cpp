@@ -41,6 +41,8 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/QueryValidity.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::Recon
@@ -162,7 +164,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
     T_KnowledgeObjectVector knownObjects;
-    callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
+    callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjects( knownObjects, filter );
     for( auto it = knownObjects.begin(); it != knownObjects.end(); ++it )
         if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {

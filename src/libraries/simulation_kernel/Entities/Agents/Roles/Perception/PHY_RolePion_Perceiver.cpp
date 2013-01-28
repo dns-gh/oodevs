@@ -57,6 +57,7 @@
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -1116,7 +1117,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Object_ABC& object ) const
 {
-    return owner_->GetArmy().GetKnowledge().IsKnown( object );
+    return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------
