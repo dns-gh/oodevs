@@ -169,6 +169,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadOptionalPath( input, "crowds-mission-sheets-directory", szCrowdsMissionPath_ );
     ReadOptionalPath( input, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
     ReadPath( input, "symbols-directory", szSymbolsPath_ );
+    ReadFile( input, "mission-sheets-xsl", szMissionSheetXslPath_ );
 
     input >> xml::end;
 }
@@ -230,6 +231,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WritePath( output, "crowds-mission-sheets-directory", szCrowdsMissionPath_ );
     WritePath( output, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
     WritePath( output, "symbols-directory", szSymbolsPath_ );
+    WriteFile( output, "mission-sheets-xsl", szMissionSheetXslPath_ );
     output << xml::end;
 }
 
@@ -388,6 +390,35 @@ void ADN_Project_Data::Reset()
     // load default parameters (included has resource)
     xml::xistringstream defaultFile( physicalXml );
     dataInfos_.ReadArchive( defaultFile );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Project_Data::GetMissionDir
+// Created: NPT 13-07-25
+//-----------------------------------------------------------------------------
+std::string ADN_Project_Data::GetMissionDir( E_EntityType elementType )
+{
+    const std::string workDir = workDir_.GetWorkingDirectory().GetData();
+    switch( elementType )
+    {
+    case eEntityType_Pawn:
+        return workDir + dataInfos_.szUnitsMissionPath_.GetData();
+    case eEntityType_Automat:
+        return workDir + dataInfos_.szAutomataMissionPath_.GetData();
+    case eEntityType_Population:
+        return workDir + dataInfos_.szCrowdsMissionPath_.GetData();
+    default:
+        return workDir + dataInfos_.szFragOrdersMissionPath_.GetData();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::GetMissionSheetXslFile
+// Created: NPT 2013-01-25
+// -----------------------------------------------------------------------------
+std::string ADN_Project_Data::GetMissionSheetXslFile()
+{
+    return workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMissionSheetXslPath_.GetData();
 }
 
 //-----------------------------------------------------------------------------

@@ -682,6 +682,10 @@ Arrêt moteur allumé</translation>
         <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
         <translation>Les symboles %1 sont définis dans symbols.xml mais n&apos;existent pas dans le répertoire Symbols.</translation>
     </message>
+    <message>
+        <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
+        <translation>Le fichier %2 dans la mission %1 est invalid ou non présent dans la liste des piècess jointes.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2076,6 +2080,45 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_DescriptionAttachment</name>
+    <message>
+        <source>Attachments</source>
+        <translation>Pièces jointes</translation>
+    </message>
+    <message>
+        <source>Select an image</source>
+        <translation>Selectionnez une image</translation>
+    </message>
+    <message>
+        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</source>
+        <translation>Tous les formats supportés (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)</translation>
+    </message>
+    <message>
+        <source>Add File</source>
+        <translation>Ajouter fichier</translation>
+    </message>
+    <message>
+        <source>Remove File</source>
+        <translation>Enlever fichier</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_DescriptionParameter</name>
+    <message>
+        <source>Parameters</source>
+        <translation>Paramètres</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
@@ -2611,20 +2654,60 @@ du tireur</translation>
         <translation>Symbole</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation>Général</translation>
-    </message>
-    <message>
-        <source>Mission sheets</source>
-        <translation>Fiches missions</translation>
-    </message>
-    <message>
         <source>Available without mission</source>
         <translation>Disponible sans mission</translation>
     </message>
     <message>
         <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
         <translation>Un nom de mission ne peut contenir les caractères suivants : / &lt; &gt; * \ : &quot; |</translation>
+    </message>
+    <message>
+        <source>Definition</source>
+        <translation>Définition</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Mission sheet preview</source>
+        <translation>Prévisualisation de la fiche</translation>
+    </message>
+    <message>
+        <source>Context</source>
+        <translation>Contexte</translation>
+    </message>
+    <message>
+        <source>Specific</source>
+        <translation>Cas spécifiques</translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation>Commentaires</translation>
+    </message>
+    <message>
+        <source>End of mission</source>
+        <translation>Fin de mission</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Pieces jointes</translation>
+    </message>
+    <message>
+        <source>Mission sheets preview</source>
+        <translation>Prévisualisation de la fiche</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Prévisualisation</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Aide</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
+        <translation>&lt;b&gt;Aide à l&apos;édition des fiches mission&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : ajouter une image dans le texte&lt;br/&gt;&quot;&quot;texte&quot;&quot; : mets le text en gras&lt;br/&gt;&apos;&apos;texte&apos;&apos; : mets le texte en italique&lt;br/&gt;__text__ : souligne le texte&lt;br/&gt; espace*espace : ajouter un element de list au  texte( le niveau de profondeur dans la liste est indiqué par le nombre d&apos;espaces avant l&apos;étoile )</translation>
     </message>
 </context>
 <context>
@@ -3274,10 +3357,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <translation>Attrition sur les foules</translation>
     </message>
     <message>
-        <source>Description</source>
-        <translation>Description</translation>
-    </message>
-    <message>
         <source>Geometries</source>
         <translation>Géométries</translation>
     </message>
@@ -3344,6 +3423,10 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     <message>
         <source>Civilian</source>
         <translation>Civil</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
     </message>
 </context>
 <context>

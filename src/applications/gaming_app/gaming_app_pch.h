@@ -24,6 +24,8 @@
 
 #include <QtGui/QtGui>
 
+#include <QtWebKit/qwebview.h>
+
 #include <QtOpenGL/qgl.h>
 
 #include <Qtcore/qtimer.h>

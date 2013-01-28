@@ -670,6 +670,10 @@ Parked engine running</source>
         <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2060,6 +2064,41 @@ stance</source>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_DescriptionAttachment</name>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_DescriptionParameter</name>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished">المعلمات</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
@@ -2595,20 +2634,60 @@ stance</source>
         <translation type="unfinished">الرمز</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="unfinished">العام</translation>
-    </message>
-    <message>
-        <source>Mission sheets</source>
-        <translation type="unfinished">أوراق البعثة</translation>
-    </message>
-    <message>
         <source>Available without mission</source>
         <translation type="unfinished">متوفرة بدون بعثة</translation>
     </message>
     <message>
         <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
         <translation type="unfinished">لا يمكن أن يحتوي اسم البعثة حرف التالي:/ &lt;&gt; * \: &quot;|</translation>
+    </message>
+    <message>
+        <source>Definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">الوصف</translation>
+    </message>
+    <message>
+        <source>Mission sheet preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Context</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specific</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation type="unfinished">تعليقات</translation>
+    </message>
+    <message>
+        <source>End of mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission sheets preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished">تعليمات</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2896,10 +2975,6 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Point effect distance</source>
         <translation type="unfinished">نقطة تأثير المسافة</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation type="unfinished">الوصف</translation>
     </message>
     <message>
         <source>Geometries</source>
@@ -3328,6 +3403,10 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Civilian</source>
         <translation type="unfinished">المدنيين</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">الوصف</translation>
     </message>
 </context>
 <context>

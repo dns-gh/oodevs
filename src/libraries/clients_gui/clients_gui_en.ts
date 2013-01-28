@@ -90,6 +90,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <source>PhysicalFeatures/Architecture/parkingFloors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -862,116 +866,6 @@ Please check access permissions or write protection.</translation>
     <message>
         <source>Remove highlight</source>
         <translation>Remove highlight</translation>
-    </message>
-</context>
-<context>
-    <name>gui::HtmlEditor</name>
-    <message>
-        <source>Undo</source>
-        <translation>Undo</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation>Redo</translation>
-    </message>
-    <message>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation>The document has been modified.
-Do you want to save your changes?</translation>
-    </message>
-    <message>
-        <source>Open File...</source>
-        <translation>Open File...</translation>
-    </message>
-    <message>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation>HTML-Files (*.htm *.html);;All Files (*)</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation>Save as...</translation>
-    </message>
-    <message>
-        <source>ODF files (*.odt);;HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation>ODF files (*.odt);;HTML-Files (*.htm *.html);;All Files (*)</translation>
-    </message>
-    <message>
-        <source>Select an image</source>
-        <translation>Select an image</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation>Cut</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Copy</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation>Paste</translation>
-    </message>
-    <message>
-        <source>Insert image</source>
-        <translation>Insert image</translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation>Bold</translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation>Italic</translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation>Underline</translation>
-    </message>
-    <message>
-        <source>Bullets</source>
-        <translation>Bullets</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation>Left</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Center</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation>Right</translation>
-    </message>
-    <message>
-        <source>Justify</source>
-        <translation>Justify</translation>
-    </message>
-    <message>
-        <source>Text color...</source>
-        <translation>Text color...</translation>
-    </message>
-    <message>
-        <source>Highlight</source>
-        <translation>Highlight</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <source>Select color</source>
-        <translation>Select color</translation>
-    </message>
-    <message>
-        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
-Bitmap Files (*.bmp)
-JPEG (*.jpg *jpeg)
-GIF (*.gif)
-PNG (*.png)
-</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -15,6 +15,9 @@
 #pragma warning( push, 0 )
 
 #include <QtGui/QtGui>
+#include <QtGui/qtabwidget.h>
+
+#include <QtWebKit/qwebview.h>
 
 #include <QtOpenGL/qgl.h>
 

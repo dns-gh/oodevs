@@ -103,7 +103,8 @@ void ADN_Objects_GUI::Build()
 
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterEqualZero );
     pPointDistance_->SetAutoEnabled( false );
-    builder.AddField< ADN_TextEdit_String >( pInfoHolder, tr( "Description"), vInfosConnectors[ eDescription ] );
+    ADN_TextEdit_String* field = builder.AddField< ADN_TextEdit_String >( pInfoHolder, tr( "Description"), vInfosConnectors[ eDescription ] );
+    field->setFixedHeight( 80 );
 
     // Geometries
     Q3GroupBox* geometries = new Q3GroupBox( 2, Qt::Horizontal, tr( "Geometries" ) );

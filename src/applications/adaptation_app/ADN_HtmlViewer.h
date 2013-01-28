@@ -3,23 +3,23 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 MASA Group
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ADN_HtmlEditor_h_
-#define __ADN_HtmlEditor_h_
+#ifndef __ADN_HtmlViewer_h_
+#define __ADN_HtmlViewer_h_
 
-#include "clients_gui/HtmlEditor.h"
+#include <boost/noncopyable.hpp>
 #include "ADN_Gfx_ABC.h"
 
 // =============================================================================
-/** @class  ADN_HtmlEditor
-    @brief  ADN_HtmlEditor
+/** @class  ADN_HtmlViewer
+    @brief  ADN_HtmlViewer
 */
-// Created: NPT 2012-07-27
+// Created: NPT 2013-01-04
 // =============================================================================
-class ADN_HtmlEditor : public gui::HtmlEditor
+class ADN_HtmlViewer : public QWebView
                      , public ADN_Gfx_ABC
 {
     Q_OBJECT
@@ -27,21 +27,20 @@ class ADN_HtmlEditor : public gui::HtmlEditor
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_HtmlEditor( int optionFlags = eAllMask );
-    virtual ~ADN_HtmlEditor();
+             ADN_HtmlViewer( QWidget* parent = 0 );
+    virtual ~ADN_HtmlViewer();
     //@}
 
     //! @name Operations
     //@{
     QString text() const;
-    void setText( const QString text );
+    void setText( const QString& text );
     //@}
 
-private slots:
-    //! @name slots
+    //! @name Helpers
     //@{
-    void OnTextChanged();
-    virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
+    public slots:
+        virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
     //@}
 
 private:
@@ -55,4 +54,4 @@ private:
     //@}
 };
 
-#endif // __ADN_HtmlEditor_h_
+#endif // __ADN_HtmlViewer_h_

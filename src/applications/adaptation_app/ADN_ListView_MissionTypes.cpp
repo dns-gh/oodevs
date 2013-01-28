@@ -51,9 +51,16 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
     Mission* pInfos = static_cast< Mission* >( pCurData_ );
-
     vItemConnectors_[ADN_Missions_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Missions_GUI::eMissionSheetDescription]->Connect( &pInfos->missionSheetContent_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionSheetPath]->Connect( &pInfos->missionSheetPath_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionContext]->Connect( &pInfos->descriptionContext_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionParameters]->Connect( &pInfos->parameters_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionBehavior]->Connect( &pInfos->descriptionBehavior_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionSpecificCases]->Connect( &pInfos->descriptionSpecific_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionComments]->Connect( &pInfos->descriptionComment_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionMissionEnd]->Connect( &pInfos->descriptionMissionEnd_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDescriptionAttachments]->Connect( &pInfos->attachments_, bConnect );
+
     vItemConnectors_[ADN_Missions_GUI::eParameters]->Connect( &pInfos->parameters_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eDiaType]->Connect( &pInfos->diaType_, bConnect );
     if( vItemConnectors_[ADN_Missions_GUI::eBehavior] )

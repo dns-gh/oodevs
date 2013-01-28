@@ -13,8 +13,10 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_Models_Data.h"
+#include "ADN_EditLine_ABC.h"
 
 enum E_EntityType;
+class ADN_HtmlViewer;
 
 namespace gui
 {
@@ -35,7 +37,17 @@ public:
     enum E_GuiElements
     {
         eName,
-        eMissionSheetDescription,
+        //mission sheets
+        eDescriptionSheetPath,
+        eDescriptionContext,
+        eDescriptionParameters,
+        eDescriptionParametersText,
+        eDescriptionBehavior,
+        eDescriptionSpecificCases,
+        eDescriptionComments,
+        eDescriptionMissionEnd,
+        eDescriptionAttachments,
+        //--------------
         eParameters,
         eParameterValues,
         eFragOrderAvailableWithoutMission,
@@ -67,7 +79,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType );
+    QWidget* BuildMissions( QTabWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType );
     QWidget* BuildUnitMissions();
     QWidget* BuildAutomatMissions();
     QWidget* BuildPopulationMissions();
@@ -77,17 +89,24 @@ private:
 private:
     //! @name Member data
     //@{
+    ADN_EditLine_ABC* nameField_;
     ADN_Missions_Data& data_;
-    QWidget* pUnitMissionsWidget_;
-    QWidget* pAutomatMissionsWidget_;
-    QWidget* pPopulationMissionsWidget_;
-    QWidget* pFragOrderWidget_;
+    QTabWidget* pUnitMissionsWidget_;
+    QTabWidget* pAutomatMissionsWidget_;
+    QTabWidget* pPopulationMissionsWidget_;
+    QTabWidget* fragOrderDescriptionTab_;
+    ADN_HtmlViewer* missionViewer_;
+    ADN_HtmlViewer* fragViewer_;
     //@}
 
 private slots:
     //! @name slots
     //@{
     void OnNotifyElementDeleted( std::string elementName, E_EntityType elementType );
+    void OnGenerateUnitMissionSheet();
+    void OnGenerateAutomataMissionSheet();
+    void OnGeneratePopulationMissionSheet();
+    void OnGenerateFragOrdersMissionSheet();
     //@}
 };
 

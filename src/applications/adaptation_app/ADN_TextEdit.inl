@@ -17,7 +17,6 @@ ADN_TextEdit< Connector >::ADN_TextEdit( QWidget* parent, const char * name)
 {
     pConnector_ = new Connector( this );
     assert( pConnector_ != 0 );
-    setFixedHeight( 64 );
 }
 
 //-----------------------------------------------------------------------------

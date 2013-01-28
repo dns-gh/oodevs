@@ -13,20 +13,23 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_MissionTypes_Table.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_ListView_DescriptionParameter.h"
+#include "ADN_ListView_DescriptionAttachment.h"
 #include "ADN_ListView_Missions.h"
 #include "ADN_ListView_MissionTypes.h"
 #include "ADN_ListView_FragOrderTypes.h"
 #include "ADN_MissionParameters_Table.h"
 #include "ADN_MissionParameterValues_Table.h"
+#include "ADN_Project_Data.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_MissionGenObjectTypes_Table.h"
 #include "ADN_ComboBox_Drawings.h"
 #include "ADN_MissionParameter_GroupBox.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_SearchListView.h"
-#include "ADN_HtmlEditor.h"
+#include "ADN_TextEdit.h"
+#include "ADN_HtmlViewer.h"
 #include "ADN_enums.h"
-
 #include <boost/lexical_cast.hpp>
 
 namespace
@@ -68,7 +71,7 @@ ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     , pUnitMissionsWidget_( 0 )
     , pAutomatMissionsWidget_( 0 )
     , pPopulationMissionsWidget_( 0 )
-    , pFragOrderWidget_( 0 )
+    , fragOrderDescriptionTab_( 0 )
 {
     // NOTHING
 }
@@ -106,11 +109,23 @@ void ADN_Missions_GUI::Build()
     pMainLayout->addWidget( pTabWidget_ );
 }
 
+namespace
+{
+    void AddTextEditField( QVBoxLayout* layout, const QString& name, ADN_Connector_ABC*& pGuiConnector )
+    {
+        QLabel* label= new QLabel( name );
+        ADN_TextEdit_String* textEdit = new ADN_TextEdit_String( 0 );
+        pGuiConnector = &textEdit->GetConnector();
+        layout->addWidget( label );
+        layout->addWidget( textEdit );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType )
+QWidget* ADN_Missions_GUI::BuildMissions( QTabWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -121,9 +136,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->SetToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
-    nameField->ConnectWithRefValidity( missions );
+    nameField_ = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField_->setToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
+    nameField_->ConnectWithRefValidity( missions );
 
     builder.SetValidator( new MissionNameValidator() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
@@ -174,9 +189,66 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
         connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), knowledgeObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
     }
 
-    // Html Mission Sheet Editor
-    ADN_HtmlEditor* editor = new ADN_HtmlEditor( gui::HtmlEditor::eAllMask ^ gui::HtmlEditor::ePoliceType );
-    vInfosConnectors[ eMissionSheetDescription ] = &editor->GetConnector();
+    //Mission Sheet Editor
+    QWidget* descriptionTab = new QWidget();
+    {
+        QLabel* helpLabel = new QLabel( tr( "Help" ) );
+        helpLabel->setToolTip( tr( "<b>Mission sheets edition Help</b><br/>"
+                                   "$$image.jpg$$ : add image in text<br/>"
+                                   "\"\"text\"\" : set text in bold<br/>"
+                                   "\'\'text\'\' : set text in italic<br/>"
+                                   "__text__ : set text underlined<br/>"
+                                   " space*space : add list element to text"
+                                   "( the level in the list is indicated by the number"
+                                   " of space before the star )") );
+        helpLabel->setAlignment( Qt::AlignRight );
+
+        QVBoxLayout* descriptionLayout = new QVBoxLayout( descriptionTab );
+
+        QGroupBox* parameterGroupBox = new QGroupBox( tr( "Parameters" ) );
+        QHBoxLayout* parameterLayout = new QHBoxLayout( parameterGroupBox );
+        ADN_ListView* parametersListView = new ADN_ListView_DescriptionParameter();
+        ADN_TextEdit_String* parametersField = new ADN_TextEdit_String( 0 );
+        vInfosConnectors[ eDescriptionParameters ] = &parametersListView->GetConnector();
+        vInfosConnectors[ eDescriptionParametersText ] = &parametersField->GetConnector();
+        parametersListView->SetItemConnectors( vInfosConnectors );
+        parameterLayout->addWidget( parametersListView );
+        parameterLayout->addWidget( parametersField );
+        parameterLayout->setStretch( 0, 1 );
+        parameterLayout->setStretch( 1, 4 );
+
+        ADN_ListView* attachmentListView = new ADN_ListView_DescriptionAttachment( eEntityType );
+        vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
+
+        QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
+        QVBoxLayout* attachmentLayout = new QVBoxLayout( attachmentGroupBox );
+        attachmentLayout->addWidget( attachmentListView );
+
+        QPushButton* generateButton = new QPushButton( tr( "Preview" ) );
+        if( eEntityType == eEntityType_Pawn )
+            connect( generateButton, SIGNAL( clicked() ), SLOT( OnGenerateUnitMissionSheet() ) );
+        else if(  eEntityType == eEntityType_Automat )
+            connect( generateButton, SIGNAL( clicked() ), SLOT( OnGenerateAutomataMissionSheet() ) );
+        else if(  eEntityType == eEntityType_Population )
+            connect( generateButton, SIGNAL( clicked() ), SLOT( OnGeneratePopulationMissionSheet() ) );
+
+        descriptionLayout->addWidget( helpLabel );
+        AddTextEditField( descriptionLayout, tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
+        descriptionLayout->addWidget( parameterGroupBox );
+        AddTextEditField( descriptionLayout, tr( "Behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
+        AddTextEditField( descriptionLayout, tr( "Specific" ), vInfosConnectors[ eDescriptionSpecificCases ] );
+        AddTextEditField( descriptionLayout, tr( "Comments" ), vInfosConnectors[ eDescriptionComments ] );
+        AddTextEditField( descriptionLayout, tr( "End of mission" ), vInfosConnectors[ eDescriptionMissionEnd ] );
+        descriptionLayout->addWidget( attachmentGroupBox );
+        descriptionLayout->addWidget( generateButton );
+
+        //Mission Sheet Viewer
+        missionViewer_ = new ADN_HtmlViewer();
+        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewer_->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), missionViewer_, SLOT( reload() ) );
+    }
+
+
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
 
@@ -194,30 +266,24 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     parameterLayout->addWidget( pGenObject );
     parameterLayout->addWidget( pKnowledgeObject );
 
-    // General tab layout
-    QWidget* pGeneral= new QWidget();
-    QVBoxLayout* pGeneralLayout = new QVBoxLayout( pGeneral );
-    pGeneralLayout->setMargin( 10 );
-    pGeneralLayout->setSpacing( 10 );
-    pGeneralLayout->setAlignment( Qt::AlignTop );
-    pGeneralLayout->addWidget( pInfoHolder );
-    pGeneralLayout->addWidget( pParametersGroup );
-
-    //mission sheets tab layout
-    QWidget* pMissionSheets = new QWidget();
-    QVBoxLayout* pMissionSheetsLayout = new QVBoxLayout( pMissionSheets );
-    pMissionSheetsLayout->setMargin( 10 );
-    pMissionSheetsLayout->setSpacing( 10 );
-    pMissionSheetsLayout->setAlignment( Qt::AlignTop );
-    pMissionSheetsLayout->addWidget( editor );
+    // Definition tab layout
+    QWidget* pDefinition = new QWidget();
+    QVBoxLayout* pDefinitionLayout = new QVBoxLayout( pDefinition );
+    pDefinitionLayout->setMargin( 10 );
+    pDefinitionLayout->setSpacing( 10 );
+    pDefinitionLayout->setAlignment( Qt::AlignTop );
+    pDefinitionLayout->addWidget( pInfoHolder );
+    pDefinitionLayout->addWidget( pParametersGroup );
 
     //content layout
     pContent = new QTabWidget();
     pContent->setStyleSheet("QTabWidget: {border: 3px solid red;}");
-    static_cast<QTabWidget*>(pContent)->addTab( CreateScrollArea( *pGeneral, 0 ), tr( "General" ) );
-    static_cast<QTabWidget*>(pContent)->addTab( CreateScrollArea( *pMissionSheets, 0 ), tr( "Mission sheets" ) );
+    static_cast<QTabWidget*>( pContent )->addTab( CreateScrollArea( *pDefinition, 0 ), tr( "Definition" ) );
+    static_cast<QTabWidget*>( pContent )->addTab( CreateScrollArea( *descriptionTab, 0 ), tr( "Description" ) );
+    static_cast<QTabWidget*>( pContent )->addTab( CreateScrollArea( *missionViewer_, 0 ), tr( "Mission sheet preview" ) );
     QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
     pContentLayout->setAlignment( Qt::AlignTop );
+    connect( pContent, SIGNAL( currentChanged( int ) ), missionViewer_, SLOT( reload() ) );
 
     // List view
     ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( this, eEntityType, missions, missions, vInfosConnectors, eEntityType );
@@ -319,9 +385,58 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
         connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), knowledgeObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
     }
 
-    //Html Mission Sheet Editor
-    ADN_HtmlEditor* editor = new ADN_HtmlEditor( gui::HtmlEditor::eAllMask ^ gui::HtmlEditor::ePoliceType );
-    vInfosConnectors[ eMissionSheetDescription ] = &editor->GetConnector();
+    //Mission Sheet Editor
+    QWidget* descriptionTab = new QWidget();
+    {
+        QLabel* helpLabel = new QLabel( tr( "Help" ) );
+        helpLabel->setToolTip( tr( "<b>Mission sheets edition Help</b><br/>"
+            "$$image.jpg$$ : add image in text<br/>"
+            "\"\"text\"\" : set text in bold<br/>"
+            "\'\'text\'\' : set text in italic<br/>"
+            "__text__ : set text underlined<br/>"
+            " space*space : add list element to text"
+            "( the level in the list is indicated by the number"
+            " of space before the star )") );
+        helpLabel->setAlignment( Qt::AlignRight );
+
+        QVBoxLayout* descriptionLayout = new QVBoxLayout( descriptionTab );
+
+        QGroupBox* parameterGroupBox = new QGroupBox( tr( "Parameters" ) );
+        QHBoxLayout* parameterLayout = new QHBoxLayout( parameterGroupBox );
+        ADN_ListView* parametersListView = new ADN_ListView_DescriptionParameter();
+        ADN_TextEdit_String* parametersField = new ADN_TextEdit_String( 0 );
+        vInfosConnectors[ eDescriptionParameters ] = &parametersListView->GetConnector();
+        vInfosConnectors[ eDescriptionParametersText ] = &parametersField->GetConnector();
+        parametersListView->SetItemConnectors( vInfosConnectors );
+        parameterLayout->addWidget( parametersListView );
+        parameterLayout->addWidget( parametersField );
+
+        ADN_ListView* attachmentListView = new ADN_ListView_DescriptionAttachment( eNbrEntityTypes );
+        vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
+
+        QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
+        QVBoxLayout* attachmentLayout = new QVBoxLayout( attachmentGroupBox );
+        attachmentLayout->addWidget( attachmentListView );
+
+        QPushButton* generateButton = new QPushButton( tr( "Preview" ) );
+        connect( generateButton, SIGNAL( clicked() ), SLOT( OnGenerateFragOrdersMissionSheet() ) );
+
+        descriptionLayout->addWidget( helpLabel );
+        AddTextEditField( descriptionLayout, tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
+        descriptionLayout->addWidget( parameterGroupBox );
+        AddTextEditField( descriptionLayout, tr( "Behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
+        AddTextEditField( descriptionLayout, tr( "Specific" ), vInfosConnectors[ eDescriptionSpecificCases ] );
+        AddTextEditField( descriptionLayout, tr( "Comments" ), vInfosConnectors[ eDescriptionComments ] );
+        AddTextEditField( descriptionLayout, tr( "End of mission" ), vInfosConnectors[ eDescriptionMissionEnd ] );
+        descriptionLayout->addWidget( attachmentGroupBox );
+        descriptionLayout->addWidget( generateButton );
+
+        //Mission Sheet Viewer
+        fragViewer_ = new ADN_HtmlViewer();
+        vInfosConnectors[ eDescriptionSheetPath ] = &fragViewer_->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), fragViewer_, SLOT( reload() ) );
+    }
+
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
     // -------------------------------------------------------------------------
@@ -339,30 +454,24 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     parameterLayout->addWidget( pKnowledgeObject );
 
     // General tab layout
-    QWidget* pGeneral= new QWidget();
-    QVBoxLayout* pGeneralLayout = new QVBoxLayout( pGeneral );
-    pGeneralLayout->setMargin( 10 );
-    pGeneralLayout->setSpacing( 10 );
-    pGeneralLayout->setAlignment( Qt::AlignTop );
-    pGeneralLayout->addWidget( pInfoHolder );
-    pGeneralLayout->addWidget( pParametersGroup );
-
-    //mission sheets tab layout
-    QWidget* pMissionSheets = new QWidget();
-    QVBoxLayout* pMissionSheetsLayout = new QVBoxLayout( pMissionSheets );
-    pMissionSheetsLayout->setMargin( 10 );
-    pMissionSheetsLayout->setSpacing( 10 );
-    pMissionSheetsLayout->setAlignment( Qt::AlignTop );
-    pMissionSheetsLayout->addWidget( editor );
+    QWidget* pDefinition = new QWidget();
+    QVBoxLayout* pDefinitionLayout = new QVBoxLayout( pDefinition );
+    pDefinitionLayout->setMargin( 10 );
+    pDefinitionLayout->setSpacing( 10 );
+    pDefinitionLayout->setAlignment( Qt::AlignTop );
+    pDefinitionLayout->addWidget( pInfoHolder );
+    pDefinitionLayout->addWidget( pParametersGroup );
 
     // Content layout
-    pFragOrderWidget_ = new QTabWidget();
-    static_cast<QTabWidget*>(pFragOrderWidget_)->addTab( CreateScrollArea( *pGeneral, 0 ), tr( "General" ) );
-    static_cast<QTabWidget*>(pFragOrderWidget_)->addTab( CreateScrollArea( *pMissionSheets, 0 ), tr( "Mission sheets" ) );
-    QVBoxLayout* pFragOrderWidgetLayout = new QVBoxLayout( pFragOrderWidget_ );
+    fragOrderDescriptionTab_ = new QTabWidget();
+    static_cast<QTabWidget*>(fragOrderDescriptionTab_)->addTab( CreateScrollArea( *pDefinition, 0 ), tr( "Definition" ) );
+    static_cast<QTabWidget*>(fragOrderDescriptionTab_)->addTab( CreateScrollArea( *descriptionTab, 0 ), tr( "Description" ) );
+    static_cast<QTabWidget*>(fragOrderDescriptionTab_)->addTab( CreateScrollArea( *fragViewer_, 0 ), tr( "Mission sheets preview" ) );
+    QVBoxLayout* pFragOrderWidgetLayout = new QVBoxLayout( fragOrderDescriptionTab_ );
     pFragOrderWidgetLayout->setMargin( 10 );
     pFragOrderWidgetLayout->setSpacing( 10 );
     pFragOrderWidgetLayout->setAlignment( Qt::AlignTop );
+    connect( fragOrderDescriptionTab_, SIGNAL( currentChanged( int ) ), fragViewer_, SLOT( reload() ) );
 
     // List view
     ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, 3 );
@@ -372,7 +481,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page
-    return CreateScrollArea( *pFragOrderWidget_, pSearchListView );
+    return CreateScrollArea( *fragOrderDescriptionTab_, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,5 +493,60 @@ void ADN_Missions_GUI::Enable( bool enable )
     pUnitMissionsWidget_->setEnabled( enable );
     pAutomatMissionsWidget_->setEnabled( enable );
     pPopulationMissionsWidget_->setEnabled( enable );
-    pFragOrderWidget_->setEnabled( enable );
+    fragOrderDescriptionTab_->setEnabled( enable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnGenerateUnitMissionSheet
+// Created: NPT 2013-01-17
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnGenerateUnitMissionSheet()
+{
+    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Pawn );
+    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetUnitMissions().begin(); it != data_.GetUnitMissions().end(); ++it )
+        ( *it )->WriteMissionSheet( missionDir );
+    pUnitMissionsWidget_->setCurrentIndex( pUnitMissionsWidget_->count() - 1 );
+    missionViewer_->setText( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnGenerateAutomataMissionSheet
+// Created: NPT 2013-01-24
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnGenerateAutomataMissionSheet()
+{
+    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Automat );
+    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetAutomatMissions().begin(); it != data_.GetAutomatMissions().end(); ++it )
+        ( *it )->WriteMissionSheet( missionDir );
+    pUnitMissionsWidget_->setCurrentIndex( pUnitMissionsWidget_->count() - 1 );
+    missionViewer_->setText( path );
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnGeneratePopulationMissionSheet
+// Created: NPT 2013-01-24
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnGeneratePopulationMissionSheet()
+{
+    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Population );
+    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetPopulationMissions().begin(); it != data_.GetPopulationMissions().end(); ++it )
+        ( *it )->WriteMissionSheet( missionDir );
+    pUnitMissionsWidget_->setCurrentIndex( pUnitMissionsWidget_->count() - 1 );
+    missionViewer_->setText( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnGenerateMissionSheet
+// Created: NPT 2013-01-17
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnGenerateFragOrdersMissionSheet()
+{
+    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
+    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    for( ADN_Missions_Data::IT_FragOrder_Vector it = data_.GetFragOrders().begin(); it != data_.GetFragOrders().end(); ++it )
+        ( *it )->WriteMissionSheet( missionDir );
+    fragOrderDescriptionTab_->setCurrentIndex( fragOrderDescriptionTab_->count() - 1 );
+    /*fragViewer_->setText( path );*/
 }

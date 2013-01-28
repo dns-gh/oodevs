@@ -35,7 +35,7 @@ public:
     //@{
     virtual bool CheckConsistency();
     void AddError( ConsistencyError error );
-    void AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1 );
+    void AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
     //@}
 

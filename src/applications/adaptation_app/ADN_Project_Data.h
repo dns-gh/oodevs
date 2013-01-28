@@ -94,6 +94,7 @@ public:
         ADN_Type_String szCrowdsMissionPath_;
         ADN_Type_String szFragOrdersMissionPath_;
         // $$$$ ABR 2013-01-21: Symbols directory
+        ADN_Type_String szMissionSheetXslPath_;
         ADN_Type_String szSymbolsPath_;
 
     private:
@@ -168,6 +169,8 @@ public:
     DataInfos&           GetDataInfos();
     const DataInfos&     GetDataInfos() const;
     FileInfos&           GetFileInfos();
+    std::string          GetMissionDir( E_EntityType elementType );
+    std::string          GetMissionSheetXslFile();
     static WorkDirInfos& GetWorkDirInfos();
 
 private:

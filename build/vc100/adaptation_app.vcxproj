@@ -60,6 +60,7 @@
     <Import Project="Property sheets\link_graphics.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_qtweb.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -78,6 +79,7 @@
     <Import Project="Property sheets\link_graphics.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_qtweb.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -96,6 +98,7 @@
     <Import Project="Property sheets\link_graphics.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_qtweb.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -114,6 +117,7 @@
     <Import Project="Property sheets\link_graphics.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_qtweb.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -192,11 +196,13 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GoToButton.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlEditor.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Linear_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.cpp" />
@@ -224,6 +230,9 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_Tables.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.inl">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -1640,20 +1649,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GridDelegate.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_HtmlEditor.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Linear_Container.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewToolTip.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h" />

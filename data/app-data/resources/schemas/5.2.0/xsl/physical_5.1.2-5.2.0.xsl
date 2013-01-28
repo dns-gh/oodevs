@@ -15,6 +15,11 @@
                   <xsl:attribute name="path">Symbols</xsl:attribute>
               </xsl:element>
           </xsl:if>
+          <xsl:if test="count( ./mission-sheets-xsl ) = 0">
+              <xsl:element name="mission-sheets-xsl">
+                  <xsl:attribute name="file">missionSheets.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
       </xsl:copy>
   </xsl:template>
 

@@ -20,9 +20,7 @@
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 
-#pragma warning( push, 0 )
-#include <QtGui/qtextedit.h>
-#pragma warning( pop )
+#include <QtWebKit/qwebview.h>
 
 namespace bfs = boost::filesystem;
 
@@ -81,25 +79,13 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
             path = config.GetPhysicalChildPath( "fragorders-mission-sheets-directory" );
 
         std::string fileName = std::string( path + "/" + order.GetName() + ".html" );
-        std::string missionSheet;
         if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
         {
-            std::ifstream file( fileName.c_str() );
-            std::stringstream buffer;
-            buffer << file.rdbuf();
-            missionSheet = std::string( buffer.str() );
-            file.close();
-
             QWidget* helpTab = new QWidget(tabs_);
             tabs_->addTab( helpTab, tools::translate( "MissionInterface_ABC", "Help" ) );
-            if( !missionSheet.empty() )
-            {
-                QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
-                QTextEdit* missionSheetText = new QTextEdit();
-                missionSheetText->setHtml( QString( missionSheet.c_str() ) );
-                missionSheetText->setReadOnly( true );
-                helpLayout->addWidget( missionSheetText );
-            }
+            std::replace( fileName.begin(), fileName.end(), '\\', '/' );
+            QWebView* missionSheetText = new QWebView();
+            missionSheetText->load( QUrl( fileName.c_str() ) );
         }
     }
     CreateOkCancelButtons();

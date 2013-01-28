@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
   <xs:include schemaLocation="tools.xsd"/>
-  <xs:simpleType name="XmlFile">
+  <xs:simpleType name="XmlOrXsltFile">
     <xs:restriction base="xs:string">
-      <xs:pattern value=".*\.xml"/>
+      <xs:pattern value=".*\.xml|.*\.xslt"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="FileReference">
-    <xs:attribute name="file" type="XmlFile"/>
+    <xs:attribute name="file" type="XmlOrXsltFile"/>
   </xs:complexType>
   <xs:complexType name="PathReference">
     <xs:attribute name="path" type="xs:string"/>
@@ -62,6 +62,7 @@
         <xs:element name="crowds-mission-sheets-directory" type="PathReference"/>
         <xs:element name="fragorders-mission-sheets-directory" type="PathReference"/>
         <xs:element name="symbols-directory" type="PathReference"/>
+        <xs:element name="mission-sheets-xsl" type="FileReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
       <xs:attribute name="read-only" type="xs:boolean" use="optional"/>

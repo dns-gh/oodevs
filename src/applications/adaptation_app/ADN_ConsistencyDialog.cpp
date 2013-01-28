@@ -70,6 +70,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingEmat    ]         = tr( "%1 has no EMAT8 code defined." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
     errorDescriptions_[ eMissingSymbols ]         = tr( "The symbols %1 are defined in symbols.xml but not found in Symbols directory." );
+    errorDescriptions_[ eMissionAttachmentInvalid ] = tr( "The file %2 included in the mission %1 is invalid or not present in the attachment list." );
     errorDescriptions_[ eLowerCaseEmat  ]         = tr( "%1 has lower case EMAT8 code." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
@@ -162,7 +163,7 @@ void ADN_ConsistencyDialog::UpdateDataModel()
                 QString itemList;
                 for( ADN_ConsistencyChecker::CIT_Items it = error.items_.begin(); it != error.items_.end(); ++it )
                     itemList += ( ( itemList.isEmpty() ) ? "'" : ( it + 1 == error.items_.end() ) ? tr( " and '" ) : ", '" ) + ( *it )->targetName_ + "'";
-                text = text.arg( itemList );
+                text = ( error.optional_.empty() ) ? text.arg( itemList ) : text.arg( itemList ).arg( error.optional_.c_str() );
             }
         }
         AddIcon( error.items_, error.type_, items );

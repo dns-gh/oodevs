@@ -56,10 +56,12 @@ void ADN_ConsistencyChecker::AddError( ConsistencyError error )
 // Name: ADN_ConsistencyChecker::AddError
 // Created: ABR 2012-11-15
 // -----------------------------------------------------------------------------
-void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab /*= -1*/ )
+void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab /* = -1 */, const std::string& optional /* = "" */ )
 {
     ConsistencyError error( type );
     error.items_.push_back( CreateGotoInfo( name, tab, subTab ) );
+    if( !optional.empty() )
+        error.optional_ = optional;
     errors_.push_back( error );
 }
 
@@ -71,7 +73,6 @@ ADN_NavigationInfos::GoTo* ADN_ConsistencyChecker::CreateGotoInfo( const std::st
 {
     ADN_NavigationInfos::GoTo* result = new ADN_NavigationInfos::GoTo();
     result->targetName_ = name.c_str();
-    assert( tab >= 0 && tab < eNbrWorkspaceElements );
     result->targetTab_ = static_cast< E_WorkspaceElements >( tab );
     if( subTab != -1 )
         result->subTargetTab_ = subTab;
@@ -182,6 +183,5 @@ void ADN_ConsistencyChecker::AddNNOError( E_ConsistencyCheck type, const T_NNOEl
         const NNOElement& element = *it;
         error.items_.push_back( CreateGotoInfo( element.name_, element.tab_, element.subTab_ ) );
     }
-    error.optional_ = ( type == eNNoUniqueness ) ? elements.front().codeNNO_ : elements.front().codeEMAT8_;
     errors_.push_back( error );
 }

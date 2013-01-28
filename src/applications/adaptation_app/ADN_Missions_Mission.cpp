@@ -9,10 +9,18 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Mission.h"
-
 #include "ADN_Missions_Data.h"
+#include "ADN_Project_Data.h"
+#include "ADN_ConsistencyChecker.h"
 #include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 #include <boost/filesystem.hpp>
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
+#include <queue>
+#include <xeumeuleu/xml.hpp>
+#include <xeuseuleu/xsl.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -69,7 +77,7 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
     newMission->diaBehavior_             = diaBehavior_.GetData();
     newMission->cdtDiaBehavior_          = cdtDiaBehavior_.GetData();
     newMission->mrtDiaBehavior_          = mrtDiaBehavior_.GetData();
-    newMission->missionSheetContent_     = missionSheetContent_.GetData();
+    newMission->missionSheetPath_        = missionSheetPath_.GetData();
     newMission->symbol_                  = symbol_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
@@ -84,7 +92,7 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 // Name: ADN_Missions_Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const std::string& baseDir, const std::string& missionDir )
+void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const std::string& missionDir )
 {
     std::string missionSheetDesc, symbol;
     input >> xml::attribute( "name", strName_ )
@@ -98,7 +106,7 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data&
     const std::string code = symbol.empty() ? " - " : symbol;
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawings.GetDrawing( code ) );
-    ReadMissionSheet( baseDir, missionDir );
+    ReadMissionSheet( missionDir );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,50 +178,431 @@ void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::strin
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::ReadMissionSheet
-// Created: NPT 2012-07-27
+// Name: ADN_Missions_Mission::CheckDataConsistency
+// Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadMissionSheet( const std::string& baseDir, const std::string& missionDir )
+void ADN_Missions_Mission::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_EntityType type )
 {
-    missionSheetPath_ = std::string( missionDir +  "/" + strName_.GetData() + ".html" );
-    const std::string dir = baseDir + missionDir;
-    const std::string fileName = baseDir + missionSheetPath_;
-    if( bfs::is_directory( dir ) && bfs::is_regular_file( fileName ) )
+   CheckFieldDataConsistency( descriptionContext_.GetData(), checker, type );
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+        CheckFieldDataConsistency( (*it)->description_.GetData(), checker, type );
+    CheckFieldDataConsistency( descriptionBehavior_.GetData(), checker, type );
+    CheckFieldDataConsistency( descriptionSpecific_.GetData(), checker, type );
+    CheckFieldDataConsistency( descriptionComment_.GetData(), checker, type );
+    CheckFieldDataConsistency( descriptionMissionEnd_.GetData(), checker, type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::CheckFieldDataConsistency
+// Created: NPT 2013-01-24
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_EntityType type )
+{
+    boost::smatch match;
+    bool tagOpen = false;
+    while( boost::regex_search( fieldData, match, boost::regex( "(.*?)(\\$\\$)(.*)" ) ) )
     {
-        std::ifstream file( fileName.c_str() );
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        missionSheetContent_ = std::string( buffer.str() );
-        file.close();
+        if( tagOpen )
+            if( !IsFileInAttachmentList( match[ 1 ].str() ) )
+                checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, type , match[ 1 ].str() );
+        tagOpen = !tagOpen;
+        fieldData = match[ 3 ];
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::RemoveMissionSheet
-// Created: NPT 2012-07-31
+// Name: ADN_Missions_Mission::ReadMissionSheetDescriptionsParameters
+// Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& baseDir, const std::string& missionDir )
+void ADN_Missions_Mission::ReadMissionSheetParametersDescriptions( xml::xistream& xis )
 {
-    const std::string relPath = std::string( missionDir + "/" + strName_.GetData() + ".html" );
-    if( !missionSheetPath_.empty() && relPath != missionSheetPath_ )
-        bfs::remove( baseDir + relPath );
+    std::string parameterName;
+    std::string parameterData;
+    xis >> xml::attribute( "name", parameterName )
+            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, parameterData );
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( (*it)->strName_ == parameterName )
+            (*it)->description_ = parameterData;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::WriteMissionSheet
+// Name: ADN_Missions_Mission::ReadMissionSheetAttachments
+// Created: NPT 2013-01-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::ReadMissionSheetAttachments( xml::xistream& xis )
+{
+    attachments_.AddItem( new ADN_Missions_Attachment( xis.attribute< std::string >( "name" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::WriteMissionSheetParametersDescriptions
+// Created: NPT 2013-01-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::WriteMissionSheetParametersDescriptions( xml::xostream& xos )
+{
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    {
+        xos << xml::start( "parameter" )
+            << xml::attribute( "name", (*it)->strName_ );
+        FromWikiToXml( xos, (*it)->description_.GetData() );
+        xos << xml::end;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::ReadMissionSheetAttachments
+// Created: NPT 2013-01-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::WriteMissionSheetAttachments( xml::xostream& xos )
+{
+    for( IT_MissionAttachment_Vector it = attachments_.begin(); it != attachments_.end(); ++it )
+        xos << xml::start( "attachment" )
+            << xml::attribute( "name", (*it)->strName_ )
+            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::FromXmlToWiki
+// Created: NPT 2013-01-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::FromXmlToWiki( const std::string& tag, xml::xistream& xis, std::string& text )
+{
+    int level = 0;
+    if( tag == "line" )
+        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text );
+    else if( tag == "ul" )
+    {
+        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, ++level );
+        --level;
+    }
+    text += "\n";
+}
+
+namespace
+{
+    std::string ConvertWikiTagToXmlTag( const std::string& wikiTag )
+    {
+        if( wikiTag == "\"\"" )
+            return "bold";
+        if( wikiTag == "''")
+            return "italic";
+        if( wikiTag == "__" )
+            return "underlined";
+        if( wikiTag == "$$")
+            return "link";
+        throw MASA_EXCEPTION( "Used wiki tag is invalid." );
+    }
+
+    std::string ConvertXmlToWikiTag( const std::string& xmlTag )
+    {
+        if( xmlTag =="bold" )
+            return "\"\"" ;
+        if( xmlTag == "italic")
+            return "''";
+        if( xmlTag =="underlined" )
+            return  "__" ;
+        if( xmlTag == "link" )
+            return "$$";
+        throw MASA_EXCEPTION( "Used xml tag is invalid." );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::IsFileInAttachmentList
+// Created: NPT 2013-01-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Mission::IsFileInAttachmentList( const std::string& fileName )
+{
+    for( IT_MissionAttachment_Vector it = attachments_.begin(); it != attachments_.end(); ++it )
+        if(fileName == (*it)->strName_.GetData() )
+            return true;
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::MakeStringXmlItem
+// Created: NPT 2013-01-22
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line )
+{
+
+    if( length > 0 )
+        xos.start( "li" );
+    if( line.size() > 0 )
+    {
+        xos.start( "line" );
+        std::set< std::string > openTags;
+        while ( line.size() > 0 )
+        {
+            boost::smatch match;
+            if( boost::regex_search( line, match, boost::regex( "(.*?)(\"\"|''|__|\\$\\$)(.*)" ) ) )
+            {
+                if( match[ 1 ].length() > 0 )
+                    xos << xml::start( "text" ) << match[ 1 ] << xml::end;
+                auto ret = openTags.insert( match[ 2 ] );
+                if( ret.second )
+                    xos.start( ConvertWikiTagToXmlTag( *ret.first ) );
+                else
+                {
+                    xos.end();
+                    openTags.erase( ret.first );
+                    if( match[ 2 ] == "$$" )
+                        if( !IsFileInAttachmentList( match[ 1 ].str() ) )
+                        {
+                            //return an error
+                        }
+                }
+                line = match[ 3 ];
+            }
+            else
+            {
+                xos << xml::start( "text" ) << line << xml::end;
+                break;
+            }
+        }
+        while( !openTags.empty() )
+        {
+            openTags.erase( openTags.begin() );
+            xos.end();
+        }
+        xos.end();
+    }
+    if( length > 0 )
+        xos.end();
+}
+
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::ReadXmlData
+// Created: NPT 2013-01-23
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text )
+{
+    if( tag == "text" )
+    {
+        std::string xmlValue;
+        xis >> xml::optional >> xmlValue;
+        text += xmlValue;
+    }
+    else
+    {
+        text += ConvertXmlToWikiTag( tag );
+        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text );
+        text += ConvertXmlToWikiTag( tag );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::ReadXmlList
+// Created: NPT 2013-01-23
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int& level )
+{
+    if( tag == "ul" )
+    {
+        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, ++level );
+        --level;
+    }
+    else if( tag == "li" )
+    {
+        text += std::string( level, ' ') + "* ";
+        xis >> xml::start( "line" )
+                >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text )
+            >> xml::end;
+        text += "\n";
+    }
+}
+
+namespace
+{
+    class UL : private boost::noncopyable
+    {
+    public:
+        UL( xml::xostream& xos )
+            : xos_( xos )
+        {
+            xos << xml::start( "ul" );
+        }
+        ~UL()
+        {
+            xos_ << xml::end;
+        }
+    private:
+        xml::xostream& xos_;
+    };
+
+    class ULFormatter : private boost::noncopyable
+    {
+    public:
+        ULFormatter( xml::xostream& xos )
+            : xos_( xos )
+        {
+            // NOTHING
+        }
+        ~ULFormatter()
+        {
+            // NOTHING
+        }
+
+        void FormatUL( int n )
+        {
+            for( int i = 0; i < n ; ++i )
+                vector.emplace_back( new UL( xos_ ) );
+            for( int i = n; i < 0 ; ++i )
+                vector.pop_back();
+        }
+    private:
+        xml::xostream& xos_;
+        std::vector< std::auto_ptr< UL > > vector;
+    };
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::FromWikiToXml
+// Created: NPT 2013-01-21
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::FromWikiToXml( xml::xostream& xos, const std::string& text )
+{
+    std::vector< std::string > stringList;
+    std::string result;
+    boost::split( stringList, text, boost::algorithm::is_any_of( "\n" ) );
+
+    //list search
+     std::queue< std::pair< std::size_t, std::string > > tokensVector;
+    for( auto it = stringList.begin(); it != stringList.end(); ++it )
+    {
+        std::string val = *it;
+        boost::smatch match;
+        if( boost::regex_search( val, match, boost::regex( "^(\\s+)\\* (.*)$" ) ) ) //check if the current line is a list
+            tokensVector.push( std::make_pair< std::size_t, std::string >( match[ 1 ].length(), match[ 2 ] ) ); //< space before the *, text after the star >
+        else
+            tokensVector.push( std::make_pair< std::size_t, std::string >( 0, val ) );//< 0 space beause text, text >
+    }
+
+    //create xml file
+    size_t previousLength = 0;
+    ULFormatter formatter( xos );
+    while( !tokensVector.empty() )
+    {
+        std::pair< std::size_t, std::string > line = tokensVector.front();
+        tokensVector.pop();
+        formatter.FormatUL( static_cast< int >( line.first - previousLength ) );
+        MakeStringXmlItem( xos, line.first, line.second );
+        previousLength = line.first;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::ReadMissionSheet
+// Created: NPT 2012-07-27std::pair<
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
+{
+    const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
+    if( bfs::is_directory( missionDir ) && bfs::is_regular_file( fileName + ".xml" ) )
+    {
+        missionSheetPath_ = fileName + ".html";
+        xml::xifstream xis( fileName + ".xml" );
+        std::string descriptionContext;
+        std::string descriptionBehavior;
+        std::string descriptionSpecific;
+        std::string descriptionComment;
+        std::string descriptionMissionEnd;
+        xis >> xml::start( "mission-sheet" )
+                >> xml::optional >> xml::start( "context" )
+                    >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionContext )
+                >> xml::end
+                >> xml::optional >> xml::start( "parameters" )
+                    >> xml::list( "parameter", *this, &ADN_Missions_Mission::ReadMissionSheetParametersDescriptions )
+                >> xml::end
+                >> xml::optional >> xml::start( "behavior" )
+                    >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionBehavior )
+                >> xml::end
+                >> xml::optional >> xml::start( "specific-cases" )
+                    >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionSpecific )
+                >> xml::end
+                >> xml::optional >> xml::start( "comments" )
+                    >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionComment )
+                >> xml::end
+                >> xml::optional >> xml::start( "mission-end" )
+                    >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionMissionEnd )
+                >> xml::end
+                >> xml::optional >> xml::start( "attachments" )
+                    >> xml::list( "attachment", *this, &ADN_Missions_Mission::ReadMissionSheetAttachments )
+                >> xml::end
+            >> xml::end;
+        descriptionContext_ = descriptionContext;
+        descriptionBehavior_ = descriptionBehavior;
+        descriptionSpecific_ = descriptionSpecific;
+        descriptionComment_ = descriptionComment;
+        descriptionMissionEnd_ = descriptionMissionEnd;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::RemoveMissionSheet
+// Created: NPT 2012-07-31
+// -----------------------------------------------------------------------------
+void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& missionDir )
+{
+    //xml file
+    const std::string newXmlPath = std::string( missionDir + "/" + strName_.GetData() + ".xml" );
+    const std::string oldXmlPath = std::string( QString( missionDir.c_str() ) + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).baseName() + ".xml" );
+    if( !missionSheetPath_.GetData().empty() && newXmlPath != oldXmlPath )
+        bfs::remove( oldXmlPath );
+
+    //html file
+    const std::string newHtmlPath = std::string( missionDir + "/" + strName_.GetData() + ".html" );
+    const std::string oldHtmlPath = std::string( QString( missionDir.c_str() ) + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).baseName() + ".html" );
+    if( !missionSheetPath_.GetData().empty() && newHtmlPath != oldHtmlPath )
+        bfs::remove( oldHtmlPath );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteMissionSheet( const std::string& baseDir, const std::string& missionDir )
+void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir )
 {
-    const std::string dir = baseDir + missionDir;
-    std::string fileName = std::string(dir + "/" + strName_.GetData() + ".html" );
+    std::string fileName = std::string( missionDir + "/" + strName_.GetData() );
+    if( !bfs::is_directory( missionDir + "/obsolete" ) )
+        bfs::create_directories( missionDir + "/obsolete" );
+    xml::xofstream xos( fileName + ".xml" );
+    xos << xml::start( "mission-sheet" )
+        << xml::attribute( "name", strName_.GetData() )
+        << xml::start( "context" );
+        FromWikiToXml( xos, descriptionContext_.GetData() );
+    xos << xml::end
+        << xml::start( "parameters" );
+        WriteMissionSheetParametersDescriptions( xos );
+    xos << xml::end
+        << xml::start( "behavior" );
+        FromWikiToXml( xos,descriptionBehavior_.GetData() );
+    xos << xml::end
+        << xml::start( "specific-cases" );
+        FromWikiToXml( xos, descriptionSpecific_.GetData() );
+    xos << xml::end
+        << xml::start( "comments" );
+        FromWikiToXml( xos, descriptionComment_.GetData() );
+    xos << xml::end
+        << xml::start( "mission-end" );
+        FromWikiToXml( xos, descriptionMissionEnd_.GetData() );
+    xos << xml::end
+        << xml::start( "attachments" );
+        WriteMissionSheetAttachments( xos );
+    xos << xml::end
+        << xml::end;
 
-    if( !bfs::is_directory( dir ) )
-        bfs::create_directories( dir + "/obsolete" );
-    std::fstream fileStream( fileName.c_str(), std::ios::out | std::ios::trunc );
-    fileStream << missionSheetContent_.GetData();
+    std::string xslFile = ADN_Workspace::GetWorkspace().GetProject().GetMissionSheetXslFile();
+    assert( bfs::exists( xslFile ) );
+    xml::xifstream xisXML( fileName + ".xml" );
+    xsl::xstringtransform xst( xslFile );
+    xst << xisXML;
+    std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
+    fileStream << xst.str();
     fileStream.close();
-    missionSheetPath_ = fileName;
+    missionSheetPath_ = fileName + ".html";
 }
 
 // -----------------------------------------------------------------------------

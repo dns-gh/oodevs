@@ -682,6 +682,10 @@ Parked engine running</translation>
         <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
         <translation>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</translation>
     </message>
+    <message>
+        <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2073,6 +2077,41 @@ posture</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_DescriptionAttachment</name>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_DescriptionParameter</name>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished">Parameters</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Disasters</name>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
@@ -2608,20 +2647,60 @@ posture</translation>
         <translation>Symbol</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation>General</translation>
-    </message>
-    <message>
-        <source>Mission sheets</source>
-        <translation>Mission sheets</translation>
-    </message>
-    <message>
         <source>Available without mission</source>
         <translation>Available without mission</translation>
     </message>
     <message>
         <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
         <translation>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</translation>
+    </message>
+    <message>
+        <source>Definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Description</translation>
+    </message>
+    <message>
+        <source>Mission sheet preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Context</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specific</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation type="unfinished">Comments</translation>
+    </message>
+    <message>
+        <source>End of mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission sheets preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished">Help</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2909,10 +2988,6 @@ The spawn capacity will be disabled.</translation>
     <message>
         <source>Point effect distance</source>
         <translation>Point effect distance</translation>
-    </message>
-    <message>
-        <source>Description</source>
-        <translation>Description</translation>
     </message>
     <message>
         <source>Geometries</source>
@@ -3341,6 +3416,10 @@ The spawn capacity will be disabled.</translation>
     <message>
         <source>Civilian</source>
         <translation type="unfinished">Civilian</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Description</translation>
     </message>
 </context>
 <context>

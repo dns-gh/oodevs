@@ -469,12 +469,12 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
         // saving in temporary files activated
         dirInfos.UseTempDirectory( true );
         tempDirectory = dirInfos.GetTempDirectory().GetData();
-        assert( bfs::exists( tempDirectory ) && bfs::is_directory( tempDirectory ) );
         pProgressIndicator_->SetVisible( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
         projectData_->Save( fileLoader );
+        assert( bfs::exists( tempDirectory ) && bfs::is_directory( tempDirectory ) );
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();

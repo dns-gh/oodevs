@@ -61,4 +61,5 @@ static const char* physicalXml =
 "  <crowds-mission-sheets-directory path=\"Mission sheets/crowds\"/>"
 "  <fragorders-mission-sheets-directory path=\"Mission sheets/fragmentary orders\"/>"
 "  <symbols-directory path=\"Symbols\"/>"
+"  <mission-sheets-xsl file=\"missionSheets.xslt\"/>"
 "</physical>";

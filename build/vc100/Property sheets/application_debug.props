@@ -9,6 +9,7 @@
     <libOpengl>opengl32.lib;QtOpenGLd4.lib</libOpengl>
     <libQT>QtCored4.lib;QtGuid4.lib</libQT>
     <libQT3>Qt3Supportd4.lib</libQT3>
+    <libQTWeb>QtWebKitd4.lib</libQTWeb>
     <libTools>tools_d.lib</libTools>
     <libZip>zipstream_d.lib;zlib1d.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
@@ -78,6 +79,9 @@
     </BuildMacro>
     <BuildMacro Include="libQT">
       <Value>$(libQT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libQTWeb">
+      <Value>$(libQTWeb)</Value>
     </BuildMacro>
     <BuildMacro Include="libQT3">
       <Value>$(libQT3)</Value>

@@ -583,7 +583,7 @@
 
     <target name="adaptation_app" depends="ENT,clients_gui,license_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt4,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
-                   libs="svgl,zipstream,bugtrap,excel@{suffix},
+                   libs="svgl,zipstream,bugtrap,excel@{suffix},QtWebKit4,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
@@ -598,7 +598,7 @@
 
     <target name="gaming_app" depends="gaming" description="build Sword Gaming executable">
         <build-app name="gaming_app" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
-                   libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,glew-${platform}-mt,
+                   libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,glew-${platform}-mt,QtWebKit4,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
@@ -632,7 +632,7 @@
 
     <target name="preparation_app" depends="preparation,frontend" description="build Sword Gaming executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
-                   libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,glew-${platform}-mt,
+                   libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,glew-${platform}-mt,QtWebKit4,
                          geodata,geos_i,spatialite,proj_i,libiconv,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
@@ -1429,6 +1429,7 @@
                                    libexpat.dll,
                                    libiconv-2.dll,
                                    libpq.dll,
+                                   phonon4.dll,
                                    proj.dll,
                                    Qt3Support4.dll,
                                    QtCore4.dll,
@@ -1436,6 +1437,7 @@
                                    QtNetwork4.dll,
                                    QtOpenGL4.dll,
                                    QtSql4.dll,
+                                   QtWebKit4.dll,
                                    QtXml4.dll,
                                    spatialite.dll,
                                    ssleay32.dll,
