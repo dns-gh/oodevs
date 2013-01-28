@@ -995,7 +995,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation>Attention</translation>
+        <translation>Avertissement</translation>
     </message>
     <message>
         <source>This functionality is not available with old terrain format.</source>
@@ -1827,7 +1827,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>ResourceNetworkDialog</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Avertissement</translation>
     </message>
     <message>
         <source>A cycle has been detected in the resource network for the block %1.
@@ -2590,6 +2590,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Change shape</source>
         <translation>Changer la forme</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>Urban blocks cannot be created on top of existing blocks.</source>
+        <translation>Les blocs urbains ne peuvent pas être créés au dessus de blocs existants.</translation>
     </message>
 </context>
 <context>

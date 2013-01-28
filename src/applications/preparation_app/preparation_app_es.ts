@@ -2590,6 +2590,14 @@ This data can&apos;t be projected.</source>
         <source>Change shape</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
+    </message>
+    <message>
+        <source>Urban blocks cannot be created on top of existing blocks.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

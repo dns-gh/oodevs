@@ -195,7 +195,7 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
         urbanModel_.CreateManualUrbanBlock( location, *selected_.ConstCast(), intersectedBlocks );
     if( !intersectedBlocks.empty() )
     {
-        blinks_ = 3;
+        blinks_ = 6;
         for( auto it = intersectedBlocks.begin(); it != intersectedBlocks.end(); ++it )
         {
             auto ptr = new kernel::SafePointer< kernel::UrbanObject_ABC >( controllers_, *it );
@@ -203,6 +203,7 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
             ptr->ConstCast()->Get< kernel::UrbanColor_ABC >().SetColor( 255, 0, 0, 255 );
         }
         QTimer::singleShot( 250, this, SLOT( OnBlink() ) );
+        QMessageBox::warning( this, tr( "Warning" ), tr( "Urban blocks cannot be created on top of existing blocks." ) );
     }
 }
 
