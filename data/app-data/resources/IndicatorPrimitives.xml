@@ -333,6 +333,22 @@
 			<comment lang="ar"></comment>
 		</comments>
     </primitive>
+    <primitive category="extract" name="contaminated" type="list(key,float)">
+		<comments>
+        	<comment lang="en"><![CDATA[The contamination flag at the unit level (0: not contaminated, 1: contaminated)]]></comment>
+			<comment lang="fr"><![CDATA[L'état de contamination de l'unité (0: non contaminé, 1: contaminé)]]></comment>
+			<comment lang="es"></comment>
+			<comment lang="ar"></comment>
+		</comments>
+    </primitive>
+    <primitive category="extract" name="nbc-dose" type="list(key,float)">
+		<comments>
+        	<comment lang="en"><![CDATA[The toxic doses absorbed by units]]></comment>
+			<comment lang="fr"><![CDATA[Les doses toxiques absorbées par l'unité]]></comment>
+			<comment lang="es"></comment>
+			<comment lang="ar"></comment>
+		</comments>
+    </primitive>
     <primitive category="transform" name="distance" type="float">
 		<comments>
         	<comment lang="en"><![CDATA[Computes distance between specified positions.]]></comment>

@@ -112,7 +112,9 @@ namespace
             ( "satisfactions"                         , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
             ( "satisfactions-dpre"                    , BuildExtractor< Value, attributes::DPRESatisfaction >() )
             ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
-            ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() );
+            ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )
+            ( "contaminated"                          , BuildExtractor< Value, attributes::Contaminated >() )
+            ( "nbc-dose"                              , BuildExtractor< Value, attributes::NbcDose >() );
         return extractors;
     }
 }

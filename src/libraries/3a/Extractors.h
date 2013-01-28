@@ -69,6 +69,30 @@ namespace extractors
         }
     };
 
+    struct Contaminated : public Extractor< NumericValue >
+    {
+        bool HasFlag( const sword::UnitAttributes& attributes ) const
+        {
+            return attributes.has_contamination_state() && attributes.contamination_state().has_contaminated();
+        }
+        NumericValue Extract( const sword::UnitAttributes& attributes ) const
+        {
+            return NumericValue( attributes.contamination_state().contaminated() ? 1.f : 0.f );
+        }
+    };
+
+    struct NbcDose : public Extractor< NumericValue >
+    {
+        bool HasFlag( const sword::UnitAttributes& attributes ) const
+        {
+            return attributes.has_contamination_state() && attributes.contamination_state().has_dose();
+        }
+        NumericValue Extract( const sword::UnitAttributes& attributes ) const
+        {
+            return NumericValue( attributes.contamination_state().dose() );
+        }
+    };
+
     // Existences
     struct MaintenanceHandlingUnitId : public Extractor< NumericValue >
     {

@@ -100,6 +100,8 @@ typedef UnitAttribute< extractors::IndirectFirePower >             IndirectFireP
 typedef UnitAttribute< extractors::CloseCombatPower >              CloseCombatPower;
 typedef UnitAttribute< extractors::EngineeringPower >              EngineeringPower;
 typedef UnitAttribute< extractors::ForceRatioValue >               ForceRatioValue;
+typedef UnitAttribute< extractors::Contaminated>                   Contaminated;
+typedef UnitAttribute< extractors::NbcDose >                       NbcDose;
 
 typedef Attribute< extractors::LogMedicalEquipments >              LogMedicalEquipments;
 typedef Attribute< extractors::LogMedicalWaitingAttention >        LogMedicalWaitingAttention;
