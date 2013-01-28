@@ -146,7 +146,7 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 // Name: PHY_RolePion_Transported::UnloadFromTransport
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool bTransportOnlyLoadable, MT_Vector2D* position )
+void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transporter, bool /*bTransportOnlyLoadable*/, MT_Vector2D* position )
 {
     if( pTransporter_ != &transporter )
         return ; //false;
@@ -158,8 +158,6 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
-    if( !bTransportOnlyLoadable )
-        vHumanTransporterPosition_.Reset();
     owner_->Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoadedForTransport );
     owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     return ;//true;
