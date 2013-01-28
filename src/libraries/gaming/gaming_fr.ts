@@ -1299,7 +1299,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translationDésactivée</translation>
+        <translation>Désactivée</translation>
     </message>
 </context>
 <context>
