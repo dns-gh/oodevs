@@ -30,7 +30,7 @@ namespace gui
 */
 // Created: APE 2004-06-02
 // =============================================================================
-class Logger : public RichTreeView
+class Logger : public QTreeWidget
              , public kernel::Logger_ABC
 {
     Q_OBJECT
@@ -44,9 +44,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogElement Info();
-    virtual LogElement Warning();
-    virtual LogElement Error();
+    virtual void Info( const std::string& message );
+    virtual void Warning( const std::string& message );
+    virtual void Error( const std::string& message );
     //@}
 
 public slots:
@@ -58,16 +58,14 @@ public slots:
 protected:
     //! @name Operations
     //@{
-    virtual void End( std::stringstream& output );
     QSize sizeHint() const { return QSize( 400, 250 ); }
     virtual void contextMenuEvent( QContextMenuEvent* event );
-    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    LogElement StartLog( const QColor& color );
+    void WriteLog( const std::string& message, const QColor& color );
     //@}
 
 private:

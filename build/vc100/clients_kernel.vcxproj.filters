@@ -340,9 +340,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Formatter.cpp">
       <Filter>Source Files\Display</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Logger_ABC.cpp">
-      <Filter>Source Files\Display</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\NullDisplayer.cpp">
       <Filter>Source Files\Display</Filter>
     </ClCompile>

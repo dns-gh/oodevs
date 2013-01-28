@@ -29,20 +29,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogElement Info();
-    virtual LogElement Warning();
-    virtual LogElement Error();
+    virtual void Info( const std::string& message );
+    virtual void Warning( const std::string& message );
+    virtual void Error( const std::string& message );
     //@}
 
     //! @name Modifiers
     //@{
     void SetLogger( kernel::Logger_ABC& base );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void End( std::stringstream& output );
     //@}
 
 private:

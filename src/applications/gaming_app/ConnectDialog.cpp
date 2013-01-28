@@ -86,9 +86,9 @@ void ConnectDialog::Validate()
     }
     catch( const std::exception& e )
     {
-        logger_.Info() << tr( "Not connected to %1:%2\nReason: %3\n" ).arg( pHostNameComboBox_->currentText() )
+        logger_.Info( tr( "Not connected to %1:%2\nReason: %3\n" ).arg( pHostNameComboBox_->currentText() )
                                                                       .arg( pPortSpinBox_->value() )
-                                                                      .arg( tools::GetExceptionMsg( e ).c_str() );
+                                                                      .arg( tools::GetExceptionMsg( e ).c_str() ).toStdString() );
         reject();
     }
 }

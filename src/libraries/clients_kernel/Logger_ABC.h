@@ -10,8 +10,6 @@
 #ifndef __Logger_ABC_h_
 #define __Logger_ABC_h_
 
-#include <sstream>
-#include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -26,40 +24,11 @@ namespace kernel
 class Logger_ABC : private boost::noncopyable
 {
 public:
-    //! @name Types
-    //@{
-    class LogElement
-    {
-    private:
-        struct Ender
-        {
-             Ender( Logger_ABC& base, std::stringstream& output );
-            ~Ender();
-             Logger_ABC* base_;
-             std::stringstream* output_;
-        };
-    public:
-         LogElement( Logger_ABC& base, std::stringstream& output );
-        ~LogElement();
-        template< typename T >
-        LogElement operator<<( const T& value ) const
-        {
-            *ender_->output_ << value;
-            return *this;
-        }
-    private:
-        boost::shared_ptr< Ender > ender_;
-    };
-    //@}
-
-public:
     //! @name Operations
     //@{
-    virtual LogElement Info() = 0;
-    virtual LogElement Warning() = 0;
-    virtual LogElement Error() = 0;
-
-    virtual void End( std::stringstream& output ) = 0;
+    virtual void Info( const std::string& message ) = 0;
+    virtual void Warning( const std::string& message ) = 0;
+    virtual void Error( const std::string& message ) = 0;
     //@}
 };
 

@@ -12,6 +12,7 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include <boost/lexical_cast.hpp>
 
 namespace log_tools
 {
@@ -22,7 +23,7 @@ namespace log_tools
 // -----------------------------------------------------------------------------
 void LogAcknowledge( kernel::Logger_ABC& logger, const std::string& messageName )
 {
-    logger.Info() << messageName << " acknowledged ok";
+    logger.Info( messageName + " acknowledged ok" );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ void LogAcknowledge( kernel::Logger_ABC& logger, const std::string& messageName 
 // -----------------------------------------------------------------------------
 void LogAcknowledge( kernel::Logger_ABC& logger, const char* messageName )
 {
-    logger.Info() << messageName << " acknowledged ok";
+    logger.Info( std::string( messageName ) + " acknowledged ok" );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,12 +43,12 @@ bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::str
 {
     if( errorCode )
     {
-        logger.Warning() << messageName << " acknowledge error: " << errorMessage;
+        logger.Warning( messageName + " acknowledge error: " + errorMessage );
         return false;
     }
     else
     {
-        logger.Info() << messageName << " acknowledged ok";
+        logger.Info( messageName + " acknowledged ok" );
         return true;
     }
 }
@@ -58,14 +59,15 @@ bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::str
 // -----------------------------------------------------------------------------
 bool CheckAcknowledge( kernel::Logger_ABC& logger, const kernel::Entity_ABC& entity, int errorCode, const std::string& errorMessage, const std::string& messageName )
 {
+    const std::string str = messageName + " [" + entity.GetName().toStdString() + " " + boost::lexical_cast< std::string >( entity.GetId() ) + "] ";
     if( errorCode )
     {
-        logger.Warning() << messageName << " [" << entity.GetName() << " " << entity.GetId() << "] " << "acknowledge error: " << errorMessage;
+        logger.Warning( str + " acknowledge error: " + errorMessage );
         return false;
     }
     else
     {
-        logger.Info() << messageName << " [" << entity.GetName() << " " << entity.GetId() << "] " << "acknowledged ok";
+        logger.Info( str + " acknowledged ok" );
         return true;
     }
 }

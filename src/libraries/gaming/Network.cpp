@@ -142,7 +142,7 @@ void Network::ConnectionSucceeded( const std::string& endpoint )
 {
     ClientNetworker::ConnectionSucceeded( endpoint );
     session_ = endpoint;
-    logger_.Info() << tools::translate( "Network", "Connected to " ) << endpoint;
+    logger_.Info( tools::translate( "Network", "Connected to " ).toStdString() + endpoint );
     manager_->Connect( session_ );
     simu_.Connect( session_ );
 }
@@ -155,7 +155,7 @@ void Network::ConnectionFailed( const std::string& address, const std::string& e
 {
     ClientNetworker::ConnectionFailed( address, error );
     session_.clear();
-    logger_.Warning() << tools::translate( "Network", "Not connected to " ) << address << tools::translate( "Network", " (cause :" ) << error << ")";
+    logger_.Warning( tools::translate( "Network", "Not connected to " ).toStdString() + address + tools::translate( "Network", " (cause :" ).toStdString() + error + ")" );
     manager_->Disconnect();
     simu_.Disconnect();
 }
@@ -168,7 +168,7 @@ void Network::ConnectionError( const std::string& address, const std::string& er
 {
     ClientNetworker::ConnectionError( address, error );
     session_.clear();
-    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " lost (cause :" ) << error << ")";
+    logger_.Error( tools::translate( "Network", "Connection to " ).toStdString() + address + tools::translate( "Network", " lost (cause :" ).toStdString() + error + ")" );
     manager_->Disconnect();
     simu_.Disconnect();
 }
@@ -180,5 +180,5 @@ void Network::ConnectionError( const std::string& address, const std::string& er
 void Network::ConnectionWarning( const std::string& address, const std::string& warning )
 {
     ClientNetworker::ConnectionWarning( address, warning );
-    logger_.Error() << tools::translate( "Network", "Connection to " ) << address << tools::translate( "Network", " warning (cause :" ) << warning << ")";
+    logger_.Error( tools::translate( "Network", "Connection to " ).toStdString() + address + tools::translate( "Network", " warning (cause :" ).toStdString() + warning + ")" );
 }

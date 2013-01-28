@@ -42,41 +42,31 @@ void LoggerProxy::SetLogger( kernel::Logger_ABC& base )
 // Name: LoggerProxy::Info
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-LoggerProxy::LogElement LoggerProxy::Info()
+void LoggerProxy::Info( const std::string& message )
 {
-    if( base_ )
-        return base_->Info();
-    throw MASA_EXCEPTION( "Invalid logger." );
+    if( !base_ )
+        throw MASA_EXCEPTION( "Invalid logger." );
+    base_->Info( message);
 }
 
 // -----------------------------------------------------------------------------
 // Name: LoggerProxy::Warning
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-LoggerProxy::LogElement LoggerProxy::Warning()
+void LoggerProxy::Warning( const std::string& message )
 {
-    if( base_ )
-        return base_->Warning();
-    throw MASA_EXCEPTION( "Invalid logger." );
+    if( !base_ )
+        throw MASA_EXCEPTION( "Invalid logger." );
+    base_->Warning( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LoggerProxy::Error
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-LoggerProxy::LogElement LoggerProxy::Error()
+void LoggerProxy::Error( const std::string& message )
 {
-    if( base_ )
-        return base_->Error();
-    throw MASA_EXCEPTION( "Invalid logger." );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LoggerProxy::End
-// Created: AGE 2008-05-16
-// -----------------------------------------------------------------------------
-void LoggerProxy::End( std::stringstream& output )
-{
-    if( base_ )
-        base_->End( output );
+    if( !base_ )
+        throw MASA_EXCEPTION( "Invalid logger." );
+    base_->Error( message );
 }

@@ -15,12 +15,26 @@
 
 using namespace gui;
 
+namespace
+{
+    class LoggerItem : public QTreeWidgetItem
+    {
+    public:
+        explicit LoggerItem( QTreeWidget* view) : QTreeWidgetItem( view ) {}
+                ~LoggerItem() {}
+        virtual bool operator < ( const QTreeWidgetItem& other ) const
+        {
+            return data( 0, Qt::UserRole ).toUInt() < other.data( 0, Qt::UserRole ).toUInt();
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
 Logger::Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std::string& filename )
-    : RichTreeView( pParent )
+    : QTreeWidget( pParent )
     , simulation_( simulation )
     , log_( filename.c_str(), std::ios::out | std::ios::app )
     , popupMenu_( new kernel::ContextMenu( this ) )
@@ -30,14 +44,15 @@ Logger::Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std:
     setMinimumSize( 40, 40 );
     header()->setSortIndicatorShown( true );
     setRootIsDecorated( true );
-    dataModel_.setColumnCount( 4 );
+    setColumnCount( 3 );
+    setSortingEnabled( true );
     setHeaderHidden( false );
     setEditTriggers( 0 );
-    EnableDragAndDrop( false );
+    setUniformRowHeights( true );
 
     QStringList headers;
     headers << tr( "Real time" ) << tr( "Simulation time" ) << tr( "Message" ) << "";
-    dataModel_.setHorizontalHeaderLabels( headers );
+    setHeaderLabels( headers );
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     header()->setResizeMode( 1, QHeaderView::ResizeToContents );
     header()->setResizeMode( 2, QHeaderView::ResizeToContents );
@@ -69,32 +84,32 @@ Logger::~Logger()
 // Name: Logger::Info
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-Logger::LogElement Logger::Info()
+void Logger::Info( const std::string& message )
 {
     MakeHeader( log_, simulation_ );
-    return StartLog( Qt::black );
+    WriteLog( message, Qt::black );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::Warning
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-Logger::LogElement Logger::Warning()
+void Logger::Warning( const std::string& message )
 {
     MakeHeader( log_, simulation_ );
     log_ << "Warning - ";
-    return StartLog( Qt::darkRed );
+    WriteLog( message, Qt::darkRed );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::Error
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-Logger::LogElement Logger::Error()
+void Logger::Error( const std::string& message )
 {
     MakeHeader( log_, simulation_ );
     log_ << "Error - ";
-    return StartLog( Qt::red );
+    WriteLog( message, Qt::red );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,42 +119,26 @@ Logger::LogElement Logger::Error()
 void Logger::Clear()
 {
     counter_ = 0;
-    dataModel_.removeRows( 0, dataModel_.rowCount() );
+    while( topLevelItemCount() > 0 )
+        delete takeTopLevelItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Logger::StartLog
-// Created: AGE 2008-05-16
+// Name: Logger::WriteLog
+// Created: JSR 2013-01-25
 // -----------------------------------------------------------------------------
-Logger::LogElement Logger::StartLog( const QColor& color )
+void Logger::WriteLog( const std::string& message, const QColor& color )
 {
-    std::stringstream* output = new std::stringstream();
-    const int rowCount = dataModel_.rowCount();
-    QStandardItem* item = dataModel_.AddRootDataItem( rowCount, 0, QTime::currentTime().toString(), "", *output );
-    item->setForeground( color );
-    item->setData( counter_++, Roles::OtherRole );
-    dataModel_.AddRootTextItem( rowCount, 1, simulation_.GetTimeAsString(), "" )->setForeground( color );
-    dataModel_.AddRootItem( rowCount, 2 )->setForeground( color );
-    return LogElement( *this, *output );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Logger::End
-// Created: AGE 2008-05-16
-// -----------------------------------------------------------------------------
-void Logger::End( std::stringstream& output )
-{
-    log_ << output.str() << std::endl;
-    QStandardItem* item = dataModel_.FindDataItem( output, dataModel_.invisibleRootItem() );
-    if( item )
-    {
-        item->setData( *new QVariant(), Roles::DataRole );
-        QModelIndex index = dataModel_.index( item->row(), 2, dataModel_.indexFromItem( item->parent() ) );
-        QStandardItem* msgItem = dataModel_.GetItemFromIndex( index );
-        if( msgItem )
-            msgItem->setText( output.str().c_str() );
-    }
-    delete &output;
+    log_ << message << std::endl;
+    LoggerItem* item = new LoggerItem( this );
+    item->setData( 0, Qt::UserRole, counter_++ );
+    item->setText( 0, QTime::currentTime().toString() );
+    item->setText( 1, simulation_.GetTimeAsString() );
+    item->setText( 2, message.c_str() );
+    item->setForeground( 0, color );
+    item->setForeground( 1, color );
+    item->setForeground( 2, color );
+    insertTopLevelItem( 0, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,20 +148,4 @@ void Logger::End( std::stringstream& output )
 void Logger::contextMenuEvent( QContextMenuEvent* event )
 {
     popupMenu_->popup( event->globalPos() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Logger::LessThan
-// Created: JSR 2012-10-05
-// -----------------------------------------------------------------------------
-bool Logger::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
-{
-    QStandardItem* itemLeft = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( left ) );
-    QStandardItem* itemRight = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( right ) );
-    if( itemLeft && itemRight)
-    {
-        valid = true;
-        return itemLeft->data( Roles::OtherRole ).toUInt() < itemRight->data( Roles::OtherRole ).toUInt();
-    }
-    return false;
 }

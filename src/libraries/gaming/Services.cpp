@@ -65,7 +65,7 @@ bool Services::RequireService( const std::string& name ) const
 {
     if( ! HasService( name ) )
     {
-        logger_.Error() << "Host does not implement service '" << name << "'";
+        logger_.Error( std::string( "Host does not implement service '" ) + name + "'" );
         return false;
     }
     return true;
