@@ -18,7 +18,7 @@
 MaintenanceStatusWidget::MaintenanceStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< kernel::MaintenanceStates_ABC >( parent, controllers, factory )
 {
-    display_->AddGroup( tools::translate( "MaintenanceStates", "Maintenance system state" ) )
+    display_->AddGroup( "" )
                 .AddLabel( tools::findTranslation( "MaintenanceStates", "System status" ) )
                 .AddLabel( tools::findTranslation( "MaintenanceStates", "Working scheme" ) )
                 .AddLabel( tools::findTranslation( "MaintenanceStates", "Priorities" ) )
@@ -41,7 +41,7 @@ MaintenanceStatusWidget::~MaintenanceStatusWidget()
 MedicalStatusWidget::MedicalStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< MedicalStates >( parent, controllers, factory )
 {
-    display_->AddGroup( tools::translate( "MedicalStates", "Medical system state" ) )
+    display_->AddGroup( "" )
                 .AddLabel( tools::findTranslation( "MedicalStates", "System status" ) )
                 .AddLabel( tools::findTranslation( "MedicalStates", "Priorities" ) )
                 .AddLabel( tools::findTranslation( "MedicalStates", "Tactical priorities" ) );
@@ -63,7 +63,7 @@ MedicalStatusWidget::~MedicalStatusWidget()
 SupplyStatusWidget::SupplyStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : LogisticStatusWidget_ABC< SupplyStates >( parent, controllers, factory )
 {
-    display_->AddGroup( tools::translate( "SupplyStates", "Supply system state" ) )
+    display_->AddGroup( "" )
                 .AddLabel( tools::findTranslation( "SupplyStates", "System status" ) );
 }
 

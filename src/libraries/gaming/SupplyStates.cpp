@@ -107,8 +107,17 @@ Dotation* SupplyStates::GetConnectedNetworkStock() const
 // -----------------------------------------------------------------------------
 void SupplyStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "SupplyStates", "Supply system state" ) )
+    displayer.Group( "" )
                 .Display( tools::translate( "SupplyStates", "System status" ),
                     bChainEnabled_ ? tools::translate( "SupplyStates", "Enabled" )
                                    : tools::translate( "SupplyStates", "Disabled" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::IsChainEnabled
+// Created: MMC 2013-01-10
+// -----------------------------------------------------------------------------
+bool SupplyStates::IsChainEnabled() const
+{
+    return bChainEnabled_;
 }

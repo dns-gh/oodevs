@@ -749,10 +749,6 @@
         <translation>Chaîne maintenance/Régime de travail</translation>
     </message>
     <message>
-        <source>Maintenance system state</source>
-        <translation>Etat de la chaîne maintenance</translation>
-    </message>
-    <message>
         <source>System status</source>
         <translation>Etat du système</translation>
     </message>
@@ -798,10 +794,6 @@
     <message>
         <source>Medical system/Tactical priorities</source>
         <translation>Chaîne médicale/Priorités tactiques</translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation>Etat de la chaîne médicale</translation>
     </message>
     <message>
         <source>System status</source>
@@ -1298,20 +1290,16 @@
         <translation>Chaîne ravitaillement/Chaîne activée</translation>
     </message>
     <message>
-        <source>Supply system state</source>
-        <translation>Etat de la chaîne ravitaillement</translation>
-    </message>
-    <message>
         <source>System status</source>
         <translation>Etat du système</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Activée</translation>
+        <translation>Enabled</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Désactivée</translation>
+        <translationDésactivée</translation>
     </message>
 </context>
 <context>

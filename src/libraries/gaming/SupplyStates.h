@@ -61,6 +61,11 @@ public:
     Dotation* GetConnectedNetworkStock() const;
     //@}
 
+    //! @name Accessors
+    //@{
+    bool IsChainEnabled() const;
+    //@}
+
 private:
     //! @name Helpers
     //@{

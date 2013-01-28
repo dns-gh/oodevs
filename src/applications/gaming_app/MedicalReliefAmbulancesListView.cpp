@@ -12,6 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Availability.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalReliefAmbulancesListView constructor
@@ -38,22 +39,40 @@ MedicalReliefAmbulancesListView::~MedicalReliefAmbulancesListView()
     // NOTHING
 }
 
+namespace
+{
+    struct MergeAvailabilities
+    {
+        std::map< std::string, kernel::Availability > availabilities_;
+
+        void operator()( const kernel::Entity_ABC& element )
+        {
+            if( const MedicalStates* pState = element.Retrieve< MedicalStates >() )
+                for( unsigned int i = 0; i < pState->dispoReleveAmbulances_.size(); ++i )
+                {
+                    kernel::Availability curAvailability( 0
+                        , pState->dispoReleveAmbulances_[ i ].total_
+                        , pState->dispoReleveAmbulances_[ i ].available_
+                        , pState->dispoReleveAmbulances_[ i ].atWork_
+                        , pState->dispoReleveAmbulances_[ i ].atRest_ );
+                    availabilities_[ pState->dispoReleveAmbulances_[ i ].type_->GetName() ] += curAvailability;
+                }
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MedicalReliefAmbulancesListView::NotifyUpdated
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 void MedicalReliefAmbulancesListView::NotifyUpdated( const MedicalStates& a )
 {
-    if( ShouldUpdate( a ) )
-    {
-        ResizeModelOnNewContent( static_cast< int >( a.dispoReleveAmbulances_.size() ) );
-        for( unsigned int i = 0; i < a.dispoReleveAmbulances_.size(); ++i )
-        {
-            model_.item( i, 0 )->setText( QString( a.dispoReleveAmbulances_[ i ].type_->GetName().c_str() ) );
-            model_.item( i, 1 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].total_ ) );
-            model_.item( i, 2 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].available_ ) );
-            model_.item( i, 3 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].atWork_ ) );
-            model_.item( i, 4 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].atRest_ ) );
-        }
-    }
+    if( !isVisible() || !selected_ )
+        return;
+    if( !HasRetrieveForLogistic( *selected_, a ) )
+        return;
+
+    MergeAvailabilities merged;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
+    DisplayModelWithAvailabilities( merged.availabilities_ );
 }

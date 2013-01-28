@@ -753,10 +753,6 @@
         <translation>Maintenance system</translation>
     </message>
     <message>
-        <source>Maintenance system state</source>
-        <translation>Maintenance system state</translation>
-    </message>
-    <message>
         <source>System status</source>
         <translation>System status</translation>
     </message>
@@ -798,10 +794,6 @@
     <message>
         <source>Medical system/Tactical priorities</source>
         <translation>Medical system/Tactical priorities</translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation>Medical system state</translation>
     </message>
     <message>
         <source>System status</source>
@@ -1296,10 +1288,6 @@
     <message>
         <source>Supply system/System enabled</source>
         <translation>Supply system/System enabled</translation>
-    </message>
-    <message>
-        <source>Supply system state</source>
-        <translation>Supply system state</translation>
     </message>
     <message>
         <source>System status</source>

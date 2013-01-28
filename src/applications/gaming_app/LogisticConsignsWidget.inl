@@ -33,7 +33,7 @@ void LogisticConsignsWidget< Consign, Extension >::showEvent( QShowEvent* event 
     const kernel::Entity_ABC* entity = selected_;
     selected_ = 0;
     NotifySelected( entity );
-    Q3VBox::showEvent( event );
+    QWidget::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,17 +58,48 @@ QTreeWidgetItem* LogisticConsignsWidget< Consign, Extension >::FindTreeWidgetIte
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget::AddEntityConsignsToSet
+// Created: MMC 2013-01-17
+// -----------------------------------------------------------------------------
+template< typename Consign, typename Extension >
+void LogisticConsignsWidget< Consign, Extension >::AddEntityConsignsToSet( kernel::SafePointer< kernel::Entity_ABC > entity, std::set< const Consign* >& requestedConsigns, std::set< const Consign* >& handledConsigns )
+{
+    if( !entity )
+        return;
+    const Extension* pConsigns = entity->Retrieve< Extension >();
+    if( pConsigns )
+    {
+        requestedConsigns.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
+        handledConsigns.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget::NotifyUpdated
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename Consign, typename Extension >
 void LogisticConsignsWidget< Consign, Extension >::NotifyUpdated( const Extension& consigns )
 {
-    if( selected_ && selected_->Retrieve< Extension >() == &consigns )
-    {
-        DisplayConsigns( consigns.requested_, *pConsignTreeView_->invisibleRootItem() );
-        DisplayConsigns( consigns.handled_, *pConsignHandledTreeView_->invisibleRootItem() );
-    }
+    if( !selected_ )
+        return;
+    if( logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( *selected_, consigns ) )
+        UpdateConsigns();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget::UpdateConsigns
+// Created: SBO 2007-02-19
+// -----------------------------------------------------------------------------
+template< typename Consign, typename Extension >
+void LogisticConsignsWidget< Consign, Extension >::UpdateConsigns()
+{
+    if( !selected_ )
+        return;
+    AddLogisticConsignsToSetFunctor< Consign, Extension > merge;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< AddLogisticConsignsToSetFunctor< Consign, Extension > >( *selected_, merge );
+    DisplayConsigns( merge.requestedConsigns_, *pConsignTreeView_->invisibleRootItem() );
+    DisplayConsigns( merge.handledConsigns_, *pConsignHandledTreeView_->invisibleRootItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,16 +184,11 @@ void LogisticConsignsWidget< Consign, Extension >::NotifyUpdated( const Consign&
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename Consign, typename Extension >
-void LogisticConsignsWidget< Consign, Extension >::NotifySelected( const kernel::Entity_ABC* element )
+void LogisticConsignsWidget< Consign, Extension >::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    selected_ = element;
-    if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )
-    {
-        show();
-        NotifyUpdated( *extension );
-    }
-    else
-        hide();
+    selected_ = entity;
+    if( entity )
+        UpdateConsigns();
 }
 
 // -----------------------------------------------------------------------------

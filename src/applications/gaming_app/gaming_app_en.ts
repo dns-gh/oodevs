@@ -1001,7 +1001,7 @@ Reason: %3
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Requests</translation>
+        <translation type="unfinished">Requests</translation>
     </message>
 </context>
 <context>
@@ -1095,12 +1095,16 @@ Reason: %3
         <translation>Requests</translation>
     </message>
     <message>
-        <source>Stocks &amp;&amp; Quotas</source>
-        <translation>Stocks &amp;&amp; Quotas</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transporters</source>
-        <translation>Transporters</translation>
+        <translation type="unfinished">Transporters</translation>
     </message>
 </context>
 <context>
@@ -1776,13 +1780,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>MaintenanceStates</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation>Maintenance system state</translation>
-    </message>
-</context>
-<context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
@@ -1892,13 +1889,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Resting</source>
         <translation>Resting</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalStates</name>
-    <message>
-        <source>Medical system state</source>
-        <translation>Medical system state</translation>
     </message>
 </context>
 <context>
@@ -2848,7 +2838,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>SupplyStates</name>
     <message>
-        <source>Supply system state</source>
+        <source>Chain status</source>
         <translation>Supply system state</translation>
     </message>
 </context>

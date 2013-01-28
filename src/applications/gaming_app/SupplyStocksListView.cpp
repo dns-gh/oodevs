@@ -14,7 +14,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Dotation.h"
-#include "gaming/LogisticHelpers.h"
 #include "gaming/Tools.h"
 #include <boost/bind.hpp>
 #include <vector>
@@ -46,10 +45,10 @@ SupplyStocksListView::~SupplyStocksListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStocksListView::NotifyUpdated
+// Name: SupplyStocksListView::Update
 // Created: MMC 2012-10-02
 // -----------------------------------------------------------------------------
-void SupplyStocksListView::NotifyUpdated( const tools::Resolver< Dotation >& dotations )
+void SupplyStocksListView::Update( const tools::Resolver< Dotation >& dotations )
 {
     ResizeModelOnNewContent( dotations.Count() );
     int i = 0;
@@ -69,8 +68,12 @@ void SupplyStocksListView::NotifyUpdated( const tools::Resolver< Dotation >& dot
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::NotifyUpdated( const SupplyStates& supplyStates )
 {
-    if( ShouldUpdate( supplyStates ) )
-        NotifyUpdated( static_cast< const tools::Resolver< Dotation >& >( supplyStates ) );
+    if( !isVisible() )
+        return;
+    if( !selected_ )
+        return;
+    if( HasRetrieveForLogistic( *selected_, supplyStates ) )
+        UpdateSelected( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,24 +82,24 @@ void SupplyStocksListView::NotifyUpdated( const SupplyStates& supplyStates )
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
 {
-    if( entity )
-    {
-        if( entity->Retrieve< SupplyStates >() )
-            NotifyUpdated( entity->Get< SupplyStates >() );
-        else if( IsLogisticBase( *entity ) )
-        {
-            dotations_.clear();
-            tools::Resolver< Dotation > dotations;
-            VisitBaseStocksDotations( *entity, boost::bind( &SupplyStocksListView::TotalizeStocks, this, _1 ) );
-            for( std::map< unsigned long, Dotation >::iterator it = dotations_.begin(); it != dotations_.end(); ++it )
-                dotations.Register( it->second.type_->GetId(), it->second );
-            NotifyUpdated( dotations );
-        }
-        show();
-    }
-    else
-        hide();
-    ResourcesListView_ABC::UpdateSelected( entity );
+    UpdateSelected( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::NotifySelected
+// Created: MMC 2013-01-23
+// -----------------------------------------------------------------------------
+void SupplyStocksListView::UpdateSelected( const kernel::Entity_ABC* entity )
+{
+    selected_ = entity;
+    if( !entity )
+        return;
+    dotations_.clear();
+    tools::Resolver< Dotation > dotations;
+    VisitBaseStocksDotations( *entity, boost::bind( &SupplyStocksListView::TotalizeStocks, this, _1 ) );
+    for( std::map< unsigned long, Dotation >::iterator it = dotations_.begin(); it != dotations_.end(); ++it )
+        dotations.Register( it->second.type_->GetId(), it->second );
+    Update( dotations );
 }
 
 // -----------------------------------------------------------------------------

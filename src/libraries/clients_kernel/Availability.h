@@ -29,6 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Availability();
+             Availability( const kernel::EquipmentType* type_, unsigned int total, unsigned int available, unsigned int atWork, unsigned int atRest );
              template< typename Message >
                  Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
                 : type_     ( & resolver.Get( message.equipment().id() ) )
@@ -43,6 +44,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
+    void operator+=( const Availability& other );
     //@}
 
 public:

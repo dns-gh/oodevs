@@ -9,10 +9,8 @@
 
 #include "gaming_pch.h"
 #include "LogisticHelpers.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/EntityHelpers.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Dotation.h"
+#include "gaming/LogisticLinks.h"
 #include "gaming/SupplyStates.h"
 
 using namespace kernel;
@@ -20,7 +18,6 @@ using namespace EntityHelpers;
 
 namespace logistic_helpers
 {
-
     // -----------------------------------------------------------------------------
     // Name: VisitBaseStocksDotations
     // Created: MMC 2012-10-10
@@ -45,4 +42,25 @@ namespace logistic_helpers
         }
     }
 
+    // -----------------------------------------------------------------------------
+    // Name: CheckEntityAndSubordinatesUpToBaseLog
+    // Created: MMC 2012-01-23
+    // -----------------------------------------------------------------------------
+    bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > func )
+    {
+        if( func( entity ) )
+            return true;
+        if( entity.Retrieve< TacticalHierarchies >() )
+        {
+            tools::Iterator< const Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const Entity_ABC& child = it.NextElement();
+                if( !IsLogisticBase( child ) )
+                    if( CheckEntityAndSubordinatesUpToBaseLog( child, func ) )
+                        return true;
+            }
+        }
+        return false;
+    }
 }

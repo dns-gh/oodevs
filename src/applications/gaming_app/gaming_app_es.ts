@@ -1017,7 +1017,7 @@ Reason: %3
     </message>
     <message>
         <source>Equipment availabilities</source>
-        <translation>Disponibilidad de equipos</translation>
+        <translation>Equipos disponibles</translation>
     </message>
 </context>
 <context>
@@ -1093,15 +1093,19 @@ Reason: %3
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consignas</translation>
+        <translation type="unfinished">Consignas</translation>
     </message>
     <message>
-        <source>Stocks &amp;&amp; Quotas</source>
-        <translation>Stocks &amp;&amp; Cuotas</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transporters</source>
-        <translation>Trasnportes</translation>
+        <translation>Transportes</translation>
     </message>
 </context>
 <context>
@@ -1777,13 +1781,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>MaintenanceStates</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation>Estado del sistema de mantenimiento</translation>
-    </message>
-</context>
-<context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
@@ -1893,13 +1890,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Resting</source>
         <translation>En reposo</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalStates</name>
-    <message>
-        <source>Medical system state</source>
-        <translation>Estado del sistema médico</translation>
     </message>
 </context>
 <context>
@@ -2853,7 +2843,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>SupplyStates</name>
     <message>
-        <source>Supply system state</source>
+        <source>Chain status</source>
         <translation>Estado de sistema de abastecimiento</translation>
     </message>
 </context>

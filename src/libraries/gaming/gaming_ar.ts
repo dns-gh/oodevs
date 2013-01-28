@@ -753,10 +753,6 @@
         <translation type="unfinished">صيانة النظام</translation>
     </message>
     <message>
-        <source>Maintenance system state</source>
-        <translation type="unfinished">صيانة نظام الدولة</translation>
-    </message>
-    <message>
         <source>System status</source>
         <translation type="unfinished">حالة النظام</translation>
     </message>
@@ -798,10 +794,6 @@
     <message>
         <source>Medical system/Tactical priorities</source>
         <translation type="unfinished">أولويات النظام الطبي/التكتيكي</translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation type="unfinished">حالة النظام الطبي</translation>
     </message>
     <message>
         <source>System status</source>
@@ -1296,10 +1288,6 @@
     <message>
         <source>Supply system/System enabled</source>
         <translation type="unfinished">توريد نظام نظام تمكين</translation>
-    </message>
-    <message>
-        <source>Supply system state</source>
-        <translation type="unfinished">توريد نظام الدولة</translation>
     </message>
     <message>
         <source>System status</source>

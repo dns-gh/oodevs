@@ -24,6 +24,7 @@ InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& cont
     controllers_.Register( *this );
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new LogisticConsignsWidget< LogFuneralConsign, LogFuneralConsigns >( tabs, controllers, extractor ), tools::translate( "InfoFuneralDialog", "Consigns" ) );
+    setMinimumWidth( 400 );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,14 +36,27 @@ InfoFuneralDialog::~InfoFuneralDialog()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    struct FuneralRevelant
+    {
+        FuneralRevelant() {}
+        bool operator()( const kernel::Entity_ABC& element )
+        {
+            const LogFuneralConsigns* consigns = element.Retrieve< LogFuneralConsigns >();
+            return ( consigns && consigns->IsRelevant() );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: InfoFuneralDialog::ShouldDisplay
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 bool InfoFuneralDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    const LogFuneralConsigns* consigns = element.Retrieve< LogFuneralConsigns >();
-    return ( consigns && consigns->IsRelevant() );
+    FuneralRevelant funeralRevelant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, funeralRevelant );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,5 +65,6 @@ bool InfoFuneralDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 // -----------------------------------------------------------------------------
 void InfoFuneralDialog::NotifySelected( const kernel::Entity_ABC* element )
 {
-    SetEnabled( element && ShouldDisplay( *element ) );
+    if( element )
+        SetEnabled( element && ShouldDisplay( *element ) );
 }

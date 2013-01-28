@@ -53,7 +53,6 @@ private:
     //! @name Member data
     //@{
     QTabWidget* tabs_;
-    SupplyStocksListView* supplyStocksListView_;
     SupplyQuotasWidget* supplyQuotasWidget_;
     //@}
 };

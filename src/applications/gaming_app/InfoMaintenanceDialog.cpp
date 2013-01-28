@@ -24,12 +24,20 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
+    QWidget* pHaulersRepairersWidget = new QWidget( tabs );
+    QVBoxLayout* pHaulersRepairersLayout = new QVBoxLayout();
+    pHaulersRepairersLayout->addWidget( new MaintenanceHaulersListView( tabs, controllers ) );
+    pHaulersRepairersLayout->addWidget( new MaintenanceRepairersListView( tabs, controllers ) );
+    pHaulersRepairersWidget->setLayout( pHaulersRepairersLayout );
+
+    QWidget* statusWidget = new QWidget();
+    QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
+    statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers, factory ) );
+
     tabs->addTab( new LogisticConsignsWidget< LogMaintenanceConsign, LogMaintenanceConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
-    Q3VBox* box = new Q3VBox( tabs );
-    new MaintenanceHaulersListView( box, controllers );
-    new MaintenanceRepairersListView( box, controllers );
-    tabs->addTab( box, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
-    new MaintenanceStatusWidget( RootWidget(), controllers, factory );
+    tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
+    tabs->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
+    setMinimumWidth( 420 );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,12 +49,35 @@ InfoMaintenanceDialog::~InfoMaintenanceDialog()
     // NOTHING
 }
 
+namespace
+{
+    struct MaintenanceRevelant
+    {
+        MaintenanceRevelant() {}
+        bool operator()( const kernel::Entity_ABC& element )
+        {
+            const LogMaintenanceConsigns* consigns = element.Retrieve< LogMaintenanceConsigns >();
+            return ( ( consigns && consigns->IsRelevant() ) || element.Retrieve< kernel::MaintenanceStates_ABC >() );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: InfoMaintenanceDialog::ShouldDisplay
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 bool InfoMaintenanceDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    const LogMaintenanceConsigns* consigns = element.Retrieve< LogMaintenanceConsigns >();
-    return ( consigns && consigns->IsRelevant() ) || element.Retrieve< kernel::MaintenanceStates_ABC >();
+    MaintenanceRevelant maintenanceRevelant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, maintenanceRevelant );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMaintenanceDialog::NotifySelected
+// Created: MMC 2013-01-09
+// -----------------------------------------------------------------------------
+void InfoMaintenanceDialog::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    if( entity )
+        InfoDialog< kernel::MaintenanceStates_ABC >::NotifySelected( entity );
 }

@@ -29,18 +29,22 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, g
     : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
 {
     tabs_ = new QTabWidget( RootWidget() );
-    tabs_->addTab( new LogisticConsignsWidget< LogSupplyConsign, LogSupplyConsigns >( tabs_, controllers, extractor ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
 
-    Q3VBox* sqbox = new Q3VBox( tabs_ );
-    supplyStocksListView_ = new SupplyStocksListView( sqbox, controllers );
-    supplyQuotasWidget_ = new SupplyQuotasWidget( sqbox, controllers, factory );
-    tabs_->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
+    QWidget* transportersWidget = new QWidget();
+    QVBoxLayout* transporterslayout = new QVBoxLayout( transportersWidget );
+    transporterslayout->addWidget( new SupplyTransportersListView( this, controllers ) );
 
-    Q3VBox* tbox = new Q3VBox( tabs_ );
-    new SupplyTransportersListView( tbox, controllers );
-    tabs_->addTab( tbox, tools::translate( "InfoSupplyDialog", "Transporters" ) );
+    QWidget* statusWidget = new QWidget();
+    QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
+    statusLayout->addWidget( new SupplyStatusWidget( this, controllers, factory ) );
 
-    new SupplyStatusWidget( RootWidget(), controllers, factory );
+    supplyQuotasWidget_ = new SupplyQuotasWidget( this, controllers, factory );
+    tabs_->addTab( new LogisticConsignsWidget< LogSupplyConsign, LogSupplyConsigns >( this, controllers, extractor ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
+    tabs_->addTab( new SupplyStocksListView( this, controllers ), tools::translate( "InfoSupplyDialog", "Stocks" ) );
+    tabs_->addTab( supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
+    tabs_->addTab( transportersWidget, tools::translate( "InfoSupplyDialog", "Transporters" ) );
+    tabs_->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
+    setMinimumWidth( 520 );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,13 +56,27 @@ InfoSupplyDialog::~InfoSupplyDialog()
     // NOTHING
 }
 
+namespace
+{
+    struct SupplyRevelant
+    {
+        SupplyRevelant() {}
+        bool operator()( const kernel::Entity_ABC& element )
+        {
+            const LogSupplyConsigns* consigns = element.Retrieve< LogSupplyConsigns >();
+            return ( ( consigns && consigns->IsRelevant() ) || element.Retrieve< SupplyStates >() );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: InfoSupplyDialog::ShouldDisplay
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 {
-    return entity.Retrieve< SupplyStates >() || IsLogisticBase( entity );
+    SupplyRevelant supplyRevelant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( entity, supplyRevelant );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +85,15 @@ bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    InfoDialog< SupplyStates >::NotifySelected( entity );
-    tabs_->setCurrentIndex( 0 );
+    if( entity )
+    {
+        if( kernel::EntityHelpers::IsLogisticBase( *entity ) )      
+        {
+            if( tabs_->widget( 2 ) != supplyQuotasWidget_ )
+                tabs_->insertTab( 2, supplyQuotasWidget_, tools::translate( "InfoSupplyDialog", "Quotas" ) );
+        }
+        else if( tabs_->widget( 2 ) == supplyQuotasWidget_ )
+            tabs_->removeTab( 2 );
+        InfoDialog< SupplyStates >::NotifySelected( entity );
+    }
 }

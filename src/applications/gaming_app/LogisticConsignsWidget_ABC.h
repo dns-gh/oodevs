@@ -21,7 +21,7 @@
 */
 // Created: MMC 2012-10-29
 // =============================================================================
-class LogisticConsignsWidget_ABC : public Q3VBox
+class LogisticConsignsWidget_ABC : public QWidget
                                  , public tools::Observer_ABC
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
 {
@@ -33,7 +33,7 @@ public:
              LogisticConsignsWidget_ABC( QWidget* parent, kernel::DisplayExtractor_ABC& extractor );
     virtual ~LogisticConsignsWidget_ABC();
     //@}
-
+    
 public slots:
     //! @name Slots
     //@{

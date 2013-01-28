@@ -749,10 +749,6 @@
         <translation>Sistema de mantenimiento/Esquema de trabajo</translation>
     </message>
     <message>
-        <source>Maintenance system state</source>
-        <translation>Estado del sistema de mantenimiento</translation>
-    </message>
-    <message>
         <source>System status</source>
         <translation>Estado del sistema</translation>
     </message>
@@ -798,10 +794,6 @@
     <message>
         <source>Medical system/Tactical priorities</source>
         <translation>Sistema médico/Prioridades tácticos</translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation>Estado del sistema médico</translation>
     </message>
     <message>
         <source>System status</source>
@@ -1298,8 +1290,8 @@
         <translation>Sistema de abastecimiento/Sistema habilitado</translation>
     </message>
     <message>
-        <source>Supply system state</source>
-        <translation>Estado de sistema de abastecimiento</translation>
+        <source>System status</source>
+        <translation>Estado del sistema</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -1308,10 +1300,6 @@
     <message>
         <source>Disabled</source>
         <translation>Deshabilitado</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Estado del sistema</translation>
     </message>
 </context>
 <context>

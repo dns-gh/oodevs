@@ -1098,8 +1098,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Consignes</translation>
     </message>
     <message>
-        <source>Stocks &amp;&amp; Quotas</source>
-        <translation>Stocks et Quotas</translation>
+        <source>Stocks</source>
+        <translation>Stocks</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
+        <translation>Quotas</translation>
     </message>
     <message>
         <source>Transporters</source>
@@ -1780,13 +1784,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>MaintenanceStates</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation>Etat de la chaîne maintenance</translation>
-    </message>
-</context>
-<context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
@@ -1896,13 +1893,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalStates</name>
-    <message>
-        <source>Medical system state</source>
-        <translation>Etat de la chaîne médicale</translation>
     </message>
 </context>
 <context>
@@ -2856,7 +2846,7 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>SupplyStates</name>
     <message>
-        <source>Supply system state</source>
+        <source>Chain status</source>
         <translation>Etat de la chaîne ravitaillement</translation>
     </message>
 </context>

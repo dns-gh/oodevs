@@ -11,6 +11,7 @@
 #include "MedicalDoctorsListView.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Availability.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalDoctorsListView constructor
@@ -37,22 +38,40 @@ MedicalDoctorsListView::~MedicalDoctorsListView()
     // NOTHING
 }
 
+namespace
+{
+    struct MergeAvailabilities
+    {
+        std::map< std::string, kernel::Availability > availabilities_;
+
+        void operator()( const kernel::Entity_ABC& element )
+        {
+            if( const MedicalStates* pState = element.Retrieve< MedicalStates >() )
+                for( unsigned int i = 0; i < pState->dispoDoctors_.size(); ++i )
+                {
+                    kernel::Availability curAvailability( 0
+                        , pState->dispoDoctors_[ i ].total_
+                        , pState->dispoDoctors_[ i ].available_
+                        , pState->dispoDoctors_[ i ].atWork_
+                        , pState->dispoDoctors_[ i ].atRest_ );
+                    availabilities_[ pState->dispoDoctors_[ i ].type_->GetName() ] += curAvailability;
+                }
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MedicalDoctorsListView::NotifyUpdated
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 void MedicalDoctorsListView::NotifyUpdated( const MedicalStates& a )
 {
-    if( ShouldUpdate( a ) )
-    {
-        ResizeModelOnNewContent( static_cast< int >( a.dispoDoctors_.size() ) );
-        for( unsigned int i = 0; i < a.dispoDoctors_.size(); ++i )
-        {
-            model_.item( i, 0 )->setText( QString( a.dispoDoctors_[ i ].type_->GetName().c_str() ) );
-            model_.item( i, 1 )->setText( QString::number( a.dispoDoctors_[ i ].total_ ) );
-            model_.item( i, 2 )->setText( QString::number( a.dispoDoctors_[ i ].available_ ) );
-            model_.item( i, 3 )->setText( QString::number( a.dispoDoctors_[ i ].atWork_ ) );
-            model_.item( i, 4 )->setText( QString::number( a.dispoDoctors_[ i ].atRest_ ) );
-        }
-    }
+    if( !isVisible() || !selected_ )
+        return;
+    if( !HasRetrieveForLogistic( *selected_, a ) )
+        return;
+
+    MergeAvailabilities merged;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
+    DisplayModelWithAvailabilities( merged.availabilities_ );
 }

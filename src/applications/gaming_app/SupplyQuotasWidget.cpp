@@ -97,10 +97,6 @@ void SupplyQuotasWidget::UpdateSuperiors( const LogisticLinks& links )
         const Entity_ABC* pCurrent = &link.GetSuperior();
         superior_->AddItem( pCurrent->GetName(), pCurrent );
     }
-    if( superior_->count() > 0 )
-        hboxSuperior_->show();
-    else
-        hboxSuperior_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,10 +130,6 @@ void SupplyQuotasWidget::UpdateQuotas( const LogisticLinks& links )
             }
         }
     }
-    if( row > 0 )
-        tableView_->show();
-    else
-        tableView_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,9 +156,4 @@ void SupplyQuotasWidget::NotifySelected( const Entity_ABC* pEntity )
         pLinks_ = pEntity->Retrieve< LogisticLinks >();
     if( pLinks_ )
         NotifyUpdated( *pLinks_ );
-    else
-    {
-        hboxSuperior_->hide();
-        tableView_->hide();
-    }
 }

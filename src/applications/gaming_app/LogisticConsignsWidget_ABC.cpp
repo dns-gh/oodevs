@@ -17,15 +17,19 @@
 // Created: MMC 2012-10-29
 // -----------------------------------------------------------------------------
 LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel::DisplayExtractor_ABC& extractor )
-    : Q3VBox( parent )
+    : QWidget( parent )
     , extractor_( extractor )
 {
+    QVBoxLayout* pLayout = new QVBoxLayout( this );
+    pLayout->setSizeConstraint( QLayout::SetMaximumSize );
+
     pConsignTreeView_ = CreateTreeWidget( tools::translate( "LogisticConsignsWidget_ABC", "Logistic requests" ) );
     gui::LinkItemDelegate* consignsDelegate = new gui::LinkItemDelegate( pConsignTreeView_ );
     pConsignTreeView_->setItemDelegateForColumn( 1, consignsDelegate );
     connect( consignsDelegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                              , SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     connect( pConsignTreeView_, SIGNAL( itemExpanded( QTreeWidgetItem* ) ), SLOT( OnItemExpanded( QTreeWidgetItem* ) ) );
+    pLayout->addWidget( pConsignTreeView_ );
 
     pConsignHandledTreeView_ = CreateTreeWidget( tools::translate( "LogisticConsignsWidget_ABC", "Processing consigns" ) );
     gui::LinkItemDelegate* handledDelegate = new gui::LinkItemDelegate( pConsignHandledTreeView_ );
@@ -33,6 +37,7 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     connect( handledDelegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )
                             , SLOT( OnHandledLinkClicked( const QString&, const QModelIndex& ) ) );
     connect( pConsignHandledTreeView_, SIGNAL( itemExpanded( QTreeWidgetItem* ) ), SLOT( OnItemExpanded( QTreeWidgetItem* ) ) );
+    pLayout->addWidget( pConsignHandledTreeView_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +117,7 @@ QTreeWidget* LogisticConsignsWidget_ABC::CreateTreeWidget( const QString& title 
     QStringList headers; headers << title << "";
     pTreeView->setHeaderLabels( headers );
     pTreeView->setRootIsDecorated( false );
-    pTreeView->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    pTreeView->header()->setResizeMode( 0, QHeaderView::Stretch );
     pTreeView->setMouseTracking( true );
     pTreeView->setAllColumnsShowFocus( true );
     return pTreeView;

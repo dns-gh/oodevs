@@ -12,7 +12,6 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Availability.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceHaulersListView constructor
@@ -39,23 +38,39 @@ MaintenanceHaulersListView::~MaintenanceHaulersListView()
     // NOTHING
 }
 
+namespace
+{
+    struct MergeAvailabilities
+    {
+        std::map< std::string, kernel::Availability > availabilities_;
+
+        void operator()( const kernel::Entity_ABC& element )
+        {
+            if( const kernel::MaintenanceStates_ABC* pState = element.Retrieve< kernel::MaintenanceStates_ABC >() )
+                for( unsigned int i = 0; i < pState->GetDispoHaulers().size(); ++i )
+                {
+                    kernel::Availability curAvailability( 0
+                        , pState->GetDispoHaulers()[ i ].total_
+                        , pState->GetDispoHaulers()[ i ].available_
+                        , pState->GetDispoHaulers()[ i ].atWork_
+                        , pState->GetDispoHaulers()[ i ].atRest_ );
+                    availabilities_[ pState->GetDispoHaulers()[ i ].type_->GetName() ] += curAvailability;
+                }
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MaintenanceHaulersListView::NotifyUpdated
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 void MaintenanceHaulersListView::NotifyUpdated( const kernel::MaintenanceStates_ABC& a )
 {
-    if( ShouldUpdate( a ) )
-    {
-        ResizeModelOnNewContent( static_cast< int >( a.GetDispoHaulers().size() ) );
-        for( unsigned int i = 0; i < a.GetDispoHaulers().size(); ++i )
-        {
-            model_.item( i, 0 )->setText( QString( a.GetDispoHaulers()[ i ].type_->GetName().c_str() ) );
-            model_.item( i, 1 )->setText( QString::number( a.GetDispoHaulers()[ i ].total_ ) );
-            model_.item( i, 2 )->setText( QString::number( a.GetDispoHaulers()[ i ].available_ ) );
-            model_.item( i, 3 )->setText( QString::number( a.GetDispoHaulers()[ i ].atWork_ ) );
-            model_.item( i, 4 )->setText( QString::number( a.GetDispoHaulers()[ i ].atRest_ ) );
-        }
-    }
+    if( !isVisible() || !selected_ )
+        return;
+    if( !HasRetrieveForLogistic( *selected_, a ) )
+        return;
+    MergeAvailabilities merged;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
+    DisplayModelWithAvailabilities( merged.availabilities_ );
 }
-

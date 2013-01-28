@@ -17,7 +17,9 @@
 #include "clients_kernel/SafePointer.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogConsignDisplayer_ABC.h"
+#include "gaming/LogisticHelpers.h"
 #include <boost/bind.hpp>
+
 
 // =============================================================================
 /** @class  LogisticConsignsWidget
@@ -37,7 +39,7 @@ public:
              LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
     virtual ~LogisticConsignsWidget();
     //@}
-
+    
     //! @name Operations
     //@{
     virtual void DisplayConsign( const Consign& consign, QTreeWidgetItem* pCurrentItem );
@@ -45,6 +47,7 @@ public:
     virtual void DisplayItem( const QString& key, const QString& value );
     virtual void DisplaySubItemValues( const QString& key, const QString& subKey,
                                        const QMap< QString, T_OrderedValues >& subValues );
+    void AddEntityConsignsToSet( kernel::SafePointer< kernel::Entity_ABC > entity, std::set< const Consign* >& requestedConsigns, std::set< const Consign* >& handledConsigns );
     //@}
 
 private:
@@ -59,9 +62,10 @@ private:
     virtual void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Extension& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
-    virtual void NotifySelected( const kernel::Entity_ABC* agent );
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void DisplayConsigns( const std::set< const Consign* >& consigns, QTreeWidgetItem& rootItem );
     QTreeWidgetItem* FindTreeWidgetItem( const Consign& consign, QTreeWidgetItem* rootItem );
+    void UpdateConsigns();
     //@}
 
 private:
@@ -72,6 +76,25 @@ private:
     QTreeWidgetItem* currentItem_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+template< typename Consign, typename Extension >
+struct AddLogisticConsignsToSetFunctor
+{
+    std::set< const Consign* > requestedConsigns_;
+    std::set< const Consign* > handledConsigns_;
+
+    void operator()( const kernel::Entity_ABC& entity )
+    {
+        const Extension* pConsigns = entity.Retrieve< Extension >();
+        if( pConsigns )
+        {
+            requestedConsigns_.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
+            handledConsigns_.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
+        }
+    }
+};
+// =============================================================================
 
 #include "LogisticConsignsWidget.inl"
 

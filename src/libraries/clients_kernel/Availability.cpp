@@ -19,7 +19,24 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Availability::Availability()
     : type_( 0 )
+    , total_( 0 )
     , available_( 0 )
+    , atWork_( 0 )
+    , atRest_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Availability::Availability
+// Created: MMC 2013-01-23
+// -----------------------------------------------------------------------------
+Availability::Availability( const kernel::EquipmentType* type, unsigned int total, unsigned int available, unsigned int atWork, unsigned int atRest )
+    : type_( type )
+    , total_( total )
+    , available_( available )
+    , atWork_( atWork )
+    , atRest_( atRest )
 {
     // NOTHING
 }
@@ -44,4 +61,16 @@ void Availability::Display( Displayer_ABC& displayer ) const
              .Display( 0, available_ )
              .Display( 0, atWork_ )
              .Display( 0, atRest_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Availability::operator+=
+// Created: MMC 2013-01-23
+// -----------------------------------------------------------------------------
+void Availability::operator+=( const Availability& other )
+{ 
+    total_ += other.total_;
+    available_ += other.available_;
+    atWork_+= other.atWork_;
+    atRest_+= other.atRest_;
 }

@@ -15,6 +15,8 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Availability.h"
+#include "gaming/LogisticHelpers.h"
 #include <QtGui/qtreeview.h>
 
 namespace kernel
@@ -57,15 +59,17 @@ protected:
     virtual void polish();
     virtual void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Extension& a ) = 0;
+    bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a );
+    void DisplayModelWithAvailabilities( const std::map< std::string, kernel::Availability >& availabilities );
     //@}
 
     //! @name Member data
     //@{
 private:
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
 
 protected:
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStandardItemModel model_;
     //@}
 };
@@ -155,7 +159,9 @@ template< typename Extension >
 void ResourcesListView_ABC< Extension >::UpdateSelected( const kernel::Entity_ABC* entity )
 {
     selected_ = entity;
-    if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )
+    if( !entity )
+        return;
+    if( const Extension* extension = selected_->Retrieve< Extension >() )
         NotifyUpdated( *extension );
 }
 
@@ -177,6 +183,39 @@ void ResourcesListView_ABC< Extension >::ResizeModelOnNewContent( int wantedSize
                 list.append( new QStandardItem() );
             model_.appendRow( list );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HasRetrieveForLogistic
+// Created: MMC 2013-01-23
+// -----------------------------------------------------------------------------
+template< typename Extension >
+bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a )
+{
+    return logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( entity, a );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HasRetrieveForLogistic
+// Created: MMC 2013-01-23
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities( const std::map< std::string, kernel::Availability >& availabilities )
+{
+    if( !availabilities.empty() )
+    {
+        ResizeModelOnNewContent( static_cast< int >( availabilities.size() ) );
+        unsigned int index = 0;
+        for( auto it = availabilities.begin(); it != availabilities.end(); ++it )
+        {
+            model_.item( index, 0 )->setText( QString( it->first.c_str() ) );
+            model_.item( index, 1 )->setText( QString::number( it->second.total_ ) );
+            model_.item( index, 2 )->setText( QString::number( it->second.available_ ) );
+            model_.item( index, 3 )->setText( QString::number( it->second.atWork_ ) );
+            model_.item( index, 4 )->setText( QString::number( it->second.atRest_ ) );
+            ++index;
+        }
+    }
 }
 
 #endif // __ResourcesListView_ABC_h_

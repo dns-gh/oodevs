@@ -1096,8 +1096,12 @@ Reason: %3
         <translation type="unfinished">يلقي</translation>
     </message>
     <message>
-        <source>Stocks &amp;&amp; Quotas</source>
-        <translation type="unfinished">الأرصدة آند آند الحصص</translation>
+        <source>Stocks</source>
+        <translation type="unfinished">الأرصدة</translation>
+    </message>
+    <message>
+        <source>Quotas</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transporters</source>
@@ -1778,13 +1782,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>MaintenanceStates</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation type="unfinished">صيانة نظام الدولة</translation>
-    </message>
-</context>
-<context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
@@ -1894,13 +1891,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Resting</source>
         <translation type="unfinished">يستريح</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalStates</name>
-    <message>
-        <source>Medical system state</source>
-        <translation type="unfinished">حالة النظام الطبي</translation>
     </message>
 </context>
 <context>
@@ -2850,8 +2840,8 @@ This data can&apos;t be projected.</source>
 <context>
     <name>SupplyStates</name>
     <message>
-        <source>Supply system state</source>
-        <translation type="unfinished">توريد نظام الدولة</translation>
+        <source>Chain status</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

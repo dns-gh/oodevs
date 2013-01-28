@@ -37,13 +37,19 @@ public:
 public:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const tools::Resolver< Dotation >& dotations );
     virtual void NotifyUpdated( const SupplyStates& supplyStates );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void Update( const tools::Resolver< Dotation >& dotations );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     void TotalizeStocks( const Dotation& dotations );
     //@}

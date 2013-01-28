@@ -104,7 +104,7 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 // -----------------------------------------------------------------------------
 void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "MaintenanceStates", "Maintenance system state" ) )
+    displayer.Group( "" )
                 .Display( tools::translate( "MaintenanceStates", "System status" ), bChainEnabled_ ?
                           tools::translate( "MaintenanceStates", "Enabled" ) : tools::translate( "MaintenanceStates", "Disabled" ) )
                 .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%L1" ).arg( nWorkRate_ ) )
