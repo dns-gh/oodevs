@@ -71,14 +71,6 @@ private:
     void SendMsgDestruction() const;
     //@}
 
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
-    typedef T_FlowPartMap::iterator                                            IT_FlowPartMap;
-    typedef T_FlowPartMap::const_iterator                                     CIT_FlowPartMap;
-    //@}
-
 private:
     //! @name Member data
     //@{
