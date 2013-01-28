@@ -23,6 +23,7 @@
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
@@ -1641,9 +1642,13 @@ void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& algorithm ) const
 {
+    bool loadedTransporters = pion_->GetRole< transport::PHY_RoleInterface_Transported >().HasHumanTransportersToRecover();
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        if( ( *it )->CanBeTransported() )
-            algorithm.AddTransportedWeight( ( *it )->GetWeight(), ( *it )->CanBeLoaded());
+    {
+        bool canBeLoaded = ( *it )->CanBeLoaded();
+        if( ( *it )->CanBeTransported() && ( !loadedTransporters || canBeLoaded ) )
+            algorithm.AddTransportedWeight( ( *it )->GetWeight(), canBeLoaded );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -158,8 +158,6 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
     pTransporter_ = 0;
     bHasChanged_  = true;
     vLoadingPosition_.Reset();
-    if( !bTransportOnlyLoadable )
-        vHumanTransporterPosition_.Reset();
     pion_->Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoadedForTransport );
     pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     return ;//true;
