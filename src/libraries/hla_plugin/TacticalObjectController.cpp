@@ -40,7 +40,7 @@ TacticalObjectController::TacticalObjectController( dispatcher::Model_ABC& model
     , dotationResolver_( dotationResolver )
     , logger_( logger )
 {
-    // TODO
+    model_.RegisterFactory( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ TacticalObjectController::TacticalObjectController( dispatcher::Model_ABC& model
 // -----------------------------------------------------------------------------
 TacticalObjectController::~TacticalObjectController()
 {
-    // TODO
+    model_.UnregisterFactory( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
         const rpr::ForceIdentifier forceIdentifier = GetForce( object );
         TacticalObjectListener_ABC::GeometryType geom = TacticalObjectListener_ABC::eGeometryType_Polygon;
         if( object.GetLocalisation().GetTypeName()  == "line" )
-            geom = TacticalObjectListener_ABC::eGeometryType_Polygon;
+            geom = TacticalObjectListener_ABC::eGeometryType_Line;
         else if(object.GetLocalisation().GetTypeName() == "point" )
             geom = TacticalObjectListener_ABC::eGeometryType_Point;
         bool isBreachable = object.GetType().CanBeBypassed();
