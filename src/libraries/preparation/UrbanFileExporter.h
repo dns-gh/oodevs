@@ -11,15 +11,15 @@
 #define __UrbanFileExporter_h_
 
 #include <boost/noncopyable.hpp>
+#pragma warning( push, 0 )
+#include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 
 namespace kernel
 {
     class UrbanObject_ABC;
 }
 
-class OGRDataSource;
-class OGRFieldDefn;
-class OGRLayer;
 class PointProjector_ABC;
 class UrbanModel;
 
@@ -31,7 +31,6 @@ class UrbanModel;
 // =============================================================================
 class UrbanFileExporter : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -43,7 +42,7 @@ private:
     //! @name Helpers
     //@{
     void CreateStructure();
-    void CreateField( OGRFieldDefn* field );
+    void CreateField( const char* name, OGRFieldType type, int width, int precision = 0 );
     void Initialize();
     void Write();
     void WriteObject( const kernel::UrbanObject_ABC& object, unsigned int counter );

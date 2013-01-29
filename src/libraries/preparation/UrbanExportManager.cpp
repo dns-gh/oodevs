@@ -12,10 +12,6 @@
 #include "UrbanFileExporter.h"
 #include "terrain/PointProjector_ABC.h"
 #include "gdal_ogr/GdalOgrWorkspace.h"
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanExportManager constructor
@@ -45,27 +41,5 @@ UrbanExportManager::~UrbanExportManager()
 // -----------------------------------------------------------------------------
 void UrbanExportManager::Run() const
 {
-    bfs::path exportPath( directory_ );
-    if( !bfs::exists( exportPath ) )
-        throw MASA_EXCEPTION( "export directory doesn't exist" );
-
-    RemoveOldFile( name_ );
-    UrbanFileExporter( exportPath.string(), name_, projector_, model_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanExportManager::RemoveOldFile
-// Created: CMA 2012-03-12
-// -----------------------------------------------------------------------------
-void UrbanExportManager::RemoveOldFile( const std::string& filename ) const
-{
-    bfs::path exportPath( directory_ );
-    for( bfs::directory_iterator it( exportPath ); it != bfs::directory_iterator(); ++it )
-    {
-      if( bfs::is_directory( *it ) )
-          continue;
-      std::string basename = bfs::basename( filename );
-      if( bfs::basename( *it ) == filename )
-          bfs::remove( *it );
-  }
+    UrbanFileExporter( directory_, name_, projector_, model_ );
 }

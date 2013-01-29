@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void RemoveOldFile( const std::string& filename ) const;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const std::string   directory_;

@@ -119,12 +119,10 @@ void TerrainExportDialog::accept()
     QDialog::accept();
     const std::string path = exportPathEditor_->text().toStdString();
     assert( !path.empty() && bfs::exists( path ) && bfs::is_directory( path ) );
-
     QProgressDialog progressDialog( "", "", 0, 100, this, Qt::SplashScreen );
     progressDialog.setAutoClose( true );
     progressDialog.setContentsMargins( 5, 5, 5, 5 );
     progressDialog.setCancelButton( 0 );
-
     try
     {
         if( shapeCheck_->isChecked() )
