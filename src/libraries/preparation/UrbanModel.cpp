@@ -599,16 +599,16 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanModel::ExportShapeFile( const std::string& exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const
 {
-    boost::shared_ptr< Translator > trans = boost::make_shared< Translator >( boost::ref( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ) ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) );
-
+    PlanarCartesianProjector projector( config.GetTerrainLatitude(), config.GetTerrainLongitude() );
+    Translator translator( projector, geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) );
     SetProgression( progressDialog, 0, tools::translate( "UrbanModel", "Exporting terrain data..." ) );
     {
-        TerrainExportManager manager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, *trans );
+        TerrainExportManager manager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, translator );
         manager.Run();
     }
     SetProgression( progressDialog, 50, tools::translate( "UrbanModel", "Exporting urban data..." ) );
     {
-        UrbanExportManager manager( exportDirectory, *trans, *this );
+        UrbanExportManager manager( exportDirectory, translator, *this );
         manager.Run();
     }
     SetProgression( progressDialog, 100, "" );
