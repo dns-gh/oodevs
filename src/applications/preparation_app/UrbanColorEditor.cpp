@@ -37,7 +37,7 @@ UrbanColorEditor::~UrbanColorEditor()
 // -----------------------------------------------------------------------------
 kernel::UrbanBlockColor UrbanColorEditor::GetValue()
 {
-    return *value_;
+    return value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ kernel::UrbanBlockColor UrbanColorEditor::GetValue()
 // -----------------------------------------------------------------------------
 void UrbanColorEditor::SetValue( kernel::UrbanBlockColor& value )
 {
-    value_ = &value;
+    value_ = value;
     initial_ = QColor( value.red_, value.green_, value.blue_ );
     initial_.setAlpha( value.alpha_ );
     setCurrentColor( initial_ );
@@ -58,10 +58,10 @@ void UrbanColorEditor::SetValue( kernel::UrbanBlockColor& value )
 // -----------------------------------------------------------------------------
 void UrbanColorEditor::OnAccept( const QColor& color )
 {
-    value_->red_ = color.red();
-    value_->green_ = color.green();
-    value_->blue_ = color.blue();
-    value_->alpha_ = color.alpha();
+    value_.red_ = color.red();
+    value_.green_ = color.green();
+    value_.blue_ = color.blue();
+    value_.alpha_ = color.alpha();
 }
 
 // -----------------------------------------------------------------------------

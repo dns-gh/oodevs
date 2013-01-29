@@ -54,7 +54,7 @@ private:
     //! @name Member data
     //@{
     QColor initial_;
-    kernel::UrbanBlockColor* value_;
+    kernel::UrbanBlockColor value_;
     //@}
 };
 
