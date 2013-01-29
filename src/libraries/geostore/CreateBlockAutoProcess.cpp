@@ -253,12 +253,5 @@ void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
         block = block->Next;
         gaiaFreeGeomColl( temp );       
     }
-    gaiaPolygonPtr building = buildings->FirstPolygon;
-    while( building )
-    {
-        gaiaPolygonPtr poly = gaiaAddPolygonToGeomColl( blocks_, block->Exterior->Points, block->NumInteriors );
-        poly = gaiaClonePolygon( building );
-        building = building->Next;
-    }
     gaiaFreeGeomColl( buildings );
 }
