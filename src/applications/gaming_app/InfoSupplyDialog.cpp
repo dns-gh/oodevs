@@ -57,7 +57,8 @@ InfoSupplyDialog::~InfoSupplyDialog()
 // -----------------------------------------------------------------------------
 bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 {
-    return entity.Retrieve< SupplyStates >() || IsLogisticBase( entity );
+    const LogSupplyConsigns* consigns = entity.Retrieve< LogSupplyConsigns >();
+    return ( consigns && consigns->IsRelevant() ) || entity.Retrieve< SupplyStates >() || IsLogisticBase( entity );
 }
 
 // -----------------------------------------------------------------------------
