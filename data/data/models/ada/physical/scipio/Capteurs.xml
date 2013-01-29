@@ -157,7 +157,7 @@
         <detectable-activity type="Deplacement" value="true"/>
       </detectable-activities>
     </radar>
-    <radar action-range="5000" max-height="3000" min-height="1" name="MISTRAL" type="radar">
+    <radar action-range="40" max-height="3000" min-height="20" name="MISTRAL" type="radar">
       <detectable-activities>
         <detectable-activity type="Deplacement" value="true"/>
       </detectable-activities>
@@ -7519,4 +7519,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="3350786150" -->
+<!-- signature="2895399587" -->
