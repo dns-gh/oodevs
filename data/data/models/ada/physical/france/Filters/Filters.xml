@@ -24,60 +24,7 @@
           <description name="Export de l'Ordre de Bataille" lang="fr"><![CDATA[Exporter l'orbat.<br>Le résultat est un fichier XML importable par la fonction "importer ordre de bataille"]]></description>
         </descriptions>
       </filter>
-      <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin" non-blocking="true">
-        <arguments>
-          <argument name="0"/>
-          <argument name="-exercise" value="$exercise$"/>
-          <argument name="-root-dir" value="$rootdir$"/>
-          <argument name="-id-camps" value="$input_team_list$" display-name="Camps"/>
-        </arguments>
-        <descriptions>
-          <description name="Test DQP export" lang="en"><![CDATA[Simulate DQP export.]]></description>
-          <description name="Test d'export DQP" lang="fr"><![CDATA[Simule l'export DQP.]]></description>
-        </descriptions>
-      </filter>
-      <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin">
-        <arguments>
-          <argument name="1"/>
-          <argument name="-exercise" value="$exercise$"/>
-          <argument name="-root-dir" value="$rootdir$"/>
-          <argument name="-id-camps" value="$input_team_list$" display-name="Camps"/>
-        </arguments>
-        <descriptions>
-          <description name="Export DQP" lang="en"><![CDATA[Launch DQP export application.]]></description>
-          <description name="Exporter DQP" lang="fr"><![CDATA[Lance l'application d'export DQP.]]></description>
-        </descriptions>
-      </filter>
-    </filters>
-  </section>
-  <section id="import">
-    <descriptions>
-      <description name="Import..." lang="en"/>
-      <description name="Importer..." lang="fr"/>
-    </descriptions>
-    <filters>
-      <filter command="ImportDQP.exe" reload-exercise="true" directory="D:\THALES\SCIPIO\PrepaSE\bin">
-        <arguments>
-          <argument name="-exercise" value="$exercise$"/>
-          <argument name="-root-dir" value="$rootdir$"/>
-        </arguments>
-        <descriptions>
-          <description name="Import DQP" lang="en"><![CDATA[Launch DQP import application.]]></description>
-          <description name="Importer DQP" lang="fr"><![CDATA[Lance l'application d'import DQP.]]></description>
-        </descriptions>
-      </filter>
-      <filter command="Melmil.exe" reload-exercise="true" directory="D:\THALES\SCIPIO\PrepaSE\bin">
-        <arguments>
-          <argument name="-exercise" value="$exercise$"/>
-          <argument name="-root-dir" value="$rootdir$"/>
-        </arguments>
-        <descriptions>
-          <description name="Import Melmil" lang="en"><![CDATA[Launch Melmil import application.]]></description>
-          <description name="Importer Melmil" lang="fr"><![CDATA[Lance l'application d'import Melmil.]]></description>
-        </descriptions>
-      </filter>
     </filters>
   </section>
 </sections>
-<!-- signature="0670566367" -->
-<!-- signature="1539329805" -->
+<!-- signature="2063278823" -->
