@@ -184,7 +184,7 @@ void LogisticTreeView::NotifyDeletedInternal( const kernel::Entity_ABC& entity )
         return;
 
     // $$$$ ABR 2012-09-20: Reparent all children
-    for( int row = 0; row < item->rowCount(); )
+    for( int row = 0; row < item->rowCount(); ++row )
     {
         QStandardItem* childItem = item->child( row, 0 );
         assert( childItem );
