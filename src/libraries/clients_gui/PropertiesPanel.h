@@ -76,6 +76,12 @@ private slots:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ClearSelection();
+    //@}
+
+private:
     //! @name Member data
     //@{
     kernel::Controllers&                               controllers_;
@@ -84,6 +90,7 @@ private:
     PropertyModel*                                     model_;
     PropertyDelegate*                                  delegate_;
     const kernel::Entity_ABC*                          selected_;
+    std::vector< const kernel::UrbanObject_ABC* >      urbanObjects_;
     std::auto_ptr< kernel::PropertiesGroupDictionary > pMultiProperties_;
     //@}
 };

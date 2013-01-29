@@ -61,9 +61,18 @@ PropertiesPanel::~PropertiesPanel()
 // -----------------------------------------------------------------------------
 void PropertiesPanel::showEvent( QShowEvent* )
 {
-    const kernel::Entity_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
+    if( selected_ != 0 )
+    {
+        const kernel::Entity_ABC* selected = selected_;
+        selected_ = 0;
+        NotifySelected( selected );
+    }
+    else if( !urbanObjects_.empty() )
+    {
+        std::vector< const kernel::UrbanObject_ABC* > urbanObjects = urbanObjects_;
+        urbanObjects_.clear();
+        NotifySelectionChanged( urbanObjects );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -74,15 +83,13 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 {
     if( !element || selected_ != element )
     {
-        view_->SaveState();
-        model_->clear();
-        selected_ = element;
-
+        ClearSelection();
         if( element )
             if( kernel::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
             {
                 dictionary->Display( *model_ );
                 view_->Display();
+                selected_ = element;
             }
     }
     setWidget( view_ );
@@ -98,11 +105,11 @@ void PropertiesPanel::NotifySelectionChanged( const std::vector< const kernel::U
 {
     if( elements.size() > 1 )
     {
-        NotifySelected( 0 );
-
+        ClearSelection();
         pMultiProperties_->Fill( elements );
         pMultiProperties_->Display( *model_ );
         view_->Display();
+        urbanObjects_ = elements;
     }
 }
 
@@ -168,4 +175,16 @@ void PropertiesPanel::OnItemChanged()
         list.push_back( selected_ );
         selected_->MultipleSelect( controllers_.actions_, list );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesPanel::ClearSelection
+// Created: LGY 2013-01-29
+// -----------------------------------------------------------------------------
+void PropertiesPanel::ClearSelection()
+{
+    view_->SaveState();
+    selected_ = 0;
+    urbanObjects_.clear();
+    model_->clear();
 }
