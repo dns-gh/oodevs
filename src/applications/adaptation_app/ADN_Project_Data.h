@@ -170,7 +170,6 @@ public:
     const DataInfos&     GetDataInfos() const;
     FileInfos&           GetFileInfos();
     std::string          GetMissionDir( E_EntityType elementType );
-    std::string          GetMissionSheetXslFile();
     static WorkDirInfos& GetWorkDirInfos();
 
 private:

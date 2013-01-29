@@ -520,7 +520,7 @@ void ADN_Missions_FragOrder::WriteMissionSheet( const std::string& missionDir )
     xos << xml::end
         << xml::end;
 
-    std::string xslFile = ADN_Workspace::GetWorkspace().GetProject().GetMissionSheetXslFile();
+    std::string xslFile = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissionSheetXslPath_.GetData();
     assert( bfs::exists( xslFile ) );
     xml::xifstream xisXML( fileName + ".xml" );
     xsl::xstringtransform xst( xslFile );

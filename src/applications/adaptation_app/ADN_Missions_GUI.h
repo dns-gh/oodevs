@@ -89,7 +89,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_EditLine_ABC* nameField_;
+    ADN_EditLine_ABC* nameField_[ 4 ];
     ADN_Missions_Data& data_;
     QTabWidget* pUnitMissionsWidget_;
     QTabWidget* pAutomatMissionsWidget_;

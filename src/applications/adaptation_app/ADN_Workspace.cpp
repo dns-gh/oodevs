@@ -430,22 +430,20 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toStdString() + filename );
     dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toStdString());
 
+    // Unchanged files
     T_StringList unchangedFiles;
-    if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
-    {
-        const ADN_Project_Data::DataInfos& infos = projectData_->GetDataInfos();
-        unchangedFiles.push_back( infos.szPathfinder_.GetData() );
-        unchangedFiles.push_back( infos.szObjectNames_.GetData() );
-        unchangedFiles.push_back( infos.szHumanProtections_.GetData() );
-        unchangedFiles.push_back( infos.szMedicalTreatment_.GetData() );
-        unchangedFiles.push_back( infos.szExtensions_.GetData() );
-        unchangedFiles.push_back( infos.szDrawingTemplates_.GetData() );
-        unchangedFiles.push_back( infos.szScores_.GetData() );
-        unchangedFiles.push_back( infos.szSymbols_.GetData() );
-        unchangedFiles.push_back( infos.szFilters_.GetData() );
-        unchangedFiles.push_back( infos.szMissionSheetXslPath_.GetData() );
-        files.insert( files.end(), unchangedFiles.begin(), unchangedFiles.end() );
-    }
+    const ADN_Project_Data::DataInfos& infos = projectData_->GetDataInfos();
+    unchangedFiles.push_back( infos.szPathfinder_.GetData() );
+    unchangedFiles.push_back( infos.szObjectNames_.GetData() );
+    unchangedFiles.push_back( infos.szHumanProtections_.GetData() );
+    unchangedFiles.push_back( infos.szMedicalTreatment_.GetData() );
+    unchangedFiles.push_back( infos.szExtensions_.GetData() );
+    unchangedFiles.push_back( infos.szDrawingTemplates_.GetData() );
+    unchangedFiles.push_back( infos.szScores_.GetData() );
+    unchangedFiles.push_back( infos.szSymbols_.GetData() );
+    unchangedFiles.push_back( infos.szFilters_.GetData() );
+    unchangedFiles.push_back( infos.szMissionSheetXslPath_.GetData() );
+    files.insert( files.end(), unchangedFiles.begin(), unchangedFiles.end() );
 
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
     {
@@ -476,14 +474,16 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
         projectData_->SetFile( filename );
         projectData_->Save( fileLoader );
         assert( bfs::exists( tempDirectory ) && bfs::is_directory( tempDirectory ) );
+        bfs::current_path( tempDirectory );
+
+        for( T_StringList::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
+            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.string() + *it );
+
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
             pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
         }
-
-        for( T_StringList::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
-            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.string() + *it );
 
         dirInfos.UseTempDirectory( false );
     }
@@ -503,8 +503,10 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
             {
                 dirInfos.SetWorkingDirectory( szOldWorkDir );
                 ResetProgressIndicator();
+                bfs::remove_all( tempDirectory );
                 throw MASA_EXCEPTION( tr( "Could not save file '%1'.\nMake sure that the file is not write-protected." ).arg( it->c_str() ).toStdString() );
             }
+
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
         CopyUnsavedFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ) );
@@ -515,6 +517,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
                                              dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() );
 
     // Remove temp directory
+    bfs::current_path( dirInfos.GetWorkingDirectory().GetData() );
     bfs::remove_all( tempDirectory );
 
     pProgressIndicator_->Increment( "" );

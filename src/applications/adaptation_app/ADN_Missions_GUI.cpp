@@ -136,9 +136,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( QTabWidget*& pContent, ADN_Missions_Da
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    nameField_ = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField_->setToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
-    nameField_->ConnectWithRefValidity( missions );
+    nameField_[ eEntityType ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField_[ eEntityType ]->setToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
+    nameField_[ eEntityType ]->ConnectWithRefValidity( missions );
 
     builder.SetValidator( new MissionNameValidator() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
@@ -343,8 +343,8 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 
     // Content
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-    nameField->ConnectWithRefValidity( data_.GetFragOrders() );
+    nameField_[ eNbrEntityTypes ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    nameField_[ eNbrEntityTypes ]->ConnectWithRefValidity( data_.GetFragOrders() );
 
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[ eDiaType ] );
     QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Available without mission" ) , vInfosConnectors[ eFragOrderAvailableWithoutMission ] );
@@ -503,11 +503,11 @@ void ADN_Missions_GUI::Enable( bool enable )
 void ADN_Missions_GUI::OnGenerateUnitMissionSheet()
 {
     const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Pawn );
-    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    const QString path = missionDir.c_str() + nameField_[ eEntityType_Pawn ]->text() + ".html";
     for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetUnitMissions().begin(); it != data_.GetUnitMissions().end(); ++it )
-        ( *it )->WriteMissionSheet( missionDir );
+        if( ( *it )->strName_.GetData().c_str() == nameField_[ eEntityType_Pawn ]->text() )
+            ( *it )->WriteMissionSheet( missionDir );
     pUnitMissionsWidget_->setCurrentIndex( pUnitMissionsWidget_->count() - 1 );
-    missionViewer_->setText( path );
 }
 
 // -----------------------------------------------------------------------------
@@ -517,11 +517,11 @@ void ADN_Missions_GUI::OnGenerateUnitMissionSheet()
 void ADN_Missions_GUI::OnGenerateAutomataMissionSheet()
 {
     const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Automat );
-    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    const QString path = missionDir.c_str() + nameField_[ eEntityType_Automat ]->text() + ".html";
     for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetAutomatMissions().begin(); it != data_.GetAutomatMissions().end(); ++it )
-        ( *it )->WriteMissionSheet( missionDir );
+        if( ( *it )->strName_.GetData().c_str() == nameField_[ eEntityType_Automat ]->text() )
+            ( *it )->WriteMissionSheet( missionDir );
     pUnitMissionsWidget_->setCurrentIndex( pUnitMissionsWidget_->count() - 1 );
-    missionViewer_->setText( path );
 }
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::OnGeneratePopulationMissionSheet
@@ -530,11 +530,11 @@ void ADN_Missions_GUI::OnGenerateAutomataMissionSheet()
 void ADN_Missions_GUI::OnGeneratePopulationMissionSheet()
 {
     const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Population );
-    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    const QString path = missionDir.c_str() + nameField_[ eEntityType_Population ]->text() + ".html";
     for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetPopulationMissions().begin(); it != data_.GetPopulationMissions().end(); ++it )
-        ( *it )->WriteMissionSheet( missionDir );
+        if( ( *it )->strName_.GetData().c_str() == nameField_[ eEntityType_Population ]->text() )
+            ( *it )->WriteMissionSheet( missionDir );
     pUnitMissionsWidget_->setCurrentIndex( pUnitMissionsWidget_->count() - 1 );
-    missionViewer_->setText( path );
 }
 
 // -----------------------------------------------------------------------------
@@ -544,9 +544,9 @@ void ADN_Missions_GUI::OnGeneratePopulationMissionSheet()
 void ADN_Missions_GUI::OnGenerateFragOrdersMissionSheet()
 {
     const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
-    const QString path = missionDir.c_str() + nameField_->text() + ".html";
+    const QString path = missionDir.c_str() + nameField_[ eNbrEntityTypes ]->text() + ".html";
     for( ADN_Missions_Data::IT_FragOrder_Vector it = data_.GetFragOrders().begin(); it != data_.GetFragOrders().end(); ++it )
-        ( *it )->WriteMissionSheet( missionDir );
+        if( ( *it )->strName_.GetData().c_str() == nameField_[ eNbrEntityTypes ]->text() )
+            ( *it )->WriteMissionSheet( missionDir );
     fragOrderDescriptionTab_->setCurrentIndex( fragOrderDescriptionTab_->count() - 1 );
-    /*fragViewer_->setText( path );*/
 }

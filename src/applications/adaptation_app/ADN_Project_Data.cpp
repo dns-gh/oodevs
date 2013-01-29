@@ -313,6 +313,7 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& fil
     _splitpath( filename.c_str(), szDrive, szDir, szFile, szExt );
     _makepath( szPath, szDrive, szDir, 0, 0 );
     szWorkingDir_ = std::string( szPath );
+    bfs::current_path( szWorkingDir_.GetData() );
 }
 
 //-----------------------------------------------------------------------------
@@ -398,27 +399,17 @@ void ADN_Project_Data::Reset()
 //-----------------------------------------------------------------------------
 std::string ADN_Project_Data::GetMissionDir( E_EntityType elementType )
 {
-    const std::string workDir = workDir_.GetWorkingDirectory().GetData();
     switch( elementType )
     {
     case eEntityType_Pawn:
-        return workDir + dataInfos_.szUnitsMissionPath_.GetData();
+        return dataInfos_.szUnitsMissionPath_.GetData();
     case eEntityType_Automat:
-        return workDir + dataInfos_.szAutomataMissionPath_.GetData();
+        return dataInfos_.szAutomataMissionPath_.GetData();
     case eEntityType_Population:
-        return workDir + dataInfos_.szCrowdsMissionPath_.GetData();
+        return dataInfos_.szCrowdsMissionPath_.GetData();
     default:
-        return workDir + dataInfos_.szFragOrdersMissionPath_.GetData();
+        return dataInfos_.szFragOrdersMissionPath_.GetData();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Project_Data::GetMissionSheetXslFile
-// Created: NPT 2013-01-25
-// -----------------------------------------------------------------------------
-std::string ADN_Project_Data::GetMissionSheetXslFile()
-{
-    return workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMissionSheetXslPath_.GetData();
 }
 
 //-----------------------------------------------------------------------------
