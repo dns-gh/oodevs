@@ -372,12 +372,13 @@ void ADN_Project_Data::SetFile( const std::string& strFile )
 // Name: ADN_Project_Data::FilesNeeded
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
+void ADN_Project_Data::FilesNeeded( T_StringList& vFiles ) const
 {
 #ifndef NDEBUG
     ADN_Project_Data* that = const_cast< ADN_Project_Data* >( this );
     assert( ! that->szFile_.GetFileName().GetData().empty() );
 #endif
+    vFiles.push_back( GetDataInfos().szMissionSheetXslPath_.GetData() );
 }
 
 //-----------------------------------------------------------------------------
