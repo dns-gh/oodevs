@@ -63,7 +63,6 @@ Propagation::~Propagation()
 namespace
 {
     struct VisitorProxy : public TextureVisitor_ABC
-                        , private boost::noncopyable
     {
         explicit VisitorProxy( const geometry::Rectangle2f& globalExtent )
             : globalExtent_( globalExtent )
