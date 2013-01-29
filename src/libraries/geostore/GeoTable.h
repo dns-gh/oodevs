@@ -44,9 +44,9 @@ private:
     //! @name Helpers
     //@{
     void CreateStructure();
-    void CreatePolygonGeometry( const TerrainObject& shape );
-    void CreateLineGeometry( const TerrainObject& shape );
-    void CreateGeometry( const TerrainObject& shape );
+    std::vector< gaiaGeomCollPtr > CreatePolygonGeometry( const TerrainObject& shape );
+    std::vector< gaiaGeomCollPtr > CreateLineGeometry( const TerrainObject& shape );
+    std::vector< gaiaGeomCollPtr > CreateGeometry( const TerrainObject& shape );
     void MbrSpatialIndex();
     //@}
 

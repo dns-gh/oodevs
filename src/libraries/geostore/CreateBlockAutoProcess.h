@@ -57,10 +57,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const Database&         database_;
-    GeometryFactory*        geometryFactory_;
-    gaiaGeomCollPtr         blocks_;
-    SpatialRequestStatus&   status_;
+    const Database&                     database_;
+    std::auto_ptr< GeometryFactory >    geometryFactory_;
+    gaiaGeomCollPtr                     blocks_;
+    SpatialRequestStatus&               status_;
     //@}
 };
 
