@@ -58,12 +58,12 @@ void GeoStoreManager::Initialize( const std::string& path )
     try
     {
         InitProjector( ( directory / "terrain.xml" ).string() );
+        LoadTerrainFiles();
     }
     catch ( ... )
     {
         InitProjectorOld( ( directory / "World.xml" ).string() );
     }
-    LoadTerrainFiles();
 }
 
 // -----------------------------------------------------------------------------
