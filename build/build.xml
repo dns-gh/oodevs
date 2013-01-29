@@ -1474,7 +1474,7 @@
                 <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
                 <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
                 <arg value="/DOUTFILE=@{file}"/>
-                <arg value="/X!include sword-defense.nsh"/>
+                <arg value="/X!include sword.nsh"/>
             </nsis>
             <check-depends file="@{file}">
                 <arg value="*.exe"/>
