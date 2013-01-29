@@ -443,6 +443,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
         unchangedFiles.push_back( infos.szScores_.GetData() );
         unchangedFiles.push_back( infos.szSymbols_.GetData() );
         unchangedFiles.push_back( infos.szFilters_.GetData() );
+        unchangedFiles.push_back( infos.szMissionSheetXslPath_.GetData() );
         files.insert( files.end(), unchangedFiles.begin(), unchangedFiles.end() );
     }
 
