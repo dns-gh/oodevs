@@ -141,7 +141,7 @@ public:
         void               UseTempDirectory( bool bUse );
         ADN_Type_String&   GetTempDirectory();     //!< Returns a temporary directory
 
-        const std::string  GetSaveDirectory(); //!< Returns either the working or the temporary directory according to the
+        const std::string  GetSaveDirectory(); //!< Returns either the working or the temporary directory according to the current mode
 
         std::string        GetRelativePath(const std::string& full, E_WorkDir e=eWorking); //!< Given "the/whole/path/toto/toto.xml" returns "/toto/toto.xml"
 

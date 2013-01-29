@@ -55,7 +55,8 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         );
     if( fileName.isEmpty() )
         return;
-    std::string imageDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( entityType_ ) + "/Images";
+    std::string imageDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+                         + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( entityType_ ) + "/Images";
     if( !boost::filesystem::is_directory( imageDir ) )
         boost::filesystem::create_directory( imageDir );
     std::string newFileName = imageDir + "/" + QFileInfo( fileName ).fileName().toStdString(); 

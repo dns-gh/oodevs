@@ -123,7 +123,8 @@ void ADN_Missions_Data::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_EntityType elementType )
 {
-    const std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( elementType );
+    const std::string missionDirectoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+                                           + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( elementType );
     std::string xmlFileName = missionDirectoryPath + std::string( "/" + elementName + ".xml");
     std::string htmlFileName = missionDirectoryPath + std::string( "/" + elementName + ".html");
     toDeleteMissionSheets_.push_back( xmlFileName );
@@ -163,7 +164,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 {
     std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-    spNew->ReadArchive( xis, ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes )  );
+    spNew->ReadArchive( xis, ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes )  );
     fragOrders_.AddItem( spNew.release() );
 }
 
@@ -176,7 +177,7 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missi
     std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
     const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
     ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    spNew->ReadArchive( xis, drawings, ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType ) );
+    spNew->ReadArchive( xis, drawings, ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType ) );
     missions.AddItem( spNew.release() );
 }
 
@@ -184,7 +185,7 @@ namespace
 {
     void WriteMissionSheets( E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
-        const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+        const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->RemoveDifferentNamedMissionSheet( missionDir );
         for( unsigned int i = 0; i < missions.size(); ++i )
@@ -237,7 +238,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
         fragOrders_[i]->WriteArchive( output );
 
     const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
     //frag orders mission sheets saving
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->RemoveDifferentNamedMissionSheet( missionDir );

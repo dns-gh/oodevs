@@ -502,7 +502,7 @@ void ADN_Missions_GUI::Enable( bool enable )
 // -----------------------------------------------------------------------------
 void ADN_Missions_GUI::OnGenerateUnitMissionSheet()
 {
-    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Pawn );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Pawn );
     const QString path = missionDir.c_str() + nameField_[ eEntityType_Pawn ]->text() + ".html";
     for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetUnitMissions().begin(); it != data_.GetUnitMissions().end(); ++it )
         if( ( *it )->strName_.GetData().c_str() == nameField_[ eEntityType_Pawn ]->text() )
@@ -516,7 +516,7 @@ void ADN_Missions_GUI::OnGenerateUnitMissionSheet()
 // -----------------------------------------------------------------------------
 void ADN_Missions_GUI::OnGenerateAutomataMissionSheet()
 {
-    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Automat );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Automat );
     const QString path = missionDir.c_str() + nameField_[ eEntityType_Automat ]->text() + ".html";
     for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetAutomatMissions().begin(); it != data_.GetAutomatMissions().end(); ++it )
         if( ( *it )->strName_.GetData().c_str() == nameField_[ eEntityType_Automat ]->text() )
@@ -529,7 +529,7 @@ void ADN_Missions_GUI::OnGenerateAutomataMissionSheet()
 // -----------------------------------------------------------------------------
 void ADN_Missions_GUI::OnGeneratePopulationMissionSheet()
 {
-    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Population );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eEntityType_Population );
     const QString path = missionDir.c_str() + nameField_[ eEntityType_Population ]->text() + ".html";
     for( ADN_Missions_Data::IT_Mission_Vector it = data_.GetPopulationMissions().begin(); it != data_.GetPopulationMissions().end(); ++it )
         if( ( *it )->strName_.GetData().c_str() == nameField_[ eEntityType_Population ]->text() )
@@ -543,7 +543,7 @@ void ADN_Missions_GUI::OnGeneratePopulationMissionSheet()
 // -----------------------------------------------------------------------------
 void ADN_Missions_GUI::OnGenerateFragOrdersMissionSheet()
 {
-    const std::string missionDir = ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
     const QString path = missionDir.c_str() + nameField_[ eNbrEntityTypes ]->text() + ".html";
     for( ADN_Missions_Data::IT_FragOrder_Vector it = data_.GetFragOrders().begin(); it != data_.GetFragOrders().end(); ++it )
         if( ( *it )->strName_.GetData().c_str() == nameField_[ eNbrEntityTypes ]->text() )

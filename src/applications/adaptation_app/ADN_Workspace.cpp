@@ -474,7 +474,6 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
         projectData_->SetFile( filename );
         projectData_->Save( fileLoader );
         assert( bfs::exists( tempDirectory ) && bfs::is_directory( tempDirectory ) );
-        bfs::current_path( tempDirectory );
 
         for( T_StringList::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
             ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.string() + *it );
@@ -517,7 +516,6 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
                                              dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() );
 
     // Remove temp directory
-    bfs::current_path( dirInfos.GetWorkingDirectory().GetData() );
     bfs::remove_all( tempDirectory );
 
     pProgressIndicator_->Increment( "" );

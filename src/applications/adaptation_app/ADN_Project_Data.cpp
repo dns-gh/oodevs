@@ -313,7 +313,6 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& fil
     _splitpath( filename.c_str(), szDrive, szDir, szFile, szExt );
     _makepath( szPath, szDrive, szDir, 0, 0 );
     szWorkingDir_ = std::string( szPath );
-    bfs::current_path( szWorkingDir_.GetData() );
 }
 
 //-----------------------------------------------------------------------------
