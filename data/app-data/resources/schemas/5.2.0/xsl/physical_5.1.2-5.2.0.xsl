@@ -17,7 +17,7 @@
           </xsl:if>
           <xsl:if test="count( ./mission-sheets-xsl ) = 0">
               <xsl:element name="mission-sheets-xsl">
-                  <xsl:attribute name="file">missionSheets.xml</xsl:attribute>
+                  <xsl:attribute name="file">missionSheets.xslt</xsl:attribute>
               </xsl:element>
           </xsl:if>
       </xsl:copy>
