@@ -603,8 +603,8 @@ void UrbanModel::ExportShapeFile( const std::string& exportDirectory, const tool
     Translator translator( projector, geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) );
     SetProgression( progressDialog, 0, tools::translate( "UrbanModel", "Exporting terrain data..." ) );
     {
-        TerrainExportManager manager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, translator );
-        manager.Run();
+        TerrainExportManager manager( config.GetTerrainDir( config.GetTerrainName() ), translator );
+        manager.Run( exportDirectory );
     }
     SetProgression( progressDialog, 50, tools::translate( "UrbanModel", "Exporting urban data..." ) );
     {
