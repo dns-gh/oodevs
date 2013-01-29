@@ -793,14 +793,6 @@ Reason: %1.</source>
         <source>Delete all selected elements?</source>
         <translation>Delete all selected elements?</translation>
     </message>
-    <message>
-        <source>Exporting terrain data...</source>
-        <translation>Exporting terrain data...</translation>
-    </message>
-    <message>
-        <source>Exporting urban data...</source>
-        <translation>Exporting urban data...</translation>
-    </message>
 </context>
 <context>
     <name>UrbanPositions</name>

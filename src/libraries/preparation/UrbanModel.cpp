@@ -27,10 +27,6 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include "geometry/Types.h"
 #include "geostore/GeoStoreManager.h"
-#include "preparation/UrbanExportManager.h"
-#include "terrain/PlanarCartesianProjector.h"
-#include "terrain/TerrainExportManager.h"
-#include "terrain/Translator.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
 
@@ -39,7 +35,6 @@
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <QtGui/qmessagebox.h>
-#include <QtGui/qprogressdialog.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( disable : 4355 )
@@ -579,39 +574,6 @@ void UrbanModel::GetListWithinCircle( const geometry::Point2f& center, float rad
         quadTree_->Apply( intersecter, extractor );
         std::swap( extractor.data_, result );
     }
-}
-
-namespace
-{
-    void SetProgression( QProgressDialog& progressDialog, int value, const QString& text )
-    {
-        if( !value )
-            progressDialog.show();
-        progressDialog.setLabelText( text );
-        progressDialog.setValue( value );
-        qApp->processEvents();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::ExportShapeFile
-// Created: ABR 2012-06-13
-// -----------------------------------------------------------------------------
-void UrbanModel::ExportShapeFile( const std::string& exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const
-{
-    PlanarCartesianProjector projector( config.GetTerrainLatitude(), config.GetTerrainLongitude() );
-    Translator translator( projector, geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) );
-    SetProgression( progressDialog, 0, tools::translate( "UrbanModel", "Exporting terrain data..." ) );
-    {
-        TerrainExportManager manager( config.GetTerrainDir( config.GetTerrainName() ), translator );
-        manager.Run( exportDirectory );
-    }
-    SetProgression( progressDialog, 50, tools::translate( "UrbanModel", "Exporting urban data..." ) );
-    {
-        UrbanExportManager manager( exportDirectory, translator, *this );
-        manager.Run();
-    }
-    SetProgression( progressDialog, 100, "" );
 }
 
 // -----------------------------------------------------------------------------

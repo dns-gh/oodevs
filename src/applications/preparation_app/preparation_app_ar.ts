@@ -2560,6 +2560,22 @@ This data can&apos;t be projected.</source>
         <source>Export successful.</source>
         <translation type="unfinished">التصدير الناجحة.</translation>
     </message>
+    <message>
+        <source>Exporting terrain data...</source>
+        <translation type="unfinished">تصدير بيانات التضاريس...</translation>
+    </message>
+    <message>
+        <source>Exporting urban data...</source>
+        <translation type="unfinished">تصدير البيانات الحضرية...</translation>
+    </message>
+    <message>
+        <source>Exporting raster data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exporting elevation data...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TerrainToolBar</name>

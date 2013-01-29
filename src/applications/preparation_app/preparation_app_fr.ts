@@ -2560,6 +2560,22 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Export successful.</source>
         <translation>Succès de l&apos;export.</translation>
     </message>
+    <message>
+        <source>Exporting terrain data...</source>
+        <translation>Export des données terrain...</translation>
+    </message>
+    <message>
+        <source>Exporting urban data...</source>
+        <translation>Export des données urbaines...</translation>
+    </message>
+    <message>
+        <source>Exporting raster data...</source>
+        <translation>Export des données raster</translation>
+    </message>
+    <message>
+        <source>Exporting elevation data...</source>
+        <translation>Export des données d'élévation</translation>
+    </message>
 </context>
 <context>
     <name>TerrainToolBar</name>

@@ -11,8 +11,12 @@
 #include "TerrainExportDialog.h"
 #include "moc_TerrainExportDialog.cpp"
 #include "preparation/UrbanModel.h"
+#include "preparation/UrbanExportManager.h"
 #include "clients_gui/resources.h"
 #include "tools/ExerciseConfig.h"
+#include <terrain/PlanarCartesianProjector.h>
+#include <terrain/TerrainExportManager.h>
+#include <terrain/Translator.h>
 #include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
@@ -125,13 +129,29 @@ void TerrainExportDialog::accept()
     progressDialog.setCancelButton( 0 );
     try
     {
+        SetProgression( progressDialog, 0, tr( "Exporting terrain data..." ) );
         if( shapeCheck_->isChecked() )
-            urbanModel_.ExportShapeFile( path, config_, progressDialog );
+        {
+            PlanarCartesianProjector projector( config_.GetTerrainLatitude(), config_.GetTerrainLongitude() );
+            Translator translator( projector, geometry::Vector2d( config_.GetTerrainWidth() / 2.f, config_.GetTerrainHeight() / 2.f ) );
+            {
+                TerrainExportManager manager( config_.GetTerrainDir( config_.GetTerrainName() ), translator );
+                manager.Run( path );
+            }
+            SetProgression( progressDialog, 25, tr( "Exporting urban data..." ) );
+            {
+                UrbanExportManager manager( path, translator, urbanModel_ );
+                manager.Run();
+            }
+        }
+        SetProgression( progressDialog, 50, tr( "Exporting raster data..." ) );
         extractor::TerrainExtractionManager extractor( bfs::path( config_.GetTerrainFile() ).parent_path() );
         if( rasterCheck_->isChecked() )
             extractor.ExportRaster( path );
+        SetProgression( progressDialog, 75, tr( "Exporting elevation data..." ) );
         if( elevationCheck_->isChecked() )
             extractor.ExportElevation( path );
+        SetProgression( progressDialog, 100, "" );
         QMessageBox::information( this, tr( "Terrain export" ), tr( "Export successful." ) );
     }
     catch( const std::exception& e )

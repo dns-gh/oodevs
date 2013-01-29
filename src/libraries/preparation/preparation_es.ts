@@ -798,14 +798,6 @@ Detalle: %1.</translation>
         <source>Delete all selected elements?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Exporting terrain data...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exporting urban data...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UrbanPositions</name>

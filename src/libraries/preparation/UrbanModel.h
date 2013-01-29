@@ -38,7 +38,6 @@ namespace tools
     class IdManager;
 }
 
-class QProgressDialog;
 class StaticModel;
 class UrbanFactory_ABC;
 class UrbanMenuManager;
@@ -81,7 +80,6 @@ public:
     kernel::UrbanObject_ABC* Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent );
     void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
-    void ExportShapeFile( const std::string& exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const;
     bool TakeLinkErrors();
     void CreateGeostoreManager( const tools::ExerciseConfig& config );
     //@}

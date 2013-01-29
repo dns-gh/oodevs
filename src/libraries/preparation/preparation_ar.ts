@@ -793,14 +793,6 @@ Reason: %1.</source>
         <source>Delete all selected elements?</source>
         <translation type="unfinished">حذف كافة العناصر المحددة؟</translation>
     </message>
-    <message>
-        <source>Exporting terrain data...</source>
-        <translation type="unfinished">تصدير بيانات التضاريس...</translation>
-    </message>
-    <message>
-        <source>Exporting urban data...</source>
-        <translation type="unfinished">تصدير البيانات الحضرية...</translation>
-    </message>
 </context>
 <context>
     <name>UrbanPositions</name>

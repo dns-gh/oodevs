@@ -2563,6 +2563,22 @@ This data can&apos;t be projected.</translation>
         <source>Export successful.</source>
         <translation>Export successful.</translation>
     </message>
+    <message>
+        <source>Exporting terrain data...</source>
+        <translation>Exporting terrain data...</translation>
+    </message>
+    <message>
+        <source>Exporting urban data...</source>
+        <translation>Exporting urban data...</translation>
+    </message>
+    <message>
+        <source>Exporting raster data...</source>
+        <translation>Exporting raster data...</translation>
+    </message>
+    <message>
+        <source>Exporting elevation data...</source>
+        <translation>Exporting elevation data...</translation>
+    </message>
 </context>
 <context>
     <name>TerrainToolBar</name>
