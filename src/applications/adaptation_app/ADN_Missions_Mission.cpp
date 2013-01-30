@@ -12,7 +12,8 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
-#include "tools/Loader_ABC.h"
+#include <tools/Loader_ABC.h>
+#include <tools/EncodingConverter.h>
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem.hpp>
@@ -497,11 +498,11 @@ void ADN_Missions_Mission::FromWikiToXml( xml::xostream& xos, const std::string&
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Mission::ReadMissionSheet
-// Created: NPT 2012-07-27std::pair<
+// Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
 void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
 {
-    const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
+    const std::string fileName = std::string( missionDir +  "/" + tools::FromUtf8ToLocalCharset( strName_.GetData() ) );
     if( bfs::is_directory( missionDir ) )
     {
         if( bfs::is_regular_file( fileName + ".xml" ) )
@@ -575,7 +576,7 @@ void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& 
 // -----------------------------------------------------------------------------
 void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir, const tools::Loader_ABC& fileLoader )
 {
-    std::string fileName = std::string( missionDir + "/" + strName_.GetData() );
+    std::string fileName = std::string( missionDir + "/" + tools::FromUtf8ToLocalCharset( strName_.GetData() ) );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
         bfs::create_directories( missionDir + "/obsolete" );
     xml::xofstream xos( fileName + ".xml" );
