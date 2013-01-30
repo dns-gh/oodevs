@@ -49,7 +49,6 @@ private:
     //@{
     void UpdateUrbanModel( UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, const geometry::Polygon2f& footprint );
     gaiaGeomCollPtr GetUrbanBlockInArea( const UrbanModel& model, PointProjector_ABC& projector, const geometry::Polygon2f& footprint );
-    void UpdateBuildingTable( gaiaGeomCollPtr buildings );
     void ClippingUrbanAreaWithTerrainComponent( gaiaGeomCollPtr buffers, gaiaGeomCollPtr areas, gaiaGeomCollPtr urbans );
     void PrepareTerrainComponents( gaiaGeomCollPtr selection, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& buffers );
     //@}

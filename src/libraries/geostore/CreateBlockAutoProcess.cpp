@@ -44,6 +44,19 @@ CreateBlockAutoProcess::~CreateBlockAutoProcess()
     // NOTHING
 }
 
+namespace
+{
+    void AddBuildingsToUrban( gaiaGeomCollPtr urbans, gaiaGeomCollPtr buildings )
+    {
+        gaiaPolygonPtr block = buildings->FirstPolygon;
+        while( block )
+        {
+            gaiaInsertPolygonInGeomColl( urbans, gaiaCloneRing( block->Exterior ) );
+            block = block->Next;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CreateBlockAutoProcess::Run
 // Created: AME 2010-08-02
@@ -69,8 +82,8 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanMod
         buildings = it->second->GetFeaturesIntersectsWith( poly );
     PrepareTerrainComponents( poly, areas, buffers );
     gaiaFreeGeomColl( poly );
+    AddBuildingsToUrban( urbans, buildings );
     ClippingUrbanAreaWithTerrainComponent( buffers, areas, urbans );
-    UpdateBuildingTable( buildings ); //Update building tables
     UpdateUrbanModel( model, parent, projector, footprint ); //Update urban blocks
 }
 
@@ -226,64 +239,4 @@ gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlockInArea( const UrbanModel& m
             geometryFactory_->AddPolygonGeometryToCollection( attribute->Polygon(), projector, getBlocksFromFiles );
 
     return getBlocksFromFiles;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateBlockAutoProcess::UpdateBuildingTable
-// Created: AME 2010-08-02
-// -----------------------------------------------------------------------------
-void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
-{
-    //Not Checked
-    //TODO: Update and Export building.bin
-    if( !geometryFactory_->CheckValidity( buildings ) )
-        return;
-
-    gaiaGeomCollPtr temp;
-    gaiaPolygonPtr block = blocks_->FirstPolygon;
-    gaiaPolygonPtr prev = 0;
-
-    while( block )
-    {
-        // Create an empty collection
-        temp = geometryFactory_->InitGeometryCollection();
-        // Insert a copy of the block in that collection
-        gaiaInsertPolygonInGeomColl( temp, gaiaCloneRing( block->Exterior ) );
-        // Go figure...
-        gaiaMbrGeometry( temp );
-
-        // If the buildings and this block (copy) intersect, remove the block from the collection
-        if( gaiaGeomCollIntersects( temp, buildings ) == 1 )
-        {
-            // If it is the first polygon in the geometry set
-            if( block == blocks_->FirstPolygon )
-            {
-                blocks_->FirstPolygon = block->Next;
-            }
-            // If it is the last polygon in the geometry set
-            // (not "else if" because the set can contain only 1 polygon)
-            if( block == blocks_->LastPolygon )
-            {
-                blocks_->LastPolygon = prev;
-            }
-            // If prev is not NULL, update it.
-            if( prev )
-            {
-                prev->Next = block->Next;
-            }
-
-            gaiaPolygonPtr next = block->Next;
-            // Free the polygon, it is not needed anymore
-            gaiaFreePolygon( block );   // Would this call be enough ?
-                                        // Does it take care of removing from the linked list ?
-            block = next;
-        }
-        else
-        {
-            // Go on, there was no intersection...
-            prev = block;
-            block = block->Next;
-        }
-        gaiaFreeGeomColl( temp );
-    }
 }
