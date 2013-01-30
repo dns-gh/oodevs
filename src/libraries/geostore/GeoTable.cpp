@@ -99,26 +99,26 @@ void GeoTable::SetGeometry( const std::string& name )
 
 namespace
 {
-    void AddPolygon( int numVertices, gaiaGeomCollPtr geo_, const geodata::Primitive_ABC& shape )
-    {
-        gaiaRingPtr ring;
-        geometry::Point2d firstPoint;
-        gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geo_, numVertices + 1, 0 );
-        ring = polyg->Exterior; 
-        for( int i = 0; i < numVertices; ++i )
-        {
-            gaiaSetPoint( ring->Coords, i, shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
-            if( i == 0 )
-                firstPoint.Set( shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
-        }
-        gaiaSetPoint( ring->Coords, numVertices, firstPoint.X(), firstPoint.Y() );
-    }
-
     gaiaGeomCollPtr InitGeomCollPtr()
     {
         gaiaGeomCollPtr ptr = gaiaAllocGeomColl();
         ptr->Srid = 4326;
         return ptr;
+    }
+
+    void AddPolygon( const geodata::Primitive_ABC& shape, std::vector< gaiaGeomCollPtr >& result )
+    {
+        int numVertices = static_cast< int >( shape.GetCoordinates().size() );
+        if( numVertices < 3 )
+            return;
+        gaiaGeomCollPtr currentGeomCollPtr = InitGeomCollPtr();
+        result.push_back( currentGeomCollPtr );
+        gaiaRingPtr ring;
+        gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( currentGeomCollPtr, numVertices + 1, 0 );
+        ring = polyg->Exterior; 
+        for( int i = 0; i < numVertices; ++i )
+            gaiaSetPoint( ring->Coords, i, shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
+        gaiaSetPoint( ring->Coords, numVertices, shape.GetCoordinates()[ 0 ].X(), shape.GetCoordinates()[ 0 ].Y() );
     }
 }
 
@@ -128,23 +128,11 @@ namespace
 // -----------------------------------------------------------------------------
 std::vector< gaiaGeomCollPtr > GeoTable::CreatePolygonGeometry( const TerrainObject& shape )
 {
-    std::vector< gaiaGeomCollPtr > result;
-    int numVertices = static_cast< int >( shape.GetCoordinates().size() );
-    int numRings = static_cast< int >( shape.GetSubPrimitives().size() );
-    result.push_back( InitGeomCollPtr() );
-    AddPolygon( numVertices, result[0], shape );
-    if( numRings == 0 )
-        return result;
+    std::vector< gaiaGeomCollPtr > result;    
+    AddPolygon( shape, result );
     geodata::Primitive_ABC::T_Vector innerRing = shape.GetSubPrimitives();
     for( geodata::Primitive_ABC::CIT_Vector it = innerRing.begin(); it != innerRing.end(); ++it )
-    {
-        numVertices = static_cast< int >( ( *it )->GetCoordinates().size() );
-        if( numVertices < 3 )
-            continue;
-        gaiaGeomCollPtr currentGeomCollPtr = InitGeomCollPtr();
-        result.push_back( currentGeomCollPtr );
-        AddPolygon( numVertices, currentGeomCollPtr, **it );
-    }
+        AddPolygon( **it, result );
     return result;
 }
 
