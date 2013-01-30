@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <nbc model-version="4.9.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/NBC.xsd">
-  <propagation contamination-distance="300" contamination-quantity-given="0.5" wind-speed-limit="5"/>
+  <propagation contamination-distance="150" contamination-quantity-given="0.2" wind-speed-limit="5"/>
   <nbc-suit max-speed-modifier="0.7" reloading-time-modifier="1.5"/>
   <agents>
-    <agent category="chemical" id="1" name="Ammoniac">
+    <agent category="chemical" id="1" name="C - ROTA Ammoniac">
       <effects affliction="true" type="liquid">
-        <effect percentage="1" wound="healthy"/>
-        <effect percentage="0" wound="u1"/>
-        <effect percentage="0" wound="u2"/>
-        <effect percentage="0" wound="u3"/>
-        <effect percentage="0" wound="ue"/>
-        <effect percentage="0" wound="dead"/>
+        <effect percentage="0.8" wound="healthy"/>
+        <effect percentage="0.08" wound="u1"/>
+        <effect percentage="0.04" wound="u2"/>
+        <effect percentage="0.04" wound="u3"/>
+        <effect percentage="0.02" wound="ue"/>
+        <effect percentage="0.02" wound="dead"/>
       </effects>
       <effects affliction="true" life-time="24h" propagation="30" type="gaseous">
         <effect percentage="0.8" wound="healthy"/>
@@ -21,53 +21,17 @@
         <effect percentage="0.02" wound="dead"/>
       </effects>
     </agent>
-    <agent category="biological" id="2" name="Biologique">
-      <effects affliction="true" type="liquid">
-        <effect percentage="0.7" wound="healthy"/>
-        <effect percentage="0.06" wound="u1"/>
-        <effect percentage="0.04" wound="u2"/>
-        <effect percentage="0.08" wound="u3"/>
-        <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.02" wound="dead"/>
-      </effects>
-    </agent>
-    <agent category="chemical" id="3" name="Chimique">
+    <agent category="biological" id="2" name="B - Virus">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.7" wound="healthy"/>
         <effect percentage="0.06" wound="u1"/>
         <effect percentage="0.04" wound="u2"/>
-        <effect percentage="0.08" wound="u3"/>
+        <effect percentage="0.1" wound="u3"/>
         <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.02" wound="dead"/>
-      </effects>
-      <effects affliction="true" life-time="6h" propagation="20" type="gaseous">
-        <effect percentage="0.7" wound="healthy"/>
-        <effect percentage="0.06" wound="u1"/>
-        <effect percentage="0.04" wound="u2"/>
-        <effect percentage="0.08" wound="u3"/>
-        <effect percentage="0.1" wound="ue"/>
-        <effect percentage="0.02" wound="dead"/>
-      </effects>
-    </agent>
-    <agent category="chemical" id="4" name="Chlore">
-      <effects affliction="true" type="liquid">
-        <effect percentage="1" wound="healthy"/>
-        <effect percentage="0" wound="u1"/>
-        <effect percentage="0" wound="u2"/>
-        <effect percentage="0" wound="u3"/>
-        <effect percentage="0" wound="ue"/>
         <effect percentage="0" wound="dead"/>
       </effects>
-      <effects affliction="true" life-time="24h" propagation="30" type="gaseous">
-        <effect percentage="0.8" wound="healthy"/>
-        <effect percentage="0.08" wound="u1"/>
-        <effect percentage="0.04" wound="u2"/>
-        <effect percentage="0.04" wound="u3"/>
-        <effect percentage="0.02" wound="ue"/>
-        <effect percentage="0.02" wound="dead"/>
-      </effects>
     </agent>
-    <agent category="chemical" id="5" name="HCN">
+    <agent category="chemical" id="5" name="C - ROTA HCN">
       <effects affliction="false" type="liquid"/>
       <effects affliction="true" life-time="30m" propagation="20" type="gaseous">
         <effect percentage="0.7" wound="healthy"/>
@@ -96,17 +60,7 @@
         <effect percentage="0.02" wound="dead"/>
       </effects>
     </agent>
-    <agent category="chemical" id="7" name="VX">
-      <effects affliction="true" contamination="true" type="liquid">
-        <effect percentage="0.8" wound="healthy"/>
-        <effect percentage="0.04" wound="u1"/>
-        <effect percentage="0.08" wound="u2"/>
-        <effect percentage="0.04" wound="u3"/>
-        <effect percentage="0.02" wound="ue"/>
-        <effect percentage="0.02" wound="dead"/>
-      </effects>
-    </agent>
-    <agent category="chemical" id="8" name="Vapeurs Hydrocarbure">
+    <agent category="chemical" id="8" name="C - ROTA Hydrocarbure">
       <effects affliction="true" type="liquid">
         <effect percentage="1" wound="healthy"/>
         <effect percentage="0" wound="u1"/>
@@ -115,17 +69,8 @@
         <effect percentage="0" wound="ue"/>
         <effect percentage="0" wound="dead"/>
       </effects>
-      <effects affliction="true" life-time="24h" propagation="30" type="gaseous">
-        <effect percentage="0.7" wound="healthy"/>
-        <effect percentage="0.1" wound="u1"/>
-        <effect percentage="0.08" wound="u2"/>
-        <effect percentage="0.06" wound="u3"/>
-        <effect percentage="0.04" wound="ue"/>
-        <effect percentage="0.02" wound="dead"/>
-      </effects>
     </agent>
-    <agent category="chemical" id="9" name="gaz sarin">
-      <effects affliction="false" type="liquid"/>
+    <agent category="chemical" id="9" name="C - Sarin">
       <effects affliction="true" life-time="3600s" propagation="20" type="gaseous">
         <effect percentage="0.7" wound="healthy"/>
         <effect percentage="0.04" wound="u1"/>
@@ -135,8 +80,7 @@
         <effect percentage="0.02" wound="dead"/>
       </effects>
     </agent>
-    <agent category="chemical" id="10" name="soman">
-      <effects affliction="false" type="liquid"/>
+    <agent category="chemical" id="10" name="C - Soman">
       <effects affliction="true" contamination="true" life-time="3600s" propagation="20" type="gaseous">
         <effect percentage="0.7" wound="healthy"/>
         <effect percentage="0.08" wound="u1"/>
@@ -146,7 +90,7 @@
         <effect percentage="0.02" wound="dead"/>
       </effects>
     </agent>
-    <agent category="chemical" id="11" name="yperite">
+    <agent category="chemical" id="11" name="C - Yperite">
       <effects affliction="true" contamination="true" type="liquid">
         <effect percentage="0.75" wound="healthy"/>
         <effect percentage="0.05" wound="u1"/>
@@ -156,6 +100,26 @@
         <effect percentage="0.02" wound="dead"/>
       </effects>
     </agent>
+    <agent category="chemical" id="12" name="C - Chloropicrine">
+      <effects affliction="true" type="liquid">
+        <effect percentage="0.75" wound="healthy"/>
+        <effect percentage="0.12" wound="u1"/>
+        <effect percentage="0.05" wound="u2"/>
+        <effect percentage="0.08" wound="u3"/>
+        <effect percentage="0" wound="ue"/>
+        <effect percentage="0" wound="dead"/>
+      </effects>
+    </agent>
+    <agent category="chemical" id="13" name="Radiologique">
+      <effects affliction="true" type="liquid">
+        <effect percentage="0.7" wound="healthy"/>
+        <effect percentage="0.08" wound="u1"/>
+        <effect percentage="0.08" wound="u2"/>
+        <effect percentage="0.08" wound="u3"/>
+        <effect percentage="0.04" wound="ue"/>
+        <effect percentage="0.02" wound="dead"/>
+      </effects>
+    </agent>
   </agents>
 </nbc>
-<!-- signature="3846318241" -->
+<!-- signature="0888986895" -->
