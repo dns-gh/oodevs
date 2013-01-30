@@ -1347,7 +1347,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk,package.proto" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
@@ -1384,6 +1384,14 @@
                     <flattenmapper/>
                 </mappedresources>
              </zip>
+        </safe-move>
+    </target>
+
+    <target name="package.proto" description="package protobuf for other projects">
+        <safe-move file="${out.dir}/protobuf-dev.zip">
+            <zip destfile="@{file}" duplicate="fail">
+                <fileset dir="${src.dir}/libraries/protocol/proto" includes="*.proto"/>
+            </zip>
         </safe-move>
     </target>
 
