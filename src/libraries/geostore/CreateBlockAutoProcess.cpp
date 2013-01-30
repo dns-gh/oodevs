@@ -48,6 +48,8 @@ namespace
 {
     void AddBuildingsToUrban( gaiaGeomCollPtr urbans, gaiaGeomCollPtr buildings )
     {
+        if( !buildings )
+            return;
         gaiaPolygonPtr block = buildings->FirstPolygon;
         while( block )
         {
