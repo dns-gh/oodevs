@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas\5.2.0\physical/missionSheets.xsd">
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xsi:noNamespaceSchemaLocation="schemas\5.2.0\physical/missionSheets.xsd">
     <xsl:output method="html" indent="yes" encoding="utf-8"/>
     <xsl:template match="mission-sheet">
         <html>
