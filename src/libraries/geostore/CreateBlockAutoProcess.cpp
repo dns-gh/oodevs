@@ -42,6 +42,21 @@ CreateBlockAutoProcess::~CreateBlockAutoProcess()
     // NOTHING
 }
 
+namespace
+{
+    void AddBuildingsToUrban( gaiaGeomCollPtr urbans, gaiaGeomCollPtr buildings )
+    {
+        if( !buildings )
+            return;
+        gaiaPolygonPtr block = buildings->FirstPolygon;
+        while( block )
+        {
+            gaiaInsertPolygonInGeomColl( urbans, gaiaCloneRing( block->Exterior ) );
+            block = block->Next;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CreateBlockAutoProcess::Run
 // Created: AME 2010-08-02
@@ -57,15 +72,19 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     // Find intersecting urban areas
     auto it = database_.tables_.find( "urban" );
     if( it != database_.tables_.end() )
-        urbans = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( poly ) );
-
-    if( !urbans )
-        return;
+        urbans = it->second->GetFeaturesIntersectingWith( poly );
 
     // Find intersecting buildings
     it = database_.tables_.find( "building" );
     if( it != database_.tables_.end() )
-        buildings = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( poly ) );
+        buildings = it->second->GetFeaturesIntersectingWith( poly );
+        
+    AddBuildingsToUrban( urbans, buildings );
+    if( !GeometryFactory::Validate( urbans ) )
+    {
+        gaiaFreeGeomColl( buildings );
+        return;
+    }
 
     // Compute the road width
     double lat0, lon0, lat1, lon1;
@@ -85,15 +104,9 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     gaiaFreeGeomColl( urbans );
     gaiaFreeGeomColl( lines );
 
-    // Remove blocks that intersect buildings
-    gaiaGeomCollPtr temp = ClipBlocksWithCollection( urbanBlocks, buildings );
-    gaiaFreeGeomColl( urbanBlocks );
-    gaiaFreeGeomColl( buildings );
-    urbanBlocks = temp;
-
     // Remove blocks that intersect with existing urban blocks in the index/model
     gaiaGeomCollPtr blocksFromIndex = GeometryFactory::Validate( GetUrbanBlocksInAreaFromIndex( footprint ) );
-    temp = ClipBlocksWithCollection( urbanBlocks, blocksFromIndex );
+    gaiaGeomCollPtr temp = ClipBlocksWithCollection( urbanBlocks, blocksFromIndex );
     gaiaFreeGeomColl( urbanBlocks );
     gaiaFreeGeomColl( blocksFromIndex );
     urbanBlocks = temp;
