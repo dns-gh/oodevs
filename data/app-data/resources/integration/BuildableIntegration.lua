@@ -65,11 +65,11 @@ end
 
 integration.startBuildItInstantaneously = function( object, objectType )
     object[ myself ] = object[ myself ] or {}
-    object[myself].actionBuild = DEC_StartCreateObjectInstantaneously( object.source )
-    actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
-        object[ myself ].actionBuildState = arg
+    object[myself].actionCreate = DEC_StartCreateObjectInstantaneously( object.source )
+    actionCallbacks[ object[ myself ].actionCreate ] = function( arg ) 
+        object[ myself ].actionCreateState = arg
     end
-    actionKnowledgeCallbacks[ object[ myself ].actionBuild ] = function( arg )
+    actionKnowledgeCallbacks[ object[ myself ].actionCreate ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
             object.knowledge = CreateKnowledge( objectType, arg )
         end
@@ -174,6 +174,24 @@ end
 -- quand l'action est terminée, que l'on est contruit ou pas l'objet. On renvoie faux
 -- quand la construction est en cours. 
 -- ============================================================================
+
+-- -----------------------------------------------------------------------------
+-- built object
+-- -----------------------------------------------------------------------------
+integration.startBuildItSecu = function( object, objectType )
+    object[ myself ] = object[ myself ] or {}
+    object[myself].actionBuild = DEC_StartCreateObject( object.source )
+    actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
+        object[ myself ].actionBuildState = arg
+    end
+    actionKnowledgeCallbacks[ object[ myself ].actionBuild ] = function( arg )
+        if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
+            object.knowledge = CreateKnowledge( objectType, arg )
+        end
+    end
+    integration.pionRC( eRC_DebutTravaux )
+end
+
 -- -----------------------------------------------------------------------------
 -- Update the object creation
 -- -----------------------------------------------------------------------------
