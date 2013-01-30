@@ -126,11 +126,11 @@ namespace
     // contract of explosable = has a method ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
     template< typename T > void ApplyExplosion( AttritionCapacity& attrition, MIL_Object_ABC& object, const PHY_DotationCategory* dotation, T& explosable )
     {
-    const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
-    if( bypass && bypass->IsBypassed() )
+        const BypassAttribute* bypass = object.RetrieveAttribute< BypassAttribute >();
+        if( bypass && bypass->IsBypassed() )
             return;
-    const ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
-    if( obstacle && !obstacle->IsActivated() )
+        const ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
+        if( obstacle && !obstacle->IsActivated() )
             return;
         ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
         if( ! ( construction && construction->HasDotation( *dotation ) && dotation->HasAttritions() ) )
