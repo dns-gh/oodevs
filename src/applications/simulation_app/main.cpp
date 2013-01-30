@@ -168,5 +168,5 @@ int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
     __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
     }
-    return 0;
+    return EXIT_FAILURE;
 }
