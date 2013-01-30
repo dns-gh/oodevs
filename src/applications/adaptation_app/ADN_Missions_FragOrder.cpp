@@ -14,6 +14,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_ConsistencyChecker.h"
+#include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
 #pragma warning( push, 0 )
@@ -426,43 +427,51 @@ void ADN_Missions_FragOrder::FromWikiToXml( xml::xostream& xos, const std::strin
 void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& missionDir )
 {
     const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
-    if( bfs::is_directory( missionDir ) && bfs::is_regular_file( fileName + ".xml" ) )
+    if( bfs::is_directory( missionDir ) )
     {
+        if( bfs::is_regular_file( fileName + ".xml" ) )
+        {
+            xml::xifstream xis( fileName + ".xml" );
+            std::string descriptionContext;
+            std::string descriptionBehavior;
+            std::string descriptionSpecific;
+            std::string descriptionComment;
+            std::string descriptionMissionEnd;
+            xis >> xml::start( "mission-sheet" )
+                >> xml::optional >> xml::start( "context" )
+                >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionContext )
+                >> xml::end
+                >> xml::optional >> xml::start( "parameters" )
+                >> xml::list( "parameter", *this, &ADN_Missions_FragOrder::ReadMissionSheetParametersDescriptions )
+                >> xml::end
+                >> xml::start( "behavior" )
+                >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionBehavior )
+                >> xml::end
+                >> xml::optional >> xml::start( "specific-cases" )
+                >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionSpecific )
+                >> xml::end
+                >> xml::optional >> xml::start( "comments" )
+                >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionComment )
+                >> xml::end
+                >> xml::optional >> xml::start( "mission-end" )
+                >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionMissionEnd )
+                >> xml::end
+                >> xml::optional >> xml::start( "attachments" )
+                >> xml::list( "attachment", *this, &ADN_Missions_FragOrder::ReadMissionSheetAttachments )
+                >> xml::end
+                >> xml::end;
+            descriptionContext_ = descriptionContext;
+            descriptionBehavior_ = descriptionBehavior;
+            descriptionSpecific_ = descriptionSpecific;
+            descriptionComment_ = descriptionComment;
+            descriptionMissionEnd_ = descriptionMissionEnd;
+        }
+        if( !bfs::exists( fileName + ".html" ) )
+        {
+            std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
+            fileStream.close();
+        }
         missionSheetPath_ = fileName + ".html";
-        xml::xifstream xis( fileName + ".xml" );
-        std::string descriptionContext;
-        std::string descriptionBehavior;
-        std::string descriptionSpecific;
-        std::string descriptionComment;
-        std::string descriptionMissionEnd;
-        xis >> xml::start( "mission-sheet" )
-            >> xml::optional >> xml::start( "context" )
-            >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionContext )
-            >> xml::end
-            >> xml::optional >> xml::start( "parameters" )
-            >> xml::list( "parameter", *this, &ADN_Missions_FragOrder::ReadMissionSheetParametersDescriptions )
-            >> xml::end
-            >> xml::start( "behavior" )
-            >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionBehavior )
-            >> xml::end
-            >> xml::optional >> xml::start( "specific-cases" )
-            >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionSpecific )
-            >> xml::end
-            >> xml::optional >> xml::start( "comments" )
-            >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionComment )
-            >> xml::end
-            >> xml::optional >> xml::start( "mission-end" )
-            >> xml::list( *this, &ADN_Missions_FragOrder::FromXmlToWiki, descriptionMissionEnd )
-            >> xml::end
-            >> xml::optional >> xml::start( "attachments" )
-            >> xml::list( "attachment", *this, &ADN_Missions_FragOrder::ReadMissionSheetAttachments )
-            >> xml::end
-            >> xml::end;
-        descriptionContext_ = descriptionContext;
-        descriptionBehavior_ = descriptionBehavior;
-        descriptionSpecific_ = descriptionSpecific;
-        descriptionComment_ = descriptionComment;
-        descriptionMissionEnd_ = descriptionMissionEnd;
     }
 }
 
@@ -489,7 +498,7 @@ void ADN_Missions_FragOrder::RemoveDifferentNamedMissionSheet( const std::string
 // Name: ADN_Missions_FragOrder::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_FragOrder::WriteMissionSheet( const std::string& missionDir )
+void ADN_Missions_FragOrder::WriteMissionSheet( const std::string& missionDir, const tools::Loader_ABC& fileLoader )
 {
     std::string fileName = std::string( missionDir + "/" + strName_.GetData() );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
@@ -520,14 +529,18 @@ void ADN_Missions_FragOrder::WriteMissionSheet( const std::string& missionDir )
     xos << xml::end
         << xml::end;
 
-    std::string xslFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-                        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissionSheetXslPath_.GetData();
-    assert( bfs::exists( xslFile ) );
+    std::auto_ptr< xml::xistream > xslStream = fileLoader.LoadFile( ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissionSheetXslPath_.GetData() );
+    {
+        xml::xofstream xosTemp( fileName + "TempStream.xml" );
+        *xslStream >> xosTemp;
+    }
     xml::xifstream xisXML( fileName + ".xml" );
-    xsl::xstringtransform xst( xslFile );
+    xsl::xstringtransform xst( fileName + "TempStream.xml" );
     xst << xisXML;
     std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
     fileStream << xst.str();
     fileStream.close();
+    bfs::remove( fileName + "TempStream.xml" );
     missionSheetPath_ = fileName + ".html";
 }

@@ -68,7 +68,7 @@ public:
     void FromWikiToXml( xml::xostream& xos, const std::string& text );
     void ReadMissionSheet( const std::string& missionDir );
     void RemoveDifferentNamedMissionSheet( const std::string& missionDir );
-    void WriteMissionSheet( const std::string& missionDir );
+    void WriteMissionSheet( const std::string& missionDir, const tools::Loader_ABC& fileLoader );
 
 private:
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );

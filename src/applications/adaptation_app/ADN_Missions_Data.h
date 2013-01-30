@@ -90,6 +90,7 @@ public:
     QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
 
     void NotifyElementDeleted( std::string elementName, E_EntityType elementType );
+    void GenerateMissionSheet( int index, const QString& text );
     //@}
 
 private:
@@ -105,6 +106,7 @@ public:
     T_Mission_Vector    populationMissions_;
     T_FragOrder_Vector  fragOrders_;
     T_StringList        toDeleteMissionSheets_;
+    const tools::Loader_ABC*  fileLoader_;
 
 public:
     static tools::IdManager idManager_;

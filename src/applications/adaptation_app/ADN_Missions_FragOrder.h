@@ -71,7 +71,7 @@ public:
     void FromWikiToXml( xml::xostream& xos, const std::string& text );
     void ReadMissionSheet( const std::string& missionDir );
     void RemoveDifferentNamedMissionSheet( const std::string& missionDir );
-    void WriteMissionSheet( const std::string& missionDir );
+    void WriteMissionSheet( const std::string& missionDir, const tools::Loader_ABC& fileLoader );
 
 public:
     ADN_Type_Int              id_;

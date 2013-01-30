@@ -79,34 +79,26 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QTabWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType );
-    QWidget* BuildUnitMissions();
-    QWidget* BuildAutomatMissions();
-    QWidget* BuildPopulationMissions();
+    QWidget* BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType );
     QWidget* BuildFragOrders();
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_EditLine_ABC* nameField_[ 4 ];
+    ADN_EditLine_ABC* nameFields_[ 4 ];
+    QTabWidget* missionTabs_[ 4 ];
     ADN_Missions_Data& data_;
-    QTabWidget* pUnitMissionsWidget_;
-    QTabWidget* pAutomatMissionsWidget_;
-    QTabWidget* pPopulationMissionsWidget_;
-    QTabWidget* fragOrderDescriptionTab_;
     ADN_HtmlViewer* missionViewer_;
     ADN_HtmlViewer* fragViewer_;
+    QSignalMapper* generateMapper_;
     //@}
 
 private slots:
     //! @name slots
     //@{
     void OnNotifyElementDeleted( std::string elementName, E_EntityType elementType );
-    void OnGenerateUnitMissionSheet();
-    void OnGenerateAutomataMissionSheet();
-    void OnGeneratePopulationMissionSheet();
-    void OnGenerateFragOrdersMissionSheet();
+    void OnGenerate( int );
     //@}
 };
 
