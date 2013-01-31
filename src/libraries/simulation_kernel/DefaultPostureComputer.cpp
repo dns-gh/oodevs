@@ -105,6 +105,48 @@ PostureComputer_ABC::Results& DefaultPostureComputer::Result()
     return results_;
 }
 
+namespace
+{
+    void ComputeDeathPosture( PostureComputer_ABC::Results& results )
+    {
+        results.newPosture_ = &PHY_Posture::arret_;
+        results.postureCompletionPercentage_ = 1.;
+        results.bIsStealth_ = false;
+    }
+    void ComputeStealthMode( PostureComputer_ABC::Results& results, const MIL_Random_ABC& random, double stealthFactor )
+    {
+        results.bIsStealth_ = random.rand_oi( 0., 1., MIL_Random::ePerception ) > stealthFactor;
+    }
+    void ComputeMovingPosture( PostureComputer_ABC::Results& results, bool isLoaded, bool isDiscreteModeEnabled )
+    {
+        if( !isLoaded )
+            results.newPosture_ = &PHY_Posture::posteReflexe_;
+        else if( isDiscreteModeEnabled )
+            results.newPosture_ = &PHY_Posture::mouvementDiscret_;
+        else
+            results.newPosture_ = &PHY_Posture::mouvement_;
+    }
+    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool forceStop, const PHY_Posture& current )
+    {
+        if( forceStop && ( &current == &PHY_Posture::mouvement_
+                        || &current == &PHY_Posture::mouvementDiscret_ ) )
+            results.newPosture_ = &PHY_Posture::arret_;
+    }
+    void ComputeNextPosture( PostureComputer_ABC::Results& results, const PHY_Posture& current )
+    {
+        const PHY_Posture* pNextAutoPosture = current.GetNextAutoPosture();
+        if( !pNextAutoPosture )
+            return;
+        results.newPosture_ = pNextAutoPosture;
+    }
+    double ComputeCompletion( double currentCompletion, double postureTime )
+    {
+        if( postureTime == 0. )
+            return 1.;
+        return std::min( 1., currentCompletion + ( 1. / postureTime ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DefaultPostureComputer::Update
 // Created: MGD 2009-09-22
@@ -112,53 +154,14 @@ PostureComputer_ABC::Results& DefaultPostureComputer::Result()
 void DefaultPostureComputer::Update()
 {
     if( bIsDead_ )
-    {
-        results_.newPosture_ = &PHY_Posture::arret_;
-        results_.postureCompletionPercentage_ = 1.;
-        results_.bIsStealth_ = false;
-        return;
-    }
-
-    // Mode furtif
-    results_.bIsStealth_ = random_.rand_oi( 0., 1., MIL_Random::ePerception ) > rStealthFactor_;
-
+        return ComputeDeathPosture( results_ );
+    ComputeStealthMode( results_, random_, rStealthFactor_ );
     if( bForceMovement_ )
-    {
-        if( !bIsLoaded_ )
-            results_.newPosture_ = &PHY_Posture::posteReflexe_;
-        else if( bDiscreteModeEnabled_ )
-            results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
-        else
-            results_.newPosture_ = &PHY_Posture::mouvement_;
-        return;
-    }
-
-    if( bForceStop_ && ( &posture_ == &PHY_Posture::mouvement_
-                      || &posture_ == &PHY_Posture::mouvementDiscret_ ) )
-            results_.newPosture_ = &PHY_Posture::arret_;
-
+        return ComputeMovingPosture( results_, bIsLoaded_, bDiscreteModeEnabled_ );
+    ComputeStopPosture( results_, bForceStop_, posture_ );
     if( results_.postureCompletionPercentage_ == 1. )
-    {
-        const PHY_Posture* pNextAutoPosture = posture_.GetNextAutoPosture();
-        if( !pNextAutoPosture )
-            return;
-        results_.newPosture_ = pNextAutoPosture;
-    }
-    else
-    {
-        const double rPostureTime = GetPostureTime();
-        double rNewPostureCompletionPercentage = results_.postureCompletionPercentage_;
-        if( rPostureTime )
-        {
-            rNewPostureCompletionPercentage += ( 1. / rPostureTime );
-            if( rNewPostureCompletionPercentage > 1. )
-                rNewPostureCompletionPercentage = 1.;
-        }
-        else
-            rNewPostureCompletionPercentage = 1.;
-
-        results_.postureCompletionPercentage_ = rNewPostureCompletionPercentage;
-    }
+        return ComputeNextPosture( results_, posture_ );
+    results_.postureCompletionPercentage_ = ComputeCompletion( results_.postureCompletionPercentage_, GetPostureTime() );
 }
 
 // -----------------------------------------------------------------------------
