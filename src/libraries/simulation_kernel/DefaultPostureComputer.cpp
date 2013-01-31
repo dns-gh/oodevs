@@ -136,6 +136,7 @@ namespace
         results.postureCompletionPercentage_ = completion;
         if( completion > 0. )
             return;
+        results.postureCompletionPercentage_ = 1.;
         if( &current != &PHY_Posture::arret_ )
             return ComputePreviousPosture( results, current );
         else if( !isLoaded )

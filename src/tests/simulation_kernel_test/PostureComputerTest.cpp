@@ -49,9 +49,10 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_with_unfinished_completion_does_not_cha
     BOOST_CHECK( !result.newPosture_ );
 }
 
-BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_moving_posture, Fixture )
+BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_moving_posture_and_new_completion_is_full, Fixture )
 {
     const double completion = 0.;
+    const double fullCompletion = 1.;
     const double tearDownTime = 0;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completion, 1, 1 );
     computer.SetPostureMovement();
@@ -59,6 +60,7 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_mo
     MOCK_EXPECT( time.GetPostureTearDownTime ).once().returns( tearDownTime );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK( result.newPosture_ == &PHY_Posture::mouvement_ );
+    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, fullCompletion, 0.0001 );
 }
 
 BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_must_wait_completion_decrease_before_changing_to_moving_posture, Fixture )
@@ -218,13 +220,14 @@ namespace
         void CheckPreviousPosture( const PHY_Posture& current, const PHY_Posture* previous )
         {
             const double completionPercent = 0;
+            const double fullCompletion = 1.;
             posture::DefaultPostureComputer computer( random, time, current, false, false, completionPercent, 1, 1 );
             computer.SetPostureMovement();
             computer.NotifyLoaded();
             MOCK_EXPECT( time.GetPostureTearDownTime ).returns( 0 );
             const posture::PostureComputer_ABC::Results& result = computer.Result();
             BOOST_CHECK( result.newPosture_ == previous );
-            BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 0, 0.0001 );
+            BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, fullCompletion, 0.0001 );
         }
     };
 }
