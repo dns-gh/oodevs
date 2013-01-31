@@ -13,6 +13,7 @@
 #include "ModuleFacade.h"
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
+#include "wrapper/Effect.h"
 #include "wrapper/Hook.h"
 #include "simulation_kernel/Entities/Orders/MIL_DecisionalReport.h" // $$$$ MCO : for enums
 #include <tools/Exception.h>
@@ -36,13 +37,19 @@ namespace
         event[ "name" ] = name;
         event.Post();
     }
+    void PostMovementIntention( const wrapper::View& entity, bool intention )
+    {
+        wrapper::Effect effect( entity[ "movement/intention" ] );
+        effect = intention;
+        effect.Post();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MoveCommand constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/ )
+MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model )
     : module_            ( module )
     , action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
@@ -55,6 +62,7 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
 {
     if( mainPath_.expired() )
         throw MASA_EXCEPTION( "Path pointer is of wrong type." );
+    PostMovementIntention( model[ "entities" ][ identifier_ ], true );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +76,7 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
     auto mainPath = mainPath_.lock();
     if( mainPath )
         GET_HOOK( CancelPathFindJob )( mainPath->GetID() );
+    PostMovementIntention( model[ "entities" ][ identifier_ ], false );
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 

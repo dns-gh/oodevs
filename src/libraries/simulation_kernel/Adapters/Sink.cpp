@@ -632,7 +632,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
         MT_LOG_ERROR_MSG( "Can't configure sink ( '" << tools::GetExceptionMsg( e ) << "' )" );
     }
 
-    pion.RegisterRole( *new sword::RoleAction_Moving( pion ) );
+    pion.RegisterRole( *new sword::RoleAction_Moving( pion, entity ) );
     pion.RegisterRole( *new sword::RolePion_Perceiver( *this, *model_, pion, entity ) );
     pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );
     pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes

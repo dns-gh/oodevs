@@ -98,6 +98,7 @@ namespace movement
             entity[ "danger/x" ] = 1;
             entity[ "danger/y" ] = 0;
             entity[ "is-deployed" ] = false;
+            entity[ "movement/intention" ] = false;
             entity[ "movement/height" ] = 0;
             entity[ "movement/direction/x" ] = 0;
             entity[ "movement/direction/y" ] = 0;

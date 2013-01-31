@@ -88,10 +88,12 @@ BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, MovementFixture 
     UpdatePosition( start );
     const T_Points points = boost::assign::map_list_of( start, TerrainData() )
                                                       ( end, TerrainData() );
+    ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( true ) );
     command = StartMoveCommand( points );
     MOCK_EXPECT( CancelPathFindJob ).once();
     MOCK_EXPECT( DeleteKnowledgeCache );
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
+    ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( false ) );
     commands.Stop( command );
     mock::verify();
     ExecuteCommands();
@@ -106,6 +108,7 @@ namespace
             MOCK_EXPECT( CancelPathFindJob ).once();
             MOCK_EXPECT( DeleteKnowledgeCache );
             ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
+            ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( false ) );
             StopCommand( command );
         }
     };
@@ -118,6 +121,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when
                                                       ( geometry::Point2f( 0, 5 ), TerrainData::Water() )
                                                       ( geometry::Point2f( 0, 10 ), TerrainData() );
     UpdatePosition( points.front().first );
+    ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( true ) );
     command = StartMoveCommand( points );
     ExpectEffect( entity[ "movement/environment" ], sword::test::MakeModel( "area", TerrainData::Water().Area() )
                                                                           ( "left", 0 )
@@ -143,6 +147,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     ExpectEvent( "movement report" );
     const std::size_t path = CreateSimplePath();
     MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );
+    ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( true ) );
     command = StartCommand( "move",
         core::MakeModel( "action", action )
                        ( "identifier", identifier )
@@ -159,6 +164,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     ExpectEvent( "movement report" );
     const std::size_t path = CreateSimplePath();
     MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );
+    ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( true ) );
     command = StartCommand( "move",
         core::MakeModel( "action", action )
                        ( "identifier", identifier )
@@ -180,6 +186,7 @@ namespace
             UpdatePosition( start );
             const T_Points points = boost::assign::map_list_of( start, TerrainData() )
                                                               ( end, TerrainData() );
+            ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( true ) );
             command = StartMoveCommand( points );
         }
     };
@@ -331,6 +338,7 @@ namespace
             T_Points points;
             for( float y = 0; y < size; ++y )
                 points.push_back( T_Point( geometry::Point2f( 0, y ), TerrainData() ) );
+            ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( true ) );
             command = StartMoveCommand( points );
         }
         const int size;

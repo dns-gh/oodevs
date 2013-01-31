@@ -20,7 +20,8 @@ BOOST_FIXTURE_TEST_CASE( follow_command_posts_effect_with_followed_position_and_
                                                                    ( "direction/y", 1 )
                                                                    ( "speed", 20 )
                                                                    ( "height", 10 );
-    model[ "entities" ][ identifier ][ "movement" ];
+    model[ "entities" ][ identifier ][ "movement/intention" ] = false;
+    ExpectEffect( model[ "entities" ][ identifier ][ "movement/intention" ], sword::test::MakeModel( true ) );
     PostCommand( "follow", core::MakeModel( "identifier", identifier )
                                           ( "followed", followed ) );
     ExpectEffect( model[ "entities" ][ identifier ][ "movement" ],
@@ -30,5 +31,6 @@ BOOST_FIXTURE_TEST_CASE( follow_command_posts_effect_with_followed_position_and_
                                         ( "direction/y", 1 )
                                         ( "speed", 20 )
                                         ( "height", 10 ) );
+    ExpectEffect( model[ "entities" ][ identifier ][ "movement/intention" ], sword::test::MakeModel( false ) );
     ExecuteCommands();
 }

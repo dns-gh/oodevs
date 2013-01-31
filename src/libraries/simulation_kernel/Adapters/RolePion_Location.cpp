@@ -225,12 +225,15 @@ namespace
     };
 }
 
+// -----------------------------------------------------------------------------
+// Name: RolePion_Location constructor
+// Created: LDC 2013-01-11
+// -----------------------------------------------------------------------------
 RolePion_Location::RolePion_Location()
     : sink_             ( 0 )
     , owner_            ( 0 )
     , entity_           ( 0 )
     , vDirection_       ( 0, 1 )
-    , pvPosition_       ()
     , bHasDoneMagicMove_( false )
 {
     // NOTHING

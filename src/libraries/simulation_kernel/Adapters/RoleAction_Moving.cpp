@@ -25,6 +25,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include <core/Model.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAction_Moving )
 
@@ -36,6 +37,7 @@ using namespace sword;
 // -----------------------------------------------------------------------------
 RoleAction_Moving::RoleAction_Moving()
     : owner_               ( 0 )
+    , entity_              ( 0 )
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
@@ -49,8 +51,9 @@ RoleAction_Moving::RoleAction_Moving()
 // Name: RoleAction_Moving constructor
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion )
+RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion, const core::Model& entity )
     : owner_               ( &pion )
+    , entity_              ( &entity )
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
@@ -77,7 +80,8 @@ template< typename Archive >
 void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< moving::PHY_RoleAction_InterfaceMoving >( *this );
-    file & owner_;
+    file & owner_
+         & entity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -308,10 +312,10 @@ double RoleAction_Moving::GetMaxSpeedModificator() const
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) const
 {
-    if( rSpeed_ == 0. )
-        algorithm.UnsetPostureMovement();
-    else
+    if( (*entity_)[ "movement/intention" ] )
         algorithm.SetPostureMovement();
+    else
+        algorithm.UnsetPostureMovement();
 }
 
 // -----------------------------------------------------------------------------

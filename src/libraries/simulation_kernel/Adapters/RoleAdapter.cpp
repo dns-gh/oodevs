@@ -42,6 +42,7 @@ namespace
         entity[ "movement/environment/left" ] = 0;
         entity[ "movement/environment/right" ] = 0;
         entity[ "movement/environment/linear" ] = 0;
+        entity[ "movement/intention" ] = false;
         entity[ "identifier" ] = pion.GetID();
         entity[ "can-fly" ] = pion.GetType().GetUnitType().CanFly();
         entity[ "is-autonomous" ] = pion.IsAutonomous();

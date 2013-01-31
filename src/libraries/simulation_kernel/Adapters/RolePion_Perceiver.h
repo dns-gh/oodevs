@@ -24,7 +24,6 @@ namespace detection
 namespace core
 {
     class Model;
-    class Facade;
 }
 
 namespace sword

@@ -24,6 +24,11 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+namespace core
+{
+    class Model;
+}
+
 namespace sword
 {
 // =============================================================================
@@ -40,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              RoleAction_Moving();
-    explicit RoleAction_Moving( MIL_AgentPion& pion );
+             RoleAction_Moving( MIL_AgentPion& pion, const core::Model& entity );
     virtual ~RoleAction_Moving();
     //@}
 
@@ -82,13 +87,14 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion*              owner_;
-    double                      rSpeed_;
-    double                      rSpeedModificator_;
-    double                      rMaxSpeedModificator_;
-    // Network
-    bool                        bHasMove_;
-    mutable bool bTheoricMaxSpeed_;
+    MIL_AgentPion*     owner_;
+    const core::Model* entity_;
+    double             rSpeed_;
+    double             rSpeedModificator_;
+    double             rMaxSpeedModificator_;
+    // Network         
+    bool               bHasMove_;
+    mutable bool       bTheoricMaxSpeed_;
     //@}
 };
 

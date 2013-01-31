@@ -14,22 +14,33 @@
 using namespace sword;
 using namespace sword::movement;
 
+namespace
+{
+    void PostMovementIntention( const wrapper::View& parameters, const wrapper::View& model, bool intention )
+    {
+        const std::size_t identifier = parameters[ "identifier" ];
+        wrapper::Effect effect( model[ "entities" ][ identifier ][ "movement/intention" ] );
+        effect = intention;
+        effect.Post();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FollowCommand constructor
 // Created: SLI 2012-10-23
 // -----------------------------------------------------------------------------
-FollowCommand::FollowCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
+FollowCommand::FollowCommand( const wrapper::View& parameters, const wrapper::View& model )
 {
-    // NOTHING
+    PostMovementIntention( parameters, model, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FollowCommand::Destroy
 // Created: MCO 2012-10-26
 // -----------------------------------------------------------------------------
-void FollowCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void FollowCommand::Destroy( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    // NOTHING
+    PostMovementIntention( parameters, model, false );
 }
 
 // -----------------------------------------------------------------------------
