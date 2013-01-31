@@ -22,6 +22,7 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
+#include "simulation_kernel/MoveComputer_ABC.h"
 #include "MIL_Random_ABC.h"
 #include "MIL_Random.h"
 
@@ -447,6 +448,16 @@ void PHY_RolePion_Posture::Execute( urbanLocation::UrbanLocationComputer_ABC& al
         algorithm.SetUrbanDeployment( static_cast< float >( rPostureCompletionPercentage_ ) );
     if( pCurrentPosture_ == &PHY_Posture::posteAmenage_ )
         algorithm.SetUrbanDeployment( 1.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Execute
+// Created: SLI 2013-01-30
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Execute( moving::MoveComputer_ABC& algorithm ) const
+{
+    if( !IsMovingPosture() )
+        algorithm.NotifyStoppedPosture();
 }
 
 // -----------------------------------------------------------------------------

@@ -79,7 +79,6 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsStealth() const = 0;
-    virtual bool IsMovingPosture() const = 0;
     //@}
 
 private:

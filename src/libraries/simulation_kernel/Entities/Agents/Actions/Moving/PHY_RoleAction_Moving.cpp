@@ -54,6 +54,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving()
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
+    , bIntentToMove_         ( false )
     , bTheoricMaxSpeed_      ( false )
 {
         // NOTHING
@@ -71,6 +72,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
+    , bIntentToMove_         ( false )
     , bTheoricMaxSpeed_      ( false )
 {
     // NOTHING
@@ -359,6 +361,15 @@ void PHY_RoleAction_Moving::ApplyMove( const MT_Vector2D& position, const MT_Vec
     return owner_->GetRole< PHY_RoleInterface_Location >().Move( position, direction, rSpeed );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::Move
+// Created: SLI 2013-01-30
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Moving::Move( boost::shared_ptr< DEC_PathResult > pPath )
+{
+    bIntentToMove_ = true;
+    return PHY_MovingEntity_ABC::Move( pPath );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::NotifyMovingOnPathPoint
@@ -495,6 +506,7 @@ void PHY_RoleAction_Moving::Clean()
     bCurrentPathHasChanged_ = false;
     bEnvironmentHasChanged_ = false;
     bHasMove_               = false;
+    bIntentToMove_          = false;
     bTheoricMaxSpeed_       = false;
 }
 
@@ -560,10 +572,10 @@ double PHY_RoleAction_Moving::GetMaxSpeedModificator() const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) const
 {
-    if( rSpeed_ == 0. )
-        algorithm.UnsetPostureMovement();
-    else
+    if( bIntentToMove_ )
         algorithm.SetPostureMovement();
+    else
+        algorithm.UnsetPostureMovement();
 }
 
 } // namespace moving

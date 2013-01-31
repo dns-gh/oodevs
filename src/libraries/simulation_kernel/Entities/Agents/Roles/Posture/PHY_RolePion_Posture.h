@@ -33,6 +33,11 @@ namespace detection
     class PerceptionDistanceComputer_ABC;
 }
 
+namespace moving
+{
+    class MoveComputer_ABC;
+}
+
 namespace urbanLocation
 {
     class UrbanLocationComputer_ABC;
@@ -47,6 +52,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
+                           , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
                            , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
@@ -71,6 +77,7 @@ public:
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
     virtual void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
+    virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
 
     // Override automatic postures
     virtual void SetPosturePostePrepareGenie();
@@ -104,7 +111,6 @@ public:
     virtual const PHY_Posture& GetCurrentPosture() const;
     virtual double GetPostureCompletionPercentage() const;
     virtual bool IsStealth() const;
-    virtual bool IsMovingPosture() const;
     //@}
 
     //! @name Network
@@ -120,6 +126,7 @@ private:
     void ChangePosture( const PHY_Posture& newPosture );
     void ChangePostureCompletionPercentage( double rNewPercentage );
     void Uninstall();
+    bool IsMovingPosture() const;
     //@}
 
     //! @name Serialization

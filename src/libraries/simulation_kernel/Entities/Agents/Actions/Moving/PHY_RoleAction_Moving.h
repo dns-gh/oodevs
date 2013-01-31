@@ -68,6 +68,8 @@ public:
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId ) const;
     virtual void SendRC( const MIL_DecisionalReport& reportId, const std::string& name ) const;
+    virtual int Move( boost::shared_ptr< DEC_PathResult > pPath );
+
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 
@@ -145,6 +147,7 @@ private:
     bool                        bCurrentPathHasChanged_;
     bool                        bEnvironmentHasChanged_;
     bool                        bHasMove_;
+    bool                        bIntentToMove_;
     mutable bool bTheoricMaxSpeed_;
     //@}
 };
