@@ -36,9 +36,9 @@ namespace logistic_helpers
     void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, UnaryFunction& func )
     {
         func( entity );
-        if( entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( auto tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
-            tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            auto it = tactical->CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& child = it.NextElement();
@@ -53,9 +53,9 @@ namespace logistic_helpers
     {
         if( entity.Retrieve< Extension >() == &extension )
             return true;
-        if( entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( auto tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
-            tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            auto it = tactical->CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& child = it.NextElement();
@@ -72,9 +72,9 @@ namespace logistic_helpers
     {
         if( entity.Retrieve< Extension >() )
             return true;
-        if( entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( auto tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
-            tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            auto it = tactical->CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const kernel::Entity_ABC& child = it.NextElement();

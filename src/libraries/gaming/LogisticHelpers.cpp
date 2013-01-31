@@ -26,13 +26,13 @@ namespace logistic_helpers
     {
         if( entity.Retrieve< SupplyStates >() )
         {
-            tools::Iterator< const Dotation& > it = entity.Get< SupplyStates >().CreateIterator();
+            auto it = entity.Get< SupplyStates >().CreateIterator();
             while( it.HasMoreElements() )
                 func( it.NextElement() );
         }
-        else if( entity.Retrieve< TacticalHierarchies >() )
+        else if( auto tactical = entity.Retrieve< TacticalHierarchies >() )
         {
-            tools::Iterator< const Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
+            auto it = tactical->CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const Entity_ABC& child = it.NextElement();
@@ -50,9 +50,9 @@ namespace logistic_helpers
     {
         if( func( entity ) )
             return true;
-        if( entity.Retrieve< TacticalHierarchies >() )
+        if( auto tactical = entity.Retrieve< TacticalHierarchies >() )
         {
-            tools::Iterator< const Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
+            auto it = tactical->CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const Entity_ABC& child = it.NextElement();
