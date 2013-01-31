@@ -779,6 +779,15 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveDeleteUnit
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveDeleteUnit()
+{
+    // TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::MagicMove
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
@@ -1091,6 +1100,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::UnitMagicAction::destroy_all:
         OnReceiveDestroyAll();
+        break;
+    case sword::UnitMagicAction::delete_unit:
+        OnReceiveDeleteUnit();
         break;
     case sword::UnitMagicAction::change_human_factors:
         OnReceiveChangeHumanFactors( msg.parameters() );

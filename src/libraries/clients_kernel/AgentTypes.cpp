@@ -390,6 +390,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "recover_equipments", sword::UnitMagicAction::recover_equipments ) );
     RegisterActionType( *new MagicActionType( "recover_resources", sword::UnitMagicAction::recover_resources ) );
     RegisterActionType( *new MagicActionType( "destroy_all", sword::UnitMagicAction::destroy_all ) );
+    RegisterActionType( *new MagicActionType( "delete_unit", sword::UnitMagicAction::delete_unit ) );
     RegisterActionType( *new MagicActionType( "change_human_factors", sword::UnitMagicAction::change_human_factors ) );
     RegisterActionType( *new MagicActionType( "partial_recovery", sword::UnitMagicAction::partial_recovery ) );
     RegisterActionType( *new MagicActionType( "automat_creation", sword::UnitMagicAction::automat_creation ) );

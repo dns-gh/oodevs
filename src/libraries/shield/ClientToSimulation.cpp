@@ -151,6 +151,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( MsgsClientToSim::MsgUnitMagicAction::recover_equipments, sword::UnitMagicAction::recover_equipments )
                         ( MsgsClientToSim::MsgUnitMagicAction::recover_resources, sword::UnitMagicAction::recover_resources )
                         ( MsgsClientToSim::MsgUnitMagicAction::destroy_all, sword::UnitMagicAction::destroy_all )
+                        ( MsgsClientToSim::MsgUnitMagicAction::delete_unit, sword::UnitMagicAction::delete_unit )
                         ( MsgsClientToSim::MsgUnitMagicAction::change_human_factors, sword::UnitMagicAction::change_human_factors )
                         ( MsgsClientToSim::MsgUnitMagicAction::partial_recovery, sword::UnitMagicAction::partial_recovery )
                         ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation )

@@ -186,6 +186,7 @@ private:
     void OnReceiveResupply( const sword::MissionParameters& msg );
     void OnReceiveDestroyAll();
     void OnReceiveDestroyComponent();
+    void OnReceiveDeleteUnit();
     void OnReceiveRecoverHumansTransporters();
     void OnReceiveCreateWound( const sword::MissionParameters& asn );
     void OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg );

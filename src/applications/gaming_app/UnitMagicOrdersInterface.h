@@ -82,6 +82,7 @@ private slots:
     //@{
     void Magic( int );
     void DestroyComponent();
+    void DeleteUnit();
     void Move();
     void RecoverHumanTransporters();
     void SurrenderTo( int );

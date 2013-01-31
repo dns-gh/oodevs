@@ -3092,6 +3092,10 @@ This data can&apos;t be projected.</source>
         <source>Finish logistic handlings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

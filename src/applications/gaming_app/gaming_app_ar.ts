@@ -3089,6 +3089,10 @@ This data can&apos;t be projected.</source>
         <source>Surrender to</source>
         <translation type="unfinished">الاستسلام إلى</translation>
     </message>
+    <message>
+        <source>Delete unit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

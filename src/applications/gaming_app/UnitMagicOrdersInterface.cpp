@@ -104,6 +104,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ), SLOT( DestroyComponent() ), magicMenu );
+        AddMagic( tr( "Delete unit" ), SLOT( DeleteUnit() ), magicMenu );
 
         const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
         const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
@@ -294,9 +295,17 @@ void UnitMagicOrdersInterface::Magic( int type )
 void UnitMagicOrdersInterface::DestroyComponent()
 {
     if( selectedEntity_ )
-    {
         CreateAndPublish( "destroy_component", tr( "Destroy Component") );
-    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::DeleteUnit
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::DeleteUnit()
+{
+    if( selectedEntity_)
+        CreateAndPublish( "delete_unit", tr( "Delete unit" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -319,9 +328,7 @@ void UnitMagicOrdersInterface::Move()
 void UnitMagicOrdersInterface::RecoverHumanTransporters()
 {
     if( selectedEntity_ )
-    {
         CreateAndPublish( "recover_transporters", tr( "Recover Transporters" ) );
-    }
 }
 
 // -----------------------------------------------------------------------------

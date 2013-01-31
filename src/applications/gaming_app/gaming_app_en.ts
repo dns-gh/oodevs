@@ -3087,6 +3087,10 @@ This data can&apos;t be projected.</source>
         <source>Surrender to</source>
         <translation>Surrender to</translation>
     </message>
+    <message>
+        <source>Delete unit</source>
+        <translation>Delete unit</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>
