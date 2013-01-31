@@ -51,6 +51,7 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     , bPercentageHasChanged_               ( true  )
     , bIsStealth_                          ( false )
     , bInstallationSetUpInProgress_        ( false )
+    , bIsParkedOnEngineerArea_             ( false )
     , bInstallationStateHasChanged_        ( true )
     , rLastPostureCompletionPercentageSent_( 0. )
     , rLastInstallationStateSent_          ( 0. )
@@ -87,7 +88,8 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
          >> bIsStealth_
          >> rLastPostureCompletionPercentageSent_
          >> rInstallationState_
-         >> rLastInstallationStateSent_;
+         >> rLastInstallationStateSent_
+         >> bIsParkedOnEngineerArea_;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +111,8 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
          << bIsStealth_
          << rLastPostureCompletionPercentageSent_
          << rInstallationState_
-         << rLastInstallationStateSent_;
+         << rLastInstallationStateSent_
+         << bIsParkedOnEngineerArea_;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +161,9 @@ namespace
 void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     Uninstall();
-    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( random, owner_.GetType().GetUnitType(), *pCurrentPosture_, bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_, rStealthFactor_, rTimingFactor_ ) );
+    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( random, owner_.GetType().GetUnitType(), *pCurrentPosture_,
+                                                                                                           bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
+                                                                                                           rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ ) );
     owner_.Execute( *computer );
     PostureComputer_ABC::Results& result = computer->Result();
     if( result.newPosture_ )
@@ -175,7 +180,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SetPosturePostePrepareGenie()
 {
-    ChangePosture( PHY_Posture::postePrepareGenie_ );
+    bIsParkedOnEngineerArea_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,8 +189,7 @@ void PHY_RolePion_Posture::SetPosturePostePrepareGenie()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::UnsetPosturePostePrepareGenie()
 {
-    if( pCurrentPosture_ == &PHY_Posture::postePrepareGenie_ )
-        ChangePosture( PHY_Posture::arret_ );
+    bIsParkedOnEngineerArea_ = false;
 }
 
 // -----------------------------------------------------------------------------

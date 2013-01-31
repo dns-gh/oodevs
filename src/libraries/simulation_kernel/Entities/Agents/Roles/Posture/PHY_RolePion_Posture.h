@@ -147,6 +147,7 @@ private:
     // Installation
     double              rInstallationState_;
     bool                bInstallationSetUpInProgress_;
+    bool bIsParkedOnEngineerArea_;
     bool bDiscreteModeEnabled_;
     bool bIsStealth_;
     // Network

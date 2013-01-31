@@ -37,8 +37,8 @@ PostureComputerFactory::~PostureComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< PostureComputer_ABC > PostureComputerFactory::Create( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                                                      bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
-                                                                     double rTimingFactor ) const
+                                                                     double rTimingFactor, bool isParkedOnEngineerArea ) const
 {
     return std::auto_ptr< PostureComputer_ABC >( new DefaultPostureComputer( random, time, posture, bIsDead, bDiscreteModeEnabled, rCompletionPercentage,
-                                                                             rStealthFactor, rTimingFactor ) );
+                                                                             rStealthFactor, rTimingFactor, isParkedOnEngineerArea ) );
 }

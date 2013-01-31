@@ -31,7 +31,7 @@ public:
     //@{
              DefaultPostureComputer( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                      bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
-                                     double rTimingFactor );
+                                     double rTimingFactor, bool isParkedOnEngineerArea );
     virtual ~DefaultPostureComputer();
     //@}
 
@@ -62,6 +62,7 @@ private:
     const double rCompletionPercentage_;
     const double rStealthFactor_;
     const double rTimingFactor_;
+    const bool isParkedOnEngineerArea_;
     std::vector< double > coefficientsModifier_;
     bool bMoving_;
     bool bStopped_;

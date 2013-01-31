@@ -22,19 +22,20 @@ using namespace posture;
 // -----------------------------------------------------------------------------
 DefaultPostureComputer::DefaultPostureComputer( const MIL_Random_ABC& random, const PostureTime_ABC& time, const PHY_Posture& posture, bool bIsDead,
                                                 bool bDiscreteModeEnabled, double rCompletionPercentage, double rStealthFactor,
-                                                double rTimingFactor )
-    : random_               ( random )
-    , time_                 ( time )
-    , posture_              ( posture )
-    , bIsDead_              ( bIsDead )
-    , bDiscreteModeEnabled_ ( bDiscreteModeEnabled )
-    , rCompletionPercentage_( rCompletionPercentage )
-    , rStealthFactor_       ( rStealthFactor )
-    , rTimingFactor_        ( rTimingFactor )
-    , bMoving_              ( false )
-    , bStopped_             ( false )
-    , bIsLoaded_            ( false )
-    , results_              ( rCompletionPercentage )
+                                                double rTimingFactor, bool isParkedOnEngineerArea )
+    : random_                ( random )
+    , time_                  ( time )
+    , posture_               ( posture )
+    , bIsDead_               ( bIsDead )
+    , bDiscreteModeEnabled_  ( bDiscreteModeEnabled )
+    , rCompletionPercentage_ ( rCompletionPercentage )
+    , rStealthFactor_        ( rStealthFactor )
+    , rTimingFactor_         ( rTimingFactor )
+    , isParkedOnEngineerArea_( isParkedOnEngineerArea )
+    , bMoving_               ( false )
+    , bStopped_              ( false )
+    , bIsLoaded_             ( false )
+    , results_               ( rCompletionPercentage )
 {
     // NOTHING
 }
@@ -144,7 +145,7 @@ namespace
         else
             results.newPosture_ = &PHY_Posture::mouvement_;
     }
-    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool forceStop, double completion, const PHY_Posture& current )
+    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool isParkedOnEngineerArea, bool forceStop, double completion, const PHY_Posture& current )
     {
         results.postureCompletionPercentage_ = completion;
         if( forceStop && ( &current == &PHY_Posture::mouvement_
@@ -156,6 +157,11 @@ namespace
         }
         if( completion < 1. )
             return;
+        if( isParkedOnEngineerArea )
+        {
+            results.newPosture_ = &PHY_Posture::postePrepareGenie_;
+            return;
+        }
         return ComputeNextPosture( results, current );
     }
     double ApplyModifiers( double time, const std::vector< double >& coefficientsModifier, double timingFactor )
@@ -165,9 +171,9 @@ namespace
             time *= *it;
         return time / timingFactor;
     }
-    double ComputeNextCompletion( double currentCompletion, const PHY_Posture& current, const std::vector< double >& coefficientsModifier, double timingFactor, const PostureTime_ABC& time )
+    double ComputeNextCompletion( double currentCompletion, const PHY_Posture& current, const std::vector< double >& coefficientsModifier, double timingFactor, const PostureTime_ABC& time, bool isParkedOnEngineerArea )
     {
-        const PHY_Posture* next = current.GetNextAutoPosture();
+        const PHY_Posture* next = isParkedOnEngineerArea ? &PHY_Posture::postePrepareGenie_ : current.GetNextAutoPosture();
         if( !next )
             return 0.;
         const double postureTime = ApplyModifiers( time.GetPostureSetupTime( *next ), coefficientsModifier, timingFactor );
@@ -200,7 +206,7 @@ void DefaultPostureComputer::Update()
     }
     else
     {
-        const double completion = ComputeNextCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, time_ );
-        return ComputeStopPosture( results_, bStopped_, completion, posture_ );
+        const double completion = ComputeNextCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, time_, isParkedOnEngineerArea_ );
+        return ComputeStopPosture( results_, isParkedOnEngineerArea_, bStopped_, completion, posture_ );
     }
 }
