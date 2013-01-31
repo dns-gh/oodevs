@@ -435,6 +435,11 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
+
+    std::auto_ptr< xml::xistream > xslStream = fileLoader.LoadFile( workDir_.GetSaveDirectory()
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissionSheetXslPath_.GetData() );
+    xml::xofstream xosTemp( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
+    *xslStream >> xosTemp;
 }
 
 namespace

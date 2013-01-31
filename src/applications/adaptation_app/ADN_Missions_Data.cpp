@@ -72,7 +72,6 @@ void ADN_Missions_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    fileLoader_ = &fileLoader;
     T_StringList fileList;
     FilesNeeded( fileList );
     if( ! fileList.empty() )
@@ -138,7 +137,7 @@ void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_EntityT
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
 {
-    assert( index >= 0 && index < 4 && fileLoader_ );
+    assert( index >= 0 && index < 4 );
      const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
                                   + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_EntityType >( index)  );
      const QString path = missionDir.c_str() + text + ".html";
@@ -148,7 +147,7 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
          for( auto it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
-                 ( *it )->WriteMissionSheet( missionDir, *fileLoader_ );
+                 ( *it )->WriteMissionSheet( missionDir );
                  break;
              }
          break;
@@ -156,7 +155,7 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
          for( auto it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
-                ( *it )->WriteMissionSheet( missionDir, *fileLoader_ );
+                ( *it )->WriteMissionSheet( missionDir );
                 break;
              }
          break;
@@ -164,7 +163,7 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
          for( auto it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
-                 ( *it )->WriteMissionSheet( missionDir, *fileLoader_ );
+                 ( *it )->WriteMissionSheet( missionDir );
                  break;
              }
          break;
@@ -172,7 +171,7 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
          for( auto it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
-                 ( *it )->WriteMissionSheet( missionDir, *fileLoader_ );
+                 ( *it )->WriteMissionSheet( missionDir );
                  break;
              }
          break;
@@ -231,16 +230,16 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missi
 
 namespace
 {
-    void WriteMissionSheets( E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions, const tools::Loader_ABC& fileLoader )
+    void WriteMissionSheets( E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->RemoveDifferentNamedMissionSheet( missionDir );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteMissionSheet( missionDir, fileLoader );
+            missions[i]->WriteMissionSheet( missionDir );
     }
 
-    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions, const tools::Loader_ABC& fileLoader )
+    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         //xml datas saving
         output << xml::start( name );
@@ -248,7 +247,7 @@ namespace
             missions[i]->WriteArchive( output, name );
 
         //save mission sheets
-        WriteMissionSheets( type, missions, fileLoader );
+        WriteMissionSheets( type, missions );
 
         output << xml::end;
     }
@@ -276,9 +275,9 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 
     output << xml::start( "missions" );
     ADN_Tools::AddSchema( output, "Missions" );
-    WriteMissions( output, "units", eEntityType_Pawn, unitMissions_, *fileLoader_ );
-    WriteMissions( output, "automats", eEntityType_Automat, automatMissions_, *fileLoader_ );
-    WriteMissions( output, "populations", eEntityType_Population, populationMissions_, *fileLoader_ );
+    WriteMissions( output, "units", eEntityType_Pawn, unitMissions_ );
+    WriteMissions( output, "automats", eEntityType_Automat, automatMissions_ );
+    WriteMissions( output, "populations", eEntityType_Population, populationMissions_ );
 
     //frag orders datas saving
     output << xml::start( "fragorders" );
@@ -291,7 +290,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->RemoveDifferentNamedMissionSheet( missionDir );
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-         fragOrders_[i]->WriteMissionSheet( missionDir, *fileLoader_ );
+         fragOrders_[i]->WriteMissionSheet( missionDir );
 
     //move mission sheets to obsolete directory when mission is deleted
     for( IT_StringList it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )

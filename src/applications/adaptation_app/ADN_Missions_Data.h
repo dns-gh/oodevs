@@ -106,7 +106,6 @@ public:
     T_Mission_Vector    populationMissions_;
     T_FragOrder_Vector  fragOrders_;
     T_StringList        toDeleteMissionSheets_;
-    const tools::Loader_ABC*  fileLoader_;
 
 public:
     static tools::IdManager idManager_;

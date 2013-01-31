@@ -502,7 +502,7 @@ void ADN_Missions_Mission::FromWikiToXml( xml::xostream& xos, const std::string&
 // -----------------------------------------------------------------------------
 void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
 {
-    const std::string fileName = std::string( missionDir +  "/" + tools::FromUtf8ToLocalCharset( strName_.GetData() ) );
+    const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
     if( bfs::is_directory( missionDir ) )
     {
         if( bfs::is_regular_file( fileName + ".xml" ) )
@@ -574,9 +574,9 @@ void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& 
 // Name: ADN_Missions_Mission::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir, const tools::Loader_ABC& fileLoader )
+void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir )
 {
-    std::string fileName = std::string( missionDir + "/" + tools::FromUtf8ToLocalCharset( strName_.GetData() ) );
+    std::string fileName = std::string( missionDir + "/" + strName_.GetData() );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
         bfs::create_directories( missionDir + "/obsolete" );
     xml::xofstream xos( fileName + ".xml" );
@@ -605,19 +605,12 @@ void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir, con
     xos << xml::end
         << xml::end;
 
-    std::auto_ptr< xml::xistream > xslStream = fileLoader.LoadFile( ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-                                                                  + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissionSheetXslPath_.GetData() );
-   {
-        xml::xofstream xosTemp( fileName + "TempStream.xml" );
-        *xslStream >> xosTemp;
-   }
     xml::xifstream xisXML( fileName + ".xml" );
-    xsl::xstringtransform xst( fileName + "TempStream.xml" );
+    xsl::xstringtransform xst( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
     xst << xisXML;
-    std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
+    std::fstream fileStream( tools::FromUtf8ToLocalCharset( fileName + ".html" ), std::ios::out | std::ios::trunc );
     fileStream << xst.str();
     fileStream.close();
-    bfs::remove( fileName + "TempStream.xml" );
     missionSheetPath_ = fileName + ".html";
 }
 
