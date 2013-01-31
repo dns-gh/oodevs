@@ -629,9 +629,9 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::Or
         if( i >= message.elem_size() )
             throw MASA_EXCEPTION( "Mission parameter count does not match mission definition" );
         if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-            if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
-            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), *entity ) )
-                action.AddParameter( *newParam );
+            if( const kernel::Entity_ABC* entity = entities_.FindEntity( tasker->GetTaskerId() ) )
+                if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), *entity ) )
+                    action.AddParameter( *newParam );
     }
 }
 

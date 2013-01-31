@@ -17,6 +17,7 @@
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/Model.h"
 
 using namespace actions;
 
@@ -25,8 +26,9 @@ namespace
     struct ProfileActionFilter : private boost::noncopyable
                                , public actions::ActionsFilter_ABC
     {
-        explicit ProfileActionFilter( const kernel::Profile_ABC& profile )
+        explicit ProfileActionFilter( const kernel::Profile_ABC& profile, const Model& model )
             : profile_( profile )
+            , model_( model )
         {
             // NOTHING
         }
@@ -35,18 +37,19 @@ namespace
         {
             if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
             {
-                if( const kernel::Entity_ABC* entity = tasker->GetTasker() )
+                if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
                     return profile_.IsVisible( *entity );
             }
             return true;
         }
 
         const kernel::Profile_ABC& profile_;
+        const Model& model_;
     };
     struct GlobalFilter : public ProfileActionFilter
     {
-        explicit GlobalFilter( const kernel::Profile_ABC& profile )
-            : ProfileActionFilter( profile )
+        explicit GlobalFilter( const kernel::Profile_ABC& profile, const Model& model )
+            : ProfileActionFilter( profile, model )
         {
             // NOTHING
         }
@@ -59,8 +62,8 @@ namespace
 
     struct CurrentSessionFilter : public ProfileActionFilter
     {
-        explicit CurrentSessionFilter( const kernel::Profile_ABC& profile )
-            : ProfileActionFilter( profile )
+        explicit CurrentSessionFilter( const kernel::Profile_ABC& profile, const Model& model )
+            : ProfileActionFilter( profile, model )
         {
             // NOTHING
         }
@@ -81,7 +84,7 @@ namespace
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor )
     : QDockWidget( "timeline", parent )
 {
     // Init
@@ -91,7 +94,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     QVBoxLayout* layout = new QVBoxLayout( box );
     setWidget( box );
     // Toolbar
-    toolbar_ = new ActionsToolbar( this, model, config, controllers );
+    toolbar_ = new ActionsToolbar( this, model.actions_, config, controllers );
     connect( toolbar_, SIGNAL( PlanificationModeChange() ), parent, SLOT( OnPlanifStateChange() ) );
     // Radio buttons
     QGroupBox* groupBox = new QGroupBox();
@@ -114,8 +117,8 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     layout->addWidget( groupBox );
     layout->addWidget( timeline_, 1 );
     // Filters
-    filters_.push_back( new GlobalFilter( profile ) );
-    filters_.push_back( new CurrentSessionFilter( profile ) );
+    filters_.push_back( new GlobalFilter( profile, model ) );
+    filters_.push_back( new CurrentSessionFilter( profile, model ) );
     OnViewChanged();
 }
 

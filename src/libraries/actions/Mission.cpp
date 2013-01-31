@@ -15,24 +15,22 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
 using namespace actions;
 
 namespace
 {
-    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity, bool stub )
+    const kernel::OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
     {
-        const OrderType* type = 0;
+        const kernel::OrderType* type = 0;
         try
         {
             const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
-            const std::string name = xis.attribute< std::string >( "name", "" );
             type = missions.Find( id );
             if( !type )
             {
+                const std::string name = xis.attribute< std::string >( "name", "" );
                 throw MASA_EXCEPTION( tools::translate( "Mission", "Entity '%1' (id: %2) cannot execute mission '%3' (id: %4)" )
                                       .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ).toStdString() );
             }
@@ -41,7 +39,7 @@ namespace
         {
             if( stub )
             {
-                static const OrderType stubType;
+                static const kernel::OrderType stubType;
                 return stubType;
             }
             throw MASA_EXCEPTION( tools::translate( "Mission", "Entity '%1' (id: %2) received unknown mission" )
@@ -55,7 +53,7 @@ namespace
 // Name: Mission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Mission::Mission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /* = true */ )
+Mission::Mission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
     : ActionWithTarget_ABC( controller, mission, entity )
     , controller_         ( controller )
     , registered_         ( registered )
@@ -67,7 +65,7 @@ Mission::Mission( const Entity_ABC& entity, const MissionType& mission, Controll
 // Name: Mission constructor
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity, bool stub )
+Mission::Mission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
     : ActionWithTarget_ABC( xis, controller, ResolveType( xis, missions, entity, stub ), entity )
     , controller_         ( controller )
     , registered_         ( true )
@@ -82,7 +80,7 @@ Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resol
 Mission::~Mission()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +90,7 @@ Mission::~Mission()
 void Mission::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

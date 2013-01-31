@@ -330,7 +330,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Actions panel
     {
-        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *pProfile_, *displayExtractor );
+        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_, *scheduler, config_, *pProfile_, *displayExtractor );
         addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
         timelinePanel->hide();
     }

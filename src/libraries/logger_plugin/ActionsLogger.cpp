@@ -159,18 +159,23 @@ namespace
     struct CheckPointFilter : public actions::ActionsFilter_ABC
                             , private boost::noncopyable
     {
+        CheckPointFilter( const kernel::EntityResolver_ABC& resolver )
+            : resolver_( resolver )
+        {
+            // NOTHING
+        }
         virtual bool Allows( const actions::Action_ABC& action ) const
         {
             if( const actions::Mission* m = dynamic_cast< const actions::Mission* >( &action ) )
             {
-                const kernel::Entity_ABC& entity = m->GetEntity();
-                if( const dispatcher::Agent* agent = dynamic_cast< const dispatcher::Agent* >( &entity ) )
-                    return agent->GetOrder() != 0;
-                else if( const dispatcher::Population* population = dynamic_cast< const dispatcher::Population* >( &entity ) )
-                    return population->GetOrder() != 0;
+                if( const kernel::Agent_ABC* agent = resolver_.FindAgent( m->GetEntityId() ) )
+                    return static_cast< const dispatcher::Agent* >( agent )->GetOrder() != 0;
+                else if( const kernel::Population_ABC* population = resolver_.FindPopulation( m->GetEntityId() ) )
+                    return static_cast< const dispatcher::Population* >( population )->GetOrder() != 0;
             }
             return false;
         }
+        const kernel::EntityResolver_ABC& resolver_;
     };
 }
 
@@ -180,7 +185,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionsLogger::SaveCheckpointActiveMissions( std::string name )
 {
-    CheckPointFilter filter;
+    CheckPointFilter filter( *entities_ );
     actions_->Save( config_.BuildOnLocalCheckpointChildFile( name, "current.ord" ), &filter );
     Commit();
 }

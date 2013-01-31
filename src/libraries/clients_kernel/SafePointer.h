@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Controller;
     class Controllers;
 
 // =============================================================================
@@ -29,6 +30,7 @@ class SafePointer : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit SafePointer( Controller& controller, const T* element = 0 );
     explicit SafePointer( Controllers& controllers, const T* element = 0 );
     virtual ~SafePointer();
     //@}
@@ -51,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Controllers* controllers_;
+    Controller* controller_;
     const T* element_;
     //@}
 };
@@ -59,6 +61,7 @@ private:
 }
 
 #include "Controllers.h"
+#include "Controller.h"
 
 namespace kernel
 {
@@ -69,10 +72,22 @@ namespace kernel
 // -----------------------------------------------------------------------------
 template< typename T >
 SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* element /* = 0*/ )
-    : controllers_( &controllers )
+    : controller_( &controllers.controller_ )
     , element_( element )
 {
-    controllers_->Register( *this );
+    controller_->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SafePointer constructor
+// Created: JSR 2013-01-30
+// -----------------------------------------------------------------------------
+template< typename T >
+SafePointer< T >::SafePointer( kernel::Controller& controller, const T* element /*= 0*/ )
+    : controller_( &controller )
+    , element_( element )
+{
+    controller_->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +97,7 @@ SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* elemen
 template< typename T >
 SafePointer< T >::~SafePointer()
 {
-    controllers_->Unregister( *this );
+    controller_->Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

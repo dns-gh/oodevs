@@ -97,7 +97,7 @@ private:
     int  AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
     void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
     void FillCommonOrders( kernel::ContextMenu* magicMenu );
-    void CreateAndPublish( const std::string& actionType, const QString& name );
+    void CreateAndPublish( const std::string& actionType, const QString& name, bool attachEntitytoTasker = true );
 
     void AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity );
     void AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< kernel::DecisionalModel >& models,

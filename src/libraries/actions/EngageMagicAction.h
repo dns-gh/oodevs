@@ -48,7 +48,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     bool registered_;
     bool engaged_;

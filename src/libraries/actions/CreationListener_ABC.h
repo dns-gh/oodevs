@@ -16,6 +16,7 @@ namespace sword
 {
     class Listener;
 }
+
 namespace actions
 {
 
@@ -31,20 +32,13 @@ class CreationListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    CreationListener_ABC() {};
-     virtual ~CreationListener_ABC() {};
+              CreationListener_ABC() {}
+     virtual ~CreationListener_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     virtual void RegisterListener( boost::shared_ptr< sword::Listener >& listener ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    CreationListener_ABC( const CreationListener_ABC& );            //!< Copy constructor
-    CreationListener_ABC& operator=( const CreationListener_ABC& ); //!< Assignment operator
     //@}
 };
 }

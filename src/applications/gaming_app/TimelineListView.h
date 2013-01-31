@@ -26,6 +26,8 @@ namespace actions
     enum EActionType;
 }
 
+class Model;
+
 // =============================================================================
 /** @class  TimelineListView
     @brief  TimelineListView
@@ -43,7 +45,7 @@ class TimelineListView : public QTreeWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineListView( QWidget* parent, kernel::Controllers& controllers );
+             TimelineListView( QWidget* parent, kernel::Controllers& controllers, const Model& model );
     virtual ~TimelineListView();
     //@}
 
@@ -89,6 +91,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const Model& model_;
     T_EntityActions entityActions_;
     T_Actions weatherActions_;
     T_Actions objectsActions_;

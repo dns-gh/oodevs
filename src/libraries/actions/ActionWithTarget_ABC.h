@@ -30,15 +30,11 @@ public:
     virtual ~ActionWithTarget_ABC();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual const kernel::Entity_ABC& GetEntity() const;
-    //@}
-
-private:
+protected:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& target_;
+    const unsigned int entityId_;
+    const std::string entityTypeName_;
     //@}
 };
 

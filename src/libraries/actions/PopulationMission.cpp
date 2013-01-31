@@ -9,13 +9,10 @@
 
 #include "actions_pch.h"
 #include "PopulationMission.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-using namespace sword;
-using namespace kernel;
 using namespace actions;
 
 // -----------------------------------------------------------------------------
@@ -54,7 +51,7 @@ PopulationMission::~PopulationMission()
 void PopulationMission::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::CrowdOrder message;
-    message().mutable_tasker()->set_id( GetEntity().GetId() );
+    message().mutable_tasker()->set_id( entityId_ );
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher, 0 );

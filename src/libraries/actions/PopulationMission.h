@@ -11,6 +11,7 @@
 #define __ActionPopulationMission_h_
 
 #include "Mission.h"
+#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -22,6 +23,7 @@ namespace actions
 // Created: AGE 2007-07-11
 // =============================================================================
 class PopulationMission : public Mission
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -34,13 +36,6 @@ public:
     //! @name Operations
     //@{
     virtual void Publish( Publisher_ABC& publisher, int context ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationMission( const PopulationMission& );            //!< Copy constructor
-    PopulationMission& operator=( const PopulationMission& ); //!< Assignment operator
     //@}
 };
 

@@ -17,6 +17,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/ActionController.h"
+#include "gaming/Model.h"
 
 Q_DECLARE_METATYPE( const kernel::Entity_ABC* )
 
@@ -70,9 +71,10 @@ namespace
 // Name: TimelineListView constructor
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers )
+TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers, const Model& model )
     : QTreeWidget( parent )
     , controllers_( controllers )
+    , model_( model )
     , filter_     ( 0 )
     , blockSelect_( false )
 {
@@ -81,7 +83,7 @@ TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& contro
     setHeaderLabel( tr( "Units" ) );
     setBackgroundColor( Qt::white );
     setHeader( new TimelineHeaderView( this ) );
-    header()->setModel( model() );
+    header()->setModel( this->model() );
     setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn ); //--> to have the same height as canvasview
     setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
     setSortingEnabled( false );
@@ -135,10 +137,13 @@ QTreeWidgetItem* TimelineListView::FindItem( const kernel::Entity_ABC* entity ) 
 QTreeWidgetItem* TimelineListView::FindListItem( const actions::Action_ABC& action, actions::EActionType& actionType ) const
 {
     const actions::ActionTasker* tasker = action.Retrieve< actions::ActionTasker >();
-    if( tasker && tasker->GetTasker() )
+    if( tasker && tasker->GetTaskerId() != 0)
     {
-        actionType = actions::eTypeEntity;
-        return FindItem( tasker->GetTasker() );
+        if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
+        {
+            actionType = actions::eTypeEntity;
+            return FindItem( entity );
+        }
     }
     const std::string& actionTypeName = action.GetType().GetName();
     if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
@@ -168,7 +173,7 @@ void TimelineListView::NotifyCreated( const actions::Action_ABC& action )
     {
     case actions::eTypeEntity :
         {
-            const kernel::Entity_ABC* entity = action.Retrieve< actions::ActionTasker >()->GetTasker(); // cannot be null
+            const kernel::Entity_ABC* entity = model_.FindEntity( action.Retrieve< actions::ActionTasker >()->GetTaskerId() ); // cannot be null
             if( !item )
             {
                 item = new QTreeWidgetItem();
@@ -216,8 +221,11 @@ void TimelineListView::NotifyDeleted( const actions::Action_ABC& action )
     switch( actionType )
     {
     case actions::eTypeEntity :
-        actions = &entityActions_[ action.Retrieve< actions::ActionTasker >()->GetTasker() ]; // cannot be null
+    {
+        const kernel::Entity_ABC* entity = model_.FindEntity( action.Retrieve< actions::ActionTasker >()->GetTaskerId() ); // cannot be null;
+        actions = &entityActions_[ entity ];
         break;
+    }
     case actions::eTypeWeather :
         actions = &weatherActions_;
         break;

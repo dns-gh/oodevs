@@ -20,6 +20,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/Model.h"
 
 using namespace kernel;
 using namespace actions;
@@ -30,7 +31,7 @@ const unsigned int TimelineView::rowHeight_ = 25;
 // Name: TimelineView constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineView::TimelineView( QWidget* parent, Q3Canvas* canvas, Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
+TimelineView::TimelineView( QWidget* parent, Q3Canvas* canvas, Controllers& controllers, Model& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
     : Q3CanvasView( canvas, parent, "TimelineView" )
     , controllers_   ( controllers )
     , model_         ( model )
@@ -66,32 +67,31 @@ TimelineView::~TimelineView()
 TimelineView::T_Actions* TimelineView::FindActions( const actions::Action_ABC& action, actions::EActionType& actionType )
 {
     const ActionTasker* tasker = action.Retrieve< ActionTasker >();
-    if( tasker && tasker->GetTasker() )
+    if( tasker && tasker->GetTaskerId() != 0 )
     {
-        actionType = eTypeEntity;
-        const kernel::Entity_ABC* entity = tasker->GetTasker();
-        std::map< const kernel::Entity_ABC*, T_Actions >::iterator it = entityActions_.find( entity );
-        if( it == entityActions_.end() )
-            return 0;
-        return &it->second;
+        if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
+        {
+            actionType = eTypeEntity;
+            std::map< const kernel::Entity_ABC*, T_Actions >::iterator it = entityActions_.find( entity );
+            if( it == entityActions_.end() )
+                return 0;
+            return &it->second;
+        }
     }
-    else
+    const std::string& actionTypeName = action.GetType().GetName();
+    if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
     {
-        const std::string& actionTypeName = action.GetType().GetName();
-        if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
-        {
-            actionType = eTypeWeather;
-            return &weatherActions_;
-        }
-        if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
-                 actionTypeName == "destroy_object" || actionTypeName == "request_object" )
-        {
-            actionType = eTypeObjects;
-            return &objectsActions_;
-        }
-        actionType = eTypeMagic;
-        return &magicActions_;
+        actionType = eTypeWeather;
+        return &weatherActions_;
     }
+    if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
+                actionTypeName == "destroy_object" || actionTypeName == "request_object" )
+    {
+        actionType = eTypeObjects;
+        return &objectsActions_;
+    }
+    actionType = eTypeMagic;
+    return &magicActions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
     case eTypeEntity :
         if( actions == 0 )
         {
-            const kernel::Entity_ABC* entity = action.Retrieve< ActionTasker >()->GetTasker();
+            const kernel::Entity_ABC* entity = model_.FindEntity( action.Retrieve< ActionTasker >()->GetTaskerId() );
             actions = &entityActions_[ entity ];
             orderedActions_.push_back( entity );
         }
@@ -123,7 +123,7 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
         magicVisible_ = true;
         break;
     }
-    ( *actions )[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
+    ( *actions )[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_.actions_, action );
     Update();
 }
 
@@ -147,7 +147,7 @@ void TimelineView::NotifyDeleted( const Action_ABC& action )
             if( actions->empty() )
             {
                 if( actionType == eTypeEntity )
-                    NotifyDeleted( *action.Retrieve< ActionTasker >()->GetTasker() );
+                    NotifyDeleted( *model_.FindEntity( action.Retrieve< ActionTasker >()->GetTaskerId() ) );
                 else if( actionType == eTypeWeather )
                     weatherVisible_ = false;
                 else if( actionType == eTypeObjects )

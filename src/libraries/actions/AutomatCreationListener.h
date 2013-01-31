@@ -13,6 +13,7 @@
 #include "geometry/types.h"
 #include "protocol/MsgsSimToClientListener.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -34,6 +35,7 @@ namespace kernel
 // Created: LDC 2010-10-11
 // =============================================================================
 class AutomatCreationListener : public sword::Listener
+                              , private boost::noncopyable
 {
 
 public:
@@ -47,13 +49,6 @@ public:
     //! @name Operations
     //@{
     virtual bool OnMessageReceived( const sword::SimToClient& message );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AutomatCreationListener( const AutomatCreationListener& );            //!< Copy constructor
-    AutomatCreationListener& operator=( const AutomatCreationListener& ); //!< Assignment operator
     //@}
 
 private:

@@ -19,7 +19,7 @@ using namespace actions;
 // Created: SBO 2010-05-03
 // -----------------------------------------------------------------------------
 ActionTasker::ActionTasker( const kernel::Entity_ABC* tasker, bool simulation )
-    : tasker_    ( tasker )
+    : taskerId_  ( tasker ? tasker->GetId() : 0 )
     , simulation_( simulation )
 {
     // NOTHING
@@ -35,15 +35,6 @@ ActionTasker::~ActionTasker()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionTasker::GetTasker
-// Created: SBO 2010-05-03
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ActionTasker::GetTasker() const
-{
-    return tasker_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActionTasker::IsSimulation
 // Created: SBO 2010-05-03
 // -----------------------------------------------------------------------------
@@ -53,11 +44,20 @@ bool ActionTasker::IsSimulation() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionTasker::GetTaskerId
+// Created: JSR 2013-01-31
+// -----------------------------------------------------------------------------
+unsigned int ActionTasker::GetTaskerId() const
+{
+    return taskerId_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionTasker::SerializeAttributes
 // Created: SBO 2010-05-17
 // -----------------------------------------------------------------------------
 void ActionTasker::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( tasker_ )
-        xos << xml::attribute( "target", tasker_->GetId() );
+    if( taskerId_ )
+        xos << xml::attribute( "target", taskerId_ );
 }

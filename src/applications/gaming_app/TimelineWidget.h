@@ -19,10 +19,10 @@ namespace kernel
 namespace actions
 {
     class ActionsFilter_ABC;
-    class ActionsModel;
 }
 
 class ActionsScheduler;
+class Model;
 class TimelineListView;
 class TimelineView;
 
@@ -37,7 +37,7 @@ class TimelineWidget : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, kernel::DisplayExtractor_ABC& extractor );
+             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, kernel::DisplayExtractor_ABC& extractor );
     virtual ~TimelineWidget();
     //@}
 

@@ -31,6 +31,7 @@ UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel
     : ActionWithTarget_ABC ( controller, magic, entity )
     , controller_( controller )
     , registered_( registered )
+    , entity_( controller_, &entity )
 {
     Rename( name );
 }
@@ -43,6 +44,7 @@ UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& contro
     : ActionWithTarget_ABC( xis, controller, magic, entity )
     , controller_( controller )
     , registered_( true )
+    , entity_( controller_, &entity )
 {
     Rename( name );
 }
@@ -54,7 +56,7 @@ UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& contro
 UnitMagicAction::~UnitMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +66,7 @@ UnitMagicAction::~UnitMagicAction()
 void UnitMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,24 +88,23 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
     sword::UnitMagicAction_Type type = ( sword::UnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
-    const kernel::Entity_ABC& entity = GetEntity();
-    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_unit()->set_id( entity.GetId() );
-    else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_automat()->set_id( entity.GetId() );
-    else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_formation()->set_id( entity.GetId() );
-    else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_crowd()->set_id( entity.GetId() );
-    else if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_party()->set_id( entity.GetId() );
-    else if( dynamic_cast< const kernel::Inhabitant_ABC* >( &entity ) )
-        message().mutable_tasker()->mutable_population()->set_id( entity.GetId() );
+    if( entityTypeName_ == kernel::Agent_ABC::typeName_ )
+        message().mutable_tasker()->mutable_unit()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Automat_ABC::typeName_ )
+        message().mutable_tasker()->mutable_automat()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Formation_ABC::typeName_ )
+        message().mutable_tasker()->mutable_formation()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Population_ABC::typeName_ )
+        message().mutable_tasker()->mutable_crowd()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Team_ABC::typeName_ )
+        message().mutable_tasker()->mutable_party()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Inhabitant_ABC::typeName_ )
+        message().mutable_tasker()->mutable_population()->set_id( entityId_ );
     else
         throw MASA_EXCEPTION( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher, context );
-    if( type == sword::UnitMagicAction_Type_move_to )
-        const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
+    if( type == sword::UnitMagicAction_Type_move_to && entity_ )
+        entity_.ConstCast()->Update( message() );
 }

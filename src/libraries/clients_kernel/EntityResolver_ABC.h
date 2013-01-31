@@ -14,8 +14,9 @@ namespace kernel
 {
     class Agent_ABC;
     class Automat_ABC;
-    class Inhabitant_ABC;
+    class Entity_ABC;
     class Formation_ABC;
+    class Inhabitant_ABC;
     class KnowledgeGroup_ABC;
     class Object_ABC;
     class Population_ABC;
@@ -57,6 +58,7 @@ public:
     virtual kernel::Team_ABC& GetTeam( unsigned int id ) const = 0;
     virtual kernel::UrbanObject_ABC* FindUrbanObject( unsigned int id ) const = 0;
     virtual kernel::UrbanObject_ABC& GetUrbanObject( unsigned int id ) const = 0;
+    virtual kernel::Entity_ABC* FindEntity( unsigned int id ) const = 0;
     //@}
 };
 

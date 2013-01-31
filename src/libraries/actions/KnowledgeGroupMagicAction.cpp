@@ -47,7 +47,7 @@ KnowledgeGroupMagicAction::KnowledgeGroupMagicAction( xml::xistream& xis, kernel
 KnowledgeGroupMagicAction::~KnowledgeGroupMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void KnowledgeGroupMagicAction::Serialize( xml::xostream& xos ) const
 void KnowledgeGroupMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
     sword::KnowledgeMagicAction_Type type =
         ( sword::KnowledgeMagicAction_Type ) GetType().GetId();
     simulation::KnowledgeMagicAction message;
-    message().mutable_knowledge_group()->set_id( GetEntity().GetId() );
+    message().mutable_knowledge_group()->set_id( entityId_ );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );

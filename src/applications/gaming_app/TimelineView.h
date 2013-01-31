@@ -22,12 +22,12 @@ namespace kernel
 namespace actions
 {
     class ActionsFilter_ABC;
-    class ActionsModel;
     class Action_ABC;
     enum EActionType;
 }
 
 class ActionsScheduler;
+class Model;
 class Simulation;
 class TimelineItem_ABC;
 class TimelineRuler;
@@ -49,7 +49,7 @@ class TimelineView : public Q3CanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineView( QWidget* parent, Q3Canvas* canvas, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
+             TimelineView( QWidget* parent, Q3Canvas* canvas, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
     virtual ~TimelineView();
     //@}
 
@@ -100,7 +100,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    actions::ActionsModel& model_;
+    Model& model_;
     T_EntityActions entityActions_;
     T_Actions magicActions_;
     T_Actions weatherActions_;

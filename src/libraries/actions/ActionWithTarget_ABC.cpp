@@ -18,7 +18,8 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 ActionWithTarget_ABC::ActionWithTarget_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
     : Action_ABC( controller, type )
-    , target_( target )
+    , entityId_( target.GetId() )
+    , entityTypeName_( target.GetTypeName() )
 {
     // NOTHING
 }
@@ -29,7 +30,8 @@ ActionWithTarget_ABC::ActionWithTarget_ABC( kernel::Controller& controller, cons
 // -----------------------------------------------------------------------------
 ActionWithTarget_ABC::ActionWithTarget_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
     : Action_ABC( xis, controller, type )
-    , target_( target )
+    , entityId_( target.GetId() )
+    , entityTypeName_( target.GetTypeName() )
 {
     // NOTHING
 }
@@ -41,13 +43,4 @@ ActionWithTarget_ABC::ActionWithTarget_ABC( xml::xistream& xis, kernel::Controll
 ActionWithTarget_ABC::~ActionWithTarget_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionWithTarget_ABC::GetEntity
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& ActionWithTarget_ABC::GetEntity() const
-{
-    return target_;
 }

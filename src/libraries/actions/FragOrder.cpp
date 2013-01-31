@@ -9,27 +9,30 @@
 
 #include "actions_pch.h"
 #include "FragOrder.h"
-#include "clients_kernel/Tools.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/FragOrderType.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
 using namespace actions;
 
 namespace
 {
-    const OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< kernel::FragOrderType >& missions, const Entity_ABC& entity )
+    const kernel::OrderType& ResolveType( xml::xistream& xis, const tools::Resolver_ABC< kernel::FragOrderType >& missions, const kernel::Entity_ABC& entity )
     {
         const unsigned int id = xis.attribute< unsigned int >( "id", 0 );
-        const std::string name = xis.attribute< std::string >( "name", "" );
-        const OrderType* type = missions.Find( id );
+        const kernel::OrderType* type = missions.Find( id );
         if( !type )
+        {
+            const std::string name = xis.attribute< std::string >( "name", "" );
             throw MASA_EXCEPTION( tools::translate( "FragOrder", "Entity '%1' (id: %2) cannot execute fragmentary order '%3' (id: %4)" )
                                   .arg( entity.GetName() ).arg( entity.GetId() ).arg( name.c_str() ).arg( id ).toStdString() );
+        }
         return *type;
     }
 }
@@ -38,7 +41,7 @@ namespace
 // Name: FragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( const Entity_ABC& entity, const kernel::FragOrderType& fragOrder, Controller& controller, bool registered )
+FragOrder::FragOrder( const Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered )
     : ActionWithTarget_ABC( controller, fragOrder, entity )
     , controller_         ( controller )
     , registered_         ( registered )
@@ -50,7 +53,7 @@ FragOrder::FragOrder( const Entity_ABC& entity, const kernel::FragOrderType& fra
 // Name: FragOrder constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Entity_ABC& entity )
+FragOrder::FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Entity_ABC& entity )
     : ActionWithTarget_ABC( xis, controller, ResolveType( xis, fragOrders, entity ), entity )
     , controller_         ( controller )
     , registered_         ( true )
@@ -65,7 +68,7 @@ FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::R
 FragOrder::~FragOrder()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +78,7 @@ FragOrder::~FragOrder()
 void FragOrder::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,12 +99,12 @@ void FragOrder::Serialize( xml::xostream& xos ) const
 void FragOrder::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::FragOrder message;
-    if( GetEntity().GetTypeName() == "automat" )
-        message().mutable_tasker()->mutable_automat()->set_id( GetEntity().GetId() );
-    else if( GetEntity().GetTypeName() == "crowd" )
-        message().mutable_tasker()->mutable_crowd()->set_id( GetEntity().GetId() );
-    else if( GetEntity().GetTypeName() == "agent" )
-        message().mutable_tasker()->mutable_unit()->set_id( GetEntity().GetId() );
+    if( entityTypeName_ == kernel::Automat_ABC::typeName_ )
+        message().mutable_tasker()->mutable_automat()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Population_ABC::typeName_ )
+        message().mutable_tasker()->mutable_crowd()->set_id( entityId_ );
+    else if( entityTypeName_ == kernel::Agent_ABC::typeName_ )
+        message().mutable_tasker()->mutable_unit()->set_id( entityId_ );
     message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );

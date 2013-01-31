@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -34,6 +35,7 @@ namespace actions
 // =============================================================================
 class ActionTasker : public kernel::Extension_ABC
                    , public kernel::Serializable_ABC
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,22 +46,15 @@ public:
 
     //! @name Operations
     //@{
-    const kernel::Entity_ABC* GetTasker() const;
     bool IsSimulation() const;
+    unsigned int GetTaskerId() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ActionTasker( const ActionTasker& );            //!< Copy constructor
-    ActionTasker& operator=( const ActionTasker& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC* tasker_;
+    unsigned int taskerId_;
     const bool simulation_;
     //@}
 };

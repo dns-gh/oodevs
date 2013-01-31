@@ -305,7 +305,7 @@ void UnitMagicOrdersInterface::DestroyComponent()
 void UnitMagicOrdersInterface::DeleteUnit()
 {
     if( selectedEntity_)
-        CreateAndPublish( "delete_unit", tr( "Delete unit" ) );
+        CreateAndPublish( "delete_unit", tr( "Delete unit" ), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -431,13 +431,13 @@ void UnitMagicOrdersInterface::FillCommonOrders( kernel::ContextMenu* magicMenu 
 // Name: UnitMagicOrdersInterface::CreateAndPublish
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr, const QString& name )
+void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr, const QString& name, bool attachEntitytoTasker /*= true*/ )
 {
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
     UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, name, true );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( selectedEntity_, false ) );
+    action->Attach( *new ActionTasker( attachEntitytoTasker ? selectedEntity_ : static_cast< const kernel::Entity_ABC* >( 0 ), false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 

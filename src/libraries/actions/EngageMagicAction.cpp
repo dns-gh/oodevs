@@ -22,12 +22,11 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, const QString& name, const bool engaged, bool registered /* = true*/ )
     : ActionWithTarget_ABC ( controller, magic, entity )
-    , entity_( entity )
     , controller_( controller )
     , registered_( registered )
-    , engaged_ ( engaged )
+    , engaged_( engaged )
 {
-    Rename ( name );
+    Rename( name );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,12 +35,11 @@ EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const ke
 // -----------------------------------------------------------------------------
 EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const QString& name, const bool engaged )
     : ActionWithTarget_ABC( xis, controller, magic, entity )
-    , entity_( entity )
     , controller_( controller )
     , registered_( true )
-    , engaged_ ( engaged )
+    , engaged_( engaged )
 {
-    Rename ( name );
+    Rename( name );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +49,7 @@ EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& co
 EngageMagicAction::~EngageMagicAction()
 {
     if( registered_ )
-        controller_.Delete( *(Action_ABC*)this );
+        controller_.Delete( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +59,7 @@ EngageMagicAction::~EngageMagicAction()
 void EngageMagicAction::Polish()
 {
     if( registered_ )
-        controller_.Create( *(Action_ABC*)this );
+        controller_.Create( *static_cast< Action_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +70,7 @@ void EngageMagicAction::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "type", "change_mode" );
     xos << xml::attribute( "engaged", engaged_ );
-    xos << xml::attribute( "entity", entity_.GetId() );
+    xos << xml::attribute( "entity", entityId_ );
     ActionWithTarget_ABC::Serialize( xos );
 }
 
@@ -83,7 +81,7 @@ void EngageMagicAction::Serialize( xml::xostream& xos ) const
 void EngageMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::SetAutomatMode message;
-    message().mutable_automate()->set_id( entity_.GetId() );
+    message().mutable_automate()->set_id( entityId_ );
     message().set_mode( engaged_ ? sword::engaged : sword::disengaged );
     message.Send( publisher );
 }

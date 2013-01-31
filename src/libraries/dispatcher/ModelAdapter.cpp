@@ -202,3 +202,29 @@ kernel::UrbanObject_ABC& ModelAdapter::GetUrbanObject( unsigned int id ) const
 {
     return model_.UrbanBlocks().Get( id );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ModelAdapter::FindEntity
+// Created: JSR 2013-01-31
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC* ModelAdapter::FindEntity( unsigned int id ) const
+{
+    kernel::Entity_ABC* entity = FindAgent( id );
+    if( !entity )
+        entity = FindAutomat( id );
+    if( !entity )
+        entity = FindInhabitant( id );
+    if( !entity )
+        entity = FindKnowledgeGroup( id );
+    if( !entity )
+        entity = FindObject( id );
+    if( !entity )
+        entity = FindPopulation( id );
+    if( !entity )
+        entity = FindFormation( id );
+    if( !entity )
+        entity = FindTeam( id );
+    if( !entity )
+        entity = FindUrbanObject( id );
+    return entity;
+}
