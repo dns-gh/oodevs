@@ -144,7 +144,6 @@ private:
     // Network
     bool                bInstallationStateHasChanged_;
     bool                bPostureHasChanged_;
-    bool                bPercentageCrossed50_;
     bool                bStealthFactorHasChanged_;
     bool                bPercentageHasChanged_;
     mutable double      rLastPostureCompletionPercentageSent_;

@@ -22,7 +22,7 @@ using namespace sword;
 // -----------------------------------------------------------------------------
 MovementEventListener::MovementEventListener( const core::Model& model, core::Facade& facade )
     : EventListenerBase( facade, "movement" )
-    , model_ ( model )
+    , model_( model )
 {
     // NOTHING
 }

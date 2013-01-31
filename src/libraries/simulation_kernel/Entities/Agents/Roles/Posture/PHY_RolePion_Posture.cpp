@@ -46,7 +46,6 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     , rInstallationState_                  ( 0. )
     , bDiscreteModeEnabled_                ( false )
     , bPostureHasChanged_                  ( true  )
-    , bPercentageCrossed50_                ( false )
     , bStealthFactorHasChanged_            ( true  )
     , bPercentageHasChanged_               ( true  )
     , bIsStealth_                          ( false )
@@ -85,7 +84,6 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
          >> rTimingFactor_
          >> rStealthFactor_
          >> bIsStealth_
-         >> bPercentageCrossed50_
          >> rLastPostureCompletionPercentageSent_
          >> rInstallationState_
          >> rLastInstallationStateSent_;
@@ -108,7 +106,6 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
          << rTimingFactor_
          << rStealthFactor_
          << bIsStealth_
-         << bPercentageCrossed50_
          << rLastPostureCompletionPercentageSent_
          << rInstallationState_
          << rLastInstallationStateSent_;
@@ -123,7 +120,6 @@ void PHY_RolePion_Posture::ChangePostureCompletionPercentage( double rNewPercent
     if( rPostureCompletionPercentage_ == rNewPercentage )
         return;
     // Network
-    bPercentageCrossed50_ = ( 0.5 - rPostureCompletionPercentage_ ) * ( 0.5 - rNewPercentage ) <= 0;
     if( fabs( rLastPostureCompletionPercentageSent_ - rNewPercentage ) > rDeltaPercentageForNetwork || rNewPercentage == 0. || rNewPercentage == 1. )
         bPercentageHasChanged_ = true;
     rPostureCompletionPercentage_ = rNewPercentage;
