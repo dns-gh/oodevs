@@ -41,7 +41,7 @@ EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const 
     connect( this,             SIGNAL( activated       ( const QModelIndex& ) ),                           this, SLOT( OnActivate( const QModelIndex& ) ) );
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelect  ( const QItemSelection&, const QItemSelection& ) ) );
     connect( &dataModel_, SIGNAL( DataChanged( const QModelIndex&, const QVariant& ) ), SLOT( OnDataChanged ( const QModelIndex&, const QVariant& ) ) );
-    connect( horizontalScrollBar(), SIGNAL( valueChanged( int ) ), proxyModel_, SLOT( invalidate() ) ); // force redraw
+    connect( horizontalScrollBar(), SIGNAL( valueChanged( int ) ), this, SLOT( ForceRedraw() ) );
 
     controllers_.Register( *this );
 }
@@ -249,4 +249,13 @@ bool EntityTreeView_ABC::IsTypeRejected( const kernel::Entity_ABC& /*entity*/ ) 
 Qt::ItemFlags EntityTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::ForceRedraw
+// Created: MMC 2013-01-30
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::ForceRedraw()
+{
+    doItemsLayout();
 }

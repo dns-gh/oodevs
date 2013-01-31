@@ -98,6 +98,7 @@ protected slots:
     virtual void OnActivate( const QModelIndex& index );
     virtual void OnSelect( const QItemSelection& selected, const QItemSelection& deselected );
     void OnDataChanged( const QModelIndex& index, const QVariant& value );
+    void ForceRedraw();
     //@}
 
 protected:
