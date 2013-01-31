@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "Entity_ABC.h"
-#include "ExtensionVisitor_ABC.h"
 
 namespace kernel
 {
@@ -80,27 +79,6 @@ const Entity_ABC& Hierarchies::GetUp( unsigned int nLevel /* = 1*/ ) const
             return superiorHierarchies->GetUp( nLevel - 1 );
     }
     throw MASA_EXCEPTION( "Invalid or null superior." );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Hierarchies::Accept
-// Created: AGE 2006-10-26
-// -----------------------------------------------------------------------------
-template< typename T >
-inline
-void Hierarchies::Accept( ExtensionVisitor_ABC< T >& visitor ) const
-{
-    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const Entity_ABC& subordinate = it.NextElement();
-        const T* extension = subordinate.Retrieve< T >();
-        if( extension )
-            visitor.Visit( *extension );
-        const Hierarchies* subHierarchies = RetrieveHierarchies( subordinate );
-        if( subHierarchies )
-            subHierarchies->Accept( visitor );
-    }
 }
 
 }

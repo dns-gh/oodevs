@@ -34,7 +34,6 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/ExtensionVisitor_ABC.h"
 #include "tools/Iterator.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"

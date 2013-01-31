@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Entity_ABC;
-    template< typename T > class ExtensionVisitor_ABC;
 
 // =============================================================================
 /** @class  Hierarchies
@@ -55,9 +54,6 @@ public:
     bool IsSubordinateOf( const Entity_ABC& entity ) const;
     const Entity_ABC& GetTop() const;
     const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const;
-
-    template< typename T >
-    void Accept( ExtensionVisitor_ABC< T >& visitor ) const;
     //@}
 
     //! @name Helpers
