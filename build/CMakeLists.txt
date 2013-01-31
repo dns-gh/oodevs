@@ -39,7 +39,6 @@ masa_set_external_library( GEOS_I_LIBRARIES           geos_i_d geos_i )
 masa_set_external_library( GRAPHICS_LIBRARIES         graphics_d graphics )
 masa_set_external_library( HLA_LIBRARIES              hla_d hla )
 masa_set_external_library( LOG4CXX_LIBRARIES          log4cxxd log4cxx )
-masa_set_external_library( MASALLOC_LIBRARIES         masalloc_d masalloc )
 masa_set_external_library( MONGOOSE_LIBRARIES         mongoose_d mongoose )
 masa_set_external_library( PATHFIND_LIBRARIES         pathfind_d pathfind )
 masa_set_external_library( PROJ_I_LIBRARIES           proj_i_d proj_i )
@@ -412,7 +411,6 @@ target_link_libraries( simulation_kernel
     ${CORE_LIBRARIES}
     ${GEODATA_LIBRARIES}
     ${LOG4CXX_LIBRARIES}
-    ${MASALLOC_LIBRARIES}
     ${TERRAIN_LIBRARIES}
 )
 

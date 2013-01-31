@@ -82,7 +82,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>spatialcontainer_d.lib;masalloc_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -97,7 +97,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>spatialcontainer_d.lib;masalloc_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>spatialcontainer_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -112,7 +112,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>spatialcontainer.lib;masalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>spatialcontainer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -127,7 +127,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>spatialcontainer.lib;masalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>spatialcontainer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>

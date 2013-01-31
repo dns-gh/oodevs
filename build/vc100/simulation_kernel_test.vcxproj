@@ -111,7 +111,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;analysis_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;geodata_d.lib;analysis_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -123,7 +123,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;analysis_d.lib;geodata_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;analysis_d.lib;geodata_d.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -139,7 +139,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;analysis.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;geodata.lib;analysis.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -151,7 +151,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;analysis.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;geodata.lib;analysis.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
