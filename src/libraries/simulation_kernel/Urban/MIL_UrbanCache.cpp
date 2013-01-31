@@ -326,15 +326,13 @@ const std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanCache::GetUrbanBlocks(
 // -----------------------------------------------------------------------------
 double MIL_UrbanCache::GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    if( quadTree_.get() )
-    {
-        spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2d( from.rX_, from.rY_ ),
-                                                                    geometry::Point2d( to.rX_, to.rY_ ), maxElementSize_ );
-        MT_Line segment( from, to );
-        SegmentChecker checker( segment );
-        CostExtractor< SegmentChecker > extractor( checker, weight );
-        quadTree_->Apply( intersecter, extractor );
-        return extractor.cost_;
-    }
-    return 0;
+    if( !quadTree_.get() )
+        return 0;
+    const spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2d( from.rX_, from.rY_ ),
+                                                                      geometry::Point2d( to.rX_, to.rY_ ), maxElementSize_ );
+    const MT_Line segment( from, to );
+    const SegmentChecker checker( segment );
+    CostExtractor< SegmentChecker > extractor( checker, weight );
+    quadTree_->Apply( intersecter, extractor );
+    return extractor.cost_;
 }
