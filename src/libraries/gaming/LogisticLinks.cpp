@@ -15,11 +15,13 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogisticHelpers.h"
 #include "protocol/Protocol.h"
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
@@ -198,7 +200,7 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_AB
     {
         BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
         {
-            link->Draw( where, viewport, tools );
+            link->Draw( logistic_helpers::GetLogisticPosition( entity_ ), viewport, tools );
             glColor4f( COLOR_LIGHT_YELLOW );
         }
     }

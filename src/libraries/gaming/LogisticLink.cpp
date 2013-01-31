@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "gaming/LogisticHelpers.h"
 
 using namespace kernel;
 
@@ -52,5 +53,5 @@ void LogisticLink::Update( const sword::SeqOfDotationQuota& message, const tools
 // -----------------------------------------------------------------------------
 void LogisticLink::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
 {
-    tools.DrawCurvedArrow( where, superior_.Get< Positions >().GetPosition(), 0.3f );
+    tools.DrawCurvedArrow( where, logistic_helpers::GetLogisticPosition( superior_ ), 0.3f );
 }

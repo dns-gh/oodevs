@@ -16,7 +16,9 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Entity_ABC;
+    class Positions;
 }
 
 class Dotation;
@@ -31,6 +33,7 @@ namespace logistic_helpers
 {
     void VisitBaseStocksDotations( const kernel::Entity_ABC& logisticBase, boost::function< void( const Dotation& ) > func );    
     bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > func );
+    geometry::Point2f GetLogisticPosition( const kernel::Entity_ABC& entity, bool onlySupply = false );
 
     template< typename UnaryFunction >
     void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, UnaryFunction& func )
