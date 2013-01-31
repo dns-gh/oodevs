@@ -61,8 +61,6 @@ void UnitStateTableEquipment::OnItemChanged( QStandardItem* item )
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::AddLines( const QString& name, int size, E_EquipmentState state, const QStringList& breakdowns, const std::vector< unsigned int > currentBreakdowns /* = std::vector< unsigned int >()*/ )
 {
-    if( !currentBreakdowns.empty() && ( state != eEquipmentState_RepairableWithEvacuation || static_cast< int >( currentBreakdowns.size() ) != size ) )
-        throw MASA_EXCEPTION( "Bad amount of breakdowns." );
     if( !size )
         return;
     if( !breakdowns.empty() )
@@ -72,7 +70,7 @@ void UnitStateTableEquipment::AddLines( const QString& name, int size, E_Equipme
         unsigned int row = dataModel_.rowCount();
         AddItem( row, eName, name, name );
 
-        unsigned int currentIndex = currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ];
+        unsigned int currentIndex = ( currentBreakdowns.size() <= i ) ? 0 : currentBreakdowns[ i ];
         if( currentIndex < static_cast< unsigned int >( breakdowns.size() ) )
             AddItem( row, eBreakdown, breakdowns[ currentIndex ], currentIndex, Qt::ItemIsEditable );
 

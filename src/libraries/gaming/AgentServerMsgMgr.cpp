@@ -13,6 +13,7 @@
 #include "AgentsModel.h"
 #include "CommandHandler.h"
 #include "DrawingsModel.h"
+#include "Equipments.h"
 #include "FiresModel.h"
 #include "FolkModel.h"
 #include "KnowledgeGroupsModel.h"
@@ -417,6 +418,7 @@ void AgentServerMsgMgr::OnReceiveAutomatAttributes( const sword::AutomatAttribut
 void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingCreation( const sword::LogMaintenanceHandlingCreation& message )
 {
     GetModel().logistics_.CreateMaintenanceConsign( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Get< Equipments >().CreateMaintenanceConsign( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -426,6 +428,7 @@ void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingCreation( const sword::Lo
 void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingDestruction( const sword::LogMaintenanceHandlingDestruction& message )
 {
     GetModel().logistics_.DeleteMaintenanceConsign( message.request().id() );
+    GetModel().agents_.GetAgent( message.unit().id() ).Get< Equipments >().DeleteMaintenanceConsign( message.request().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,6 +438,7 @@ void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingDestruction( const sword:
 void AgentServerMsgMgr::OnReceiveLogMaintenanceHandlingUpdate( const sword::LogMaintenanceHandlingUpdate& message )
 {
     GetModel().logistics_.GetMaintenanceConsign( message.request().id() ).Update( message );
+    GetModel().agents_.GetAgent( message.unit().id() ).Get< Equipments >().Update( message );
 }
 
 // -----------------------------------------------------------------------------

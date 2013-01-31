@@ -27,6 +27,8 @@ namespace kernel
 namespace sword
 {
     class UnitAttributes;
+    class LogMaintenanceHandlingCreation;
+    class LogMaintenanceHandlingUpdate;
 }
 
 class Equipment;
@@ -54,6 +56,9 @@ public:
     //! @name Operations
     //@{
     float GetTotalWeight() const;
+    void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    void DeleteMaintenanceConsign( int id );
+    void Update( const sword::LogMaintenanceHandlingUpdate& message );
     //@}
 
 private:
@@ -63,6 +68,7 @@ private:
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const std::vector< Equipment >& differences );
     void AddToDictionary( const Equipment& equipment );
+    void UpdateController();
     //@}
 
 private:

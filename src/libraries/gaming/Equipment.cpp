@@ -43,8 +43,8 @@ Equipment::Equipment( const Equipment& rhs )
     , inMaintenance_( rhs.inMaintenance_ )
     , prisonners_   ( rhs.prisonners_ )
 {
-    for( unsigned int i = 0; i < rhs.breakdowns_.size(); ++i )
-        breakdowns_.push_back( rhs.breakdowns_[ i ] );
+    breakdowns_ = rhs.breakdowns_;
+    consigns_ = rhs.consigns_;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,8 +191,67 @@ Equipment& Equipment::operator=( const Equipment& rhs )
     onSiteFixable_ = rhs.onSiteFixable_;
     inMaintenance_ = rhs.inMaintenance_;
     prisonners_    = rhs.prisonners_;
-    breakdowns_.resize( rhs.breakdowns_.size() );
-    for( unsigned int i = 0; i < rhs.breakdowns_.size(); ++i )
-        breakdowns_[ i ] = rhs.breakdowns_[ i ];
+    breakdowns_    = rhs.breakdowns_;
+    consigns_      = rhs.consigns_;
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< int > Equipment::GetBreakdowns
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+std::vector< int > Equipment::GetBreakdowns( bool isReadOnly ) const
+{
+    if( !isReadOnly )
+        return breakdowns_;
+    else
+        return std::vector< int >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< int > Equipment::GetBreakdownsInTreatment
+// Created: LDC 2013-01-31
+// -----------------------------------------------------------------------------
+std::vector< int > Equipment::GetBreakdownsInTreatment( bool isReadOnly ) const
+{
+    std::vector< int > result;
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        if( it->second.inMaintenance_ && ( !isReadOnly || it->second.diagnosed_ ) )
+            result.push_back( it->second.type_ );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipment::CreateMaintenanceConsign
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+void Equipment::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message )
+{
+    int id = message.request().id();
+    consigns_[ id ].diagnosed_ = false;
+    consigns_[ id ].inMaintenance_ = false;
+    consigns_[ id ].type_ = message.breakdown().id();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipment::DeleteMaintenanceConsign
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+void Equipment::DeleteMaintenanceConsign( int id )
+{
+    consigns_.erase( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipment::UpdateMaintenanceConsign
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+void Equipment::UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message )
+{
+    int id = message.request().id();
+    if( consigns_.end() == consigns_.find( id ) )
+        return;
+    consigns_[ id ].diagnosed_ = message.diagnosed();
+    consigns_[id].inMaintenance_ |= ( message.state() != sword::LogMaintenanceHandlingUpdate::waiting_for_transporter && 
+        message.state() != sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply );
 }

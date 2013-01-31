@@ -17,6 +17,7 @@
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 
@@ -61,6 +62,53 @@ float Equipments::GetTotalWeight() const
         weight += equipment.Total() * equipment.type_.GetWeight();
     }
     return weight;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::UpdateController
+// Created: LDC 2013-01-31
+// -----------------------------------------------------------------------------
+void Equipments::UpdateController()
+{
+    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::CreateMaintenanceConsign
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+void Equipments::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message )
+{
+    Equipment* equipment = Find( message.equipement().id() );
+    if( !equipment )
+    {
+        equipment = new Equipment( resolver_.Get( message.equipement().id() ) );
+        AddToDictionary( *equipment );
+        Register( message.equipement().id(), *equipment );
+    }
+    equipment->CreateMaintenanceConsign( message );
+    UpdateController();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::DeleteMaintenanceConsign
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+void Equipments::DeleteMaintenanceConsign( int id )
+{
+    Apply( boost::bind( &Equipment::DeleteMaintenanceConsign, _1, id ) );
+    UpdateController();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::Update
+// Created: LDC 2013-01-30
+// -----------------------------------------------------------------------------
+void Equipments::Update( const sword::LogMaintenanceHandlingUpdate& message )
+{
+    Apply( boost::bind( &Equipment::UpdateMaintenanceConsign, _1, boost::cref( message ) ) );
+    UpdateController();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,8 +160,7 @@ void Equipments::Update( const std::vector< Equipment >& differences )
     if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Equipments* equipments = const_cast< Equipments* >( superior->Retrieve< Equipments >() ) )
             equipments->Update( differences );
-    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
-    controller_.Update( *this );
+    UpdateController();
 }
 
 // -----------------------------------------------------------------------------

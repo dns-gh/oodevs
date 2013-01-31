@@ -13,6 +13,8 @@
 namespace sword
 {
     class EquipmentDotations_EquipmentDotation;
+    class LogMaintenanceHandlingUpdate;
+    class LogMaintenanceHandlingCreation;
 }
 
 namespace kernel
@@ -41,6 +43,11 @@ public:
     void Update( const sword::EquipmentDotations_EquipmentDotation& message );
     QString GetName() const;
     unsigned Total() const;
+    void CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message );
+    void DeleteMaintenanceConsign( int id );
+    void UpdateMaintenanceConsign( const sword::LogMaintenanceHandlingUpdate& message );
+    std::vector< int > GetBreakdowns( bool isReadOnly ) const;
+    std::vector< int > GetBreakdownsInTreatment( bool isReadOnly ) const;
     //@}
 
     //! @name Operators
@@ -49,6 +56,17 @@ public:
     Equipment operator-( const Equipment& rhs ) const;
     Equipment operator-() const;
     Equipment& operator=( const Equipment& rhs );
+    //@}
+
+private:
+    //! @name types
+    //@{
+    struct Breakdown
+    {
+        int type_;
+        bool diagnosed_;
+        bool inMaintenance_;
+    };
     //@}
 
 public:
@@ -61,7 +79,9 @@ public:
     int                          onSiteFixable_;
     int                          inMaintenance_;
     int                          prisonners_;
+private:
     std::vector< int >           breakdowns_;
+    std::map< int, Breakdown >   consigns_;       
     //@}
 };
 

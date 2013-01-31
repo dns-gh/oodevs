@@ -76,7 +76,7 @@ bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int si
 {
     for( int i = 0; row < dataModel_.rowCount() && i < size && GetDisplayData( row, eName ) == name; ++i, ++row )
         if( GetEnumData< E_EquipmentState >( row, eState ) != state ||
-            state == eEquipmentState_RepairableWithEvacuation && GetEnumData< unsigned int >( row, eBreakdown ) != ( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] ) )
+            GetEnumData< unsigned int >( row, eBreakdown ) != ( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] ) )
             return true;
     return false;
 }
@@ -145,9 +145,9 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
         const QStringList* breakdowns = delegate_.GetComboContent( row, eBreakdown );
         if( LineChanged( name, row, equipment.available_,     eEquipmentState_Available ) ||
             LineChanged( name, row, equipment.unavailable_,   eEquipmentState_Destroyed ) ||
-            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.breakdowns_ ) : std::vector< unsigned int >() ) ||
+            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdowns( IsReadOnly() ) ) : std::vector< unsigned int >()  ) ||
             LineChanged( name, row, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable ) ||
-            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance ) ||
+            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdownsInTreatment( IsReadOnly() ) ) : std::vector< unsigned int >() ) ||
             LineChanged( name, row, equipment.prisonners_,    eEquipmentState_Prisonner ) )
             rowsChanged_[ equipment.type_.GetId() ] = first_row;
     }
@@ -177,9 +177,9 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         // States
         AddLines( name, equipment.available_,     eEquipmentState_Available,                breakdowns );
         AddLines( name, equipment.unavailable_,   eEquipmentState_Destroyed,                breakdowns );
-        AddLines( name, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.breakdowns_ ) );
+        AddLines( name, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdowns( IsReadOnly() ) ) );
         AddLines( name, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable,            breakdowns );
-        AddLines( name, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns );
+        AddLines( name, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdownsInTreatment( IsReadOnly() ) ) );
         AddLines( name, equipment.prisonners_,    eEquipmentState_Prisonner,                breakdowns );
     }
 }
