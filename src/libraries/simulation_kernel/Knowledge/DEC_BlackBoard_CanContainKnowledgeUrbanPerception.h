@@ -23,14 +23,6 @@ class MIL_UrbanObject_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeUrbanPerception : private boost::noncopyable
 {
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned, boost::shared_ptr< DEC_Knowledge_UrbanPerception > > T_KnowledgeUrbanPerceptionMap;
-    typedef T_KnowledgeUrbanPerceptionMap::iterator                                 IT_KnowledgeUrbanPerceptionMap;
-    typedef T_KnowledgeUrbanPerceptionMap::const_iterator                          CIT_KnowledgeUrbanPerceptionMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -48,41 +40,32 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived );
-    void DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge );
+    DEC_Knowledge_UrbanPerception* CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived );
     //@}
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const;
+    DEC_Knowledge_UrbanPerception* GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrbanPerception( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); )
-        {
-            DEC_Knowledge_UrbanPerception& knowledge = *itKnowledge->second;
-            ++itKnowledge;
-            fct( knowledge );
-        }
+        for( auto itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); ++itKnowledge )
+            fct( *itKnowledge->second );
     }
 
     template < class BinaryFunction, class Parameter >
     void ApplyOnKnowledgesUrbanPerception( BinaryFunction& fct, Parameter param ) const
     {
-        for( CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); )
-        {
-            DEC_Knowledge_UrbanPerception& knowledge = *itKnowledge->second;
-            ++itKnowledge;
-            fct( knowledge, param );
-        }
+        for( auto itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); ++itKnowledge )
+            fct( *itKnowledge->second, param );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_KnowledgeUrbanPerceptionMap knowledgeUrbanPerceptionMap_;
+    std::map< unsigned int, DEC_Knowledge_UrbanPerception* > knowledgeUrbanPerceptionMap_;
     //@}
 };
 

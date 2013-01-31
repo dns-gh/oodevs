@@ -91,10 +91,12 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
 DEC_KnowledgeBlackBoard_AgentPion::~DEC_KnowledgeBlackBoard_AgentPion()
 {
     delete pKnowledgeAgentPerceptionContainer_;
+    delete pKnowledgeUrbanPerceptionContainer_;
     delete pKnowledgeObjectCollisionContainer_;
     delete pKnowledgeObjectPerceptionContainer_;
     delete pKnowledgePopulationPerceptionContainer_;
     delete pKnowledgePopulationCollisionContainer_;
+    delete pKnowledgeRapForLocal_;
     delete pKsObjectInteraction_;
     delete pKsPopulationInteraction_;
     delete pKsFire_;
@@ -747,7 +749,7 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsIdentified( const MIL_UrbanObject_ABC&
 {
     assert( pKnowledgeUrbanPerceptionContainer_ );
 
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pKnowledgeUrbanPerceptionContainer_->GetKnowledgeUrbanPerception( object );
+    DEC_Knowledge_UrbanPerception* pKnowledge = pKnowledgeUrbanPerceptionContainer_->GetKnowledgeUrbanPerception( object );
     if( pKnowledge )
         return pKnowledge->IsPerceived();
     return false;

@@ -293,9 +293,10 @@ void DEC_KS_Perception::NotifyPerception( const MIL_UrbanObject_ABC& object, con
 
     assert( pBlackBoard_ );
 
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().GetKnowledgeUrbanPerception( object );
+    DEC_Knowledge_UrbanPerception* pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().GetKnowledgeUrbanPerception( object );
     if( !pKnowledge )
         pKnowledge = pBlackBoard_->GetKnowledgeUrbanPerceptionContainer().CreateKnowledgeUrbanPerception( pBlackBoard_->GetPion(), object );
+    assert( pKnowledge );
 
     pKnowledge->Update( level );
 }

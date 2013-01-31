@@ -32,8 +32,8 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKnowledgeUrbanPerception()
 {
-    while( !knowledgeUrbanPerceptionMap_.empty() )
-        DestroyKnowledgeUrbanPerception( *knowledgeUrbanPerceptionMap_.begin()->second );
+    for( auto it = knowledgeUrbanPerceptionMap_.begin(); it != knowledgeUrbanPerceptionMap_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,34 +58,24 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutA
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived )
+DEC_Knowledge_UrbanPerception* DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived )
 {
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > knowledge ( new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived.GetID() ) );
-    if( ! knowledgeUrbanPerceptionMap_.insert( std::make_pair( objectPerceived.GetID(), knowledge ) ).second )
+    DEC_Knowledge_UrbanPerception*& knowledge = knowledgeUrbanPerceptionMap_[ objectPerceived.GetID() ];
+    if( knowledge )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    else
+        knowledge = new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived.GetID() );
     return knowledge;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DestroyKnowledgeUrbanPerception
-// Created: MGD 2009-12-07
-// -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge )
-{
-    if( knowledgeUrbanPerceptionMap_.erase( knowledge.GetUrbanPerceivedId() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
-    delete &knowledge;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgesUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const
+DEC_Knowledge_UrbanPerception* DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const
 {
-    CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.find( associatedUrban.GetID() );
+    auto itKnowledge = knowledgeUrbanPerceptionMap_.find( associatedUrban.GetID() );
     if( itKnowledge != knowledgeUrbanPerceptionMap_.end() )
         return itKnowledge->second;
-    else
-        return boost::shared_ptr< DEC_Knowledge_UrbanPerception >();
+    return 0;
 }
