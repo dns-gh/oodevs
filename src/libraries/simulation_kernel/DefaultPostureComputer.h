@@ -49,7 +49,7 @@ private:
     //! @name Operations
     //@{
     void Update();
-    double GetPostureTime() const;
+    double ApplyModifiers( double time ) const;
     //@}
 
 private:
@@ -64,8 +64,8 @@ private:
     const double rStealthFactor_;
     const double rTimingFactor_;
     std::vector< double > coefficientsModifier_;
-    bool bForceMovement_;
-    bool bForceStop_;
+    bool bMoving_;
+    bool bStopped_;
     bool bIsLoaded_;
     Results results_;
     //@}
