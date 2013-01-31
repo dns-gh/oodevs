@@ -49,7 +49,6 @@ private:
     //! @name Operations
     //@{
     void Update();
-    double ApplyModifiers( double time ) const;
     //@}
 
 private:

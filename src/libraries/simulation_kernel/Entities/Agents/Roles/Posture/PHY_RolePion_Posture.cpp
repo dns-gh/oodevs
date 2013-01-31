@@ -39,7 +39,7 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     : owner_                               ( pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
-    , rPostureCompletionPercentage_        ( 1. )
+    , rPostureCompletionPercentage_        ( 0. )
     , rElongationFactor_                   ( 1. )
     , rTimingFactor_                       ( 1. )
     , rStealthFactor_                      ( 1. ) // 1. == Non furtif
@@ -135,11 +135,6 @@ void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
         return;
     pLastPosture_    = pCurrentPosture_;
     pCurrentPosture_ = &newPosture;
-
-    if( newPosture.GetID() <= PHY_Posture::mouvementDiscret_.GetID() )
-        ChangePostureCompletionPercentage( 1. );
-    else
-        ChangePostureCompletionPercentage( 0. );
     bPostureHasChanged_    = true;
     bPercentageHasChanged_ = true;
 }
@@ -167,8 +162,7 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     PostureComputer_ABC::Results& result = computer->Result();
     if( result.newPosture_ )
         ChangePosture( *result.newPosture_ );
-    else
-        ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
+    ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
     if( HasChanged() )
         owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
@@ -453,4 +447,14 @@ void PHY_RolePion_Posture::Execute( urbanLocation::UrbanLocationComputer_ABC& al
         algorithm.SetUrbanDeployment( static_cast< float >( rPostureCompletionPercentage_ ) );
     if( pCurrentPosture_ == &PHY_Posture::posteAmenage_ )
         algorithm.SetUrbanDeployment( 1.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::IsMovingPosture
+// Created: SLI 2013-01-25
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::IsMovingPosture() const
+{
+    return pCurrentPosture_ == &PHY_Posture::mouvement_
+        || pCurrentPosture_ == &PHY_Posture::mouvementDiscret_;
 }

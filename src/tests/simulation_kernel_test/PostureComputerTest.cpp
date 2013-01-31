@@ -44,15 +44,14 @@ namespace
 BOOST_FIXTURE_TEST_CASE( stopped_posture_with_unfinished_completion_does_not_change_posture, Fixture )
 {
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, 0, 1, 1 );
-    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 1 );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 10 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK( !result.newPosture_ );
 }
 
-BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_moving_posture_and_new_completion_is_full, Fixture )
+BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_moving_posture_and_new_completion_is_empty, Fixture )
 {
     const double completion = 0.;
-    const double fullCompletion = 1.;
     const double tearDownTime = 0;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completion, 1, 1 );
     computer.SetPostureMovement();
@@ -60,7 +59,7 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_mo
     MOCK_EXPECT( time.GetPostureTearDownTime ).once().returns( tearDownTime );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK( result.newPosture_ == &PHY_Posture::mouvement_ );
-    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, fullCompletion, 0.0001 );
+    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completion, 0.0001 );
 }
 
 BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_must_wait_completion_decrease_before_changing_to_moving_posture, Fixture )
@@ -100,9 +99,9 @@ BOOST_FIXTURE_TEST_CASE( moving_posture_but_stopped_changes_to_stopped_posture, 
 {
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::mouvement_, false, false, 0, 1, 1 );
     computer.UnsetPostureMovement();
-    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 1 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK( result.newPosture_ == &PHY_Posture::arret_ );
+    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 0, 0.0001 );
 }
 
 BOOST_FIXTURE_TEST_CASE( completion_percent_increase_with_posture_time, Fixture )
@@ -115,15 +114,14 @@ BOOST_FIXTURE_TEST_CASE( completion_percent_increase_with_posture_time, Fixture 
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completionPercent + 1 / timeForNextPosture, 0.0001 );
 }
 
-BOOST_FIXTURE_TEST_CASE( empty_posture_time_completes_posture_instantly, Fixture )
+BOOST_FIXTURE_TEST_CASE( empty_posture_time_changes_posture_instantly, Fixture )
 {
     const double completionPercent = 0;
-    const double complete = 1;
     const double timeForNextPosture = 0;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1 );
     MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, complete, 0.0001 );
+    BOOST_CHECK( result.newPosture_ == PHY_Posture::arret_.GetNextAutoPosture() );
 }
 
 BOOST_FIXTURE_TEST_CASE( modifier_changes_completion_percent_increase_rate, Fixture )
@@ -213,21 +211,20 @@ namespace
         {
             const double completionPercent = 1;
             posture::DefaultPostureComputer computer( random, time, current, false, false, completionPercent, 1, 1 );
+            MOCK_EXPECT( time.GetPostureSetupTime ).returns( 0 );
             const posture::PostureComputer_ABC::Results& result = computer.Result();
             BOOST_CHECK( result.newPosture_ == next );
-            BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 1, 0.0001 );
+            BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 0., 0.0001 );
         }
         void CheckPreviousPosture( const PHY_Posture& current, const PHY_Posture* previous )
         {
             const double completionPercent = 0;
-            const double fullCompletion = 1.;
             posture::DefaultPostureComputer computer( random, time, current, false, false, completionPercent, 1, 1 );
             computer.SetPostureMovement();
             computer.NotifyLoaded();
             MOCK_EXPECT( time.GetPostureTearDownTime ).returns( 0 );
             const posture::PostureComputer_ABC::Results& result = computer.Result();
             BOOST_CHECK( result.newPosture_ == previous );
-            BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, fullCompletion, 0.0001 );
         }
     };
 }
@@ -249,7 +246,7 @@ BOOST_FIXTURE_TEST_CASE( moving_entity_changes_to_previous_posture, CheckFixture
     CheckPreviousPosture( PHY_Posture::posteReflexe_     , &PHY_Posture::arret_ );
     CheckPreviousPosture( PHY_Posture::poste_            , &PHY_Posture::posteReflexe_ );
     CheckPreviousPosture( PHY_Posture::posteAmenage_     , &PHY_Posture::poste_ );
-    CheckPreviousPosture( PHY_Posture::postePrepareGenie_, 0 );
-    CheckPreviousPosture( PHY_Posture::mouvement_        , 0 );
-    CheckPreviousPosture( PHY_Posture::mouvementDiscret_ , 0 );
+    CheckPreviousPosture( PHY_Posture::postePrepareGenie_, &PHY_Posture::mouvement_ );
+    CheckPreviousPosture( PHY_Posture::mouvement_        , &PHY_Posture::mouvement_ );
+    CheckPreviousPosture( PHY_Posture::mouvementDiscret_ , &PHY_Posture::mouvement_ );
 }

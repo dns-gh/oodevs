@@ -122,23 +122,21 @@ namespace
         const PHY_Posture* pNextAutoPosture = current.GetNextAutoPosture();
         if( !pNextAutoPosture )
             return;
+        results.postureCompletionPercentage_ = 0.;
         results.newPosture_ = pNextAutoPosture;
     }
-    void ComputePreviousPosture( PostureComputer_ABC::Results& results, const PHY_Posture& current )
+    void ComputePreviousPosture( PostureComputer_ABC::Results& results, const PHY_Posture& previous )
     {
-        const PHY_Posture* pPreviousAutoPosture = current.GetPreviousAutoPosture();
-        if( !pPreviousAutoPosture )
-            return;
-        results.newPosture_ = pPreviousAutoPosture;
+        results.postureCompletionPercentage_ = 1.;
+        results.newPosture_ = &previous;
     }
     void ComputeMovingPosture( PostureComputer_ABC::Results& results, bool isLoaded, bool isDiscreteModeEnabled, double completion, const PHY_Posture& current )
     {
         results.postureCompletionPercentage_ = completion;
         if( completion > 0. )
             return;
-        results.postureCompletionPercentage_ = 1.;
-        if( &current != &PHY_Posture::arret_ )
-            return ComputePreviousPosture( results, current );
+        if( current.GetPreviousAutoPosture() )
+            return ComputePreviousPosture( results, *current.GetPreviousAutoPosture() );
         else if( !isLoaded )
             results.newPosture_ = &PHY_Posture::posteReflexe_;
         else if( isDiscreteModeEnabled )
@@ -146,20 +144,40 @@ namespace
         else
             results.newPosture_ = &PHY_Posture::mouvement_;
     }
-    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool forceStop, const PHY_Posture& current )
+    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool forceStop, double completion, const PHY_Posture& current )
     {
+        results.postureCompletionPercentage_ = completion;
         if( forceStop && ( &current == &PHY_Posture::mouvement_
                         || &current == &PHY_Posture::mouvementDiscret_ ) )
+        {
             results.newPosture_ = &PHY_Posture::arret_;
+            results.postureCompletionPercentage_ = 0.;
+            return;
+        }
+        if( completion < 1. )
+            return;
+        return ComputeNextPosture( results, current );
     }
-    double ComputeNextCompletion( double currentCompletion, double postureTime )
+    double ApplyModifiers( double time, const std::vector< double >& coefficientsModifier, double timingFactor )
     {
+        assert( timingFactor > 0. );
+        for( auto it = coefficientsModifier.begin(); it != coefficientsModifier.end(); ++it )
+            time *= *it;
+        return time / timingFactor;
+    }
+    double ComputeNextCompletion( double currentCompletion, const PHY_Posture& current, const std::vector< double >& coefficientsModifier, double timingFactor, const PostureTime_ABC& time )
+    {
+        const PHY_Posture* next = current.GetNextAutoPosture();
+        if( !next )
+            return 0.;
+        const double postureTime = ApplyModifiers( time.GetPostureSetupTime( *next ), coefficientsModifier, timingFactor );
         if( postureTime == 0. )
             return 1.;
         return std::min( 1., currentCompletion + ( 1. / postureTime ) );
     }
-    double ComputePreviousCompletion( double currentCompletion, double postureTime )
+    double ComputePreviousCompletion( double currentCompletion, const PHY_Posture& current, const std::vector< double >& coefficientsModifier, double timingFactor, const PostureTime_ABC& time )
     {
+        const double postureTime = ApplyModifiers( time.GetPostureTearDownTime( current ), coefficientsModifier, timingFactor );
         if( postureTime == 0. )
             return 0.;
         return std::max( 0., currentCompletion - ( 1. / postureTime ) );
@@ -177,23 +195,12 @@ void DefaultPostureComputer::Update()
     ComputeStealthMode( results_, random_, rStealthFactor_ );
     if( bMoving_ )
     {
-        const double completion = ComputePreviousCompletion( results_.postureCompletionPercentage_, ApplyModifiers( time_.GetPostureTearDownTime( posture_ ) ) );
+        const double completion = ComputePreviousCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, time_ );
         return ComputeMovingPosture( results_, bIsLoaded_, bDiscreteModeEnabled_, completion, posture_ );
     }
-    ComputeStopPosture( results_, bStopped_, posture_ );
-    if( results_.postureCompletionPercentage_ == 1. )
-        return ComputeNextPosture( results_, posture_ );
-    results_.postureCompletionPercentage_ = ComputeNextCompletion( results_.postureCompletionPercentage_, ApplyModifiers( time_.GetPostureSetupTime( posture_ ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::ApplyModifiers
-// Created: MGD 2009-09-22
-// -----------------------------------------------------------------------------
-double DefaultPostureComputer::ApplyModifiers( double time ) const
-{
-    assert( rTimingFactor_ > 0. );
-    for( auto it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
-        time *= *it;
-    return time / rTimingFactor_;
+    else
+    {
+        const double completion = ComputeNextCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, time_ );
+        return ComputeStopPosture( results_, bStopped_, completion, posture_ );
+    }
 }

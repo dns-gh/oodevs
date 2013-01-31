@@ -103,7 +103,8 @@ public:
     virtual const PHY_Posture& GetLastPosture() const;
     virtual const PHY_Posture& GetCurrentPosture() const;
     virtual double GetPostureCompletionPercentage() const;
-    bool IsStealth() const;
+    virtual bool IsStealth() const;
+    virtual bool IsMovingPosture() const;
     //@}
 
     //! @name Network
