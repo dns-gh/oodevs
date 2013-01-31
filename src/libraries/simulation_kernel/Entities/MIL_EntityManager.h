@@ -268,6 +268,7 @@ private:
     void UpdateKnowledgeGroups();
 
     void PreprocessRandomBreakdowns();
+    void CleanObsoleteAgents( std::vector< unsigned int >& toDelete );
     //@}
 
 private:

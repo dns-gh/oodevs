@@ -28,6 +28,7 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( GetKnowledgeGroup, 0 );
     MOCK_METHOD( GetType, 0 );
     MOCK_METHOD( IsDead, 0 );
+    MOCK_METHOD( IsMarkedForDestruction, 0 );
     MOCK_METHOD( IsNeutralized, 0 );
     MOCK_METHOD( IsPC, 0 );
     MOCK_METHOD( IsAutonomous, 0 );

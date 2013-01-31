@@ -20,6 +20,7 @@
 #define __TER_Agent_ABC_h_
 
 #include "TER_AgentTraits.h"
+#include <boost/noncopyable.hpp>
 
 class TER_AgentManager;
 
@@ -31,7 +32,7 @@ namespace spatialcontainer
 // =============================================================================
 // Created: AGE 2005-01-28
 // =============================================================================
-class TER_Agent_ABC
+class TER_Agent_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -56,21 +57,10 @@ public:
 
     void UpdatePatch();
     void SetListener( TER_AgentManager& agentManager );
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
     void RemoveFromPatch();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TER_Agent_ABC( const TER_Agent_ABC& );            //!< Copy constructor
-    TER_Agent_ABC& operator=( const TER_Agent_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void InsertInPatch();

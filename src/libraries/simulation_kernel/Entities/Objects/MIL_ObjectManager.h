@@ -64,6 +64,7 @@ public:
 
     //! @name Operations
     //@{
+    void Clean();
     void ProcessEvents();
     void UpdateStates( const propagation::FloodModel_ABC& floodModel );
     unsigned long Count() const;

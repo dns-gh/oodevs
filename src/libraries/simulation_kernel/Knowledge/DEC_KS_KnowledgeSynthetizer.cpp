@@ -11,6 +11,7 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_Population.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MT_Tools/MT_Stl.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -98,7 +99,7 @@ void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent( DEC_Knowledge_Agent& know
 {
     assert( pBlackBoard_ );
 
-    if( knowledge.Clean() )
+    if( knowledge.Clean() || knowledge.GetAgentKnown().IsMarkedForDestruction() )
         pBlackBoard_->GetKnowledgeAgentContainer().DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
 }
 

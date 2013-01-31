@@ -54,6 +54,7 @@ public:
     unsigned int GetID() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
     virtual const MIL_AgentType_ABC& GetType() const = 0;
+    virtual bool IsMarkedForDestruction() const = 0;
     virtual bool IsDead() const = 0;
     virtual bool IsNeutralized() const = 0;
     virtual bool UpdateUnderIndirectFire() = 0;

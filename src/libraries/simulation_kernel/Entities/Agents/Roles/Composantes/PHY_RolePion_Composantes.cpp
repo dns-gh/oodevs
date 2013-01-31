@@ -149,8 +149,8 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::~PHY_RolePion_Composantes()
 {
-    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        delete *it;
+    while( composantes_.size() > 0 )
+        delete composantes_.front(); // removed from composantes_ by NotifyComposanteRemoved
 }
 
 namespace boost

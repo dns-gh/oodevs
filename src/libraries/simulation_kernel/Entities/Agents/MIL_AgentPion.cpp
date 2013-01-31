@@ -95,6 +95,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     : MIL_Agent_ABC( xis )
     , pType_               ( &type )
     , bHasChanged_         ( false )
+    , markedForDestruction_( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -127,6 +128,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     : MIL_Agent_ABC( name )
     , pType_               ( &type )
     , bHasChanged_         ( false )
+    , markedForDestruction_( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -148,6 +150,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     : MIL_Agent_ABC( type.GetName() )
     , pType_               ( &type )
     , bHasChanged_         ( false )
+    , markedForDestruction_( false )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -388,6 +391,15 @@ MIL_AgentPion::~MIL_AgentPion()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsMarkedForDestruction
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsMarkedForDestruction() const
+{
+    return markedForDestruction_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsDead
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
@@ -488,6 +500,8 @@ void MIL_AgentPion::UpdateDecision( float duration )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdatePhysicalState()
 {
+    if( markedForDestruction_ )
+        return;
     try
     {
         const bool bIsDead = IsDead();
@@ -582,8 +596,10 @@ void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) c
 // Name: MIL_AgentPion::Clean
 // Created: AGE 2004-11-23
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::Clean()
+void MIL_AgentPion::Clean( std::vector< unsigned int >& toDelete  )
 {
+    if( markedForDestruction_ )
+        toDelete.push_back( GetID() );
     GetRole< PHY_RoleInterface_Location >().Clean();
     GetRole< PHY_RoleInterface_Perceiver >().Clean();
     GetRole< dotation::PHY_RolePion_Dotations >().Clean();
@@ -784,7 +800,11 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveDeleteUnit()
 {
-    // TODO
+    CancelCurrentMission();
+    GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
+    // TODO faire ce qui est dans magicmove?
+    markedForDestruction_ = true;
+    Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -796,11 +816,7 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     GetRole< PHY_RoleAction_MovingUnderground >().GetOutFromUndergroundNetwork();
     GetRole< PHY_RoleInterface_Location >().MagicMove( vNewPos );
     GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
-    CancelAllActions();
-    DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
-    if( roleDec )
-        roleDec->Reset( GetAutomate().GetName() );
-    pOrderManager_->CancelMission();
+    CancelCurrentMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -1222,6 +1238,19 @@ void MIL_AgentPion::ChangeSuperiorSilently( MIL_Automate& newAutomate )
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = &newAutomate;
     pAutomate_->RegisterPion( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CancelCurrentMission
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::CancelCurrentMission()
+{
+    CancelAllActions();
+    DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
+    if( roleDec )
+        roleDec->Reset( GetAutomate().GetName() );
+    pOrderManager_->CancelMission();
 }
 
 // -----------------------------------------------------------------------------

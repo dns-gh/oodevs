@@ -38,7 +38,7 @@ TER_Agent_ABC::TER_Agent_ABC()
 // -----------------------------------------------------------------------------
 TER_Agent_ABC::~TER_Agent_ABC()
 {
-    RemoveFromPatch(); // $$$$ AGE 2006-03-31: pure virtual call sur GetPosition();
+//    RemoveFromPatch(); // $$$$ AGE 2006-03-31: pure virtual call sur GetPosition();
 }
 
 // -----------------------------------------------------------------------------

@@ -85,6 +85,37 @@ namespace
     }
 }
 
+namespace
+{
+    void RemoveDeletedAgent( std::set< MIL_Agent_ABC* >& agentSet, MIL_Object_ABC* object = 0 )
+    {
+        for( auto it = agentSet.begin(); it != agentSet.end(); )
+        {
+            if( ( *it )->IsMarkedForDestruction() )
+            {
+                if( object )
+                    object->ProcessAgentExiting( **it );
+                it = agentSet.erase( it );
+            }
+            else
+                ++it;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectInteraction::Clean
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void MIL_ObjectInteraction::Clean( MIL_Object_ABC& object )
+{
+    RemoveDeletedAgent( agentInsideSet_, &object );
+    RemoveDeletedAgent( agentEnteringSet_ );
+    RemoveDeletedAgent( agentExitingSet_ );
+    RemoveDeletedAgent( agentMovingInsideSet_ );
+    RemoveDeletedAgent( agentDelayedEnteringSet_ );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction::UpdateLocation
 // Created: JCR 2008-05-30
@@ -216,7 +247,7 @@ void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
 {
-    CIT_AgentSet itAgent;
+    T_AgentSet::const_iterator itAgent;
 
     for( itAgent = agentInsideSet_.begin(); itAgent != agentInsideSet_.end(); ++itAgent )
         object.PreprocessAgent( **itAgent );

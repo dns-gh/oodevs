@@ -92,6 +92,7 @@ public:
     virtual void UpdateLocalisation( const TER_Localisation& newLocalisation );
     virtual bool IsInside( const MT_Vector2D& vPos ) const;
     virtual bool IsOnBorder( const MT_Vector2D& vPos ) const;
+    void Clean();
     void ProcessEvents();
     void MarkForDestruction();
     //@}

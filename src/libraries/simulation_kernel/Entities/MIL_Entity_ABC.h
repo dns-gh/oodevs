@@ -59,13 +59,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_Entity_ABC( const MIL_Entity_ABC& );            //!< Copy constructor
-    MIL_Entity_ABC& operator=( const MIL_Entity_ABC& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name data Members
     //@{
     const std::string strName_;

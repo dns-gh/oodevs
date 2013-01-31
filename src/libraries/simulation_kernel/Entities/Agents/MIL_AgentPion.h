@@ -95,6 +95,7 @@ public:
     virtual const MIL_Automate& GetAutomate() const;
     virtual MIL_Automate& GetAutomate();
     virtual const MIL_AgentType_ABC&  GetType() const;
+    virtual bool IsMarkedForDestruction() const;
     virtual bool IsDead() const;
     virtual bool IsNeutralized() const;
     virtual bool UpdateUnderIndirectFire();
@@ -126,7 +127,7 @@ public:
     void UpdateDecision( float duration );
     void UpdateState();
     void UpdateNetwork();
-    void Clean();
+    void Clean( std::vector< unsigned int >& toDelete );
     void Register( MissionController_ABC& pController );
     //@}
 
@@ -174,6 +175,7 @@ private:
     //@{
     void UpdatePhysicalState();
     void ChangeSuperiorSilently( MIL_Automate& newAutomate );
+    void CancelCurrentMission();
     //@}
 
     //! @name Magic actions
@@ -213,6 +215,7 @@ private:
     //@{
     const MIL_AgentTypePion*                  pType_;
     bool                                      bHasChanged_;
+    bool                                      markedForDestruction_;
     std::string                               app6Symbol_;
     std::string                               level_;
     std::string                               criticalIntelligence_;

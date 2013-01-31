@@ -12,6 +12,7 @@
 
 #include <boost/serialization/split_member.hpp>
 #include <boost/function.hpp>
+#include <boost/noncopyable.hpp>
 
 class MIL_Agent_ABC;
 class TER_Localisation;
@@ -26,7 +27,7 @@ class MIL_PopulationElement_ABC;
 */
 // Created: JCR 2008-05-26
 // =============================================================================
-class MIL_ObjectInteraction
+class MIL_ObjectInteraction : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,6 +45,7 @@ public:
 
     //! @name Operations
     //@{
+    void Clean( MIL_Object_ABC& object );
     void UpdateInteraction( MIL_Object_ABC& object, const TER_Localisation& location );
     void ClearInteraction( MIL_Object_ABC& object );
     void ProcessInteractionEvents( MIL_Object_ABC& object );
@@ -68,24 +70,14 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Agent_ABC* >   T_AgentSet;
-    typedef T_AgentSet::const_iterator CIT_AgentSet;
-
+    typedef std::set< MIL_Agent_ABC* > T_AgentSet;
     typedef std::set< MIL_PopulationElement_ABC* > T_PopulationSet;
-    typedef T_PopulationSet::const_iterator      CIT_PopulationSet;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void Update( const T_PopulationSet& last, const T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_ObjectInteraction( const MIL_ObjectInteraction& );            //!< Copy constructor
-    MIL_ObjectInteraction& operator=( const MIL_ObjectInteraction& ); //!< Assignment operator
     //@}
 
 private:

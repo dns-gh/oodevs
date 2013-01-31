@@ -3097,7 +3097,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Delete unit</source>
-        <translation>Supprimer l'unité</translation>
+        <translation>Supprimer l&apos;unité</translation>
     </message>
 </context>
 <context>

@@ -16,9 +16,9 @@
 template< typename Role >
 typename Role::RoleInterface& RoleContainer::RegisterRole( Role& role )
 {
-	Attach( static_cast< Role::RoleInterface& >( role ) );
-	InterfaceContainer<Role_ABC>::Register( role );
-	return static_cast< Role::RoleInterface& >( role );
+    Attach( static_cast< Role::RoleInterface& >( role ) );
+    InterfaceContainer<Role_ABC>::Register( role );
+    return static_cast< Role::RoleInterface& >( role );
 }
 
 // -----------------------------------------------------------------------------

@@ -85,6 +85,14 @@ void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnM
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::SendChangedState( unsigned int context ) const
 {
+    if( bExternalMustUpdateData_ && pion_->IsMarkedForDestruction() )
+    {
+        client::UnitDestruction msg;
+        msg().mutable_unit()->set_id( pion_->GetID() );
+        msg.Send( NET_Publisher_ABC::Publisher(), context );
+        return;
+    }
+
     // UnitAttributes message
     if( bExternalMustUpdateData_
         || pion_->IsDead()        != bLastStateDead_

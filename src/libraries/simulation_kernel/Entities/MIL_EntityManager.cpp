@@ -987,12 +987,28 @@ void MIL_EntityManager::Update()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CleanObsoleteAgents
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::CleanObsoleteAgents( std::vector< unsigned int >& toDelete )
+{
+    for( auto it = toDelete.begin(); it != toDelete.end(); ++it )
+    {
+        sink_->Remove( *it );
+        agentFactory_->Delete( *it ); // delete agent
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Clean
 // Created: AGE 2004-11-23
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Clean()
 {
-    sink_->Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
+    pObjectManager_->Clean();
+    std::vector< unsigned int > agentsToDelete;
+    sink_->Apply( boost::bind( &MIL_AgentPion::Clean, _1, boost::ref( agentsToDelete ) ) );
+    CleanObsoleteAgents( agentsToDelete );
     automateFactory_->Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
     formationFactory_->Apply( boost::bind( &MIL_Formation::Clean, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::Clean, _1 ) );

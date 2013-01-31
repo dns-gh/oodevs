@@ -104,6 +104,16 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::Clean
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::Clean()
+{
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+        it->second->Clean();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::ProcessEvents
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
