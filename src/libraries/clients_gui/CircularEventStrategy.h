@@ -69,7 +69,6 @@ private:
     //@{
     T_MapLayers layers_;
     MapLayer_ABC* default_;
-    bool reverse_;
     bool exclusive_;
     T_MapLayers::const_reverse_iterator rlast_;
     //@}
