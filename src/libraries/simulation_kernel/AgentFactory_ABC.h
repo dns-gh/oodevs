@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "boost/noncopyable.hpp"
 
 class MIL_AgentPion;
 class MIL_AgentTypePion;
@@ -21,6 +22,7 @@ namespace xml
 {
     class xistream;
 }
+
 // =============================================================================
 /** @class  AgentFactory_ABC
     @brief  AgentFactory_ABC
@@ -47,13 +49,6 @@ public:
     //! @name CheckPoint
     //@{
     template< typename Archive > void serialize( Archive& file, const unsigned int );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFactory_ABC( const AgentFactory_ABC& );            //!< Copy constructor
-    AgentFactory_ABC& operator=( const AgentFactory_ABC& ); //!< Assignment operator
     //@}
 };
 

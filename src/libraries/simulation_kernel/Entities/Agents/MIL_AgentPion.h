@@ -127,7 +127,7 @@ public:
     void UpdateDecision( float duration );
     void UpdateState();
     void UpdateNetwork();
-    void Clean( std::vector< unsigned int >& toDelete );
+    void Clean();
     void Register( MissionController_ABC& pController );
     //@}
 

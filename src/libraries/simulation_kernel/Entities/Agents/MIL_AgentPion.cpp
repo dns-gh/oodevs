@@ -596,10 +596,8 @@ void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) c
 // Name: MIL_AgentPion::Clean
 // Created: AGE 2004-11-23
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::Clean( std::vector< unsigned int >& toDelete  )
+void MIL_AgentPion::Clean()
 {
-    if( markedForDestruction_ )
-        toDelete.push_back( GetID() );
     GetRole< PHY_RoleInterface_Location >().Clean();
     GetRole< PHY_RoleInterface_Perceiver >().Clean();
     GetRole< dotation::PHY_RolePion_Dotations >().Clean();

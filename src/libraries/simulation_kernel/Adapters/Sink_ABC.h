@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     virtual void Finalize() = 0;
+    virtual void Clean() = 0;
     virtual void ExecutePerceptions() = 0;
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;

@@ -110,6 +110,28 @@ void Sink::Finalize()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Sink::Clean
+// Created: JSR 2013-01-30
+// -----------------------------------------------------------------------------
+void Sink::Clean()
+{
+    for( auto it = elements_.begin(); it != elements_.end(); )
+    {
+        MIL_AgentPion* pion = it->second;
+        assert( pion );
+        pion->Clean();
+        if( pion->IsMarkedForDestruction() )
+        {
+            factory_.Remove( pion->GetID() );
+            it = elements_.erase( it );
+            delete pion;
+        }
+        else
+            ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Sink::ExecutePerceptions
 // Created: SLI 2012-09-11
 // -----------------------------------------------------------------------------

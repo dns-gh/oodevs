@@ -40,6 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void Finalize();
+    virtual void Clean();
     virtual void ExecutePerceptions();
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
