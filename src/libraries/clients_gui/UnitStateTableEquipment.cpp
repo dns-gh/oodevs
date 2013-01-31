@@ -65,12 +65,13 @@ void UnitStateTableEquipment::AddLines( const QString& name, int size, E_Equipme
         return;
     if( !breakdowns.empty() )
         delegate_.AddComboBox( dataModel_.rowCount(), dataModel_.rowCount() + size - 1, eBreakdown, eBreakdown, breakdowns );
+    int currentSize = static_cast< int >( currentBreakdowns.size() );
     for( int i = 0; i < size; ++i )
     {
         unsigned int row = dataModel_.rowCount();
         AddItem( row, eName, name, name );
 
-        unsigned int currentIndex = ( currentBreakdowns.size() <= i ) ? 0 : currentBreakdowns[ i ];
+        unsigned int currentIndex = ( currentSize <= i ) ? 0 : currentBreakdowns[ i ];
         if( currentIndex < static_cast< unsigned int >( breakdowns.size() ) )
             AddItem( row, eBreakdown, breakdowns[ currentIndex ], currentIndex, Qt::ItemIsEditable );
 
