@@ -2709,6 +2709,14 @@ PNG (*.png)</translation>
         <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
         <translation>&lt;b&gt;Aide à l&apos;édition des fiches mission&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : ajouter une image dans le texte&lt;br/&gt;&quot;&quot;texte&quot;&quot; : mets le text en gras&lt;br/&gt;&apos;&apos;texte&apos;&apos; : mets le texte en italique&lt;br/&gt;__text__ : souligne le texte&lt;br/&gt; espace*espace : ajouter un element de list au  texte( le niveau de profondeur dans la liste est indiqué par le nombre d&apos;espaces avant l&apos;étoile )</translation>
     </message>
+    <message>
+        <source>Visible behavior</source>
+        <translation>Comportement visible</translation>
+    </message>
+    <message>
+        <source>Specific cases</source>
+        <translation>Cas spécifiques</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -6046,12 +6054,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>ADN - Data export</source>
         <translation>Adaptation - Export des données</translation>
-    </message>
-    <message>
-        <source>Could not save file &apos;%1&apos;.
-Make sure that the file is not write-protected.</source>
-        <translation>Impossible d&apos;enregistrer le fichier &apos;%1&apos;.
-Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>

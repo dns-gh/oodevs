@@ -2689,6 +2689,14 @@ PNG (*.png)
         <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Visible behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specific cases</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -6015,12 +6023,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>ADN - Data export</source>
         <translation type="unfinished">ADN-تصدير البيانات</translation>
-    </message>
-    <message>
-        <source>Could not save file &apos;%1&apos;.
-Make sure that the file is not write-protected.</source>
-        <translation type="unfinished">تعذر حفظ الملف &apos;%1&apos;.
-تأكد من أن الملف غير محمي ضد الكتابة.</translation>
     </message>
 </context>
 <context>

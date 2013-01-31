@@ -228,8 +228,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         descriptionLayout->addWidget( helpLabel );
         AddTextEditField( descriptionLayout, tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
         descriptionLayout->addWidget( parameterGroupBox );
-        AddTextEditField( descriptionLayout, tr( "Behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
-        AddTextEditField( descriptionLayout, tr( "Specific" ), vInfosConnectors[ eDescriptionSpecificCases ] );
+        AddTextEditField( descriptionLayout, tr( "Visible behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
+        AddTextEditField( descriptionLayout, tr( "Specific cases" ), vInfosConnectors[ eDescriptionSpecificCases ] );
         AddTextEditField( descriptionLayout, tr( "Comments" ), vInfosConnectors[ eDescriptionComments ] );
         AddTextEditField( descriptionLayout, tr( "End of mission" ), vInfosConnectors[ eDescriptionMissionEnd ] );
         descriptionLayout->addWidget( attachmentGroupBox );

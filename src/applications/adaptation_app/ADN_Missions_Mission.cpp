@@ -503,52 +503,52 @@ void ADN_Missions_Mission::FromWikiToXml( xml::xostream& xos, const std::string&
 void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
 {
     const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
-    if( bfs::is_directory( missionDir ) )
+    if( !bfs::is_directory( missionDir ) )
+        bfs::create_directory( missionDir );
+    
+    if( bfs::is_regular_file( fileName + ".xml" ) )
     {
-        if( bfs::is_regular_file( fileName + ".xml" ) )
-        {
-            xml::xifstream xis( fileName + ".xml" );
-            std::string descriptionContext;
-            std::string descriptionBehavior;
-            std::string descriptionSpecific;
-            std::string descriptionComment;
-            std::string descriptionMissionEnd;
-            xis >> xml::start( "mission-sheet" )
-                    >> xml::optional >> xml::start( "context" )
-                        >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionContext )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "parameters" )
-                        >> xml::list( "parameter", *this, &ADN_Missions_Mission::ReadMissionSheetParametersDescriptions )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "behavior" )
-                        >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionBehavior )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "specific-cases" )
-                        >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionSpecific )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "comments" )
-                        >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionComment )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "mission-end" )
-                        >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionMissionEnd )
-                    >> xml::end
-                    >> xml::optional >> xml::start( "attachments" )
-                        >> xml::list( "attachment", *this, &ADN_Missions_Mission::ReadMissionSheetAttachments )
-                    >> xml::end
-                >> xml::end;
-            descriptionContext_ = descriptionContext;
-            descriptionBehavior_ = descriptionBehavior;
-            descriptionSpecific_ = descriptionSpecific;
-            descriptionComment_ = descriptionComment;
-            descriptionMissionEnd_ = descriptionMissionEnd;
-        }
-        if( !bfs::exists( fileName + ".html" ) )
-        {
-            std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
-            fileStream.close();
-        }
-        missionSheetPath_ = fileName + ".html";
+        xml::xifstream xis( fileName + ".xml" );
+        std::string descriptionContext;
+        std::string descriptionBehavior;
+        std::string descriptionSpecific;
+        std::string descriptionComment;
+        std::string descriptionMissionEnd;
+        xis >> xml::start( "mission-sheet" )
+            >> xml::optional >> xml::start( "context" )
+            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionContext )
+            >> xml::end
+            >> xml::optional >> xml::start( "parameters" )
+            >> xml::list( "parameter", *this, &ADN_Missions_Mission::ReadMissionSheetParametersDescriptions )
+            >> xml::end
+            >> xml::optional >> xml::start( "behavior" )
+            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionBehavior )
+            >> xml::end
+            >> xml::optional >> xml::start( "specific-cases" )
+            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionSpecific )
+            >> xml::end
+            >> xml::optional >> xml::start( "comments" )
+            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionComment )
+            >> xml::end
+            >> xml::optional >> xml::start( "mission-end" )
+            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionMissionEnd )
+            >> xml::end
+            >> xml::optional >> xml::start( "attachments" )
+            >> xml::list( "attachment", *this, &ADN_Missions_Mission::ReadMissionSheetAttachments )
+            >> xml::end
+            >> xml::end;
+        descriptionContext_ = descriptionContext;
+        descriptionBehavior_ = descriptionBehavior;
+        descriptionSpecific_ = descriptionSpecific;
+        descriptionComment_ = descriptionComment;
+        descriptionMissionEnd_ = descriptionMissionEnd;
     }
+    if( !bfs::exists( fileName + ".html" ) )
+    {
+        std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
+        fileStream.close();
+    }
+    missionSheetPath_ = fileName + ".html";
 }
 
 // -----------------------------------------------------------------------------
@@ -558,16 +558,13 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
 void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& missionDir )
 {
     //xml file
-    const std::string newXmlPath = std::string( missionDir + "/" + strName_.GetData() + ".xml" );
-    const std::string oldXmlPath = std::string( QString( missionDir.c_str() ) + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).baseName() + ".xml" );
-    if( !missionSheetPath_.GetData().empty() && newXmlPath != oldXmlPath )
-        bfs::remove( oldXmlPath );
-
-    //html file
-    const std::string newHtmlPath = std::string( missionDir + "/" + strName_.GetData() + ".html" );
-    const std::string oldHtmlPath = std::string( QString( missionDir.c_str() ) + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).baseName() + ".html" );
-    if( !missionSheetPath_.GetData().empty() && newHtmlPath != oldHtmlPath )
-        bfs::remove( oldHtmlPath );
+    const std::string newPath = std::string( missionDir + "/" + strName_.GetData() );
+    const std::string oldPath = std::string( missionDir + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).completeBaseName().toStdString() );
+    if( !missionSheetPath_.GetData().empty() && newPath != oldPath )
+    {
+        bfs::remove( oldPath + ".xml" );
+        bfs::remove( oldPath + ".html" );
+    }
 }
 
 // -----------------------------------------------------------------------------

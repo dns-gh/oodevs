@@ -381,7 +381,7 @@ bool ADN_Workspace::ShowSymbols() const
 
 namespace
 {
-    void CopyUnsavedFiles( const bfs::path& from, const bfs::path& to )
+    void CopyFiles( const bfs::path& from, const bfs::path& to, bool forceCopy )
     {
         bfs::directory_iterator end;
         for( bfs::directory_iterator it( from ); it != end; ++it )
@@ -391,15 +391,41 @@ namespace
                 bfs::path dest( to / it->path().filename() );
                 if( !bfs::exists( dest ) )
                     bfs::create_directories( dest );
-                CopyUnsavedFiles( *it, dest );
+                CopyFiles( *it, dest, forceCopy );
             }
             else
             {
-                if( !bfs::exists( to / it->path().filename() ) )
-                    bfs::copy_file( *it, to / it->path().filename() );
+                if( forceCopy || !bfs::exists( to / it->path().filename() ) )
+                    bfs::copy_file( *it, to / it->path().filename(), bfs::copy_option::overwrite_if_exists );
             }
         }
     }
+
+    class TempDirectory : private boost::noncopyable
+    {
+    public:
+        TempDirectory( ADN_Project_Data::WorkDirInfos& dirInfos ) 
+            : dirInfos_( dirInfos )
+        { 
+            dirInfos_.UseTempDirectory( true );
+            directory_ = dirInfos_.GetTempDirectory().GetData();
+            if( bfs::exists( directory_ ) && bfs::is_directory( directory_ ) )
+                bfs::remove_all( directory_ );
+        }
+        ~TempDirectory() 
+        {
+            bfs::remove_all( directory_ ); 
+            dirInfos_.UseTempDirectory( false );
+        }
+
+        const std::string& GetDirectory()
+        {
+            return directory_;
+        }
+    private:
+        ADN_Project_Data::WorkDirInfos& dirInfos_;
+        std::string directory_;
+    };
 }
 
 //-----------------------------------------------------------------------------
@@ -462,62 +488,44 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
 
     /////////////////////////////////////
     // Save Data files in temporary folder
-    bfs::path tempDirectory;
+    TempDirectory tempDirectory( dirInfos );
     try
     {
         // saving in temporary files activated
-        dirInfos.UseTempDirectory( true );
-        tempDirectory = dirInfos.GetTempDirectory().GetData();
         pProgressIndicator_->SetVisible( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
         projectData_->Save( fileLoader );
-        assert( bfs::exists( tempDirectory ) && bfs::is_directory( tempDirectory ) );
-
         for( T_StringList::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
-            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.string() + *it );
+            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.GetDirectory() + *it );
 
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
             pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
         }
-
-        dirInfos.UseTempDirectory( false );
     }
     catch( const std::exception& )
     {
         dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
         ResetProgressIndicator();
-        bfs::remove_all( tempDirectory );
         throw;
     }
 
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
-    for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
-        if( !it->empty() && bfs::exists( tempDirectory.string() + *it ) )
-            if( !ADN_Tools::CopyFileToFile( tempDirectory.string() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
-            {
-                dirInfos.SetWorkingDirectory( szOldWorkDir );
-                ResetProgressIndicator();
-                bfs::remove_all( tempDirectory );
-                throw MASA_EXCEPTION( tr( "Could not save file '%1'.\nMake sure that the file is not write-protected." ).arg( it->c_str() ).toStdString() );
-            }
+    CopyFiles( tempDirectory.GetDirectory(), dirInfos.GetWorkingDirectory().GetData(), true );
 
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
-        CopyUnsavedFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ) );
+        CopyFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ), false );
 
     // Unzip symbols.pak if not already in the working directory
     if( !bfs::exists( dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() ) )
         tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
                                              dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() );
-
-    // Remove temp directory
-    bfs::remove_all( tempDirectory );
-
+    
     pProgressIndicator_->Increment( "" );
     pProgressIndicator_->SetVisible( false );
 
