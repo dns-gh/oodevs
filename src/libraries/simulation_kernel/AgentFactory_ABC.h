@@ -10,13 +10,12 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
-#include "tools/Resolver.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "boost/noncopyable.hpp"
 
 class MIL_AgentPion;
 class MIL_AgentTypePion;
 class MIL_Automate;
+class MT_Vector2D;
 
 namespace xml
 {
@@ -29,8 +28,7 @@ namespace xml
 */
 // Created: MGD 2009-08-13
 // =============================================================================
-class AgentFactory_ABC : public tools::Resolver< MIL_AgentPion >
-                       , private boost::noncopyable
+class AgentFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,18 +46,8 @@ public:
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive& file, const unsigned int );
+    template< typename Archive > void serialize( Archive& , const unsigned int ) {}
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: template< typename Archive > void AgentFactory_ABC::serialize
-// Created: SLG 2010-02-10
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void AgentFactory_ABC::serialize( Archive& file, const unsigned int )
-{
-    file & elements_;
-}
 
 #endif // __AgentFactory_ABC_h_

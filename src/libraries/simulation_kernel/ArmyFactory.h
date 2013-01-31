@@ -12,9 +12,9 @@
 
 #include "ArmyFactory_ABC.h"
 #include "MT_Tools/MT_Converter.h"
+#include "MT_Tools/MT_String.h"
 
 class AutomateFactory_ABC;
-class AgentFactory_ABC;
 class FormationFactory_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
@@ -32,9 +32,9 @@ class ArmyFactory : public ArmyFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ArmyFactory( AutomateFactory_ABC& automateFactory, AgentFactory_ABC& agentFactory,
-                          FormationFactory_ABC& formationFactory, MIL_ObjectManager& objectFactory,
-                          PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+    explicit ArmyFactory( AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory,
+                          MIL_ObjectManager& objectFactory, PopulationFactory_ABC& populationFactory,
+                          InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     virtual ~ArmyFactory();
     //@}
 
@@ -66,7 +66,6 @@ private:
     //! @name Data Members
     //@{
     AutomateFactory_ABC& automateFactory_;
-    AgentFactory_ABC& agentFactory_;
     FormationFactory_ABC& formationFactory_;
     MIL_ObjectManager& objectFactory_;
     PopulationFactory_ABC& populationFactory_;

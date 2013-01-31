@@ -13,6 +13,7 @@
 #include "AgentFactory_ABC.h"
 #include "FloodModelFactory_ABC.h"
 #include <boost/serialization/export.hpp>
+#include <tools/Resolver.h>
 
 class MIL_ObjectManager;
 class MIL_UrbanCache;
@@ -31,7 +32,8 @@ namespace sword
 */
 // Created: SBO 2011-06-06
 // =============================================================================
-class Sink_ABC : public AgentFactory_ABC
+class Sink_ABC : public tools::Resolver< MIL_AgentPion >
+               , public AgentFactory_ABC
                , public FloodModelFactory_ABC
 {
 public:

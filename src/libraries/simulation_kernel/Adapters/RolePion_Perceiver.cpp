@@ -14,6 +14,7 @@
 #include "Sink.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"

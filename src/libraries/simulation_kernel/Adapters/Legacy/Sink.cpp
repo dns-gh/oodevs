@@ -19,7 +19,8 @@
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
-#include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/PHY_MeteoDataManager.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "Tools/MIL_Tools.h"
 
 using namespace sword::legacy;
@@ -122,7 +123,6 @@ void Sink::Clean()
         pion->Clean();
         if( pion->IsMarkedForDestruction() )
         {
-            factory_.Remove( pion->GetID() );
             it = elements_.erase( it );
             delete pion;
         }
@@ -238,6 +238,8 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
+    if( MIL_AgentPion* pPion = Find( xis.attribute< unsigned long >( "id" ) ) )
+        throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis ) );
     { 
         std::string strPosition;

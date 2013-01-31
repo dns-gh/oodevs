@@ -16,7 +16,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -41,7 +40,7 @@ AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& mis
 // -----------------------------------------------------------------------------
 AgentFactory::~AgentFactory()
 {
-    DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,13 +49,9 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xis.attribute< unsigned long >( "id" ) );
-    if( pPion )
-        throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
-    pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
+    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
     type.RegisterRoles( *pPion );
     pPion->Register( missionController_ );
-    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     return pPion;
 }
 
@@ -78,7 +73,6 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, name );
     type.RegisterRoles( *pPion );
     pPion->Register( missionController_ );
-    tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     return pPion;
 }
 

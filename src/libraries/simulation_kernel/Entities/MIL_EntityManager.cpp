@@ -259,7 +259,6 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     archive >> sink;
     std::auto_ptr< Sink_ABC > pSink( sink );
     ::new( manager )MIL_EntityManager( MIL_Time_ABC::GetTime(), MIL_EffectManager::GetEffectManager(),
-                                       MIL_AgentServer::GetWorkspace().GetObjectFactory(),
                                        pSink,
                                        MIL_AgentServer::GetWorkspace().GetConfig() );
 }
@@ -298,7 +297,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_ ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *sink_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
+    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
 {
     // NOTHING
 }
@@ -307,8 +306,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 // Name: MIL_EntityManager constructor
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
-                                      std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, std::auto_ptr< sword::Sink_ABC > sink
+                                    , const MIL_Config& config )
     : time_                         ( time )
     , gcPause_                      ( config.GetGarbageCollectorPause() )
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
@@ -323,17 +322,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rEffectsTime_                 ( 0 )
     , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
-    , missionController_            ( new MissionController() )
-    , inhabitantFactory_            ( new InhabitantFactory() )
-    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_ ) )
-    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
     , sink_                         ( sink )
-    , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
-    , pFloodModel_                  ( sink_->CreateFloodModel() )
-    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_ ) )
-    , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
-    , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
-    , armyFactory_                  ( new ArmyFactory( *automateFactory_, *sink_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
 {
     // NOTHING
 }

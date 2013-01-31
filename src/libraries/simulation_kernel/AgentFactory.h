@@ -11,7 +11,7 @@
 #define __AgentFactory_h_
 
 #include "AgentFactory_ABC.h"
-#include "tools/Resolver.h"
+#include "MIL.h"
 
 class MIL_IDManager;
 class AlgorithmsFactories;
@@ -49,12 +49,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFactory( const AgentFactory& );            //!< Copy constructor
-    AgentFactory& operator=( const AgentFactory& ); //!< Assignment operator
-    //@}
-
     //! @name CheckPoint
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const AgentFactory* factory, const unsigned int /*version*/ );
@@ -80,6 +74,7 @@ void save_construct_data( Archive& archive, const AgentFactory* factory, const u
     archive << idManager
             << missionController;
 }
+
 template< typename Archive >
 void load_construct_data( Archive& archive, AgentFactory* factory, const unsigned int /*version*/ )
 {

@@ -93,10 +93,10 @@ void MissionController::Stop( boost::shared_ptr< MIL_Mission_ABC > mission )
 // Name: MissionController::Initialize
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::Initialize( AgentFactory_ABC& factory, PopulationFactory_ABC& populationFactory )
+void MissionController::Initialize( tools::Resolver< MIL_AgentPion >& resolver, PopulationFactory_ABC& populationFactory )
 {
     BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
-        if( MIL_AgentPion* pion = factory.Find( mission.first ) )
+        if( MIL_AgentPion* pion = resolver.Find( mission.first ) )
             pion->GetOrderManager().ReplaceMission( mission.second );
         else if( MIL_Population* population = populationFactory.Find( mission.first ) )
             population->GetOrderManager().ReplaceMission( mission.second );

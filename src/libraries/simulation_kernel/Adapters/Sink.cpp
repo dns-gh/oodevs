@@ -72,6 +72,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Loader_ABC.h"
 #include <core/Facade.h>
@@ -516,7 +517,7 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
     UpdatePopulations( (*model_)[ "populations" ], populations_ );
     UpdateObjects( (*model_)[ "objects" ], objects.GetObjects() );
     UpdateFlyingShells( (*model_)[ "flying-shells" ], effects.GetFlyingShells() );
-    for( tools::Iterator< const MIL_AgentPion& > it = agents_.CreateIterator(); it.HasMoreElements(); )
+    for( tools::Iterator< const MIL_AgentPion& > it = CreateIterator(); it.HasMoreElements(); )
     {
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
         UpdateAgent( pion, entities[ pion.GetID() ] );
@@ -680,7 +681,6 @@ void Sink::Clean()
         pion->Clean();
         if( pion->IsMarkedForDestruction() )
         {
-            agents_.Remove( pion->GetID() );
             it = elements_.erase( it );
             delete pion;
         }
@@ -695,10 +695,10 @@ void Sink::Clean()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    std::string strPosition;
-    xis >> xml::attribute( "position", strPosition );
+    if( MIL_AgentPion* pPion = Find( xis.attribute< unsigned long >( "id" ) ) )
+        throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
+    MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), vPosTmp );
     MIL_AgentPion& pion = Configure( *agents_.Create( type, automate, xis ), vPosTmp );
     pion.ReadOverloading( xis );
     pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans

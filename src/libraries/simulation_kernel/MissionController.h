@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( AgentFactory_ABC& factory, PopulationFactory_ABC& populationFactory );
+    virtual void Initialize( tools::Resolver< MIL_AgentPion >& resolver, PopulationFactory_ABC& populationFactory );
     virtual void SendFullState();
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission );

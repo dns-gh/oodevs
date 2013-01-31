@@ -10,6 +10,7 @@
 #ifndef __MissionController_ABC_h_
 #define __MissionController_ABC_h_
 
+#include "tools/Resolver.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_Mission_ABC;
@@ -34,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( AgentFactory_ABC& factory, PopulationFactory_ABC& populationFactory ) = 0;
+    virtual void Initialize( tools::Resolver< MIL_AgentPion >& resolver, PopulationFactory_ABC& populationFactory ) = 0;
     virtual void SendFullState() = 0;
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
