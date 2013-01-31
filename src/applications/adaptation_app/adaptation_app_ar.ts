@@ -5574,6 +5574,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Time to activate</source>
         <translation type="unfinished">الوقت لتنشيط</translation>
     </message>
+    <message>
+        <source>Time to deactivate</source>
+        <translation type="unfinished">الوقت لتعطيل</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Urban_AttritionTable</name>

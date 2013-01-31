@@ -111,6 +111,7 @@ public:
     public:
         E_UnitPosture  nPosture_;
         ADN_Type_Time  timeToActivate_;
+        ADN_Type_Time  timeToDeactivate_;
 
     public:
         class Cmp : public std::unary_function< PostureInfos* , bool >

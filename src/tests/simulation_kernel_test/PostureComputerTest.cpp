@@ -18,7 +18,8 @@ namespace
 {
     MOCK_BASE_CLASS( MockPostureTime, posture::PostureTime_ABC )
     {
-        MOCK_METHOD( GetPostureTime, 1 )
+        MOCK_METHOD( GetPostureSetupTime, 1 )
+        MOCK_METHOD( GetPostureTearDownTime, 1 )
     };
     MOCK_BASE_CLASS( MockMIL_Random, MIL_Random_ABC )
     {
@@ -43,7 +44,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( stopped_posture_with_unfinished_completion_does_not_change_posture, Fixture )
 {
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, 0, 1, 1 );
-    MOCK_EXPECT( time.GetPostureTime ).once().returns( 1 );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 1 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK( !result.newPosture_ );
 }
@@ -79,7 +80,7 @@ BOOST_FIXTURE_TEST_CASE( moving_posture_but_stopped_changes_to_stopped_posture, 
 {
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::mouvement_, false, false, 0, 1, 1 );
     computer.UnsetPostureMovement();
-    MOCK_EXPECT( time.GetPostureTime ).once().returns( 1 );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 1 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK( result.newPosture_ == &PHY_Posture::arret_ );
 }
@@ -89,7 +90,7 @@ BOOST_FIXTURE_TEST_CASE( completion_percent_increase_with_posture_time, Fixture 
     const double completionPercent = 0;
     const double timeForNextPosture = 5;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1 );
-    MOCK_EXPECT( time.GetPostureTime ).once().returns( timeForNextPosture );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completionPercent + 1 / timeForNextPosture, 0.0001 );
 }
@@ -100,7 +101,7 @@ BOOST_FIXTURE_TEST_CASE( empty_posture_time_completes_posture_instantly, Fixture
     const double complete = 1;
     const double timeForNextPosture = 0;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1 );
-    MOCK_EXPECT( time.GetPostureTime ).once().returns( timeForNextPosture );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, complete, 0.0001 );
 }
@@ -112,7 +113,7 @@ BOOST_FIXTURE_TEST_CASE( modifier_changes_completion_percent_increase_rate, Fixt
     const double modifier = 0.5;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1 );
     computer.AddCoefficientModifier( modifier );
-    MOCK_EXPECT( time.GetPostureTime ).once().returns( timeForNextPosture );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completionPercent + 1 / ( timeForNextPosture * modifier ), 0.0001 );
 }
@@ -123,7 +124,7 @@ BOOST_FIXTURE_TEST_CASE( timing_factor_changes_completion_percent_increase_rate,
     const double timeForNextPosture = 5;
     const double timingFactor = 2;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, timingFactor );
-    MOCK_EXPECT( time.GetPostureTime ).once().returns( timeForNextPosture );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completionPercent + 1 / ( timeForNextPosture / timingFactor ), 0.0001 );
 }
@@ -138,14 +139,14 @@ BOOST_FIXTURE_TEST_CASE( urban_modifier_is_applied_only_if_posture_is_parked, Fi
     {
         posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1 );
         computer.AddUrbanCoefficientModifier( urbanModifier );
-        MOCK_EXPECT( time.GetPostureTime ).once().returns( timeForNextPosture );
+        MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
         const posture::PostureComputer_ABC::Results& result = computer.Result();
         BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, unmodified, 0.0001 );
     }
     {
         posture::DefaultPostureComputer computer( random, time, PHY_Posture::poste_, false, false, completionPercent, 1, 1 );
         computer.AddUrbanCoefficientModifier( urbanModifier );
-        MOCK_EXPECT( time.GetPostureTime ).once().returns( timeForNextPosture );
+        MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
         const posture::PostureComputer_ABC::Results& result = computer.Result();
         BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, modified, 0.0001 );
     }
@@ -160,7 +161,7 @@ BOOST_FIXTURE_TEST_CASE( stealth_is_enabled_if_roll_is_greater_than_stealth_fact
     {
         posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, 0, stealthFactor, 1 );
         MOCK_EXPECT( random.rand_oi ).once().returns( greatRoll );
-        MOCK_EXPECT( time.GetPostureTime ).once().returns( 1 );
+        MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 1 );
         const posture::PostureComputer_ABC::Results& result = computer.Result();
         BOOST_CHECK( result.bIsStealth_ );
         mock::verify();
@@ -168,7 +169,7 @@ BOOST_FIXTURE_TEST_CASE( stealth_is_enabled_if_roll_is_greater_than_stealth_fact
     {
         posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, 0, stealthFactor, 1 );
         MOCK_EXPECT( random.rand_oi ).once().returns( lowRoll );
-        MOCK_EXPECT( time.GetPostureTime ).once().returns( 1 );
+        MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 1 );
         const posture::PostureComputer_ABC::Results& result = computer.Result();
         BOOST_CHECK( !result.bIsStealth_ );
     }

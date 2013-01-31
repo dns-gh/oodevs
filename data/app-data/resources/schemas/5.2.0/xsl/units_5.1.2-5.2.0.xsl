@@ -13,4 +13,11 @@
           <xsl:apply-templates select="text()|@*"/>
       </xsl:copy>
     </xsl:template>
+
+    <xsl:template match="posture">
+      <xsl:copy>
+          <xsl:attribute name="tear-down-time">0s</xsl:attribute>
+          <xsl:apply-templates select="text()|@*"/>
+      </xsl:copy>
+    </xsl:template>
 </xsl:stylesheet>

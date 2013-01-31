@@ -43,7 +43,7 @@ PHY_UnitType::sComposanteTypeData::sComposanteTypeData()
 PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     : dotationCapacitiesTC1_            ( "logistics", xis )
     , composanteTypes_                  ()
-    , postureTimes_                     ( PHY_Posture::GetPostures().size(), 0 )
+    , postureTimes_                     ( PHY_Posture::GetPostures().size(), std::make_pair( 0, 0 ) )
     , rInstallationTime_                ( 0. )
     , rUninstallationTime_              ( 0. )
     , rCoupDeSondeLength_               ( 0. )
@@ -265,9 +265,12 @@ void PHY_UnitType::ReadPosture( xml::xistream& xis )
     auto it = postures.find( xis.attribute< std::string >( "name" ) );
     const PHY_Posture& posture = *it->second;
     assert( postureTimes_.size() > posture.GetID() );
-    double rTime;
-    tools::ReadTimeAttribute( xis, "setup-time", rTime );
-    postureTimes_[ posture.GetID() ] = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rTime ) );
+    double setupTime;
+    double tearDownTime;
+    tools::ReadTimeAttribute( xis, "setup-time", setupTime );
+    tools::ReadTimeAttribute( xis, "tear-down-time", tearDownTime );
+    postureTimes_[ posture.GetID() ] = std::make_pair( static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( setupTime ) ),
+                                                       static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( tearDownTime ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,13 +324,23 @@ void PHY_UnitType::ReadDrill( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_UnitType::GetPostureTime
+// Name: PHY_UnitType::GetPostureSetupTime
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-double PHY_UnitType::GetPostureTime( const PHY_Posture& posture ) const
+double PHY_UnitType::GetPostureSetupTime( const PHY_Posture& posture ) const
 {
     assert( postureTimes_.size() > posture.GetID() );
-    return postureTimes_[ posture.GetID() ];
+    return postureTimes_[ posture.GetID() ].first;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetPostureTearDownTime
+// Created: SLI 2013-01-24
+// -----------------------------------------------------------------------------
+double PHY_UnitType::GetPostureTearDownTime( const PHY_Posture& posture ) const
+{
+    assert( postureTimes_.size() > posture.GetID() );
+    return postureTimes_[ posture.GetID() ].second;
 }
 
 // -----------------------------------------------------------------------------

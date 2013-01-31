@@ -5605,6 +5605,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Time to activate</source>
         <translation>Temps avant activation</translation>
     </message>
+    <message>
+        <source>Time to deactivate</source>
+        <translation>Temps avant désactivation</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Urban_AttritionTable</name>

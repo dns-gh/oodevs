@@ -35,7 +35,7 @@ public:
     //@}
 
 public:
-    //! @name
+    //! @name Postures
     //@{
     static const PHY_Posture mouvement_;
     static const PHY_Posture mouvementDiscret_;
@@ -59,11 +59,12 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                  GetName           () const;
-          unsigned int                  GetID             () const;
-          sword::UnitAttributes_Posture GetAsnID          () const;
-    const PHY_Posture*                  GetNextAutoPosture() const;
-    const PHY_ConsumptionType&          GetConsumptionMode() const;
+    const std::string&                  GetName               () const;
+          unsigned int                  GetID                 () const;
+          sword::UnitAttributes_Posture GetAsnID              () const;
+    const PHY_Posture*                  GetNextAutoPosture    () const;
+    const PHY_Posture*                  GetPreviousAutoPosture() const;
+    const PHY_ConsumptionType&          GetConsumptionMode    () const;
 
     bool CanModifyPH       () const;
     bool CanModifyDetection() const;
@@ -93,19 +94,29 @@ private:
     //@}
 
 private:
-     PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0 );
+    //! @name Constructors/Destructor
+    //@{
+     PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0, const PHY_Posture* pPreviousAutoPosture = 0 );
     ~PHY_Posture();
+    //@}
 
 private:
-    const std::string                                   strName_;
-    const E_PostureType                                 nType_;
-    const sword::UnitAttributes_Posture    nAsnID_;
-    const unsigned int                                  nFlags_;
-    const PHY_ConsumptionType&                          consumptionMode_;
-    const PHY_Posture*                                  pNextAutoPosture_;
+    //! @name Member data
+    //@{
+    const std::string                   strName_;
+    const E_PostureType                 nType_;
+    const sword::UnitAttributes_Posture nAsnID_;
+    const unsigned int                  nFlags_;
+    const PHY_ConsumptionType&          consumptionMode_;
+    const PHY_Posture*                  pNextAutoPosture_;
+    const PHY_Posture*                  pPreviousAutoPosture_;
+    //@}
 
 private:
-    static T_PostureMap                                 postures_;
+    //! @name Static member data
+    //@{
+    static T_PostureMap                 postures_;
+    //@}
 };
 
 #endif // __PHY_Posture_h_

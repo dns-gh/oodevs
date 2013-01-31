@@ -33,7 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual double GetPostureTime( const PHY_Posture& posture ) const = 0;
+    virtual double GetPostureSetupTime( const PHY_Posture& posture ) const = 0;
+    virtual double GetPostureTearDownTime( const PHY_Posture& posture ) const = 0;
     //@}
 };
 

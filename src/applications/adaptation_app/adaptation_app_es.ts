@@ -5590,6 +5590,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Time to activate</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Time to deactivate</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Urban_AttritionTable</name>

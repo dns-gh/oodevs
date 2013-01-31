@@ -277,8 +277,9 @@ void ADN_Units_Data::PointInfos::WriteArchive( xml::xostream& output ) const
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::PostureInfos::PostureInfos(const E_UnitPosture& nPosture)
-    :   nPosture_       ( nPosture )
-    ,   timeToActivate_ ( "0s" )
+    :   nPosture_        ( nPosture )
+    ,   timeToActivate_  ( "0s" )
+    ,   timeToDeactivate_( "0s" )
 {
     // NOTHING
 }
@@ -289,7 +290,8 @@ ADN_Units_Data::PostureInfos::PostureInfos(const E_UnitPosture& nPosture)
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::PostureInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "setup-time", timeToActivate_ );
+    input >> xml::attribute( "setup-time", timeToActivate_ )
+          >> xml::attribute( "tear-down-time", timeToDeactivate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,6 +303,7 @@ void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output ) const
     output << xml::start( "posture" )
             << xml::attribute( "name", ADN_Tools::ComputePostureScriptName( nPosture_ ) )
             << xml::attribute( "setup-time", timeToActivate_ )
+            << xml::attribute( "tear-down-time", timeToDeactivate_ )
            << xml::end;
 }
 

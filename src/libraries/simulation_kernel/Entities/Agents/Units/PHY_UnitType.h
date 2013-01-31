@@ -56,7 +56,8 @@ public:
     //@{
     const PHY_DotationCapacities& GetTC1Capacities() const;
     const T_CommanderRepartitionMap& GetCommanderRepartition() const;
-    virtual double GetPostureTime( const PHY_Posture& posture ) const;
+    virtual double GetPostureSetupTime( const PHY_Posture& posture ) const;
+    virtual double GetPostureTearDownTime( const PHY_Posture& posture ) const;
     double GetInstallationTime() const;
     double GetUninstallationTime() const;
     double GetCoupDeSondeLength() const;
@@ -84,7 +85,7 @@ private:
         unsigned int nNbrHumanInCrew_;
     };
     typedef std::map< const PHY_ComposanteTypePion*, sComposanteTypeData > T_ComposanteTypeMap;
-    typedef std::vector< unsigned int > T_PostureTimesVector;
+    typedef std::vector< std::pair< unsigned int, unsigned int > > T_PostureTimesVector;
     typedef std::map< const PHY_DotationLogisticType*, double > T_StockLogisticThresholdRatios;
     //@}
 

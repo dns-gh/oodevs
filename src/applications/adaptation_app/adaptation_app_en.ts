@@ -5587,6 +5587,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Time to activate</source>
         <translation>Time to activate</translation>
     </message>
+    <message>
+        <source>Time to deactivate</source>
+        <translation>Time to deactivate</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Urban_AttritionTable</name>

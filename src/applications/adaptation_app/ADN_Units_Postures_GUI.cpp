@@ -28,15 +28,17 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( const QString& objectName, ADN_C
 {
     setFixedHeight( 110 );
 
-    dataModel_.setColumnCount( 2 );
+    dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Stance" )
-                      << tr( "Time to activate" );
+                      << tr( "Time to activate" )
+                      << tr( "Time to deactivate" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
 
     delegate_.AddDelayEditOnColumn( 1 );
+    delegate_.AddDelayEditOnColumn( 2 );
 }
 
 //-----------------------------------------------------------------------------
@@ -60,4 +62,5 @@ void ADN_Units_Postures_GUI::AddRow( int row, void* data )
 
     AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfo->nPosture_, ENT_Tr_ABC::eToTr ).c_str() );
     AddItem( row, 1, data, &pInfo->timeToActivate_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pInfo->timeToDeactivate_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
 }

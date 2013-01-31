@@ -171,7 +171,7 @@ void DefaultPostureComputer::Update()
 double DefaultPostureComputer::GetPostureTime() const
 {
     assert( rTimingFactor_ > 0. );
-    double postureTime = time_.GetPostureTime( posture_ );
+    double postureTime = time_.GetPostureSetupTime( posture_ );
     for( auto it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
         postureTime *= *it;
     return postureTime / rTimingFactor_;
