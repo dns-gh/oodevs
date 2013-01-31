@@ -29,7 +29,7 @@ namespace kernel
 {
     class Controller;
     class ActionController;
-    template< typename T > class ExtensionVisitor_ABC;
+    class ExtensionVisitor_ABC;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -95,7 +95,7 @@ public:
     //! @name Extension methods
     //@{
     virtual void AddExtension( Extension_ABC& ext );
-    virtual void Apply( ExtensionVisitor_ABC< Extension_ABC >& visitor ) const;
+    virtual void Apply( ExtensionVisitor_ABC& visitor ) const;
     //@}
 
 private:

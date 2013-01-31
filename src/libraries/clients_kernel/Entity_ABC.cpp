@@ -73,7 +73,7 @@ void Entity_ABC::AddExtension( Extension_ABC& ext )
 // Name: Entity_ABC::Apply
 // Created: BAX 2013-01-22
 // -----------------------------------------------------------------------------
-void Entity_ABC::Apply( ExtensionVisitor_ABC< Extension_ABC >& visitor ) const
+void Entity_ABC::Apply( ExtensionVisitor_ABC& visitor ) const
 {
     for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         visitor.Visit( **it );

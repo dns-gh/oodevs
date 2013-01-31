@@ -12,12 +12,16 @@
 
 #include "Drawer.h"
 
-#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/ExtensionVisitor_ABC.h"
+
+namespace kernel
+{
+    class Extension_ABC;
+}
 
 namespace gui
 {
-class DrawVisitor : public kernel::ExtensionVisitor_ABC< kernel::Extension_ABC >
+class DrawVisitor : public kernel::ExtensionVisitor_ABC
 {
 public:
      DrawVisitor() {}

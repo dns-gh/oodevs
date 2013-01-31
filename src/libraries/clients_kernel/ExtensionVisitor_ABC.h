@@ -13,6 +13,8 @@
 namespace kernel
 {
 
+class Extension_ABC;
+
 // =============================================================================
 /** @class  ExtensionVisitor_ABC
     @brief  Extension visitor definition
@@ -20,7 +22,6 @@ namespace kernel
 */
 // Created: AGE 2006-10-26
 // =============================================================================
-template< typename T >
 class ExtensionVisitor_ABC
 {
 public:
@@ -32,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const T& extension ) = 0;
+    virtual void Visit( const Extension_ABC& extension ) = 0;
     //@}
 };
 
