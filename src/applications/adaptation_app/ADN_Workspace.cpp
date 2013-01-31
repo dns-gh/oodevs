@@ -383,14 +383,14 @@ namespace
 {
     void CopyFiles( const bfs::path& from, const bfs::path& to, bool forceCopy )
     {
+        if( !bfs::exists( to ) )
+            bfs::create_directories( to );
         bfs::directory_iterator end;
         for( bfs::directory_iterator it( from ); it != end; ++it )
         {
             if( bfs::is_directory( *it ) )
             {
                 bfs::path dest( to / it->path().filename() );
-                if( !bfs::exists( dest ) )
-                    bfs::create_directories( dest );
                 CopyFiles( *it, dest, forceCopy );
             }
             else
