@@ -2574,7 +2574,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Exporting elevation data...</source>
-        <translation>Export des données d'élévation</translation>
+        <translation>Export des données d&apos;élévation</translation>
     </message>
 </context>
 <context>
