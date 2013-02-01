@@ -575,11 +575,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     boost::shared_ptr< MT_Vector2D > pResult;
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nPopulationKnowledgeID );
     if( pKnowledge )
-    {
         pResult.reset( new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) ) );
-        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
-            pResult.reset();
-    }
     return pResult;
 }
 
