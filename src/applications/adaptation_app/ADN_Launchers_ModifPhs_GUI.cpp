@@ -60,8 +60,13 @@ void ADN_Launchers_ModifPhs_GUI::AddRow( int row, void* data )
     if( !pLine )
         return;
 
+    QStringList headers;
     for( int col = 0; col < eNbrUnitPosture; ++col )
+    {
         AddItem( row, col, data, pLine->operator[]( col ), ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+        headers.append( ENT_Tr::ConstdvertFromUnitPosture( static_cast< E_UnitPosture >( col ), ENT_Tr_ABC::eToTr).c_str() );
+    }
+    dataModel_.setVerticalHeaderLabels( headers );
 }
 
 // -----------------------------------------------------------------------------
