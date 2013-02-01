@@ -18,7 +18,7 @@
 		<description>Escorter des réfugiés vers une position</description>
 	</goal>
 	<stages>
-		<stage label="Déplacement vers les réfugiés.">
+		<stage label="Déplacement vers les prisonniers.">
 			<skills>
 				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
 					<parameter name="entities">

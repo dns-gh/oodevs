@@ -2,13 +2,13 @@
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.EscorterPrisonniersVersPosition" source-version="1.0.0" knowledge-class="france.military.company.tasks.knowledges.EscorterPrisonniersVersPositionEffect">
     <parameters>
         <parameter name="objective">
-            <description>Position ou il faut emmener les réfugiés</description>
+            <description>Position ou il faut emmener les prisonniers</description>
             <type>
                 <class name="sword.military.knowledge.decisional.Loading"/>
             </type>
         </parameter>
         <parameter name="prisoners">
-            <description>Groupe de réfugiés à guider</description>
+            <description>Groupe de prisonniers à guider</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Loadable"/>
