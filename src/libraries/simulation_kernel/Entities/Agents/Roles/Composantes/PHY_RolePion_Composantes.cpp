@@ -284,8 +284,10 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 
 namespace
 {
-    void WriteEquipment( xml::xostream& xos, const PHY_ComposantePion& composante, unsigned int id = 0 )
+    void WriteEquipment( xml::xostream& xos, const PHY_ComposantePion& composante, bool first, unsigned int id = 0 )
     {
+        if( first )
+            xos << xml::start( "equipements" );
         xos << xml::start( "equipment" )
                 << xml::attribute( "state", composante.GetState().GetName() )
                 << xml::attribute( "type", composante.GetType().GetName() );
@@ -312,30 +314,16 @@ namespace
         }
         return false;
     }
-
-    class WriteEquipmentsTag : boost::noncopyable
-    {
-    public:
-        WriteEquipmentsTag( xml::xostream& xos ) : xos_( xos )
-        {
-            xos_.start( "equipments" );
-        }
-        ~WriteEquipmentsTag()
-        {
-            xos_.end();
-        }
-    private:
-        xml::xostream& xos_;
-    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
+void PHY_RolePion_Composantes::WriteODB( xml::xostream& output ) const
 {
-    std::auto_ptr< WriteEquipmentsTag > tag;
+    int written = 0;
+    xml::xosubstream xos( output );
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante = **it;
@@ -343,18 +331,19 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
             continue;
         if( &composante.GetState() != &PHY_ComposanteState::undamaged_ )
         {
-            if( tag.get() == 0 )
-                tag.reset( new WriteEquipmentsTag( xos ) );
-            WriteEquipment( xos, composante );
+            WriteEquipment( xos, composante, written <= 0 );
+            ++written;
         }
     }
     for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
     {
-        if( tag.get() == 0 )
-            tag.reset( new WriteEquipmentsTag( xos ) );
         unsigned int id = it->first->GetID();
-        for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
-            WriteEquipment( xos, **itComposante, id );
+        for( auto itComposante = it->second.begin(); itComposante != it->second.end();
+                ++itComposante )
+        {
+            WriteEquipment( xos, **itComposante, written <= 0, id );
+            ++written;
+        }
     }
 }
 
