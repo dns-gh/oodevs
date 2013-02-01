@@ -467,8 +467,8 @@ void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& missionDir )
     }
     if( !bfs::exists( fileName + ".html" ) )
     {
-        std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
-        fileStream.close();
+        // Broken, fileName is not sanitized
+        //std::fstream( fileName + ".html", std::ios::out | std::ios::trunc );
     }
     missionSheetPath_ = fileName + ".html";
 }
