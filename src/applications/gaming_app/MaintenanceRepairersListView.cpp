@@ -40,29 +40,6 @@ MaintenanceRepairersListView::~MaintenanceRepairersListView()
 
 namespace
 {
-    struct DispoRepairers
-    {
-        unsigned int total_;
-        unsigned int available_;
-        unsigned int atWork_;
-        unsigned int atRest_;
-
-        DispoRepairers(): total_(0), available_(0), atWork_(0), atRest_(0) {}
-        DispoRepairers( int total, int available, int atWork, int atRest )
-            : total_( total ), available_( available ), atWork_( atWork ), atRest_( atRest ) {}
-
-        void operator+=( const DispoRepairers& other )
-        { 
-            total_ += other.total_;
-            available_ += other.available_;
-            atWork_+= other.atWork_;
-            atRest_+= other.atRest_;
-        }
-    };
-}
-
-namespace
-{
     struct MergeAvailabilities
     {
         std::map< std::string, kernel::Availability > availabilities_;
