@@ -86,15 +86,15 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
     }
     if( message.has_activation_time() )
     {
-        Quantity* quantity = new Quantity( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), message.activation_time() );
-        quantity->SetKeyName( "ActivationTime" );
-        AddParameter( *quantity );
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), static_cast< float >( message.activation_time() ) );
+        numeric->SetKeyName( "ActivationTime" );
+        AddParameter( *numeric );
     }
     if( message.has_activity_time() )
     {
-        Quantity* quantity = new Quantity( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), message.activity_time() );
-        quantity->SetKeyName( "ActivityTime" );
-        AddParameter( *quantity );
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), static_cast< float >( message.activity_time() ) );
+        numeric->SetKeyName( "ActivityTime" );
+        AddParameter( *numeric );
     }
     if( message.altitude_modifier() != 0 )
     {
@@ -109,7 +109,7 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
     if( message.time_limit() > 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).toStdString(), "integer", false );
-        AddParameter( *new Quantity( param, message.time_limit() ) );
+        AddParameter( *new Numeric( param, static_cast< float >( message.time_limit() ) ) );
     }
     if( message.lodging() > 0 )
     {
@@ -172,32 +172,36 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         AddParameter( *new Automat( xis, entities, controller ) );
     else if( type == "string" )
         AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toStdString(), "string", true ), xis ) );
-    else if( type == "quantity" || type == "Integer")
+    else if( type == "quantity" )
     {
         std::string identifier = xis.attribute( "identifier", std::string() );
         if( identifier == "altitude_modifier" )
         {
-            Quantity* quantity = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toStdString(), "integer", true ), xis );
-            quantity->SetKeyName( identifier );
-            AddParameter( *quantity );
+            Quantity* numeric = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toStdString(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
         }
         else if( identifier == "lodging" )
         {
-            Quantity* quantity = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Lodging" ).toStdString(), "integer", true ), xis );
-            quantity->SetKeyName( identifier );
-            AddParameter( *quantity );
+            Quantity* numeric = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Lodging" ).toStdString(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
         }
-        else if( identifier == "ActivityTime" )
+    }
+    else if( type == "Integer" )
+    {
+        std::string identifier = xis.attribute( "identifier", std::string() );
+        if( identifier == "ActivityTime" )
         {
-            Quantity* quantity = new Quantity( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), xis );
-            quantity->SetKeyName( identifier );
-            AddParameter( *quantity );
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
         }
         else if( identifier == "ActivationTime" )
         {
-            Quantity* quantity = new Quantity( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), xis );
-            quantity->SetKeyName( identifier );
-            AddParameter( *quantity );
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
         }
         else if( identifier == "density" )
         {
@@ -277,9 +281,9 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
         else if( type == "integer" || type == "quantity" )
         {
             if( keyName == "ActivityTime" )
-                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_activity_time, boost::ref( message ), _1 ) );
+                message.set_activity_time( static_cast< int >( static_cast< const Numeric* >( it->second )->GetValue() ) );
             else if( keyName == "ActivationTime" )
-                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_activation_time, boost::ref( message ), _1 ) );
+                message.set_activation_time( static_cast< int >( static_cast< const Numeric* >( it->second )->GetValue() ) );
             else if( keyName == "altitude_modifier" )
                 static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
             else if( keyName == "lodging" )
