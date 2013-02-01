@@ -63,12 +63,11 @@ void UrbanFileExporter::Initialize()
     OGRSFDriver* poDriver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName( "ESRI Shapefile" );
     if( ! poDriver )
         throw MASA_EXCEPTION( "ESRI Shapefile driver not available" );
-    const std::string filename = name_ + ".shp";
-    const std::string filepath =  directory_ + "/" + filename;
-    poDriver->DeleteDataSource( filepath.c_str() );
+    const std::string filepath =  directory_ + "/" + name_ + ".shp";
+    bfs::remove( filepath );
     source_ = poDriver->CreateDataSource( filepath.c_str(), 0 );
     if( !source_ )
-        throw MASA_EXCEPTION( "gdal_ogr : write shape failed " + directory_ );
+        throw MASA_EXCEPTION( "gdal_ogr : write shape failed " + filepath );
     OGRSpatialReference newSpatialRef;
     newSpatialRef.SetWellKnownGeogCS( "EPSG:4326" );
     layer_ = source_->CreateLayer( filepath.c_str(), &newSpatialRef, wkbPolygon, 0 );
