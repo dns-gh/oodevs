@@ -44,7 +44,7 @@ def get_lines(src):
     fh = open(src, "rb")
     lines = fh.readlines()
     fh.close()
-    if not lines[-1].endswith("\n"):
+    if lines and not lines[-1].endswith("\n"):
         lines[-1] += "\n"
     return lines
 
