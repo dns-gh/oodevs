@@ -1040,21 +1040,29 @@
         <attribute name="input"/>
         <sequential>
             <echo>Testing models: @{input}</echo>
+            <!-- HTML files are not versioned, there is no easy way to test for 
+                 non-regressions, this is someone else job.
+            -->
+            <local name="excluded"/>
+            <property name="excluded" value="*/Mission sheets/*.html"/>
             <delete dir="${out.dir}/test-adaptation"/>
             <tempfile property="@{input}.temp" destdir="${out.dir}" deleteonexit="true"/>
             <python taskname="checksum" output="${@{input}.temp}" failonerror="true">
                 <arg value="checksum.py"/>
+                <arg value="--exclude=${excluded}"/>
                 <arg value="@{input}"/>
             </python>
             <run-adaptation input="@{input}" output="${out.dir}/test-adaptation"/>
             <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
+                <arg value="--exclude=${excluded}"/>
                 <arg value="@{input}"/>
                 <arg value="--check"/>
                 <arg value="${@{input}.temp}"/>
             </python>
             <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
+                <arg value="--exclude=${excluded}"/>
                 <arg value="${out.dir}/test-adaptation"/>
                 <arg value="--check"/>
                 <arg value="${@{input}.temp}"/>

@@ -1,5 +1,6 @@
 # Simple utility to make checksums of directories and compare them
 import difflib
+import fnmatch
 import hashlib
 import optparse
 import os
@@ -15,6 +16,8 @@ parser = optparse.OptionParser(
         description = helpstring )
 parser.add_option("-c", "--check", action="store", type="string",
         dest="filename", help="Directory checksum snapshot file")
+parser.add_option("-X", "--exclude", action="append", default=[],
+        help="ignore files matching a glob expression")
 
 def get_checksum(filename):
     checksum = hashlib.md5()
@@ -32,11 +35,13 @@ def parse_paths(src, root, filename):
     key = os.path.normpath(prefix + "/" + filename)
     return full, key
 
-def parse_checksums(src):
+def parse_checksums(src, matcher):
     print os.path.abspath(src)
     for root, dirs, files in os.walk(src):
         for filename in sorted(files):
             full, key = parse_paths(src, root, filename)
+            if not matcher(full):
+                continue
             print key + ";" + get_checksum(full)
     return 0
 
@@ -54,7 +59,7 @@ def print_diff(src, dst):
     diff = difflib.unified_diff(src, dst)
     sys.stderr.writelines(diff)
 
-def check_checksums(src, filename):
+def check_checksums(src, filename, matcher):
     fh = open(filename, "rb")
     checksums = {}
     dst = fh.readline().rstrip("\r\n")
@@ -66,6 +71,9 @@ def check_checksums(src, filename):
     for root, dirs, files in os.walk(src):
         for filename in sorted(files):
             full, key = parse_paths(src, root, filename)
+            if not matcher(full):
+                checksums.pop(key, None)
+                continue
             if key not in checksums:
                 sys.stderr.write("Unknown file " + full + "\n")
                 err = -1
@@ -81,8 +89,14 @@ def check_checksums(src, filename):
         err = -1
     return err
 
+def getmatcher(exclude):
+    def match(fn):
+        return not any(fnmatch.fnmatch(fn, e) for e in exclude)
+    return match
+
 if __name__ == '__main__':
     opts, args = parser.parse_args()
+    matcher = getmatcher(opts.exclude)
 
     if len(args) != 1:
         parser.error("checksum: missing <src_dir> argument")
@@ -92,6 +106,6 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     if opts.filename:
-        sys.exit(check_checksums(args[0], opts.filename))
+        sys.exit(check_checksums(args[0], opts.filename, matcher))
     else:
-        sys.exit(parse_checksums(args[0]))
+        sys.exit(parse_checksums(args[0], matcher))
