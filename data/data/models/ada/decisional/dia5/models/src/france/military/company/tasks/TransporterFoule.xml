@@ -1,62 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.TransporterFoule" source-version="1.0.0" knowledge-class="france.military.company.tasks.knowledges.TransportEffectCrowd">
-  <parameters>
-    <parameter name="crowd">
-      <description>Foule à transporter</description>
-      <type>
-        <class name="sword.military.knowledge.decisional.Loadable"/>
-      </type>
-    </parameter>
-    <parameter name="loadingPoint">
-      <description>Position d'embarquement</description>
-      <type>
-        <class name="sword.military.knowledge.decisional.Loading"/>
-      </type>
-    </parameter>
-    <parameter name="destination">
-      <description>Position d'arrivee</description>
-      <type>
-        <class name="sword.military.knowledge.decisional.Loading"/>
-      </type>
-    </parameter>
-    <parameter name="meetingPoint">
-      <description>Poin ou aller une fois toutes les unites transportees</description>
-      <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
-      </type>
-    </parameter>
-  </parameters>
-  <stages>
-    <stage label="Transport de foule">
-      <skills>
-        <skill name="sword.military.company.skills.Lead" main="true">
-          <parameter name="companyTask">
-            <value>
-              <string>france.military.company.tasks.TransporterFoule</string>
-            </value>
-          </parameter>
-          <parameter name="mainTasks">
-            <value>
-              <string>france.military.platoon.tasks.TransporterFoule</string>
-            </value>
-          </parameter>
-          <parameter name="supportTasks">
-            <value>
-              <string>france.military.platoon.tasks.FaireMouvement</string>
-            </value>
-          </parameter>
-          <parameter name="defaultTask">
-            <value>
-              <string>france.military.platoon.tasks.FaireMouvement</string>
-            </value>
-          </parameter>
-          <parameter name="taskForSupporting">
-            <value>
-              <string>france.military.platoon.tasks.FaireMouvement</string>
-            </value>
-          </parameter>
-        </skill>
-      </skills>
-    </stage>
-  </stages>
+	<parameters>
+		<parameter name="crowd">
+			<description>Foule à transporter</description>
+			<type>
+				<class name="sword.military.knowledge.decisional.Loadable"/>
+			</type>
+		</parameter>
+		<parameter name="loadingPoint">
+			<description>Position d'embarquement</description>
+			<type>
+				<class name="sword.military.knowledge.decisional.Loading"/>
+			</type>
+		</parameter>
+		<parameter name="destination">
+			<description>Position d'arrivee</description>
+			<type>
+				<class name="sword.military.knowledge.decisional.Loading"/>
+			</type>
+		</parameter>
+		<parameter name="meetingPoint">
+			<description>Poin ou aller une fois toutes les unites transportees</description>
+			<type>
+				<class name="sword.military.knowledge.decisional.Reachable"/>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Transport de foule" disable-when-done="true">
+			<skills>
+				<skill name="sword.military.company.skills.Lead" main="true">
+					<parameter name="companyTask">
+						<value>
+							<string>france.military.company.tasks.TransporterFoule</string>
+						</value>
+					</parameter>
+					<parameter name="mainTasks">
+						<value>
+							<string>france.military.platoon.tasks.TransporterFoule</string>
+						</value>
+					</parameter>
+					<parameter name="supportTasks">
+						<value>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
+						</value>
+					</parameter>
+					<parameter name="defaultTask">
+						<value>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
+						</value>
+					</parameter>
+					<parameter name="taskForSupporting">
+						<value>
+							<string>france.military.platoon.tasks.FaireMouvement</string>
+						</value>
+					</parameter>
+					<parameter name="disableWhenDone">
+						<value>
+							<boolean>true</boolean>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
 </task>

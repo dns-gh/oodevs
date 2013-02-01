@@ -233,13 +233,11 @@ activate = function( self )
     -- Gestion du SE (car les objectifs ne sont plus les mêmes)
     local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
     Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
-    if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
-        Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
-    end
     
     if myself.feedback then
         if self.params.disableWhenDone then
            Feedback( self.feedbacks.done )
+           return
         else
            meKnowledge:RC( eRC_FinMission )
         end
@@ -247,6 +245,10 @@ activate = function( self )
            F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
         end
         myself.feedback = false
+    end
+    
+    if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+        Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
     end
 end,
 
