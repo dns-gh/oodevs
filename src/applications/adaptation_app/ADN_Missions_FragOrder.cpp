@@ -211,29 +211,29 @@ void ADN_Missions_FragOrder::FromXmlToWiki( const std::string& tag, xml::xistrea
 
 namespace
 {
-    std::string ConvertWikiTagToXmlTag( const std::string& wikiTag )
+
+    typedef std::pair< std::string, std::string > XmlToWikiTag;
+    const XmlToWikiTag xmlToWikiTags[] =
     {
-        if( wikiTag == "\"\"" )
-            return "bold";
-        if( wikiTag == "''")
-            return "italic";
-        if( wikiTag == "__" )
-            return "underlined";
-        if( wikiTag == "$$")
-            return "link";
+        XmlToWikiTag( "bold",       "\"\"" ),
+        XmlToWikiTag( "italic",     "''" ),
+        XmlToWikiTag( "underlined", "__" ),
+        XmlToWikiTag( "link",       "$$" ),
+    };
+
+    const std::string& ConvertWikiTagToXmlTag( const std::string& wikiTag )
+    {
+        for( size_t i = 0; i != sizeof( xmlToWikiTags )/sizeof( *xmlToWikiTags); ++i )
+            if( wikiTag.compare( xmlToWikiTags[i].second ) == 0 )
+                return xmlToWikiTags[i].first;
         throw MASA_EXCEPTION( "Used wiki tag is invalid." );
     }
 
-    std::string ConvertXmlToWikiTag( const std::string& xmlTag )
+    const std::string& ConvertXmlToWikiTag( const std::string& xmlTag )
     {
-        if( xmlTag =="bold" )
-            return "\"\"" ;
-        if( xmlTag == "italic")
-            return "''";
-        if( xmlTag =="underlined" )
-            return  "__" ;
-        if( xmlTag == "link" )
-            return "$$";
+        for( size_t i = 0; i != sizeof( xmlToWikiTags )/sizeof( *xmlToWikiTags); ++i )
+            if( xmlTag.compare( xmlToWikiTags[i].first ) == 0 )
+                return xmlToWikiTags[i].second;
         throw MASA_EXCEPTION( "Used xml tag is invalid." );
     }
 }
