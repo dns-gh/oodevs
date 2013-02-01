@@ -17,8 +17,8 @@ using namespace kernel;
 // Created: LDC 2012-05-04
 // -----------------------------------------------------------------------------
 UrbanColor_ABC::UrbanColor_ABC()
-    : initial_( 200, 200, 200, 180 )
-    , current_( 200, 200, 200, 180 )
+    : initial_( 80, 80, 80, 180 )
+    , current_( 80, 80, 80, 180 )
 {
     // NOTHING
 }
