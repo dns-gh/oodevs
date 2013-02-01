@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.roles.Individu" source-version="1.0.0" extends="sword.military.platoon.individual.roles.Individual">
-    <skills>
-        <skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.SortirDuReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.MoveAlong"/>
-        <skill name="france.military.platoon.terrorism.skills.SeDissimuler"/>
-        <skill name="france.military.platoon.skills.SeFaireTransporter"/>
-        <skill name="france.military.platoon.terrorism.skills.Renseigner"/>
-    </skills>
+	<skills>
+		<skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
+		<skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>
+		<skill name="france.military.platoon.skills.SortirDuReseauSouterrain"/>
+		<skill name="france.military.platoon.skills.MoveAlong"/>
+		<skill name="france.military.platoon.terrorism.skills.SeDissimuler"/>
+		<skill name="france.military.platoon.skills.SeFaireTransporter"/>
+		<skill name="france.military.platoon.terrorism.skills.Renseigner"/>
+		<skill name="sword.military.platoon.coercition.skills.SwitchToSafety"/>
+		<skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
+	</skills>
 </role>
