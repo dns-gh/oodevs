@@ -133,14 +133,11 @@ void ADN_Missions_FragOrder::CheckMissionDataConsistency( ADN_ConsistencyChecker
 void ADN_Missions_FragOrder::CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker )
 {
     boost::smatch match;
-    bool tagOpen = false;
-    while( boost::regex_search( fieldData, match, boost::regex( "(.*?)(\\$\\$)(.*)" ) ) )
+    while( boost::regex_search( fieldData, match, boost::regex( "\\$\\$(.*?)\\$\\$(.*)" ) ) )
     {
-        if( tagOpen )
-            if( !IsFileInAttachmentList( match[ 1 ].str() ) )
-                checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, eNbrEntityTypes, match[ 1 ].str() );
-        tagOpen = !tagOpen;
-        fieldData = match[ 3 ];
+        if( !IsFileInAttachmentList( match[ 1 ].str() ) )
+            checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, eNbrEntityTypes , match[ 1 ].str() );
+        fieldData = match[ 2 ];
     }
 }
 
@@ -206,8 +203,8 @@ void ADN_Missions_FragOrder::FromXmlToWiki( const std::string& tag, xml::xistrea
         xis >> xml::list( *this, &ADN_Missions_FragOrder::ReadXmlLine, text );
     else if( tag == "ul" )
     {
-        xis >> xml::list( *this, &ADN_Missions_FragOrder::ReadXmlList, text, ++level );
-        --level;
+        int sublevel = level + 1;
+        xis >> xml::list( *this, &ADN_Missions_FragOrder::ReadXmlList, text, sublevel );
     }
     text += "\n";
 }
@@ -326,12 +323,12 @@ void ADN_Missions_FragOrder::ReadXmlLine( const std::string& tag, xml::xistream&
 // Name: ADN_Missions_FragOrder::ReadXmlList
 // Created: NPT 2013-01-23
 // -----------------------------------------------------------------------------
-void ADN_Missions_FragOrder::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int& level )
+void ADN_Missions_FragOrder::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level )
 {
     if( tag == "ul" )
     {
-        xis >> xml::list( *this, &ADN_Missions_FragOrder::ReadXmlList, text, ++level );
-        --level;
+        int sublevel = level + 1;
+        xis >> xml::list( *this, &ADN_Missions_FragOrder::ReadXmlList, text, sublevel );
     }
     else if( tag == "li" )
     {
@@ -429,7 +426,7 @@ void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& missionDir )
 {
     const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
     if( !bfs::is_directory( missionDir ) )
-        bfs::create_directory( missionDir );
+        bfs::create_directories( missionDir );
 
     if( bfs::is_regular_file( fileName + ".xml" ) )
     {

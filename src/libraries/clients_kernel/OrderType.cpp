@@ -21,7 +21,11 @@ using namespace kernel;
 OrderType::OrderType( xml::xistream& xis )
 {
     xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "id", id_ );
+        >> xml::attribute( "id", id_ )
+        >> xml::optional >> xml::start( "description" )
+            >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
+            >> xml::optional >> xml::attribute( "doctrine", usage_ )
+        >> xml ::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +74,24 @@ unsigned long OrderType::GetId() const
 const std::string& OrderType::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::GetDoctrineInformation
+// Created: NPT 2013-02-01
+// -----------------------------------------------------------------------------
+const std::string& OrderType::GetDoctrineInformation() const
+{
+    return doctrine_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType::GetUsageInformation
+// Created: NPT 2013-02-01
+// -----------------------------------------------------------------------------
+const std::string& OrderType::GetUsageInformation() const
+{
+    return usage_;
 }
 
 // -----------------------------------------------------------------------------

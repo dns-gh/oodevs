@@ -105,6 +105,11 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data&
         >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
         >> xml::optional >> xml::attribute( "package", strPackage_ )
+        >> xml::optional >> xml::attribute( "package", strPackage_ )
+        >> xml::optional >> xml::start( "description" )
+            >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
+            >> xml::optional >> xml::attribute( "doctrine", usage_ )
+        >> xml ::end
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
     const std::string code = symbol.empty() ? " - " : symbol;
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
@@ -202,14 +207,11 @@ void ADN_Missions_Mission::CheckMissionDataConsistency( ADN_ConsistencyChecker& 
 void ADN_Missions_Mission::CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_EntityType type )
 {
     boost::smatch match;
-    bool tagOpen = false;
-    while( boost::regex_search( fieldData, match, boost::regex( "(.*?)(\\$\\$)(.*)" ) ) )
+    while( boost::regex_search( fieldData, match, boost::regex( "\\$\\$(.*?)\\$\\$(.*)" ) ) )
     {
-        if( tagOpen )
-            if( !IsFileInAttachmentList( match[ 1 ].str() ) )
-                checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, type , match[ 1 ].str() );
-        tagOpen = !tagOpen;
-        fieldData = match[ 3 ];
+        if( !IsFileInAttachmentList( match[ 1 ].str() ) )
+            checker.AddError( eMissionAttachmentInvalid, strName_.GetData(), eMissions, type , match[ 1 ].str() );
+        fieldData = match[ 2 ];
     }
 }
 
@@ -275,8 +277,8 @@ void ADN_Missions_Mission::FromXmlToWiki( const std::string& tag, xml::xistream&
         xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text );
     else if( tag == "ul" )
     {
-        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, ++level );
-        --level;
+        int sublevel = level + 1;
+        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, sublevel );
     }
     text += "\n";
 }
@@ -401,12 +403,12 @@ void ADN_Missions_Mission::ReadXmlLine( const std::string& tag, xml::xistream& x
 // Name: ADN_Missions_Mission::ReadXmlList
 // Created: NPT 2013-01-23
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int& level )
+void ADN_Missions_Mission::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level )
 {
     if( tag == "ul" )
     {
-        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, ++level );
-        --level;
+        int sublevel = level + 1;
+        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, sublevel );
     }
     else if( tag == "li" )
     {
@@ -504,7 +506,7 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
 {
     const std::string fileName = std::string( missionDir +  "/" + strName_.GetData() );
     if( !bfs::is_directory( missionDir ) )
-        bfs::create_directory( missionDir );
+        bfs::create_directories( missionDir );
     
     if( bfs::is_regular_file( fileName + ".xml" ) )
     {
@@ -542,6 +544,11 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
         descriptionSpecific_ = descriptionSpecific;
         descriptionComment_ = descriptionComment;
         descriptionMissionEnd_ = descriptionMissionEnd;
+    }
+    else
+    {
+        descriptionContext_ = usage_;
+        descriptionBehavior_ = doctrine_;
     }
     if( !bfs::exists( fileName + ".html" ) )
     {

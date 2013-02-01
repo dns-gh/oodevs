@@ -51,11 +51,24 @@ namespace
     }
 }
 
+namespace
+{
+    void CreateLineField( const QString& name, const QString& text, QVBoxLayout* parentLayout )
+    {
+        QTextEdit* textEdit = new QTextEdit( text );
+        textEdit->setReadOnly( true );
+        QGroupBox* group = new QGroupBox( name );
+        QVBoxLayout* layout = new QVBoxLayout( group );
+        layout->addWidget( textEdit );
+        parentLayout->addWidget( group );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionType /*=""*/ )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionSheetPath /*=""*/ )
     : Q3VBox            ( parent )
     , ParamInterface_ABC()
     , title_     ( order.GetName().c_str() )
@@ -68,24 +81,30 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     mainTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Mandatory" ) );
     optionalTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Optional" ) );
     {
-        std::string path;
-        if( missionType == "Units" )
-            path = config.GetPhysicalChildPath( "units-mission-sheets-directory" );
-        else if( missionType == "Automata" )
-            path = config.GetPhysicalChildPath( "automata-mission-sheets-directory" );
-        else if( missionType == "Population" )
-            path = config.GetPhysicalChildPath( "crowds-mission-sheets-directory" );
-        else if( missionType == "FragOrders")
-            path = config.GetPhysicalChildPath( "fragorders-mission-sheets-directory" );
-
-        std::string fileName = std::string( path + "/" + order.GetName() + ".html" );
-        if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
+        std::string path = config.GetPhysicalChildPath( missionSheetPath );
+        std::string doctrine = order.GetDoctrineInformation();
+        std::string usage = order.GetUsageInformation();
+        std::string fileName = std::string( config.GetPhysicalChildPath( missionSheetPath ) + "/" + order.GetName() + ".html" );
+        if( bfs::is_regular_file( fileName ) || ( !doctrine.empty() && !usage.empty() ) )
         {
-            QWidget* helpTab = new QWidget(tabs_);
+            QWidget* helpTab = new QWidget( tabs_ );
             tabs_->addTab( helpTab, tools::translate( "MissionInterface_ABC", "Help" ) );
-            std::replace( fileName.begin(), fileName.end(), '\\', '/' );
-            QWebView* missionSheetText = new QWebView();
-            missionSheetText->load( QUrl( fileName.c_str() ) );
+            QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
+
+            if( bfs::is_regular_file( fileName ) )
+            {
+                std::replace( fileName.begin(), fileName.end(), '\\', '/' );
+                QWebView* missionSheetText = new QWebView();
+                missionSheetText->load( QUrl( fileName.c_str() ) );
+                helpLayout->addWidget( missionSheetText );
+            }
+            else 
+            {
+                if( !doctrine.empty() )
+                    CreateLineField( tools::translate( "MissionInteface_ABC", "Doctrine" ), doctrine.c_str(), helpLayout );
+                if( !usage.empty() )
+                    CreateLineField( tools::translate( "MissionInteface_ABC", "Usage" ), usage.c_str(), helpLayout );
+            }
         }
     }
     CreateOkCancelButtons();

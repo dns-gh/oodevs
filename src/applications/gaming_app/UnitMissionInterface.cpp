@@ -26,7 +26,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const kernel::MissionType& mission, ActionController& controller,
                                             actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller, config, "Units" )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller, config, "units-mission-sheets-directory" )
     , model_( model )
     , mission_( mission )
 {

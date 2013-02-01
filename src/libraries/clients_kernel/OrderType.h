@@ -42,6 +42,8 @@ public:
     //@{
     unsigned long GetId() const;
     const std::string& GetName() const;
+    const std::string& GetDoctrineInformation() const;
+    const std::string& GetUsageInformation() const;
     void AddParameter( const OrderParameter& parameter );
     //@}
 
@@ -50,6 +52,8 @@ private:
     //@{
     std::string name_;
     unsigned long id_;
+    std::string doctrine_;
+    std::string usage_;
     //@}
 };
 

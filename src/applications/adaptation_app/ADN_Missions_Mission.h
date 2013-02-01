@@ -63,7 +63,7 @@ public:
     bool IsFileInAttachmentList( const std::string& fileName );
     void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line );
     void ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text );
-    void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int& level );
+    void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level );
     void FromXmlToWiki( const std::string& tag, xml::xistream& xis, std::string& text ); 
     void FromWikiToXml( xml::xostream& xos, const std::string& text );
     void ReadMissionSheet( const std::string& missionDir );
@@ -82,6 +82,8 @@ public:
     ADN_Type_String mrtDiaBehavior_;
     ADN_Type_String strPackage_;
     ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
+    std::string doctrine_;
+    std::string usage_;
 
     //Missions sheets descriptions data
     ADN_Type_String missionSheetPath_;

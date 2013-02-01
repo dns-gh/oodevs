@@ -62,7 +62,7 @@ class MissionInterface_ABC : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionType = "" );
+             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionSheetPath = "" );
     virtual ~MissionInterface_ABC();
     //@}
 

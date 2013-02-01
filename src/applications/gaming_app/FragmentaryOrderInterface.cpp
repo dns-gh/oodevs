@@ -23,7 +23,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller,
                                                       actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controller, config, "FragOrders" )
+    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controller, config, "fragorders-mission-sheets-directory" )
     , model_( model )
     , fragOrder_( fragOrder )
 {

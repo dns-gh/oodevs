@@ -24,7 +24,7 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller,
                                                     actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller, config, "Automata" )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller, config, "automata-mission-sheets-directory" )
     , model_ ( model )
     , mission_ ( mission )
 {

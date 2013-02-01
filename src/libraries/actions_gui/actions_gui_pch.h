@@ -28,6 +28,7 @@
 #include <QtGui/qlistwidget.h>
 #include <QtGui/qstandarditemmodel.h>
 #include <QtGui/qheaderview.h>
+#include <QtGui/qtextedit.h>
 
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3hbox.h>

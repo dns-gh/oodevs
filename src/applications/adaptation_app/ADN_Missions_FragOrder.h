@@ -66,7 +66,7 @@ public:
     bool IsFileInAttachmentList( const std::string& fileName );
     void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line );
     void ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text );
-    void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int& level );
+    void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level );
     void FromXmlToWiki( const std::string& tag, xml::xistream& xis, std::string& text ); 
     void FromWikiToXml( xml::xostream& xos, const std::string& text );
     void ReadMissionSheet( const std::string& missionDir );
