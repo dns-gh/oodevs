@@ -51,9 +51,9 @@ InfoMaintenanceDialog::~InfoMaintenanceDialog()
 
 namespace
 {
-    struct MaintenanceRevelant
+    struct MaintenanceRelevant
     {
-        MaintenanceRevelant() {}
+        MaintenanceRelevant() {}
         bool operator()( const kernel::Entity_ABC& element )
         {
             const LogMaintenanceConsigns* consigns = element.Retrieve< LogMaintenanceConsigns >();
@@ -68,8 +68,8 @@ namespace
 // -----------------------------------------------------------------------------
 bool InfoMaintenanceDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    MaintenanceRevelant maintenanceRevelant;
-    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, maintenanceRevelant );
+    MaintenanceRelevant maintenanceRelevant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, maintenanceRelevant );
 }
 
 // -----------------------------------------------------------------------------

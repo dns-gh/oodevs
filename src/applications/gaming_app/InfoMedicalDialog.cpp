@@ -53,9 +53,9 @@ InfoMedicalDialog::~InfoMedicalDialog()
 
 namespace
 {
-    struct MedicalRevelant
+    struct MedicalRelevant
     {
-        MedicalRevelant() {}
+        MedicalRelevant() {}
         bool operator()( const kernel::Entity_ABC& element )
         {
             const LogMedicalConsigns* consigns = element.Retrieve< LogMedicalConsigns >();
@@ -70,8 +70,8 @@ namespace
 // -----------------------------------------------------------------------------
 bool InfoMedicalDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    MedicalRevelant medicalRevelant;
-    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, medicalRevelant );
+    MedicalRelevant medicalRelevant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, medicalRelevant );
 }
 
 // -----------------------------------------------------------------------------

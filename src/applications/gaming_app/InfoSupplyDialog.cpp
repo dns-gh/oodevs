@@ -58,9 +58,9 @@ InfoSupplyDialog::~InfoSupplyDialog()
 
 namespace
 {
-    struct SupplyRevelant
+    struct SupplyRelevant
     {
-        SupplyRevelant() {}
+        SupplyRelevant() {}
         bool operator()( const kernel::Entity_ABC& element )
         {
             const LogSupplyConsigns* consigns = element.Retrieve< LogSupplyConsigns >();
@@ -75,8 +75,8 @@ namespace
 // -----------------------------------------------------------------------------
 bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 {
-    SupplyRevelant supplyRevelant;
-    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( entity, supplyRevelant );
+    SupplyRelevant supplyRelevant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( entity, supplyRelevant );
 }
 
 // -----------------------------------------------------------------------------

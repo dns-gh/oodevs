@@ -38,9 +38,9 @@ InfoFuneralDialog::~InfoFuneralDialog()
 
 namespace
 {
-    struct FuneralRevelant
+    struct FuneralRelevant
     {
-        FuneralRevelant() {}
+        FuneralRelevant() {}
         bool operator()( const kernel::Entity_ABC& element )
         {
             const LogFuneralConsigns* consigns = element.Retrieve< LogFuneralConsigns >();
@@ -55,8 +55,8 @@ namespace
 // -----------------------------------------------------------------------------
 bool InfoFuneralDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    FuneralRevelant funeralRevelant;
-    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, funeralRevelant );
+    FuneralRelevant funeralRelevant;
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, funeralRelevant );
 }
 
 // -----------------------------------------------------------------------------
