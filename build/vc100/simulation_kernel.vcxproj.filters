@@ -2643,6 +2643,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.cpp">
       <Filter>Source Files\Entities\Automates</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_ABC.cpp">
+      <Filter>Source Files\Entities\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp">
       <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClCompile>

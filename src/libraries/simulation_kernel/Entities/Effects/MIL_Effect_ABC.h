@@ -21,13 +21,20 @@ class MIL_Effect_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Effect_ABC() {}
-    virtual ~MIL_Effect_ABC() {}
+             MIL_Effect_ABC();
+    virtual ~MIL_Effect_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool Execute() = 0;
+    const int GetId() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const int id_;
     //@}
 };
 
