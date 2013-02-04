@@ -58,6 +58,7 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Stress.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -96,6 +97,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pType_               ( &type )
     , bHasChanged_         ( false )
     , markedForDestruction_( false )
+    , brainDeleted_        ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -129,6 +131,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pType_               ( &type )
     , bHasChanged_         ( false )
     , markedForDestruction_( false )
+    , brainDeleted_        ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -151,6 +154,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , pType_               ( &type )
     , bHasChanged_         ( false )
     , markedForDestruction_( false )
+    , brainDeleted_        ( false )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -381,8 +385,6 @@ void MIL_AgentPion::Finalize()
 // -----------------------------------------------------------------------------
 MIL_AgentPion::~MIL_AgentPion()
 {
-    if( pAutomate_ )
-        pAutomate_->UnregisterPion( *this );
     delete pKnowledgeBlackBoard_;
 }
 
@@ -479,6 +481,14 @@ void MIL_AgentPion::NotifySendHeadquarters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision( float duration )
 {
+    if( markedForDestruction_ && !brainDeleted_ )
+    {
+        GetRole< DEC_RolePion_Decision >().DeleteBrain();
+        pAutomate_->GetRole< DEC_AutomateDecision >().GarbageCollect();
+        brainDeleted_ = true;
+        return;
+    }
+
     if( GetRole< PHY_RolePion_Composantes >().IsImmobilized() )
         pOrderManager_->CancelMission();
     try
@@ -562,6 +572,8 @@ void MIL_AgentPion::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateNetwork()
 {
+    if( markedForDestruction_ )
+        return;
     try
     {
         GetRole< network::NET_RolePion_Dotations >().SendChangedState();
@@ -742,6 +754,8 @@ void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SendFullState( unsigned int nCtx ) const
 {
+    if( markedForDestruction_ )
+        return;
     bool critical = !criticalIntelligence_.empty();
     if( critical || !pExtensions_->IsEmpty() || !pAffinities_->IsEmpty() )
     {
@@ -803,7 +817,10 @@ void MIL_AgentPion::OnReceiveDeleteUnit()
     GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
     GetRole< PHY_RolePion_Composantes >().RetrieveAllLentComposantes();
     GetRole< PHY_RolePion_Composantes >().ReturnAllBorrowedComposantes();
-    // TODO faire ce qui est dans magicmove?
+
+    if( pAutomate_ )
+        pAutomate_->UnregisterPion( *this );
+
     markedForDestruction_ = true;
     Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
@@ -1489,6 +1506,8 @@ bool MIL_AgentPion::IsImmobilized() const
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
 {
+    if( markedForDestruction_ )
+        return;
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();

@@ -90,6 +90,7 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
         wrapper.message().has_party_creation() ||
         wrapper.message().has_automat_creation() ||
         wrapper.message().has_unit_creation() ||
+        wrapper.message().has_unit_destruction() ||
         wrapper.message().has_change_diplomacy() ||
         wrapper.message().has_unit_change_superior() ||
         wrapper.message().has_automat_change_logistic_links() ||

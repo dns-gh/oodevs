@@ -216,6 +216,7 @@ private:
     const MIL_AgentTypePion*                  pType_;
     bool                                      bHasChanged_;
     bool                                      markedForDestruction_;
+    bool                                      brainDeleted_;
     std::string                               app6Symbol_;
     std::string                               level_;
     std::string                               criticalIntelligence_;

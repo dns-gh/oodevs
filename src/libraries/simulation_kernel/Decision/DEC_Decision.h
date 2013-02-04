@@ -42,6 +42,10 @@ public:
     virtual void UpdateDecision( float duration );
     virtual void Reset( std::string groupName = "" );
     virtual void Reload();
+    virtual void IncDIARef();
+    virtual void DecDIARef();
+    virtual bool IsUsedByDIA() const;
+    void DeleteBrain();
 
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
     virtual boost::shared_ptr< MIL_Mission_ABC > GetMission();
@@ -54,7 +58,7 @@ public:
     virtual unsigned int GetID() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
 
-    //virtual void GarbageCollect();
+    virtual void GarbageCollect();
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
@@ -190,6 +194,7 @@ protected:
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     unsigned int                    gcPause_;
     unsigned int                    gcMult_;
+    unsigned int                    nDIARef_;
     const DEC_Model_ABC*            model_;
     //@}
 

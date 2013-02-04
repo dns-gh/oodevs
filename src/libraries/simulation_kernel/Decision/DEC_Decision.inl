@@ -26,6 +26,7 @@ DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int g
     : pEntity_ ( &entity )
     , gcPause_ ( gcPause)
     , gcMult_  ( gcMult )
+    , nDIARef_ ( 0 )
     , model_   ( 0 )
 {
     // NOTHING
@@ -110,6 +111,16 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::DeleteBrain
+// Created: JSR 2013-02-01
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::DeleteBrain()
+{
+    pBrain_.reset();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::SetModel
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
@@ -138,6 +149,8 @@ const std::string& DEC_Decision< T >::GetDIAType() const
 template< class T >
 void DEC_Decision< T >::UpdateDecision( float duration )
 {
+    if( pBrain_.get() == 0 )
+        return;
     try
     {
         pBrain_->SelectActions         ();
@@ -153,11 +166,12 @@ void DEC_Decision< T >::UpdateDecision( float duration )
 // Name: DEC_Decision::GarbageCollect
 // Created: LDC 2009-09-22
 // -----------------------------------------------------------------------------
-/*template< class T >
+template< class T >
 void DEC_Decision< T >::GarbageCollect()
 {
-    //pRefs_->collectgarbage_( pRefs_->step_ );
-}*/
+    pRefs_->collectgarbage_( pRefs_->step_ );
+    //pRefs_->collectgarbage_( 3 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::Reset
@@ -210,6 +224,7 @@ void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception* error )
 template< class T >
 sword::Brain& DEC_Decision< T >::GetBrain()
 {
+    assert( pBrain_.get() );
     return *pBrain_;
 }
 
@@ -277,6 +292,8 @@ void DEC_Decision< T >::StopDefaultBehavior()
 template< class T >
 void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
+    if( pBrain_.get() == 0 )
+        return;
     pMission_ = mission;
     // Register mission parameters in the brain...
     directia::tools::binders::ScriptRef refMission = pBrain_->GetScriptRef();
@@ -1106,6 +1123,37 @@ void DEC_Decision< T >::Reload()
 {
     InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true, model_->GetIntegrationDir() );
     StartDefaultBehavior();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IncDIARef
+// Created: JSR 2013-02-01
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::IncDIARef()
+{
+    ++nDIARef_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::DecDIARef
+// Created: JSR 2013-02-01
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::DecDIARef()
+{
+    assert( nDIARef_ > 0 );
+    --nDIARef_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::IsUsedByDIA
+// Created: JSR 2013-02-01
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::IsUsedByDIA() const
+{
+    return nDIARef_ > 0;
 }
 
 // -----------------------------------------------------------------------------

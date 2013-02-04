@@ -52,6 +52,7 @@ bool SimulationDispatcher::IsDestruction( const sword::SimToClient& wrapper ) co
 {
     if( wrapper.message().has_unit_knowledge_destruction() ||
         wrapper.message().has_object_destruction() ||
+        wrapper.message().has_unit_destruction() ||
         wrapper.message().has_object_knowledge_destruction() ||
         wrapper.message().has_log_medical_handling_destruction() ||
         wrapper.message().has_log_maintenance_handling_destruction() ||

@@ -14,12 +14,20 @@
 #include "Decision/DEC_FrontAndBackLinesComputer.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Objective.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 
 namespace directia
 {
 // $$$$ LDC: TODO Check which kind of deletion/destruction operations must be done. See ManageDeletion below...
-    void UsedByDIA( DEC_Decision_ABC* ) {}
-    void ReleasedByDIA( DEC_Decision_ABC* ) {}
+    void UsedByDIA( DEC_Decision_ABC* dec )
+    {
+        dec->IncDIARef();
+    }
+    void ReleasedByDIA( DEC_Decision_ABC* dec )
+    {
+        dec->DecDIARef();
+    }
     void UsedByDIA( DEC_FrontAndBackLinesComputer* ) {}
     void ReleasedByDIA( DEC_FrontAndBackLinesComputer* ) {}
     void UsedByDIA( DEC_Gen_Object* ) {}
