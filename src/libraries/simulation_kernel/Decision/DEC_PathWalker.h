@@ -79,8 +79,7 @@ public:
 private:
      //! @name Types
     //@{
-    typedef std::set< const MIL_Object_ABC* > T_ObjectSet;
-    typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
+    typedef std::map< int, const MIL_Object_ABC* > T_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep
