@@ -137,7 +137,7 @@ QTreeWidgetItem* TimelineListView::FindItem( const kernel::Entity_ABC* entity ) 
 QTreeWidgetItem* TimelineListView::FindListItem( const actions::Action_ABC& action, actions::EActionType& actionType ) const
 {
     const actions::ActionTasker* tasker = action.Retrieve< actions::ActionTasker >();
-    if( tasker && tasker->GetTaskerId() != 0)
+    if( tasker )
     {
         if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
         {

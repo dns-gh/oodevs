@@ -209,6 +209,8 @@ kernel::UrbanObject_ABC& ModelAdapter::GetUrbanObject( unsigned int id ) const
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* ModelAdapter::FindEntity( unsigned int id ) const
 {
+    if( id == 0 )
+        return 0;
     kernel::Entity_ABC* entity = FindAgent( id );
     if( !entity )
         entity = FindAutomat( id );

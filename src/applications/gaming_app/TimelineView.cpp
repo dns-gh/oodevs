@@ -67,7 +67,7 @@ TimelineView::~TimelineView()
 TimelineView::T_Actions* TimelineView::FindActions( const actions::Action_ABC& action, actions::EActionType& actionType )
 {
     const ActionTasker* tasker = action.Retrieve< ActionTasker >();
-    if( tasker && tasker->GetTaskerId() != 0 )
+    if( tasker )
     {
         if( const kernel::Entity_ABC* entity = model_.FindEntity( tasker->GetTaskerId() ) )
         {
