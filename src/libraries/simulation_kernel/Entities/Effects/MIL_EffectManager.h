@@ -50,8 +50,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Effect_ABC* > T_EffectSet;
-    typedef T_EffectSet::iterator       IT_EffectSet;
+    struct EffectComparator {
+        bool operator() (const MIL_Effect_ABC* lhs, const MIL_Effect_ABC* rhs) const;
+    };
+    typedef std::set< MIL_Effect_ABC*, EffectComparator > T_EffectSet;
     //@}
 
 private:

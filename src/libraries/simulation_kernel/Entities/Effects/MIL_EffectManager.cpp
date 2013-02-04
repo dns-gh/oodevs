@@ -21,6 +21,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EffectManager::EffectComparator::operator()
+// Created: JSR 2013-02-04
+// -----------------------------------------------------------------------------
+bool MIL_EffectManager::EffectComparator::operator() (const MIL_Effect_ABC* lhs, const MIL_Effect_ABC* rhs) const
+{
+    if( !lhs )
+        return false;
+    if( !rhs )
+        return true;
+    return lhs->GetId() < rhs->GetId();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EffectManager::GetEffectManager
 // Created: LDC 2010-01-04
 // -----------------------------------------------------------------------------
@@ -67,7 +80,7 @@ void MIL_EffectManager::Register( MIL_Effect_ABC& effect )
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::Update()
 {
-    for( IT_EffectSet it = effects_.begin(); it != effects_.end(); )
+    for( auto it = effects_.begin(); it != effects_.end(); )
     {
         MIL_Effect_ABC& effect = **it;
         bool executed = false;
