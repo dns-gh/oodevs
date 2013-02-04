@@ -15,6 +15,7 @@
 #include "SupplyRequestParameters_ABC.h"
 #include "SupplyConvoyEventsObserver_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "SpeedComputer_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -244,6 +245,15 @@ const T_PointVector* SupplyConvoyReal::GetPathToNextDestination() const
         default:
             return 0;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyReal::IsPushedFlow
+// Created: LDC 2013-02-04
+// -----------------------------------------------------------------------------
+bool SupplyConvoyReal::IsPushedFlow() const
+{
+    return transportersProvider_ == supplier_;
 }
 
 // -----------------------------------------------------------------------------

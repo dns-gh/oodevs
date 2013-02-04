@@ -96,4 +96,6 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( directia::brain::Brain& brain,
         boost::bind( &DEC_LogisticFunctions::ConvoyGetTransportersProvider, boost::cref( agent ) );
     brain[ "DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination" ] = 
         boost::bind( &DEC_LogisticFunctions::ConvoyGetPathToNextDestination, boost::cref( agent ) );
+    brain[ "DEC_Ravitaillement_Convoi_EstFluxPousse" ] = 
+        boost::bind( &DEC_LogisticFunctions::ConvoyIsPushedFlow, boost::cref( agent ) );
 }

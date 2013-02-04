@@ -64,3 +64,7 @@ end
 integration.changeTacticPriority = function( priority )
     DEC_Sante_ChangerPrioritesTactiques( priority )
 end
+
+integration.isLogSupplyPushFlow = function()
+    return DEC_Ravitaillement_Convoi_EstFluxPousse()
+end

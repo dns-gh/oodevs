@@ -9,7 +9,7 @@ create = function( self )
     self.arrived = false
     
     self.transporteur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getTransporter() )
-    self.fluxTire = integration.distance(self.transporteur, meKnowledge) < 10
+    self.fluxTire = not integration.isLogSupplyPushFlow()
 end,
 
  activate = function( self )

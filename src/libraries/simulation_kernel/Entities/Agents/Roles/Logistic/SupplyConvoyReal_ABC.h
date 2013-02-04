@@ -59,6 +59,7 @@ public:
     virtual SupplySupplier_ABC&  GetTransportersProvider  () const = 0;
     virtual const T_PointVector* GetPathToNextDestination () const = 0;
     virtual const MIL_Agent_ABC* GetProvider              () const = 0;
+    virtual bool                 IsPushedFlow             () const = 0;
     //@}
     
     template< typename Archive > void serialize( Archive&, const unsigned int ) {}

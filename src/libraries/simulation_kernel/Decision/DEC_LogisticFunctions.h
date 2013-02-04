@@ -91,6 +91,7 @@ public:
     static DEC_Decision_ABC* ConvoyGetTransportersProvider  ( const MIL_Agent_ABC& callerAgent );
     static DEC_Decision_ABC* ConvoyGetSupplier              ( const MIL_Agent_ABC& callerAgent );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent );
+    static bool ConvoyIsPushedFlow( const MIL_Agent_ABC& callerAgent );
 
     static void AutomateRequestSupply( MIL_Automate&  callerAutomate );
     static void PionRequestSupply( MIL_Agent_ABC& callerAgent );
