@@ -1398,7 +1398,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.scipioForSword,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
+    <target name="package.otpacks" depends="package.otpack.defense.algerie.exercises,package.otpack.defense.scipioForSword,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1514,6 +1514,13 @@
             <include name="exercises/scipio/exercisesVA/VEM_Logistique/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
             <include name="data/terrains/StNazairePontSuspendu/**"/>
+        </pack>
+    </target>
+	
+	 <target name="package.otpack.defense.algerie.exercises" description="Exercices pour la base France">
+        <pack name="Algerie-Exercices" description="Exercices pour la base France">
+            <include name="exercises/algerie/**"/>
+            <include name="data/terrains/algerie6/**"/>
         </pack>
     </target>
 
