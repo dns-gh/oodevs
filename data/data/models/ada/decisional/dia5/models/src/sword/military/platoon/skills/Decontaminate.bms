@@ -17,7 +17,7 @@ rootnode
     -- feedback from GetDecon
     -- --------------------------------------------------------------------------------
     isDecontaminated = function( self, params, additionalParams )
-        self.decontaminated = true
+         -- Nothing
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -34,7 +34,7 @@ rootnode
     activate = function( self )
         local Activate = Activate
         
-        if self.decontaminated == false then
+        if meKnowledge:isContaminated() then
             Activate( skill.links.getDecon, 0.9, { objectives = self.params.objectives } )
         else
             Activate( skill.links.moveToward, 0.1, { entities = self.params.meetingPoint } )
