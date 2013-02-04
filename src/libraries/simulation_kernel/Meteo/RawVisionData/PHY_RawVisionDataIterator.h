@@ -10,7 +10,7 @@
 #ifndef __PHY_RawVisionDataIterator_h_
 #define __PHY_RawVisionDataIterator_h_
 
-#include "PHY_RawVisionData.h"
+#include "ElevationGrid.h"
 #include "MT_Tools/MT_Vector3D.h"
 
 //*****************************************************************************
@@ -30,7 +30,7 @@ public:
 
     bool End() const;
     double Length() const;
-    PHY_RawVisionData::envBits GetCurrentEnv() const;
+    ElevationGrid::envBits GetCurrentEnv() const;
     const weather::PHY_Lighting& GetLighting() const;
     const weather::PHY_Precipitation& GetPrecipitation() const;
 
@@ -101,7 +101,7 @@ protected:
     double rEnvCoeff_;
 
     // Environnement courrant
-    const PHY_RawVisionData::sCell* pCurrentCell_;
+    const ElevationGrid::sCell* pCurrentCell_;
     bool bIsInGround_;
     bool bIsInEnv_;
 };

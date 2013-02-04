@@ -10,14 +10,14 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
-#include "meteo/Meteo.h"
-#include "meteo/PHY_RawVisionData_ABC.h"
+#include "ElevationGrid.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
 class PHY_MeteoDataManager;
+class ElevationGrid;
 
 //*****************************************************************************
 // Created: JVT 02-11-05
@@ -37,44 +37,6 @@ public:
         eNbrVisionObjects = 4
     };
 
-    typedef unsigned char envBits;  // champ de bit
-
-    // cellule de la matrice de vision
-    struct sCell
-    {
-    public:
-        sCell()
-            : h       ( 0 )
-            , dh      ( 0 )
-            , e       ( 0 )
-            , pEffects( 0 )
-        {
-            // NOTHING
-        }
-        short GetAltitude() const          { return h; }
-        unsigned char GetEnvHeight() const { return dh; }
-        envBits GetEnv() const             { return e; }
-        const weather::PHY_Precipitation&    GetPrecipitation() const;
-        const weather::PHY_Lighting&         GetLighting     () const;
-        const weather::Meteo::sWindData& GetWind         () const;
-
-        bool operator == ( const sCell& rhs ) const
-        {
-            return h == rhs.h && dh == rhs.dh && e == rhs.e;
-        }
-    private:
-        // $$$$ _RC_ JSR 2011-05-19: TODO à cleaner (virer le friend, rajouter des underscores...)
-        friend class PHY_RawVisionData;
-
-        unsigned short h  : 16;                         // hauteur du sol
-        unsigned char  dh : 8;                          // hauteur de la planimétrie
-        envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
-        boost::shared_ptr< weather::Meteo > pMeteo;     // météo locale
-        PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
-
-        static const weather::Meteo* pGlobalMeteo_;
-
-    };
 
 public:
     //! @name Constructors/Destructor
@@ -88,8 +50,8 @@ public:
     /** @name Tools */
     //-------------------------------------------------------------------------
     //@{
-    const sCell& operator () ( const MT_Vector2D& ) const;
-    const sCell& operator () ( double, double ) const;
+    const ElevationGrid::sCell& operator () ( const MT_Vector2D& ) const;
+    const ElevationGrid::sCell& operator () ( double, double ) const;
 
     double GetCellSize() const;
 
@@ -98,8 +60,8 @@ public:
     double GetAltitude( const MT_Vector2D& pos, bool applyOnCell = false ) const;
     double GetAltitude( double rX_, double rY_, bool applyOnCell = false ) const;
 
-    envBits GetVisionObject( const MT_Vector2D& pos ) const;
-    envBits GetVisionObject( double rX_, double rY_ ) const;
+    ElevationGrid::envBits GetVisionObject( const MT_Vector2D& pos ) const;
+    ElevationGrid::envBits GetVisionObject( double rX_, double rY_ ) const;
 
     const weather::Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
 
@@ -139,24 +101,20 @@ private:
     // Convertisseurs de coordonnées SIM en coordonnées du tableau
     unsigned int GetCol( double ) const;
     unsigned int GetRow( double ) const;
-    const sCell& operator () ( unsigned int col, unsigned int row ) const;
-    sCell& operator () ( double, double );
+    const ElevationGrid::sCell& operator () ( unsigned int col, unsigned int row ) const;
+    ElevationGrid::sCell& operator () ( double, double );
 
     double rCellSize_; // taille (en metre) du côté de la cellule
 
     unsigned int nNbrCol_;
     unsigned int nNbrRow_;
 
-    sCell** ppCells_;
-
     double rMinAltitude_;
     double rMaxAltitude_;
+    std::auto_ptr< ElevationGrid > pElevationGrid_;
 
-    std::map< unsigned int, ElevationOffset > elevationOffsets_;
-    std::vector< MT_Vector2D > cell_;
     PHY_MeteoDataManager* meteoManager_;
 
-    static sCell emptyCell_;
 };
 
 #endif // __PHY_RawVisionData_h_

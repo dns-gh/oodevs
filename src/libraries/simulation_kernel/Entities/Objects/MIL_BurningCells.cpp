@@ -257,7 +257,7 @@ void MIL_BurningCells::FindTerrainData( const geometry::Point2d& center, float r
     const TerrainData unknow;
     if( data == unknow )
     {
-        PHY_RawVisionData::envBits e = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( center.X(), center.Y() ).GetEnv();
+        ElevationGrid::envBits e = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( center.X(), center.Y() ).GetEnv();
         if( e & PHY_RawVisionData::eVisionForest )
             data.Merge( data.Forest() );
         if( e & PHY_RawVisionData::eVisionUrban )

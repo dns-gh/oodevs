@@ -112,7 +112,7 @@ bool PHY_PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) c
         return false;
 
     const unsigned int                       nCurrentTime = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    const PHY_RawVisionData::envBits env          = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( vPoint );
+    const ElevationGrid::envBits env          = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( vPoint );
 
     if( env == PHY_RawVisionData::eVisionEmpty )
         return nCurrentTime >= nEmptyDetectionTimeStep_;

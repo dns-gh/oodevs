@@ -2655,6 +2655,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\EventListenerBase.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.cpp">
+      <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5434,6 +5437,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random_ABC.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.h">
+      <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

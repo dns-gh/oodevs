@@ -7,20 +7,22 @@
 //
 // *****************************************************************************
 
+#include "PHY_RawVisionData.h"
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::GetCurrentEnv
 // Created: JVT 03-04-02
 //-----------------------------------------------------------------------------
 inline
-PHY_RawVisionData::envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
+ElevationGrid::envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
 {
     assert( pCurrentCell_ );
     if( bIsInGround_ )
-        return static_cast< PHY_RawVisionData::envBits >( pCurrentCell_->GetEnv() | PHY_RawVisionData::eVisionGround );
+        return static_cast< ElevationGrid::envBits >( pCurrentCell_->GetEnv() | PHY_RawVisionData::eVisionGround );
     else if( bIsInEnv_ )
         return pCurrentCell_->GetEnv();
     else
-        return static_cast< PHY_RawVisionData::envBits >( PHY_RawVisionData::eVisionEmpty );
+        return static_cast< ElevationGrid::envBits >( PHY_RawVisionData::eVisionEmpty );
 }
 
 //-----------------------------------------------------------------------------

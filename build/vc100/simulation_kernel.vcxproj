@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Time_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.cpp">
@@ -972,6 +973,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_LogisticVisitors.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />

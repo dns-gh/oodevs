@@ -16,14 +16,13 @@
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include "tools/InputBinaryStream.h"
 
-PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
-const weather::Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_ = 0;
+const weather::Meteo* ElevationGrid::sCell::pGlobalMeteo_ = 0;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::sCell::GetPrecipitation
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
-const weather::PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() const
+const weather::PHY_Precipitation& ElevationGrid::sCell::GetPrecipitation() const
 {
     const weather::PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
     return pEffects ? pEffects->GetPrecipitation( mainPrecipitation ) : mainPrecipitation;
@@ -33,7 +32,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() c
 // Name: PHY_RawVisionData::GetLighting
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
-const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
+const weather::PHY_Lighting& ElevationGrid::sCell::GetLighting() const
 {
     const weather::PHY_Lighting& mainLighting = pMeteo ? pMeteo->GetLighting() : pGlobalMeteo_->GetLighting();
     return pEffects ? pEffects->GetLighting( mainLighting ) : mainLighting;
@@ -45,16 +44,15 @@ const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo,
-    const std::string& detection, PHY_MeteoDataManager* manager )
-    : ppCells_( 0 )
-    , nNbrCol_( 0 )
+                                      const std::string& detection, PHY_MeteoDataManager* manager )
+    : nNbrCol_( 0 )
     , nNbrRow_( 0 )
     , meteoManager_( manager )
-    , cell_( 4 )
+    , pElevationGrid_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
     Read( detection );
-    sCell::pGlobalMeteo_ = &globalMeteo;
+    ElevationGrid::sCell::pGlobalMeteo_ = &globalMeteo;
 }
 
 //-----------------------------------------------------------------------------
@@ -63,10 +61,7 @@ PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo,
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::~PHY_RawVisionData()
 {
-    for( unsigned int i = nNbrCol_; i; )
-        delete [] ppCells_[ --i ];
-    delete [] ppCells_;
-    ppCells_ = 0;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +71,6 @@ PHY_RawVisionData::~PHY_RawVisionData()
 //-----------------------------------------------------------------------------
 void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, boost::shared_ptr< weather::Meteo > pMeteo )
 {
-    assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
@@ -92,7 +86,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
-            sCell& cell = ppCells_[ nXBeg ][ y ];
+            ElevationGrid::sCell& cell = pElevationGrid_->GetCell( nXBeg, y );
             cell.pMeteo = pMeteo;
         }
         ++nXBeg;
@@ -105,7 +99,6 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
 //-----------------------------------------------------------------------------
 void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, boost::shared_ptr< weather::Meteo > pMeteo )
 {
-    assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
@@ -121,7 +114,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
-            sCell& cell = ppCells_[ nXBeg ][ y ];
+            ElevationGrid::sCell& cell = pElevationGrid_->GetCell( nXBeg, y );
             boost::shared_ptr< weather::Meteo > meteo = meteoManager_->GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
             if( meteo.get() && cell.pMeteo.get() != meteo.get() )
                 cell.pMeteo = meteo;
@@ -147,8 +140,8 @@ void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const 
         for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
-                sCell& cell = operator () ( x, y );
-                if( &cell == &emptyCell_ )
+                ElevationGrid::sCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
+                if( &cell == &pElevationGrid_->GetEmptyCell() )
                     continue;
                 PHY_AmmoEffect* pEffect = new PHY_AmmoEffect( weaponClass, cell.pEffects );
                 cell.pEffects = pEffect;
@@ -171,8 +164,8 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
         for( ; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
-                sCell& cell = operator () ( x, y );
-                if( &cell == &emptyCell_ )
+                 ElevationGrid::sCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
+                if( &cell == &pElevationGrid_->GetEmptyCell() )
                     continue;
 
                 PHY_AmmoEffect* pPrevEffect = 0;
@@ -211,19 +204,13 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
         throw MASA_EXCEPTION( "Cannot open file " + strFile );
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
        throw MASA_EXCEPTION( "Error reading file " + strFile );
-    const double halfCellSize = 0.5*rCellSize_;
-    cell_[0] = MT_Vector2D(  halfCellSize,  halfCellSize );
-    cell_[1] = MT_Vector2D( -halfCellSize,  halfCellSize );
-    cell_[2] = MT_Vector2D( -halfCellSize, -halfCellSize );
-    cell_[3] = MT_Vector2D(  halfCellSize, -halfCellSize );
 
-    assert( !ppCells_ );
-    ppCells_ = new sCell*[ nNbrCol_ ];
+    ElevationGrid::sCell** ppCells = new ElevationGrid::sCell*[ nNbrCol_ ];
 
     for( unsigned int x = 0; x < nNbrCol_; ++x )
     {
-        sCell* pTmp = new sCell[ nNbrRow_ ];
-        ppCells_[ x ] = pTmp;
+        ElevationGrid::sCell* pTmp = new ElevationGrid::sCell[ nNbrRow_ ];
+        ppCells[ x ] = pTmp;
 
         for( unsigned int i = 0; i < nNbrRow_; ++i )
         {
@@ -234,8 +221,22 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
                 throw MASA_EXCEPTION( "Error reading file " + strFile );
         }
     }
+
+    pElevationGrid_.reset( new ElevationGrid( rCellSize_, nNbrCol_, nNbrRow_, ppCells ) );
+
     CalcMinMaxAltitude();
     return true;
+}
+
+namespace
+{
+    std::vector< geometry::Point2d > Convert( const T_PointVector& vector )
+    {
+        std::vector< geometry::Point2d > result;
+        for( auto it = vector.begin(); it != vector.end(); ++it )
+            result.push_back( geometry::Point2d( it->rX_, it->rY_ ) );
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -244,13 +245,8 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 // -----------------------------------------------------------------------------
 void PHY_RawVisionData::ModifyAltitude( const TER_Localisation& localisation, short heightOffset, unsigned int objectId )
 {
-    if( heightOffset == 0 )
-        elevationOffsets_.erase( objectId );
-    else
-    {
-        elevationOffsets_[ objectId ].localisation_ = localisation;
-        elevationOffsets_[ objectId ].offset_ = heightOffset;
-    }
+    pElevationGrid_->SetAltitude( objectId, Convert( localisation.GetPoints() ), localisation.GetType() == TER_Localisation::ePolygon,
+                                  heightOffset );
 }
 
 //-----------------------------------------------------------------------------
@@ -266,7 +262,7 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
     {
         for( unsigned int nY = 0; nY < nNbrRow_; ++nY )
         {
-            short nAltitude = ppCells_[ nX ][ nY ].h;
+            short nAltitude = pElevationGrid_->GetCell( nX, nY ).h;
             if( nAltitude < nMinAltitude )
                 nMinAltitude = nAltitude;
             if( nAltitude > nMaxAltitude )
@@ -281,25 +277,25 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
 // Name: PHY_RawVisionData::operator ()
 // Created: JVT 02-11-05
 //-----------------------------------------------------------------------------
-const PHY_RawVisionData::sCell& PHY_RawVisionData::operator () ( unsigned int col, unsigned int row ) const
+const ElevationGrid::sCell& PHY_RawVisionData::operator () ( unsigned int col, unsigned int row ) const
 {
-    return ( col < nNbrCol_ && row < nNbrRow_ ) ? ppCells_[ col ][ row ] : emptyCell_;
+    return pElevationGrid_->GetCell( GetCol( col ), GetRow( row ) );
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::operator
 // Created: JVT 02-11-15
 //-----------------------------------------------------------------------------
-const PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( const MT_Vector2D& pos ) const
+const ElevationGrid::sCell& PHY_RawVisionData::operator() ( const MT_Vector2D& pos ) const
 {
-    return operator () ( GetCol( pos.rX_ ), GetRow( pos.rY_ ) );
+    return pElevationGrid_->GetCell( GetCol( pos.rX_ ), GetRow( pos.rY_ ) );
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::operator
 // Created: JVT 02-11-15
 //-----------------------------------------------------------------------------
-const PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double x, double y ) const
+const ElevationGrid::sCell& PHY_RawVisionData::operator() ( double x, double y ) const
 {
     return operator () ( GetCol( x ), GetRow( y ) );
 }
@@ -308,11 +304,9 @@ const PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double x, double
 // Name: PHY_RawVisionData::operator
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
+ElevationGrid::sCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
 {
-    unsigned int nCol = GetCol( rCol );
-    unsigned int nRow = GetRow( rRow );
-    return ( nCol < nNbrCol_ && nRow < nNbrRow_ ) ? ppCells_[ nCol ][ nRow ] : emptyCell_;
+    return pElevationGrid_->GetCell( GetCol( rCol ), GetRow( rRow ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,70 +324,7 @@ const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_
 //-----------------------------------------------------------------------------
 double PHY_RawVisionData::GetAltitude( double rX, double rY, bool applyOnCell /*= false*/ ) const
 {
-    unsigned int nCol = GetCol( rX );
-    unsigned int nRow = GetRow( rY );
-
-    double rScaledX = rX / rCellSize_;
-
-    const double halfCellSize_ = 0.5 * rCellSize_;
-    const size_t cellLen = cell_.size();
-    T_PointVector cellVector;
-
-    short maxOffset = 0;
-    for( auto it = elevationOffsets_.begin(); it != elevationOffsets_.end(); ++it )
-    {
-        if( it->second.offset_ > maxOffset )
-        {
-            MT_Vector2D point( rX, rY );
-            if( applyOnCell )
-            {
-                if( it->second.localisation_.GetType() == TER_Localisation::ePolygon )
-                {
-                    if( it->second.localisation_.Intersect2DWithCircle( point, 1.414f * halfCellSize_ ) )
-                        maxOffset = it->second.offset_;
-                }
-                else
-                {
-                    if( cellVector.empty() )
-                        cellVector.resize( cellLen );
-                    for( size_t i = 0; i != cellLen; ++i )
-                        cellVector[i] = point + cell_[i];
-                    TER_Localisation cell( TER_Localisation::ePolygon, cellVector );
-                    const T_PointVector linePoints = it->second.localisation_.GetPoints();
-                    for( std::size_t i = 0; i < linePoints.size() - 1; ++i )
-                    {
-                        if( cell.Intersect2D( MT_Line( linePoints[ i ], linePoints[ i + 1 ] ) ) )
-                        {
-                            maxOffset = it->second.offset_;
-                            break;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if( it->second.localisation_.GetType() == TER_Localisation::ePolygon && it->second.localisation_.IsInside( point ) )
-                    maxOffset = it->second.offset_;
-            }
-        }
-    }
-
-    return Interpolate(
-                 nRow,
-                 Interpolate(
-                    nCol,
-                    operator()( nCol, nRow ).GetAltitude(),
-                    nCol + 1,
-                    operator()( nCol + 1, nRow ).GetAltitude(),
-                    rScaledX ),
-                 nRow + 1,
-                 Interpolate(
-                    nCol,
-                    operator()( nCol, nRow + 1 ).GetAltitude(),
-                    nCol + 1,
-                    operator()( nCol + 1, nRow + 1 ).GetAltitude(),
-                    rScaledX ),
-                 rY / rCellSize_ ) + maxOffset;
+    return pElevationGrid_->ElevationAt( rX, rY, applyOnCell );
 }
 
 //-----------------------------------------------------------------------------
@@ -410,7 +341,7 @@ double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos, bool applyOnCell 
 // Name: PHY_RawVisionData::GetVisionObject
 // Created: JVT 03-07-04
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
+ElevationGrid::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
 {
     return operator()( pos ).GetEnv();
 }
@@ -428,7 +359,7 @@ const weather::Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector2D& 
 // Name: PHY_RawVisionData::GetVisionObject
 // Created: JVT 03-07-04
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( double rX_, double rY_ ) const
+ElevationGrid::envBits PHY_RawVisionData::GetVisionObject( double rX_, double rY_ ) const
 {
     return operator()( rX_, rY_ ).GetEnv();
 }
@@ -482,7 +413,7 @@ double PHY_RawVisionData::GetMaxAltitude() const
 // Name: PHY_RawVisionData::GetWind
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
-const weather::Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
+const weather::Meteo::sWindData& ElevationGrid::sCell::GetWind() const
 {
     return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
 }
@@ -507,7 +438,7 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const TER_Localisation_ABC& l
             if( !localisation.IsInside( MT_Vector2D( nX * rCellSize_, nY * rCellSize_ ) ) )
                 continue;
 
-            const envBits env = operator () ( nX, nY ).GetEnv();
+            const ElevationGrid::envBits env = operator () ( nX, nY ).GetEnv();
 
             if( env == eVisionEmpty )
                 ++nEmptySurface;
