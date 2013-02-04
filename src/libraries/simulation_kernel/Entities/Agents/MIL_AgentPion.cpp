@@ -339,12 +339,10 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
         xos << xml::attribute( "overridden-symbol", true )
             << xml::attribute( "nature", app6Symbol_ );
     pColor_->WriteODB( xos );
-    GetRole< PHY_RolePion_Composantes >().WriteODB( xos );         // Equipments
-    GetRole< human::PHY_RolePion_Humans >().WriteODB( xos );       // Humans
-    GetRole< dotation::PHY_RolePion_Dotations >().WriteODB( xos ); // Dotations
-    const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
-    if( role )
-        role->WriteODB( xos ); // Stocks
+    CallRole( &PHY_RolePion_Composantes::WriteODB, xos );
+    CallRole( &human::PHY_RolePion_Humans::WriteODB, xos );
+    CallRole( &dotation::PHY_RolePion_Dotations::WriteODB, xos );
+    CallRole( &PHY_RoleInterface_Supply::WriteODB, xos );
     if( criticalIntelligence_ != "" )
     {
         xos << xml::start( "critical-intelligence" )
@@ -363,11 +361,9 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
-    GetRole< dotation::PHY_RolePion_Dotations >().ReadOverloading( xis ); // Dotations
-    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis );        // Human factor
-    PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role )
-        role->ReadOverloading( xis ); // Stocks
+    CallRole( &dotation::PHY_RoleInterface_Dotations::ReadOverloading, xis );
+    CallRole( &PHY_RoleInterface_HumanFactors::ReadOverloading, xis );
+    CallRole( &PHY_RoleInterface_Supply::ReadOverloading, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,7 +372,7 @@ void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Finalize()
 {
-    GetRole< PHY_RolePion_Composantes >().Finalize();
+    CallRole( &PHY_RolePion_Composantes::Finalize );
 }
 
 // -----------------------------------------------------------------------------
@@ -405,7 +401,7 @@ bool MIL_AgentPion::IsMarkedForDestruction() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsDead() const
 {
-    return !GetRole< PHY_RolePion_Composantes >().IsUsable();
+    return !CallRole( &PHY_RoleInterface_Composantes::IsUsable, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -414,7 +410,7 @@ bool MIL_AgentPion::IsDead() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsNeutralized() const
 {
-    return GetRole< PHY_RolePion_Composantes >().IsNeutralized();
+    return CallRole( &PHY_RoleInterface_Composantes::IsNeutralized, false) ;
 }
 
 // -----------------------------------------------------------------------------
@@ -423,8 +419,13 @@ bool MIL_AgentPion::IsNeutralized() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::UpdateUnderIndirectFire()
 {
-    bool returnValue = GetRole< PHY_RolePion_Composantes >().IsUnderIndirectFire();
-    GetRole< PHY_RolePion_Composantes >().ResetUnderIndirectFire();
+    bool returnValue = false;
+    PHY_RolePion_Composantes* role = RetrieveRole< PHY_RolePion_Composantes >();
+    if( role )
+    {
+        returnValue = role->IsUnderIndirectFire();
+        role->ResetUnderIndirectFire();
+    }
     return returnValue;
 }
 
@@ -752,7 +753,7 @@ void MIL_AgentPion::SendFullState( unsigned int nCtx ) const
         pExtensions_->SendFullState( msg );
         msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
     }
-    GetRole< network::NET_RolePion_Dotations >().SendFullState( nCtx );
+    CallRole( &network::NET_RolePion_Dotations::SendFullState, nCtx );
 }
 
 // -----------------------------------------------------------------------------

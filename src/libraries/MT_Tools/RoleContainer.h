@@ -17,6 +17,23 @@
 #include "tools/InterfaceContainer.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include <boost/serialization/split_member.hpp>
+#include <boost/preprocessor.hpp>
+#include <boost/type_traits.hpp>
+
+#define BOOST_CONST_REF_PRE( A ) typename boost::add_lvalue_reference< typename boost::add_const< A
+#define BOOST_CONST_REF_POST >::type >::type
+
+#define CALL_ROLE_DECL( z, n, d ) \
+     template< typename Role BOOST_PP_ENUM_TRAILING_PARAMS(n, typename A ) > void CallRole( void (Role::*func)( BOOST_PP_ENUM_PARAMS( n, A ) ) BOOST_PP_ENUM_TRAILING_BINARY_PARAMS( n, BOOST_CONST_REF_PRE( A ), BOOST_CONST_REF_POST p ) );
+
+#define CALL_ROLE_DECL_CONST( z, n, d ) \
+     template< typename Role BOOST_PP_ENUM_TRAILING_PARAMS(n, typename A ) > void CallRole( void (Role::*func)( BOOST_PP_ENUM_PARAMS( n, A ) ) const BOOST_PP_ENUM_TRAILING_BINARY_PARAMS( n, BOOST_CONST_REF_PRE( A ), BOOST_CONST_REF_POST p ) ) const;
+
+#define CALL_ROLE_RETVAL_DECL( z, n, d ) \
+     template< typename Role, typename RetType BOOST_PP_ENUM_TRAILING_PARAMS(n, typename A ) > RetType CallRole( RetType (Role::*func)( BOOST_PP_ENUM_PARAMS( n, A ) ), const RetType& defVal BOOST_PP_ENUM_TRAILING_BINARY_PARAMS( n, BOOST_CONST_REF_PRE( A ), BOOST_CONST_REF_POST p ) );
+
+#define CALL_ROLE_RETVAL_DECL_CONST( z, n, d ) \
+     template< typename Role, typename RetType BOOST_PP_ENUM_TRAILING_PARAMS(n, typename A ) > RetType CallRole( RetType (Role::*func)( BOOST_PP_ENUM_PARAMS( n, A ) ) const, const RetType& defVal BOOST_PP_ENUM_TRAILING_BINARY_PARAMS( n, BOOST_CONST_REF_PRE( A ), BOOST_CONST_REF_POST p ) ) const;
 
 namespace tools
 {
@@ -62,11 +79,22 @@ public:
     //! @name Operation
     //@{
     template< typename Algorithm > const Algorithm& Execute( Algorithm& algorithm );
+
+    BOOST_PP_REPEAT( 2, CALL_ROLE_DECL, l )
+    BOOST_PP_REPEAT( 2, CALL_ROLE_DECL_CONST, l )
+    BOOST_PP_REPEAT( 2, CALL_ROLE_RETVAL_DECL, l )
+    BOOST_PP_REPEAT( 2, CALL_ROLE_RETVAL_DECL_CONST, l )
     //@}
 };
 
 #include "RoleContainer.inl"
 
+#undef BOOST_CONST_REF_PRE
+#undef BOOST_CONST_REF_POST
+#undef CALL_ROLE_DECL
+#undef CALL_ROLE_DECL_CONST
+#undef CALL_ROLE_RETVAL_DECL
+#undef CALL_ROLE_RETVAL_DECL_CONST
 }
 
 #endif // __RoleContainer_h_
