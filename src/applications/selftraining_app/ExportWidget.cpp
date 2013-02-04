@@ -166,13 +166,16 @@ ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config,
     tabs_->addTab( terrainTab, "" );
     tabs_->addTab( modelTab, "" );
 
+    //general progress bar
+    progress_ = new QProgressBar( this );
+    progress_->hide();
+
     //main layout
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->addWidget( tabs_ );
+    layout->addWidget( progress_ );
 
     //general configuration
-    progress_ = new QProgressBar( this );
-    progress_->hide();
     package_.first = config_.GetRootDir();
     controllers_.Register( *this );
     connect( tabs_, SIGNAL( currentChanged( int ) ), SLOT( OnButtonChanged() ) );
@@ -432,10 +435,14 @@ namespace
     void BrowseChildren( const std::string& base, QStandardItem* item, zip::ozipfile& zos, QProgressBar* progress, bool recursive )
     {
         int row = 0;
-        while( row < item->rowCount() && !dynamic_cast< frontend::CheckListItem* >( item ) )
+        while( row < item->rowCount() )
         {
-            std::string file( item->child( row )->text().toStdString() );
-            Serialize( base, file, zos, recursive, progress );
+            frontend::CheckListItem* child = dynamic_cast< frontend::CheckListItem* >( item->child( row ) );
+            if( child && child->checkState() == Qt::Checked )
+            {
+                std::string file( child->text().toStdString() );
+                Serialize( base, file, zos, recursive, progress );
+            }
             AddProgress( progress, 2 );
             ++row;
         }
