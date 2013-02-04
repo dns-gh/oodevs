@@ -16,19 +16,16 @@ rootnode
     connections = { skill.links.moveToward, skill.links.stayClose };
 
     done = function( self, params, additionalParams )
-        if additionalParams.reason == "blocked" then -- Cas ou un endroit non atteignable me bloque 
-            myself.blocked = nil -- Si ce n'est pas le dernier point de mon itinéraire, je passe au suivant sans rester bloqué
-        end
         if self.nextTargetIndex + 1 > #self.params.entities then
-           if not self.params.entities[ self.nextTargetIndex ]:isReached() then
-               self.notArrived = true
-               if not myself.isEscorted then -- Attention, si on est escorté on ne veut pas renvoyer un feedback failed
-                   Feedback( self.feedbacks.failed ) --Fin de mission au dernier point même si je ne l'atteinds pas
-               end
+          if not self.params.entities[ self.nextTargetIndex ]:isReached() then
+              self.notArrived = true
            else
                Feedback( self.feedbacks.done, { sender = "moveAlong", element = self.params.entities[ self.nextTargetIndex ] } )
            end
         else
+            if additionalParams.reason == "blocked" then -- Cas ou un endroit non atteignable me bloque 
+                myself.blocked = nil -- Si ce n'est pas le dernier point de mon itinéraire, je passe au suivant sans rester bloqué
+            end
             self.nextTargetIndex = self.nextTargetIndex + 1
         end
         myself.isEscorted = false
