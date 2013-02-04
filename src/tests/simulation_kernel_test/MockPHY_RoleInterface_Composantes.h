@@ -32,6 +32,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( RetrieveLentComposante, 2 );
     MOCK_METHOD( NotifyLentComposanteReceived, 2 );
     MOCK_METHOD( NotifyLentComposanteReturned, 2 );
+    MOCK_METHOD( ReturnAllBorrowedComposantes, 0 );
+    MOCK_METHOD( RetrieveAllLentComposantes, 0 );
     MOCK_METHOD( PreprocessRandomBreakdowns, 1 );
     MOCK_METHOD( NotifyComposanteWaitingForMaintenance, 1 );
     MOCK_METHOD( NotifyComposanteBackFromMaintenance, 1 );
