@@ -1485,6 +1485,8 @@
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
 					<include name="data/models/ada/physical/france/**"/>
+					<exclude name="data/models/ada/decisional/Sources/Humus/**"/>
+					<exclude name="data/models/ada/decisional/Sources/glaise/**"/>
                 </zipfileset>
                 <fileset dir="${out.dir}" includes="content.xml"/>
              </zip>
