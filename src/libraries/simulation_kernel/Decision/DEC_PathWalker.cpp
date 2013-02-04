@@ -263,12 +263,12 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
         // Ajout des points de collision dans moveStepSet
         if( object.Intersect2D( lineTmp, collisions ) )
         {
-            for( IT_PointSet itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
+            for( auto itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
             {
                 if( !object.IsInside( *itPoint ) )
                     continue;
                 IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( *itPoint ) ).first;
-                const_cast< T_ObjectSet& >( itMoveStep->ponctualObjectsOnSet_ ).insert( &object );
+                const_cast< T_ObjectSet& >( itMoveStep->ponctualObjectsOnSet_ )[ object.GetID() ] = &object;
                 // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
                 if( itMoveStep != moveStepSet.begin() )
                 {
@@ -282,22 +282,22 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
         // Détermination si objet courant se trouve sur le trajet entre chaque point
         IT_MoveStepSet itPrevMoveStep = moveStepSet.begin();
         bool bInsideObjectOnPrevPoint = false;
-        for( IT_MoveStepSet itMoveStep = ++( moveStepSet.begin() ); itMoveStep != moveStepSet.end(); ++itMoveStep )
+        for( auto itMoveStep = ++( moveStepSet.begin() ); itMoveStep != moveStepSet.end(); ++itMoveStep )
         {
             // Picking au milieu de la ligne reliant les 2 points
             MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
             if( object.IsInside( vTmp ) )
             {
-                const_cast< T_ObjectSet& >( itPrevMoveStep->objectsToNextPointSet_ ).insert( &object );
+                const_cast< T_ObjectSet& >( itPrevMoveStep->objectsToNextPointSet_ )[ object.GetID() ] = &object;
                 bInsideObjectOnPrevPoint = true;
-                const_cast< T_ObjectSet& >( itPrevMoveStep->ponctualObjectsOnSet_ ).erase( &object ); // This is not yet a ponctual object
+                const_cast< T_ObjectSet& >( itPrevMoveStep->ponctualObjectsOnSet_ ).erase( object.GetID() ); // This is not yet a ponctual object
             }
             else
             {
                 // Stockage des objets desquels on sort
                 if( bInsideObjectOnPrevPoint )
                 {
-                    const_cast< T_ObjectSet& >( itMoveStep->objectsOutSet_ ).insert( &object );
+                    const_cast< T_ObjectSet& >( itMoveStep->objectsOutSet_ )[ object.GetID() ] = &object;
                     bInsideObjectOnPrevPoint = false;
                 }
             }
@@ -313,12 +313,11 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove )
 {
     static const double rDistanceBeforeBlockingObject = TER_World::GetWorld().GetWeldValue();
-    CIT_ObjectSet itObject;
-
+    
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
-    for( itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
+    for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
+        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( *itObject->second );
         double rSpeedWithinObject = movingEntity_.GetSpeedWithReinforcement( environment_, object );
         if( movingEntity_.CanObjectInteractWith( object ) )
         {
@@ -344,9 +343,9 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     }
 
     double rMaxSpeedForStep = std::numeric_limits< double >::max();
-    for( itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
+    for( auto itObject = itCurMoveStep->objectsToNextPointSet_.begin(); itObject != itCurMoveStep->objectsToNextPointSet_.end(); ++itObject )
     {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
+        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( *itObject->second );
         if( movingEntity_.CanObjectInteractWith( object ) )
         {
             movingEntity_.NotifyMovingInsideObject( object );
@@ -368,9 +367,9 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     }
 
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
-    for( itObject = itNextMoveStep->objectsOutSet_.begin(); itObject != itNextMoveStep->objectsOutSet_.end(); ++itObject )
+    for( auto itObject = itNextMoveStep->objectsOutSet_.begin(); itObject != itNextMoveStep->objectsOutSet_.end(); ++itObject )
     {
-        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
+        MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( *itObject->second );
         if( movingEntity_.CanObjectInteractWith( object ) )
             movingEntity_.NotifyMovingOutsideObject( object );
     }
