@@ -199,6 +199,15 @@ const T_PointVector* PHY_RolePionLOGConvoy_Supply::ConvoyGetPathToNextDestinatio
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ConvoyIsPushedFlow
+// Created: LDC 2013-02-04
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOGConvoy_Supply::ConvoyIsPushedFlow() const
+{
+    return convoy_ ? convoy_->IsPushedFlow() : false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOGConvoy_Supply::ModifySpeed
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------

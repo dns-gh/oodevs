@@ -95,4 +95,6 @@ void MIL_AgentTypePionLOG_ABC::RegisterFunctions( sword::Brain& brain, MIL_Agent
         boost::bind( &DEC_LogisticFunctions::ConvoyGetTransportersProvider, boost::cref( agent ) ) );
     brain.RegisterFunction( "DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination",
         boost::bind( &DEC_LogisticFunctions::ConvoyGetPathToNextDestination, boost::cref( agent ) ) );
+    brain.RegisterFunction( "DEC_Ravitaillement_Convoi_EstFluxPousse",
+        boost::bind( &DEC_LogisticFunctions::ConvoyIsPushedFlow, boost::cref( agent ) ) );
 }

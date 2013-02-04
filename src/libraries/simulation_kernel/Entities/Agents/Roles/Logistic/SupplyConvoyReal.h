@@ -60,6 +60,7 @@ public:
     virtual SupplySupplier_ABC&  GetSupplier              () const;
     virtual SupplySupplier_ABC&  GetTransportersProvider  () const;
     virtual const T_PointVector* GetPathToNextDestination () const;
+    virtual bool                 IsPushedFlow             () const;
     virtual const MIL_Agent_ABC* GetProvider              () const;
     //@}
 

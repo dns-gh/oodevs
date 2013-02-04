@@ -668,6 +668,18 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGet
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConvoyIsPushedFlow
+// Created: LDC 2013-02-04
+// -----------------------------------------------------------------------------
+bool DEC_LogisticFunctions::ConvoyIsPushedFlow( const MIL_Agent_ABC& callerAgent )
+{
+    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+        return role->ConvoyIsPushedFlow();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UndoLendComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------

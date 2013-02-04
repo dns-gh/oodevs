@@ -133,6 +133,7 @@ public:
     virtual const MIL_Agent_ABC*           ConvoyGetSupplier() const { return 0; };
     virtual logistic::SupplySupplier_ABC*  ConvoyGetTransportersProvider() const { return 0; };
     virtual const T_PointVector*           ConvoyGetPathToNextDestination() const { return 0; };
+    virtual bool                           ConvoyIsPushedFlow() const { return false; }
     //@}
 
 private:
