@@ -100,7 +100,7 @@ void MineAttribute::SetDotations( const PHY_DotationCategory& category, unsigned
 {
     dotation_            = &category;
     nFullNbrDotation_    = nFullNbrDotation;
-    nCurrentNbrDotation_ = nFullNbrDotation;
+    nCurrentNbrDotation_ = static_cast< int >( miningPercentage_.Get() * nFullNbrDotation );
 }
 
 // -----------------------------------------------------------------------------

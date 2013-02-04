@@ -84,7 +84,7 @@ ConstructionAttribute::~ConstructionAttribute()
 void ConstructionAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
 {
     nFullNbrDotation_    = nFullNbrDotation;
-    nCurrentNbrDotation_ = nFullNbrDotation;
+    nCurrentNbrDotation_ = static_cast< int >( constructionPercentage_.Get() * nFullNbrDotation );
     dotation_            = &category;
 }
 
