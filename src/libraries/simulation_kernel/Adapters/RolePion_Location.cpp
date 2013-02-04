@@ -248,7 +248,7 @@ RolePion_Location::RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Mod
     , owner_            ( &pion )
     , entity_           ( &entity )
     , vDirection_       ( 0, 1 )
-    , pvPosition_       ( new MT_Vector2D ( position ) )   // $$$$ Devrait être 'NULL'
+    , pvPosition_       ( new MT_Vector2D( position ) )
     , bHasDoneMagicMove_( false )
 {
     // NOTHING
