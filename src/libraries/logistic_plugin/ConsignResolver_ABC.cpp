@@ -272,7 +272,7 @@ namespace logistic
     // -----------------------------------------------------------------------------
     void ConsignResolver_ABC::CheckOutputFile( const boost::gregorian::date& today )
     {
-        if( fileDate_ != today || curLineIndex_ >= maxLinesInFile_ )
+        if( fileDate_ != today || curLineIndex_ >= maxLinesInFile_ || !output_.is_open() )
         {
             SetNewFile( today );
             OpenFile();
