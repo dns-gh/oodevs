@@ -3650,8 +3650,6 @@
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION ASS Mise En Batterie">
           <fragorder name="Pion Appliquer Feux"/>
-          <fragorder name="Pion Engager"/>
-          <fragorder name="Pion Desengager"/>
           <fragorder name="Sauvegarde Contre Batterie"/>
         </mission>
         <mission name="PION COMMUNES Se Faire Transporter"/>
@@ -7321,4 +7319,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0865472583" -->
+<!-- signature="4258905608" -->

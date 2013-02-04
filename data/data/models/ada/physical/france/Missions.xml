@@ -4483,9 +4483,6 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_SArreter" id="346" name="S'arreter"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Poursuivre" id="343" name="Poursuivre"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Interrompre" id="344" name="Interrompre"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_EffectuerMouvementDeSauvegarde" id="464" name="Effectuer Mouvement De Sauvegarde">
-      <parameter dia-name="destination_point_" name="Destination" optional="false" type="Point"/>
-    </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerAmbiance" id="345" name="Changer Ambiance">
       <parameter dia-name="orderConduiteChangerAmbiance_" name="Ordre conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="surete"/>
@@ -4514,20 +4511,9 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="349" name="Deboucher"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Decrocher" id="350" name="Decrocher"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_AcquerirObjectif" id="351" name="Acquerir Objectif">
-      <parameter dia-name="orderConduiteAcquerirObjectif_" name="Ordre conduite acquerir objectif" optional="false" type="Polygon"/>
-    </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerPositionDebarquement" id="353" name="Changer Position Debarquement">
       <parameter dia-name="orderConduiteChangerPositionDebarquement_" name="Ordre conduite changer position debarquement" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ChangerDePosition" id="354" name="Pion Changer De Position">
-      <parameter dia-name="orderConduitePionChangerDePosition_" name="Ordre conduite pion changer de position" optional="false" type="Point"/>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Contourner" id="355" name="Pion Contourner"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule" id="356" name="Pion Envoyer Vehicule"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ExecuterTir" id="359" name="Pion Executer Tir"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Emettre" id="360" name="Pion Emettre"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
       <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
@@ -4590,27 +4576,6 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" id="372" name="Modifier Priorites Tactiques Blesses">
       <parameter dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" max-occurs="unbounded" min-occurs="0" name="Ordre conduite modifier priorites tactiques blesses" optional="false" type="Automat"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_RealiserVariantement" id="373" name="Automate Realiser Variantement">
-      <parameter dia-name="siteFranchissementOriginal_" name="Site franchissement original" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="siteFranchissementVariante_" name="Site franchissement variante" optional="false" type="ObjectKnowledge"/>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement" id="374" name="Automate Desequiper Site Franchissement">
-      <parameter dia-name="siteFranchissement_" name="Site franchissement" optional="false" type="ObjectKnowledge"/>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation" id="376" name="Automate Reconnaitre Zone Implantation">
-      <parameter dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" name="Ordre conduite automate reconnaitre zone implantation" optional="false" type="Point"/>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement" id="377" name="Automate TC2 Gerer Materiel Avant Deplacement">
-      <parameter dia-name="orderConduiteAutomateTc2GererMaterielAvantDeplacement_" name="Ordre conduite automate tc2 gerer materiel avant deplacement" optional="false" type="Enumeration">
-        <value id="0" name="deborder_materiels_vers_bld"/>
-        <value id="1" name="detruire_materiels_en_reparation"/>
-        <value id="2" name="reparer_materiels_sur_place"/>
-      </parameter>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Automate_TransfererRenforts" id="379" name="Automate Transferer Renforts">
-      <parameter dia-name="pionATransferer_" name="Pion a transferer" optional="false" type="Agent"/>
-      <parameter dia-name="automateARenforcer_" name="Automate a renforcer" optional="false" type="Automat"/>
-    </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Population_ChangerAttitude" id="380" name="Population Changer Attitude">
       <parameter dia-name="orderConduitePopulationChangerAttitude_" name="Ordre conduite population changer attitude" optional="false" type="Enumeration">
         <value id="0" name="calme"/>
@@ -4656,8 +4621,6 @@
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Engager" id="399" name="Pion Engager"/>
-    <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_Desengager" id="400" name="Pion Desengager"/>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.DeposerUnite" id="401" name="Deposer Unite Capturee">
       <parameter dia-name="pointCible_" name="Position" optional="true" type="Point"/>
       <parameter dia-name="agentKnowledge_" name="Unite" optional="false" type="AgentKnowledge"/>
@@ -4683,4 +4646,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1636429935" -->
+<!-- signature="0380004299" -->
