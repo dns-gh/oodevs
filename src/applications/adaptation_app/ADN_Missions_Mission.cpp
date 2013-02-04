@@ -352,11 +352,6 @@ void ADN_Missions_Mission::MakeStringXmlItem( xml::xostream& xos, std::size_t le
                 {
                     xos.end();
                     openTags.erase( ret.first );
-                    if( match[ 2 ] == "$$" )
-                        if( !IsFileInAttachmentList( match[ 1 ].str() ) )
-                        {
-                            //return an error
-                        }
                 }
                 line = match[ 3 ];
             }
