@@ -34,14 +34,6 @@ public:
     virtual void NotifyNoXmlSchemaSpecified( const std::string& file );
     virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion );
     //@}
-
-    //! @name Accessors
-    //@{
-    const std::string& GetInvalidSignedFiles() const;
-    //@}
-
-private:
-    std::string invalidSignedFiles_;
 };
 
 #endif // ADN_FileLoaderObserver_h

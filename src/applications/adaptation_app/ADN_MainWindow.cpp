@@ -404,7 +404,7 @@ void ADN_MainWindow::OpenProject()
 // Name: ADN_MainWindow::OpenProject
 // Created: APE 2005-04-14
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAdminMode )
+void ADN_MainWindow::OpenProject( const std::string& szFilename, bool isAdminMode )
 {
     if( isAdminMode )
     {
@@ -433,13 +433,6 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     setCaption( title + "[*]" );
     SetMenuEnabled( true );
     mainTabWidget_->show();
-    if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
-            QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
-                    , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );
-    }
     pProjectLoadAction_->setVisible( false );
     setWindowModified( false );
 }

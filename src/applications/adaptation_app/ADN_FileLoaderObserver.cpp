@@ -58,12 +58,3 @@ void ADN_FileLoaderObserver::NotifyFileMigrated( const std::string& /*fileName*/
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FileLoaderObserver::NotifyFileMigrated
-// Created: NLD 2011-02-28
-// -----------------------------------------------------------------------------
-const std::string& ADN_FileLoaderObserver::GetInvalidSignedFiles() const
-{
-    return invalidSignedFiles_;
-}

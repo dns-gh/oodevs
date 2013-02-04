@@ -57,7 +57,7 @@ public:
     void AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>* pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback );
 
-    void OpenProject( const std::string& filename, const bool isAdminMode = false );
+    void OpenProject( const std::string& filename, bool isAdminMode = false );
     void SaveProjectAs( const std::string& filename );
 
 protected:
