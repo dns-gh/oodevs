@@ -12,7 +12,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > void PHY_RolePion_Composantes::ApplyOnWeapons
+// Name: PHY_RolePion_Composantes::ApplyOnWeapons
 // Created: NLD 2006-08-07
 // -----------------------------------------------------------------------------
 template< typename T > 
@@ -26,7 +26,7 @@ inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 // Name: PHY_RolePion_Composantes::LendComposantes
 // Created: NLD 2006-04-03
 // -----------------------------------------------------------------------------
-template < typename T >
+template< typename T >
 unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
@@ -46,10 +46,10 @@ unsigned int PHY_RolePion_Composantes::LendComposantes( MIL_Agent_ABC& borrower,
 }
 
 // -----------------------------------------------------------------------------
-// Name: template < typename T > unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes
+// Name: PHY_RolePion_Composantes::RetrieveLentComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-template < typename T > 
+template< typename T > 
 unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
@@ -75,10 +75,10 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( MIL_Agent_ABC& b
 }
    
 // -----------------------------------------------------------------------------
-// Name: template < typename T > unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime
+// Name: PHY_RolePion_Composantes::GetLentComposantesTravelTime
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-template < typename T > 
+template< typename T > 
 unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( MIL_Agent_ABC& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;

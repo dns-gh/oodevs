@@ -801,6 +801,8 @@ void MIL_AgentPion::OnReceiveDeleteUnit()
 {
     CancelCurrentMission();
     GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
+    GetRole< PHY_RolePion_Composantes >().RetrieveAllLentComposantes();
+    GetRole< PHY_RolePion_Composantes >().ReturnAllBorrowedComposantes();
     // TODO faire ce qui est dans magicmove?
     markedForDestruction_ = true;
     Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );

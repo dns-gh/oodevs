@@ -145,6 +145,8 @@ public:
     // Actions on the composante owner
     virtual void LendComposante        ( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante );
     virtual void RetrieveLentComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante );
+    virtual void RetrieveAllLentComposantes();
+    virtual void ReturnAllBorrowedComposantes();
 
     // Notification for the beneficary
     virtual void NotifyLentComposanteReceived( MIL_Agent_ABC& lender, PHY_ComposantePion& composante );

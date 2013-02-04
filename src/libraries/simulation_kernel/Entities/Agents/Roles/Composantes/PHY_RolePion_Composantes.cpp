@@ -1455,6 +1455,37 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::RetrieveAllLentComposantes
+// Created: JSR 2013-01-31
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::RetrieveAllLentComposantes()
+{
+    while( lentComposantes_.size() > 0 )
+    {
+        const MIL_Agent_ABC* borrower = lentComposantes_.begin()->first;
+        PHY_ComposantePion::T_ComposantePionVector vector = lentComposantes_.begin()->second;
+        for( auto it = vector.begin(); it != vector.end(); ++it )
+            RetrieveLentComposante( *const_cast< MIL_Agent_ABC* >( borrower ), **it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReturnAllBorrowedComposantes
+// Created: JSR 2013-01-31
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReturnAllBorrowedComposantes()
+{
+    while( borrowedComposantes_.size() > 0 )
+    {
+        MIL_Agent_ABC* lender = const_cast< MIL_Agent_ABC* >( borrowedComposantes_.begin()->first );
+        PHY_RolePion_Composantes& lenderRole = lender->GetRole< PHY_RolePion_Composantes >();
+        PHY_ComposantePion::T_ComposantePionVector vector = borrowedComposantes_.begin()->second;
+        for( auto it = vector.begin(); it != vector.end(); ++it )
+            lenderRole.RetrieveLentComposante( *owner_, **it );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyCaptured
 // Created: NLD 2005-03-07
 // -----------------------------------------------------------------------------
