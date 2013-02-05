@@ -37,14 +37,13 @@ namespace gui
 */
 // Created: AGE 2006-11-21
 // =============================================================================
-class TacticalLinesLayer : public QObject
-                         , public EntityLayer< kernel::TacticalLine_ABC >
+class TacticalLinesLayer : public EntityLayer< kernel::TacticalLine_ABC >
                          , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                          , private ShapeHandler_ABC
                          , private kernel::LocationVisitor_ABC
                          , public kernel::OptionsObserver_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -61,17 +60,11 @@ protected:
     virtual void CreateLimit( const T_PointVector& points ) = 0;
     virtual void CreateLima( const T_PointVector& points ) = 0;
     virtual bool CanCreateLine();
-    virtual bool MouseMove       ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool MousePress      ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool MouseDoubleClick( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
 
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
 
     virtual bool HandleKeyPress        ( QKeyEvent* key );
-    virtual bool HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void NotifyContextMenu     ( const kernel::Nothing&, kernel::ContextMenu& menu );
     virtual void NotifySelectionChanged( const std::vector< const kernel::TacticalLine_ABC* >& elements );
     virtual void OptionChanged         ( const std::string& /*name*/, const kernel::OptionVariant& /*value*/ ) {}
