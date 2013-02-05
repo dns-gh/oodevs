@@ -168,7 +168,16 @@ void Converter::ReceiveMessengerToClient( const sword::MessengerToClient& msg )
     FORWARD( client_, MessengerToClient, client_object_creation_ack )
     FORWARD( client_, MessengerToClient, client_object_destruction_ack )
     FORWARD( client_, MessengerToClient, client_object_update_ack )
-    
+    if( msg.has_message() && msg.message().has_log_history_request_for_play_ack() )
+    {
+        MsgsSimToClient::MsgSimToClient simout;
+        if( msg.has_context() )
+            simout.set_context( msg.context() );
+        MessengerToClient::Convert( msg.message().log_history_request_for_play_ack(), simout.mutable_message()->mutable_log_history_request_for_play_ack() );
+        client_.Send( simout );
+        return;
+    }
+
     if( msg.has_message() && msg.message().has_phase_line_creation() )
     {
         if( msg.has_context() )

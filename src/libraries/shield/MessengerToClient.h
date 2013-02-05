@@ -53,6 +53,8 @@ public:
     static void Convert( const sword::ClientObjectCreationRequestAck& from, MsgsMessengerToClient::MsgClientObjectCreationRequestAck* to );
     static void Convert( const sword::ClientObjectDestructionRequestAck& from, MsgsMessengerToClient::MsgClientObjectDestructionRequestAck* to );
     static void Convert( const sword::ClientObjectUpdateRequestAck& from, MsgsMessengerToClient::MsgClientObjectUpdateRequestAck* to );
+    
+    static void Convert( const sword::LogHistoryRequestForPlayAck& from, Common::MsgLogHistoryRequestForPlayAck* to );
     //@}
 };
 

@@ -185,3 +185,13 @@ BOOST_FIXTURE_TEST_CASE( client_object_update_ack_to_client_is_converted, Contex
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { client_object_update_ack { object { id: 12 } error_code: duplicate_attribute_name } }" ) );
     converter.ReceiveMessengerToClient( msg );
 }
+
+BOOST_FIXTURE_TEST_CASE( log_history_request_for_play_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+{
+    content.mutable_log_history_request_for_play_ack()->set_exercise( "ex" );
+    content.mutable_log_history_request_for_play_ack()->set_session( "sess" );
+    content.mutable_log_history_request_for_play_ack()->set_profile( "prof" );
+    content.mutable_log_history_request_for_play_ack()->mutable_date_time()->set_data( "dat" );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_history_request_for_play_ack { exercise: \"ex\" session: \"sess\" profile: \"prof\" date_time { data: \"dat\" } } }" ) );
+    converter.ReceiveMessengerToClient( msg );
+}
