@@ -159,6 +159,22 @@
         <source>Integration layer directory</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Profiling settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decisional function calls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commands start / stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hooks function calls</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
@@ -582,10 +598,6 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Starting scenario</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

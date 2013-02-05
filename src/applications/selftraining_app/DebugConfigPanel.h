@@ -10,8 +10,12 @@
 #ifndef __DebugConfigPanel_h_
 #define __DebugConfigPanel_h_
 
-#include "clients_gui/LanguageChangeObserver_ABC.h"
-#include <boost/noncopyable.hpp>
+#include "frontend/PluginConfig_ABC.h"
+
+namespace tools
+{
+    class GeneralConfig;
+}
 
 // =============================================================================
 /** @class  DebugConfigPanel
@@ -19,20 +23,21 @@
 */
 // Created: NPT 2013-01-03
 // =============================================================================
-class DebugConfigPanel : public gui::LanguageChangeObserver_ABC< QWidget >
-                       , private boost::noncopyable
+class DebugConfigPanel : public frontend::PluginConfig_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugConfigPanel();
+             DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
     virtual ~DebugConfigPanel();
     //@}
 
     //! @name Operations
     //@{
+    virtual QString GetName() const;
+    virtual void Commit( const std::string& exercise, const std::string& session );
     virtual void OnLanguageChanged();
     //@}
 
@@ -46,6 +51,9 @@ signals:
 private:
     //! @name Member data
     //@{
+    //config
+    const tools::GeneralConfig& config_;
+
     QStringList* pathList_;
     //legacy
     QLabel* legacyLabel_;
@@ -57,6 +65,12 @@ private:
     QComboBox* integrationComboBox_;
     QPushButton* integrationButton_;
     QGroupBox* integrationBox_;
+
+    // profiling configuration
+    QGroupBox* profilingBox_;
+    QCheckBox* decCallsBox_;
+    QCheckBox* commandsBox_;
+    QCheckBox* hooksBox_;
     //@}
 
 private slots:

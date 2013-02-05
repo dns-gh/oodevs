@@ -161,6 +161,22 @@
         <source>Integration layer directory</source>
         <translation>Répertoire d&apos;intégration</translation>
     </message>
+    <message>
+        <source>Profiling settings</source>
+        <translation>Instrumentation</translation>
+    </message>
+    <message>
+        <source>Decisional function calls</source>
+        <translation>Appel aux fonctions décisionnelles</translation>
+    </message>
+    <message>
+        <source>Commands start / stop</source>
+        <translation>Commandes démarrage / arrêt</translation>
+    </message>
+    <message>
+        <source>Hooks function calls</source>
+        <translation>Appel aux points d'insertion </translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
@@ -587,10 +603,6 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Starting scenario</source>
         <translation>Chargement du scénario</translation>
-    </message>
-    <message>
-        <source>Debug</source>
-        <translation>Debug</translation>
     </message>
 </context>
 <context>

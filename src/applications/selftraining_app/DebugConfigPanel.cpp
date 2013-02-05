@@ -11,6 +11,7 @@
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
 #include "clients_gui/tools.h"
+#include "frontend/CreateSession.h"
 
 namespace
 {
@@ -44,8 +45,14 @@ namespace
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel()
-    : pathList_( new QStringList() )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
+    : PluginConfig_ABC( parent )
+    , config_( config )
+    , pathList_( new QStringList() )
+    , profilingBox_( 0 )
+    , decCallsBox_( 0 )
+    , commandsBox_( 0 )
+    , hooksBox_( 0 )
 {
     //legacy box
     legacyLabel_ = new QLabel();
@@ -64,7 +71,7 @@ DebugConfigPanel::DebugConfigPanel()
     //integration level label
     integrationLabel_ = new QLabel();
 
-    //integration level comobobox
+    //integration level combobox
     integrationComboBox_ = new QComboBox();
     integrationComboBox_->setEditable( true );
     QString pathValue = ReadStringRegistryValue( "IntegrationLayerPaths" );
@@ -80,7 +87,7 @@ DebugConfigPanel::DebugConfigPanel()
     integrationButton_->setText( "..." );
     connect( integrationButton_, SIGNAL( clicked() ), SLOT( OnChangeIntegrationDirectory() ) );
 
-    //integraiton level group box
+    //integration level group box
     integrationBox_ = new QGroupBox();
     QHBoxLayout* integrationBoxLayout = new QHBoxLayout( integrationBox_ );
     integrationBoxLayout->addWidget( integrationLabel_ );
@@ -91,11 +98,22 @@ DebugConfigPanel::DebugConfigPanel()
     integrationBoxLayout->setStretch( 2, 1 );
     integrationBoxLayout->setMargin( 5 );
 
+    //profiling group box
+    profilingBox_ = new QGroupBox();
+    QGridLayout* profiling = new QGridLayout( profilingBox_, 2, 2 );
+    profiling->setMargin( 10 );
+    decCallsBox_ = new QCheckBox();
+    commandsBox_ = new QCheckBox();
+    hooksBox_ = new QCheckBox();
+    profiling->addWidget( decCallsBox_, 0, 0 );
+    profiling->addWidget( commandsBox_, 0, 1 );
+    profiling->addWidget( hooksBox_, 1, 0 );
 
     //general Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     mainLayout->addWidget( legacyBox_ );
     mainLayout->addWidget( integrationBox_ );
+    mainLayout->addWidget( profilingBox_ );
     mainLayout->setAlignment( Qt::AlignTop );
 }
 
@@ -160,4 +178,33 @@ void DebugConfigPanel::OnLanguageChanged()
 {
     legacyLabel_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
+    profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
+    decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional function calls" ) );
+    commandsBox_->setText( tools::translate( "DebugConfigPanel", "Commands start / stop" ) );
+    hooksBox_->setText( tools::translate( "DebugConfigPanel", "Hooks function calls" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::GetName
+// Created: LGY 2013-02-05
+// -----------------------------------------------------------------------------
+QString DebugConfigPanel::GetName() const
+{
+    return tools::translate( "DebugConfigPanel", "Debug" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::Commit
+// Created: LGY 2013-02-05
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::Commit( const std::string& exercise, const std::string& session )
+{
+    frontend::CreateSession action( config_, exercise, session );
+    if( decCallsBox_->isChecked() )
+        action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
+    if( commandsBox_->isChecked() )
+        action.SetOption( "session/config/simulation/profiling/@command", "true" );
+    if( hooksBox_->isChecked() )
+        action.SetOption( "session/config/simulation/profiling/@hook", "true" );
+    action.Commit();
 }

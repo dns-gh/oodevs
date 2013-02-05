@@ -182,10 +182,9 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //debug config panel
     if( config.IsOnDebugMode() )
     {
-        DebugConfigPanel* configPanel = new DebugConfigPanel();
+        DebugConfigPanel* configPanel = AddPlugin< DebugConfigPanel >();
         connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
         connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
-        configTabs_->addTab( configPanel, tools::translate( "ScenarioLauncherPage", "Debug" ) );
     }
 
     //general settings tab
