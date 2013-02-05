@@ -10,14 +10,16 @@
 #ifndef __DebugConfigPanel_h_
 #define __DebugConfigPanel_h_
 
+#include "clients_gui/LanguageChangeObserver_ABC.h"
 #include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  DebugConfigPanel
     @brief  DebugConfigPanel
 */
 // Created: NPT 2013-01-03
 // =============================================================================
-class DebugConfigPanel : public QWidget
+class DebugConfigPanel : public gui::LanguageChangeObserver_ABC< QWidget >
                        , private boost::noncopyable
 {
     Q_OBJECT
@@ -31,6 +33,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void OnLanguageChanged();
     //@}
 
 signals:
@@ -41,10 +44,6 @@ signals:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
     //! @name Member data
     //@{
     QStringList* pathList_;

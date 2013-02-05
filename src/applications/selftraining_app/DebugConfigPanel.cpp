@@ -49,7 +49,6 @@ DebugConfigPanel::DebugConfigPanel()
 {
     //legacy box
     legacyLabel_ = new QLabel();
-    legacyLabel_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
 
     legacyCheckBox_ = new QCheckBox();
     legacyCheckBox_->setCheckable( true );
@@ -64,7 +63,6 @@ DebugConfigPanel::DebugConfigPanel()
 
     //integration level label
     integrationLabel_ = new QLabel();
-    integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
 
     //integration level comobobox
     integrationComboBox_ = new QComboBox();
@@ -154,3 +152,12 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
     emit IntegrationPathSelected( directory );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::OnLanguageChanged
+// Created: LGY 2013-02-05
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::OnLanguageChanged()
+{
+    legacyLabel_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
+    integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
+}
