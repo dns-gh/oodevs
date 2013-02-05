@@ -27,6 +27,8 @@
 
 using namespace gui;
 
+#define ICON_SIZE 32 // $$$$ ABR 2013-02-01: Need to set the icon size and the empty pixmap size to the same value so row won't crop the symbol
+
 // -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC constructor
 // Created: ABR 2012-08-13
@@ -38,6 +40,7 @@ HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, 
 {
     dataModel_.SetDecorationGetter( this );
     EnableDragAndDrop( true );
+    setIconSize( QSize( ICON_SIZE, ICON_SIZE ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +67,6 @@ void HierarchyTreeView_ABC::ActivateSelection( bool activate )
     else if( !activate && activated_ )
     {
         activated_ = false;
-        //ClearSelection();
         clearSelection();
         setSelectionMode( QAbstractItemView::NoSelection );
         SetContextMenuBlocked( true );
@@ -203,13 +205,12 @@ void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewIt
 
 namespace
 {
-
     QPixmap* GetEmptyPixmap()
     {
         static QPixmap* emptyPixmap = 0;
         if( !emptyPixmap )
         {
-            emptyPixmap = new QPixmap( 1, 32 );
+            emptyPixmap = new QPixmap( 1, ICON_SIZE );
             emptyPixmap->fill( Qt::transparent );
         }
         return emptyPixmap;

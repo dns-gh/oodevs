@@ -22,9 +22,6 @@ PopulationTreeView::PopulationTreeView( kernel::Controllers& controllers, const 
     : gui::PopulationTreeView( controllers, profile, modelObserver, parent )
     , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).c_str() )
 {
-    dataModel_.setColumnCount( 1 );
-    setUniformRowHeights( true );
-    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &PopulationTreeView::GetEntityPixmap, this, _1 ), this, 20 ) );
 }
 

@@ -43,9 +43,6 @@ TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kern
     , commandPost_( MAKE_PIXMAP( commandpost ) )
     , lock_( MAKE_PIXMAP( lock ) )
 {
-    dataModel_.setColumnCount( 1 );
-    setUniformRowHeights( true );
-    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     setItemDelegate( new ItemPixmapDelegate( dataModel_, boost::bind( &TacticalTreeView::GetEntityPixmap, this, _1 ), this ) );
 }
 

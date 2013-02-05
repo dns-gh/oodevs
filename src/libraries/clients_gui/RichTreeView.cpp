@@ -72,7 +72,6 @@ RichTreeView::RichTreeView( QWidget* parent /*= 0*/, kernel::Controllers* contro
 {
     setSortingEnabled( true );
     setDropIndicatorShown( false );
-
     setItemDelegate( new HeightDelegate( this ) );
 
     setModel( proxyModel_ );

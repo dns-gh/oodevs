@@ -140,7 +140,7 @@ inline
 QStandardItem* StandardModel::AddChildIconItem( QStandardItem* root, int row, int col, const QPixmap& pixmap , Qt::ItemFlags flags /*= 0*/ )
 {
     QStandardItem* item = AddChildItem( root, row, col, flags );
-    item->setData( pixmap, Qt::DecorationRole ); // $$$$ ABR 2012-08-17: To be tested
+    item->setData( pixmap, Qt::DecorationRole );
     return item;
 }
 

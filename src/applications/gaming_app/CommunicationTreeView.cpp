@@ -71,9 +71,6 @@ CommunicationTreeView::CommunicationTreeView( kernel::Controllers& controllers, 
     , scisors_( MAKE_PIXMAP( scisors ) ) // LTO
     , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
-    dataModel_.setColumnCount( 1 );
-    setUniformRowHeights( true );
-    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &CommunicationTreeView::GetEntityPixmap, this, _1 ), this ) );
     setEditTriggers( 0 );
     controllers_.Update( *this );

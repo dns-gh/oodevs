@@ -51,7 +51,7 @@ QVariant StandardModel::data( const QModelIndex &index, int role /*= Qt::Display
 {
     if( role == Qt::DecorationRole && decorationGetter_ )
         if( const QPixmap* p = decorationGetter_->GetDecoration( index ) )
-            return *p;
+            return QIcon( *p );
     return QStandardItemModel::data( index, role );
 }
 
