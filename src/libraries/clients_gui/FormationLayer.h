@@ -32,11 +32,10 @@ namespace gui
 */
 // Created: AGE 2007-05-31
 // =============================================================================
-class FormationLayer : public QObject
-                     , public EntityLayer< kernel::Formation_ABC >
+class FormationLayer : public EntityLayer< kernel::Formation_ABC >
                      , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -70,7 +69,7 @@ private:
     //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
     void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const;

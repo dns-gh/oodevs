@@ -300,6 +300,13 @@
     </message>
 </context>
 <context>
+    <name>gui::AgentsLayer</name>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">وحدات</translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -319,6 +326,10 @@
     <message>
         <source>Disaggregate</source>
         <translation type="unfinished">تفصيل</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -586,6 +597,10 @@
         <source>Erase drawing</source>
         <translation type="unfinished">محو الرسم</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished">رسومات</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawerPanel</name>
@@ -758,6 +773,10 @@ Please check access permissions or write protection.</source>
         <source>Disaggregate</source>
         <translation type="unfinished">تفصيل</translation>
     </message>
+    <message>
+        <source>Formations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::GisToolBar</name>
@@ -861,6 +880,13 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Remove highlight</source>
         <translation type="unfinished">إزالة تمييز</translation>
+    </message>
+</context>
+<context>
+    <name>gui::InhabitantLayer</name>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1321,6 +1347,13 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
+    <name>gui::ObjectsLayer</name>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ObstaclePrototype_ABC</name>
     <message>
         <source>Obstacle</source>
@@ -1403,6 +1436,13 @@ Do you want to remove it?</source>
     <message>
         <source>Dead people:</source>
         <translation type="unfinished">قتيلا:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::PopulationsLayer</name>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished">الحشود</translation>
     </message>
 </context>
 <context>
@@ -1673,6 +1713,10 @@ Do you want to remove it?</source>
         <source>Create phase line</source>
         <translation type="unfinished">إنشاء خط المرحلة</translation>
     </message>
+    <message>
+        <source>Tactical lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::TerrainPicker</name>
@@ -1897,6 +1941,13 @@ Do you want to remove it?</source>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
         <translation type="unfinished">سحب وإسقاط رمز خريطة لإنشاء وحدة جديدة.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UrbanLayer</name>
+    <message>
+        <source>Urban blocks</source>
+        <translation type="unfinished">كتل الحضرية</translation>
     </message>
 </context>
 <context>

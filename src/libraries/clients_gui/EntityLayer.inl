@@ -26,8 +26,8 @@ namespace gui
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayerBase( controllers, tools, strategy, view, profile )
+EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const QString& name )
+    : EntityLayerBase( controllers, tools, strategy, view, profile, name )
     , controllers_( controllers )
     , strategy_( strategy )
 {
@@ -110,9 +110,9 @@ void EntityLayer< ConcreteEntity >::SelectColor( const kernel::Entity_ABC& entit
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Selectable_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
 {
-    controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( entity ), geoPoint, point );
+    controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( selectable ), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------

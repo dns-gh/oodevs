@@ -31,7 +31,7 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const QString& name )
     : controllers_( controllers )
     , profile_    ( profile )
     , tools_      ( tools )
@@ -40,6 +40,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , tooltip_    ( 0 )
     , tooltiped_  ( controllers )
     , selected_   ( controllers )
+    , name_       ( name )
 {
     // NOTHING
 }
@@ -115,41 +116,6 @@ bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayerBase::HandleMousePress
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
-{
-    if( entities_.empty() || !event || event->buttons() == Qt::NoButton )
-        return false;
-    const int button = event->button();
-    if( button != Qt::LeftButton && button != Qt::RightButton )
-        return false;
-
-    auto selected = std::find( entities_.begin(), entities_.end(), selected_.ConstCast() );
-
-    if( selected == entities_.end() ||
-        !IsInSelection( *selected_, point ) || !ShouldDisplay( *selected_ ) ||
-        ( button == Qt::LeftButton && ++selected == entities_.end() ) )
-        selected = entities_.begin();
-
-    for( ; selected < entities_.end(); ++selected )
-    {
-        tooltiped_ = *selected;
-        if( ShouldDisplay( **selected ) && IsInSelection( **selected, point ) )
-        {
-            if( button == Qt::LeftButton )
-                Select( **selected, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
-            else if( button == Qt::RightButton && !IsReadOnly() )
-                ContextMenu( **selected, point, event->globalPos() );
-            selected_ = *selected;
-            return true;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::HandleMouseDoubleClick
 // Created: JSR 2012-06-01
 // -----------------------------------------------------------------------------
@@ -162,18 +128,19 @@ bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const Entity_ABC& entity, bool control, bool /*shift*/ )
+void EntityLayerBase::Select( const kernel::Selectable_ABC& selectable, bool control, bool /*shift*/ )
 {
-    controllers_.actions_.SetSelected( entity, control );
+    selected_ = &static_cast< const kernel::Entity_ABC& >( selectable );
+    controllers_.actions_.SetSelected( selectable, control );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ContextMenu
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const geometry::Point2f&, const QPoint& where )
+void EntityLayerBase::ContextMenu( const kernel::Selectable_ABC& selectable, const geometry::Point2f&, const QPoint& where )
 {
-    entity.ContextMenu( controllers_.actions_, where );
+    selectable.ContextMenu( controllers_.actions_, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,17 +149,16 @@ void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const geometry::Poi
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
 {
-    if( tooltiped_ && !ShouldDisplayTooltip( *tooltiped_, point ) )
+    if( !tooltiped_ || !ShouldDisplayTooltip( *tooltiped_, point ) )
     {
         tooltiped_ = 0;
         if( tooltip_.get() )
             tooltip_->Hide();
-        if( selected_ && !DisplayTooltip( *selected_, point ) )
-        {
-            bool found = false;
-            for( auto it = entities_.begin(); it != entities_.end(); ++it )
-                found = *it != &*selected_ && DisplayTooltip( **it, point );
-        }
+
+        bool found = false;
+        for( auto it = entities_.begin(); it != entities_.end() && !found; ++it )
+            found = DisplayTooltip( **it, point );
+        return found;
     }
     return false;
 }
@@ -346,4 +312,13 @@ void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const 
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
         if( ShouldDisplay( **it ) && IsInSelection( **it, point ) )
             extractedElement[ this ].push_back( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::GetName
+// Created: ABR 2013-01-25
+// -----------------------------------------------------------------------------
+QString EntityLayerBase::GetName() const
+{
+    return name_;
 }

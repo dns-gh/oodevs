@@ -30,7 +30,7 @@
 // -----------------------------------------------------------------------------
 GhostsLayer::GhostsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, tr( "Ghosts" ) )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )
@@ -261,17 +261,14 @@ bool GhostsLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    bool result = EntityLayer< kernel::Ghost_ABC >::HandleMousePress( event, point );
-    if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
-    {
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
         if( const GhostPositions* pos = static_cast< const GhostPositions* >( selectedGhost_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             draggingOffset_ = pos->GetPosition( true ) - point.ToVector();
             dnd::CreateDragObject( pos, dummy_.get() );
         }
-    }
-    return result;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

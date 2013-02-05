@@ -44,7 +44,7 @@ private:
 template< typename KnowledgeType >
 KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                                                  gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< KnowledgeType >( controllers, tools, strategy, view, profile )
+    : gui::EntityLayer< KnowledgeType >( controllers, tools, strategy, view, profile, tr( "Knowledge" ) )
 {
     // NOTHING
 }

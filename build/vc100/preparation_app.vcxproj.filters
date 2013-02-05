@@ -784,9 +784,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\WeatherPanel.h">
       <Filter>Source Files\Panels\Weather</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\LimitsLayer.h">
-      <Filter>Source Files\Layers</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ProfileDialog.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </CustomBuild>
@@ -988,5 +985,10 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\UrbanTreeView.h">
       <Filter>Source Files\TreeView</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Qt_file_Mocing Include="..\..\src\applications\preparation_app\LimitsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>

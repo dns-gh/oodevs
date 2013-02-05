@@ -27,39 +27,54 @@ class ModelBuilder;
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
+                  , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
              LimitsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
-                          gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile );
+                          const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& line, kernel::ContextMenu& menu );
+
     virtual bool CanCreateLine();
     virtual void Delete( const kernel::TacticalLine_ABC& line );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
+    virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
 
     float Precision( const geometry::Point2f& point ) const;
-    virtual bool MouseMove ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
+    bool IsEligibleForDrag( const geometry::Point2f& point ) const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnEdit();
     //@}
 
 private:
     //! @name Member data
     //@{
     ModelBuilder& modelBuilder_;
-    gui::ExclusiveEventStrategy& eventStrategy_;
     const gui::GlTools_ABC& tools_;
     geometry::Point2f dragPoint_;
+    geometry::Point2f oldPosition_;
     kernel::FourStateOption drawLines_;
+    std::auto_ptr< QWidget > dummy_;
     //@}
 };
 

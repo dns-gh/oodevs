@@ -874,7 +874,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\PropertiesPanel.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\AgentsLayer.h" />
-    <CustomBuild Include="..\..\src\applications\preparation_app\LimitsLayer.h">
+    <Qt_file_Mocing Include="..\..\src\applications\preparation_app\LimitsLayer.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -895,7 +895,7 @@
       </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
+    </Qt_file_Mocing>
     <ClInclude Include="..\..\src\applications\preparation_app\ObjectsLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PopulationsLayer.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\ProfileDialog.h">

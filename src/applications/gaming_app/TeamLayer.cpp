@@ -25,7 +25,7 @@
 TeamLayer::TeamLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
                      const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
                      const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager )
-    : gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile )
+    : gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile, tr( "Party" ) )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -136,4 +136,13 @@ void TeamLayer::Paint( const geometry::Rectangle2f& )
 void TeamLayer::Paint( gui::Viewport_ABC& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamLayer::IsInSelection
+// Created: ABR 2013-02-04
+// -----------------------------------------------------------------------------
+bool TeamLayer::IsInSelection( const kernel::Entity_ABC&, const geometry::Point2f& ) const
+{
+    return false;
 }

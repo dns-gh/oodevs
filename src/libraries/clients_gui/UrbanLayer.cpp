@@ -29,7 +29,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, tr( "Urban blocks" ) )
     , view_          ( view )
     , controllers_   ( controllers )
 {
@@ -169,9 +169,10 @@ void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 // Name: UrbanLayer::ContextMenu
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+void UrbanLayer::ContextMenu( const kernel::Selectable_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
 {
-    controllers_.actions_.ContextMenu( static_cast< const kernel::UrbanObject_ABC& >( entity ), kernel::Nothing(), geoPoint, point );
+    const kernel::UrbanObject_ABC& urbanObject = static_cast< const kernel::UrbanObject_ABC& >( selectable );
+    controllers_.actions_.ContextMenu( urbanObject, kernel::Nothing(), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,12 +286,13 @@ namespace
 // Name: UrbanLayer::Select
 // Created: JSR 2012-05-29
 // -----------------------------------------------------------------------------
-void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool shift )
+void UrbanLayer::Select( const kernel::Selectable_ABC& selectable, bool control, bool shift )
 {
+    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
     const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >();
     const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::Hierarchies >();
     if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( &entity ) || ( positions && !positions->IsSelected() ) )
-        EntityLayerBase::Select( entity, control, shift );
+        EntityLayerBase::Select( selectable, control, shift );
     else
     {
         const kernel::Entity_ABC* district = hierarchies->GetSuperior();
@@ -309,6 +311,6 @@ void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool sh
             controllers_.actions_.SetMultipleSelection( newSelection );
         }
         else
-            EntityLayerBase::Select( entity, control, shift );
+            EntityLayerBase::Select( selectable, control, shift );
     }
 }

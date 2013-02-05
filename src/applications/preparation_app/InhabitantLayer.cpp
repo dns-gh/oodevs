@@ -51,8 +51,8 @@ void InhabitantLayer::NotifySelectionChanged( const std::vector< const kernel::I
 bool InhabitantLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
     if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_LivingArea )
-        return gui::InhabitantLayer::HandleMousePress( event, point );
-    if( event && event->state() != Qt::NoButton )
+        return false;
+    if( event && event->buttons() != Qt::NoButton )
     {
         if( event->button() == Qt::LeftButton )
             editor_.Select( point );

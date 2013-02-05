@@ -25,7 +25,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                         ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile, tr( "Tactical lines" ) )
     , controllers_ ( controllers )
     , tools_       ( tools )
     , strategy_    ( strategy )

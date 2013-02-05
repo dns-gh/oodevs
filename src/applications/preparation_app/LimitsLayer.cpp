@@ -9,9 +9,10 @@
 
 #include "preparation_app_pch.h"
 #include "LimitsLayer.h"
+#include "moc_LimitsLayer.cpp"
 #include "ModelBuilder.h"
 #include "preparation/TacticalLinePositions.h"
-#include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/ModeController_ABC.h"
@@ -24,14 +25,13 @@ using namespace gui;
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
 LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
-                          gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile )
+                          ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile )
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
     , modelBuilder_( modelBuilder )
     , tools_( tools )
-    , eventStrategy_( eventStrategy )
+    , dummy_( new QWidget() )
 {
-    // NOTHING
+    controllers.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,6 @@ bool LimitsLayer::CanCreateLine()
 void LimitsLayer::Delete( const kernel::TacticalLine_ABC& line )
 {
     modelBuilder_.DeleteEntity( line );
-    eventStrategy_.ReleaseExclusiveFocus();
 }
 
 // -----------------------------------------------------------------------------
@@ -92,56 +91,6 @@ float LimitsLayer::Precision( const geometry::Point2f& point ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsLayer::MouseMove
-// Created: SBO 2006-12-18
-// -----------------------------------------------------------------------------
-bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point )
-{
-    if( mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
-    {
-        const geometry::Vector2f translation( dragPoint_, point );
-        TacticalLinePositions* positions = dynamic_cast< TacticalLinePositions* >( &entity.Get< Positions >() );
-        if( positions )
-        {
-            const geometry::Rectangle2f newBoundingBox = positions->GetBoundingBox() + translation;
-            if( newBoundingBox.Intersect( world_ ) == newBoundingBox )
-            {
-                positions->Translate( dragPoint_, translation, Precision( point ) );
-                dragPoint_ = point;
-                controllers_.controller_.Update( entity );
-            }
-        }
-        return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::MousePress
-// Created: SBO 2006-12-18
-// -----------------------------------------------------------------------------
-bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point )
-{
-    const float precision = Precision( point );
-    if( mouse->state() == Qt::ShiftModifier )
-        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->InsertPoint( point, precision );
-    else if( mouse->state() == Qt::AltModifier )
-        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->RemovePoint( point, precision );
-
-    if( entity.Get< Positions >().IsAt( point, precision ) )
-    {
-        eventStrategy_.TakeExclusiveFocus( *this );
-        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton )
-            dragPoint_ = point;
-        else
-            dragPoint_ = geometry::Point2f();
-        return true;
-    }
-    eventStrategy_.ReleaseExclusiveFocus();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LimitsLayer::ShouldDisplay
 // Created: LGY 2012-01-03
 // -----------------------------------------------------------------------------
@@ -160,4 +109,93 @@ void LimitsLayer::OptionChanged( const std::string& name, const kernel::OptionVa
 {
     if( name == "TacticalLines" )
         drawLines_ = value.To< FourStateOption >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::NotifyContextMenu
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+void LimitsLayer::NotifyContextMenu( const kernel::TacticalLine_ABC& /* line */, kernel::ContextMenu& menu )
+{
+    menu.InsertItem( "Creation", tr( "Edit..." ), this, SLOT( OnEdit() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::OnEdit
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+void LimitsLayer::OnEdit()
+{
+    if( selected_ )
+        static_cast< TacticalLinePositions& >( const_cast< kernel::Positions& >( selected_->Get< kernel::Positions >() ) ).Edit( parameters_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::CanDrop
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+bool LimitsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
+{
+    return dnd::HasData< TacticalLinePositions >( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::HandleMoveDragEvent
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+bool LimitsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
+{
+    if( dnd::HasData< TacticalLinePositions >( event ) && selected_ )
+    {
+        if( TacticalLinePositions* position = static_cast< TacticalLinePositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
+        {
+            const geometry::Vector2f translation( dragPoint_, point );
+            const geometry::Rectangle2f newBoundingBox = position->GetBoundingBox() + translation;
+            if( newBoundingBox.Intersect( world_ ) == newBoundingBox )
+            {
+                position->Translate( dragPoint_, translation, Precision( point ) );
+                dragPoint_ = point;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::HandleDropEvent
+// Created: JSR 2011-12-22
+// -----------------------------------------------------------------------------
+bool LimitsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& )
+{
+    if( dnd::HasData< TacticalLinePositions >( event ) && selected_ )
+    {
+        dragPoint_.Set( 0, 0 );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::HandleMousePress
+// Created: JSR 2011-12-22
+// -----------------------------------------------------------------------------
+bool LimitsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+{
+    if( event->button() == Qt::LeftButton && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
+        if( const TacticalLinePositions* pos = static_cast< const TacticalLinePositions* >( selected_->Retrieve< kernel::Positions >() ) )
+        {
+            dragPoint_ = point;
+            dnd::CreateDragObject( pos, dummy_.get() );
+        }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::IsEligibleForDrag
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+bool LimitsLayer::IsEligibleForDrag( const geometry::Point2f& point ) const
+{
+    return selected_ && IsInSelection( *selected_, point );
 }

@@ -802,6 +802,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>FogLayer</name>
+    <message>
+        <source>Fog</source>
+        <translation>Fog</translation>
+    </message>
+</context>
+<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>
@@ -2889,6 +2896,13 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Change superior</source>
         <translation>Change superior</translation>
+    </message>
+</context>
+<context>
+    <name>TeamLayer</name>
+    <message>
+        <source>Party</source>
+        <translation>Party</translation>
     </message>
 </context>
 <context>

@@ -688,6 +688,13 @@
     </message>
 </context>
 <context>
+    <name>GhostsLayer</name>
+    <message>
+        <source>Ghosts</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GhostsPanel</name>
     <message>
         <source>Name:</source>
@@ -771,6 +778,13 @@
     <message>
         <source>Create</source>
         <translation type="unfinished">إنشاء</translation>
+    </message>
+</context>
+<context>
+    <name>LimitsLayer</name>
+    <message>
+        <source>Edit...</source>
+        <translation type="unfinished">تحرير...</translation>
     </message>
 </context>
 <context>
@@ -1022,6 +1036,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Ghost</source>
         <translation type="unfinished">شبح</translation>
+    </message>
+    <message>
+        <source>Generate symbols</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

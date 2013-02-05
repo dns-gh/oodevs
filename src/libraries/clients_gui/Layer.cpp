@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Layer.h"
+#include "moc_Layer.cpp"
 #include "Gl3dWidget.h"
 #include "GlWidget.h"
 #include "MapLayerProxy.h"
@@ -294,6 +295,33 @@ bool Layer::IsReadOnly() const
 void Layer::SetReadOnlyModes( int modes )
 {
     readOnlyModes_ = modes;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::GetName
+// Created: ABR 2013-01-25
+// -----------------------------------------------------------------------------
+QString Layer::GetName() const
+{
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::Select
+// Created: ABR 2013-01-28
+// -----------------------------------------------------------------------------
+void Layer::Select( const kernel::Selectable_ABC&, bool, bool )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::ContextMenu
+// Created: ABR 2013-01-28
+// -----------------------------------------------------------------------------
+void Layer::ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

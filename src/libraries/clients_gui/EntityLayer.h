@@ -50,7 +50,7 @@ class EntityLayerBase : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayerBase( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             EntityLayerBase( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const QString& name );
     virtual ~EntityLayerBase();
     //@}
 
@@ -62,7 +62,6 @@ public:
 protected:
     //! @name Events
     //@{
-    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseDoubleClick( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
     //@}
@@ -87,8 +86,6 @@ protected:
     virtual void SelectEntity( const kernel::Entity_ABC& );
 
     virtual void SelectColor( const kernel::Entity_ABC& );
-    virtual void Select     ( const kernel::Entity_ABC&, bool control, bool shift );
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
     virtual bool ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
@@ -100,6 +97,9 @@ protected:
 
     //! @name Layer_ABC implementation
     //@{
+    virtual QString GetName() const;
+    virtual void Select( const kernel::Selectable_ABC&, bool control, bool shift );
+    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
     //@}
 
@@ -121,6 +121,7 @@ protected:
 private:
     //! @name Private Member data
     //@{
+    QString                                 name_;
     kernel::Controllers&                    controllers_; // TODO protected?? utilisé dans EntityLayer
     ColorStrategy_ABC&                      strategy_;
     View_ABC&                               view_;
@@ -146,7 +147,7 @@ class EntityLayer : public EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const QString& name );
     virtual ~EntityLayer();
     //@}
 
@@ -158,7 +159,7 @@ protected:
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements );
     virtual void SelectColor( const kernel::Entity_ABC& );
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     virtual bool IsIn( const kernel::Selectable_ABC& selectable ) const;
     //@}

@@ -26,7 +26,7 @@ using namespace gui;
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
 AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
-    : EntityLayer< Automat_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< Automat_ABC >( controllers, tools, strategy, view, profile, tr( "Automata" ) )
     , selected_( controllers )
 {
     // NOTHING
@@ -127,11 +127,12 @@ void AutomatsLayer::Toggle( const Entity_ABC& entity, bool aggregate )
 // Name: AutomatsLayer::ContextMenu
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void AutomatsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+void AutomatsLayer::ContextMenu( const Selectable_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
-    const Automat_ABC* automat = static_cast< const Automat_ABC* >( &entity );
+    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
+    const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
     if( !IsAggregated( entity ) && HasSubordinate( entity, boost::bind( &AutomatsLayer::IsAggregated, this, _1 ) ) )
-        controllers_.actions_.ContextMenu( *automat, entity, point, where );
+        controllers_.actions_.ContextMenu( automat, entity, point, where );
 }
 
 // -----------------------------------------------------------------------------

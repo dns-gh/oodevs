@@ -37,10 +37,13 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Layer : public Layer_ABC
+class Layer : public QObject
+            , public Layer_ABC
             , public tools::Observer_ABC
             , public kernel::DisplayableModesObserver_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -94,6 +97,9 @@ public:
 
     //! @name Layer_ABC implementation
     //@{
+    virtual QString GetName() const;
+    virtual void Select( const kernel::Selectable_ABC&, bool control, bool shift );
+    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
     //@}
 
