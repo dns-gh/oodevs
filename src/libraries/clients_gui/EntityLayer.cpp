@@ -37,9 +37,9 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
-    , tooltiped_  ( std::numeric_limits< unsigned >::max() )
     , tooltip_    ( 0 )
-    , selected_   ( 0 )
+    , tooltiped_  ( controllers )
+    , selected_   ( controllers )
 {
     // NOTHING
 }
@@ -69,16 +69,13 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
-    for( unsigned i = 0; i < entities_.size(); ++i )
-    {
-        if( i != selected_ )
-            Draw( *entities_[ i ], viewport );
-    }
-    if( selected_ < entities_.size() )
-        Draw( *entities_[ selected_ ], viewport );
-    if( tooltiped_ < entities_.size() )
-    {
-        if( const Positions* positions = entities_[ tooltiped_ ]->Retrieve< Positions >() )
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( *it != &*selected_ )
+            Draw( **it, viewport );
+    if( selected_ )
+        Draw( *selected_, viewport );
+    if( tooltiped_ )
+        if( const Positions* positions = tooltiped_->Retrieve< Positions >() )
         {
             const geometry::Point2f position = positions->GetPosition();
             if( !tooltip_.get() )
@@ -88,7 +85,6 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
             }
             tooltip_->Draw( position );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +93,7 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport )
 {
-    if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
+    if( ShouldDisplay( entity ) )
     {
         SelectColor( entity );
         const Positions& positions = entity.Get< Positions >();
@@ -130,24 +126,23 @@ bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( button != Qt::LeftButton && button != Qt::RightButton )
         return false;
 
-    //std::size_t oldSelected = selected_;
-    if( selected_ >= entities_.size()
-     || ! IsInSelection( *entities_[ selected_ ], point )
-     || ! ShouldDisplay( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
-        selected_ = 0;
+    auto selected = std::find( entities_.begin(), entities_.end(), selected_.ConstCast() );
 
-    for( ; selected_ < entities_.size(); ++selected_ )
+    if( selected == entities_.end() ||
+        !IsInSelection( *selected_, point ) || !ShouldDisplay( *selected_ ) ||
+        ( button == Qt::LeftButton && ++selected == entities_.end() ) )
+        selected = entities_.begin();
+
+    for( ; selected < entities_.end(); ++selected )
     {
-        assert( selected_ >= 0 && selected_ < entities_.size() );
-        const Entity_ABC& entity = *entities_[ selected_ ];
-        tooltiped_ = selected_;
-        if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
+        tooltiped_ = *selected;
+        if( ShouldDisplay( **selected ) && IsInSelection( **selected, point ) )
         {
             if( button == Qt::LeftButton )
-                Select( entity, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
+                Select( **selected, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
             else if( button == Qt::RightButton && !IsReadOnly() )
-                ContextMenu( entity, point, event->globalPos() );
+                ContextMenu( **selected, point, event->globalPos() );
+            selected_ = *selected;
             return true;
         }
     }
@@ -187,16 +182,16 @@ void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const geometry::Poi
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
 {
-    if( ! ShouldDisplayTooltip( tooltiped_, point ) )
+    if( tooltiped_ && !ShouldDisplayTooltip( *tooltiped_, point ) )
     {
-        tooltiped_ = std::numeric_limits< unsigned >::max();
+        tooltiped_ = 0;
         if( tooltip_.get() )
             tooltip_->Hide();
-        if( ! DisplayTooltip( selected_, point ) )
+        if( selected_ && !DisplayTooltip( *selected_, point ) )
         {
             bool found = false;
-            for( unsigned i = 0; i < entities_.size() && !found ; ++i )
-                found = i != selected_ && DisplayTooltip( i, point );
+            for( auto it = entities_.begin(); it != entities_.end(); ++it )
+                found = *it != &*selected_ && DisplayTooltip( **it, point );
         }
     }
     return false;
@@ -206,27 +201,25 @@ bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& p
 // Name: EntityLayerBase::ShouldDisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::ShouldDisplayTooltip( std::size_t i, const geometry::Point2f& point )
+bool EntityLayerBase::ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
 {
-    return i < entities_.size()
-        && ShouldDisplay( *entities_[ i ] )
-        && IsInSelection( *entities_[ i ], point );
+    return ShouldDisplay( entity ) && IsInSelection( entity, point );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( std::size_t i, const geometry::Point2f& point )
+bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
 {
     if( !tooltip_.get() )
     {
         std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
         tooltip_ = tooltip;
     }
-    if( ShouldDisplayTooltip( i, point ) && DisplayTooltip( *entities_[ i ], *tooltip_ ) )
+    if( ShouldDisplayTooltip( entity, point ) && DisplayTooltip( entity, *tooltip_ ) )
     {
-        tooltiped_ = i;
+        tooltiped_ = &entity;
         return true;
     }
     return false;
@@ -276,15 +269,14 @@ void EntityLayerBase::AddEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
 {
-    IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
+    auto it = std::find( entities_.begin(), entities_.end(), &entity );
     if( it != entities_.end() )
     {
-        std::swap( *it, entities_.back() );
-        entities_.pop_back();
-        if( selected_  >= entities_.size() )
+        entities_.erase( it );
+        if( &entity == selected_ )
             selected_ = 0;
-        if( tooltiped_ >= entities_.size() )
-            tooltiped_ = std::numeric_limits< unsigned >::max();
+        if( &entity == tooltiped_ )
+            tooltiped_ = 0;
         return true;
     }
     return false;
@@ -305,9 +297,8 @@ void EntityLayerBase::ActivateEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::SelectEntity( const Entity_ABC& entity )
 {
-    IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
-    if( it != entities_.end() )
-        selected_ = it - entities_.begin();
+    if( std::find( entities_.begin(), entities_.end(), &entity ) != entities_.end() )
+        selected_ = &entity;
 }
 
 // -----------------------------------------------------------------------------
@@ -333,14 +324,13 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     selected_ = 0;
     tooltiped_ = 0;
     kernel::Selectable_ABC::T_Selectables selectables;
-    for( std::size_t i = 0; i < entities_.size(); ++i )
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
-        const Entity_ABC& entity = *entities_[ i ];
-        if( ShouldDisplay( entity ) && ( IsInside( entity, rectangle ) || IsInSelection( entity, topLeft ) ) )
+        if( ShouldDisplay( **it ) && ( IsInside( **it, rectangle ) || IsInSelection( **it, topLeft ) ) )
         {
-            selected_ = i;
-            tooltiped_ = i;
-            selectables.push_back( &entity );
+            selected_ = *it;
+            tooltiped_ = *it;
+            selectables.push_back( *it );
         }
     }
     if( !selectables.empty() )

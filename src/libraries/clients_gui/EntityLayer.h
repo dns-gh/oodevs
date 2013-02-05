@@ -91,8 +91,8 @@ protected:
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
-    virtual bool ShouldDisplayTooltip( std::size_t i, const geometry::Point2f& point );
-    virtual bool DisplayTooltip( std::size_t i, const geometry::Point2f& point );
+    virtual bool ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
+    virtual bool DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
     virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
 
     virtual void SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
@@ -107,8 +107,6 @@ protected:
     //! @name Types
     //@{
     typedef std::vector< const kernel::Entity_ABC* >  T_Entities;
-    typedef T_Entities::iterator                     IT_Entities;
-    typedef T_Entities::const_iterator              CIT_Entities;
     //@}
 
 protected:
@@ -126,9 +124,9 @@ private:
     kernel::Controllers&                    controllers_; // TODO protected?? utilisé dans EntityLayer
     ColorStrategy_ABC&                      strategy_;
     View_ABC&                               view_;
-    std::size_t                             tooltiped_;
     std::auto_ptr< kernel::GlTooltip_ABC >  tooltip_;
-    std::size_t                             selected_;
+    kernel::SafePointer< kernel::Entity_ABC > tooltiped_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
