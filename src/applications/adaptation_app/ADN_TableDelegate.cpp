@@ -389,8 +389,25 @@ void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& op
         QItemDelegate::paint( painter, viewItemOption, index );
     }
     else
-        QItemDelegate::paint( painter, option, index );
+    {
+         QStyleOptionViewItem tempOption = option;
+         const CommonDelegate::DelegatePosition* position = IsInPosition( index.row(), index.column() );
+         if( position )
+             if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
+                 tempOption.state &= ~QStyle::State_Selected;
+        QItemDelegate::paint( painter, tempOption, index );
+}
 
+     // To draw a border on selected cells
+     if( option.state & QStyle::State_Selected )
+     {
+         painter->save();
+         QPen pen( Qt::black, 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin );
+         int w = pen.width() / 2;
+         painter->setPen( pen );
+         painter->drawRect( option.rect.adjusted( w, w, -w, -w ) );
+         painter->restore();
+     }
     QPen oldPen = painter->pen();
     painter->setPen( gridPen_ );
     if( boldGridRowIndexes_.find( index.row() ) != boldGridRowIndexes_.end() )
