@@ -34,6 +34,9 @@
     <ClCompile Include="..\..\src\tests\protocol_test\HelpersTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\protocol_test\SerializersTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\protocol_test\MessageHelpers.h">

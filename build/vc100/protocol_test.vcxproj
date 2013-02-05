@@ -126,6 +126,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\protocol_test\SerializationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\protocol_test\SerializersTest.cpp" />
     <ClCompile Include="..\..\src\tests\protocol_test\VersionTest.cpp" />
   </ItemGroup>
   <ItemGroup>

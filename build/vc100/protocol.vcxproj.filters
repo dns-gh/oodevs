@@ -78,6 +78,9 @@
     <ClInclude Include="..\..\src\libraries\protocol\Helpers.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\Serializers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp">
@@ -129,6 +132,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\Serializers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
