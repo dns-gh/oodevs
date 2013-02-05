@@ -132,16 +132,19 @@ float DisasterCapacity::GetDose( const MIL_Object_ABC& object, const MT_Vector2D
 // -----------------------------------------------------------------------------
 void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    float dose = GetDose( object, agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    if( dose > 0.f )
-    {
-        int step = MIL_Time_ABC::GetTime().GetTickDuration();
-        const float protection = disasterType_->GetProtectionCoefficient(
-            agent.GetType().GetUnitType().GetNbcSuit() );
-        dose = std::pow( dose * protection, disasterType_->GetToxicityExponent() ) * step;
-        if( dose > 0.f )
-            agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose, *disasterType_ );
-    }
+     if( !agent.IsDead() )
+     {
+         float dose = GetDose( object, agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+         if( dose > 0.f )
+         {
+             int step = MIL_Time_ABC::GetTime().GetTickDuration();
+             const float protection = disasterType_->GetProtectionCoefficient(
+                 agent.GetType().GetUnitType().GetNbcSuit() );
+             dose = std::pow( dose * protection, disasterType_->GetToxicityExponent() ) * step;
+             if( dose > 0.f )
+                 agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose, *disasterType_ );
+         }
+     }
 }
 
 // -----------------------------------------------------------------------------
