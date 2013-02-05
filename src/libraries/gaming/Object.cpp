@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Object.h"
+#include "ObjectPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -92,4 +93,14 @@ void Object::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     if( !type_.GetDescription().empty() )
         displayer.Display( tools::translate( "Object", "Description:" ), type_.GetDescription() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetSymbol
+// Created: ABR 2013-01-30
+// -----------------------------------------------------------------------------
+std::string Object::GetSymbol() const
+{
+    const ObjectPositions& pos = static_cast< const ObjectPositions& >( Get< Positions >() );
+    return pos.GetSymbol();
 }

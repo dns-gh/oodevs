@@ -48,6 +48,7 @@ public:
     //! @name Accessors
     //@{
     virtual const ObjectType& GetType() const = 0;
+    virtual std::string GetSymbol() const = 0;
     //@}
 
     //! @name Operations

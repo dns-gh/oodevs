@@ -62,6 +62,7 @@ public:
     virtual bool IsAggregated() const;
 
     void Serialize( xml::xostream& xos ) const;
+    std::string GetSymbol() const;
     //@}
 
 private:

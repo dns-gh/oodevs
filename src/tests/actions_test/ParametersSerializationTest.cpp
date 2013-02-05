@@ -141,6 +141,7 @@ namespace
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetType, 0 );
         MOCK_METHOD( Display, 1 );
+        MOCK_METHOD( GetSymbol, 0 );
     };
 
     MOCK_BASE_CLASS( MockObjectKnowledge, kernel::ObjectKnowledge_ABC )
