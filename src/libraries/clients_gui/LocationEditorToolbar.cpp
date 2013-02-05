@@ -164,6 +164,7 @@ bool LocationEditorToolbar::GetPosition( geometry::Point2f& result )
     bool parseSucceed = locBox_->GetPosition( result );
     return parseSucceed;
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar::NotifyContextMenu
 // Created: SBO 2007-03-26
