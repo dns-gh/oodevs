@@ -98,6 +98,11 @@ protected:
     virtual void SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     //@}
 
+    //! @name Layer_ABC implementation
+    //@{
+    virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
+    //@}
+
 protected:
     //! @name Types
     //@{

@@ -92,6 +92,11 @@ public:
     void SetReadOnlyModes( int modes );
     //@}
 
+    //! @name Layer_ABC implementation
+    //@{
+    virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
+    //@}
+
 private:
     //! @name Member data
     //@{

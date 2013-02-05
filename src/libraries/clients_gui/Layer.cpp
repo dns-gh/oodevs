@@ -295,3 +295,12 @@ void Layer::SetReadOnlyModes( int modes )
 {
     readOnlyModes_ = modes;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Layer::ExtractElements
+// Created: ABR 2013-01-25
+// -----------------------------------------------------------------------------
+void Layer::ExtractElements( T_LayerElements&, const geometry::Point2f& )
+{
+    // NOTHING
+}

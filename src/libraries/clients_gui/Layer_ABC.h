@@ -12,6 +12,7 @@
 
 #include <graphics/MapLayer_ABC.h>
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/Selectable_ABC.h"
 
 namespace gui
 {
@@ -34,7 +35,13 @@ public:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* > T_Layers;
+    typedef std::vector< Layer_ABC* >                                       T_Layers;
+    typedef std::map< Layer_ABC*, kernel::Selectable_ABC::T_Selectables >   T_LayerElements;
+    //@}
+
+    //! @name Abstract methods
+    //@{
+    virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point ) = 0;
     //@}
 };
 

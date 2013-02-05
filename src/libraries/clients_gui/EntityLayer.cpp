@@ -346,3 +346,14 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     if( !selectables.empty() )
         controllers_.actions_.AddToSelection( selectables );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::ExtractElements
+// Created: ABR 2013-01-25
+// -----------------------------------------------------------------------------
+void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point )
+{
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( ShouldDisplay( **it ) && IsInSelection( **it, point ) )
+            extractedElement[ this ].push_back( *it );
+}
