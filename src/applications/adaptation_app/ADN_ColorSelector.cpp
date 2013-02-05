@@ -14,6 +14,9 @@
 #include "ADN_Connector_String.h"
 #include "ADN_Enums.h"
 #include "ADN_Workspace.h"
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ColorSelector constructor
@@ -59,10 +62,9 @@ void ADN_ColorSelector::setEnabled( bool b )
 // -----------------------------------------------------------------------------
 void ADN_ColorSelector::setText( const QString& string )
 {
-    if( string.length() >= 6 )
-        color_.setNamedColor( "#" + string.right( 6 ) );
-    else
-        color_.setNamedColor( "#000000" );
+    std::string color( string.toStdString() );
+    boost::replace_all( color, "0x", "#" );
+    color_.setNamedColor( color.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +97,7 @@ void ADN_ColorSelector::paintEvent( QPaintEvent *e )
 // -----------------------------------------------------------------------------
 void ADN_ColorSelector::OnClick()
 {
-    QColor color = QColorDialog::getColor( color, this, tr( "Select color" ) );
+    QColor color = QColorDialog::getColor( color_, this, tr( "Select color" ) );
     if( color.isValid() )
     {
         color_ = color;
