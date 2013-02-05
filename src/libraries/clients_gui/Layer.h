@@ -96,7 +96,7 @@ private:
     //! @name Member data
     //@{
     GlWidget*     currentWidget_;
-    MapLayer_ABC* currentProxy_;
+    Layer_ABC*    currentProxy_;
     float         alpha_;
     std::string   passes_;
     bool          enabled_;

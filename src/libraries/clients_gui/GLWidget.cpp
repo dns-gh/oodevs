@@ -13,7 +13,6 @@
 #include "IconLayout.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/UrbanColor_ABC.h"
-#include <graphics/MapLayer_ABC.h>
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <xeumeuleu/xml.hpp>

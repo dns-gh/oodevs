@@ -325,7 +325,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
 
     // Display modes
-    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
+    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or Layer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
     agents.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     limits.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );

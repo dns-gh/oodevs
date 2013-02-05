@@ -24,8 +24,6 @@
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
 
-class MapLayer_ABC;
-
 namespace kernel
 {
 class Selectionner_ABC;

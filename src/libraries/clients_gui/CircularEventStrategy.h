@@ -11,6 +11,7 @@
 #define __CircularEventStrategy_h_
 
 #include <graphics/EventStrategy_ABC.h>
+#include "Layer_ABC.h"
 
 namespace gui
 {
@@ -38,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    void SetDefault( MapLayer_ABC& layer );
-    void Register  ( MapLayer_ABC& layer );
-    void Remove    ( MapLayer_ABC& layer );
+    void SetDefault( Layer_ABC& layer );
+    void Register  ( Layer_ABC& layer );
+    void Remove    ( Layer_ABC& layer );
 
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
@@ -67,10 +68,10 @@ private:
 private:
     //! @name Member data
     //@{
-    T_MapLayers layers_;
-    MapLayer_ABC* default_;
+    Layer_ABC::T_Layers layers_;
+    Layer_ABC* default_;
     bool exclusive_;
-    T_MapLayers::const_reverse_iterator rlast_;
+    Layer_ABC::T_Layers::const_reverse_iterator rlast_;
     //@}
 };
 

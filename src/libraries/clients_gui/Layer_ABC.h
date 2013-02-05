@@ -31,6 +31,11 @@ public:
              Layer_ABC() {}
     virtual ~Layer_ABC() {}
     //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< Layer_ABC* > T_Layers;
+    //@}
 };
 
 }

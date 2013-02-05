@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    class Layer_ABC;
 
 // =============================================================================
 /** @class  ExclusiveEventStrategy
@@ -32,15 +33,15 @@ public:
 
     //! @name Operations
     //@{
-    void AddTerrainLayer( MapLayer_ABC& layer );
-    void TakeExclusiveFocus( MapLayer_ABC& layer );
+    void AddTerrainLayer( Layer_ABC& layer );
+    void TakeExclusiveFocus( Layer_ABC& layer );
     void ReleaseExclusiveFocus();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Register( MapLayer_ABC& layer );
-    virtual void Remove  ( MapLayer_ABC& layer );
+    virtual void Register( Layer_ABC& layer );
+    virtual void Remove  ( Layer_ABC& layer );
 
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
@@ -65,8 +66,8 @@ private:
     //! @name Member data
     //@{
     EventStrategy_ABC& forward_;
-    MapLayer_ABC* layer_;
-    MapLayer_ABC* layerTerrain_;
+    Layer_ABC* layer_;
+    Layer_ABC* layerTerrain_;
     //@}
 };
 
