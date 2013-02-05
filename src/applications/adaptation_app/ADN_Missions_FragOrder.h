@@ -72,6 +72,8 @@ public:
     void ReadMissionSheet( const std::string& missionDir );
     void RemoveDifferentNamedMissionSheet( const std::string& missionDir );
     void WriteMissionSheet( const std::string& missionDir );
+    bool IsEmptyMissionSheet();
+    bool IsEmptyParameterList();
 
 public:
     ADN_Type_Int              id_;

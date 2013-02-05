@@ -89,8 +89,7 @@ private:
     ADN_EditLine_ABC* nameFields_[ 4 ];
     QTabWidget* missionTabs_[ 4 ];
     ADN_Missions_Data& data_;
-    ADN_HtmlViewer* missionViewer_;
-    ADN_HtmlViewer* fragViewer_;
+    ADN_HtmlViewer* missionViewers_[ 4 ];
     QSignalMapper* generateMapper_;
     //@}
 

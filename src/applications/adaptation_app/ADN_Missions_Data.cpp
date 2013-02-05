@@ -135,12 +135,11 @@ void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_EntityT
 // Name: ADN_Missions_Data::GenerateMissionSheet
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
+QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
 {
-    assert( index >= 0 && index < 4 );
+     assert( index >= 0 && index < 4 );
      const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
                                   + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_EntityType >( index)  );
-     const QString path = missionDir.c_str() + text + ".html";
      switch( index )
      {
      case eEntityType_Pawn:
@@ -176,6 +175,7 @@ void ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
              }
          break;
      }
+     return QString( missionDir.c_str() ) + "/" + text + ".html";
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ namespace
 {
     void WriteMissionSheets( E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
-        const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+        const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->RemoveDifferentNamedMissionSheet( missionDir );
         for( unsigned int i = 0; i < missions.size(); ++i )
@@ -285,7 +285,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
         fragOrders_[i]->WriteArchive( output );
 
     const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
     //frag orders mission sheets saving
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->RemoveDifferentNamedMissionSheet( missionDir );

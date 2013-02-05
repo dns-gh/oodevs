@@ -52,6 +52,8 @@ void ADN_HtmlViewer::setText( const QString& text )
     std::replace( val.begin(), val.end(), '\\', '/' );
     if( boost::filesystem::exists( val ) )
         load( QUrl( val.c_str() ) );
+    else
+        setHtml( "<html/>" );
 }
 
 // -----------------------------------------------------------------------------

@@ -451,11 +451,14 @@ namespace
             for( int i = 0; i < n ; ++i )
                 vector.emplace_back( new UL( xos_ ) );
             for( int i = n; i < 0 ; ++i )
+            {
+                delete vector.back();
                 vector.pop_back();
+            }
         }
     private:
         xml::xostream& xos_;
-        std::vector< std::auto_ptr< UL > > vector;
+        std::vector< UL* > vector;
     };
 }
 // -----------------------------------------------------------------------------
@@ -545,11 +548,6 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
         descriptionContext_ = usage_;
         descriptionBehavior_ = doctrine_;
     }
-    if( !bfs::exists( fileName + ".html" ) )
-    {
-        // Broken, fileName is not sanitized
-        // std::fstream( fileName + ".html", std::ios::out | std::ios::trunc );
-    }
     missionSheetPath_ = fileName + ".html";
 }
 
@@ -559,7 +557,6 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& missionDir )
 {
-    //xml file
     const std::string newPath = std::string( missionDir + "/" + strName_.GetData() );
     const std::string oldPath = std::string( missionDir + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).completeBaseName().toStdString() );
     if( !missionSheetPath_.GetData().empty() && newPath != oldPath )
@@ -578,39 +575,69 @@ void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir )
     std::string fileName = std::string( missionDir + "/" + strName_.GetData() );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
         bfs::create_directories( missionDir + "/obsolete" );
-    xml::xofstream xos( fileName + ".xml" );
-    xos << xml::start( "mission-sheet" )
-        << xml::attribute( "name", strName_.GetData() )
-        << xml::start( "context" );
-        FromWikiToXml( xos, descriptionContext_.GetData() );
-    xos << xml::end
-        << xml::start( "parameters" );
-        WriteMissionSheetParametersDescriptions( xos );
-    xos << xml::end
-        << xml::start( "behavior" );
-        FromWikiToXml( xos,descriptionBehavior_.GetData() );
-    xos << xml::end
-        << xml::start( "specific-cases" );
-        FromWikiToXml( xos, descriptionSpecific_.GetData() );
-    xos << xml::end
-        << xml::start( "comments" );
-        FromWikiToXml( xos, descriptionComment_.GetData() );
-    xos << xml::end
-        << xml::start( "mission-end" );
-        FromWikiToXml( xos, descriptionMissionEnd_.GetData() );
-    xos << xml::end
-        << xml::start( "attachments" );
-        WriteMissionSheetAttachments( xos );
-    xos << xml::end
-        << xml::end;
+    if( !IsEmptyMissionSheet() )
+    {
+        //mission sheet xml creation
+        xml::xofstream xos( fileName + ".xml" );
+        xos << xml::start( "mission-sheet" )
+            << xml::attribute( "name", strName_.GetData() )
+            << xml::start( "context" );
+            FromWikiToXml( xos, descriptionContext_.GetData() );
+        xos << xml::end
+            << xml::start( "parameters" );
+            WriteMissionSheetParametersDescriptions( xos );
+        xos << xml::end
+            << xml::start( "behavior" );
+            FromWikiToXml( xos,descriptionBehavior_.GetData() );
+        xos << xml::end
+            << xml::start( "specific-cases" );
+            FromWikiToXml( xos, descriptionSpecific_.GetData() );
+        xos << xml::end
+            << xml::start( "comments" );
+            FromWikiToXml( xos, descriptionComment_.GetData() );
+        xos << xml::end
+            << xml::start( "mission-end" );
+            FromWikiToXml( xos, descriptionMissionEnd_.GetData() );
+        xos << xml::end
+            << xml::start( "attachments" );
+            WriteMissionSheetAttachments( xos );
+        xos << xml::end
+            << xml::end;
 
-    xml::xifstream xisXML( fileName + ".xml" );
-    xsl::xstringtransform xst( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
-    xst << xisXML;
-    std::fstream fileStream( tools::FromUtf8ToLocalCharset( fileName + ".html" ), std::ios::out | std::ios::trunc );
-    fileStream << xst.str();
-    fileStream.close();
-    missionSheetPath_ = fileName + ".html";
+        //mission sheet html creation
+        xml::xifstream xisXML( fileName + ".xml" );
+        xsl::xstringtransform xst( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
+        xst << xisXML;
+        std::fstream fileStream( tools::FromUtf8ToLocalCharset( fileName + ".html" ), std::ios::out | std::ios::trunc );
+        fileStream << xst.str();
+        fileStream.close();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::IsEmptyParameterList
+// Created: NPT 2013-02-04
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Mission::IsEmptyParameterList()
+{
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( !(*it)->description_.GetData().empty() )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::IsEmptyMissionSheet
+// Created: NPT 2013-02-04
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Mission::IsEmptyMissionSheet()
+{
+    return  descriptionContext_.GetData().empty()
+            && descriptionBehavior_.GetData().empty()
+            && descriptionMissionEnd_.GetData().empty()
+            && descriptionSpecific_.GetData().empty()
+            && descriptionComment_.GetData().empty()
+            && IsEmptyParameterList();
 }
 
 // -----------------------------------------------------------------------------

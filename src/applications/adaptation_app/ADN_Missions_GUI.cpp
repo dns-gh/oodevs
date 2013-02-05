@@ -236,9 +236,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         descriptionLayout->addWidget( generateButton );
 
         //Mission Sheet Viewer
-        missionViewer_ = new ADN_HtmlViewer();
-        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewer_->GetConnector();
-        connect( generateButton, SIGNAL( clicked() ), missionViewer_, SLOT( reload() ) );
+        missionViewers_[ eEntityType ] = new ADN_HtmlViewer();
+        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ eEntityType ]->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), missionViewers_[ eEntityType ], SLOT( reload() ) );
     }
 
 
@@ -273,10 +273,10 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
     missionTabs_[ eEntityType ]->setStyleSheet("QTabWidget: {border: 3px solid red;}");
     static_cast<QTabWidget*>( missionTabs_[ eEntityType ] )->addTab( CreateScrollArea( *pDefinition, 0 ), tr( "Definition" ) );
     static_cast<QTabWidget*>( missionTabs_[ eEntityType ] )->addTab( CreateScrollArea( *descriptionTab, 0 ), tr( "Description" ) );
-    static_cast<QTabWidget*>( missionTabs_[ eEntityType ] )->addTab( CreateScrollArea( *missionViewer_, 0 ), tr( "Mission sheet preview" ) );
+    static_cast<QTabWidget*>( missionTabs_[ eEntityType ] )->addTab( CreateScrollArea( *missionViewers_[ eEntityType ], 0 ), tr( "Mission sheet preview" ) );
     QVBoxLayout* pContentLayout = new QVBoxLayout( missionTabs_[ eEntityType ] );
     pContentLayout->setAlignment( Qt::AlignTop );
-    connect( missionTabs_[ eEntityType ], SIGNAL( currentChanged( int ) ), missionViewer_, SLOT( reload() ) );
+    connect( missionTabs_[ eEntityType ], SIGNAL( currentChanged( int ) ), missionViewers_[ eEntityType ], SLOT( reload() ) );
 
     // List view
     ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( this, eEntityType, missions, missions, vInfosConnectors, eEntityType );
@@ -390,9 +390,9 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
         descriptionLayout->addWidget( generateButton );
 
         //Mission Sheet Viewer
-        fragViewer_ = new ADN_HtmlViewer();
-        vInfosConnectors[ eDescriptionSheetPath ] = &fragViewer_->GetConnector();
-        connect( generateButton, SIGNAL( clicked() ), fragViewer_, SLOT( reload() ) );
+        missionViewers_[ 3 ] = new ADN_HtmlViewer();
+        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ 3 ]->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), missionViewers_[ 3 ], SLOT( reload() ) );
     }
 
     // Connect the gui to the data.
@@ -424,12 +424,12 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     missionTabs_[ 3 ] = new QTabWidget();
     static_cast<QTabWidget*>( missionTabs_[ 3 ] )->addTab( CreateScrollArea( *pDefinition, 0 ), tr( "Definition" ) );
     static_cast<QTabWidget*>( missionTabs_[ 3 ] )->addTab( CreateScrollArea( *descriptionTab, 0 ), tr( "Description" ) );
-    static_cast<QTabWidget*>( missionTabs_[ 3 ] )->addTab( CreateScrollArea( *fragViewer_, 0 ), tr( "Mission sheets preview" ) );
+    static_cast<QTabWidget*>( missionTabs_[ 3 ] )->addTab( CreateScrollArea( *missionViewers_[ 3 ], 0 ), tr( "Mission sheets preview" ) );
     QVBoxLayout* pFragOrderWidgetLayout = new QVBoxLayout( missionTabs_[ 3 ] );
     pFragOrderWidgetLayout->setMargin( 10 );
     pFragOrderWidgetLayout->setSpacing( 10 );
     pFragOrderWidgetLayout->setAlignment( Qt::AlignTop );
-    connect( missionTabs_[ 3 ], SIGNAL( currentChanged( int ) ), fragViewer_, SLOT( reload() ) );
+    connect( missionTabs_[ 3 ], SIGNAL( currentChanged( int ) ), missionViewers_[ 3 ], SLOT( reload() ) );
 
     // List view
     ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, 3 );
@@ -468,6 +468,7 @@ void ADN_Missions_GUI::OnNotifyElementDeleted( std::string elementName, E_Entity
 void ADN_Missions_GUI::OnGenerate( int index )
 {
     assert( index >= 0 && index < 4 );
-    data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
+    QString missionPath = data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
     missionTabs_[ index ]->setCurrentIndex( 2 );
+    missionViewers_[ index ]->load( missionPath );
 }

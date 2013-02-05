@@ -376,11 +376,14 @@ namespace
             for( int i = 0; i < n ; ++i )
                 vector.emplace_back( new UL( xos_ ) );
             for( int i = n; i < 0 ; ++i )
+            {
+                delete vector.back();
                 vector.pop_back();
+            }
         }
     private:
         xml::xostream& xos_;
-        std::vector< std::auto_ptr< UL > > vector;
+        std::vector< UL* > vector;
     };
 }
 // -----------------------------------------------------------------------------
@@ -467,8 +470,8 @@ void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& missionDir )
     }
     if( !bfs::exists( fileName + ".html" ) )
     {
-        // Broken, fileName is not sanitized
-        //std::fstream( fileName + ".html", std::ios::out | std::ios::trunc );
+        std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
+        fileStream.close();
     }
     missionSheetPath_ = fileName + ".html";
 }
@@ -479,17 +482,13 @@ void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& missionDir )
 // -----------------------------------------------------------------------------
 void ADN_Missions_FragOrder::RemoveDifferentNamedMissionSheet( const std::string& missionDir )
 {
-    //xml file
-    const std::string newXmlPath = std::string( missionDir + "/" + strName_.GetData() + ".xml" );
-    const std::string oldXmlPath = std::string( QString( missionDir.c_str() ) + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).baseName() + ".xml" );
-    if( !missionSheetPath_.GetData().empty() && newXmlPath != oldXmlPath )
-        bfs::remove( oldXmlPath );
-
-    //html file
-    const std::string newHtmlPath = std::string( missionDir + "/" + strName_.GetData() + ".html" );
-    const std::string oldHtmlPath = std::string( QString( missionDir.c_str() ) + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).baseName() + ".html" );
-    if( !missionSheetPath_.GetData().empty() && newHtmlPath != oldHtmlPath )
-        bfs::remove( oldHtmlPath );
+    const std::string newPath = std::string( missionDir + "/" + strName_.GetData() );
+    const std::string oldPath = std::string( missionDir + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).completeBaseName().toStdString() );
+    if( !missionSheetPath_.GetData().empty() && newPath != oldPath )
+    {
+        bfs::remove( oldPath + ".xml" );
+        bfs::remove( oldPath + ".html" );
+    }
 }
 
 // -----------------------------------------------------------------------------

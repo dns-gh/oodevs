@@ -69,6 +69,8 @@ public:
     void ReadMissionSheet( const std::string& missionDir );
     void RemoveDifferentNamedMissionSheet( const std::string& missionDir );
     void WriteMissionSheet( const std::string& missionDir );
+    bool IsEmptyMissionSheet();
+    bool IsEmptyParameterList();
 
 private:
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );

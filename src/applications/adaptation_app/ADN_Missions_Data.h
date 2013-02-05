@@ -90,7 +90,7 @@ public:
     QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
 
     void NotifyElementDeleted( std::string elementName, E_EntityType elementType );
-    void GenerateMissionSheet( int index, const QString& text );
+    QString GenerateMissionSheet( int index, const QString& text );
     //@}
 
 private:
