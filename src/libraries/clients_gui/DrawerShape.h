@@ -60,6 +60,7 @@ public:
     //@{
     virtual QColor GetColor() const;
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const;
+    const DrawingTemplate& GetDrawingTemplate() const;
     //@}
 
     //! @name Operations

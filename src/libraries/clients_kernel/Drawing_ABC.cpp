@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const std::string Drawing_ABC::typeName_ = "drawing";
+
 // -----------------------------------------------------------------------------
 // Name: Drawing_ABC constructor
 // Created: JSR 2012-06-06
@@ -72,4 +74,13 @@ void Drawing_ABC::ContextMenu( kernel::ActionController& controller, const QPoin
 void Drawing_ABC::Activate( kernel::ActionController& controller ) const
 {
     controller.Activate( *this, *(const kernel::Entity_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing_ABC::GetTypeName
+// Created: ABR 2013-02-04
+// -----------------------------------------------------------------------------
+const std::string& Drawing_ABC::GetTypeName() const
+{
+    return typeName_;
 }
