@@ -11,7 +11,6 @@
 #define __ActionAgentMission_h_
 
 #include "Mission.h"
-#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -23,7 +22,6 @@ namespace actions
 // Created: SBO 2007-05-21
 // =============================================================================
 class AgentMission : public Mission
-                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
