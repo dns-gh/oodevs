@@ -98,8 +98,8 @@ protected:
     //! @name Layer_ABC implementation
     //@{
     virtual QString GetName() const;
-    virtual void Select( const kernel::Selectable_ABC&, bool control, bool shift );
-    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
     //@}
 
@@ -159,9 +159,9 @@ protected:
     virtual void NotifyActivated( const ConcreteEntity& );
     virtual void NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements );
     virtual void SelectColor( const kernel::Entity_ABC& );
-    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
-    virtual bool IsIn( const kernel::Selectable_ABC& selectable ) const;
+    virtual bool IsIn( const kernel::GraphicalEntity_ABC& selectable ) const;
     //@}
 
 protected:

@@ -62,7 +62,7 @@ namespace
         virtual QString GetName() const { return name_.c_str(); }
         virtual unsigned long GetId() const { return id_; }
         virtual void Select( kernel::ActionController& ) const {}
-        virtual void MultipleSelect( kernel::ActionController&, const std::vector< const kernel::Selectable_ABC* >& ) const {}
+        virtual void MultipleSelect( kernel::ActionController&, const std::vector< const kernel::GraphicalEntity_ABC* >& ) const {}
         virtual void ContextMenu( kernel::ActionController&, const QPoint& ) const {}
         virtual void Activate( kernel::ActionController& ) const {}
         virtual void SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const { SendCreation( publisher ); }
@@ -88,7 +88,7 @@ namespace
         virtual QString GetName() const { return name_.c_str(); }
         virtual unsigned long GetId() const { return id_; }
         virtual void Select( kernel::ActionController& ) const {}
-        virtual void MultipleSelect( kernel::ActionController&, const std::vector< const kernel::Selectable_ABC* >& ) const {}
+        virtual void MultipleSelect( kernel::ActionController&, const std::vector< const kernel::GraphicalEntity_ABC* >& ) const {}
         virtual void ContextMenu( kernel::ActionController&, const QPoint& ) const {}
         virtual void Activate( kernel::ActionController& ) const {}
         //@}

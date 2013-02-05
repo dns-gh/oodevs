@@ -12,7 +12,7 @@
 
 #include "tools/Extendable.h"
 #include "tools/SortedInterfaceContainer.h"
-#include "Selectable_ABC.h"
+#include "GraphicalEntity_ABC.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
 #include "geometry/Types.h"
@@ -71,7 +71,7 @@ private:
 };
 
 class Entity_ABC : public EntityBase_ABC
-                 , public Selectable_ABC
+                 , public GraphicalEntity_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -86,7 +86,7 @@ public:
     virtual const std::string& GetTypeName() const;
     //@}
 
-    //! @name Selectable_ABC implementation
+    //! @name GraphicalEntity_ABC implementation
     //@{
     virtual QString GetTooltip() const;
     virtual void OverFly( ActionController& controller ) const;

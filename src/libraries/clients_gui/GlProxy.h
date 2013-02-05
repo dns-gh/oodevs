@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Selectable_ABC;
+    class GraphicalEntity_ABC;
 }
 
 namespace gui
@@ -64,7 +64,7 @@ public:
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
-    virtual bool ShouldEdit( const kernel::Selectable_ABC& selectable ) const;
+    virtual bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const;
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;

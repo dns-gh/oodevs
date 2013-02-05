@@ -207,7 +207,7 @@ void TacticalTreeView::Drop( const kernel::AgentType& item, kernel::Entity_ABC& 
         delete &target;
         setFocus();
         result->Select( controllers_.actions_ );
-        kernel::Selectable_ABC::T_Selectables list;
+        kernel::GraphicalEntity_ABC::T_GraphicalEntities list;
         list.push_back( result );
         result->MultipleSelect( controllers_.actions_, list );
     }
@@ -225,7 +225,7 @@ void TacticalTreeView::Drop( const kernel::AutomatType& item, kernel::Entity_ABC
         delete &target;
         setFocus();
         result->Select( controllers_.actions_ );
-        kernel::Selectable_ABC::T_Selectables list;
+        kernel::GraphicalEntity_ABC::T_GraphicalEntities list;
         list.push_back( result );
         result->MultipleSelect( controllers_.actions_, list );
     }

@@ -110,7 +110,7 @@ void EntityLayer< ConcreteEntity >::SelectColor( const kernel::Entity_ABC& entit
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Selectable_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
+void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
 {
     controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( selectable ), geoPoint, point );
 }
@@ -120,7 +120,7 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Selectable_ABC& s
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-bool EntityLayer< ConcreteEntity >::IsIn( const kernel::Selectable_ABC& selectable ) const
+bool EntityLayer< ConcreteEntity >::IsIn( const kernel::GraphicalEntity_ABC& selectable ) const
 {
     return dynamic_cast< const ConcreteEntity* >( &selectable ) != 0;
 }

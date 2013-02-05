@@ -127,7 +127,7 @@ void AutomatsLayer::Toggle( const Entity_ABC& entity, bool aggregate )
 // Name: AutomatsLayer::ContextMenu
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void AutomatsLayer::ContextMenu( const Selectable_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
+void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );

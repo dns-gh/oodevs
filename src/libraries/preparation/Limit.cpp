@@ -60,7 +60,7 @@ void Limit::Select( kernel::ActionController& actions ) const
 // Name: Limit::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void Limit::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void Limit::MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const Limit* > first;
     std::vector< const kernel::TacticalLine_ABC* > second;

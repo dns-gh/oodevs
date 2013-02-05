@@ -40,7 +40,7 @@ AgentsLayer::~AgentsLayer()
 // Name: AgentsLayer::Select
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
-void AgentsLayer::Select( const Selectable_ABC& selectable, bool control, bool shift )
+void AgentsLayer::Select( const GraphicalEntity_ABC& selectable, bool control, bool shift )
 {
     const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
     const Entity_ABC* superior = entity.Get< TacticalHierarchies >().GetSuperior();

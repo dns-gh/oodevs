@@ -19,7 +19,7 @@
 #include "Controllers.h"
 #include "MultipleSelectionObserver_ABC.h"
 #include "OverFlyingObserver_ABC.h"
-#include "Selectable_ABC.h"
+#include "GraphicalEntity_ABC.h"
 #include "Selectionners.h"
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
@@ -56,7 +56,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const Selectionner_ABC*, Selectable_ABC::T_Selectables >  T_SelectedMap;
+    typedef std::map< const Selectionner_ABC*, GraphicalEntity_ABC::T_GraphicalEntities >  T_SelectedMap;
     typedef std::vector< const Selectionner_ABC* >                              T_Selectionners;
     typedef std::map< int, T_Selectionners >                                    T_MultipleMode;
     //@}
@@ -66,20 +66,20 @@ public:
     //@{
     template< typename T >
     void AllowMultipleSelection( int mode );
-    bool IsSelected( Selectable_ABC* selectable ) const;
-    bool IsSingleSelection( const Selectable_ABC* selectable ) const;
+    bool IsSelected( GraphicalEntity_ABC* selectable ) const;
+    bool IsSingleSelection( const GraphicalEntity_ABC* selectable ) const;
     bool HasMultipleSelection() const;
-    const Selectionner_ABC* GetSelectionner( const Selectable_ABC* selectable ) const; // private ?
+    const Selectionner_ABC* GetSelectionner( const GraphicalEntity_ABC* selectable ) const; // private ?
 
     void BlockSelection( bool blocked );
 
     // -----------------------------------------------------------------------------
     // Select
     // -----------------------------------------------------------------------------
-    void SetSelected( const Selectable_ABC& selectable, bool append );
-    void AddToSelection( const Selectable_ABC::T_Selectables& selectables );
+    void SetSelected( const GraphicalEntity_ABC& selectable, bool append );
+    void AddToSelection( const GraphicalEntity_ABC::T_GraphicalEntities& selectables );
     void NotifyRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight, bool append );
-    void SetMultipleSelection( const Selectable_ABC::T_Selectables& selectables );
+    void SetMultipleSelection( const GraphicalEntity_ABC::T_GraphicalEntities& selectables );
 
     template< typename T >
     void Select( const T& element )

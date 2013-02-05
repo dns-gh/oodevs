@@ -55,7 +55,7 @@ void Population_ABC::Select( ActionController& controller ) const
 // Name: Population_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void Population_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void Population_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const Population_ABC* > first;
     std::vector< const Entity_ABC* > second;

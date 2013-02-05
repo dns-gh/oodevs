@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void Select( kernel::ActionController& controller ) const;
-    virtual void MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const;
+    virtual void MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
 

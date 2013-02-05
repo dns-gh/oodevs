@@ -310,7 +310,7 @@ QString Layer::GetName() const
 // Name: Layer::Select
 // Created: ABR 2013-01-28
 // -----------------------------------------------------------------------------
-void Layer::Select( const kernel::Selectable_ABC&, bool, bool )
+void Layer::Select( const kernel::GraphicalEntity_ABC&, bool, bool )
 {
     // NOTHING
 }
@@ -319,7 +319,7 @@ void Layer::Select( const kernel::Selectable_ABC&, bool, bool )
 // Name: Layer::ContextMenu
 // Created: ABR 2013-01-28
 // -----------------------------------------------------------------------------
-void Layer::ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& )
+void Layer::ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& )
 {
     // NOTHING
 }

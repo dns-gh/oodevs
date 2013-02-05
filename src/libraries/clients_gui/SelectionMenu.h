@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Selectable_ABC;
+    class GraphicalEntity_ABC;
 }
 
 namespace gui
@@ -72,7 +72,7 @@ private:
     GlTools_ABC& tools_;
 
     Layer_ABC::T_LayerElements extractedElements_;
-    std::map< const kernel::Selectable_ABC*, QPixmap > icons_;
+    std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
     std::auto_ptr< QMouseEvent > mouseEvent_;
     geometry::Point2f point_;
     //@}

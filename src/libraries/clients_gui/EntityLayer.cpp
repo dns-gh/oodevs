@@ -128,7 +128,7 @@ bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const kernel::Selectable_ABC& selectable, bool control, bool /*shift*/ )
+void EntityLayerBase::Select( const kernel::GraphicalEntity_ABC& selectable, bool control, bool /*shift*/ )
 {
     selected_ = &static_cast< const kernel::Entity_ABC& >( selectable );
     controllers_.actions_.SetSelected( selectable, control );
@@ -138,7 +138,7 @@ void EntityLayerBase::Select( const kernel::Selectable_ABC& selectable, bool con
 // Name: EntityLayerBase::ContextMenu
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void EntityLayerBase::ContextMenu( const kernel::Selectable_ABC& selectable, const geometry::Point2f&, const QPoint& where )
+void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f&, const QPoint& where )
 {
     selectable.ContextMenu( controllers_.actions_, where );
 }
@@ -289,7 +289,7 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     geometry::Rectangle2f rectangle( topLeft, bottomRight );
     selected_ = 0;
     tooltiped_ = 0;
-    kernel::Selectable_ABC::T_Selectables selectables;
+    kernel::GraphicalEntity_ABC::T_GraphicalEntities selectables;
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         if( ShouldDisplay( **it ) && ( IsInside( **it, rectangle ) || IsInSelection( **it, topLeft ) ) )

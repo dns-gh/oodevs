@@ -55,7 +55,7 @@ void ObjectKnowledge_ABC::Select( ActionController& controller ) const
 // Name: ObjectKnowledge_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void ObjectKnowledge_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void ObjectKnowledge_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const ObjectKnowledge_ABC* > first;
     std::vector< const Knowledge_ABC* > second;

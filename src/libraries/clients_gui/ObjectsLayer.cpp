@@ -42,7 +42,7 @@ ObjectsLayer::~ObjectsLayer()
 // Name: ObjectsLayer::ContextMenu
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void ObjectsLayer::ContextMenu( const Selectable_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
+void ObjectsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Object_ABC& object = static_cast< const Object_ABC& >( entity );

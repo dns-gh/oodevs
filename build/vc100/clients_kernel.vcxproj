@@ -264,6 +264,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\GhostPrototype.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Ghost_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GraphicalEntity_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HierarchyLevel_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Karma.h" />
@@ -281,7 +282,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ReadOnlyModable.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Selectionners.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />

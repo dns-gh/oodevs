@@ -3,33 +3,35 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Selectable_ABC_h_
-#define __Selectable_ABC_h_
+#ifndef __GraphicalEntity_ABC_h_
+#define __GraphicalEntity_ABC_h_
 
 class QPoint;
 class QString;
+class QPixmap;
 
 namespace kernel
 {
     class ActionController;
 
 // =============================================================================
-/** @class  Selectable_ABC
-    @brief  Selectable extension definition
+/** @class  GraphicalEntity_ABC
+    @brief  GraphicalEntity_ABC
 */
-// Created: JSR 2012-05-21
+// Created: ABR 2013-02-04
 // =============================================================================
-class Selectable_ABC
+class GraphicalEntity_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             Selectable_ABC() {}
-    virtual ~Selectable_ABC() {}
+             GraphicalEntity_ABC() {}
+    virtual ~GraphicalEntity_ABC() {}
     //@}
 
     //! @name Accessors
@@ -38,10 +40,10 @@ public:
     virtual QString GetTooltip() const = 0;
     //@}
 
-    //! @name Operations
+    //! @name Mouse interactions
     //@{
     virtual void Select( ActionController& controller ) const = 0;
-    virtual void MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const = 0;
+    virtual void MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const = 0;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
     virtual void Activate( ActionController& controller ) const = 0;
     virtual void OverFly( ActionController& controller ) const = 0;
@@ -49,10 +51,10 @@ public:
 
     //! @name Types
     //@{
-    typedef std::vector< const Selectable_ABC* > T_Selectables;
+    typedef std::vector< const GraphicalEntity_ABC* > T_GraphicalEntities;
     //@}
 };
 
-}
+} //! namespace kernel
 
-#endif // __Selectable_ABC_h_
+#endif // __GraphicalEntity_ABC_h_

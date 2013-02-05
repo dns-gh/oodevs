@@ -41,7 +41,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void Select( const kernel::Selectable_ABC&, bool, bool );
+    virtual void Select( const kernel::GraphicalEntity_ABC&, bool, bool );
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     //@}
 };

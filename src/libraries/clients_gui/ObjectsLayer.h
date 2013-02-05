@@ -50,7 +50,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void Paint( Viewport_ABC& viewport );
     //@}
 };

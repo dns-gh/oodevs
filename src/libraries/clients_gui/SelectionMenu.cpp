@@ -60,7 +60,7 @@ SelectionMenu::~SelectionMenu()
 
 namespace
 {
-    void ApplyMousePress( Layer_ABC& layer, const Selectable_ABC& selectable, const geometry::Point2f& point, QMouseEvent* mouse )
+    void ApplyMousePress( Layer_ABC& layer, const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, QMouseEvent* mouse )
     {
         if( mouse->button() == Qt::LeftButton )
             layer.Select( selectable, ( mouse->modifiers() & Qt::ControlModifier ) != 0, ( mouse->modifiers() & Qt::ShiftModifier ) != 0 );
@@ -137,12 +137,12 @@ bool SelectionMenu::GenerateIcons()
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
         Layer_ABC* layer = extractedPair->first;
-        kernel::Selectable_ABC::T_Selectables& entities = extractedPair->second;
+        kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
         if( !layer )
             continue;
         for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
         {
-            const Selectable_ABC* graphicalEntity = *extractedElement;
+            const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
             if( !graphicalEntity )
                 continue;
 
@@ -249,13 +249,13 @@ void SelectionMenu::GenerateMenu()
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
         Layer_ABC* layer = extractedPair->first;
-        kernel::Selectable_ABC::T_Selectables& entities = extractedPair->second;
+        kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
         if( !layer )
             continue;
         menu.addSeparator()->setText( layer->GetName() );
         for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
         {
-            const Selectable_ABC* graphicalEntity = *extractedElement;
+            const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
             if( !graphicalEntity )
                 continue;
             QAction* action = menu.addAction( graphicalEntity->GetTooltip() );
@@ -282,12 +282,12 @@ void SelectionMenu::GenerateMenu()
         for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
         {
             Layer_ABC* layer = extractedPair->first;
-            kernel::Selectable_ABC::T_Selectables& entities = extractedPair->second;
+            kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
             if( !layer )
                 continue;
             for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
             {
-                const Selectable_ABC* graphicalEntity = *extractedElement;
+                const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
                 if( !graphicalEntity )
                     continue;
                 if( graphicalEntity->GetTooltip() == actionText )

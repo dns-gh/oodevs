@@ -171,7 +171,7 @@ void PropertiesPanel::OnItemChanged()
     {
         selected_->Select( controllers_.actions_ );
 
-        kernel::Selectable_ABC::T_Selectables list;
+        kernel::GraphicalEntity_ABC::T_GraphicalEntities list;
         list.push_back( selected_ );
         selected_->MultipleSelect( controllers_.actions_, list );
     }

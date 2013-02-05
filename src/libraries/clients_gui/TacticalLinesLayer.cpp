@@ -90,7 +90,7 @@ void TacticalLinesLayer::NotifyContextMenu( const kernel::Nothing&, kernel::Cont
 // Name: TacticalLinesLayer::ContextMenu
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-void TacticalLinesLayer::ContextMenu( const Selectable_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
+void TacticalLinesLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const TacticalLine_ABC& line = static_cast< const TacticalLine_ABC& >( entity );

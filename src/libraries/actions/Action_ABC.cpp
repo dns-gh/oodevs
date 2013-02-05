@@ -247,7 +247,7 @@ void Action_ABC::Select( kernel::ActionController& controller ) const
 // Name: Action_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void Action_ABC::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void Action_ABC::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     controller.MultipleSelect( elements );
 }

@@ -36,7 +36,7 @@ PopulationsLayer::~PopulationsLayer()
 // Name: PopulationsLayer::ContextMenu
 // Created: SBO 2006-11-28
 // -----------------------------------------------------------------------------
-void PopulationsLayer::ContextMenu( const Selectable_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
+void PopulationsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Population_ABC& popu = static_cast< const Population_ABC& >( entity );

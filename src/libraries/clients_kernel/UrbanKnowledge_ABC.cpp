@@ -55,7 +55,7 @@ void UrbanKnowledge_ABC::Select( ActionController& controller ) const
 // Name: UrbanKnowledge_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void UrbanKnowledge_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void UrbanKnowledge_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const UrbanKnowledge_ABC* > first;
     std::vector< const Knowledge_ABC* > second;

@@ -19,7 +19,7 @@ class ViewFrustum;
 namespace kernel
 {
     class Controllers;
-    class Selectable_ABC;
+    class GraphicalEntity_ABC;
 }
 
 namespace gui
@@ -78,7 +78,7 @@ public:
     std::string GetCurrentPass() const;
     bool ShouldDrawPass() const;
 
-    virtual bool IsIn( const kernel::Selectable_ABC& ) const { return false; }
+    virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const { return false; }
     //@}
 
     //! @name ModesObserver implementation
@@ -98,8 +98,8 @@ public:
     //! @name Layer_ABC implementation
     //@{
     virtual QString GetName() const;
-    virtual void Select( const kernel::Selectable_ABC&, bool control, bool shift );
-    virtual void ContextMenu( const kernel::Selectable_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
     //@}
 

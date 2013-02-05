@@ -470,7 +470,7 @@ std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
 // Name: GlProxy::ShouldEdit
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-bool GlProxy::ShouldEdit( const kernel::Selectable_ABC& selectable ) const
+bool GlProxy::ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
         if( (*it)->IsIn( selectable ) )

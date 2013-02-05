@@ -118,7 +118,7 @@ bool ActionController::HasMultipleSelection() const
 // Name: ActionController::GetSelectionner
 // Created: JSR 2012-06-01
 // -----------------------------------------------------------------------------
-const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC* selectable ) const
+const Selectionner_ABC* ActionController::GetSelectionner( const GraphicalEntity_ABC* selectable ) const
 {
     if( selectable )
         for( auto it = selectionners_.begin(); it != selectionners_.end(); ++it )
@@ -131,7 +131,7 @@ const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC*
 // Name: ActionController::SetSelected
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-void ActionController::SetSelected( const Selectable_ABC& selectable, bool append )
+void ActionController::SetSelected( const GraphicalEntity_ABC& selectable, bool append )
 {
     if( blocked_ )
         return;
@@ -147,7 +147,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
         selectedMap_[ selectionner ].push_back( &selectable );
         selectable.Select( *this );
 
-        Selectable_ABC::T_Selectables list;
+        GraphicalEntity_ABC::T_GraphicalEntities list;
         list.push_back( &selectable );
         selectable.MultipleSelect( *this, list );
     }
@@ -164,7 +164,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
             {
                 if( it->second.size() == 1 )
                 {
-                    static const Selectable_ABC::T_Selectables emptyList;
+                    static const GraphicalEntity_ABC::T_GraphicalEntities emptyList;
                     ( * itSelectable )->MultipleSelect( *this, emptyList );
                     selectedMap_.erase( it );
                     return;
@@ -186,7 +186,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
 // Name: ActionController::AddToSelection
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void ActionController::AddToSelection( const Selectable_ABC::T_Selectables& selectables )
+void ActionController::AddToSelection( const GraphicalEntity_ABC::T_GraphicalEntities& selectables )
 {
     if( blocked_ )
         return;
@@ -196,7 +196,7 @@ void ActionController::AddToSelection( const Selectable_ABC::T_Selectables& sele
         assert( selectionner );
         if( !selectionner )
             continue;
-        Selectable_ABC::T_Selectables& vect = selectedMap_[ selectionner ];
+        GraphicalEntity_ABC::T_GraphicalEntities& vect = selectedMap_[ selectionner ];
         if( std::find( vect.begin(), vect.end(), *it ) == vect.end() )
             vect.push_back( *it );
     }
@@ -233,7 +233,7 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
 // Name: ActionController::SetMultipleSelection
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------
-void ActionController::SetMultipleSelection( const Selectable_ABC::T_Selectables& selectables )
+void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_GraphicalEntities& selectables )
 {
     if( blocked_ )
         return;
@@ -261,7 +261,7 @@ void ActionController::SetMultipleSelection( const Selectable_ABC::T_Selectables
 // Name: ActionController::IsSelected
 // Created: NPT 2012-11-30
 // -----------------------------------------------------------------------------
-bool ActionController::IsSelected( Selectable_ABC* selectable ) const
+bool ActionController::IsSelected( GraphicalEntity_ABC* selectable ) const
 {
     const Selectionner_ABC* selectionner = GetSelectionner( selectable );
     for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
@@ -278,7 +278,7 @@ bool ActionController::IsSelected( Selectable_ABC* selectable ) const
 // Name: ActionController::IsSingleSelection
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-bool ActionController::IsSingleSelection( const Selectable_ABC* selectable ) const
+bool ActionController::IsSingleSelection( const GraphicalEntity_ABC* selectable ) const
 {
     auto it = multipleModes_.find( currentMode_ );
     const Selectionner_ABC* selectionner = GetSelectionner( selectable );
