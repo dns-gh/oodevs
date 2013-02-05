@@ -14,7 +14,6 @@
 
 namespace geostore
 {
-
 // =============================================================================
 /** @class  LogTable
     @brief  LogTable
@@ -34,9 +33,10 @@ public:
     void SetLastAccessTime( const std::string& layerName, const std::time_t& time );
 
 private:
-    void CreateStructure();
+    bool GetLastAccessTimeImpl( const std::string& layerName, std::time_t& time );
+    void SetLastAccessTimeImpl( const std::string& layerName, const std::time_t& time );
 };
 
-} //! namespace geostore
+}
 
 #endif // __LogTable_h_

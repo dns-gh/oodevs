@@ -19,7 +19,8 @@ using namespace geostore;
 ProjectionTable::ProjectionTable( sqlite3* db )
     : Table( db, "spatial_ref_sys" )
 {
-    ExecuteQuery( "SELECT InitSpatialMetadata()" );
+    if( ExecuteQuery( "SELECT name FROM sqlite_master WHERE type='table' AND name='spatial_ref_sys'" ).empty() )
+        ExecuteQuery( "SELECT InitSpatialMetaData()" );
     ExecuteQuery(
         "REPLACE INTO"
         "   spatial_ref_sys ( srid, auth_name, auth_srid, ref_sys_name, proj4text ) "

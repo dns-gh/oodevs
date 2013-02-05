@@ -21,7 +21,9 @@ using namespace geostore;
 GeoTable::GeoTable( sqlite3* db, const std::string& name )
     : Table( db, name )
 {
-    CreateStructure();
+    ExecuteQuery(
+        "CREATE TABLE IF NOT EXISTS " + GetName()
+        + " ( id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(256) )" );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,32 +50,17 @@ void GeoTable::SetGeometry( const std::string& name )
         throw MASA_EXCEPTION( "Invalid geometry name." );
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable::CreateStructure
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
-void GeoTable::CreateStructure()
-{
-    std::stringstream query;
-    query   << "CREATE TABLE IF NOT EXISTS " << GetName()
-            << " ( id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(256) )";
-    ExecuteQuery( query.str() );
-}
-
 void GeoTable::LoadTable()
 {
-    Table::T_ResultSet results;
-    ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'", results );
-
+    Table::T_ResultSet results = ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'" );
     if( results.empty() )
         throw MASA_EXCEPTION( "Could not load table " + GetName() );
-
     SetGeometry( results.back().back() );
 }
 
-void GeoTable::FillTable( const boost::filesystem::path& path, PointProjector_ABC& proj )
+void GeoTable::FillTable( const boost::filesystem::path& path, PointProjector_ABC& projector )
 {
-    TerrainFileReader reader( path.string(), proj );
+    TerrainFileReader reader( path.string(), projector );
     AddGeometryColumn( reader.geomType_ );
     Fill( reader.features_ );
 }
@@ -103,9 +90,7 @@ void GeoTable::AddGeometryColumn( int geom_type )
     default:
         throw MASA_EXCEPTION( "Invalid geometry type." );
     }
-
     query << "', 2 )";
-
     ExecuteQuery( query.str() );
 }
 
@@ -140,7 +125,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::vector< gaiaGeomCollPtr > GeoTable::CreatePolygonGeometry( const TerrainObject& shape )
 {
-    std::vector< gaiaGeomCollPtr > result;    
+    std::vector< gaiaGeomCollPtr > result;
     AddPolygon( shape, result );
     geodata::Primitive_ABC::T_Vector innerRing = shape.GetSubPrimitives();
     for( geodata::Primitive_ABC::CIT_Vector it = innerRing.begin(); it != innerRing.end(); ++it )
@@ -164,17 +149,6 @@ std::vector< gaiaGeomCollPtr > GeoTable::CreateLineGeometry( const TerrainObject
 }
 
 // -----------------------------------------------------------------------------
-// Name: GeoTable::MbrSpatialIndex
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
-void GeoTable::MbrSpatialIndex()
-{
-    std::stringstream query;
-    query << "SELECT CreateMbrCache( '" << GetName() << "', 'geom' )";
-    ExecuteQuery( query.str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GeoTable::Fill
 // Created: AME 2010-07-20
 // -----------------------------------------------------------------------------
@@ -184,25 +158,21 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
     ExecuteQuery( "BEGIN" );
 
     std::stringstream query;
-    query << "REPLACE INTO " << GetName() << "( id, name, geom ) VALUES ( ?, ?, ? )";
-    sqlite3_stmt* stmt = CreateStatement( query.str() );
+    sqlite3_stmt* stmt = CreateStatement( "REPLACE INTO " + GetName() + "( id, name, geom ) VALUES ( ?, ?, ? )" );
 
     // ID
     int i = 0;
     int counter = 0;
-
     for( auto it = features.begin(); it != features.end(); ++it, ++counter )
     {
-        const size_t verticesCount = ( *it )->GetCoordinates().size();
-        if( ( verticesCount == 1 ) || ( geometryType_ == Polygon && verticesCount < 3 ) )
+        const size_t vertices = ( *it )->GetCoordinates().size();
+        if( vertices == 1 || ( geometryType_ == Polygon && vertices < 3 ) )
             continue;
         std::vector< gaiaGeomCollPtr > geo = CreateGeometry( **it );
-        for( auto geoIt = geo.begin(); geoIt != geo.end(); ++geoIt )
+        for( auto geoIt = geo.begin(); geoIt != geo.end(); ++geoIt, ++i )
         {
-            ++i;            
             if( !gaiaIsValid( *geoIt ) )
             {
-                std::cout << GetName() << " invalid geometry for :" << counter << std::endl;
                 gaiaFreeGeomColl( *geoIt );
                 continue;
             }
@@ -223,23 +193,15 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
             std::string text = ( *it )->GetText();
             sqlite3_bind_text( stmt, 2, text.c_str(), static_cast< int >( text.length() ), SQLITE_TRANSIENT );
             // Spatialite BLOB
-            sqlite3_bind_blob( stmt, 3, blob, blob_size, &free ); // Will be freed!
+            sqlite3_bind_blob( stmt, 3, blob, blob_size, &free );
 
             // Step the query
             StepStatement( stmt );
         }
-
-    // Free all the resources for that statement
     }
     sqlite3_finalize( stmt );
-
-    // Commit transaction
     ExecuteQuery( "COMMIT" );
-
-    // Create spatial index
-    MbrSpatialIndex();
-
-    // Analyze of the table
+    ExecuteQuery( "SELECT CreateMbrCache( '" + GetName() + "', 'geom' )" );
     ExecuteQuery( "ANALYZE " + GetName() );
 }
 
@@ -249,7 +211,6 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
 // -----------------------------------------------------------------------------
 std::vector< gaiaGeomCollPtr > GeoTable::CreateGeometry( const TerrainObject& shape )
 {
-
     switch( geometryType_ )
     {
         case Polygon:
@@ -265,14 +226,11 @@ std::vector< gaiaGeomCollPtr > GeoTable::CreateGeometry( const TerrainObject& sh
 // Name: GeoTable::GetFeaturesIntersectsWith
 // Created: AME 2010-07-21
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly )
+gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly ) const
 {
     gaiaGeomCollPtr result = nullptr;
 
-    std::ostringstream query;
-    query << "SELECT GUnion( geom ) FROM " << GetName() << " WHERE MbrIntersects( geom, BuildMbr( ?, ?, ?, ? ) );";
-
-    sqlite3_stmt* stmt = CreateStatement( query.str() );
+    sqlite3_stmt* stmt = CreateStatement( "SELECT GUnion( geom ) FROM " + GetName() + " WHERE MbrIntersects( geom, BuildMbr( ?, ?, ?, ? ) );" );
     sqlite3_reset( stmt );
     sqlite3_clear_bindings( stmt );
 
@@ -296,7 +254,6 @@ gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly )
         // Do not leak the temporary retrieved data
         gaiaFreeGeomColl( temp );
     }
-
     sqlite3_finalize( stmt );
     return result;
 }

@@ -9,6 +9,7 @@
 
 #include "geostore_pch.h"
 #include "LogTable.h"
+#include <boost/assign.hpp>
 
 using namespace geostore;
 
@@ -19,7 +20,16 @@ using namespace geostore;
 LogTable::LogTable( sqlite3* db )
     : Table( db, "MasaLog" )
 {
-    CreateStructure();
+    ExecuteQuery( "CREATE TABLE IF NOT EXISTS " + GetName() + " ( table_name TEXT PRIMARY KEY, last_modification INTEGER );" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogTable destructor
+// Created: AME 2010-07-28
+// -----------------------------------------------------------------------------
+LogTable::~LogTable()
+{
+    // NOTHING
 }
 
 bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& time )
@@ -27,10 +37,7 @@ bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& tim
     bool result = false;
     time = 0;
 
-    std::ostringstream query;
-    query << "SELECT last_modification FROM " << GetName() << " WHERE table_name = '" << layerName << "'";
-
-    sqlite3_stmt* stmt = CreateStatement( query.str() );
+    sqlite3_stmt* stmt = CreateStatement( "SELECT last_modification FROM " + GetName() + " WHERE table_name = '" + layerName + "'" );
     sqlite3_reset( stmt );
     sqlite3_clear_bindings( stmt );
 
@@ -47,30 +54,11 @@ bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& tim
 
 void LogTable::SetLastAccessTime( const std::string& layerName, const std::time_t& time )
 {
-    std::ostringstream query;
-    query << "REPLACE INTO " << GetName() << " VALUES ( ?, ? )";
-
-    sqlite3_stmt* stmt = CreateStatement( query.str() );
+    sqlite3_stmt* stmt = CreateStatement( "REPLACE INTO " + GetName() + " VALUES ( ?, ? )" );
     sqlite3_reset( stmt );
     sqlite3_clear_bindings( stmt );
     sqlite3_bind_text( stmt, 1, layerName.c_str(), static_cast< int >( layerName.length() ), SQLITE_TRANSIENT );
     sqlite3_bind_int64( stmt, 2, time );
     StepStatement( stmt );
     sqlite3_finalize( stmt );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogTable destructor
-// Created: AME 2010-07-28
-// -----------------------------------------------------------------------------
-LogTable::~LogTable()
-{
-    // NOTHING
-}
-
-void LogTable::CreateStructure()
-{
-    std::stringstream query;
-    query << "CREATE TABLE IF NOT EXISTS " << GetName() << " ( table_name TEXT PRIMARY KEY, last_modification INTEGER );";
-    ExecuteQuery( query.str() );
 }

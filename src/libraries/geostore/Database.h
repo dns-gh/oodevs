@@ -10,13 +10,19 @@
 #ifndef __Database_h_
 #define __Database_h_
 
+#include "LogTable.h"
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
+#include <string>
+#include <map>
+
 class PointProjector_ABC;
 struct sqlite3;
 
 namespace geostore
 {
     class GeoTable;
-    class LogTable;
 
 // =============================================================================
 /** @class  Database
@@ -29,34 +35,32 @@ class Database : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Database( const boost::filesystem::path& path );
-    virtual ~Database();
-    //@}
-
-    //! @name Operations
-    //@{
-    void LoadLayers( PointProjector_ABC& projector );
+     Database( const boost::filesystem::path& path, PointProjector_ABC& projector );
+    ~Database();
     //@}
 
 private:
-    void LoadLayer( const std::string& name, const boost::filesystem::path& path, PointProjector_ABC& projector );
-    void LoadLayer( const std::string& name );
+    //! @name Helpers
+    //@{
+    void LoadLayers( PointProjector_ABC& projector );
+    GeoTable* LoadLayer( PointProjector_ABC& projector, const boost::filesystem::path& file, const std::string& layer );
+    //@}
 
 public:
-   //! @name Member data
+    //! @name Member data
     //@{
-    std::map< std::string, GeoTable* > tables_;
-    std::auto_ptr< LogTable > logTable_;
+    boost::ptr_map< std::string, GeoTable > tables_; // $$$$ MCO 2013-02-04: public only for tests but WTF anyway !
     //@}
 
 private:
     //! @name Member data
     //@{
     boost::filesystem::path path_;
-    sqlite3* db_;
+    boost::shared_ptr< sqlite3 > db_;
+    LogTable log_;
     //@}
 };
 
-} //! namespace geostore
+}
 
 #endif // __Database_h_

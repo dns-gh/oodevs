@@ -11,8 +11,11 @@
 #define __geostore_Table_h_
 
 #include <boost/noncopyable.hpp>
+#include <vector>
+#include <string>
 
 struct sqlite3;
+struct sqlite3_stmt;
 
 namespace geostore
 {
@@ -22,17 +25,15 @@ class Table : private boost::noncopyable
 public:
     typedef std::vector< std::vector< std::string > > T_ResultSet;
 
+protected:
     Table( sqlite3* db, const std::string& name );
 
     const std::string& GetName() const;
 
-    void ExecuteQuery( const std::string& query );
-    void ExecuteQuery( const std::string& query, T_ResultSet& result );
+    T_ResultSet ExecuteQuery( const std::string& query );
 
-protected:
     sqlite3_stmt* CreateStatement( const std::string& query ) const;
     int StepStatement( sqlite3_stmt* stmt ) const;
-    sqlite3* GetDB() const;
 
 private:
     sqlite3* db_;

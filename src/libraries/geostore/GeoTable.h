@@ -17,7 +17,6 @@ class PointProjector_ABC;
 
 namespace geostore
 {
-
 // =============================================================================
 /** @class  GeoTable
     @brief  GeoTable
@@ -46,17 +45,15 @@ public:
     void FillTable( const boost::filesystem::path& path, PointProjector_ABC& proj );
 
     GeometryType GetGeometryType() const;
-    gaiaGeomCollPtr GetFeaturesIntersectingWith( gaiaGeomCollPtr poly );
+    gaiaGeomCollPtr GetFeaturesIntersectingWith( gaiaGeomCollPtr poly ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void CreateStructure();
     std::vector< gaiaGeomCollPtr > CreatePolygonGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateLineGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateGeometry( const TerrainObject& shape );
-    void MbrSpatialIndex();
     void SetGeometry( const std::string& name );
     void Fill( const std::vector< TerrainObject* >& features );
     void AddGeometryColumn( int geom_type );
@@ -69,6 +66,6 @@ private:
     //@}
 };
 
-} //! namespace geostore
+}
 
 #endif // __GeoTable_h_

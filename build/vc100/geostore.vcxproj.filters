@@ -25,9 +25,6 @@
     <ClInclude Include="..\..\src\libraries\geostore\GeoTable.h">
       <Filter>Source Files\Structure</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\LogTable.h">
-      <Filter>Source Files\Structure</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\ProjectionTable.h">
       <Filter>Source Files\Structure</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
     <ClInclude Include="..\..\src\libraries\geostore\DatabaseException.h">
       <Filter>Source Files\Structure</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\LogTable.h">
+      <Filter>Source Files\Structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\geostore\geostore_pch.cpp">
@@ -61,9 +61,6 @@
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\GeoTable.cpp">
-      <Filter>Source Files\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\LogTable.cpp">
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\ProjectionTable.cpp">
@@ -79,6 +76,9 @@
       <Filter>Source Files\SpatialProcess</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\Table.cpp">
+      <Filter>Source Files\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\LogTable.cpp">
       <Filter>Source Files\Structure</Filter>
     </ClCompile>
   </ItemGroup>

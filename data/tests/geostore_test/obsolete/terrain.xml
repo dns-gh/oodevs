@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<terrain model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/terrain/terrain.xsd">
+  <data>
+    <location>
+      <center latitude="43.2914" longitude="5.3921"/>
+      <dimension height="29621.7" width="24394.4"/>
+      <extent x-max="31TGH0669181543" x-min="31TFH8226780845" y-max="31TGJ0579211074" y-min="31TFJ8147410376"/>
+    </location>
+    <pathfind directory="Pathfind"/>
+    <detection directory="Detection"/>
+    <graphics directory="Graphics"/>
+    <urban file="urban/urban.xml"/>
+    <model dataset="ada" physical="worldwide-ML"/>
+  </data>
+</terrain>
+<!-- signature="1793989105" -->

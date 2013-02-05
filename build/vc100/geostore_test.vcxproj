@@ -127,6 +127,10 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --detect_memory_leaks=0</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
@@ -138,6 +142,10 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --detect_memory_leaks=0</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
@@ -150,6 +158,10 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --detect_memory_leaks=0</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
@@ -162,6 +174,10 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --detect_memory_leaks=0</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\geostore_test\geostore_test_pch.h" />

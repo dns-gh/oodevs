@@ -17,12 +17,14 @@ namespace kernel
     class UrbanObject_ABC;
 }
 
-namespace geostore {
+namespace geostore
+{
 
 class SpatialIndexer
 {
 public:
-    virtual ~SpatialIndexer() {};
+    virtual ~SpatialIndexer() {}
+
     virtual void GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< const kernel::UrbanObject_ABC* >& result ) const = 0;
 };
 

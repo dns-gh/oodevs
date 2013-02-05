@@ -46,22 +46,14 @@ public:
     std::vector< const kernel::UrbanObject_ABC* > IntersectedBlocks( const geometry::Polygon2f& footprint );
 
 private:
-    //! @name Helpers
-    //@{
-    void InitProjector( const boost::filesystem::path& terrainFile ) ;
-    void InitProjectorOld( const boost::filesystem::path& worldfile ) ;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const SpatialIndexer&               index_;
-    std::auto_ptr< Database >           spatialDb_;
-    std::auto_ptr< PointProjector_ABC > proj_;
-    std::auto_ptr< PointProjector_ABC > trans_;
+    std::auto_ptr< PointProjector_ABC > projector_;
+    std::auto_ptr< Database >           database_;
     //@}
 };
 
-} //! namespace geostore
+}
 
 #endif // __GeoStoreManager_h_
