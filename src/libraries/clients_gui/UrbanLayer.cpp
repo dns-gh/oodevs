@@ -237,21 +237,21 @@ void UrbanLayer::ActivateEntity( const kernel::Entity_ABC& entity )
 
 namespace
 {
-    void Append( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
+    void Append( kernel::Selectable_ABC::T_Selectables& vector, const kernel::Selectable_ABC* element )
     {
         auto it = std::find( vector.begin(), vector.end(), element );
         if( it == vector.end() )
             vector.push_back( element );
     }
 
-    void Remove( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
+    void Remove( kernel::Selectable_ABC::T_Selectables& vector, const kernel::Selectable_ABC* element )
     {
         auto it = std::find( vector.begin(), vector.end(), element );
         if( it != vector.end() )
             vector.erase( it );
     }
 
-    void AppendDistrict( kernel::ActionController::T_Selectables& vector, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
+    void AppendDistrict( kernel::Selectable_ABC::T_Selectables& vector, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
     {
         Remove( vector, district );
         tools::Iterator< const kernel::Entity_ABC& > districtIt = district->Get< kernel::Hierarchies >().CreateSubordinateIterator();
@@ -265,7 +265,7 @@ namespace
         }
     }
 
-    void AppendCity( kernel::ActionController::T_Selectables& vector, const kernel::Entity_ABC* city, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
+    void AppendCity( kernel::Selectable_ABC::T_Selectables& vector, const kernel::Entity_ABC* city, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
     {
         Remove( vector, city );
         const kernel::Hierarchies& cityHierarchies = city->Get< kernel::Hierarchies >();
@@ -299,7 +299,7 @@ void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool sh
         bool districtSelected = citySelected ? false : ( district && std::find( actualSelection_.begin(), actualSelection_.end(), district ) != actualSelection_.end() );
         if( citySelected || districtSelected )
         {
-            kernel::ActionController::T_Selectables newSelection;
+            kernel::Selectable_ABC::T_Selectables newSelection;
             for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = actualSelection_.begin(); it != actualSelection_.end(); ++it )
                 newSelection.push_back( *it );
             if( citySelected )

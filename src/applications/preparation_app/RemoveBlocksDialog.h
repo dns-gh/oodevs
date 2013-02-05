@@ -64,7 +64,7 @@ private:
     //@{
     kernel::Controllers&                    controllers_;
     UrbanModel&                             urbanModel_;
-    kernel::ActionController::T_Selectables selectables_;
+    kernel::Selectable_ABC::T_Selectables selectables_;
     T_Elements                              urbanObjects_;
     QSpinBox*                               sizeEditor_;
     QPushButton*                            deleteButton_;

@@ -58,10 +58,9 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::vector< const Selectable_ABC* >                T_Selectables;
-    typedef std::map< const Selectionner_ABC*, T_Selectables >  T_SelectedMap;
-    typedef std::vector< const Selectionner_ABC* >              T_Selectionners;
-    typedef std::map< int, T_Selectionners >                    T_MultipleMode;
+    typedef std::map< const Selectionner_ABC*, Selectable_ABC::T_Selectables >  T_SelectedMap;
+    typedef std::vector< const Selectionner_ABC* >                              T_Selectionners;
+    typedef std::map< int, T_Selectionners >                                    T_MultipleMode;
     //@}
 
 public:
@@ -80,9 +79,9 @@ public:
     // Select
     // -----------------------------------------------------------------------------
     void SetSelected( const Selectable_ABC& selectable, bool append );
-    void AddToSelection( const T_Selectables& selectables );
+    void AddToSelection( const Selectable_ABC::T_Selectables& selectables );
     void NotifyRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight, bool append );
-    void SetMultipleSelection( const T_Selectables& selectables );
+    void SetMultipleSelection( const Selectable_ABC::T_Selectables& selectables );
 
     template< typename T >
     void Select( const T& element )

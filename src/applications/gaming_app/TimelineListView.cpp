@@ -313,7 +313,7 @@ void TimelineListView::OnSelectionChange( const QItemSelection&, const QItemSele
         item = items[ 0 ];
     if( item && item->data( 0, Qt::UserRole ).isValid() )
     {
-        kernel::ActionController::T_Selectables list;
+        kernel::Selectable_ABC::T_Selectables list;
         list.push_back( item->data( 0, Qt::UserRole ).value< const kernel::Entity_ABC* >() );
         controllers_.actions_.SetMultipleSelection( list );
     }

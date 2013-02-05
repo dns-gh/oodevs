@@ -208,7 +208,7 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Agent_ABC* agent = model_.agents_.CreateAgent( *currentGhost, *agentType, position );
         delete currentGhost;
         agent->Select( controllers_.actions_ );
-        kernel::ActionController::T_Selectables list;
+        kernel::Selectable_ABC::T_Selectables list;
         list.push_back( agent );
         agent->MultipleSelect( controllers_.actions_, list );
         selectedGhost_ = 0;
@@ -229,7 +229,7 @@ bool GhostsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         kernel::Automat_ABC* automat = model_.agents_.CreateAutomatInsteadOf( *currentGhost, *automatType, position );
         delete currentGhost;
         automat->Select( controllers_.actions_ );
-        kernel::ActionController::T_Selectables list;
+        kernel::Selectable_ABC::T_Selectables list;
         list.push_back( automat );
         automat->MultipleSelect( controllers_.actions_, list );
         selectedGhost_ = 0;

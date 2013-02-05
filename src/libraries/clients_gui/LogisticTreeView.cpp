@@ -488,7 +488,7 @@ void LogisticTreeView::Drop( const QString& mimeType, void* data, QStandardItem&
 
         ( *safePtr )->Select( controllers_.actions_ );
 
-        kernel::ActionController::T_Selectables list;
+        kernel::Selectable_ABC::T_Selectables list;
         list.push_back( *safePtr );
         ( *safePtr )->MultipleSelect( controllers_.actions_, list );
     }

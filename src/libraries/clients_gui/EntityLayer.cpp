@@ -332,7 +332,7 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     geometry::Rectangle2f rectangle( topLeft, bottomRight );
     selected_ = 0;
     tooltiped_ = 0;
-    kernel::ActionController::T_Selectables selectables;
+    kernel::Selectable_ABC::T_Selectables selectables;
     for( std::size_t i = 0; i < entities_.size(); ++i )
     {
         const Entity_ABC& entity = *entities_[ i ];

@@ -180,7 +180,7 @@ void EntityTreeView_ABC::OnSelect( const QItemSelection& /*selected*/, const QIt
         return;
 
     QModelIndexList indexes = selectedIndexes();
-    kernel::ActionController::T_Selectables list;
+    kernel::Selectable_ABC::T_Selectables list;
     for( QModelIndexList::const_iterator it = indexes.constBegin(); it != indexes.constEnd(); ++it )
     {
         const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( *it );

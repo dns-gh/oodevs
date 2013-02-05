@@ -147,7 +147,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
         selectedMap_[ selectionner ].push_back( &selectable );
         selectable.Select( *this );
 
-        ActionController::T_Selectables list;
+        Selectable_ABC::T_Selectables list;
         list.push_back( &selectable );
         selectable.MultipleSelect( *this, list );
     }
@@ -164,7 +164,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
             {
                 if( it->second.size() == 1 )
                 {
-                    static const T_Selectables emptyList;
+                    static const Selectable_ABC::T_Selectables emptyList;
                     ( * itSelectable )->MultipleSelect( *this, emptyList );
                     selectedMap_.erase( it );
                     return;
@@ -186,7 +186,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
 // Name: ActionController::AddToSelection
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void ActionController::AddToSelection( const T_Selectables& selectables )
+void ActionController::AddToSelection( const Selectable_ABC::T_Selectables& selectables )
 {
     if( blocked_ )
         return;
@@ -196,7 +196,7 @@ void ActionController::AddToSelection( const T_Selectables& selectables )
         assert( selectionner );
         if( !selectionner )
             continue;
-        T_Selectables& vect = selectedMap_[ selectionner ];
+        Selectable_ABC::T_Selectables& vect = selectedMap_[ selectionner ];
         if( std::find( vect.begin(), vect.end(), *it ) == vect.end() )
             vect.push_back( *it );
     }
@@ -233,7 +233,7 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
 // Name: ActionController::SetMultipleSelection
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------
-void ActionController::SetMultipleSelection( const T_Selectables& selectables )
+void ActionController::SetMultipleSelection( const Selectable_ABC::T_Selectables& selectables )
 {
     if( blocked_ )
         return;

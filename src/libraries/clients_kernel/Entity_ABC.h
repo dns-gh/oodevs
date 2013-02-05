@@ -86,11 +86,10 @@ public:
     virtual QString GetTooltip() const;
     //@}
 
-    //! @name GUI methods
+    //! @name Selectable_ABC methods
     //@{
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
-    virtual void Activate( ActionController& controller ) const = 0;
-    virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
+    virtual void OverFly( ActionController& controller ) const;
+    //@}
 
     //! @name Extension methods
     //@{
