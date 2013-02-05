@@ -741,3 +741,15 @@ BOOST_FIXTURE_TEST_CASE( read_set_automat_mode, Fixture )
     BOOST_CHECK_EQUAL( msg.automate().id(), 27u );
     BOOST_CHECK_EQUAL( msg.mode(), engaged );
 }
+
+BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
+{
+    xos << xml::attribute( "id", 2053 )
+        << xml::attribute( "target", 8323 )
+        << xml::attribute( "type", "mission" );
+    MOCK_EXPECT( service.Resolve ).once().with( 8323u ).returns( Service_ABC::AUTOMAT );
+    const auto msg = Read< ClientToSim_Content >();
+    BOOST_CHECK( msg.has_automat_order() );
+    BOOST_CHECK_EQUAL( msg.automat_order().tasker().id(), 8323u );
+    BOOST_CHECK_EQUAL( msg.automat_order().type().id(), 2053u );
+}

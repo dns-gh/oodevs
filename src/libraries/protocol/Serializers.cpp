@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable: 4100 )
 #ifndef _SCL_SECURE_NO_WARNINGS
 #define _SCL_SECURE_NO_WARNINGS
 #endif
@@ -707,7 +706,7 @@ namespace
         AddPointList( service, *pull.mutable_waybackpath(), "wayBackPath", xis );
     }
 
-    void ReadNull( MissionParameter& dst, xml::xistream& xis )
+    void ReadNull( MissionParameter& dst, xml::xistream& )
     {
         dst.set_null_value( true );
     }
@@ -923,4 +922,72 @@ void Reader::Read( SetAutomatMode& dst, xml::xistream& xis ) const
 {
     dst.mutable_automate()->set_id( xis.attribute< int32_t >( "target" ) );
     dst.set_mode( ReadAutomatMode( xis ) );
+}
+
+namespace
+{
+    void ReadMission( const Service_ABC& service, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        const auto target = TestAttribute< uint32_t >( xis, "target" );
+        if( !target )
+            return;
+        const Service_ABC::EntityType type = service.Resolve( *target );
+        if( type == Service_ABC::AGENT )
+            return reader.Read( *dst.mutable_unit_order(), xis );
+        if( type == Service_ABC::AUTOMAT )
+            return reader.Read( *dst.mutable_automat_order(), xis );
+        if( type == Service_ABC::POPULATION )
+            return reader.Read( *dst.mutable_crowd_order(), xis );
+    }
+
+    void ReadFragOrder( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        reader.Read( *dst.mutable_frag_order(), xis );
+    }
+
+    void ReadMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        reader.Read( *dst.mutable_magic_action(), xis );
+    }
+
+    void ReadUnitMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        reader.Read( *dst.mutable_unit_magic_action(), xis );
+    }
+
+    void ReadObjectMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        reader.Read( *dst.mutable_object_magic_action(), xis );
+    }
+
+    void ReadKnowledgeGroupMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        reader.Read( *dst.mutable_knowledge_magic_action(), xis );
+    }
+
+    void ReadChangeMode( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    {
+        reader.Read( *dst.mutable_set_automat_mode(), xis );
+    }
+
+    typedef void ( *T_ReadOrder )( const Service_ABC&, const Reader&, ClientToSim_Content&, xml::xistream& );
+    const struct { T_ReadOrder Read; std::string name; } orders[] = {
+        { &ReadChangeMode,                "change_mode" },
+        { &ReadFragOrder,                 "fragorder" },
+        { &ReadKnowledgeGroupMagicAction, "magicknowledge" },
+        { &ReadMagicAction,               "magic" },
+        { &ReadMission,                   "mission" },
+        { &ReadObjectMagicAction,         "magicobject" },
+        { &ReadUnitMagicAction,           "magicunit" },
+    };
+}
+
+void Reader::Read( ClientToSim_Content& dst, xml::xistream& xis ) const
+{
+    const auto type = TestLowCaseAttribute( xis, "type" );
+    if( !type )
+        return;
+    for( size_t i = 0; i < COUNT_OF( orders ); ++i )
+        if( orders[i].name == *type )
+            orders[i].Read( service_, *this, dst, xis );
 }

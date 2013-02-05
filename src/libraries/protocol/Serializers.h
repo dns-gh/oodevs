@@ -68,7 +68,7 @@ namespace serializer
         virtual ~Reader();
         //@}
 
-        //! @name Public methods
+        //! @name Public readers
         //@{
         void Read( sword::MissionParameter& dst,     xml::xistream& xis ) const;
         void Read( sword::MissionParameters& dst,    xml::xistream& xis ) const;
@@ -81,6 +81,7 @@ namespace serializer
         void Read( sword::ObjectMagicAction& dst,    xml::xistream& xis ) const;
         void Read( sword::KnowledgeMagicAction& dst, xml::xistream& xis ) const;
         void Read( sword::SetAutomatMode& dst,       xml::xistream& xis ) const;
+        void Read( sword::ClientToSim_Content& dst,  xml::xistream& xis ) const;
         //@}
 
     private:
