@@ -62,6 +62,7 @@ public:
     virtual void SelectColor( const kernel::UrbanObject_ABC& object );
     virtual void SelectColor( const kernel::Ghost_ABC& ghost );
     virtual QColor FindColor( const kernel::Entity_ABC& entity );
+    virtual QColor FindColorWithModifiers( const kernel::Entity_ABC& entity );
     virtual QColor FindBaseColor( const kernel::Entity_ABC& entity );
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge );
     //@}
