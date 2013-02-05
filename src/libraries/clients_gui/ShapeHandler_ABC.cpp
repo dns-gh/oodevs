@@ -42,3 +42,12 @@ void ShapeHandler_ABC::Draw( const kernel::Location_ABC& location, const geometr
     gui::SimpleLocationDrawer drawer( tools );
     location.Accept( drawer );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ShapeHandler_ABC::Reset
+// Created: ABR 2013-02-04
+// -----------------------------------------------------------------------------
+void ShapeHandler_ABC::Reset()
+{
+    // NOTHING
+}
