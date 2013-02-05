@@ -14,7 +14,6 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #pragma warning( pop )
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -33,7 +32,6 @@ namespace gui
 template< typename I >
 class EntityImplementation : public I
                            , public kernel::Serializable_ABC
-                           , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

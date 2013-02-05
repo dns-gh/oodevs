@@ -15,7 +15,8 @@
 #include "Selectable_ABC.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
-#include <geometry/types.h>
+#include "geometry/Types.h"
+#include <boost/noncopyable.hpp>
 
 class QPoint;
 class QString;
@@ -39,6 +40,7 @@ namespace kernel
 // =============================================================================
 
 class EntityBase_ABC : public tools::Extendable< Extension_ABC >
+                     , private boost::noncopyable
 {
 public:
              EntityBase_ABC() {}
@@ -80,14 +82,13 @@ public:
 
     //! @name Accessors
     //@{
-    virtual QString GetName() const = 0;
     virtual unsigned long GetId() const = 0;
     virtual const std::string& GetTypeName() const;
-    virtual QString GetTooltip() const;
     //@}
 
-    //! @name Selectable_ABC methods
+    //! @name Selectable_ABC implementation
     //@{
+    virtual QString GetTooltip() const;
     virtual void OverFly( ActionController& controller ) const;
     //@}
 
@@ -95,13 +96,6 @@ public:
     //@{
     virtual void AddExtension( Extension_ABC& ext );
     virtual void Apply( ExtensionVisitor_ABC& visitor ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Entity_ABC( const Entity_ABC& );            //!< Copy constructor
-    Entity_ABC& operator=( const Entity_ABC& ); //!< Assignment operator
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #define __Selectable_ABC_h_
 
 class QPoint;
+class QString;
 
 namespace kernel
 {
@@ -29,6 +30,12 @@ public:
     //@{
              Selectable_ABC() {}
     virtual ~Selectable_ABC() {}
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual QString GetName() const = 0;
+    virtual QString GetTooltip() const = 0;
     //@}
 
     //! @name Operations
