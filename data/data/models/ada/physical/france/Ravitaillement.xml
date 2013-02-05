@@ -2,7 +2,7 @@
 <supply model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.2/physical/Supply.xsd">
   <convoys mission="PION LOGISTIQUE Convoyer" unit-type="LOG . Convoi">
     <type>
-      <dotation-supply type="virtual"/>
+      <dotation-supply type="real"/>
       <stock-supply type="real"/>
     </type>
     <constitution-times>
@@ -29,4 +29,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="2436475997" -->
+<!-- signature="3980581225" -->
