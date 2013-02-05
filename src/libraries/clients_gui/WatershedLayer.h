@@ -10,7 +10,7 @@
 #ifndef __WatershedLayer_h_
 #define __WatershedLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2010-03-23
 // =============================================================================
-class WatershedLayer : public Layer2d_ABC
+class WatershedLayer : public Layer2D
                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                      , public kernel::OptionsObserver_ABC
 {

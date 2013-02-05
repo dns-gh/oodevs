@@ -64,7 +64,7 @@ void ParametersLayer::Initialize( const geometry::Rectangle2f& extent )
 void ParametersLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     viewport_ = viewport;
-    Layer_ABC::Paint( viewport );
+    Layer::Paint( viewport );
 }
 
 // -----------------------------------------------------------------------------

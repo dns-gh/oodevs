@@ -88,7 +88,7 @@ void DrawerLayer::OnDeleteDrawing()
 void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     viewport_ = viewport;
-    Layer_ABC::Paint( viewport );
+    Layer::Paint( viewport );
 }
 
 // -----------------------------------------------------------------------------

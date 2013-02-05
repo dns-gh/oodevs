@@ -23,7 +23,7 @@ namespace gui
 {
     class CheckBox;
     class GlSelector;
-    class Layer_ABC;
+    class Layer;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddLayer( const QString& name, Layer_ABC& layer, bool dynamic = false );
+    void AddLayer( const QString& name, Layer& layer, bool dynamic = false );
     void Update();
     virtual void Commit();
     virtual void Reset();
@@ -72,14 +72,14 @@ private:
     void UpdateLeastAndMostVisible();
     void ResetLayers();
     void RemoveDynamicLayer( QStandardItem& item );
-    void MoveItem( int row, Layer_ABC* layer, int newPlace, int oldPlace, int step );
-    Layer_ABC* GetCurrentLayer() const;
-    int GetCurrentRow( Layer_ABC* layer ) const;
+    void MoveItem( int row, Layer* layer, int newPlace, int oldPlace, int step );
+    Layer* GetCurrentLayer() const;
+    int GetCurrentRow( Layer* layer ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >     T_Layers;
+    typedef std::vector< Layer* >     T_Layers;
     typedef std::vector< float >          T_Alphas;
     typedef std::vector< QString >        T_Names;
     //@}

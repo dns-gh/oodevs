@@ -10,7 +10,7 @@
 #ifndef __Elevation3dLayer_h_
 #define __Elevation3dLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include <graphics/ViewFrustum.h>
@@ -41,7 +41,7 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Elevation3dLayer : public Layer3d_ABC
+class Elevation3dLayer : public Layer3D
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 
 {

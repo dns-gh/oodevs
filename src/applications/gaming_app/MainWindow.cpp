@@ -437,34 +437,34 @@ namespace
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
-                               gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer& locationsLayer,
+                               gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer& weather, gui::Layer& profilerLayer,
                                gui::PreferencesDialog& preferences, const Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker )
 {
     gui::TooltipsLayer_ABC& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer_ABC& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
-    gui::Layer_ABC& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );
+    gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
+    gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );
     gui::Elevation2dLayer& elevation2d   = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    gui::Layer_ABC& raster               = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer_ABC& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
-    gui::Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker );
-    gui::Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& defaultLayer         = *new gui::DefaultLayer( controllers_ );
-    gui::Layer_ABC& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
-    gui::Layer_ABC& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
-    gui::Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    gui::Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
+    gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
+    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
+    gui::Layer& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker );
+    gui::Layer& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
+    gui::Layer& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
+    gui::Layer& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
+    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
+    gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
     AddLayer( *glProxy_, preferences, defaultLayer );

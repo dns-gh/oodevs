@@ -10,7 +10,7 @@
 #ifndef __MiscLayer_h_
 #define __MiscLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace gui
 {
@@ -22,7 +22,7 @@ namespace gui
 // Created: AGE 2006-03-31
 // =============================================================================
 template< typename Panel >
-class MiscLayer : public Layer_ABC
+class MiscLayer : public Layer
 {
 public:
     //! @name Constructors/Destructor

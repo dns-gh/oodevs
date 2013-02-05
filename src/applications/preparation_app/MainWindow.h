@@ -28,7 +28,7 @@ namespace gui
     class ExclusiveEventStrategy;
     class LightingProxy;
     class GlSelector;
-    class Layer_ABC;
+    class Layer;
     class Painter_ABC;
     class TerrainPicker;
     class AutomatsLayer;
@@ -106,7 +106,7 @@ private:
     //@{
     bool Load();
     void LoadExercise( bool checkConsistency = true );
-    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                        const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();

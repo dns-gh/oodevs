@@ -134,7 +134,7 @@ void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::SetAlpha( float alpha )
 {
-    Layer2d_ABC::SetAlpha( alpha );
+    Layer2D::SetAlpha( alpha );
     updateGradient_ = true;
 }
 

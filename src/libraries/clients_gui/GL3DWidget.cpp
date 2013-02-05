@@ -60,7 +60,7 @@ Gl3dWidget::~Gl3dWidget()
 // Name: Gl3dWidget::Register
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Register( Layer_ABC& layer )
+void Gl3dWidget::Register( Layer& layer )
 {
     layers_.push_back( & layer );
 }
@@ -69,7 +69,7 @@ void Gl3dWidget::Register( Layer_ABC& layer )
 // Name: Gl3dWidget::Unregister
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Unregister( Layer_ABC& layer )
+void Gl3dWidget::Unregister( Layer& layer )
 {
     IT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )

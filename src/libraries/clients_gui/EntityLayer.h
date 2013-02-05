@@ -17,7 +17,7 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/RectangleSelectionHandler_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -45,7 +45,7 @@ namespace gui
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class EntityLayerBase : public Layer_ABC
+class EntityLayerBase : public Layer
 {
 public:
     //! @name Constructors/Destructor

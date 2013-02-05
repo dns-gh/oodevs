@@ -10,7 +10,7 @@
 #ifndef __gui_WeatherLayer_h_
 #define __gui_WeatherLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace gui
 {
@@ -33,7 +33,7 @@ namespace gui
 */
 // Created: ABR 2011-06-07
 // =============================================================================
-class WeatherLayer : public Layer_ABC
+class WeatherLayer : public Layer
 {
 
 public:

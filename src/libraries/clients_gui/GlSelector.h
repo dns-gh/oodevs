@@ -36,7 +36,7 @@ namespace gui
     class Gl3dWidget;
     class GlPlaceHolder;
     class IconLayout;
-    class Layer_ABC;
+    class Layer;
 
 // =============================================================================
 /** @class  GlSelector
@@ -63,8 +63,8 @@ public:
     void Close();
 
     void AddIcon( const char** xpm, int x, int y );
-    void AddLayer( Layer_ABC& layer );
-    void RemoveLayer( Layer_ABC& layer );
+    void AddLayer( Layer& layer );
+    void RemoveLayer( Layer& layer );
 
     void SetFocus();
     //@}

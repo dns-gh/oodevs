@@ -266,33 +266,33 @@ namespace
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                                const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
     gui::PreferencesDialog& preferences     = dialogContainer_->GetPrefDialog();
-    gui::Layer_ABC& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
+    gui::Layer& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
     ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
     gui::TooltipsLayer_ABC& tooltipLayer    = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer_ABC& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
-    gui::Layer_ABC& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
-    gui::Layer_ABC& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
+    gui::Layer& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
+    gui::Layer& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
+    gui::Layer& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
     gui::Elevation2dLayer& elevation2d      = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    gui::Layer_ABC& raster                  = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer_ABC& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
-    gui::Layer_ABC& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
-    gui::Layer_ABC& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
-    gui::Layer_ABC& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    gui::Layer_ABC& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    gui::Layer_ABC& defaultLayer            = *new gui::DefaultLayer( controllers_ );
-    gui::Layer_ABC& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    gui::Layer_ABC& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
-    gui::Layer_ABC& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
+    gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
+    gui::Layer& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
+    gui::Layer& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
+    gui::Layer& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
+    gui::Layer& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
+    gui::Layer& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    gui::Layer& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    gui::Layer& defaultLayer            = *new gui::DefaultLayer( controllers_ );
+    gui::Layer& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    gui::Layer& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
+    gui::Layer& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 
     // Drawing order
     AddLayer( *glProxy_, preferences, defaultLayer );
@@ -325,7 +325,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
 
     // Display modes
-    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer_ABC or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer_ABC.
+    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
     agents.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     limits.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );

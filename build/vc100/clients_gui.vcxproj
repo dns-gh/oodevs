@@ -137,6 +137,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\KeyModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Layer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkItemDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
@@ -210,7 +211,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\EntitySymbols.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GlTooltip.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\IconLayout.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Layer_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\MapLayerProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SetGlOptions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SymbolIcon.cpp" />
@@ -729,6 +729,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Layer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />

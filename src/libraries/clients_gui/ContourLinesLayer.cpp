@@ -69,7 +69,7 @@ void ContourLinesLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 // -----------------------------------------------------------------------------
 void ContourLinesLayer::SetAlpha( float alpha )
 {
-    Layer2d_ABC::SetAlpha( alpha );
+    Layer2D::SetAlpha( alpha );
 }
 
 // -----------------------------------------------------------------------------

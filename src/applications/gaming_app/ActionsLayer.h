@@ -11,7 +11,7 @@
 #define __ActionsLayer_h_
 
 #include "actions/Action_ABC.h"
-#include "clients_gui/Layer_ABC.h"
+#include "clients_gui/Layer.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
 
@@ -32,7 +32,7 @@ namespace gui
 */
 // Created: SBO 2010-04-30
 // =============================================================================
-class ActionsLayer : public gui::Layer_ABC
+class ActionsLayer : public gui::Layer
                    , public tools::SelectionObserver< actions::Action_ABC >
 {
 public:

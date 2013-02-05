@@ -11,7 +11,7 @@
 #define __Elevation2dLayer_h_
 
 #include "Gradient.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 #include "tools/ElementObserver_ABC.h"
 
@@ -38,7 +38,7 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class Elevation2dLayer : public Layer2d_ABC
+class Elevation2dLayer : public Layer2D
                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:

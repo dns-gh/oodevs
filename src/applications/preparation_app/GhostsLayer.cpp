@@ -336,5 +336,5 @@ bool GhostsLayer::IsEligibleForDrag( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void GhostsLayer::SetAlpha( float alpha )
 {
-    Layer_ABC::SetAlpha( alpha / 3.f );
+    Layer::SetAlpha( alpha / 3.f );
 }

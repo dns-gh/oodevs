@@ -10,7 +10,7 @@
 #ifndef __LocationsLayer_h_
 #define __LocationsLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace gui
 {
@@ -25,7 +25,7 @@ namespace gui
 */
 // Created: SBO 2007-03-28
 // =============================================================================
-class LocationsLayer : public Layer_ABC
+class LocationsLayer : public Layer
 {
 public:
     //! @name Constructors/Destructor

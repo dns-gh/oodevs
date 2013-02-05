@@ -22,7 +22,7 @@ namespace gui
 {
     class GlWidget;
     class Gl3dWidget;
-    class Layer_ABC;
+    class Layer;
     class TooltipsLayer_ABC;
 
 // =============================================================================
@@ -51,9 +51,9 @@ public:
     void Reset2d();
     void Reset3d();
 
-    void Register( Layer_ABC& layer );
+    void Register( Layer& layer );
     void Register( TooltipsLayer_ABC& layer );
-    void Unregister( Layer_ABC& layer );
+    void Unregister( Layer& layer );
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
@@ -107,7 +107,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >  T_Layers;
+    typedef std::vector< Layer* >  T_Layers;
     typedef T_Layers::iterator        IT_Layers;
     typedef T_Layers::const_iterator CIT_Layers;
     //@}

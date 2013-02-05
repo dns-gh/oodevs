@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "Gl3dWidget.h"
 #include "GlWidget.h"
 #include "MapLayerProxy.h"
@@ -18,10 +18,10 @@
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC constructor
+// Name: Layer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Layer_ABC::Layer_ABC()
+Layer::Layer()
     : alpha_        ( 1 )
     , currentWidget_( 0 )
     , currentProxy_ ( 0 )
@@ -33,29 +33,29 @@ Layer_ABC::Layer_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC destructor
+// Name: Layer destructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Layer_ABC::~Layer_ABC()
+Layer::~Layer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::Paint
+// Name: Layer::Paint
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer_ABC::Paint( const ViewFrustum& frustum )
+void Layer::Paint( const ViewFrustum& frustum )
 {
     Viewport3d viewport( frustum );
     Paint( viewport );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::Paint
+// Name: Layer::Paint
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer_ABC::Paint( const geometry::Rectangle2f& rectangle )
+void Layer::Paint( const geometry::Rectangle2f& rectangle )
 {
     if( ShouldDrawPass() )
     {
@@ -65,29 +65,29 @@ void Layer_ABC::Paint( const geometry::Rectangle2f& rectangle )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::Paint
+// Name: Layer::Paint
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer_ABC::Paint( Viewport_ABC& )
+void Layer::Paint( Viewport_ABC& )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::RegisterIn
+// Name: Layer::RegisterIn
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer_ABC::RegisterIn( Gl3dWidget& widget )
+void Layer::RegisterIn( Gl3dWidget& widget )
 {
     currentProxy_  = new MapLayerProxy( *this );
-    widget.Register( static_cast< gui::Layer_ABC& >( *currentProxy_ ) );
+    widget.Register( static_cast< gui::Layer& >( *currentProxy_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::RegisterIn
+// Name: Layer::RegisterIn
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Layer_ABC::RegisterIn( GlWidget& widget )
+void Layer::RegisterIn( GlWidget& widget )
 {
     currentWidget_ = &widget;
     currentProxy_  = new MapLayerProxy( *this );
@@ -95,203 +95,203 @@ void Layer_ABC::RegisterIn( GlWidget& widget )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::UnregisterIn
+// Name: Layer::UnregisterIn
 // Created: ABR 2012-06-11
 // -----------------------------------------------------------------------------
-void Layer_ABC::UnregisterIn( Gl3dWidget& widget )
+void Layer::UnregisterIn( Gl3dWidget& widget )
 {
-    widget.Unregister( static_cast< gui::Layer_ABC& >( *currentProxy_ ) );
+    widget.Unregister( static_cast< gui::Layer& >( *currentProxy_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::UnregisterIn
+// Name: Layer::UnregisterIn
 // Created: ABR 2012-06-11
 // -----------------------------------------------------------------------------
-void Layer_ABC::UnregisterIn( GlWidget& widget )
+void Layer::UnregisterIn( GlWidget& widget )
 {
     widget.Unregister( *currentProxy_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::Reset2d
+// Name: Layer::Reset2d
 // Created: AGE 2007-01-19
 // -----------------------------------------------------------------------------
-void Layer_ABC::Reset2d()
+void Layer::Reset2d()
 {
     currentWidget_ = 0;
     currentProxy_   = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::Reset3d
+// Name: Layer::Reset3d
 // Created: AGE 2007-01-19
 // -----------------------------------------------------------------------------
-void Layer_ABC::Reset3d()
+void Layer::Reset3d()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::SetAlpha
+// Name: Layer::SetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer_ABC::SetAlpha( float alpha )
+void Layer::SetAlpha( float alpha )
 {
     alpha_ = alpha;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::GetAlpha
+// Name: Layer::GetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-float Layer_ABC::GetAlpha() const
+float Layer::GetAlpha() const
 {
     return alpha_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::MoveAbove
+// Name: Layer::MoveAbove
 // Created: AGE 2007-04-27
 // -----------------------------------------------------------------------------
-void Layer_ABC::MoveAbove( Layer_ABC& layer )
+void Layer::MoveAbove( Layer& layer )
 {
     if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
         currentWidget_->MoveAbove( *currentProxy_, *layer.currentProxy_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::MoveBelow
+// Name: Layer::MoveBelow
 // Created: AGE 2007-04-27
 // -----------------------------------------------------------------------------
-void Layer_ABC::MoveBelow( Layer_ABC& layer )
+void Layer::MoveBelow( Layer& layer )
 {
     if( currentWidget_ && currentProxy_ && layer.currentProxy_ )
         currentWidget_->MoveBelow( *currentProxy_, *layer.currentProxy_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer2d_ABC::Reset2d
+// Name: Layer2D::Reset2d
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer2d_ABC::Reset2d()
+void Layer2D::Reset2d()
 {
-    Layer_ABC::Reset2d();
+    Layer::Reset2d();
     Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer2d_ABC::Reset
+// Name: Layer2D::Reset
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer2d_ABC::Reset()
+void Layer2D::Reset()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer3d_ABC::Reset3d
+// Name: Layer3D::Reset3d
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer3d_ABC::Reset3d()
+void Layer3D::Reset3d()
 {
     Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer3d_ABC::Reset
+// Name: Layer3D::Reset
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Layer3d_ABC::Reset()
+void Layer3D::Reset()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::SetPasses
+// Name: Layer::SetPasses
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void Layer_ABC::SetPasses( const std::string& passes )
+void Layer::SetPasses( const std::string& passes )
 {
     passes_ = passes;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::GetCurrentPass
+// Name: Layer::GetCurrentPass
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-std::string Layer_ABC::GetCurrentPass() const
+std::string Layer::GetCurrentPass() const
 {
     return currentWidget_ ? currentWidget_->GetCurrentPass() : "";
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::ShouldDrawPass
+// Name: Layer::ShouldDrawPass
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-bool Layer_ABC::ShouldDrawPass() const
+bool Layer::ShouldDrawPass() const
 {
     return passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::SetVisible
+// Name: Layer::SetVisible
 // Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-void Layer_ABC::SetVisible( bool /*visible*/ )
+void Layer::SetVisible( bool /*visible*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::ForceEnabled
+// Name: Layer::ForceEnabled
 // Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-void Layer_ABC::ForceEnabled( bool enabled )
+void Layer::ForceEnabled( bool enabled )
 {
     enabled_ = enabled;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::EnsureIsEnabled
+// Name: Layer::EnsureIsEnabled
 // Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-void Layer_ABC::EnsureIsEnabled()
+void Layer::EnsureIsEnabled()
 {
     enabled_ = true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::IsEnabled
+// Name: Layer::IsEnabled
 // Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-bool Layer_ABC::IsEnabled() const
+bool Layer::IsEnabled() const
 {
     return enabled_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::IsVisible
+// Name: Layer::IsVisible
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
-bool Layer_ABC::IsVisible() const
+bool Layer::IsVisible() const
 {
     return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::IsReadOnly
+// Name: Layer::IsReadOnly
 // Created: ABR 2012-05-23
 // -----------------------------------------------------------------------------
-bool Layer_ABC::IsReadOnly() const
+bool Layer::IsReadOnly() const
 {
     return GetCurrentMode() != -1 && ( readOnlyModes_ & GetCurrentMode() ) != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Layer_ABC::SetReadOnlyModes
+// Name: Layer::SetReadOnlyModes
 // Created: ABR 2012-05-23
 // -----------------------------------------------------------------------------
-void Layer_ABC::SetReadOnlyModes( int modes )
+void Layer::SetReadOnlyModes( int modes )
 {
     readOnlyModes_ = modes;
 }

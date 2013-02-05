@@ -84,5 +84,5 @@ void LogoLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void LogoLayer::RegisterIn( Gl3dWidget& w )
 {
-    Layer_ABC::RegisterIn( w );
+    Layer::RegisterIn( w );
 }

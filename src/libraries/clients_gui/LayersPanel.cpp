@@ -12,7 +12,7 @@
 #include "moc_LayersPanel.cpp"
 #include "CheckBox.h"
 #include "GlSelector.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
@@ -20,7 +20,7 @@
 
 using namespace gui;
 
-Q_DECLARE_METATYPE( Layer_ABC* )
+Q_DECLARE_METATYPE( Layer* )
 
 namespace
 {
@@ -106,7 +106,7 @@ LayersPanel::~LayersPanel()
 
 namespace
 {
-    QStandardItem* CreateItem( const QString& name, gui::Layer_ABC& layer, QStandardItemModel& model )
+    QStandardItem* CreateItem( const QString& name, gui::Layer& layer, QStandardItemModel& model )
     {
         QStandardItem* item = new QStandardItem( "  " + name );
         item->setEditable( false );
@@ -120,7 +120,7 @@ namespace
 // Name: LayersPanel::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer, bool dynamic /* = false */ )
+void LayersPanel::AddLayer( const QString& name, Layer& layer, bool dynamic /* = false */ )
 {
     CreateItem( "  " + name, layer, *layersModel_ );
 
@@ -149,7 +149,7 @@ void LayersPanel::OnRemoveDynamicLayer()
 namespace
 {
     template< typename T >
-    void RemoveFromVector( Layer_ABC* layer, std::vector< Layer_ABC* >& layerVector, std::vector< T >& otherVector )
+    void RemoveFromVector( Layer* layer, std::vector< Layer* >& layerVector, std::vector< T >& otherVector )
     {
         for( unsigned i = 0; i < layerVector.size(); ++i )
             if( layerVector[ i ] == layer )
@@ -167,7 +167,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LayersPanel::RemoveDynamicLayer( QStandardItem& item )
 {
-    Layer_ABC* layer = item.data().value< Layer_ABC* >();
+    Layer* layer = item.data().value< Layer* >();
     if( !layer )
         return;
 
@@ -296,7 +296,7 @@ void LayersPanel::OnSelectionChanged()
     if( QStandardItem* item = layersModel_->itemFromIndex( index ) )
     {
         currentLayer_ = -1;
-        T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->data().value< Layer_ABC* >() );
+        T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->data().value< Layer* >() );
         QString transparencyLabelText( tr( "Transparency " ) );
 
         if( it != layers_.end() )
@@ -319,7 +319,7 @@ void LayersPanel::OnSelectionChanged()
 // Name: LayersPanel::MoveItem
 // Created: LGY 2012-10-01
 // -----------------------------------------------------------------------------
-void LayersPanel::MoveItem( int row, Layer_ABC* layer, int newPlace, int oldPlace, int step )
+void LayersPanel::MoveItem( int row, Layer* layer, int newPlace, int oldPlace, int step )
 {
     if( layer )
     {
@@ -337,7 +337,7 @@ void LayersPanel::MoveItem( int row, Layer_ABC* layer, int newPlace, int oldPlac
 // Name: LayersPanel::GetCurrentLayer
 // Created: LGY 2012-10-01
 // -----------------------------------------------------------------------------
-Layer_ABC* LayersPanel::GetCurrentLayer() const
+Layer* LayersPanel::GetCurrentLayer() const
 {
     if( currentLayer_ != -1 && currentLayer_ < static_cast< int >( layers_.size() ) )
         return layers_[ currentLayer_ ];
@@ -348,7 +348,7 @@ Layer_ABC* LayersPanel::GetCurrentLayer() const
 // Name: LayersPanel::GetCurrentRow
 // Created: LGY 2012-10-01
 // -----------------------------------------------------------------------------
-int LayersPanel::GetCurrentRow( Layer_ABC* layer ) const
+int LayersPanel::GetCurrentRow( Layer* layer ) const
 {
     QModelIndexList list = layersModel_->match( layersModel_->index( 0, 0 ), Qt::UserRole + 1, QVariant::fromValue( layer ), -1, Qt::MatchRecursive );
     if( !list.empty() )
@@ -362,14 +362,14 @@ int LayersPanel::GetCurrentRow( Layer_ABC* layer ) const
 // -----------------------------------------------------------------------------
 void LayersPanel::OnUp()
 {
-    Layer_ABC* layer = GetCurrentLayer();
+    Layer* layer = GetCurrentLayer();
     if( layer )
     {
         int row = GetCurrentRow( layer );
         if( row != -1 && row != 0 )
         {
             if( QStandardItem* previous = layersModel_->item( row - 1 ) )
-                layer->MoveAbove( *previous->data().value< Layer_ABC* >() );
+                layer->MoveAbove( *previous->data().value< Layer* >() );
             MoveItem( row, layer, -1, 1, 1 );
         }
     }
@@ -381,14 +381,14 @@ void LayersPanel::OnUp()
 // -----------------------------------------------------------------------------
 void LayersPanel::OnDown()
 {
-    Layer_ABC* layer = GetCurrentLayer();
+    Layer* layer = GetCurrentLayer();
     if( layer )
     {
         int row = GetCurrentRow( layer );
         if( row != -1 && row != layersModel_->rowCount() - 1 )
         {
             if( QStandardItem* next = layersModel_->item( row + 1 ) )
-                layer->MoveBelow( *next->data().value< Layer_ABC* >() );
+                layer->MoveBelow( *next->data().value< Layer* >() );
             MoveItem( row, layer, 2, 0, -1 );
         }
     }
@@ -465,7 +465,7 @@ void LayersPanel::Update()
     QStandardItem* root = layersModel_->invisibleRootItem();
     for( int row = 0; row < root->rowCount(); ++row )
         if( QStandardItem* childItem = root->child( row ) )
-            if( Layer_ABC* layer = childItem->data().value< Layer_ABC* >() )
+            if( Layer* layer = childItem->data().value< Layer* >() )
                 childItem->setEnabled( layer->IsEnabled() );
 }
 

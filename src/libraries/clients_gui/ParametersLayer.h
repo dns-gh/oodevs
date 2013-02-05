@@ -10,7 +10,7 @@
 #ifndef __ParametersLayer_h_
 #define __ParametersLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ namespace gui
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class ParametersLayer : public Layer_ABC
+class ParametersLayer : public Layer
 {
 public:
     //! @name Constructors/Destructor

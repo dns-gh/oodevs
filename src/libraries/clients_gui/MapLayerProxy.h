@@ -10,7 +10,7 @@
 #ifndef __MapLayerProxy_h_
 #define __MapLayerProxy_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace gui
 {
@@ -20,12 +20,12 @@ namespace gui
 */
 // Created: AGE 2006-03-29
 // =============================================================================
-class MapLayerProxy : public Layer_ABC
+class MapLayerProxy : public Layer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MapLayerProxy( Layer_ABC& layer );
+    explicit MapLayerProxy( Layer& layer );
     virtual ~MapLayerProxy();
     //@}
 
@@ -45,7 +45,7 @@ public:
 private:
     //! @name Member data
     //@{
-    Layer_ABC& layer_;
+    Layer& layer_;
     //@}
 };
 

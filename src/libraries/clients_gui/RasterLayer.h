@@ -10,7 +10,7 @@
 #ifndef __RasterLayer_h_
 #define __RasterLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ namespace gui
 */
 // Created: AGE 2007-01-04
 // =============================================================================
-class RasterLayer : public Layer2d_ABC
+class RasterLayer : public Layer2D
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:

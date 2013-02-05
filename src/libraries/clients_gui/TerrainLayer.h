@@ -10,7 +10,7 @@
 #ifndef __TerrainLayer_h_
 #define __TerrainLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
 #include "tools/ElementObserver_ABC.h"
@@ -40,7 +40,7 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class TerrainLayer : public Layer2d_ABC
+class TerrainLayer : public Layer2D
                    , public kernel::OptionsObserver_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {

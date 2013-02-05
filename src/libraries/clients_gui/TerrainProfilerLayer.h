@@ -10,7 +10,7 @@
 #ifndef __TerrainProfilerLayer_h_
 #define __TerrainProfilerLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace gui
 {
@@ -25,7 +25,7 @@ namespace gui
 */
 // Created: SBO 2010-03-31
 // =============================================================================
-class TerrainProfilerLayer : public Layer_ABC
+class TerrainProfilerLayer : public Layer
 {
 public:
     //! @name Constructors/Destructor

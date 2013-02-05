@@ -244,9 +244,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\IconLayout.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\Layer_ABC.cpp">
-      <Filter>Source Files\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\MapLayerProxy.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
@@ -916,6 +913,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Team.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Layer.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1499,6 +1499,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityImplementation.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Layer.h">
+      <Filter>Source Files\gl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
