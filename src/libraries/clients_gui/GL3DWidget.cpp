@@ -642,7 +642,7 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
 {
     if( event )
     {
-        const float speedFactor = ( event->state() == Qt::ShiftModifier ) ? 10.f : 1.f;
+        const float speedFactor = ( event->modifiers() == Qt::ShiftModifier ) ? 10.f : 1.f;
 
         if( event->key() == Qt::Key_Plus )
             zRatio_ *= 1.1f;

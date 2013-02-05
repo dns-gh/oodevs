@@ -271,7 +271,7 @@ void TimelineView::contentsMousePressEvent( QMouseEvent* evt )
 // -----------------------------------------------------------------------------
 void TimelineView::contentsMouseMoveEvent( QMouseEvent* evt )
 {
-    if( evt->state() & Qt::LeftButton )
+    if( evt->buttons() & Qt::LeftButton )
     {
         if( !selectedItem_ )
             Select( grabPoint_ );
@@ -339,7 +339,7 @@ void TimelineView::keyPressEvent( QKeyEvent* evt )
         else if( evt->key() == Qt::Key_Left || evt->key() == Qt::Key_Right )
         {
             const short sign = evt->key() == Qt::Key_Left ? -1 : 1;
-            const long seconds = ( evt->state() & Qt::ShiftModifier ) ? 3600 * 24 : 3600;
+            const long seconds = ( evt->modifiers() & Qt::ShiftModifier ) ? 3600 * 24 : 3600;
             selectedItem_->Move( ruler_.ConvertToPixels( sign * seconds ) );
         }
     }

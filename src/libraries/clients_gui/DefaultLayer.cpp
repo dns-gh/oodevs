@@ -50,7 +50,7 @@ void DefaultLayer::Paint( Viewport_ABC& )
 // -----------------------------------------------------------------------------
 bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( mouse && mouse->buttons() != Qt::NoButton )
+    if( mouse && mouse->button() != Qt::NoButton )
     {
         point_ = point;
         if( controllers_.actions_.HasMultipleSelection() && mouse->button() == Qt::LeftButton && ( mouse->modifiers() & Qt::ControlModifier ) == 0)

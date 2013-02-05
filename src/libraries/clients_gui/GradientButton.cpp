@@ -186,7 +186,7 @@ void GradientButton::mouseMoveEvent( QMouseEvent* event )
 {
     if( !canvas()->onCanvas( event->pos() ) || !selected_ )
         return;
-    if( event->state() | Qt::LeftButton )
+    if( event->button() | Qt::LeftButton ) // $$$$ ABR 2013-01-29: Button on mouse move ? wtf ?
     {
         selected_->SetPercentage( unsigned short( event->pos().x() * 100.f / canvas()->rect().width() ) );
         std::sort( colors_.begin(), colors_.end(), sComparator() );
