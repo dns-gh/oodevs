@@ -11,6 +11,7 @@
 #define __DrawerStyle_h_
 
 #include "clients_kernel/Types.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -30,22 +31,29 @@ namespace gui
 
 namespace svg
 {
+    class Color;
     class Node_ABC;
     class RenderingContext_ABC;
     class References;
     class TextRenderer;
 }
 
+#define SYMBOL_PIXMAP_SIZE           64
+#define SYMBOL_ICON_SIZE             128
+#define SYMBOL_ICON_MARGIN           24
+#define SYMBOL_FRAME_SIZE             4
+#define SYMBOL_SCALE_RATIO_FOR_METER 0.1f
+
 namespace gui
 {
+
 // =============================================================================
 /** @class  DrawingTemplate
     @brief  DrawingTemplate
-    // $$$$ AGE 2006-09-01: eventuellement, mettre les références au niveau du panel
 */
 // Created: AGE 2006-08-31
 // =============================================================================
-class DrawingTemplate
+class DrawingTemplate : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -61,7 +69,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             DrawingTemplate( xml::xistream& xis, const QString& category, svg::TextRenderer& renderer );
+             DrawingTemplate( xml::xistream& xis, const QString& category, const QString& id, svg::TextRenderer& renderer );
     virtual ~DrawingTemplate();
     //@}
 
@@ -72,8 +80,12 @@ public:
     QString GetCode() const;
     QString GetDescription() const;
     QString GetCategory() const;
-    QPixmap GetPixmap() const;
+    QString GetId() const;
     Unit    GetUnit() const;
+    const QPixmap& GetPixmap() const;
+    const QPixmap& GetSamplePixmap() const;
+    void GenerateSamplePixmap( const GlTools_ABC& tools, float r = -1, float g = -1, float b = -1, float sampleMarkerRatio = 1.f );
+
     void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const GlTools_ABC& tools, float zoom = 1.f ) const;
     void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const GlTools_ABC& tools, float zoom = 1.f ) const;
     void Serialize( xml::xostream& xos ) const;
@@ -81,12 +93,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DrawingTemplate( const DrawingTemplate& );            //!< Copy constructor
-    DrawingTemplate& operator=( const DrawingTemplate& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void DrawSegment     ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& from, const geometry::Point2f& to ) const;
@@ -100,6 +106,16 @@ private:
     float ComputeFactor  ( Unit, float base, const GlTools_ABC& tools ) const;
     //@}
 
+    //! @name Sample helper
+    //@{
+    void DrawSample( const GlTools_ABC& tools );
+    void DrawOnPoint( const GlTools_ABC& tools );
+    void DrawOnLine( const GlTools_ABC& tools );
+    void DrawOnPolygon( const GlTools_ABC& tools );
+    void DrawOnCircle( const GlTools_ABC& tools );
+    void DrawItem( const T_PointVector& points, const GlTools_ABC& tools );
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -109,6 +125,7 @@ private:
     QString type_;
     QString code_;
     QString description_;
+    QString id_;
     svg::References* references_;
     svg::Node_ABC* line_;
     svg::Node_ABC* markerStart_;
@@ -126,6 +143,10 @@ private:
     QPixmap pointPixmap_;
     QPixmap polygonPixmap_;
     QPixmap circlePixmap_;
+    QPixmap samplePixmap_;
+    std::auto_ptr< svg::Color > sampleColor_;
+    float sampleMarkerRatio_;
+    bool isDrawingSample_;
     //@}
 };
 

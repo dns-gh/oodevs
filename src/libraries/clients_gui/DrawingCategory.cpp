@@ -23,6 +23,7 @@ using namespace gui;
 DrawingCategory::DrawingCategory( xml::xistream& xis, svg::TextRenderer& renderer, kernel::Controller& controller )
     : controller_( controller )
     , name_( xis.attribute< std::string >( "name" ).c_str() )
+    , id_( xis.attribute< std::string >( "id", "" ).c_str() )
     , description_( xis.content< std::string >( "description", "" ).c_str() )
 {
     xis >> xml::list( "template", *this, &DrawingCategory::ReadTemplate, renderer );
@@ -62,7 +63,7 @@ QString DrawingCategory::GetDescription() const
 // -----------------------------------------------------------------------------
 void DrawingCategory::ReadTemplate( xml::xistream& xis, svg::TextRenderer& renderer )
 {
-    DrawingTemplate* style = new DrawingTemplate( xis, name_, renderer );
+    DrawingTemplate* style = new DrawingTemplate( xis, name_, id_, renderer );
 
     if( !Find( style->GetName() ) && !Find( std::string( style->GetCode().toStdString() ) ) )
         Register( style->GetName(), style->GetCode().toStdString(), *style );

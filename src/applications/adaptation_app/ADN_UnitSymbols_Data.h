@@ -69,7 +69,7 @@ public:
 
         //! @name Accessors
         //@{
-        const QPixmap& GetPixmap() const;
+        const QPixmap& GetSamplePixmap() const;
         const std::string GetCode() const;
         const std::string GetGeometry() const;
         //@}

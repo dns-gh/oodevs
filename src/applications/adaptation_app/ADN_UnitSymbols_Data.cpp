@@ -65,10 +65,10 @@ ADN_UnitSymbols_Data::UnitSymbolInfo::~UnitSymbolInfo()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_UnitSymbols_Data::SymbolInfo::GetPixmap
+// Name: ADN_UnitSymbols_Data::SymbolInfo::GetSamplePixmap
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
-const QPixmap& ADN_UnitSymbols_Data::UnitSymbolInfo::GetPixmap() const
+const QPixmap& ADN_UnitSymbols_Data::UnitSymbolInfo::GetSamplePixmap() const
 {
     return *pixmap_;
 }
@@ -131,23 +131,32 @@ void ADN_UnitSymbols_Data::UnitSymbolInfo::Draw()
             glViewport( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
             glOrtho( 0, symbolSize, 0, symbolSize, -300, 300 );
 
-            glColor3f( 0.f, 0.f, 0.f );
-            glBegin( GL_QUADS );
-            glVertex2f( 0.f,        0.f );
-            glVertex2f( 0.f,        symbolSize );
-            glVertex2f( symbolSize, symbolSize );
-            glVertex2f( symbolSize, 0.f );
-            glEnd();
+            // Draw background
             glColor3f( 0.9f, 0.9f, 0.9f );
             glBegin( GL_QUADS );
-            glVertex2f(              SYMBOL_BG_MARGIN,               SYMBOL_BG_MARGIN );
-            glVertex2f(              SYMBOL_BG_MARGIN,  symbolSize - SYMBOL_BG_MARGIN );
-            glVertex2f( symbolSize - SYMBOL_BG_MARGIN,  symbolSize - SYMBOL_BG_MARGIN );
-            glVertex2f( symbolSize - SYMBOL_BG_MARGIN,               SYMBOL_BG_MARGIN );
+                glVertex2f(        0.f,        0.f );
+                glVertex2f(        0.f, symbolSize );
+                glVertex2f( symbolSize, symbolSize );
+                glVertex2f( symbolSize,        0.f );
             glEnd();
 
-            geometry::Rectangle2f viewPort( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
-            symbols_.PrintApp6( fileName_, gui::SvglRenderer::DefaultStyle(), viewPort, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
+            // Draw symbol
+            glPushMatrix();
+                geometry::Rectangle2f viewPort( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
+                symbols_.PrintApp6( fileName_, gui::SvglRenderer::DefaultStyle(), viewPort, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
+            glPopMatrix();
+
+            // Draw frame
+            glColor3f( 0.f, 0.f, 0.f );
+            glLineWidth( SYMBOL_FRAME_SIZE );
+            glBegin( GL_LINE_STRIP );
+                glVertex2f(        0.f,        0.f );
+                glVertex2f(        0.f, symbolSize );
+                glVertex2f( symbolSize, symbolSize );
+                glVertex2f( symbolSize,        0.f );
+                glVertex2f(        0.f,        0.f );
+            glEnd();
+
         glPopMatrix();
     glPopAttrib();
 }

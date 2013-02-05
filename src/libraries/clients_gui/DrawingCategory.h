@@ -70,6 +70,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const QString name_;
+    const QString id_;
     const QString description_;
     //@}
 };

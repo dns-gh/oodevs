@@ -15,7 +15,12 @@
 #include "ADN_Ref_ABC.h"
 #include "ADN_Types.h"
 #include "clients_kernel/Types.h"
-#include "svgl/TextRenderer.h"
+#include "clients_gui/DrawingTemplate.h"
+
+namespace svg
+{
+    class TextRenderer;
+}
 
 namespace xml
 {
@@ -24,13 +29,7 @@ namespace xml
 
 namespace gui
 {
-    class DrawingTemplate;
     class GlTools_ABC;
-}
-
-namespace
-{
-    class GlToolsSymbols;
 }
 
 // =============================================================================
@@ -43,41 +42,18 @@ class ADN_Drawings_Data : public ADN_Data_ABC
 {
 public:
     class DrawingInfo : public ADN_RefWithName
+                      , public gui::DrawingTemplate
     {
     public:
         //! @name Constructors/Destructor
         //@{
-                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, gui::GlTools_ABC& tools, const std::string& category );
-        virtual ~DrawingInfo();
-        //@}
-
-        //! @name Accessors
-        //@{
-        const QPixmap& GetPixmap() const;
-        const std::string GetCode() const;
-        const std::string GetGeometry() const;
-        const std::string& GetCategory() const;
-        //@}
-
-    private:
-        //! @name Helpers
-        //@{
-        void Initialize();
-        void Draw();
-        void DrawOnPoint();
-        void DrawOnLine();
-        void DrawOnPolygon();
-        void DrawOnCircle();
-        void DrawItem( const T_PointVector& points );
-        //@}
-
-    private:
-        //! @name Private member data
-        //@{
-        gui::DrawingTemplate* template_;
-        gui::GlTools_ABC& tools_;
-        QPixmap* pixmap_;
-        std::string category_;
+        DrawingInfo( xml::xistream& xis, const QString& category, const QString& id, svg::TextRenderer& renderer )
+            : ADN_RefWithName()
+            , gui::DrawingTemplate( xis, category, id, renderer )
+        {
+            strName_ = GetName().toStdString();
+        }
+        ~DrawingInfo() {}
         //@}
     };
 
@@ -90,11 +66,8 @@ public:
 
     //! @name Types
     //@{
-    typedef ADN_Type_Vector_ABC< DrawingInfo >            T_DrawingInfoVector;
-    typedef T_DrawingInfoVector::iterator                IT_DrawingInfoVector;
-    typedef T_DrawingInfoVector::const_iterator         CIT_DrawingInfoVector;
+    typedef ADN_Type_Vector_ABC< DrawingInfo >   T_DrawingInfoVector;
     typedef std::map< std::string, T_DrawingInfoVector >  T_DrawingsMap;
-    typedef T_DrawingsMap::iterator                      IT_DrawingsMap;
     //@}
 
     //! @name Operations
@@ -112,7 +85,7 @@ private:
     //@{
     void ReadArchive( xml::xistream& xis );
     void ReadCategory( xml::xistream& xis );
-    void ReadTemplate( xml::xistream& xis, const std::string& name );
+    void ReadTemplate( xml::xistream& xis, const std::string& name, const std::string& id );
     //@}
 
 private:
@@ -121,8 +94,8 @@ private:
     T_DrawingsMap geometryMap_;
     T_DrawingsMap categoryMap_;
     T_DrawingInfoVector drawings_;
-    svg::TextRenderer renderer_;
-    ::GlToolsSymbols* tools_;
+    std::auto_ptr< svg::TextRenderer > renderer_;
+    std::auto_ptr< gui::GlTools_ABC > tools_;
     //@}
 };
 

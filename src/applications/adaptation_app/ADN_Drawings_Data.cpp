@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Project_Data.h"
-#include "clients_gui/DrawingTemplate.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/GlTooltip.h"
 #include "clients_gui/TooltipsLayer.h"
@@ -83,232 +82,6 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// ADN_Drawings_Data::DrawingInfo
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::DrawingInfo
-// Created: ABR 2011-04-18
-// -----------------------------------------------------------------------------
-ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, gui::GlTools_ABC& tools, const std::string& category )
-    : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
-    , tools_   ( tools )
-    , category_( category )
-{
-    strName_ = template_->GetName().toStdString();
-    Initialize();
-    Draw();
-    glFlush();
-    QImage image( SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE, 32 );
-    glReadPixels( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-    glFlush();
-    pixmap_ = new QPixmap( image.mirror().smoothScale( QSize( SYMBOL_PIXMAP_SIZE, SYMBOL_PIXMAP_SIZE ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::~DrawingInfo
-// Created: SBO 2011-04-18
-// -----------------------------------------------------------------------------
-ADN_Drawings_Data::DrawingInfo::~DrawingInfo()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::GetPixmap
-// Created: ABR 2011-04-21
-// -----------------------------------------------------------------------------
-const QPixmap& ADN_Drawings_Data::DrawingInfo::GetPixmap() const
-{
-    return *pixmap_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::GetCode
-// Created: ABR 2011-04-21
-// -----------------------------------------------------------------------------
-const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
-{
-    return template_->GetCode().toStdString();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::GetGeometry
-// Created: ABR 2011-04-21
-// -----------------------------------------------------------------------------
-const std::string ADN_Drawings_Data::DrawingInfo::GetGeometry() const
-{
-    return template_->GetType().toStdString();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::GetCategory
-// Created: LGY 2011-08-30
-// -----------------------------------------------------------------------------
-const std::string& ADN_Drawings_Data::DrawingInfo::GetCategory() const
-{
-    return category_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::Initialize
-// Created: ABR 2011-04-20
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::Initialize()
-{
-    glShadeModel( GL_SMOOTH );
-    glEnable( GL_TEXTURE_2D );
-    glEnable( GL_BLEND );
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    glClearColor( 1.0f, 1.0f, 1.0f, 0.0f );
-    glClearDepth( 1.0f );
-    glEnable( GL_DEPTH_TEST );
-    glDepthFunc( GL_LEQUAL );
-    glEnableClientState( GL_VERTEX_ARRAY );
-    glLineWidth( 1.f );
-    glColor3f( 1.f, 1.f, 1.f );
-    glDisable( GL_DEPTH_TEST );
-    glBindTexture( GL_TEXTURE_2D, 0 );
-
-    //glEnable( GL_TEXTURE_2D );
-    //glEnableClientState( GL_VERTEX_ARRAY );
-    //gl::Initialize();
-    //glShadeModel( GL_SMOOTH );
-    //glEnable( GL_LINE_SMOOTH );
-    //glEnable( GL_BLEND );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::Draw
-// Created: ABR 2011-04-20
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::Draw()
-{
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
-    glPushMatrix();
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
-    glViewport( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
-    glOrtho( 0.0f, SYMBOL_ICON_SIZE, 0.0f, SYMBOL_ICON_SIZE, 0, 1);
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-    // $$$$ ABR 2011-04-21: draw background
-    glColor3f( 0.f, 0.f, 0.f );
-    glBegin( GL_QUADS );
-        glVertex2f(              0.f,              0.f );
-        glVertex2f(              0.f, SYMBOL_ICON_SIZE );
-        glVertex2f( SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
-        glVertex2f( SYMBOL_ICON_SIZE,              0.f );
-    glEnd();
-    glColor3f( 0.9f, 0.9f, 0.9f );
-    glBegin( GL_QUADS );
-        glVertex2f(                    SYMBOL_BG_MARGIN,                    SYMBOL_BG_MARGIN );
-        glVertex2f(                    SYMBOL_BG_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_BG_MARGIN );
-        glVertex2f( SYMBOL_ICON_SIZE - SYMBOL_BG_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_BG_MARGIN );
-        glVertex2f( SYMBOL_ICON_SIZE - SYMBOL_BG_MARGIN,                    SYMBOL_BG_MARGIN );
-    glEnd();
-
-    // $$$$ ABR 2011-04-21: scale and translate if meter unit
-    const std::string geometry = template_->GetType().toStdString();
-    if( template_->GetUnit() == gui::DrawingTemplate::eMeter && geometry != "polygon" )
-    {
-        glScalef( SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
-        glTranslatef( SYMBOL_ICON_SIZE / 2.f / SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_ICON_SIZE / 5.f / SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
-    }
-
-    if( category_ == "tasks" && geometry == "point" )
-    {
-        glScalef( 1.2f * SYMBOL_SCALE_RATIO_FOR_METER, 1.2f * SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
-        glTranslatef( SYMBOL_ICON_SIZE / 2.4f / SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_ICON_SIZE / 2.4f / SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
-    }
-
-    // $$$$ ABR 2011-04-21: draw icon
-    if( geometry == "polygon" )
-        DrawOnPolygon();
-    else if( geometry == "line" )
-        DrawOnLine();
-    else if( geometry == "point" )
-        DrawOnPoint();
-    else if( geometry == "circle" )
-        DrawOnCircle();
-
-    glPopMatrix();
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::DrawOnPoint
-// Created: ABR 2011-04-20
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::DrawOnPoint()
-{
-    T_PointVector points;
-    points.push_back( geometry::Point2f( 0.f, 0.f ) );
-    DrawItem( points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::DrawOnLine
-// Created: ABR 2011-04-20
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::DrawOnLine()
-{
-    T_PointVector points;
-    points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE / 2.f ) );
-    points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE / 2.f ) );
-    DrawItem( points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::DrawOnPolygon
-// Created: ABR 2011-04-20
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::DrawOnPolygon()
-{
-    T_PointVector points;
-    points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN ) );
-    points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN ) );
-    points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN,                    SYMBOL_ICON_MARGIN ) );
-    points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN,                    SYMBOL_ICON_MARGIN ) );
-    points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN ) );
-    DrawItem( points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::DrawOnCircle
-// Created: JSR 2012-04-11
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::DrawOnCircle()
-{
-    T_PointVector points;
-    static const float twoPi = 2.f * std::acos( -1.f );
-    for( float angle = 0; angle < twoPi; angle += twoPi / 20.f + 1e-7f )
-        points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::cos( angle ), SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::sin( angle ) ) );
-    points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE / 2 ) );
-    DrawItem( points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::DrawItem
-// Created: ABR 2011-04-20
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::DrawingInfo::DrawItem( const T_PointVector& points )
-{
-    svg::RenderingContext context;
-    context.SetViewport( geometry::BoundingBox( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE ), SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
-    svg::Color svgColor( "blue" );
-    context.PushProperty( svg::RenderingContext_ABC::color, svgColor );
-    if( points.size() == 1 )
-        template_->Draw( points[ 0 ], context, tools_ );
-    else
-        template_->Draw( points, context, tools_ );
-    context.PopProperty( svg::RenderingContext_ABC::color );
-}
-
-// -----------------------------------------------------------------------------
 // ADN_Drawings_Data
 // -----------------------------------------------------------------------------
 
@@ -318,7 +91,7 @@ void ADN_Drawings_Data::DrawingInfo::DrawItem( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::ADN_Drawings_Data()
     : ADN_Data_ABC( eDrawings )
-    , renderer_()
+    , renderer_( new svg::TextRenderer() )
     , tools_   ( new GlToolsSymbols() )
 {
     // NOTHING
@@ -330,14 +103,13 @@ ADN_Drawings_Data::ADN_Drawings_Data()
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::~ADN_Drawings_Data()
 {
-    delete tools_;
-    for( IT_DrawingsMap it = geometryMap_.begin(); it != geometryMap_.end(); ++it )
+    for( auto it = geometryMap_.begin(); it != geometryMap_.end(); ++it )
         it->second.clear();
     geometryMap_.clear();
-    for( IT_DrawingsMap it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
+    for( auto it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
         it->second.clear();
     categoryMap_.clear();
-    for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
+    for( auto it = drawings_.begin(); it != drawings_.end(); ++it )
         delete *it;
 }
 
@@ -382,7 +154,11 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
     xml::xistringstream xss( "<template name=' - ' type='default'>"
                              "    <segment/>"
                              "</template>" );
-    drawings_.AddItem( new DrawingInfo( xss >> xml::start( "template" ), renderer_, *tools_, "tasks" ) );
+
+    std::auto_ptr< DrawingInfo > drawing;
+    drawing.reset( new DrawingInfo( xss >> xml::start( "template" ), "tasks", "tasks", *renderer_ ) );
+    drawing->GenerateSamplePixmap( *tools_ );
+    drawings_.AddItem( drawing.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,20 +167,24 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::ReadCategory( xml::xistream& xis )
 {
+    const std::string name = xis.attribute< std::string >( "name", "" );
     const std::string id = xis.attribute< std::string >( "id", "" );
     if( id != "" ) // $$$$ ABR 2011-04-22: check for hidden to display only tactical graphics category
-        xis >> xml::list( "template", *this, &ADN_Drawings_Data::ReadTemplate, id );
+        xis >> xml::list( "template", *this, &ADN_Drawings_Data::ReadTemplate, name, id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Drawings_Data::ReadTemplate
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
-void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& name )
+void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& name, const std::string& id )
 {
     try
     {
-        drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );
+        std::auto_ptr< DrawingInfo > drawing;
+        drawing.reset( new DrawingInfo( xis, name.c_str(), id.c_str(), *renderer_ ) );
+        drawing->GenerateSamplePixmap( *tools_ );
+        drawings_.AddItem( drawing.release() );
     }
     catch( const std::exception& e )
     {
@@ -419,7 +199,7 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
 ADN_Drawings_Data::DrawingInfo* const ADN_Drawings_Data::GetDrawing( const std::string& code ) const
 {
     for( auto it = drawings_.begin(); it != drawings_.end(); ++it )
-        if( (*it)->GetCode() == code )
+        if( (*it)->GetCode() == code.c_str() )
             return *it;
     return 0;
 }
@@ -436,8 +216,8 @@ ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( 
         QRegExp reg( "[, ]" );
         QStringList qlist = QStringList::split( reg, geometries.c_str() );
 
-        for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
-            if( (*it)->GetCategory() == category && qlist.contains( (*it)->GetGeometry().c_str() ) )
+        for( auto it = drawings_.begin(); it != drawings_.end(); ++it )
+            if( (*it)->GetId() == category.c_str() && qlist.contains( (*it)->GetType() ) )
                 currentVector.AddItem( *it );
     }
     return currentVector;
@@ -451,8 +231,8 @@ ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetCategoryDrawings( 
 {
     T_DrawingInfoVector& currentVector = categoryMap_[ category ];
     if( currentVector.empty() )
-        for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
-            if( (*it)->GetCategory() == category )
+        for( auto it = drawings_.begin(); it != drawings_.end(); ++it )
+            if( (*it)->GetId() == category.c_str() )
                 currentVector.AddItem( *it );
     return currentVector;
 }
