@@ -776,5 +776,5 @@ BOOST_AUTO_TEST_CASE( read_aurige_orders )
     xis >> xml::start( "actions" );
     T_Content data;
     xis >> xml::list( "action", boost::bind( &ReadAction, boost::ref( data ), _1 ) );
-    BOOST_CHECK_EQUAL( data.size(), 14795 );
+    BOOST_CHECK_EQUAL( data.size(), 14795u );
 }
