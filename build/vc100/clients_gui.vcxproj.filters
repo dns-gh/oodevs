@@ -916,6 +916,12 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Layer.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SelectionMenu.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\StandardIconProxyStyle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1076,9 +1082,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SmartGridWidget.h">
       <Filter>Source Files\gl\Miniview</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\CircularEventStrategy.h">
-      <Filter>Source Files\gl\Strategies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ColorEditor_ABC.h">
       <Filter>Source Files\gl\Strategies</Filter>
@@ -1500,8 +1503,11 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityImplementation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Layer.h">
-      <Filter>Source Files\gl</Filter>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CircularEventStrategy.h">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\StandardIconProxyStyle.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1870,5 +1876,13 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\Layer.h">
+      <Filter>Source Files\gl</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SelectionMenu.h">
+      <Filter>Source Files\Tools</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>

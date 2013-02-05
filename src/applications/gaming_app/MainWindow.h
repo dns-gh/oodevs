@@ -35,6 +35,7 @@ namespace gui
     class AutomatsLayer;
     class CircularEventStrategy;
     class ColorStrategy;
+    class EntitySymbols;
     class ExclusiveEventStrategy;
     class FormationLayer;
     class GlProxy;
@@ -120,6 +121,7 @@ private:
     virtual void NotifyUpdated( const Services& connection );
     virtual void NotifyUpdated( const Profile& profile );
 
+    void GeneratePixmapSymbols();
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer& locationsLayer,
@@ -143,6 +145,7 @@ private:
     std::auto_ptr< QProcess > process_;
     std::auto_ptr< gui::AddRasterDialog > addRasterDialog_;
     std::auto_ptr< gui::PreferencesDialog > preferenceDialog_;
+    std::auto_ptr< gui::EntitySymbols > icons_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

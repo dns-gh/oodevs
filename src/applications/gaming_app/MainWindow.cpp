@@ -65,6 +65,7 @@
 #include "actions_gui/InterfaceBuilder.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/AgentsModel.h"
@@ -77,6 +78,7 @@
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ActionsScheduler.h"
 #include "gaming/ColorController.h"
+#include "gaming/TeamsModel.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/DisplayExtractor.h"
@@ -144,14 +146,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , model_           ( model )
     , network_         ( network )
     , config_          ( config )
-    , forward_         ( new gui::CircularEventStrategy() )
-    , eventStrategy_   ( new gui::ExclusiveEventStrategy( *forward_ ) )
     , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_( new ColorController( controllers_ ) )
     , glProxy_         ( 0 )
     , connected_       ( false )
     , onPlanif_        ( false )
     , pProfile_        ( new ProfileFilter( controllers, p ) )
+    , icons_           ( 0 )
 {
     controllers_.modes_->SetMainWindow( this );
 
@@ -167,6 +168,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, *pProfile_ ) ) );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, *pProfile_ ) ) );
 
+    // Symbols
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
+    icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
+
+    forward_.reset( new gui::CircularEventStrategy( *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
+    eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
+
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
     selector_ = new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
@@ -181,6 +189,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
+    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     lighting_ = new SimulationLighting( controllers, this );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
@@ -239,13 +248,10 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
 
     // Profile
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
-    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-    gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
-    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *pProfile_, *icons, model_.userProfileFactory_ );
+    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *pProfile_, *icons_, model_.userProfileFactory_ );
 
     // Agent list panel
-    orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "orbat", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *icons );
+    orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "orbat", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *icons_ );
     addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
 
     // Mini views
@@ -289,7 +295,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
-    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory, *displayExtractor, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
+    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons_, *factory, *displayExtractor, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
     addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
 
     // Clock
@@ -649,6 +655,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
+    static bool firstPass = true;
     const QString appName = tools::translate( "Application", "SWORD" );
     const QString modePlanif =  tools::translate( "Application", " - Planning mode on" );
     if( simulation.IsConnected() )
@@ -680,6 +687,11 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         connected_ = false;
         profile_ = "";
         Close();
+    }
+    if( simulation.IsInitialized() && firstPass )
+    {
+        GeneratePixmapSymbols();
+        firstPass = false;
     }
 }
 
@@ -853,4 +865,38 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
+}
+
+namespace
+{
+    void RecGenerateSymbols( gui::EntitySymbols& icons, kernel::ActionController& actions, const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& child = it.NextElement();
+                RecGenerateSymbols( icons, actions, child );
+                icons.GetSymbol( child );
+                actions.Select( child );
+                icons.GetSymbol( child, QSize( 64, 64 ), true );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::GeneratePixmapSymbols
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+void MainWindow::GeneratePixmapSymbols()
+{
+    tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.tools::Resolver< kernel::Team_ABC >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& entity = it.NextElement();
+        RecGenerateSymbols( *icons_, controllers_.actions_, entity );
+    }
+    controllers_.actions_.DeselectAll();
 }

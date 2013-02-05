@@ -34,6 +34,7 @@ namespace gui
     class AutomatsLayer;
     class FormationLayer;
     class HelpSystem;
+    class EntitySymbols;
 }
 
 class ColorController;
@@ -114,6 +115,7 @@ private:
     void DoClose();
     void DoLoad( QString filename, bool checkConsistency = true );
     void MigrateExercises();
+    void GeneratePixmapSymbols();
 
     virtual void NotifyCreated();
     virtual void NotifyUpdated();
@@ -149,6 +151,7 @@ private:
     std::auto_ptr< QProgressDialog >             progressDialog_;
     std::auto_ptr< gui::HelpSystem >             help_;
     std::auto_ptr< QProcess >                    process_;
+    std::auto_ptr< gui::EntitySymbols >          icons_;
     //@}
 };
 

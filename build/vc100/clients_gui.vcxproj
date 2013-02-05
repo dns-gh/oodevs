@@ -168,8 +168,10 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SelectionMenu.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SimpleLocationDrawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\StandardIconProxyStyle.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StandardModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExtensionsPanel.cpp" />
@@ -729,7 +731,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Layer.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\Layer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
@@ -954,6 +956,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SelectionMenu.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SimpleLocationDrawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\SpinBoxAndSlider.h">
@@ -984,6 +987,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\StandardIconProxyStyle.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\StandardModelVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalLinePositions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\TacticalTreeView.h" />

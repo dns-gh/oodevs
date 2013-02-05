@@ -15,6 +15,11 @@
 
 namespace gui
 {
+    class ColorStrategy;
+    class DrawingTypes;
+    class GlTools_ABC;
+    class SelectionMenu;
+    class EntitySymbols;
 
 // =============================================================================
 /** @class  CircularEventStrategy
@@ -24,16 +29,16 @@ namespace gui
 // =============================================================================
 class CircularEventStrategy : public EventStrategy_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy();
+             CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, GlTools_ABC& tools );
     virtual ~CircularEventStrategy();
     //@}
 
     //! @name Settings
     //@{
-    void SetReverse( bool );
     void SetExclusive( bool );
     //@}
 
@@ -72,6 +77,7 @@ private:
     Layer_ABC* default_;
     bool exclusive_;
     Layer_ABC::T_Layers::const_reverse_iterator rlast_;
+    std::auto_ptr< SelectionMenu > menu_;
     //@}
 };
 

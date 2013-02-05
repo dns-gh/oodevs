@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
+#include "SelectionMenu.h"
 
 using namespace gui;
 
@@ -16,8 +17,9 @@ using namespace gui;
 // Name: CircularEventStrategy constructor
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-CircularEventStrategy::CircularEventStrategy()
-    : default_  ( 0 )
+CircularEventStrategy::CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, GlTools_ABC& tools )
+    : menu_( new SelectionMenu( entitySymbols, colorStrategy, drawingTypes, tools ) )
+    , default_( 0 )
     , exclusive_( true )
 {
     // NOTHING
@@ -197,8 +199,28 @@ void CircularEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) && default_ )
+    if( !mouse ||
+        Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
+        ( mouse->buttons() & mouse->button() ) == 0 ||                                                      // mouse release
+        ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
+        ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) )                       // no good button 
+        return;
+
+    Layer_ABC::T_LayerElements extractedElements;
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )                                             // Extract elements
+    {
+        if( !( mouse->button() == Qt::LeftButton || ( mouse->button() == Qt::RightButton && !( *it )->IsReadOnly() ) ) )
+            continue;
+        ( *it )->ExtractElements( extractedElements, point );
+    }
+
+    if( default_ && extractedElements.size() == 0 )                                                         // No element extracted
+    {
         default_->HandleMousePress( mouse, point );
+        return;
+    }
+
+    menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
 }
 
 // -----------------------------------------------------------------------------
