@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "AgentTypes.h"
 
-#include "protocol/Protocol.h"
 #include "AgentType.h"
 #include "AutomatType.h"
 #include "ComponentType.h"
@@ -26,12 +25,16 @@
 #include "SensorType.h"
 #include "SymbolFactory.h"
 #include "MT_Tools/MT_Logger.h"
+
+#include "protocol/Helpers.h"
+#include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
+using namespace protocol;
 
 // -----------------------------------------------------------------------------
 // Name: AgentTypes constructor
@@ -373,84 +376,28 @@ void AgentTypes::RegisterActionType( MagicActionType& actionType )
     tools::Resolver< MagicActionType, std::string >::Register( actionType.GetName(), actionType );
 }
 
+namespace
+{
+    typedef void (AgentTypes::*T_Register)( MagicActionType& );
+
+    template< typename T >
+    void RegisterMagicActions( const T_Register& operand, AgentTypes* types )
+    {
+        const auto& tab = typename T::data_;
+        for( size_t i = 0; i < typename T::size_; ++i )
+            ( types->*operand )( *new MagicActionType( tab[i].name, tab[i].type ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentTypes::CreateMagicActionTypes
 // Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
 void AgentTypes::CreateMagicActionTypes()
 {
-    // Unit Magic Actions
-    RegisterActionType( *new MagicActionType( "teleport", sword::UnitMagicAction::move_to ) );
-    RegisterActionType( *new MagicActionType( "surrender", sword::UnitMagicAction::surrender_to ) );
-    RegisterActionType( *new MagicActionType( "cancel_surrender", sword::UnitMagicAction::cancel_surrender ) );
-    RegisterActionType( *new MagicActionType( "recover_transporters", sword::UnitMagicAction::recover_transporters) );
-    RegisterActionType( *new MagicActionType( "destroy_component", sword::UnitMagicAction::destroy_component ) );
-    RegisterActionType( *new MagicActionType( "recover_all", sword::UnitMagicAction::recover_all ) );
-    RegisterActionType( *new MagicActionType( "recover_troops", sword::UnitMagicAction::recover_troops ) );
-    RegisterActionType( *new MagicActionType( "recover_equipments", sword::UnitMagicAction::recover_equipments ) );
-    RegisterActionType( *new MagicActionType( "recover_resources", sword::UnitMagicAction::recover_resources ) );
-    RegisterActionType( *new MagicActionType( "destroy_all", sword::UnitMagicAction::destroy_all ) );
-    RegisterActionType( *new MagicActionType( "delete_unit", sword::UnitMagicAction::delete_unit ) );
-    RegisterActionType( *new MagicActionType( "change_human_factors", sword::UnitMagicAction::change_human_factors ) );
-    RegisterActionType( *new MagicActionType( "partial_recovery", sword::UnitMagicAction::partial_recovery ) );
-    RegisterActionType( *new MagicActionType( "automat_creation", sword::UnitMagicAction::automat_creation ) );
-    RegisterActionType( *new MagicActionType( "crowd_creation", sword::UnitMagicAction::crowd_creation ) );
-    RegisterActionType( *new MagicActionType( "formation_creation", sword::UnitMagicAction::formation_creation ) );
-    RegisterActionType( *new MagicActionType( "unit_creation", sword::UnitMagicAction::unit_creation ) );
-    RegisterActionType( *new MagicActionType( "fire_order", sword::UnitMagicAction::create_fire_order ) );
-    RegisterActionType( *new MagicActionType( "change_knowledge_group", sword::UnitMagicAction::change_knowledge_group ) );
-    RegisterActionType( *new MagicActionType( "unit_change_superior", sword::UnitMagicAction::unit_change_superior ) );
-    RegisterActionType( *new MagicActionType( "change_automat_superior", sword::UnitMagicAction::change_automat_superior ) );
-    RegisterActionType( *new MagicActionType( "change_formation_superior", sword::UnitMagicAction::change_formation_superior ) );
-    RegisterActionType( *new MagicActionType( "change_logistic_links", sword::UnitMagicAction::change_logistic_links ) );
-    RegisterActionType( *new MagicActionType( "automat_log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
-    RegisterActionType( *new MagicActionType( "automat_log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
-    RegisterActionType( *new MagicActionType( "automat_log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
-    RegisterActionType( *new MagicActionType( "formation_log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
-    RegisterActionType( *new MagicActionType( "formation_log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
-    RegisterActionType( *new MagicActionType( "formation_log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
-    RegisterActionType( *new MagicActionType( "crowd_total_destruction", sword::UnitMagicAction::crowd_total_destruction ) );
-    RegisterActionType( *new MagicActionType( "crowd_change_attitude", sword::UnitMagicAction::crowd_change_attitude ) );
-    RegisterActionType( *new MagicActionType( "crowd_change_health_state", sword::UnitMagicAction::crowd_change_health_state ) );
-    RegisterActionType( *new MagicActionType( "crowd_change_affinities", sword::UnitMagicAction::crowd_change_affinities ) );
-    RegisterActionType( *new MagicActionType( "crowd_change_armed_individuals", sword::UnitMagicAction::crowd_change_armed_individuals ) );
-    RegisterActionType( *new MagicActionType( "inhabitant_change_health_state", sword::UnitMagicAction::inhabitant_change_health_state ) );
-    RegisterActionType( *new MagicActionType( "inhabitant_change_affinities", sword::UnitMagicAction::inhabitant_change_affinities ) );
-    RegisterActionType( *new MagicActionType( "inhabitant_change_alerted_state", sword::UnitMagicAction::inhabitant_change_alerted_state ) );
-    RegisterActionType( *new MagicActionType( "inhabitant_change_confined_state", sword::UnitMagicAction::inhabitant_change_confined_state ) );
-    RegisterActionType( *new MagicActionType( "unit_change_affinities", sword::UnitMagicAction::unit_change_affinities ) );
-    RegisterActionType( *new MagicActionType( "change_extension", sword::UnitMagicAction::change_extension ) );
-    RegisterActionType( *new MagicActionType( "change_critical_intelligence", sword::UnitMagicAction::change_critical_intelligence ) );
-    RegisterActionType( *new MagicActionType( "transfer_equipment", sword::UnitMagicAction::transfer_equipment ) );
-    RegisterActionType( *new MagicActionType( "reload_brain", sword::UnitMagicAction::reload_brain ) );
-    RegisterActionType( *new MagicActionType( "change_equipment_state", sword::UnitMagicAction::change_equipment_state ) );
-    RegisterActionType( *new MagicActionType( "change_human_state", sword::UnitMagicAction::change_human_state ) );
-    RegisterActionType( *new MagicActionType( "change_dotation", sword::UnitMagicAction::change_dotation ) );
-    RegisterActionType( *new MagicActionType( "create_wounds", sword::UnitMagicAction::create_wounds ) );
-    RegisterActionType( *new MagicActionType( "create_breakdowns", sword::UnitMagicAction::create_breakdowns ) );
-    RegisterActionType( *new MagicActionType( "log_finish_handlings", sword::UnitMagicAction::log_finish_handlings ) );
-
-    // Knowledge Magic Actions
-    RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_side", sword::KnowledgeMagicAction::update_party ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", sword::KnowledgeMagicAction::update_party_parent ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_update_type", sword::KnowledgeMagicAction::update_type ) );
-    RegisterActionType( *new MagicActionType( "knowledge_group_add_knowledge", sword::KnowledgeMagicAction::add_knowledge ) );
-
-    // Object Magic Actions
-    RegisterActionType( *new MagicActionType( "create_object", sword::ObjectMagicAction::create ) );
-    RegisterActionType( *new MagicActionType( "update_object", sword::ObjectMagicAction::update ) );
-    RegisterActionType( *new MagicActionType( "destroy_object", sword::ObjectMagicAction::destroy ) );
-
-    // Other Magic Actions
-    RegisterActionType( *new MagicActionType( "global_weather", sword::MagicAction::global_weather ) );
-    RegisterActionType( *new MagicActionType( "local_weather", sword::MagicAction::local_weather ) );
-    RegisterActionType( *new MagicActionType( "local_weather_destruction", sword::MagicAction::local_weather_destruction ) );
-    RegisterActionType( *new MagicActionType( "change_diplomacy", sword::MagicAction::change_diplomacy ) );
-    RegisterActionType( *new MagicActionType( "create_knowledge_group", sword::MagicAction::create_knowledge_group ) );
-    RegisterActionType( *new MagicActionType( "change_resource_links", sword::MagicAction::change_resource_network_properties ) );
-    RegisterActionType( *new MagicActionType( "fire_order_on_location", sword::MagicAction::create_fire_order_on_location ) );
-
+    RegisterMagicActions< mapping::MagicUnitAction >( &AgentTypes::RegisterActionType, this );
+    RegisterMagicActions< mapping::MagicKnowledgeAction >( &AgentTypes::RegisterActionType, this );
+    RegisterMagicActions< mapping::MagicObjectAction >( &AgentTypes::RegisterActionType, this );
+    RegisterMagicActions< mapping::MagicAction >( &AgentTypes::RegisterActionType, this );
     RegisterActionType( *new MagicActionType( "change_mode" ) );
-
 }

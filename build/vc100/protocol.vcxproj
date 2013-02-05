@@ -132,6 +132,7 @@
     <ClInclude Include="..\..\src\libraries\protocol\ClientSenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Dispatcher.h" />
     <ClInclude Include="..\..\src\libraries\protocol\DispatcherSenders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\Helpers.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Launcher.h" />
     <ClInclude Include="..\..\src\libraries\protocol\LauncherSenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Messenger.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="..\..\src\libraries\protocol\Common.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\DispatcherToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\DispatcherToSimulation.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\LauncherToAdmin.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\MessengerToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\ReplayToClient.cpp" />
