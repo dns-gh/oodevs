@@ -183,6 +183,9 @@ namespace
 
     boost::optional< Location > TryReadLocation( const Service_ABC& service, xml::xisubstream xis )
     {
+        if( !xis.has_child( "location" ) )
+            return boost::none;
+
         xis >> xml::start( "location" );
         const auto type = TestLowCaseAttribute( xis, "type" );
         if( !type )
@@ -745,6 +748,7 @@ namespace
         { &ReadUnitId,                "agent" },
         { &ReadUnitKnowledgeId,       "agentknowledge" },
         { &ReadUrbanKnowledgeId,      "urbanknowledge" },
+        { &ReadUrbanKnowledgeId,      "urbanblock" },
         // obsolete fields
         { &ReadNull, "automatlist" },
         { &ReadNull, "locationlist" },
@@ -787,7 +791,8 @@ namespace
     void ReadListParameters( const Reader& reader, MissionParameter& dst, xml::xistream& xis )
     {
         xis >> xml::list( "parameter", boost::bind( &AddListParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
-        dst.set_null_value( !dst.value( 0 ).list_size() );
+        const bool valid = dst.value_size() && dst.value( 0 ).list_size();
+        dst.set_null_value( !valid );
     }
 }
 

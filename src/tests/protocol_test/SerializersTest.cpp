@@ -753,3 +753,28 @@ BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
     BOOST_CHECK_EQUAL( msg.automat_order().tasker().id(), 8323u );
     BOOST_CHECK_EQUAL( msg.automat_order().type().id(), 2053u );
 }
+
+namespace
+{
+    typedef std::vector< ClientToSim_Content > T_Content;
+
+    void ReadAction( T_Content& dst, xml::xistream& xis )
+    {
+        MockService service;
+        Reader reader( service );
+        ClientToSim_Content msg;
+        MOCK_EXPECT( service.Convert ).returns( dummy );
+        MOCK_EXPECT( service.Resolve ).returns( Service_ABC::AGENT );
+        reader.Read( msg, xis );
+        dst.push_back( msg );
+    }
+}
+
+BOOST_AUTO_TEST_CASE( read_aurige_orders )
+{
+    xml::xifstream xis( BOOST_RESOLVE( "aurige.ord" ) );
+    xis >> xml::start( "actions" );
+    T_Content data;
+    xis >> xml::list( "action", boost::bind( &ReadAction, boost::ref( data ), _1 ) );
+    BOOST_CHECK_EQUAL( data.size(), 14795 );
+}

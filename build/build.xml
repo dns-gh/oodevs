@@ -1590,6 +1590,7 @@
         <update name="spatialite"/>
         <update name="steel"/>
         <update name="svgl"/>
+        <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
         <update name="terrain" package="terraintools_${platform}.zip"/>
         <update name="tools"/>
