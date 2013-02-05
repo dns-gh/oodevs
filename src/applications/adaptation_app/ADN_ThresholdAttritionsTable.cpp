@@ -36,7 +36,7 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
     verticalHeader()->setVisible( false );
 
     delegate_.AddLineEditOnColumn( 0 );
-    delegate_.AddDoubleSpinBoxOnColumn( 1, 0., std::numeric_limits< double >::max() );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0., std::numeric_limits< double >::max(), 1, 5 );
     for( std::size_t i = 2; i<= 6; ++i )
         delegate_.AddSpinBoxOnColumn( static_cast< int >( i ) );
     delegate_.AddCheckBoxOnColumn( 7 );
