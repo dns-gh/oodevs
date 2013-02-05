@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Color_ABC_h_
-#define __Color_ABC_h_
+#ifndef __kernel_Color_ABC_h_
+#define __kernel_Color_ABC_h_
 
 #include "Extension_ABC.h"
 #include "Serializable_ABC.h"
@@ -53,4 +53,4 @@ public:
 
 }
 
-#endif // __Color_ABC_h_
+#endif // __kernel_Color_ABC_h_
