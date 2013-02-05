@@ -40,9 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 32, 32 ) ) const;
+    const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const QSize& size = QSize( 64, 64 ), bool applyColorModifiers = false ) const;
     const QPixmap& GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
-                              const QSize& size = QSize( 32, 32 ) ) const;
+                              const QSize& size = QSize( 64, 64 ), bool applyColorModifiers = false ) const;
     //@}
 
 private:

@@ -41,7 +41,7 @@ EntitySymbols::~EntitySymbols()
 // Name: EntitySymbols::GetSymbol
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
+const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 64, 64 )*/, bool applyColorModifiers /* = false */ ) const
 {
     const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !symbol )
@@ -50,7 +50,7 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     const std::string levelName  = symbol->GetLevel();
     if( symbolName.empty() && levelName.empty() )
         return icons_.GetDefaultSymbol();
-    return GetSymbol( entity, symbolName, levelName, size );
+    return GetSymbol( entity, symbolName, levelName, size, applyColorModifiers );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +58,10 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
 // Created: LGY 2011-07-22
 // -----------------------------------------------------------------------------
 const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
-                                         const QSize& size /*= QSize( 32, 32 )*/ ) const
+                                         const QSize& size /*= QSize( 64, 64 )*/, bool applyColorModifiers /* = false */ ) const
 {
     SymbolIcon icon( symbolName, levelName );
-    icon.SetColor( strategy_.FindColor( entity ) );
+    icon.SetColor( applyColorModifiers ? strategy_.FindColorWithModifiers( entity ) : strategy_.FindColor( entity ) );
     icon.SetSize( size );
     return icons_.GetSymbol( icon );
 }
