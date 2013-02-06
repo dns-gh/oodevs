@@ -105,7 +105,7 @@ namespace
     {
         return static_cast< float >( value / 100. );
     }
-    int LoadWound( float value )
+    int LoadWound( double value )
     {
         return static_cast< int >( value * 100u );
     }
@@ -117,7 +117,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::AttritionThresholdInfos::ReadArchive( xml::xistream& input )
 {
-    float u1, u2, u3, ue, dead;
+    double u1, u2, u3, ue, dead;
     input >> xml::attribute( "value", threshold_ )
           >> xml::attribute( "u1", u1 )
           >> xml::attribute( "u2", u2 )
