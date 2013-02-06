@@ -111,6 +111,9 @@ void FromXmlTagsToWiki( const std::string& tag, xml::xistream& xis, std::string&
 // Name: MakeStringXmlItem
 // Created: NPT 2013-01-22
 // -----------------------------------------------------------------------------
+
+const boost::regex reStyles = boost::regex( "(.*?)(\"\"|''|__|\\$\\$)(.*)" );
+
 void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line )
 {
 
@@ -123,7 +126,7 @@ void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line
         while ( line.size() > 0 )
         {
             boost::smatch match;
-            if( boost::regex_search( line, match, boost::regex( "(.*?)(\"\"|''|__|\\$\\$)(.*)" ) ) )
+            if( boost::regex_search( line, match, reStyles ) )
             {
                 if( match[ 1 ].length() > 0 )
                     xos << xml::start( "text" ) << match[ 1 ] << xml::end;
@@ -169,6 +172,9 @@ void FromXmlToWiki( xml::xistream& xis, std::string& text )
 // Name: FromWikiToXml
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
+
+const boost::regex reList = boost::regex( "^(\\s+)\\* (.*)$" );
+
 void FromWikiToXml( xml::xostream& xos, const std::string& text )
 {
     std::vector< std::string > stringList;
@@ -181,7 +187,7 @@ void FromWikiToXml( xml::xostream& xos, const std::string& text )
     {
         std::string val = *it;
         boost::smatch match;
-        if( boost::regex_search( val, match, boost::regex( "^(\\s+)\\* (.*)$" ) ) ) //check if the current line is a list
+        if( boost::regex_search( val, match, reList ) ) //check if the current line is a list
             tokensVector.push( std::make_pair< std::size_t, std::string >( match[ 1 ].length(), match[ 2 ] ) ); //< space before the *, text after the star >
         else
             tokensVector.push( std::make_pair< std::size_t, std::string >( 0, val ) );//< 0 space beause text, text >
