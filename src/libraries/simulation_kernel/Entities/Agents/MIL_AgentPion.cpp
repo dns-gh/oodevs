@@ -481,11 +481,14 @@ void MIL_AgentPion::NotifySendHeadquarters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision( float duration )
 {
-    if( markedForDestruction_ && !brainDeleted_ )
+    if( markedForDestruction_ )
     {
-        GetRole< DEC_RolePion_Decision >().DeleteBrain();
-        pAutomate_->GetRole< DEC_AutomateDecision >().GarbageCollect();
-        brainDeleted_ = true;
+        if( !brainDeleted_ )
+        {
+            GetRole< DEC_RolePion_Decision >().DeleteBrain();
+            pAutomate_->GetRole< DEC_AutomateDecision >().GarbageCollect();
+            brainDeleted_ = true;
+        }
         return;
     }
 
@@ -814,15 +817,20 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 void MIL_AgentPion::OnReceiveDeleteUnit()
 {
     CancelCurrentMission();
+    pOrderManager_->StopAllMissions();
     GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
     GetRole< PHY_RolePion_Composantes >().RetrieveAllLentComposantes();
     GetRole< PHY_RolePion_Composantes >().ReturnAllBorrowedComposantes();
+    GetRole< transport::PHY_RoleAction_Transport >().Cancel();
 
     if( pAutomate_ )
         pAutomate_->UnregisterPion( *this );
 
     markedForDestruction_ = true;
-    Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+
+    client::UnitDestruction msg;
+    msg().mutable_unit()->set_id( GetID() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

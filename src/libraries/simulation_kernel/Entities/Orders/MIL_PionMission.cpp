@@ -132,6 +132,8 @@ void MIL_PionMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 // static
 void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 {
+    if( pion.IsMarkedForDestruction() )
+        return;
     client::UnitOrder asn;
     asn().mutable_tasker()->set_id( pion.GetID() );
     asn().mutable_type()->set_id( 0 );
@@ -146,6 +148,8 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 void MIL_PionMission::Send() const
 {
+    if( pion_.IsMarkedForDestruction() )
+        return;
     client::UnitOrder asn;
     asn().mutable_tasker()->set_id( pion_.GetID() );
     asn().mutable_type()->set_id( GetType().GetID() );

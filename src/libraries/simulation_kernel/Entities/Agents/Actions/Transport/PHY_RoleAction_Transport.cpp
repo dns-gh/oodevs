@@ -422,7 +422,7 @@ void PHY_RoleAction_Transport::Cancel()
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const
 {
-    if( *owner_ == transported )
+    if( *owner_ == transported || transported.IsMarkedForDestruction() )
         return false;
 
     LoadableStrategy strategy( bTransportOnlyLoadable );

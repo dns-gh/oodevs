@@ -85,13 +85,8 @@ void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnM
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::SendChangedState( unsigned int context ) const
 {
-    if( bExternalMustUpdateData_ && pion_->IsMarkedForDestruction() )
-    {
-        client::UnitDestruction msg;
-        msg().mutable_unit()->set_id( pion_->GetID() );
-        msg.Send( NET_Publisher_ABC::Publisher(), context );
+    if( pion_->IsMarkedForDestruction() )
         return;
-    }
 
     // UnitAttributes message
     if( bExternalMustUpdateData_
@@ -126,6 +121,9 @@ void NET_RolePion_Dotations::SendChangedState( unsigned int context ) const
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::SendFullState( unsigned int context ) const
 {
+    if( pion_->IsMarkedForDestruction() )
+        return;
+
     // UnitAttributes
     client::UnitAttributes msg;
     msg().mutable_unit()->set_id( pion_->GetID() );
