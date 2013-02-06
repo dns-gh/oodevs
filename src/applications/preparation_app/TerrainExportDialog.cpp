@@ -11,7 +11,7 @@
 #include "TerrainExportDialog.h"
 #include "moc_TerrainExportDialog.cpp"
 #include "preparation/UrbanModel.h"
-#include "preparation/UrbanExportManager.h"
+#include "preparation/UrbanFileExporter.h"
 #include "clients_gui/resources.h"
 #include "tools/ExerciseConfig.h"
 #include <terrain/PlanarCartesianProjector.h>
@@ -140,8 +140,7 @@ void TerrainExportDialog::accept()
             }
             SetProgression( progressDialog, 25, tr( "Exporting urban data..." ) );
             {
-                UrbanExportManager manager( path, translator, urbanModel_ );
-                manager.Run();
+                ExportUrbanFiles( path, "urbanblock", translator, urbanModel_ );
             }
         }
         SetProgression( progressDialog, 50, tr( "Exporting raster data..." ) );

@@ -25,6 +25,7 @@
 #pragma warning( push, 0 )
 #include <gdal/ogrsf_frmts.h>
 #pragma warning( pop )
+#include "gdal_ogr/GdalOgrWorkspace.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -279,5 +280,7 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
 void ExportUrbanFiles( const std::string& directory, const std::string& name,
     PointProjector_ABC& projector, const UrbanModel& model)
 {
+    // As usual, hide functions into classes, because Java?
+    gdal_ogr::GdalOgrWorkspace workSpace;
     UrbanFileExporter( directory, name, projector, model);
 }
