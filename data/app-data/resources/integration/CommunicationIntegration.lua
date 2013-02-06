@@ -273,6 +273,10 @@ integration.getMission = function( entity )
     return DEC_GetMission( entity.source )
 end
 
+integration.stopMission = function()
+    DEC_FinMission()
+end
+
 integration.getRawMission = function( entity )
     return DEC_GetRawMission( entity )
 end
