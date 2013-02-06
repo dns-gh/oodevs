@@ -55,16 +55,15 @@ namespace
         {
             return Read< T >( xos.str() );
         }
-
-        template< typename T >
-        void AddParameterValue( const std::string& type, const T& value )
-        {
-            xos << xml::start( "parameter" )
-                    << xml::attribute( "type", type )
-                    << xml::attribute( "value", value )
-                << xml::end;
-        }
     };
+
+    template< typename T >
+    void AddParameterValue( xml::xosubstream xos, const std::string& type, const T& value )
+    {
+        xos << xml::start( "parameter" )
+            << xml::attribute( "type", type )
+            << xml::attribute( "value", value );
+    }
 
     void CheckNull( const MissionParameter& src )
     {
@@ -81,9 +80,9 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( read_boolean, Fixture )
 {
-    AddParameterValue( "boolean", true );
+    AddParameterValue( xos, "bool", true );
     xos << xml::start( "parameter" )
-            << xml::attribute( "type", "boolean" );
+        << xml::attribute( "type", "bool" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK( msg.elem( 0 ).value( 0 ).booleanvalue() );
@@ -92,8 +91,8 @@ BOOST_FIXTURE_TEST_CASE( read_boolean, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_numerics, Fixture )
 {
-    AddParameterValue( "integer", 47 );
-    AddParameterValue( "numeric", 3.14f );
+    AddParameterValue( xos, "integer", 47 );
+    AddParameterValue( xos, "numeric", 3.14f );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).intvalue(), 47 );
@@ -102,7 +101,7 @@ BOOST_FIXTURE_TEST_CASE( read_numerics, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_heading, Fixture )
 {
-    AddParameterValue( "heading", 47 );
+    AddParameterValue( xos, "heading", 47 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).heading().heading(), 47 );
@@ -110,7 +109,7 @@ BOOST_FIXTURE_TEST_CASE( read_heading, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_enumeration, Fixture )
 {
-    AddParameterValue( "enumeration", 47 );
+    AddParameterValue( xos, "enumeration", 47 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).enumeration(), 47 );
@@ -118,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( read_enumeration, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_datetime, Fixture )
 {
-    AddParameterValue( "datetime", "20121110T083917" );
+    AddParameterValue( xos, "datetime", "20121110T083917" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).datetime().data(), "20121110T083917" );
@@ -134,25 +133,29 @@ BOOST_FIXTURE_TEST_CASE( read_location, Fixture )
     "    </location>"
     "  </parameter>"
     "  <parameter type='location'>"
-    "    <location type='line'>"
-    "      <point coordinates='29TNG4476007950'/>"
-    "      <point coordinates='29TNG4916008030'/>"
-    "    </location>"
-    "  </parameter>"
-    "  <parameter type='location'>"
-    "    <location type='polygon'>"
-    "      <point coordinates='29TNF4459099545'/>"
-    "      <point coordinates='29TNF4566099815'/>"
-    "      <point coordinates='29TNG4916008030'/>"
-    "    </location>"
+    "    <parameter type='location'>"
+    "      <location type='line'>"
+    "        <point coordinates='29TNG4476007950'/>"
+    "        <point coordinates='29TNG4916008030'/>"
+    "      </location>"
+    "    </parameter>"
+    "    <parameter type='location'>"
+    "      <location type='polygon'>"
+    "        <point coordinates='29TNF4459099545'/>"
+    "        <point coordinates='29TNF4566099815'/>"
+    "        <point coordinates='29TNG4916008030'/>"
+    "      </location>"
+    "    </parameter>"
     "  </parameter>"
     "</action>";
     MOCK_EXPECT( service.Convert ).exactly( 6 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.elem_size(), 3 );
-    CheckLocation( msg.elem( 0 ).value( 0 ).location(), Location::point,   1 );
-    CheckLocation( msg.elem( 1 ).value( 0 ).location(), Location::line,    2 );
-    CheckLocation( msg.elem( 2 ).value( 0 ).location(), Location::polygon, 3 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
+    CheckLocation( msg.elem( 0 ).value( 0 ).location(), Location::point, 1 );
+    const auto& list = msg.elem( 1 ).value( 0 ).locationlist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    CheckLocation( list.elem( 0 ), Location::line,    2 );
+    CheckLocation( list.elem( 1 ), Location::polygon, 3 );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_point, Fixture )
@@ -164,11 +167,27 @@ BOOST_FIXTURE_TEST_CASE( read_point, Fixture )
     "      <point coordinates='29TNF4813099675'/>"
     "    </location>"
     "  </parameter>"
+    "  <parameter type='point'>"
+    "    <parameter type='point'>"
+    "      <location type='point'>"
+    "        <point coordinates='29TNF4813099675'/>"
+    "      </location>"
+    "    </parameter>"
+    "    <parameter type='point'>"
+    "      <location type='point'>"
+    "        <point coordinates='29TNF4813099675'/>"
+    "      </location>"
+    "    </parameter>"
+    "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).once().returns( dummy );
+    MOCK_EXPECT( service.Convert ).exactly( 3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckLocation( msg.elem( 0 ).value( 0 ).point().location(), Location::point, 1 );
+    const auto& list = msg.elem( 1 ).value( 0 ).pointlist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    CheckLocation( list.elem( 0 ).location(), Location::point, 1 );
+    CheckLocation( list.elem( 1 ).location(), Location::point, 1 );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_polygon, Fixture )
@@ -179,16 +198,35 @@ BOOST_FIXTURE_TEST_CASE( read_polygon, Fixture )
     "    <location type='polygon'>"
     "      <point coordinates='29TNF4619099340'/>"
     "      <point coordinates='29TNF4621099110'/>"
-    "      <point coordinates='29TNF4682099300'/>"
-    "      <point coordinates='29TNF4733099500'/>"
     "      <point coordinates='29TNF4729099640'/>"
     "    </location>"
     "  </parameter>"
+    "  <parameter type='polygon'>"
+    "    <parameter type='polygon'>"
+    "      <location type='polygon'>"
+    "        <point coordinates='29TNF4619099340'/>"
+    "        <point coordinates='29TNF4619099341'/>"
+    "        <point coordinates='29TNF4619099342'/>"
+    "      </location>"
+    "    </parameter>"
+    "    <parameter type='polygon'>"
+    "      <location type='polygon'>"
+    "        <point coordinates='29TNF4619099340'/>"
+    "        <point coordinates='29TNF4619099341'/>"
+    "        <point coordinates='29TNF4619099342'/>"
+    "        <point coordinates='29TNF4619099343'/>"
+    "      </location>"
+    "    </parameter>"
+    "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 5 ).returns( dummy );
+    MOCK_EXPECT( service.Convert ).exactly( 10 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    CheckLocation( msg.elem( 0 ).value( 0 ).area().location(), Location::polygon, 5 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
+    CheckLocation( msg.elem( 0 ).value( 0 ).area().location(), Location::polygon, 3 );
+    const auto& list = msg.elem( 1 ).value( 0 ).polygonlist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    CheckLocation( list.elem( 0 ).location(), Location::polygon, 3 );
+    CheckLocation( list.elem( 1 ).location(), Location::polygon, 4 );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_limit, Fixture )
@@ -210,8 +248,7 @@ BOOST_FIXTURE_TEST_CASE( read_limit, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_path, Fixture )
 {
-    const std::string input =
-    "<action>"
+    const std::string path =
     "  <parameter type='path'>"
     "    <parameter type='pathpoint'>"
     "      <location type='point'>"
@@ -228,12 +265,22 @@ BOOST_FIXTURE_TEST_CASE( read_path, Fixture )
     "        <point coordinates='29TNG4251012740'/>"
     "      </location>"
     "    </parameter>"
+    "  </parameter>";
+    const std::string input =
+    "<action>"
+    + path +
+    "  <parameter type='path'>"
+    + path + path +
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 3 ).returns( dummy );
+    MOCK_EXPECT( service.Convert ).exactly( 3*3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckLocation( msg.elem( 0 ).value( 0 ).path().location(), Location::line, 3 );
+    const auto& list = msg.elem( 1 ).value( 0 ).pathlist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    CheckLocation( list.elem( 0 ).location(), Location::line, 3 );
+    CheckLocation( list.elem( 1 ).location(), Location::line, 3 );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
@@ -282,31 +329,55 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_automat_id, Fixture )
 {
-    AddParameterValue( "automat", 1337 );
+    AddParameterValue( xos, "automat", 1337 );
+    xos << xml::start( "parameter" )
+        << xml::attribute( "type", "automat" );
+    AddParameterValue( xos, "automat", 1338 );
+    AddParameterValue( xos, "automat", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).automat().id(), 1337u );
+    const auto& list = msg.elem( 1 ).value( 0 ).automatlist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    BOOST_CHECK_EQUAL( list.elem( 0 ).id(), 1338u );
+    BOOST_CHECK_EQUAL( list.elem( 1 ).id(), 1339u );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_agent_id, Fixture )
 {
-    AddParameterValue( "agent", 1337 );
+    AddParameterValue( xos, "agent", 1337 );
+    xos << xml::start( "parameter" )
+        << xml::attribute( "type", "agent" );
+    AddParameterValue( xos, "agent", 1338 );
+    AddParameterValue( xos, "agent", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).agent().id(), 1337u );
+    const auto& list = msg.elem( 1 ).value( 0 ).unitlist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    BOOST_CHECK_EQUAL( list.elem( 0 ).id(), 1338u );
+    BOOST_CHECK_EQUAL( list.elem( 1 ).id(), 1339u );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_agent_knowledge_id, Fixture )
 {
-    AddParameterValue( "agentknowledge", 1337 );
+    AddParameterValue( xos, "agentknowledge", 1337 );
+    xos << xml::start( "parameter" )
+        << xml::attribute( "type", "agentknowledge" );
+    AddParameterValue( xos, "agentknowledge", 1338 );
+    AddParameterValue( xos, "agentknowledge", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).agentknowledge().id(), 1337u );
+    const auto& list = msg.elem( 1 ).value( 0 ).unitknowledgelist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    BOOST_CHECK_EQUAL( list.elem( 0 ).id(), 1338u );
+    BOOST_CHECK_EQUAL( list.elem( 1 ).id(), 1339u );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_crowd_knowledge_id, Fixture )
 {
-    AddParameterValue( "crowdknowledge", 1337 );
+    AddParameterValue( xos, "crowdknowledge", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).crowdknowledge().id(), 1337u );
@@ -314,24 +385,50 @@ BOOST_FIXTURE_TEST_CASE( read_crowd_knowledge_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_object_knowledge_id, Fixture )
 {
-    AddParameterValue( "objectknowledge", 1337 );
+    AddParameterValue( xos, "objectknowledge", 1337 );
+    xos << xml::start( "parameter" )
+        << xml::attribute( "type", "objectknowledge" );
+    AddParameterValue( xos, "objectknowledge", 1338 );
+    AddParameterValue( xos, "objectknowledge", 1339 );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).objectknowledge().id(), 1337u );
+    const auto& list = msg.elem( 1 ).value( 0 ).objectknowledgelist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    BOOST_CHECK_EQUAL( list.elem( 0 ).id(), 1338u );
+    BOOST_CHECK_EQUAL( list.elem( 1 ).id(), 1339u );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_urban_knowledge_id, Fixture )
 {
-    AddParameterValue( "urbanknowledge", 1337 );
+    AddParameterValue( xos, "urbanknowledge", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).urbanknowledge().id(), 1337u );
 }
 
+namespace
+{
+    void CheckPlannedWork( const PlannedWork& work )
+    {
+        BOOST_CHECK_EQUAL( work.type(), "barricade" );
+        CheckLocation( work.position(), Location::polygon, 3 );
+        BOOST_CHECK_EQUAL( work.type_obstacle(), ObstacleType::reserved );
+        BOOST_CHECK_EQUAL( work.density(), 4.7f );
+        BOOST_CHECK_EQUAL( work.combat_train().id(), 5169u );
+        BOOST_CHECK_EQUAL( work.activity_time(), 38 );
+        BOOST_CHECK_EQUAL( work.activation_time(), 39 );
+        BOOST_CHECK_EQUAL( work.name(), "gyhjkf" );
+        BOOST_CHECK_EQUAL( work.altitude_modifier(), 40 );
+        BOOST_CHECK_EQUAL( work.time_limit(), 41 );
+        BOOST_CHECK_EQUAL( work.mining(), true );
+        BOOST_CHECK_EQUAL( work.lodging(), 98 );
+    }
+}
+
 BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
 {
-    const std::string input =
-    "<action>"
+    const std::string work =
     "  <parameter name='Chantiers (item 1)' type='plannedwork' value='barricade'>"
     "    <parameter type='obstacletype' value='reserved'/>"
     "    <parameter type='density' value='4.7'/>"
@@ -350,29 +447,27 @@ BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
     "        <point coordinates='35RPQ7177311788'/>"
     "      </location>"
     "    </parameter>"
+    "  </parameter>";
+    const std::string input =
+    "<action>"
+    + work +
+    "  <parameter type='plannedwork'>"
+    + work + work +
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 3 ).returns( dummy );
+    MOCK_EXPECT( service.Convert ).exactly( 3*3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    const auto& work = msg.elem( 0 ).value( 0 ).plannedwork();
-    BOOST_CHECK_EQUAL( work.type(), "barricade" );
-    CheckLocation( work.position(), Location::polygon, 3 );
-    BOOST_CHECK_EQUAL( work.type_obstacle(), ObstacleType::reserved );
-    BOOST_CHECK_EQUAL( work.density(), 4.7f );
-    BOOST_CHECK_EQUAL( work.combat_train().id(), 5169u );
-    BOOST_CHECK_EQUAL( work.activity_time(), 38 );
-    BOOST_CHECK_EQUAL( work.activation_time(), 39 );
-    BOOST_CHECK_EQUAL( work.name(), "gyhjkf" );
-    BOOST_CHECK_EQUAL( work.altitude_modifier(), 40 );
-    BOOST_CHECK_EQUAL( work.time_limit(), 41 );
-    BOOST_CHECK_EQUAL( work.mining(), true );
-    BOOST_CHECK_EQUAL( work.lodging(), 98 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
+    CheckPlannedWork( msg.elem( 0 ).value( 0 ).plannedwork() );
+    const auto& list = msg.elem( 1 ).value( 0 ).plannedworklist();
+    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
+    CheckPlannedWork( list.elem( 0 ) );
+    CheckPlannedWork( list.elem( 1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_nature_atlas, Fixture )
 {
-    AddParameterValue( "natureatlas", 1337 );
+    AddParameterValue( xos, "natureatlas", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).nature().flags(), 1337 );
@@ -380,7 +475,7 @@ BOOST_FIXTURE_TEST_CASE( read_nature_atlas, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_resource_type, Fixture )
 {
-    AddParameterValue( "resourcetype", 1337 );
+    AddParameterValue( xos, "resourcetype", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).resourcetype().id(), 1337u );
@@ -388,7 +483,7 @@ BOOST_FIXTURE_TEST_CASE( read_resource_type, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_acharstr, Fixture )
 {
-    AddParameterValue( "string", "zomg" );
+    AddParameterValue( xos, "string", "zomg" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).acharstr(), "zomg" );
@@ -396,7 +491,7 @@ BOOST_FIXTURE_TEST_CASE( read_acharstr, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_object_id, Fixture )
 {
-    AddParameterValue( "object", 1337 );
+    AddParameterValue( xos, "object", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).object().id(), 1337u );
@@ -404,7 +499,7 @@ BOOST_FIXTURE_TEST_CASE( read_object_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_party_id, Fixture )
 {
-    AddParameterValue( "army", 1337 );
+    AddParameterValue( xos, "army", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).party().id(), 1337u );
@@ -412,7 +507,7 @@ BOOST_FIXTURE_TEST_CASE( read_party_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_indirect_fire_id, Fixture )
 {
-    AddParameterValue( "indirectfire", 1337 );
+    AddParameterValue( xos, "indirectfire", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).indirectfire().id(), 1337u );
@@ -420,7 +515,7 @@ BOOST_FIXTURE_TEST_CASE( read_indirect_fire_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_knowledge_group_id, Fixture )
 {
-    AddParameterValue( "knowledgegroup", 1337 );
+    AddParameterValue( xos, "knowledgegroup", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).knowledgegroup().id(), 1337u );
@@ -428,7 +523,7 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_group_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_formation_id, Fixture )
 {
-    AddParameterValue( "formation", 1337 );
+    AddParameterValue( xos, "formation", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).formation().id(), 1337u );
@@ -436,7 +531,7 @@ BOOST_FIXTURE_TEST_CASE( read_formation_id, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_identifier, Fixture )
 {
-    AddParameterValue( "identifier", 1337 );
+    AddParameterValue( xos, "identifier", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).identifier(), 1337u );
@@ -444,7 +539,7 @@ BOOST_FIXTURE_TEST_CASE( read_identifier, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_external_identifier, Fixture )
 {
-    AddParameterValue( "externalidentifier", 1337 );
+    AddParameterValue( xos, "externalidentifier", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).external_identifier(), 1337 );
@@ -452,7 +547,7 @@ BOOST_FIXTURE_TEST_CASE( read_external_identifier, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_quantity, Fixture )
 {
-    AddParameterValue( "quantity", 1337 );
+    AddParameterValue( xos, "quantity", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).quantity(), 1337 );
@@ -460,7 +555,7 @@ BOOST_FIXTURE_TEST_CASE( read_quantity, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_equipment_type, Fixture )
 {
-    AddParameterValue( "equipmenttype", 1337 );
+    AddParameterValue( xos, "equipmenttype", 1337 );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).equipmenttype().id(), 1337u );
@@ -468,7 +563,7 @@ BOOST_FIXTURE_TEST_CASE( read_equipment_type, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_resource_network_type, Fixture )
 {
-    AddParameterValue( "resourcenetworktype", "zomg" );
+    AddParameterValue( xos, "resourcenetworktype", "zomg" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).resourcenetworktype().name(), "zomg" );
@@ -476,15 +571,20 @@ BOOST_FIXTURE_TEST_CASE( read_resource_network_type, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_mission_objective, Fixture )
 {
-    AddParameterValue( "missionobjective", "test" );
+    AddParameterValue( xos, "missionobjective", "test" );
+    xos << xml::start( "parameter" )
+        << xml::attribute( "type", "missionobjective" )
+            << xml::start( "parameter" )
+            << xml::attribute( "type", "missionobjective" );
     const auto msg = Read< MissionParameters >();
-    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     BOOST_CHECK_EQUAL( msg.elem( 0 ).null_value(), true );
+    BOOST_CHECK_EQUAL( msg.elem( 1 ).null_value(), true );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_maintenance_priorities, Fixture )
 {
-    AddParameterValue( "maintenancepriorities", "7;46" );
+    AddParameterValue( xos, "maintenancepriorities", "7;46" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     auto& priorities = msg.elem( 0 ).value( 0 ).logmaintenancepriorities();
@@ -495,7 +595,7 @@ BOOST_FIXTURE_TEST_CASE( read_maintenance_priorities, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( read_medical_priorities, Fixture )
 {
-    AddParameterValue( "medicalpriorities", "1;5" );
+    AddParameterValue( xos, "medicalpriorities", "1;5" );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     auto& priorities = msg.elem( 0 ).value( 0 ).logmedicalpriorities();

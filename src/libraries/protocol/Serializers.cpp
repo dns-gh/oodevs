@@ -142,7 +142,7 @@ namespace
             dst.add_value()->mutable_datetime()->set_data( *opt );
     }
 
-    void AddPoint( const Service_ABC& service, CoordLatLongList& list, xml::xistream& xis )
+    void AddCoordinate( const Service_ABC& service, CoordLatLongList& list, xml::xistream& xis )
     {
         const auto coordinates = xis.attribute< std::string >( "coordinates" );
         std::vector< std::string > tokens;
@@ -197,7 +197,7 @@ namespace
             return boost::none;
 
         CoordLatLongList list;
-        xis >> xml::list( "point", boost::bind( &AddPoint, boost::cref( service ), boost::ref( list ), _1 ) );
+        xis >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( service ), boost::ref( list ), _1 ) );
         if( !IsValid( list, geo ) )
             return boost::none;
 
@@ -233,27 +233,31 @@ namespace
             *dst.add_value()->mutable_area()->mutable_location() = *loc;
     }
 
-    void AddPathPoint( const Service_ABC& service, Location& dst, xml::xistream& xis )
+    void AddCoordinatePoint( const Service_ABC& service, CoordLatLongList& dst, xml::xistream& xis )
     {
         const auto type = TestLowCaseAttribute( xis, "type" );
         if( !type || *type != "pathpoint" )
             return;
         if( const auto loc = TryReadLocation( service, xis ) )
-            *dst.mutable_coordinates()->add_elem() = loc->coordinates().elem( 0 );
+            *dst.add_elem() = loc->coordinates().elem( 0 );
+    }
+
+    boost::optional< Location > TryReadPathPoint( const Service_ABC& service, xml::xistream& xis )
+    {
+        Location next;
+        xis >> xml::list( "parameter", boost::bind( &AddCoordinatePoint, boost::cref( service ), boost::ref( *next.mutable_coordinates() ), _1 ) );
+        if( !next.coordinates().elem_size() )
+            return boost::none;
+        next.set_type( Location::line );
+        return next;
     }
 
     void ReadPath( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
     {
-        Location next;
-        xis >> xml::list( "parameter", boost::bind( &AddPathPoint, boost::cref( service ), boost::ref( next ), _1 ) );
-        const size_t size = next.coordinates().elem_size();
-        // maybe we need to abort the whole path if one pathpoint is invalid ?
-        dst.set_null_value( !size );
-        if( !size )
-            return;
-        auto& loc = *dst.add_value()->mutable_path()->mutable_location();
-        loc = next;
-        loc.set_type( Location::line );
+        const auto opt = TryReadPathPoint( service, xis );
+        dst.set_null_value( !opt );
+        if( opt )
+            *dst.add_value()->mutable_path()->mutable_location() = *opt;
     }
 
     void ReadLimit( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
@@ -312,6 +316,116 @@ namespace
         dst.set_null_value( !size );
         if( size )
             *dst.add_value()->mutable_phaseline() = next;
+    }
+
+    bool IsList( xml::xistream& xis, const std::string& type )
+    {
+        std::string check;
+        xml::xisubstream sub( xis );
+        sub >> xml::optional
+            >> xml::start( "parameter" )
+            >> xml::optional
+            >> xml::attribute( "type", check );
+        boost::algorithm::to_lower( check );
+        return check == type;
+    }
+
+    typedef boost::function< void( Value&, xml::xistream& ) > T_ListOperand;
+
+    template< typename T >
+    void ReadList( MissionParameter& dst, xml::xistream& xis, const T& operand )
+    {
+        dst.set_null_value( false );
+        const auto adder = boost::bind( operand, boost::ref( *dst.add_value() ), _1 );
+        xis >> xml::list( "parameter", adder );
+    }
+
+    void AddUnit( Value& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
+            dst.mutable_unitlist()->add_elem()->set_id( *opt );
+    }
+
+    void ReadUnitList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &AddUnit );
+    }
+
+    void AddAutomat( Value& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
+            dst.mutable_automatlist()->add_elem()->set_id( *opt );
+    }
+
+    void ReadAutomatList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &AddAutomat );
+    }
+
+    void AddPoint( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    {
+        if( const auto loc = TryReadLocation( service, xis ) )
+            *dst.mutable_pointlist()->add_elem()->mutable_location() = *loc;
+    }
+
+    void ReadPointList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &AddPoint, boost::cref( service ), _1, _2 ) );
+    }
+
+    void AddPolygon( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    {
+        if( const auto loc = TryReadLocation( service, xis ) )
+            *dst.mutable_polygonlist()->add_elem()->mutable_location() = *loc;
+    }
+
+    void ReadPolygonList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &AddPolygon, boost::cref( service ), _1, _2 ) );
+    }
+
+    void AddLocation( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    {
+        if( const auto loc = TryReadLocation( service, xis ) )
+            *dst.mutable_locationlist()->add_elem() = *loc;
+    }
+
+    void ReadLocationList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &AddLocation, boost::cref( service ), _1, _2 ) );
+    }
+
+    void AddPathPoint( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TryReadPathPoint( service, xis ) )
+            *dst.mutable_pathlist()->add_elem()->mutable_location() = *opt;
+    }
+
+    void ReadPathList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &AddPathPoint, boost::cref( service ), _1, _2 ) );
+    }
+
+    void AddObjectKnowledge( Value& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
+            dst.mutable_objectknowledgelist()->add_elem()->set_id( *opt );
+    }
+
+    void ReadObjectKnowledgeList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &AddObjectKnowledge );
+    }
+
+    void AddUnitKnowledge( Value& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
+            dst.mutable_unitknowledgelist()->add_elem()->set_id( *opt );
+    }
+
+    void ReadUnitKnowledgeList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &AddUnitKnowledge );
     }
 
     template< typename T >
@@ -463,16 +577,34 @@ namespace
                 return;
     }
 
-    void ReadPlannedWork( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    boost::optional< PlannedWork > TryReadPlannedWork( const Service_ABC& service, xml::xistream& xis )
     {
         PlannedWork next;
-        if( const auto opt = ReadValue< std::string >( dst, xis ) )
+        if( const auto opt = TestAttribute< std::string >( xis, "value" ) )
             next.set_type( *opt );
         xis >> xml::list( "parameter", boost::bind( &ReadWorkParameter, boost::cref( service ), boost::ref( next ), _1 ) );
-        const bool valid = next.has_type() && next.has_position();
-        dst.set_null_value( !valid );
-        if( valid )
-            *dst.add_value()->mutable_plannedwork() = next;
+        if( !next.has_type() || !next.has_position() )
+            return boost::none;
+        return next;
+    }
+
+    void ReadPlannedWork( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    {
+        const auto opt = TryReadPlannedWork( service, xis );
+        dst.set_null_value( !opt );
+        if( opt )
+            *dst.add_value()->mutable_plannedwork() = *opt;
+    }
+
+    void AddPlannedWork( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    {
+        if( const auto opt = TryReadPlannedWork( service, xis ) )
+            *dst.mutable_plannedworklist()->add_elem() = *opt;
+    }
+
+    void ReadPlannedWorkList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &AddPlannedWork, boost::cref( service ), _1, _2 ) );
     }
 
     void ReadNature( MissionParameter& dst, xml::xistream& xis )
@@ -645,7 +777,7 @@ namespace
         CoordLatLongList next;
         xis >> xml::optional
             >> xml::start( key )
-            >> xml::list( "point", boost::bind( &AddPoint, boost::cref( service ), boost::ref( next ), _1 ) );
+            >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( service ), boost::ref( next ), _1 ) );
         const auto& list = next.elem();
         for( auto it = list.begin(); it != list.end(); ++it )
         {
@@ -709,12 +841,26 @@ namespace
         AddPointList( service, *pull.mutable_waybackpath(), "wayBackPath", xis );
     }
 
-    void ReadNull( MissionParameter& dst, xml::xistream& )
+    void Skip( MissionParameter&, xml::xistream& )
     {
-        dst.set_null_value( true );
+        // NOTHING
     }
 
     typedef void (*T_Read)( MissionParameter&, xml::xistream& );
+    typedef void (*T_ReadConverter)( const Service_ABC&, MissionParameter&, xml::xistream& );
+
+    const struct { T_ReadConverter Read; std::string name; } list_readers[] = {
+        { &ReadAutomatList,         "automat" },
+        { &ReadLocationList,        "location" },
+        { &ReadObjectKnowledgeList, "objectknowledge" },
+        { &ReadPathList,            "path" },
+        { &ReadPlannedWorkList,     "plannedwork" },
+        { &ReadPointList,           "point" },
+        { &ReadPolygonList,         "polygon" },
+        { &ReadUnitKnowledgeList,   "agentknowledge" },
+        { &ReadUnitList,            "agent" },
+    };
+
     const struct { T_Read Read; std::string name; } readers[] = {
         { &ReadAutomatId,             "automat" },
         { &ReadAutomatId,             "automate" },
@@ -750,20 +896,9 @@ namespace
         { &ReadUrbanKnowledgeId,      "urbanknowledge" },
         { &ReadUrbanKnowledgeId,      "urbanblock" },
         // obsolete fields
-        { &ReadNull, "automatlist" },
-        { &ReadNull, "locationlist" },
-        { &ReadNull, "missionobjective" },
-        { &ReadNull, "missionobjectivelist" },
-        { &ReadNull, "objectknowledgelist" },
-        { &ReadNull, "pathlist" },
-        { &ReadNull, "plannedworklist" },
-        { &ReadNull, "pointlist" },
-        { &ReadNull, "polygonlist" },
-        { &ReadNull, "unitknowledgelist" },
-        { &ReadNull, "unitlist" },
+        { &Skip,                      "missionobjective" },
     };
 
-    typedef void (*T_ReadConverter)( const Service_ABC&, MissionParameter&, xml::xistream& );
     const struct { T_ReadConverter Read; std::string name; } services[] = {
         { &ReadLimit,              "limit" },
         { &ReadLocation,           "location" },
@@ -798,15 +933,21 @@ namespace
 
 void Reader::Read( MissionParameter& dst, xml::xistream& xis ) const
 {
-    std::string type = xis.attribute< std::string >( "type" );
-    boost::algorithm::to_lower( type );
-    if( Apply( readers, COUNT_OF( readers ), type, dst, xis ) )
+    dst.set_null_value( true );
+    const auto type = TestLowCaseAttribute( xis, "type" );
+    if( !type )
         return;
-    if( Apply( services, COUNT_OF( services ), type, service_, dst, xis ) )
+    for( size_t i = 0; i < COUNT_OF( list_readers ); ++i )
+        if( list_readers[i].name == *type )
+            if( IsList( xis, *type ) )
+                return list_readers[i].Read( service_, dst, xis );
+    if( Apply( readers, COUNT_OF( readers ), *type, dst, xis ) )
         return;
-    if( type == "list" || type == "locationcomposite" )
+    if( Apply( services, COUNT_OF( services ), *type, service_, dst, xis ) )
+        return;
+    if( *type == "list" || *type == "locationcomposite" )
         return ReadListParameters( *this, dst, xis );
-    throw MASA_EXCEPTION( "Unknow mission parameter type '" + type + "'" );
+    throw MASA_EXCEPTION( "Unknow mission parameter type '" + *type + "'" );
 }
 
 namespace
