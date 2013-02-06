@@ -44,70 +44,15 @@ const std::string& ConvertXmlToWikiTag( const std::string& xmlTag )
     throw MASA_EXCEPTION( "Used xml tag is invalid." );
 }
 
-// =============================================================================
-/** @class  WikiXmlConverter
-    @brief  WikiXmlConverter
-*/
-// Created: NPT 2013-02-05
-// =============================================================================
-class WikiXmlConverter : private boost::noncopyable
-{
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-             WikiXmlConverter();
-    virtual ~WikiXmlConverter();
-    //@}
-
-    //! @name Operations
-    //@{
-    void FromWikiToXml( xml::xostream& xos, const std::string& text );
-    void FromXmlToWiki( xml::xistream& xis, std::string& text );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void FromXmlTagsToWiki( const std::string& tag, xml::xistream& xis, std::string& text );
-    void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line );
-    void ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text );
-    void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
-};
-
-// -----------------------------------------------------------------------------
-// Name: WikiXmlConverter constructor
-// Created: NPT 2013-02-05
-// -----------------------------------------------------------------------------
-WikiXmlConverter::WikiXmlConverter()
-{
-        // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: WikiXmlConverter destructor
-// Created: NPT 2013-02-05
-// -----------------------------------------------------------------------------
-WikiXmlConverter::~WikiXmlConverter()
-{
-        // NOTHING
-}
-
 // -----------------------------------------------------------------------------
 // XML TO WIKI CONVERSION
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: WikiXmlConverter::ReadXmlData
+// Name: ReadXmlData
 // Created: NPT 2013-01-23
 // -----------------------------------------------------------------------------
-void WikiXmlConverter::ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text )
+void ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text )
 {
     if( tag == "text" )
     {
@@ -118,56 +63,44 @@ void WikiXmlConverter::ReadXmlLine( const std::string& tag, xml::xistream& xis, 
     else
     {
         text += ConvertXmlToWikiTag( tag );
-        xis >> xml::list( *this, &WikiXmlConverter::ReadXmlLine, text );
+        xis >> xml::list( boost::bind( &ReadXmlLine, _2, _3, boost::ref( text )));
         text += ConvertXmlToWikiTag( tag );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: WikiXmlConverter::ReadXmlList
+// Name: ReadXmlList
 // Created: NPT 2013-01-23
 // -----------------------------------------------------------------------------
-void WikiXmlConverter::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level )
+void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level )
 {
     if( tag == "ul" )
     {
-        int sublevel = level + 1;
-        xis >> xml::list( *this, &WikiXmlConverter::ReadXmlList, text, sublevel );
+        xis >> xml::list( boost::bind( &ReadXmlList, _2, _3,
+            boost::ref( text ), level + 1 ));
     }
     else if( tag == "li" )
     {
         text += std::string( level, ' ') + "* ";
         xis >> xml::start( "line" )
-            >> xml::list( *this, &WikiXmlConverter::ReadXmlLine, text )
+            >> xml::list( boost::bind( &ReadXmlLine, _2, _3, boost::ref( text )))
             >> xml::end;
         text += "\n";
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: WikiXmlConverter::FromXmlTagsToWiki
+// Name: FromXmlTagsToWiki
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void WikiXmlConverter::FromXmlTagsToWiki( const std::string& tag, xml::xistream& xis, std::string& text )
+void FromXmlTagsToWiki( const std::string& tag, xml::xistream& xis, std::string& text )
 {
-    int level = 0;
     if( tag == "line" )
-        xis >> xml::list( *this, &WikiXmlConverter::ReadXmlLine, text );
+        xis >> xml::list( boost::bind( &ReadXmlLine, _2, _3, boost::ref( text )));
     else if( tag == "ul" )
-    {
-        int sublevel = level + 1;
-        xis >> xml::list( *this, &WikiXmlConverter::ReadXmlList, text, sublevel );
-    }
+        xis >> xml::list( boost::bind( &ReadXmlList, _2, _3,
+            boost::ref( text ), 1 ));
     text += "\n";
-}
-
-// -----------------------------------------------------------------------------
-// Name: WikiXmlConverter::FromXmlToWiki
-// Created: NPT 2013-02-05
-// -----------------------------------------------------------------------------
-void WikiXmlConverter::FromXmlToWiki( xml::xistream& xis, std::string& text )
-{
-    xis >> xml::list( boost::bind( &WikiXmlConverter::FromXmlTagsToWiki, this, _2, _3, boost::ref( text ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,10 +108,10 @@ void WikiXmlConverter::FromXmlToWiki( xml::xistream& xis, std::string& text )
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: WikiXmlConverter::MakeStringXmlItem
+// Name: MakeStringXmlItem
 // Created: NPT 2013-01-22
 // -----------------------------------------------------------------------------
-void WikiXmlConverter::MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line )
+void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line )
 {
 
     if( length > 0 )
@@ -221,11 +154,22 @@ void WikiXmlConverter::MakeStringXmlItem( xml::xostream& xos, std::size_t length
         xos.end();
 }
 
+}  // namespace
+
 // -----------------------------------------------------------------------------
-// Name: WikiXmlConverter::FromWikiToXml
+// Name: FromXmlToWiki
+// Created: NPT 2013-02-05
+// -----------------------------------------------------------------------------
+void FromXmlToWiki( xml::xistream& xis, std::string& text )
+{
+    xis >> xml::list( boost::bind( &FromXmlTagsToWiki, _2, _3, boost::ref( text ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FromWikiToXml
 // Created: NPT 2013-01-21
 // -----------------------------------------------------------------------------
-void WikiXmlConverter::FromWikiToXml( xml::xostream& xos, const std::string& text )
+void FromWikiToXml( xml::xostream& xos, const std::string& text )
 {
     std::vector< std::string > stringList;
     std::string result;
@@ -257,18 +201,4 @@ void WikiXmlConverter::FromWikiToXml( xml::xostream& xos, const std::string& tex
         MakeStringXmlItem( xos, line.first, line.second );
         previousLength = line.first;
     }
-}
-
-}  // namespace
-
-void FromWikiToXml( xml::xostream& xos, const std::string& text )
-{
-    WikiXmlConverter converter;
-    converter.FromWikiToXml( xos, text );
-}
-
-void FromXmlToWiki( xml::xistream& xis, std::string& text )
-{
-    WikiXmlConverter converter;
-    converter.FromXmlToWiki( xis, text );
 }
