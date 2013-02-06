@@ -34,6 +34,7 @@
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/assign/list_of.hpp>
 
 using namespace launcher;
 
@@ -166,7 +167,11 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true, false, false, endpoint, "launcher-job" ) );
+    {
+        std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", "true" )
+                                                                                   ( "checkpoint", checkpoint.c_str() );
+        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), arguments, true, false, endpoint, "launcher-job" ) );
+    }
     else if( message.type() == sword::SessionStartRequest::dispatch )
         command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, "launcher-job" ) );
     else

@@ -28,8 +28,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
-                    const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded = true,
-                    std::string commanderEndpoint = "", std::string processJobName = "", const QString& integrationDir= "" );
+                    const QString& session, const std::map< std::string, std::string >& arguments,
+                    bool attach, bool launchDispatchedIfNotEmbedded = true,
+                    std::string commanderEndpoint = "", std::string processJobName = "" );
     virtual ~StartExercise();
     //@}
 

@@ -37,6 +37,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
+#include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -280,7 +281,14 @@ void ScenarioLauncherPage::OnStart()
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
         CreateSession( exerciseName, session );
-        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true, isLegacy_, true, "", "", integrationDir_ ) );
+
+        std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", isLegacy_ ? "true" : "false" )
+                                                                                   ( "checkpoint", checkpoint_ );
+        if( !integrationDir_.isEmpty() )
+            arguments[ "integration-dir" ] = "\"" + integrationDir_.toStdString() + "\"";
+
+        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, arguments,
+                                                                                             true, true, "", "" ) );
         if ( ! noClient_ )
         {
             boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );

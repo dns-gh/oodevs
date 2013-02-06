@@ -37,26 +37,30 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/, const QString& integrationDir )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session,
+                              const std::map< std::string, std::string >& arguments, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/,
+                              std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise.toStdString() )
     , session_ ( session.toStdString() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
     , percentage_( 0 )
 {
+    auto it = arguments.find( "checkpoint" );
+    const std::string checkpoint = it != arguments.end() ? it->second : "";
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
         QString dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ).c_str() );
-        dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, checkpoint, dispatcher_path ) );
+        dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, checkpoint.c_str(), dispatcher_path ) );
     }
+
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
-    if( !checkpoint.isEmpty() )
-        AddArgument( "--checkpoint=" + checkpoint );
-    AddArgument( ( "--legacy=" + boost::lexical_cast< std::string >( legacy ) ).c_str() );
-    if( !integrationDir.isEmpty() )
-        AddArgument( "--integration-dir=\"" + integrationDir + "\"" );
+
+    for( auto it = arguments.begin(); it != arguments.end(); ++it )
+        if( it->second != "" )
+            AddArgument( std::string( "--" + it->first + "=" + it->second ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
