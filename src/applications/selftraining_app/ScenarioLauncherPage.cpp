@@ -243,8 +243,6 @@ void ScenarioLauncherPage::OnLanguageChanged()
     progressPage_->SetTitle( tools::translate( "ScenarioLauncherPage", "Starting scenario" ) );
     for( int i = 0; i < configTabs_->count() && i < static_cast< int >( plugins_.size()); ++i )
         configTabs_->setTabText( i, plugins_[ i ]->GetName() );
-    if( config_.IsOnDebugMode() )
-        configTabs_->setTabText( configTabs_->count() - 1, tools::translate( "DebugConfigPanel", "Debug" ) );
     LauncherClientPage::OnLanguageChanged();
 }
 
