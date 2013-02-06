@@ -306,6 +306,13 @@
     </message>
 </context>
 <context>
+    <name>gui::AgentsLayer</name>
+    <message>
+        <source>Units</source>
+        <translation>Units</translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -325,6 +332,10 @@
     <message>
         <source>Disaggregate</source>
         <translation>Disaggregate</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation>Automata</translation>
     </message>
 </context>
 <context>
@@ -592,6 +603,10 @@
         <source>Erase drawing</source>
         <translation>Erase drawing</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Drawings</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawerPanel</name>
@@ -764,6 +779,10 @@ Please check access permissions or write protection.</translation>
         <source>Disaggregate</source>
         <translation>Disaggregate</translation>
     </message>
+    <message>
+        <source>Formations</source>
+        <translation>Formations</translation>
+    </message>
 </context>
 <context>
     <name>gui::GisToolBar</name>
@@ -866,6 +885,13 @@ Please check access permissions or write protection.</translation>
     <message>
         <source>Remove highlight</source>
         <translation>Remove highlight</translation>
+    </message>
+</context>
+<context>
+    <name>gui::InhabitantLayer</name>
+    <message>
+        <source>Inhabitants</source>
+        <translation>Inhabitants</translation>
     </message>
 </context>
 <context>
@@ -1326,6 +1352,13 @@ Do you want to remove it?</translation>
     </message>
 </context>
 <context>
+    <name>gui::ObjectsLayer</name>
+    <message>
+        <source>Objects</source>
+        <translation>Objects</translation>
+    </message>
+</context>
+<context>
     <name>gui::ObstaclePrototype_ABC</name>
     <message>
         <source>Obstacle</source>
@@ -1408,6 +1441,13 @@ Do you want to remove it?</translation>
     <message>
         <source>Dead people:</source>
         <translation>Dead people:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::PopulationsLayer</name>
+    <message>
+        <source>Crowds</source>
+        <translation>Crowds</translation>
     </message>
 </context>
 <context>
@@ -1678,6 +1718,10 @@ Do you want to remove it?</translation>
         <source>Create phase line</source>
         <translation>Create phase line</translation>
     </message>
+    <message>
+        <source>Tactical lines</source>
+        <translation>Tactical lines</translation>
+    </message>
 </context>
 <context>
     <name>gui::TerrainPicker</name>
@@ -1902,6 +1946,13 @@ Do you want to remove it?</translation>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
         <translation>Drag and drop symbol to map to create a new unit.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UrbanLayer</name>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Urban blocks</translation>
     </message>
 </context>
 <context>
