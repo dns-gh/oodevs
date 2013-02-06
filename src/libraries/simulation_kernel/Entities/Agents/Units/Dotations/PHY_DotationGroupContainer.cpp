@@ -151,19 +151,30 @@ void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis, const PHY_Un
 {
     if( xis.has_child( "resources" ) )
     {
-        for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-            it->second->Reset();
+        T_DotationSet overloadedDotations;
         xis >> xml::start( "resources" )
-                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, unitType )
+            >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, unitType, boost::ref( overloadedDotations ) )
             >> xml::end;
+        Apply( boost::bind( &PHY_DotationGroupContainer::PurgeDotationNotOverloaded, this, _1, boost::ref( overloadedDotations ) ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::PurgeDotationNotOverloaded
+// Created: NLD 2012-03-10
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::PurgeDotationNotOverloaded( PHY_Dotation& dotation, const T_DotationSet& overloadedDotations )
+{
+    //$$ Saloperie en attendant une vraie gestion des capacités dans l'odb
+    if( overloadedDotations.find( &dotation ) == overloadedDotations.end() )
+        dotation.NotifyCaptured(); //$$$ DEGUEU TMP
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::ReadDotation
 // Created: ABR 2011-03-08
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_UnitType* unitType )
+void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_UnitType* unitType, T_DotationSet& overloadedDotations )
 {
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
     if( !pDotationCategory )
@@ -179,7 +190,8 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_Uni
         pGroup = &CreateDotationGroup( pDotationCategory->GetType() );
         pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), threshold ), 0 );
     }
-    pGroup->ReadValues( xis, *pDotationCategory );
+    PHY_Dotation& dotation = pGroup->ReadValues( xis, *pDotationCategory );
+    overloadedDotations.insert( &dotation );
 }
 
 // -----------------------------------------------------------------------------

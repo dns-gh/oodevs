@@ -59,7 +59,6 @@ public:
 
     double GetValue() const;
     double Consume ( double rValue );
-    void Reset();
 
     void   ReadValue( xml::xistream& xis );
     void   Resupply ( double rFactor = 1. );

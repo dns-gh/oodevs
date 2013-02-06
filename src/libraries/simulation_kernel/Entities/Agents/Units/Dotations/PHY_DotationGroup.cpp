@@ -131,10 +131,11 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const unsigned int
 // Name: PHY_DotationGroup::ReadValues
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
+PHY_Dotation& PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
 {
     PHY_Dotation& dotation = CreateDotation( category );
     dotation.ReadValue( xis );
+    return dotation;
 }
 
 // -----------------------------------------------------------------------------
@@ -219,16 +220,6 @@ double PHY_DotationGroup::Consume( const PHY_DotationCategory& category, double 
 {
     PHY_Dotation* pDotation = GetDotation( category );
     return pDotation ? pDotation->Consume( rNbr ) : 0.;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationGroup::Reset
-// Created: ABR 2011-03-08
-// -----------------------------------------------------------------------------
-void PHY_DotationGroup::Reset()
-{
-    for( T_DotationMap::iterator it = dotations_.begin(); it != dotations_.end(); ++it )
-        it->second->Reset();
 }
 
 // -----------------------------------------------------------------------------

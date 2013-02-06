@@ -308,18 +308,6 @@ double PHY_Dotation::Consume( double rValue )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Dotation::Reset
-// Created: ABR 2011-03-08
-// -----------------------------------------------------------------------------
-void PHY_Dotation::Reset()
-{
-    rValue_                  = 0;
-    rConsumptionReservation_ = 0;
-    rFireReservation_        = 0;
-    bDotationBlocked_        = false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Dotation::GetCategory
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
@@ -352,7 +340,7 @@ void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentag
     rFireReservation_        = 0.;
     rSupplyThreshold_ = std::min( rCapacity_ * thresholdPercentage / 100.f, rCapacity_ );
     assert( pGroup_ );
-    pGroup_->NotifyDotationChanged( *this );
+    pGroup_->NotifyDotationChanged( *this ); // What's the point, c'est déja fait dans SetValue(), bordel
     rLastValueSent_ = 0;
 }
 
