@@ -41,5 +41,5 @@ UrbanExportManager::~UrbanExportManager()
 // -----------------------------------------------------------------------------
 void UrbanExportManager::Run() const
 {
-    UrbanFileExporter( directory_, name_, projector_, model_ );
+    ExportUrbanFiles( directory_, name_, projector_, model_ );
 }

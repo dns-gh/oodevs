@@ -22,9 +22,54 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Usages_ABC.h"
 #include "terrain/PointProjector_ABC.h"
+#pragma warning( push, 0 )
+#include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 #include <boost/filesystem/operations.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace bfs = boost::filesystem;
+
+namespace
+{
+
+// =============================================================================
+/** @class  UrbanFileExporter
+    @brief  UrbanFileExporter
+*/
+// Created: CMA 2012-03-12
+// =============================================================================
+class UrbanFileExporter : private boost::noncopyable
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             UrbanFileExporter( const std::string& directory, const std::string& name, PointProjector_ABC& projector, const UrbanModel& model );
+    virtual ~UrbanFileExporter();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void CreateStructure();
+    void CreateField( const char* name, OGRFieldType type, int width, int precision = 0 );
+    void Initialize();
+    void Write();
+    void WriteObject( const kernel::UrbanObject_ABC& object, unsigned int counter );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string   directory_;
+    const std::string   name_;
+    PointProjector_ABC& projector_;
+    const UrbanModel&   urbanModel_;
+    OGRDataSource*      source_;
+    OGRLayer*           layer_;
+    //@}
+};
+
 
 // -----------------------------------------------------------------------------
 // Name: UrbanFileExporter constructor
@@ -226,4 +271,13 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
     if( counter % 50 == 0 )
         layer_->SyncToDisk();
     OGRFeature::DestroyFeature( pFeature );
+}
+
+}  // namespace
+
+
+void ExportUrbanFiles( const std::string& directory, const std::string& name,
+    PointProjector_ABC& projector, const UrbanModel& model)
+{
+    UrbanFileExporter( directory, name, projector, model);
 }
