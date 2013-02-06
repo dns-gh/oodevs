@@ -73,6 +73,27 @@ BOOST_AUTO_TEST_CASE( WikiXmlConverter_Test )
             "  * titre 2\n"
             "  * titre 3\n"
             " * titre 4\n\n"
+        },
+        {
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+            "<root>\n"
+            "  <ul>\n"
+            "    <li>\n"
+            "      <line>\n"
+            "        <text>titre 1</text>\n"
+            "      </line>\n"
+            "    </li>\n"
+            "    <ul>\n"
+            "      <li>\n"
+            "        <line>\n"
+            "          <text>titre 2</text>\n"
+            "        </line>\n"
+            "      </li>\n"
+            "    </ul>\n"
+            "  </ul>\n"
+            "</root>\n",
+            " * titre 1\n"
+            "  * titre 2\n\n",
         }
     };
 
