@@ -48,8 +48,8 @@
         <translation>السيف</translation>
     </message>
     <message>
-        <source>© 2011 MASA Group</source>
-        <translation>© 2011 مجموعة ماسا</translation>
+        <source>© 2013 MASA Group</source>
+        <translation>© 2013 مجموعة ماسا</translation>
     </message>
     <message>
         <source>www.masagroup.net</source>

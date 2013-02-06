@@ -48,8 +48,8 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>© 2011 MASA Group</source>
-        <translation>© 2011 MASA Group</translation>
+        <source>© 2013 MASA Group</source>
+        <translation>© 2013 MASA Group</translation>
     </message>
     <message>
         <source>www.masagroup.net</source>
