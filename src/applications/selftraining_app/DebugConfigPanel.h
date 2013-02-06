@@ -57,7 +57,6 @@ private:
 
     QStringList* pathList_;
     //legacy
-    QLabel* legacyLabel_;
     QCheckBox* legacyCheckBox_;
     QGroupBox* legacyBox_;
 
@@ -65,7 +64,6 @@ private:
     QLabel* integrationLabel_;
     QComboBox* integrationComboBox_;
     QPushButton* integrationButton_;
-    QGroupBox* integrationBox_;
 
     //profiling configuration
     QGroupBox* profilingBox_;

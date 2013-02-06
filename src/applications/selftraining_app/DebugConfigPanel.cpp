@@ -60,18 +60,12 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , dataButton_( 0 )
 {
     //legacy box
-    legacyLabel_ = new QLabel();
-
     legacyCheckBox_ = new QCheckBox();
     legacyCheckBox_->setCheckable( true );
     legacyCheckBox_->setChecked( ReadBoolRegistry( "IsLegacy" ) );
     connect( legacyCheckBox_, SIGNAL( clicked ( bool ) ), SLOT( SwordVersionChecked( bool ) ) );
 
     legacyBox_ = new QGroupBox();
-    QHBoxLayout* commentBoxLayout = new QHBoxLayout( legacyBox_ );
-    commentBoxLayout->addWidget( legacyLabel_ );
-    commentBoxLayout->addWidget( legacyCheckBox_ );
-    commentBoxLayout->setMargin( 5 );
 
     //integration level label
     integrationLabel_ = new QLabel();
@@ -93,8 +87,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     connect( integrationButton_, SIGNAL( clicked() ), SLOT( OnChangeIntegrationDirectory() ) );
 
     //integration level group box
-    integrationBox_ = new QGroupBox();
-    QHBoxLayout* integrationBoxLayout = new QHBoxLayout( integrationBox_ );
+    QHBoxLayout* integrationBoxLayout = new QHBoxLayout();
     integrationBoxLayout->addWidget( integrationLabel_ );
     integrationBoxLayout->addWidget( integrationComboBox_ );
     integrationBoxLayout->addWidget( integrationButton_ );
@@ -102,6 +95,11 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     integrationBoxLayout->setStretch( 1, 10 );
     integrationBoxLayout->setStretch( 2, 1 );
     integrationBoxLayout->setMargin( 5 );
+
+    QVBoxLayout* commentBoxLayout = new QVBoxLayout( legacyBox_ );
+    commentBoxLayout->setMargin( 5 );
+    commentBoxLayout->addWidget( legacyCheckBox_ );
+    commentBoxLayout->addLayout( integrationBoxLayout );
 
     //profiling group box
     profilingBox_ = new QGroupBox();
@@ -140,11 +138,9 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     pathfinds->addLayout( dumpLayout );
     pathfinds->addLayout( filterLayout );
 
-
     //general Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     mainLayout->addWidget( legacyBox_ );
-    mainLayout->addWidget( integrationBox_ );
     mainLayout->addWidget( profilingBox_ );
     mainLayout->addWidget( pathfindsBox_ );
     mainLayout->setAlignment( Qt::AlignTop );
@@ -209,7 +205,7 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnLanguageChanged()
 {
-    legacyLabel_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
+    legacyCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
     decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional function calls" ) );
