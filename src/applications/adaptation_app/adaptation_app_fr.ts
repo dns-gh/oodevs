@@ -2654,7 +2654,7 @@ PNG (*.png)</translation>
         <translation>Disponible sans mission</translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
+        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
         <translation>Un nom de mission ne peut contenir les caractères suivants : / &lt; &gt; * \ : &quot; |</translation>
     </message>
     <message>

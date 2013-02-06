@@ -134,7 +134,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     nameFields_[ eEntityType ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-    nameFields_[ eEntityType ]->setToolTip( tr( "Mission name cannot contain the following caracters: / < > * \\ : \" |" ) );
+    nameFields_[ eEntityType ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
     nameFields_[ eEntityType ]->ConnectWithRefValidity( missions );
 
     builder.SetValidator( new MissionNameValidator() );

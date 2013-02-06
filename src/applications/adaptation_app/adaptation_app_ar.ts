@@ -2634,7 +2634,7 @@ PNG (*.png)
         <translation type="unfinished">متوفرة بدون بعثة</translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
+        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
         <translation type="unfinished">لا يمكن أن يحتوي اسم البعثة حرف التالي:/ &lt;&gt; * \: &quot;|</translation>
     </message>
     <message>

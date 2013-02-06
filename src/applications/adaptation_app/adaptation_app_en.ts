@@ -2647,8 +2647,8 @@ PNG (*.png)
         <translation>Available without mission</translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
-        <translation>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</translation>
+        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
+        <translation>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</translation>
     </message>
     <message>
         <source>Definition</source>

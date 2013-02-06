@@ -2650,7 +2650,7 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
+        <source>Mission name cannot contain the following characters: / &lt; &gt; * \ : &quot; |</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
