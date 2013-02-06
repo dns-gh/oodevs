@@ -298,7 +298,7 @@
     </target>
 
     <target name="geostore" description="build geostore static library">
-        <build-lib name="geostore" pattern="lib${ant.project.name}_geostore-${platform}-mt@{suffix}" suffix="-gd"
+        <build-lib name="geostore" pattern="lib${ant.project.name}_geostore-${platform}-mt@{suffix}" suffix="-gd" depends="spatialite"
                    failonwarning="${failonwarning}">
         </build-lib>
     </target>

@@ -18,7 +18,7 @@
 #pragma warning ( pop )
 #include <sqlite/sqlite3.h>
 #include <spatialite/spatialite/gaiageo.h>
-#include <spatialite.h>
+#include <spatialite/spatialite.h>
 #include <tools/Exception.h>
 #include <geometry/Types.h>
 
