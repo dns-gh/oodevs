@@ -160,7 +160,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
-            if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+            if( target.IsDead() || target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
             PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
             if( targetRoleProtection.DestroyIndirectFire( dotationCategory_ ) )
@@ -213,7 +213,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
-            if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+            if( target.IsDead() || target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
             target.GetRole< PHY_RoleInterface_HumanFactors >().NotifyAttacked();
             PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
