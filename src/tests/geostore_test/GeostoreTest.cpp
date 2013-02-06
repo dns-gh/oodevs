@@ -32,7 +32,8 @@ namespace
         }
         ~Fixture()
         {
-            bfs::remove( terrain / "Graphics/geostore.sqlite" );
+            boost::system::error_code error;
+            bfs::remove( terrain / "Graphics/geostore.sqlite", error );
         }
         bfs::path terrain;
         SpatialIndexer indexer;
