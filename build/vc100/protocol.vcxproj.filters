@@ -134,7 +134,7 @@
     <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\protocol\Serializers.cpp">
+    <ClCompile Include="..\..\src\libraries\protocol\ReadSerializers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

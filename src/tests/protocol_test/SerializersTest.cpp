@@ -20,24 +20,22 @@ using namespace sword;
 
 namespace
 {
-    MOCK_BASE_CLASS( MockService, Service_ABC )
+    MOCK_BASE_CLASS( MockReader, Reader_ABC )
     {
         MOCK_METHOD( Convert, 1 );
         MOCK_METHOD( Resolve, 1 );
     };
 
-    const Service_ABC::Point dummy = { 0.0, 0.0 };
+    const Reader_ABC::Point dummy = { 0.0, 0.0 };
 
     struct Fixture
     {
         Fixture()
-            : reader( service )
         {
             xos << xml::start( "action" );
         }
 
-        MockService service;
-        Reader reader;
+        MockReader reader;
         xml::xostringstream xos;
 
         template< typename T >
@@ -46,7 +44,7 @@ namespace
             xml::xistringstream xis( input );
             xis >> xml::start( "action" );
             T dst;
-            reader.Read( dst, xis );
+            serializer::Read( reader, dst, xis );
             return dst;
         }
 
@@ -148,7 +146,7 @@ BOOST_FIXTURE_TEST_CASE( read_location, Fixture )
     "    </parameter>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 6 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 6 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckLocation( msg.elem( 0 ).value( 0 ).location(), Location::point, 1 );
@@ -180,7 +178,7 @@ BOOST_FIXTURE_TEST_CASE( read_point, Fixture )
     "    </parameter>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 3 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckLocation( msg.elem( 0 ).value( 0 ).point().location(), Location::point, 1 );
@@ -219,7 +217,7 @@ BOOST_FIXTURE_TEST_CASE( read_polygon, Fixture )
     "    </parameter>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 10 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 10 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckLocation( msg.elem( 0 ).value( 0 ).area().location(), Location::polygon, 3 );
@@ -240,7 +238,7 @@ BOOST_FIXTURE_TEST_CASE( read_limit, Fixture )
     "    </location>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 2 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 2 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     CheckLocation( msg.elem( 0 ).value( 0 ).limit().location(), Location::line, 2 );
@@ -273,7 +271,7 @@ BOOST_FIXTURE_TEST_CASE( read_path, Fixture )
     + path + path +
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 3*3 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 3*3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckLocation( msg.elem( 0 ).value( 0 ).path().location(), Location::line, 3 );
@@ -309,7 +307,7 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     "    </parameter>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 5 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 5 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     const auto& phaseline = msg.elem( 0 ).value( 0 ).phaseline();
@@ -455,7 +453,7 @@ BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
     + work + work +
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 3*3 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 3*3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckPlannedWork( msg.elem( 0 ).value( 0 ).plannedwork() );
@@ -660,7 +658,7 @@ BOOST_FIXTURE_TEST_CASE( read_push_flow_parameters, Fixture )
     "    </wayBackPath>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 4 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 4 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     auto& push = msg.elem( 0 ).value( 0 ).push_flow_parameters();
@@ -706,8 +704,8 @@ BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
     "    </wayBackPath>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 4 ).returns( dummy );
-    MOCK_EXPECT( service.Resolve ).once().with( 1u ).returns( Service_ABC::FORMATION );
+    MOCK_EXPECT( reader.Convert ).exactly( 4 ).returns( dummy );
+    MOCK_EXPECT( reader.Resolve ).once().with( 1u ).returns( Reader_ABC::FORMATION );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     auto& pull = msg.elem( 0 ).value( 0 ).pull_flow_parameters();
@@ -745,7 +743,7 @@ BOOST_FIXTURE_TEST_CASE( read_list, Fixture )
     "    <parameter type='agent' value='1106'/>"
     "  </parameter>"
     "</action>";
-    MOCK_EXPECT( service.Convert ).exactly( 3 ).returns( dummy );
+    MOCK_EXPECT( reader.Convert ).exactly( 3 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     auto& val = msg.elem( 0 ).value( 0 );
@@ -787,7 +785,7 @@ BOOST_FIXTURE_TEST_CASE( read_frag_order, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", 1 );
-    MOCK_EXPECT( service.Resolve ).once().with( 27u ).returns( Service_ABC::TEAM );
+    MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< FragOrder >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type().id(), 1u );
@@ -806,7 +804,7 @@ BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
         << xml::attribute( "id", mapping::MagicUnitAction::data_[10].name );
-    MOCK_EXPECT( service.Resolve ).once().with( 27u ).returns( Service_ABC::TEAM );
+    MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< UnitMagicAction >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicUnitAction::data_[10].type );
@@ -847,7 +845,7 @@ BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
     xos << xml::attribute( "id", 2053 )
         << xml::attribute( "target", 8323 )
         << xml::attribute( "type", "mission" );
-    MOCK_EXPECT( service.Resolve ).once().with( 8323u ).returns( Service_ABC::AUTOMAT );
+    MOCK_EXPECT( reader.Resolve ).once().with( 8323u ).returns( Reader_ABC::AUTOMAT );
     const auto msg = Read< ClientToSim_Content >();
     BOOST_CHECK( msg.has_automat_order() );
     BOOST_CHECK_EQUAL( msg.automat_order().tasker().id(), 8323u );
@@ -860,12 +858,11 @@ namespace
 
     void ReadAction( T_Content& dst, xml::xistream& xis )
     {
-        MockService service;
-        Reader reader( service );
+        MockReader reader;
         ClientToSim_Content msg;
-        MOCK_EXPECT( service.Convert ).returns( dummy );
-        MOCK_EXPECT( service.Resolve ).returns( Service_ABC::AGENT );
-        reader.Read( msg, xis );
+        MOCK_EXPECT( reader.Convert ).returns( dummy );
+        MOCK_EXPECT( reader.Resolve ).returns( Reader_ABC::UNIT );
+        Read( reader, msg, xis );
         dst.push_back( msg );
     }
 }

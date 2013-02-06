@@ -24,12 +24,12 @@ namespace protocol
 {
 namespace serializer
 {
-    struct Service_ABC : public boost::noncopyable
+    struct Reader_ABC : public boost::noncopyable
     {
         //! @name Constructors/Destructor
         //@{
-                 Service_ABC() {}
-        virtual ~Service_ABC() {}
+                 Reader_ABC() {}
+        virtual ~Reader_ABC() {}
         //@}
 
         //! @name Point conversions
@@ -43,15 +43,12 @@ namespace serializer
         //@{
         enum EntityType
         {
-            AGENT,
             AUTOMAT,
-            INHABITANT,
+            CROWD,
             FORMATION,
-            KNOWLEDGE_GROUP,
-            OBJECT,
+            PARTY,
             POPULATION,
-            TEAM,
-            URBAN_OBJECT,
+            UNIT,
             COUNT,
         };
         virtual EntityType Resolve( uint32_t id ) const = 0;
@@ -59,37 +56,18 @@ namespace serializer
 
     };
 
-    class Reader : public boost::noncopyable
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-                 Reader( const Service_ABC& converter );
-        virtual ~Reader();
-        //@}
-
-        //! @name Public readers
-        //@{
-        void Read( sword::MissionParameter& dst,     xml::xistream& xis ) const;
-        void Read( sword::MissionParameters& dst,    xml::xistream& xis ) const;
-        void Read( sword::UnitOrder& dst,            xml::xistream& xis ) const;
-        void Read( sword::AutomatOrder& dst,         xml::xistream& xis ) const;
-        void Read( sword::CrowdOrder& dst,           xml::xistream& xis ) const;
-        void Read( sword::FragOrder& dst,            xml::xistream& xis ) const;
-        void Read( sword::MagicAction& dst,          xml::xistream& xis ) const;
-        void Read( sword::UnitMagicAction& dst,      xml::xistream& xis ) const;
-        void Read( sword::ObjectMagicAction& dst,    xml::xistream& xis ) const;
-        void Read( sword::KnowledgeMagicAction& dst, xml::xistream& xis ) const;
-        void Read( sword::SetAutomatMode& dst,       xml::xistream& xis ) const;
-        void Read( sword::ClientToSim_Content& dst,  xml::xistream& xis ) const;
-        //@}
-
-    private:
-        //! @name Private members
-        //@{
-        const Service_ABC& service_;
-        //@}
-    };
+    void Read( const Reader_ABC& reader, sword::MissionParameter& dst,     xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::MissionParameters& dst,    xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::UnitOrder& dst,            xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::AutomatOrder& dst,         xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::CrowdOrder& dst,           xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::FragOrder& dst,            xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::MagicAction& dst,          xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::UnitMagicAction& dst,      xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::ObjectMagicAction& dst,    xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::KnowledgeMagicAction& dst, xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::SetAutomatMode& dst,       xml::xistream& xis );
+    void Read( const Reader_ABC& reader, sword::ClientToSim_Content& dst,  xml::xistream& xis );
 }
 }
 

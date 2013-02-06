@@ -29,17 +29,6 @@ using namespace protocol;
 using namespace serializer;
 using namespace sword;
 
-Reader::Reader( const Service_ABC& service )
-    : service_( service )
-{
-    // NOTHING
-}
-
-Reader::~Reader()
-{
-    // NOTHING
-}
-
 namespace
 {
     #define COUNT_OF(X) ( sizeof( X ) / sizeof *( X ) )
@@ -58,12 +47,12 @@ namespace
 
     template< typename T, typename U >
     bool Apply( const T tab[], size_t size, const std::string& name,
-                const Service_ABC& service, U& dst, xml::xistream& xis )
+                const Reader_ABC& reader, U& dst, xml::xistream& xis )
     {
         for( size_t i = 0; i < size; ++i )
             if( name == tab[i].name )
             {
-                tab[i].Read( service, dst, xis );
+                tab[i].Read( reader, dst, xis );
                 return true;
             }
         return false;
@@ -142,7 +131,7 @@ namespace
             dst.add_value()->mutable_datetime()->set_data( *opt );
     }
 
-    void AddCoordinate( const Service_ABC& service, CoordLatLongList& list, xml::xistream& xis )
+    void AddCoordinate( const Reader_ABC& reader, CoordLatLongList& list, xml::xistream& xis )
     {
         const auto coordinates = xis.attribute< std::string >( "coordinates" );
         std::vector< std::string > tokens;
@@ -150,10 +139,10 @@ namespace
         const size_t size = tokens.size();
         if( !size || size > 2 )
             return;
-        Service_ABC::Point pt;
+        Reader_ABC::Point pt;
         if( size == 1 )
         {
-            pt = service.Convert( coordinates );
+            pt = reader.Convert( coordinates );
         }
         else
         {
@@ -181,7 +170,7 @@ namespace
         return false;
     }
 
-    boost::optional< Location > TryReadLocation( const Service_ABC& service, xml::xisubstream xis )
+    boost::optional< Location > TryReadLocation( const Reader_ABC& reader, xml::xisubstream xis )
     {
         if( !xis.has_child( "location" ) )
             return boost::none;
@@ -197,7 +186,7 @@ namespace
             return boost::none;
 
         CoordLatLongList list;
-        xis >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( service ), boost::ref( list ), _1 ) );
+        xis >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( reader ), boost::ref( list ), _1 ) );
         if( !IsValid( list, geo ) )
             return boost::none;
 
@@ -207,68 +196,68 @@ namespace
         return rpy;
     }
 
-    boost::optional< Location > ReadLocationValue( const Service_ABC& service,
+    boost::optional< Location > ReadLocationValue( const Reader_ABC& reader,
                                                    MissionParameter& dst, xml::xistream& xis )
     {
-        auto loc = TryReadLocation( service, xis );
+        auto loc = TryReadLocation( reader, xis );
         dst.set_null_value( !loc );
         return loc;
     }
 
-    void ReadLocation( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadLocation( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        if( const auto loc = ReadLocationValue( service, dst, xis ) )
+        if( const auto loc = ReadLocationValue( reader, dst, xis ) )
             *dst.add_value()->mutable_location() = *loc;
     }
 
-    void ReadPoint( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPoint( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        if( const auto loc = ReadLocationValue( service, dst, xis ) )
+        if( const auto loc = ReadLocationValue( reader, dst, xis ) )
             *dst.add_value()->mutable_point()->mutable_location() = *loc;
     }
 
-    void ReadPolygon( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPolygon( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        if( const auto loc = ReadLocationValue( service, dst, xis ) )
+        if( const auto loc = ReadLocationValue( reader, dst, xis ) )
             *dst.add_value()->mutable_area()->mutable_location() = *loc;
     }
 
-    void AddCoordinatePoint( const Service_ABC& service, CoordLatLongList& dst, xml::xistream& xis )
+    void AddCoordinatePoint( const Reader_ABC& reader, CoordLatLongList& dst, xml::xistream& xis )
     {
         const auto type = TestLowCaseAttribute( xis, "type" );
         if( !type || *type != "pathpoint" )
             return;
-        if( const auto loc = TryReadLocation( service, xis ) )
+        if( const auto loc = TryReadLocation( reader, xis ) )
             *dst.add_elem() = loc->coordinates().elem( 0 );
     }
 
-    boost::optional< Location > TryReadPathPoint( const Service_ABC& service, xml::xistream& xis )
+    boost::optional< Location > TryReadPathPoint( const Reader_ABC& reader, xml::xistream& xis )
     {
         Location next;
-        xis >> xml::list( "parameter", boost::bind( &AddCoordinatePoint, boost::cref( service ), boost::ref( *next.mutable_coordinates() ), _1 ) );
+        xis >> xml::list( "parameter", boost::bind( &AddCoordinatePoint, boost::cref( reader ), boost::ref( *next.mutable_coordinates() ), _1 ) );
         if( !next.coordinates().elem_size() )
             return boost::none;
         next.set_type( Location::line );
         return next;
     }
 
-    void ReadPath( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPath( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        const auto opt = TryReadPathPoint( service, xis );
+        const auto opt = TryReadPathPoint( reader, xis );
         dst.set_null_value( !opt );
         if( opt )
             *dst.add_value()->mutable_path()->mutable_location() = *opt;
     }
 
-    void ReadLimit( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadLimit( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        if( const auto loc = ReadLocationValue( service, dst, xis ) )
+        if( const auto loc = ReadLocationValue( reader, dst, xis ) )
             *dst.add_value()->mutable_limit()->mutable_location() = *loc;
     }
 
-    void ReadLocation( const Service_ABC& service, PhaseLineOrder& dst, xml::xistream& xis )
+    void ReadLocation( const Reader_ABC& reader, PhaseLineOrder& dst, xml::xistream& xis )
     {
-        if( const auto loc = TryReadLocation( service, xis ) )
+        if( const auto loc = TryReadLocation( reader, xis ) )
             *dst.mutable_line()->mutable_location() = *loc;
     }
 
@@ -278,18 +267,18 @@ namespace
             dst.mutable_time()->set_data( *loc );
     }
 
-    void ReadLimaParameters( const Service_ABC& service, PhaseLineOrder& dst, xml::xistream& xis )
+    void ReadLimaParameters( const Reader_ABC& reader, PhaseLineOrder& dst, xml::xistream& xis )
     {
         const auto type = TestLowCaseAttribute( xis, "type" );
         if( !type )
             return;
         if( *type == "location" )
-            return ReadLocation( service, dst, xis );
+            return ReadLocation( reader, dst, xis );
         if( *type == "datetime" )
             return ReadDatetime( dst, xis );
     }
 
-    void AddLima( const Service_ABC& service, PhaseLinesOrder& dst, xml::xistream& xis )
+    void AddLima( const Reader_ABC& reader, PhaseLinesOrder& dst, xml::xistream& xis )
     {
         PhaseLineOrder next;
         const auto opt = TestAttribute< std::string >( xis, "value" );
@@ -301,17 +290,17 @@ namespace
         for( auto it = tokens.begin(); it != tokens.end(); ++it )
             if( const auto type = FindName< mapping::PhaseLineType >( *it ) )
                 next.add_fonctions( *type );
-        xis >> xml::list( "parameter", boost::bind( &ReadLimaParameters, boost::cref( service ), boost::ref( next ), _1 ) );
+        xis >> xml::list( "parameter", boost::bind( &ReadLimaParameters, boost::cref( reader ), boost::ref( next ), _1 ) );
         if( !next.has_line() || !next.has_time() )
             return;
 
         *dst.add_elem() = next;
     }
 
-    void ReadPhaseline( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPhaseline( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         PhaseLinesOrder next;
-        xis >> xml::list( "parameter", boost::bind( &AddLima, boost::cref( service ), boost::ref( next ), _1 ) );
+        xis >> xml::list( "parameter", boost::bind( &AddLima, boost::cref( reader ), boost::ref( next ), _1 ) );
         const size_t size = next.elem_size();
         dst.set_null_value( !size );
         if( size )
@@ -346,7 +335,7 @@ namespace
             dst.mutable_unitlist()->add_elem()->set_id( *opt );
     }
 
-    void ReadUnitList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    void ReadUnitList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
     {
         ReadList( dst, xis, &AddUnit );
     }
@@ -357,53 +346,53 @@ namespace
             dst.mutable_automatlist()->add_elem()->set_id( *opt );
     }
 
-    void ReadAutomatList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    void ReadAutomatList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
     {
         ReadList( dst, xis, &AddAutomat );
     }
 
-    void AddPoint( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    void AddPoint( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
     {
-        if( const auto loc = TryReadLocation( service, xis ) )
+        if( const auto loc = TryReadLocation( reader, xis ) )
             *dst.mutable_pointlist()->add_elem()->mutable_location() = *loc;
     }
 
-    void ReadPointList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPointList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        ReadList( dst, xis, boost::bind( &AddPoint, boost::cref( service ), _1, _2 ) );
+        ReadList( dst, xis, boost::bind( &AddPoint, boost::cref( reader ), _1, _2 ) );
     }
 
-    void AddPolygon( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    void AddPolygon( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
     {
-        if( const auto loc = TryReadLocation( service, xis ) )
+        if( const auto loc = TryReadLocation( reader, xis ) )
             *dst.mutable_polygonlist()->add_elem()->mutable_location() = *loc;
     }
 
-    void ReadPolygonList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPolygonList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        ReadList( dst, xis, boost::bind( &AddPolygon, boost::cref( service ), _1, _2 ) );
+        ReadList( dst, xis, boost::bind( &AddPolygon, boost::cref( reader ), _1, _2 ) );
     }
 
-    void AddLocation( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    void AddLocation( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
     {
-        if( const auto loc = TryReadLocation( service, xis ) )
+        if( const auto loc = TryReadLocation( reader, xis ) )
             *dst.mutable_locationlist()->add_elem() = *loc;
     }
 
-    void ReadLocationList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadLocationList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        ReadList( dst, xis, boost::bind( &AddLocation, boost::cref( service ), _1, _2 ) );
+        ReadList( dst, xis, boost::bind( &AddLocation, boost::cref( reader ), _1, _2 ) );
     }
 
-    void AddPathPoint( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    void AddPathPoint( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
     {
-        if( const auto opt = TryReadPathPoint( service, xis ) )
+        if( const auto opt = TryReadPathPoint( reader, xis ) )
             *dst.mutable_pathlist()->add_elem()->mutable_location() = *opt;
     }
 
-    void ReadPathList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPathList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        ReadList( dst, xis, boost::bind( &AddPathPoint, boost::cref( service ), _1, _2 ) );
+        ReadList( dst, xis, boost::bind( &AddPathPoint, boost::cref( reader ), _1, _2 ) );
     }
 
     void AddObjectKnowledge( Value& dst, xml::xistream& xis )
@@ -412,7 +401,7 @@ namespace
             dst.mutable_objectknowledgelist()->add_elem()->set_id( *opt );
     }
 
-    void ReadObjectKnowledgeList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    void ReadObjectKnowledgeList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
     {
         ReadList( dst, xis, &AddObjectKnowledge );
     }
@@ -423,7 +412,7 @@ namespace
             dst.mutable_unitknowledgelist()->add_elem()->set_id( *opt );
     }
 
-    void ReadUnitKnowledgeList( const Service_ABC&, MissionParameter& dst, xml::xistream& xis )
+    void ReadUnitKnowledgeList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
     {
         ReadList( dst, xis, &AddUnitKnowledge );
     }
@@ -465,9 +454,9 @@ namespace
         ReadId( dst, xis, &Value::mutable_urbanknowledge );
     }
 
-    void ReadLocation( const Service_ABC& service, PlannedWork& dst, xml::xistream& xis )
+    void ReadLocation( const Reader_ABC& reader, PlannedWork& dst, xml::xistream& xis )
     {
-        if( const auto opt = TryReadLocation( service, xis ) )
+        if( const auto opt = TryReadLocation( reader, xis ) )
             *dst.mutable_position() = *opt;
     }
 
@@ -552,7 +541,7 @@ namespace
             { &ReadTimeLimit,        "time_limit" },
         };
 
-        typedef void (*T_Converter)( const Service_ABC&, PlannedWork&, xml::xistream& );
+        typedef void (*T_Converter)( const Reader_ABC&, PlannedWork&, xml::xistream& );
         const struct { T_Converter Read; std::string name; } services_[] = {
             { &ReadLocation, "circle" },
             { &ReadLocation, "line" },
@@ -563,13 +552,13 @@ namespace
         };
     };
 
-    void ReadWorkParameter( const Service_ABC& service, PlannedWork& dst, xml::xistream& xis )
+    void ReadWorkParameter( const Reader_ABC& reader, PlannedWork& dst, xml::xistream& xis )
     {
         const auto type = TestLowCaseAttribute( xis, "type" );
         if( type )
             if( Apply( plannedwork::readers_, COUNT_OF( plannedwork::readers_ ), *type, dst, xis ) )
                 return;
-            else if( Apply( plannedwork::services_, COUNT_OF( plannedwork::services_ ), *type, service, dst, xis ) )
+            else if( Apply( plannedwork::services_, COUNT_OF( plannedwork::services_ ), *type, reader, dst, xis ) )
                 return;
         const auto identifier = TestLowCaseAttribute( xis, "identifier" );
         if( identifier )
@@ -577,34 +566,34 @@ namespace
                 return;
     }
 
-    boost::optional< PlannedWork > TryReadPlannedWork( const Service_ABC& service, xml::xistream& xis )
+    boost::optional< PlannedWork > TryReadPlannedWork( const Reader_ABC& reader, xml::xistream& xis )
     {
         PlannedWork next;
         if( const auto opt = TestAttribute< std::string >( xis, "value" ) )
             next.set_type( *opt );
-        xis >> xml::list( "parameter", boost::bind( &ReadWorkParameter, boost::cref( service ), boost::ref( next ), _1 ) );
+        xis >> xml::list( "parameter", boost::bind( &ReadWorkParameter, boost::cref( reader ), boost::ref( next ), _1 ) );
         if( !next.has_type() || !next.has_position() )
             return boost::none;
         return next;
     }
 
-    void ReadPlannedWork( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPlannedWork( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        const auto opt = TryReadPlannedWork( service, xis );
+        const auto opt = TryReadPlannedWork( reader, xis );
         dst.set_null_value( !opt );
         if( opt )
             *dst.add_value()->mutable_plannedwork() = *opt;
     }
 
-    void AddPlannedWork( const Service_ABC& service, Value& dst, xml::xistream& xis )
+    void AddPlannedWork( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
     {
-        if( const auto opt = TryReadPlannedWork( service, xis ) )
+        if( const auto opt = TryReadPlannedWork( reader, xis ) )
             *dst.mutable_plannedworklist()->add_elem() = *opt;
     }
 
-    void ReadPlannedWorkList( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPlannedWorkList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        ReadList( dst, xis, boost::bind( &AddPlannedWork, boost::cref( service ), _1, _2 ) );
+        ReadList( dst, xis, boost::bind( &AddPlannedWork, boost::cref( reader ), _1, _2 ) );
     }
 
     void ReadNature( MissionParameter& dst, xml::xistream& xis )
@@ -772,12 +761,12 @@ namespace
     }
 
     template< typename T >
-    void AddPointList( const Service_ABC& service, T& dst, const std::string& key, xml::xisubstream xis )
+    void AddPointList( const Reader_ABC& reader, T& dst, const std::string& key, xml::xisubstream xis )
     {
         CoordLatLongList next;
         xis >> xml::optional
             >> xml::start( key )
-            >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( service ), boost::ref( next ), _1 ) );
+            >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( reader ), boost::ref( next ), _1 ) );
         const auto& list = next.elem();
         for( auto it = list.begin(); it != list.end(); ++it )
         {
@@ -787,7 +776,7 @@ namespace
         }
     }
 
-    void AddSupplyFlowRecipient( const Service_ABC& service, PushFlowParameters& dst, xml::xistream& xis )
+    void AddSupplyFlowRecipient( const Reader_ABC& reader, PushFlowParameters& dst, xml::xistream& xis )
     {
         const auto id = TestAttribute< uint32_t >( xis, "id" );
         if( !id )
@@ -795,7 +784,7 @@ namespace
         auto& next = *dst.add_recipients();
         next.mutable_receiver()->set_id( *id );
         xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< SupplyFlowRecipient >, boost::ref( next ), _1 ) );
-        AddPointList( service, *next.mutable_path(), "path", xis );
+        AddPointList( reader, *next.mutable_path(), "path", xis );
     }
 
     template< typename T >
@@ -809,36 +798,36 @@ namespace
         res.set_quantity( pair->second );
     }
 
-    void ReadPushFlowParameters( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPushFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         dst.set_null_value( false );
         auto& push = *dst.add_value()->mutable_push_flow_parameters();
-        xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( service ), boost::ref( push ), _1 ) );
+        xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( reader ), boost::ref( push ), _1 ) );
         const auto add_transporter = &AddSupplyFlowTransporter< PushFlowParameters >;
         xis >> xml::list( "transporter", boost::bind( add_transporter, boost::ref( push ), _1 ) );
-        AddPointList( service, *push.mutable_waybackpath(), "wayBackPath", xis );
+        AddPointList( reader, *push.mutable_waybackpath(), "wayBackPath", xis );
     }
 
-    void ReadPullFlowParameters( const Service_ABC& service, MissionParameter& dst, xml::xistream& xis )
+    void ReadPullFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         xml::xisubstream sub( xis );
         sub >> xml::start( "supplier" );
         const auto supplier = TestAttribute< uint32_t >( sub, "id" );
         if( !supplier )
             return;
-        const auto type = service.Resolve( *supplier );
-        if( type != Service_ABC::AUTOMAT && type != Service_ABC::FORMATION )
+        const auto type = reader.Resolve( *supplier );
+        if( type != Reader_ABC::AUTOMAT && type != Reader_ABC::FORMATION )
             return;
         auto& pull = *dst.add_value()->mutable_pull_flow_parameters();
         auto& next = *pull.mutable_supplier();
-        if( type == Service_ABC::AUTOMAT )
+        if( type == Reader_ABC::AUTOMAT )
             next.mutable_automat()->set_id( *supplier );
         else
             next.mutable_formation()->set_id( *supplier );
         xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< PullFlowParameters >, boost::ref( pull ), _1 ) );
         xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PullFlowParameters >, boost::ref( pull ), _1 ) );
-        AddPointList( service, *pull.mutable_wayoutpath(), "wayOutPath", xis );
-        AddPointList( service, *pull.mutable_waybackpath(), "wayBackPath", xis );
+        AddPointList( reader, *pull.mutable_wayoutpath(), "wayOutPath", xis );
+        AddPointList( reader, *pull.mutable_waybackpath(), "wayBackPath", xis );
     }
 
     void Skip( MissionParameter&, xml::xistream& )
@@ -847,7 +836,7 @@ namespace
     }
 
     typedef void (*T_Read)( MissionParameter&, xml::xistream& );
-    typedef void (*T_ReadConverter)( const Service_ABC&, MissionParameter&, xml::xistream& );
+    typedef void (*T_ReadConverter)( const Reader_ABC&, MissionParameter&, xml::xistream& );
 
     const struct { T_ReadConverter Read; std::string name; } list_readers[] = {
         { &ReadAutomatList,         "automat" },
@@ -912,10 +901,10 @@ namespace
         { &ReadPushFlowParameters, "pushflowparameters" },
     };
 
-    void AddListParameter( const Reader& reader, MissionParameter& dst, xml::xistream& xis )
+    void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         MissionParameter next;
-        reader.Read( next, xis );
+        Read( reader, next, xis );
         if( next.has_null_value() && !next.null_value() )
         {
             auto& list = dst.value_size() ? *dst.mutable_value( 0 ) : *dst.add_value();
@@ -923,7 +912,7 @@ namespace
         }
     }
 
-    void ReadListParameters( const Reader& reader, MissionParameter& dst, xml::xistream& xis )
+    void ReadListParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         xis >> xml::list( "parameter", boost::bind( &AddListParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
         const bool valid = dst.value_size() && dst.value( 0 ).list_size();
@@ -931,7 +920,7 @@ namespace
     }
 }
 
-void Reader::Read( MissionParameter& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
 {
     dst.set_null_value( true );
     const auto type = TestLowCaseAttribute( xis, "type" );
@@ -940,41 +929,41 @@ void Reader::Read( MissionParameter& dst, xml::xistream& xis ) const
     for( size_t i = 0; i < COUNT_OF( list_readers ); ++i )
         if( list_readers[i].name == *type )
             if( IsList( xis, *type ) )
-                return list_readers[i].Read( service_, dst, xis );
+                return list_readers[i].Read( reader, dst, xis );
     if( Apply( readers, COUNT_OF( readers ), *type, dst, xis ) )
         return;
-    if( Apply( services, COUNT_OF( services ), *type, service_, dst, xis ) )
+    if( Apply( services, COUNT_OF( services ), *type, reader, dst, xis ) )
         return;
     if( *type == "list" || *type == "locationcomposite" )
-        return ReadListParameters( *this, dst, xis );
+        return ReadListParameters( reader, dst, xis );
     throw MASA_EXCEPTION( "Unknow mission parameter type '" + *type + "'" );
 }
 
 namespace
 {
-    void AddParameter( const Reader& reader, MissionParameters& dst, xml::xistream& xis )
+    void AddParameter( const Reader_ABC& reader, MissionParameters& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.add_elem(), xis );
+        Read( reader, *dst.add_elem(), xis );
     }
 
     template< typename T >
-    void TryAddParameters( const Reader& reader, T& dst, xml::xistream& xis )
+    void TryAddParameters( const Reader_ABC& reader, T& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_parameters(), xis );
+        Read( reader, *dst.mutable_parameters(), xis );
         if( !dst.parameters().elem_size() )
             dst.clear_parameters();
     }
 }
 
-void Reader::Read( MissionParameters& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, MissionParameters& dst, xml::xistream& xis )
 {
-    xis >> xml::list( "parameter", boost::bind( &AddParameter, boost::cref( *this ), boost::ref( dst ), _1 ) );
+    xis >> xml::list( "parameter", boost::bind( &AddParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
 }
 
 namespace
 {
     template< typename T >
-    void ReadOrder( const Reader& reader, T& dst, xml::xistream& xis )
+    void ReadOrder( const Reader_ABC& reader, T& dst, xml::xistream& xis )
     {
         dst.mutable_type()->set_id( xis.attribute< int32_t >( "id" ) );
         if( const auto opt = TestAttribute< std::string >( xis, "start_time" ) )
@@ -983,7 +972,7 @@ namespace
     }
 
     template< typename T, typename U >
-    void ReadMagic( const Reader& reader, U& dst, xml::xistream& xis )
+    void ReadMagic( const Reader_ABC& reader, U& dst, xml::xistream& xis )
     {
         const std::string name = xis.attribute< std::string >( "id" );
         const auto type = FindName< T >( name );
@@ -993,66 +982,66 @@ namespace
         TryAddParameters< U >( reader, dst, xis );
     }
 
-    void SetTasker( const Service_ABC& service, Tasker& dst, int32_t id )
+    void SetTasker( const Reader_ABC& reader, Tasker& dst, int32_t id )
     {
-        switch( service.Resolve( id ) )
+        switch( reader.Resolve( id ) )
         {
-            case Service_ABC::AGENT:            return dst.mutable_unit()->set_id( id );
-            case Service_ABC::AUTOMAT:          return dst.mutable_automat()->set_id( id );
-            case Service_ABC::INHABITANT:       return dst.mutable_population()->set_id( id );
-            case Service_ABC::FORMATION:        return dst.mutable_formation()->set_id( id );
-            case Service_ABC::POPULATION:       return dst.mutable_crowd()->set_id( id );
-            case Service_ABC::TEAM:             return dst.mutable_party()->set_id( id );
+            case Reader_ABC::UNIT:       return dst.mutable_unit()->set_id( id );
+            case Reader_ABC::AUTOMAT:    return dst.mutable_automat()->set_id( id );
+            case Reader_ABC::POPULATION: return dst.mutable_population()->set_id( id );
+            case Reader_ABC::FORMATION:  return dst.mutable_formation()->set_id( id );
+            case Reader_ABC::CROWD:      return dst.mutable_crowd()->set_id( id );
+            case Reader_ABC::PARTY:      return dst.mutable_party()->set_id( id );
         }
         throw MASA_EXCEPTION( "Unrecognized ID '" + boost::lexical_cast< std::string >( id ) + "'" );
     }
 }
 
-void Reader::Read( UnitOrder& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, UnitOrder& dst, xml::xistream& xis )
 {
     dst.mutable_tasker()->set_id( xis.attribute< int32_t >( "target" ) );
-    ReadOrder( *this, dst, xis );
+    ReadOrder( reader, dst, xis );
 }
 
-void Reader::Read( AutomatOrder& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, AutomatOrder& dst, xml::xistream& xis )
 {
     dst.mutable_tasker()->set_id( xis.attribute< int32_t >( "target" ) );
-    ReadOrder( *this, dst, xis );
+    ReadOrder( reader, dst, xis );
 }
 
-void Reader::Read( CrowdOrder& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, CrowdOrder& dst, xml::xistream& xis )
 {
     dst.mutable_tasker()->set_id( xis.attribute< int32_t >( "target" ) );
-    ReadOrder( *this, dst, xis );
+    ReadOrder( reader, dst, xis );
 }
 
-void Reader::Read( FragOrder& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, FragOrder& dst, xml::xistream& xis )
 {
-    SetTasker( service_, *dst.mutable_tasker(), xis.attribute< int32_t >( "target" ) );
-    ReadOrder( *this, dst, xis );
+    SetTasker( reader, *dst.mutable_tasker(), xis.attribute< int32_t >( "target" ) );
+    ReadOrder( reader, dst, xis );
 }
 
-void Reader::Read( MagicAction& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, MagicAction& dst, xml::xistream& xis )
 {
-    ReadMagic< mapping::MagicAction >( *this, dst, xis );
+    ReadMagic< mapping::MagicAction >( reader, dst, xis );
 }
 
-void Reader::Read( UnitMagicAction& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, UnitMagicAction& dst, xml::xistream& xis )
 {
-    SetTasker( service_, *dst.mutable_tasker(), xis.attribute< int32_t >( "target" ) );
-    ReadMagic< mapping::MagicUnitAction >( *this, dst, xis );
+    SetTasker( reader, *dst.mutable_tasker(), xis.attribute< int32_t >( "target" ) );
+    ReadMagic< mapping::MagicUnitAction >( reader, dst, xis );
 }
 
-void Reader::Read( ObjectMagicAction& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, ObjectMagicAction& dst, xml::xistream& xis )
 {
     dst.mutable_object()->set_id( xis.attribute< int32_t >( "target" ) );
-    ReadMagic< mapping::MagicObjectAction >( *this, dst, xis );
+    ReadMagic< mapping::MagicObjectAction >( reader, dst, xis );
 }
 
-void Reader::Read( KnowledgeMagicAction& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, KnowledgeMagicAction& dst, xml::xistream& xis )
 {
     dst.mutable_knowledge_group()->set_id( xis.attribute< int32_t >( "target" ) );
-    ReadMagic< mapping::MagicKnowledgeAction >( *this, dst, xis );
+    ReadMagic< mapping::MagicKnowledgeAction >( reader, dst, xis );
 }
 
 namespace
@@ -1064,7 +1053,7 @@ namespace
     }
 }
 
-void Reader::Read( SetAutomatMode& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC&, SetAutomatMode& dst, xml::xistream& xis )
 {
     dst.mutable_automate()->set_id( xis.attribute< int32_t >( "target" ) );
     dst.set_mode( ReadAutomatMode( xis ) );
@@ -1072,51 +1061,51 @@ void Reader::Read( SetAutomatMode& dst, xml::xistream& xis ) const
 
 namespace
 {
-    void ReadMission( const Service_ABC& service, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadMission( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
         const auto target = TestAttribute< uint32_t >( xis, "target" );
         if( !target )
             return;
-        const Service_ABC::EntityType type = service.Resolve( *target );
-        if( type == Service_ABC::AGENT )
-            return reader.Read( *dst.mutable_unit_order(), xis );
-        if( type == Service_ABC::AUTOMAT )
-            return reader.Read( *dst.mutable_automat_order(), xis );
-        if( type == Service_ABC::POPULATION )
-            return reader.Read( *dst.mutable_crowd_order(), xis );
+        const Reader_ABC::EntityType type = reader.Resolve( *target );
+        if( type == Reader_ABC::UNIT )
+            return Read( reader, *dst.mutable_unit_order(), xis );
+        if( type == Reader_ABC::AUTOMAT )
+            return Read( reader, *dst.mutable_automat_order(), xis );
+        if( type == Reader_ABC::CROWD )
+            return Read( reader, *dst.mutable_crowd_order(), xis );
     }
 
-    void ReadFragOrder( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadFragOrder( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_frag_order(), xis );
+        Read( reader, *dst.mutable_frag_order(), xis );
     }
 
-    void ReadMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadMagicAction( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_magic_action(), xis );
+        Read( reader, *dst.mutable_magic_action(), xis );
     }
 
-    void ReadUnitMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadUnitMagicAction( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_unit_magic_action(), xis );
+        Read( reader, *dst.mutable_unit_magic_action(), xis );
     }
 
-    void ReadObjectMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadObjectMagicAction( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_object_magic_action(), xis );
+        Read( reader, *dst.mutable_object_magic_action(), xis );
     }
 
-    void ReadKnowledgeGroupMagicAction( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadKnowledgeGroupMagicAction( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_knowledge_magic_action(), xis );
+        Read( reader, *dst.mutable_knowledge_magic_action(), xis );
     }
 
-    void ReadChangeMode( const Service_ABC&, const Reader& reader, ClientToSim_Content& dst, xml::xistream& xis )
+    void ReadChangeMode( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
     {
-        reader.Read( *dst.mutable_set_automat_mode(), xis );
+        Read( reader, *dst.mutable_set_automat_mode(), xis );
     }
 
-    typedef void ( *T_ReadOrder )( const Service_ABC&, const Reader&, ClientToSim_Content&, xml::xistream& );
+    typedef void ( *T_ReadOrder )( const Reader_ABC&, ClientToSim_Content&, xml::xistream& );
     const struct { T_ReadOrder Read; std::string name; } orders[] = {
         { &ReadChangeMode,                "change_mode" },
         { &ReadFragOrder,                 "fragorder" },
@@ -1128,12 +1117,12 @@ namespace
     };
 }
 
-void Reader::Read( ClientToSim_Content& dst, xml::xistream& xis ) const
+void serializer::Read( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
 {
     const auto type = TestLowCaseAttribute( xis, "type" );
     if( !type )
         return;
     for( size_t i = 0; i < COUNT_OF( orders ); ++i )
         if( orders[i].name == *type )
-            orders[i].Read( service_, *this, dst, xis );
+            orders[i].Read( reader, dst, xis );
 }

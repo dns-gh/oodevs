@@ -163,8 +163,8 @@
     <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\LauncherToAdmin.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\MessengerToClient.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\ReadSerializers.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\ReplayToClient.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\Serializers.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\SimulationToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\Version.cpp" />
   </ItemGroup>
