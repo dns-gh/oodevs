@@ -161,6 +161,10 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
@@ -199,6 +203,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\clients_test\IndicatorSerializerTest.cpp" />
     <ClCompile Include="..\..\src\tests\clients_test\IndicatorTypeTest.cpp" />
     <ClCompile Include="..\..\src\tests\clients_test\KnowledgeGroupTest.cpp" />
+    <ClCompile Include="..\..\src\tests\clients_test\WikiXmlConverterTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\clients_test\clients_test_pch.h" />

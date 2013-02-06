@@ -2409,10 +2409,6 @@ PNG (*.png)
         <translation>Guardar cambios al proyecto %1?</translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Saving error</source>
         <translation type="unfinished"></translation>
     </message>

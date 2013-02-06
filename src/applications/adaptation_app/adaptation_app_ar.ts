@@ -2393,10 +2393,6 @@ PNG (*.png)
         <translation type="unfinished">[للقراءة فقط]</translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation type="unfinished">تواقيع للملفات التالية غير موجودة أو غير صحيحة:</translation>
-    </message>
-    <message>
         <source>Data test</source>
         <translation type="unfinished">بيانات الاختبار</translation>
     </message>

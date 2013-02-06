@@ -2413,10 +2413,6 @@ PNG (*.png)</translation>
         <translation>Sword Adaptation - %1</translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation>Les signatures des fichiers suivants n&apos;existent pas ou bien sont invalides:</translation>
-    </message>
-    <message>
         <source>Saving error</source>
         <translation>Erreur de sauvegarde</translation>
     </message>

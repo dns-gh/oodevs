@@ -25,6 +25,9 @@
     <ClCompile Include="..\..\src\tests\clients_test\KnowledgeGroupTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\clients_test\WikiXmlConverterTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\clients_test\clients_test_pch.h">

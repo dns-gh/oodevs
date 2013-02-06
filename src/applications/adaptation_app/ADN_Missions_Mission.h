@@ -15,6 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Missions_Parameter.h"
+#include "clients_gui/WikiXmlConverter.h"
 #include <boost/regex.hpp>
 
 enum E_EntityType;
@@ -61,11 +62,6 @@ public:
     void WriteMissionSheetParametersDescriptions( xml::xostream& xos );
     void WriteMissionSheetAttachments( xml::xostream& xos );
     bool IsFileInAttachmentList( const std::string& fileName );
-    void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line );
-    void ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text );
-    void ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level );
-    void FromXmlToWiki( const std::string& tag, xml::xistream& xis, std::string& text ); 
-    void FromWikiToXml( xml::xostream& xos, const std::string& text );
     void ReadMissionSheet( const std::string& missionDir );
     void RemoveDifferentNamedMissionSheet( const std::string& missionDir );
     void WriteMissionSheet( const std::string& missionDir );

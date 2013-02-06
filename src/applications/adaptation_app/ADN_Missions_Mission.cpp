@@ -14,6 +14,7 @@
 #include "ADN_ConsistencyChecker.h"
 #include <tools/Loader_ABC.h>
 #include <tools/EncodingConverter.h>
+#include <boost/regex.hpp>
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem.hpp>
@@ -23,7 +24,6 @@
 #include <queue>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
-
 
 namespace bfs = boost::filesystem;
 
@@ -223,11 +223,15 @@ void ADN_Missions_Mission::ReadMissionSheetParametersDescriptions( xml::xistream
 {
     std::string parameterName;
     std::string parameterData;
-    xis >> xml::attribute( "name", parameterName )
-            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, parameterData );
+    xml::xisubstream sub( xis );
+    FromXmlToWiki( sub, parameterData );
+    xis >> xml::attribute( "name", parameterName );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
         if( (*it)->strName_ == parameterName )
+        {
             (*it)->description_ = parameterData;
+            break;
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -267,52 +271,6 @@ void ADN_Missions_Mission::WriteMissionSheetAttachments( xml::xostream& xos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Mission::FromXmlToWiki
-// Created: NPT 2013-01-21
-// -----------------------------------------------------------------------------
-void ADN_Missions_Mission::FromXmlToWiki( const std::string& tag, xml::xistream& xis, std::string& text )
-{
-    int level = 0;
-    if( tag == "line" )
-        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text );
-    else if( tag == "ul" )
-    {
-        int sublevel = level + 1;
-        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, sublevel );
-    }
-    text += "\n";
-}
-
-namespace
-{
-    std::string ConvertWikiTagToXmlTag( const std::string& wikiTag )
-    {
-        if( wikiTag == "\"\"" )
-            return "bold";
-        if( wikiTag == "''")
-            return "italic";
-        if( wikiTag == "__" )
-            return "underlined";
-        if( wikiTag == "$$")
-            return "link";
-        throw MASA_EXCEPTION( "Used wiki tag is invalid." );
-    }
-
-    std::string ConvertXmlToWikiTag( const std::string& xmlTag )
-    {
-        if( xmlTag =="bold" )
-            return "\"\"" ;
-        if( xmlTag == "italic")
-            return "''";
-        if( xmlTag =="underlined" )
-            return  "__" ;
-        if( xmlTag == "link" )
-            return "$$";
-        throw MASA_EXCEPTION( "Used xml tag is invalid." );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Missions_Mission::IsFileInAttachmentList
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
@@ -322,178 +280,6 @@ bool ADN_Missions_Mission::IsFileInAttachmentList( const std::string& fileName )
         if(fileName == (*it)->strName_.GetData() )
             return true;
     return false;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Mission::MakeStringXmlItem
-// Created: NPT 2013-01-22
-// -----------------------------------------------------------------------------
-void ADN_Missions_Mission::MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line )
-{
-
-    if( length > 0 )
-        xos.start( "li" );
-    if( line.size() > 0 )
-    {
-        xos.start( "line" );
-        std::set< std::string > openTags;
-        while ( line.size() > 0 )
-        {
-            boost::smatch match;
-            if( boost::regex_search( line, match, boost::regex( "(.*?)(\"\"|''|__|\\$\\$)(.*)" ) ) )
-            {
-                if( match[ 1 ].length() > 0 )
-                    xos << xml::start( "text" ) << match[ 1 ] << xml::end;
-                auto ret = openTags.insert( match[ 2 ] );
-                if( ret.second )
-                    xos.start( ConvertWikiTagToXmlTag( *ret.first ) );
-                else
-                {
-                    xos.end();
-                    openTags.erase( ret.first );
-                }
-                line = match[ 3 ];
-            }
-            else
-            {
-                xos << xml::start( "text" ) << line << xml::end;
-                break;
-            }
-        }
-        while( !openTags.empty() )
-        {
-            openTags.erase( openTags.begin() );
-            xos.end();
-        }
-        xos.end();
-    }
-    if( length > 0 )
-        xos.end();
-}
-
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Mission::ReadXmlData
-// Created: NPT 2013-01-23
-// -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadXmlLine( const std::string& tag, xml::xistream& xis, std::string& text )
-{
-    if( tag == "text" )
-    {
-        std::string xmlValue;
-        xis >> xml::optional >> xmlValue;
-        text += xmlValue;
-    }
-    else
-    {
-        text += ConvertXmlToWikiTag( tag );
-        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text );
-        text += ConvertXmlToWikiTag( tag );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Mission::ReadXmlList
-// Created: NPT 2013-01-23
-// -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadXmlList( const std::string& tag, xml::xistream& xis, std::string& text, int level )
-{
-    if( tag == "ul" )
-    {
-        int sublevel = level + 1;
-        xis >> xml::list( *this, &ADN_Missions_Mission::ReadXmlList, text, sublevel );
-    }
-    else if( tag == "li" )
-    {
-        text += std::string( level, ' ') + "* ";
-        xis >> xml::start( "line" )
-                >> xml::list( *this, &ADN_Missions_Mission::ReadXmlLine, text )
-            >> xml::end;
-        text += "\n";
-    }
-}
-
-namespace
-{
-    class UL : private boost::noncopyable
-    {
-    public:
-        UL( xml::xostream& xos )
-            : xos_( xos )
-        {
-            xos << xml::start( "ul" );
-        }
-        ~UL()
-        {
-            xos_ << xml::end;
-        }
-    private:
-        xml::xostream& xos_;
-    };
-
-    class ULFormatter : private boost::noncopyable
-    {
-    public:
-        ULFormatter( xml::xostream& xos )
-            : xos_( xos )
-        {
-            // NOTHING
-        }
-        ~ULFormatter()
-        {
-            // NOTHING
-        }
-
-        void FormatUL( int n )
-        {
-            for( int i = 0; i < n ; ++i )
-                vector.emplace_back( new UL( xos_ ) );
-            for( int i = n; i < 0 ; ++i )
-            {
-                delete vector.back();
-                vector.pop_back();
-            }
-        }
-    private:
-        xml::xostream& xos_;
-        std::vector< UL* > vector;
-    };
-}
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Mission::FromWikiToXml
-// Created: NPT 2013-01-21
-// -----------------------------------------------------------------------------
-void ADN_Missions_Mission::FromWikiToXml( xml::xostream& xos, const std::string& text )
-{
-    std::vector< std::string > stringList;
-    std::string result;
-    boost::split( stringList, text, boost::algorithm::is_any_of( "\n" ) );
-
-    //list search
-     std::queue< std::pair< std::size_t, std::string > > tokensVector;
-    for( auto it = stringList.begin(); it != stringList.end(); ++it )
-    {
-        std::string val = *it;
-        boost::smatch match;
-        if( boost::regex_search( val, match, boost::regex( "^(\\s+)\\* (.*)$" ) ) ) //check if the current line is a list
-            tokensVector.push( std::make_pair< std::size_t, std::string >( match[ 1 ].length(), match[ 2 ] ) ); //< space before the *, text after the star >
-        else
-            tokensVector.push( std::make_pair< std::size_t, std::string >( 0, val ) );//< 0 space beause text, text >
-    }
-
-    //create xml file
-    size_t previousLength = 0;
-    ULFormatter formatter( xos );
-    while( !tokensVector.empty() )
-    {
-        std::pair< std::size_t, std::string > line = tokensVector.front();
-        tokensVector.pop();
-        formatter.FormatUL( static_cast< int >( line.first - previousLength ) );
-        MakeStringXmlItem( xos, line.first, line.second );
-        previousLength = line.first;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -515,28 +301,28 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& missionDir )
         std::string descriptionComment;
         std::string descriptionMissionEnd;
         xis >> xml::start( "mission-sheet" )
-            >> xml::optional >> xml::start( "context" )
-            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionContext )
-            >> xml::end
-            >> xml::optional >> xml::start( "parameters" )
-            >> xml::list( "parameter", *this, &ADN_Missions_Mission::ReadMissionSheetParametersDescriptions )
-            >> xml::end
-            >> xml::optional >> xml::start( "behavior" )
-            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionBehavior )
-            >> xml::end
-            >> xml::optional >> xml::start( "specific-cases" )
-            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionSpecific )
-            >> xml::end
-            >> xml::optional >> xml::start( "comments" )
-            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionComment )
-            >> xml::end
-            >> xml::optional >> xml::start( "mission-end" )
-            >> xml::list( *this, &ADN_Missions_Mission::FromXmlToWiki, descriptionMissionEnd )
-            >> xml::end
-            >> xml::optional >> xml::start( "attachments" )
-            >> xml::list( "attachment", *this, &ADN_Missions_Mission::ReadMissionSheetAttachments )
-            >> xml::end
-            >> xml::end;
+                >> xml::optional >> xml::start( "context" );
+                FromXmlToWiki( xis, descriptionContext );
+        xis     >> xml::end
+                >> xml::optional >> xml::start( "parameters" )
+                >> xml::list( "parameter", *this, &ADN_Missions_Mission::ReadMissionSheetParametersDescriptions )
+                >> xml::end
+                >> xml::optional >> xml::start( "behavior" );
+                FromXmlToWiki( xis, descriptionBehavior );
+        xis     >> xml::end
+                >> xml::optional >> xml::start( "specific-cases" );
+                FromXmlToWiki( xis, descriptionSpecific );
+        xis     >> xml::end
+                >> xml::optional >> xml::start( "comments" );
+                FromXmlToWiki( xis, descriptionComment );
+        xis     >> xml::end
+                >> xml::optional >> xml::start( "mission-end" );
+                FromXmlToWiki( xis, descriptionMissionEnd );
+        xis     >> xml::end
+                >> xml::optional >> xml::start( "attachments" )
+                >> xml::list( "attachment", *this, &ADN_Missions_Mission::ReadMissionSheetAttachments )
+                >> xml::end
+                >> xml::end;
         descriptionContext_ = descriptionContext;
         descriptionBehavior_ = descriptionBehavior;
         descriptionSpecific_ = descriptionSpecific;

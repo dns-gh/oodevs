@@ -337,6 +337,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UtmParser.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Wgs84DdParser.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Wgs84DmsParser.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\WikiXmlConverter.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\XyParser.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\BooleanOptionButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ButtonGroup.cpp" />
@@ -1934,6 +1935,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\UtmParser.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Wgs84DdParser.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Wgs84DmsParser.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\WikiXmlConverter.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\XyParser.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\BooleanOptionButton.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
