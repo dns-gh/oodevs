@@ -25,9 +25,10 @@ rootnode
     -- --------------------------------------------------------------------------------
    activate = function( self )
        local Activate = Activate
-
-       Activate( skill.links.moveToward, 1, { entities  = { self.params.objective } } )
-       if self.movementDone then
+       if not self.params.dontMove then
+             Activate( skill.links.moveToward, 1, { entities  = { self.params.objective } } )
+       end
+       if self.movementDone or self.params.dontMove then
             Activate( skill.nodes.Control, 1, { entity  = self.params.objective } )
        end
    end

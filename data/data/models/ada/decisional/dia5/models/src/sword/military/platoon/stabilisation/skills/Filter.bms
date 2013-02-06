@@ -53,7 +53,7 @@ rootnode
                             crowdsNearUnit[#crowdsNearUnit + 1 ] = crowd
                         end
                     end
-                    Activate( skill.links.controlCrowds, 1, {crowds = crowdsNearUnit} )
+                    Activate( skill.links.controlCrowds, 1, {crowds = crowdsNearUnit, dontMove = true} )
     
                 else -- Objective not reached, don't build checkpoint
                     meKnowledge:RC( eRC_ImpossibleAtteindreObjectif )

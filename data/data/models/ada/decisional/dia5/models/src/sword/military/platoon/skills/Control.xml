@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.Control" source-version="1.0.0">
-    <description>Controler un élément (point, bloc, zone...). Ce skill implémente la prise de décision pour controler un element. &#xD;
+	<description>Controler un élément (point, bloc, zone...). Ce skill implémente la prise de décision pour controler un element. &#xD;
 &#xD;
      Il utilise l'intention d'occuper cet élément (un élement &quot;controlable&quot; est, par concept, occupable par l'unité cf. Interface &quot;Controlable&quot; ) en activant le skill MoveToward.&#xD;
      &#xD;
      L'effet de controler un élément peut différer suivant l'élément contrôlé (cf. implémentation de l'interface pour les différentes classes).&#xD;
     </description>
-    <parameters>
-        <parameter name="objective">
-            <type>
-                <class name="sword.military.knowledge.Controlable"/>
-            </type>
-        </parameter>
-    </parameters>
-    <links>
-        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
-    </links>
+	<parameters>
+		<parameter name="objective">
+			<type>
+				<class name="sword.military.knowledge.Controlable"/>
+			</type>
+		</parameter>
+		<parameter name="dontMove" nullable="true">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
+	</parameters>
+	<links>
+		<link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+	</links>
 </skill>

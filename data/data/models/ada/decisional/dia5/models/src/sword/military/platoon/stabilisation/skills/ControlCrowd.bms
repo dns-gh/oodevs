@@ -62,7 +62,7 @@ rootnode
             end
             Feedback( self.feedbacks.failed, { positionSurete = self.positionSurete } )
         else  -- move to crowd and try to control it
-            Activate( skill.links.control, 1, { objective  = self.params.crowd } )
+            Activate( skill.links.control, 1, { objective  = self.params.crowd, dontMove = self.params.dontMove } )
         end
 
         if self.params.crowd:isDominated() then-- main effect is reached, crowd in controled

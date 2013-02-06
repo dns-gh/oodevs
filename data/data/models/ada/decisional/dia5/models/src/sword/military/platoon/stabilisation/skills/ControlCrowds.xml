@@ -9,6 +9,14 @@
                 </list>
             </type>
         </parameter>
+        <parameter name="dontMove" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <links>
         <link name="control" skill="sword.military.platoon.stabilisation.skills.ControlCrowd"/>

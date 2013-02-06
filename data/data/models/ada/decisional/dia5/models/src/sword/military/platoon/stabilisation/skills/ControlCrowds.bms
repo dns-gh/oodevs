@@ -44,7 +44,7 @@ rootnode
             for _,crowd in pairs( self.crowds ) do  -- select the nearest element
                 nearestCrowd = crowd:proximityLevel() > nearestCrowd:proximityLevel() and crowd or nearestCrowd
             end
-            Activate( skill.links.control, 1, { crowd  = nearestCrowd } )
+            Activate( skill.links.control, 1, { crowd  = nearestCrowd, dontMove = self.params.dontMove } )
         end
     end
 }

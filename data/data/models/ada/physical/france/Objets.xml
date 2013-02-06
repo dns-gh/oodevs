@@ -408,7 +408,7 @@
     <lodging/>
     <logistic/>
   </object>
-  <object name="poste controle" point-size="75" type="checkpoint">
+  <object name="poste controle" point-size="150" type="checkpoint">
     <geometries>
       <geometry symbol="G*GPGPPK--****X" type="point"/>
     </geometries>
@@ -600,4 +600,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3057158521" -->
+<!-- signature="3265382241" -->

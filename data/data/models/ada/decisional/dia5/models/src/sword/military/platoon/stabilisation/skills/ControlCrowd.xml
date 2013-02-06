@@ -8,6 +8,14 @@
         <class name="sword.military.world.Crowd"/>
       </type>
     </parameter>
+    <parameter name="dontMove" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
   </parameters>
   <modifiers>
     <modifier name="delai">
