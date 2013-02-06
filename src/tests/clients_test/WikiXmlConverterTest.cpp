@@ -10,7 +10,7 @@
 #include "clients_test_pch.h"
 #include "clients_gui/WikiXmlConverter.h"
 
-BOOST_AUTO_TEST_CASE( WikiXmlConverter_Test )
+BOOST_AUTO_TEST_CASE( WikiXmlConverter_roundtrip )
 {
     struct TestCase
     {
@@ -110,4 +110,32 @@ BOOST_AUTO_TEST_CASE( WikiXmlConverter_Test )
         xos << xml::end;
         BOOST_CHECK_EQUAL( tests[ i ].xml, xos.str() );
     }
+}
+
+BOOST_AUTO_TEST_CASE( WikiXmlConverter_to_xml_is_stateless )
+{
+    // FromWikiToXml must return the input stream at the same level it was
+    // before being written too, aka generated XML is a pure subtree.
+    xml::xostringstream xos;
+    xos << xml::start( "root");
+    FromWikiToXml( xos, "  * some list" );
+    FromWikiToXml( xos, "some text" );
+    xos << xml::end;
+    const std::string xml =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+        "<root>\n"
+        "  <ul>\n"
+        "    <ul>\n"
+        "      <li>\n"
+        "        <line>\n"
+        "          <text>some list</text>\n"
+        "        </line>\n"
+        "      </li>\n"
+        "    </ul>\n"
+        "  </ul>\n"
+        "  <line>\n"
+        "    <text>some text</text>\n"
+        "  </line>\n"
+        "</root>\n";
+    BOOST_CHECK_EQUAL( xml, xos.str() );
 }

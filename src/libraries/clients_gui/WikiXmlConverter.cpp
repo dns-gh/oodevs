@@ -164,7 +164,7 @@ void FromXmlToWiki( xml::xistream& xis, std::string& text )
 
 const boost::regex reList = boost::regex( "^(\\s+)\\* (.*)$" );
 
-void FromWikiToXml( xml::xostream& xos, const std::string& text )
+void FromWikiToXml( xml::xostream& output, const std::string& text )
 {
     std::vector< std::string > stringList;
     std::string result;
@@ -183,6 +183,7 @@ void FromWikiToXml( xml::xostream& xos, const std::string& text )
     }
 
     //create xml file
+    xml::xosubstream xos( output );
     size_t previousLength = 0;
     while( !tokensVector.empty() )
     {
