@@ -114,11 +114,8 @@ void FromXmlTagsToWiki( const std::string& tag, xml::xistream& xis, std::string&
 
 const boost::regex reStyles = boost::regex( "(.*?)(\"\"|''|__|\\$\\$)(.*)" );
 
-void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line )
+void MakeStringXmlItem( xml::xostream& xos, std::string line )
 {
-
-    if( length > 0 )
-        xos.start( "li" );
     if( line.size() > 0 )
     {
         xos.start( "line" );
@@ -153,8 +150,6 @@ void MakeStringXmlItem( xml::xostream& xos, std::size_t length, std::string line
         }
         xos.end();
     }
-    if( length > 0 )
-        xos.end();
 }
 
 }  // namespace
@@ -204,7 +199,11 @@ void FromWikiToXml( xml::xostream& xos, const std::string& text )
             xos << xml::start( "ul" );
         for( int i = ulOffset; i < 0 ; ++i )
             xos << xml::end;
-        MakeStringXmlItem( xos, line.first, line.second );
+        if( line.first )
+            xos << xml::start( "li" );
+        MakeStringXmlItem( xos, line.second );
+        if( line.first )
+            xos << xml::end;
         previousLength = line.first;
     }
 }
