@@ -275,8 +275,7 @@ return
         return res
     end,
     decontaminateIt = function ( self )
-        local zoneLocalisation = DEC_Geometrie_CreerLocalisationPolyligne( DEC_Geometrie_ListePointsLocalisation( self.source ) )
-        DEC_DecontaminerZone( zoneLocalisation )
+        DEC_DecontaminerZone( self.source )
         meKnowledge:RC( eRC_ZoneDecontaminee )
         return true
     end,

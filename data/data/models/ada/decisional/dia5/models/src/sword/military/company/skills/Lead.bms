@@ -237,7 +237,6 @@ activate = function( self )
     if myself.feedback then
         if self.params.disableWhenDone then
            Feedback( self.feedbacks.done )
-           return
         else
            meKnowledge:RC( eRC_FinMission )
         end
@@ -245,6 +244,7 @@ activate = function( self )
            F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
         end
         myself.feedback = false
+        return
     end
     
     if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
