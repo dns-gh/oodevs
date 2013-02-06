@@ -52,8 +52,7 @@ namespace bfs = boost::filesystem;
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
 ScriptRefs::ScriptRefs( sword::Brain& brain  )
-    : sendEvent_               ( brain.GetScriptRef( "SendEvent" ) )
-    , startEvent_              ( brain.GetScriptRef( "StartEvent" ) )
+    : startEvent_              ( brain.GetScriptRef( "StartEvent" ) )
     , stopEvents_              ( brain.GetScriptRef( "StopEvents" ) )
     , setStateVariable_        ( brain.GetScriptRef( "SetStateVariable" ) )
     , collectgarbage_          ( brain.GetScriptRef( "collectgarbage" ) )
@@ -62,7 +61,6 @@ ScriptRefs::ScriptRefs( sword::Brain& brain  )
     , knowledgeCallbackAction_ ( brain.GetScriptRef( "KnowledgeCallbackAction" ) )
     , removeAction_            ( brain.GetScriptRef( "RemoveAction" ) )
     , initTaskParameter_       ( brain.GetScriptRef( "InitTaskParameter" ) )
-    , cleanBrainBeforeDeletion_( brain.GetScriptRef( "CleanBrainBeforeDeletion" ) )
 {
     // NOTHING
 }

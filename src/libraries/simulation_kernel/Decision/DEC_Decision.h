@@ -212,7 +212,6 @@ struct ScriptRefs
 public:
     ScriptRefs( sword::Brain& brain );
 
-    directia::tools::binders::ScriptRef sendEvent_;
     directia::tools::binders::ScriptRef startEvent_;
     directia::tools::binders::ScriptRef stopEvents_;
     directia::tools::binders::ScriptRef setStateVariable_;
@@ -222,7 +221,6 @@ public:
     directia::tools::binders::ScriptRef knowledgeCallbackAction_;
     directia::tools::binders::ScriptRef removeAction_;
     directia::tools::binders::ScriptRef initTaskParameter_;
-    directia::tools::binders::ScriptRef cleanBrainBeforeDeletion_;
 
 private:
     ScriptRefs();
