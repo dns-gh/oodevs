@@ -630,7 +630,7 @@
         </build-app>
     </target>
 
-    <target name="preparation_app" depends="preparation,frontend" description="build Sword Gaming executable">
+    <target name="preparation_app" depends="preparation,frontend" description="build Sword Preparation executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf,spatialite"
                    libs="geodata,gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,glew-${platform}-mt,QtWebKit4,sqlite3-${platform}-mt,
                          lib${ant.project.name}_actions-${platform}-mt,
@@ -1586,8 +1586,8 @@
         <update name="python"/>
         <update name="qt"/>
         <update name="spatialite"/>
-        <update name="steel"/>
         <update name="sqlite"/>
+        <update name="steel"/>
         <update name="svgl"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>

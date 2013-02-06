@@ -28,6 +28,7 @@
     <SrcDir>..\..\src\applications\$(ProjectName)</SrcDir>
     <Suffix />
     <libExtractor>extractor.lib</libExtractor>
+    <libSqlite>sqlite3-$(CurrentPlatform)-mt.lib</libSqlite>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
@@ -144,6 +145,9 @@
     </BuildMacro>
     <BuildMacro Include="libExtractor">
       <Value>$(libExtractor)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libSqlite">
+      <Value>$(libSqlite)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
