@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -39,6 +40,7 @@ namespace gui
 class MiniViews : public QDockWidget
                 , public tools::Observer_ABC
                 , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
@@ -57,16 +59,12 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MiniViews( const MiniViews& );            //!< Copy constructor
-    MiniViews& operator=( const MiniViews& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void BuildContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    void DeleteView( MiniView*& view, const kernel::Entity_ABC* entity );
     //@}
 
     //! @name Types

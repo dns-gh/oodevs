@@ -100,18 +100,7 @@ void MiniViews::OnMiniView()
     {
         MiniView*& view = miniViews_[ selected_ ];
         if( view )
-        {
-            if( GlRenderPass_ABC* pass = renderPasses_[ view ] )
-            {
-                widget_->RemovePass( *pass );
-                delete pass;
-                renderPasses_.erase( view );
-            }
-            delete view;
-            miniViews_.erase( selected_ );
-            if( miniViews_.empty() )
-                hide();
-        }
+            DeleteView( view, selected_ );
         else
         {
             view = new MiniView( grid_, controllers_, *selected_ );
@@ -122,4 +111,33 @@ void MiniViews::OnMiniView()
         }
         selected_ = 0;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::NotifyDeleted
+// Created: JSR 2013-02-04
+// -----------------------------------------------------------------------------
+void MiniViews::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    auto it = miniViews_.find( &entity );
+    if( it != miniViews_.end() )
+        DeleteView( it->second, &entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MiniViews::DeleteView
+// Created: JSR 2013-02-04
+// -----------------------------------------------------------------------------
+void MiniViews::DeleteView( MiniView*& view, const kernel::Entity_ABC* entity )
+{
+    if( GlRenderPass_ABC* pass = renderPasses_[ view ] )
+    {
+        widget_->RemovePass( *pass );
+        delete pass;
+        renderPasses_.erase( view );
+    }
+    delete view;
+    miniViews_.erase( entity );
+    if( miniViews_.empty() )
+        hide();
 }
