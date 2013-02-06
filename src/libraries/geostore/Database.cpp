@@ -35,6 +35,7 @@ namespace
                 SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
                 0 ) )
             throw MASA_EXCEPTION_SQLITE( "Failed to initialize database" );
+        sqlite3_enable_load_extension( db, 1 );
         return db;
     }
 }
@@ -44,6 +45,8 @@ Database::Database( const bfs::path& path, PointProjector_ABC& projector )
     , db_  ( Open( path ), &sqlite3_close )
     , log_ ( db_.get() )
 {
+    if( sqlite3_exec( db_.get(), "SELECT load_extension('spatialite.dll')", 0, 0, 0 ) != SQLITE_OK )
+        throw std::runtime_error( "cannot find spatialite DLL to load as sqlite extension" );
     ProjectionTable projection( db_.get() ); // Just used to initialize the projection table
     LoadLayers( projector );
 }
