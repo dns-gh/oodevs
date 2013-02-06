@@ -46,6 +46,7 @@ signals:
     //@{
     void SwordVersionSelected( bool isLegacy );
     void IntegrationPathSelected( const QString& integrationPath );
+    void DumpPathfindOptionsChanged( const QString& filter, const QString& directory );
     //@}
 
 private:
@@ -66,11 +67,19 @@ private:
     QPushButton* integrationButton_;
     QGroupBox* integrationBox_;
 
-    // profiling configuration
+    //profiling configuration
     QGroupBox* profilingBox_;
     QCheckBox* decCallsBox_;
     QCheckBox* commandsBox_;
     QCheckBox* hooksBox_;
+
+    //pathfinds configuration
+    QGroupBox* pathfindsBox_;
+    QLabel* dumpLabel_;
+    QLineEdit* dataDirectory_;
+    QPushButton* dataButton_;
+    QLabel* filterLabel_;
+    QLineEdit* filterEdit_;
     //@}
 
 private slots:
@@ -79,6 +88,8 @@ private slots:
     void SwordVersionChecked( bool state );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
+    void OnChangeDataDirectory();
+    void OnChangeDataFilter();
     //@}
 };
 

@@ -186,6 +186,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
         DebugConfigPanel* configPanel = AddPlugin< DebugConfigPanel >();
         connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
         connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
+        connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const QString& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const QString& ) ) );
     }
 
     //general settings tab
@@ -283,9 +284,12 @@ void ScenarioLauncherPage::OnStart()
         CreateSession( exerciseName, session );
 
         std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", isLegacy_ ? "true" : "false" )
-                                                                                   ( "checkpoint", checkpoint_ );
+                                                                                   ( "checkpoint", checkpoint_ )
+                                                                                   ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
         if( !integrationDir_.isEmpty() )
             arguments[ "integration-dir" ] = "\"" + integrationDir_.toStdString() + "\"";
+        if( !dumpPathfindDirectory_.isEmpty() )
+            arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.toStdString() + "\"";
 
         boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, arguments,
                                                                                              true, true, "", "" ) );
@@ -429,4 +433,14 @@ void ScenarioLauncherPage::OnSwordVersionSelected( bool isLegacy )
 void ScenarioLauncherPage::OnIntegrationPathSelected( const QString& integrationDir )
 {
     integrationDir_ = integrationDir;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnDumpPathfindOptionsChanged
+// Created: LGY 2013-02-06
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, const QString& directory )
+{
+    pathfindFilter_ = filter;
+    dumpPathfindDirectory_ = directory;
 }

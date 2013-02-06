@@ -73,6 +73,7 @@ private slots:
     void OnSwordVersionSelected( bool isLegacy );
     void OnNoClientSelected( bool noClient );
     void OnIntegrationPathSelected( const QString& integrationDir );
+    void OnDumpPathfindOptionsChanged( const QString& filter, const QString& directory );
     //@}
 
 protected:
@@ -106,6 +107,8 @@ protected:
     QString                       session_;
     QString                       checkpoint_;
     QString                       integrationDir_;
+    QString                       pathfindFilter_;
+    QString                       dumpPathfindDirectory_;
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;

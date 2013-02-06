@@ -53,6 +53,11 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , decCallsBox_( 0 )
     , commandsBox_( 0 )
     , hooksBox_( 0 )
+    , pathfindsBox_( 0 )
+    , filterLabel_( 0 )
+    , dumpLabel_( 0 )
+    , dataDirectory_( 0 )
+    , dataButton_( 0 )
 {
     //legacy box
     legacyLabel_ = new QLabel();
@@ -109,11 +114,39 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     profiling->addWidget( commandsBox_, 0, 1 );
     profiling->addWidget( hooksBox_, 1, 0 );
 
+    //pathfinds group box
+    pathfindsBox_ = new QGroupBox();
+    QVBoxLayout* pathfinds = new QVBoxLayout( pathfindsBox_ );
+    pathfinds->setMargin( 10 );
+    QHBoxLayout* dumpLayout = new QHBoxLayout();
+    dumpLayout->setSpacing( 10 );
+    dumpLabel_ = new QLabel();
+    dataButton_ = new QPushButton();
+    connect( dataButton_, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
+    dataDirectory_ = new QLineEdit();
+
+    dumpLayout->addWidget( dumpLabel_ );
+    dumpLayout->addWidget( dataDirectory_ );
+    dumpLayout->addWidget( dataButton_ );
+
+    QHBoxLayout* filterLayout = new QHBoxLayout();
+    filterLayout->setSpacing( 10 );
+    filterLabel_ = new QLabel();
+    filterEdit_ = new QLineEdit();
+    filterLayout->addWidget( filterLabel_ );
+    filterLayout->addWidget( filterEdit_ );
+    connect( filterEdit_, SIGNAL( editingFinished() ), SLOT( OnChangeDataFilter() ) );
+
+    pathfinds->addLayout( dumpLayout );
+    pathfinds->addLayout( filterLayout );
+
+
     //general Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     mainLayout->addWidget( legacyBox_ );
     mainLayout->addWidget( integrationBox_ );
     mainLayout->addWidget( profilingBox_ );
+    mainLayout->addWidget( pathfindsBox_ );
     mainLayout->setAlignment( Qt::AlignTop );
 }
 
@@ -182,6 +215,10 @@ void DebugConfigPanel::OnLanguageChanged()
     decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional function calls" ) );
     commandsBox_->setText( tools::translate( "DebugConfigPanel", "Commands start / stop" ) );
     hooksBox_->setText( tools::translate( "DebugConfigPanel", "Hooks function calls" ) );
+    pathfindsBox_->setTitle( tools::translate( "DebugConfigPanel", "Pathfind settings" ) );
+    filterLabel_->setText( tools::translate( "DebugConfigPanel", "Filter :" ) );
+    dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );
+    dataButton_->setText( "..." );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,4 +244,26 @@ void DebugConfigPanel::Commit( const std::string& exercise, const std::string& s
     if( hooksBox_->isChecked() )
         action.SetOption( "session/config/simulation/profiling/@hook", "true" );
     action.Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::OnChangeDataDirectory
+// Created: LGY 2013-02-05
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::OnChangeDataDirectory()
+{
+    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( this , "", dataDirectory_->text() ) );
+    if( directory.isEmpty() )
+        return;
+    dataDirectory_->setText( directory );
+    emit DumpPathfindOptionsChanged( filterEdit_->text(), dataDirectory_->text() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::OnChangeDataFilter
+// Created: LGY 2013-02-06
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::OnChangeDataFilter()
+{
+    emit DumpPathfindOptionsChanged( filterEdit_->text(), dataDirectory_->text() );
 }

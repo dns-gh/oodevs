@@ -175,7 +175,19 @@
     </message>
     <message>
         <source>Hooks function calls</source>
-        <translation>Appel aux points d'insertion </translation>
+        <translation>Appel aux points d&apos;insertion </translation>
+    </message>
+    <message>
+        <source>Pathfind settings</source>
+        <translation>Options de cherche-chemin</translation>
+    </message>
+    <message>
+        <source>Filter :</source>
+        <translation>Filtre:</translation>
+    </message>
+    <message>
+        <source>Dump pathfinds directory :</source>
+        <translation>Répertoire de sortie:</translation>
     </message>
 </context>
 <context>

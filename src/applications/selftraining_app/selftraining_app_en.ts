@@ -175,6 +175,18 @@
         <source>Hooks function calls</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pathfind settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dump pathfinds directory :</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
