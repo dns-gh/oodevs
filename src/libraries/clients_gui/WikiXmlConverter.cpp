@@ -114,41 +114,35 @@ void FromXmlTagsToWiki( const std::string& tag, xml::xistream& xis, std::string&
 
 const boost::regex reStyles = boost::regex( "(.*?)(\"\"|''|__|\\$\\$)(.*)" );
 
-void MakeStringXmlItem( xml::xostream& xos, std::string line )
+void MakeStringXmlItem( xml::xostream& output, std::string line )
 {
-    if( line.size() > 0 )
+    if( line.empty() )
+        return;
+    xml::xosubstream xos( output );
+    xos.start( "line" );
+    std::set< std::string > openTags;
+    while ( !line.empty() )
     {
-        xos.start( "line" );
-        std::set< std::string > openTags;
-        while ( line.size() > 0 )
+        boost::smatch match;
+        if( boost::regex_search( line, match, reStyles ) )
         {
-            boost::smatch match;
-            if( boost::regex_search( line, match, reStyles ) )
-            {
-                if( match[ 1 ].length() > 0 )
-                    xos << xml::start( "text" ) << match[ 1 ] << xml::end;
-                auto ret = openTags.insert( match[ 2 ] );
-                if( ret.second )
-                    xos.start( ConvertWikiTagToXmlTag( *ret.first ) );
-                else
-                {
-                    xos.end();
-                    openTags.erase( ret.first );
-                }
-                line = match[ 3 ];
-            }
+            if( match[ 1 ].length() > 0 )
+                xos << xml::start( "text" ) << match[ 1 ] << xml::end;
+            auto ret = openTags.insert( match[ 2 ] );
+            if( ret.second )
+                xos.start( ConvertWikiTagToXmlTag( *ret.first ) );
             else
             {
-                xos << xml::start( "text" ) << line << xml::end;
-                break;
+                xos.end();
+                openTags.erase( ret.first );
             }
+            line = match[ 3 ];
         }
-        while( !openTags.empty() )
+        else
         {
-            openTags.erase( openTags.begin() );
-            xos.end();
+            xos << xml::start( "text" ) << line << xml::end;
+            break;
         }
-        xos.end();
     }
 }
 
