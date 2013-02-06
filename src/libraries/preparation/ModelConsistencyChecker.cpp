@@ -953,33 +953,56 @@ namespace
         return false;
     }
 
-    std::vector< std::string > GetReceivers( const kernel::Agent_ABC& transmitter )
+    void FillReceivers( const kernel::Agent_ABC& transmitter, std::vector< std::string >& receivers )
     {
-        std::vector< std::string > list;
         if( const kernel::DictionaryExtensions* extension = transmitter.Retrieve< kernel::DictionaryExtensions >() )
         {
             const std::string name = extension->GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
             const std::string value = extension->GetValue( name );
-            boost::split( list, value, boost::algorithm::is_any_of( ";" ) );
+            boost::split( receivers, value, boost::algorithm::is_any_of( ";" ) );
         }
+    }
+
+    std::vector< std::string > GetReceivers( const kernel::Agent_ABC& transmitter )
+    {
+        std::vector< std::string > list;
+        FillReceivers( transmitter, list );
         return list;
+    }
+
+    bool IsReceiverListValid( std::set< const kernel::Agent_ABC* >& receiverSet, const kernel::Agent_ABC& transmitter, unsigned int entityId, tools::Resolver_ABC< kernel::Agent_ABC >& resolver )
+    {
+        if( !IsTransmitter( transmitter ) )
+            return true;
+        std::set< const kernel::Agent_ABC* > newAgents;
+        std::vector< std::string > receivers = GetReceivers( transmitter );
+        for( auto it = receivers.begin(); it != receivers.end(); ++it )
+        {
+            if( !it->empty() )
+            {
+                unsigned int id = boost::lexical_cast< unsigned int >( *it );
+                if( entityId == id )
+                    return false;
+                if( const kernel::Agent_ABC* agent = resolver.Find( id ) )
+                {
+                    if( receiverSet.insert( agent ).second )
+                        newAgents.insert( agent );
+                }
+            }
+        }
+        for( auto it = newAgents.begin(); it != newAgents.end(); ++it )
+        {
+            if( !IsReceiverListValid( receiverSet, **it, entityId, resolver ) )
+                return false;
+        }
+        return true;
     }
 
     bool IsValid( const kernel::Agent_ABC& transmitter, const kernel::Agent_ABC& entity, tools::Resolver_ABC< kernel::Agent_ABC >& resolver )
     {
-        if( IsTransmitter( transmitter ) )
-            BOOST_FOREACH( const std::string id, GetReceivers( transmitter ) )
-                if( id != "" )
-                {
-                    if( const kernel::Agent_ABC* agent = resolver.Find( boost::lexical_cast< unsigned int >( id ) ) )
-                    {
-                        if( entity.GetId() == agent->GetId() )
-                            return false;
-                        if( !IsValid( *agent, entity, resolver ) )
-                            return false;
-                    }
-                }
-        return true;
+        unsigned int entityId = entity.GetId();
+        std::set< const kernel::Agent_ABC* > receivers;
+        return IsReceiverListValid( receivers, transmitter, entityId, resolver );
     }
 
     bool PointsInvalidElement( const kernel::Agent_ABC& transmitter, tools::Resolver_ABC< kernel::Agent_ABC >& resolver )
