@@ -32,6 +32,18 @@ QDateTime tools::IsoStringToQTime( const std::string& text )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::GDHStringToQTime
+// Created: JSR 2013-02-06
+// -----------------------------------------------------------------------------
+QDateTime tools::GDHStringToQTime( const std::string& text )
+{
+    QString extended( text.c_str() );
+    extended.insert( 13, ':' ); extended.insert( 11, ':' );
+    extended.insert(  6, '-' ); extended.insert(  4, '-' );
+    return QDateTime::fromString( extended, Qt::ISODate );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::BoostTimeToQTime
 // Created: ABR 2012-07-19
 // -----------------------------------------------------------------------------

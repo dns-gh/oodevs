@@ -13,6 +13,7 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include <boost/noncopyable.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qdatetime.h>
 #pragma warning( pop )
@@ -41,6 +42,7 @@ namespace actions
 class ActionTiming : public kernel::Extension_ABC
                    , public kernel::Serializable_ABC
                    , public kernel::Displayable_ABC
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -64,13 +66,6 @@ public:
     //@{
     bool IsEnabled() const;
     QDateTime GetTime() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ActionTiming( const ActionTiming& );            //!< Copy constructor
-    ActionTiming& operator=( const ActionTiming& ); //!< Assignment operator
     //@}
 
 private:

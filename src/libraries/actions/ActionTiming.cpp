@@ -30,17 +30,6 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_A
     // NOTHING
 }
 
-namespace
-{
-    QDateTime ReadDateTime( const std::string& datetime )
-    {
-        QString extended( datetime.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' );
-        extended.insert(  6, '-' ); extended.insert(  4, '-' );
-        return QDateTime::fromString( extended, Qt::ISODate );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionTiming constructor
 // Created: SBO 2010-09-21
@@ -49,7 +38,7 @@ ActionTiming::ActionTiming( kernel::Controller& controller, const kernel::Time_A
     : controller_( controller )
     , simulation_( simulation )
     , enabled_( true )
-    , time_( ReadDateTime( datetime ) )
+    , time_( tools::GDHStringToQTime( datetime ) )
 {
     // NOTHING
 }

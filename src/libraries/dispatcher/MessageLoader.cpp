@@ -120,7 +120,6 @@ namespace
 void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
     boost::mutex::scoped_lock lock( access_ );
-    synchronisation_ = frameNumber != 0;
     if( disk_.get() )
     {
         for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
@@ -492,7 +491,7 @@ void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, Messa
     in.seekg( from );
     BufPtr buf = MakeBuffer( in, size, filename );
     if( buf )
-        LoadBuffer( buf, handler, callback, synchronisation_ );
+        LoadBuffer( buf, handler, callback );
 }
 
 // -----------------------------------------------------------------------------
@@ -515,7 +514,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     const Frame& current = frames[ next ];
     BufPtr buf = MakeBufferFrom( records_ / folder / updateFileName, current.offset_, current.size_ );
     if( buf )
-        cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
+        cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -531,20 +530,19 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
 
     BufPtr buf = MakeBufferFrom( records_ / folder / keyFileName, next->offset_, next->size_ );
     if( buf )
-        cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
+        cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::LoadBuffer
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadBuffer( const BufPtr& buffer, MessageHandler_ABC& handler,
-                                const T_Callback& callback, bool synchronized )
+void MessageLoader::LoadBuffer( const BufPtr& buffer, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     char* current = &buffer->data_[0];
     char* end = current + buffer->data_.size();
     while( current < end )
-        current += LoadSimToClientMessage( current, end - current, handler, synchronized );
+        current += LoadSimToClientMessage( current, end - current, handler );
     if( callback )
         callback();
 }
@@ -553,9 +551,7 @@ void MessageLoader::LoadBuffer( const BufPtr& buffer, MessageHandler_ABC& handle
 // Name: MessageLoader::LoadSimToClientMessage
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size,
-                                              MessageHandler_ABC& handler,
-                                              bool synchronized )
+size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size, MessageHandler_ABC& handler )
 {
     unsigned msgSize = 0;
     const size_t header = sizeof msgSize;
@@ -577,17 +573,6 @@ size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size,
         return header + payload;
     }
 
-    // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,
-    // to avoid them to be displayed several times in timeline (mantis 3725)
-    if( synchronized && message.has_message() )
-    {
-        if( message.message().has_unit_order() )
-            message.mutable_message()->mutable_unit_order()->mutable_type()->set_id( 0 );
-        else if( message.message().has_automat_order() )
-            message.mutable_message()->mutable_automat_order()->mutable_type()->set_id( 0 );
-        else if( message.message().has_crowd_order() )
-            message.mutable_message()->mutable_crowd_order()->mutable_type()->set_id( 0 );
-    }
     handler.Receive( message );
     return header + payload;
 }

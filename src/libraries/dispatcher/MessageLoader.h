@@ -92,8 +92,8 @@ private:
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const boost::filesystem::path& filename );
     void LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
-    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback, bool synchronized );
-    size_t LoadSimToClientMessage( const char* input, size_t size, MessageHandler_ABC& handler, bool synchronized );
+    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
+    size_t LoadSimToClientMessage( const char* input, size_t size, MessageHandler_ABC& handler );
     //@}
 
 private:
@@ -115,7 +115,6 @@ private:
     std::ifstream keys_;
     T_Frames frames_;
     T_KeyFrames keyFrames_;
-    bool synchronisation_;
     //@}
 };
 }

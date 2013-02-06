@@ -11,9 +11,12 @@
 #include "MissionParameters.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory_ABC.h"
+#include "actions/ActionTiming.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/OrderType.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace actions;
@@ -47,6 +50,19 @@ void MissionParameters::UpdateMessage( const T& message )
 {
     if( message.type().id() == 0 )
         return;
+
+    if( message.has_start_time() )
+    {
+        QDateTime time = tools::GDHStringToQTime( message.start_time().data() );
+        tools::Iterator< const Action_ABC& > it = CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Action_ABC& action = it.NextElement();
+            const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming>();
+            if( timing && action.GetType().GetId() == message.type().id() && timing->GetTime() == time )
+                return;
+        }
+    }
 
     try
     {

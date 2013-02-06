@@ -27,6 +27,7 @@
 namespace tools
 {
     QDateTime IsoStringToQTime( const std::string& text );
+    QDateTime GDHStringToQTime( const std::string& text );
 
     QDateTime BoostTimeToQTime( const boost::posix_time::ptime& btime );
     boost::posix_time::ptime QTimeToBoostTime( const QDateTime& qtime );
