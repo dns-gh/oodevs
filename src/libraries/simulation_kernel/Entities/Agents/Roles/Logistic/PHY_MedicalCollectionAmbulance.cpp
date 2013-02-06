@@ -222,10 +222,20 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForDestinationArea()
     if( !pLogisticManager )
         return false;
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
-    if( !pLogisticSuperior )
-        return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
     if( bSort_ )
+    {
+        if( !pLogisticSuperior )
+            return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
         pDestinationArea_ = pLogisticSuperior->MedicalReserveForSorting( *this );
+    }
+    else
+    {   
+        auto it = consigns_.begin();
+        if( it != consigns_.end() )
+            pDestinationArea_ = pLogisticManager->MedicalFindAlternativeHealingHandler( const_cast< PHY_MedicalHumanState& > ((*it)->GetHumanState() ) );
+        if( !pDestinationArea_ && !pLogisticSuperior )
+            return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
+    }
     return pDestinationArea_ != 0;
 }
 
