@@ -178,11 +178,15 @@ integration.startFragOrderTask = function( self )
                                                               mission_objectives = { objectives = mission.objectives}, 
                                                               echelon = eEtatEchelon_First } )
         else
-            masalife.brain.core.stopTasks()
+            integration.stopMission( )
+            local automat = integration.GetSuperiorKnowledge( meKnowledge )
+            if automat then
+              integration.SendMessage( "TaskDone", automat, { element = myself }, { type = "dynamic" } ) -- need to advice skill lead
+            end
         end
     end
-	integration.cleanFragOrder( self )
-	return
+    integration.cleanFragOrder( self )
+    return
   elseif orderType == "Rep_OrderConduite_PasserEnSilenceRadar" then
     stopTask( "sword.military.platoon.tasks.frago.ActivateRadar" )
     orderType = "sword.military.platoon.tasks.frago.ObserveRadarSilence"
@@ -324,31 +328,31 @@ integration.startFragOrderTask = function( self )
         return
     end
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnEquipements" then
-	local equipments = integration.getOrderConduiteModifierPrioritesReparationsParameter( self )
-	if not equipments or #equipments ~= 1 then 
-		integration.cleanFragOrder( self )
-		error( "Need exactly one type of equipment" ) 
-	end
-	integration.startGiveEquipment( integration.getPionRenforceParameter( self ), integration.getPionRenforceParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
+    local equipments = integration.getOrderConduiteModifierPrioritesReparationsParameter( self )
+    if not equipments or #equipments ~= 1 then 
+        integration.cleanFragOrder( self )
+        error( "Need exactly one type of equipment" ) 
+    end
+    integration.startGiveEquipment( integration.getPionRenforceParameter( self ), integration.getPionRenforceParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_TransfererEquipements" then
-	local equipments = integration.getOrderConduiteModifierPrioritesReparationsParameter( self )
-	if not equipments or #equipments ~= 1 then 
-		integration.cleanFragOrder( self )
-		error( "Need exactly one type of equipment" ) 
-	end
-	integration.startTakeEquipment( integration.getPionRenforceParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
-	integration.startGiveEquipment( integration.getPionRenforceParameter( self ), integration.getPionARenforcerParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
+    local equipments = integration.getOrderConduiteModifierPrioritesReparationsParameter( self )
+    if not equipments or #equipments ~= 1 then 
+        integration.cleanFragOrder( self )
+        error( "Need exactly one type of equipment" ) 
+    end
+    integration.startTakeEquipment( integration.getPionRenforceParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
+    integration.startGiveEquipment( integration.getPionRenforceParameter( self ), integration.getPionARenforcerParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_ReprendreAuxOrdresEquipements" then
-	local equipments = integration.getOrderConduiteModifierPrioritesReparationsParameter( self )
-	if not equipments or #equipments ~= 1 then 
-		integration.cleanFragOrder( self )
-		error( "Need exactly one type of equipment" ) 
-	end
-	integration.startTakeEquipment( integration.getPionRenforceParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
+    local equipments = integration.getOrderConduiteModifierPrioritesReparationsParameter( self )
+    if not equipments or #equipments ~= 1 then 
+        integration.cleanFragOrder( self )
+        error( "Need exactly one type of equipment" ) 
+    end
+    integration.startTakeEquipment( integration.getPionRenforceParameter( self ), equipments[1], integration.getNbrAmbulancesParameter( self ) )
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" then
