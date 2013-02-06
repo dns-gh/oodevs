@@ -187,7 +187,7 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
             const std::string text = (*it)->GetText();
             sqlite3_bind_text( stmt, 2, text.c_str(), static_cast< int >( text.length() ), SQLITE_TRANSIENT );
             // Spatialite BLOB
-            sqlite3_bind_blob( stmt, 3, blob, blob_size, &free );
+            sqlite3_bind_blob( stmt, 3, blob, blob_size, &gaiaFree );
 
             // Step the query
             StepStatement( stmt );
