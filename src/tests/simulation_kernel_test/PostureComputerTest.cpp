@@ -95,6 +95,15 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_unloaded_changes_to_
     BOOST_CHECK( result.newPosture_ == &PHY_Posture::posteReflexe_ );
 }
 
+BOOST_FIXTURE_TEST_CASE( partially_completed_posture_but_moving_uses_posture_time, Fixture )
+{
+    const double partiallyCompleted = 0.5;
+    posture::DefaultPostureComputer computer( random, time, PHY_Posture::posteReflexe_, false, false, partiallyCompleted, 1, 1, false );
+    computer.SetPostureMovement();
+    MOCK_EXPECT( time.GetPostureTearDownTime ).once().with( mock::same( PHY_Posture::poste_ ) ).returns( 10 );
+    computer.Result();
+}
+
 BOOST_FIXTURE_TEST_CASE( moving_posture_but_stopped_changes_to_stopped_posture, Fixture )
 {
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::mouvement_, false, false, 0, 1, 1, false );
