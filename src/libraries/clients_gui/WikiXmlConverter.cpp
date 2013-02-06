@@ -44,50 +44,6 @@ const std::string& ConvertXmlToWikiTag( const std::string& xmlTag )
     throw MASA_EXCEPTION( "Used xml tag is invalid." );
 }
 
-class UL : private boost::noncopyable
-{
-public:
-    UL( xml::xostream& xos )
-        : xos_( xos )
-    {
-        xos << xml::start( "ul" );
-    }
-    ~UL()
-    {
-        xos_ << xml::end;
-    }
-private:
-    xml::xostream& xos_;
-};
-
-class ULFormatter : private boost::noncopyable
-{
-public:
-    ULFormatter( xml::xostream& xos )
-        : xos_( xos )
-    {
-        // NOTHING
-    }
-    ~ULFormatter()
-    {
-        // NOTHING
-    }
-
-    void FormatUL( int n )
-    {
-        for( int i = 0; i < n ; ++i )
-            vector.emplace_back( new UL( xos_ ) );
-        for( int i = n; i < 0 ; ++i )
-        {
-            delete vector.back();
-            vector.pop_back();
-        }
-    }
-private:
-    xml::xostream& xos_;
-    std::vector< UL* > vector;
-};
-
 // =============================================================================
 /** @class  WikiXmlConverter
     @brief  WikiXmlConverter
@@ -289,12 +245,15 @@ void WikiXmlConverter::FromWikiToXml( xml::xostream& xos, const std::string& tex
 
     //create xml file
     size_t previousLength = 0;
-    ULFormatter formatter( xos );
     while( !tokensVector.empty() )
     {
         std::pair< std::size_t, std::string > line = tokensVector.front();
         tokensVector.pop();
-        formatter.FormatUL( static_cast< int >( line.first - previousLength ) );
+        int ulOffset = static_cast< int >( line.first - previousLength );
+        for( int i = 0; i < ulOffset ; ++i )
+            xos << xml::start( "ul" );
+        for( int i = ulOffset; i < 0 ; ++i )
+            xos << xml::end;
         MakeStringXmlItem( xos, line.first, line.second );
         previousLength = line.first;
     }
