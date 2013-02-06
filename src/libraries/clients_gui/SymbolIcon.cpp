@@ -121,6 +121,6 @@ void SymbolIcon::SetKarmaFactor( const kernel::Karma& karma )
 // -----------------------------------------------------------------------------
 bool SymbolIcon::operator<( const SymbolIcon& rhs ) const
 {
-    return boost::tuples::make_tuple(     symbol_,     level_,     color_.rgb(),     size_.width(),     size_.height() )
-        <  boost::tuples::make_tuple( rhs.symbol_, rhs.level_, rhs.color_.rgb(), rhs.size_.width(), rhs.size_.height() );
+    return boost::tuples::make_tuple(     boost::cref( symbol_ ),     boost::cref( level_ ),     color_.rgb(),     size_.width(),     size_.height() )
+        <  boost::tuples::make_tuple( boost::cref( rhs.symbol_ ), boost::cref( rhs.level_ ), rhs.color_.rgb(), rhs.size_.width(), rhs.size_.height() );
 }
