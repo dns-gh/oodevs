@@ -8,12 +8,15 @@
 // *****************************************************************************
 
 #include "geostore_test_pch.h"
+#include <tools/Exception.h>
+
+std::string temp_directory;
 
 namespace
 {
     std::string data_directory;
 
-    void set_data_directory( int argc, char* argv[] )
+    void parse_options( int argc, char* argv[] )
     {
         while( argc-- )
         {
@@ -21,13 +24,17 @@ namespace
             const std::string::size_type n = argument.find( '=' );
             if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
                 data_directory = argument.substr( n+1 );
+            if( n != std::string::npos && argument.substr( 0, n ) == "--temp_directory" )
+                temp_directory = argument.substr( n+1 );
         }
     }
 }
 
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
-    set_data_directory( argc, argv );
+    parse_options( argc, argv );
+    if( temp_directory.empty() )
+        throw MASA_EXCEPTION( "Test --temp_directory option was not supplied" );
     return 0;
 }
 

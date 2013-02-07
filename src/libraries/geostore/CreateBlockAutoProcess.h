@@ -10,6 +10,7 @@
 #ifndef __CreateBlockAutoProcess_h_
 #define __CreateBlockAutoProcess_h_
 
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <string>

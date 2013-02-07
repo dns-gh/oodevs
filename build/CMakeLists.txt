@@ -229,6 +229,7 @@ target_link_libraries( geostore
 
 # geostore_test
 add_target( geostore_test tests "tests/geostore_test" OPTIONS test )
+masa_add_target_include( geostore_test "${root_dir}/include/spatialite" )
 target_link_libraries( geostore_test geostore )
 
 # 3a_test

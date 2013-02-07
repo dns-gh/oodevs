@@ -20,6 +20,10 @@
 #include <turtle/mock.hpp>
 #pragma warning( disable : 4505 )
 
+#include <sqlite/sqlite3.h>
+#include <spatialite.h>
+
+extern std::string temp_directory;
 std::string BOOST_RESOLVE( const std::string& filename );
 
 #endif // __dispatcher_kernel_test_pch_h_
