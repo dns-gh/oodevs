@@ -81,6 +81,9 @@
     <ClInclude Include="..\..\src\libraries\protocol\XmlReaders.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\protocol\XmlWriters.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp">
@@ -135,6 +138,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\protocol\XmlReaders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\protocol\XmlWriters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

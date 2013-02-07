@@ -147,6 +147,7 @@
     <ClInclude Include="..\..\src\libraries\protocol\SimulationSenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Version.h" />
     <ClInclude Include="..\..\src\libraries\protocol\XmlReaders.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\XmlWriters.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="..\..\src\libraries\protocol\SimulationToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\Version.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\XmlReaders.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\XmlWriters.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">
