@@ -15,13 +15,14 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "DEC_Knowledge_AgentPerception.h"
-#include "Entities/Agents/Perceptions/PHY_ZURBPerceptionComputer.h"
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "Entities/Agents/Perceptions/PHY_ZURBPerceptionComputer.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Fire )
 
@@ -154,3 +155,28 @@ void DEC_KS_Fire::NotifyAttackedBy( MIL_Population& attacker )
     populationsAttacking_.insert( &attacker );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::PionComparator::operator()
+// Created: LDC 2013-02-07
+// -----------------------------------------------------------------------------
+bool DEC_KS_Fire::PionComparator::operator() (const MIL_AgentPion* lhs, const MIL_AgentPion* rhs) const
+{
+    if( !lhs )
+        return false;
+    if( !rhs )
+        return true;
+    return lhs->GetID() < rhs->GetID(); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::PopulationComparator::operator()
+// Created: LDC 2013-02-07
+// -----------------------------------------------------------------------------
+bool DEC_KS_Fire::PopulationComparator::operator() (const MIL_Population* lhs, const MIL_Population* rhs) const
+{
+    if( !lhs )
+        return false;
+    if( !rhs )
+        return true;
+    return lhs->GetID() < rhs->GetID(); 
+}

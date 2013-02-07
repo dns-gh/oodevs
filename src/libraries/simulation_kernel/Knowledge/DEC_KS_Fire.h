@@ -61,10 +61,16 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_AgentPion* >  T_PionSet;
+    struct PionComparator {
+        bool operator() (const MIL_AgentPion* lhs, const MIL_AgentPion* rhs) const;
+    };
+    typedef std::set< MIL_AgentPion*, PionComparator >  T_PionSet;
     typedef T_PionSet::const_iterator   CIT_PionSet;
 
-    typedef std::set< MIL_Population* >     T_PopulationSet;
+    struct PopulationComparator {
+        bool operator() (const MIL_Population* lhs, const MIL_Population* rhs) const;
+    };
+    typedef std::set< MIL_Population*, PopulationComparator >     T_PopulationSet;
     typedef T_PopulationSet::const_iterator CIT_PopulationSet;
     //@}
 
