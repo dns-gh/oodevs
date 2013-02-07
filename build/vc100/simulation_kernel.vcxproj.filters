@@ -2664,6 +2664,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.cpp">
       <Filter>Source Files\Adapters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentPion_Remote.cpp">
+      <Filter>Source Files\Entities\Specialisations\Remote</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentTypePion_Remote.cpp">
+      <Filter>Source Files\Entities\Specialisations\Remote</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5452,6 +5458,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\RoleExtender_ABC.h">
       <Filter>Source Files\Entities\Agents\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentPion_Remote.h">
+      <Filter>Source Files\Entities\Specialisations\Remote</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentTypePion_Remote.h">
+      <Filter>Source Files\Entities\Specialisations\Remote</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

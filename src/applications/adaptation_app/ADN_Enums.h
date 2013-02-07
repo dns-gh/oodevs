@@ -120,6 +120,7 @@ enum E_AgentTypePion
     eAgentTypePionNotable,
     eAgentTypePionJournalist,
     eAgentTypePionCivilian,
+    eAgentTypePionRemote,
 
     eNbrAgentTypePion
 };

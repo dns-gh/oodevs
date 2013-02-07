@@ -37,6 +37,7 @@
 #include "Entities/Specialisations/LOG/Maintenance/MIL_AgentTypePionLOGMaintenance.h"
 #include "Entities/Specialisations/LOG/Supply/MIL_AgentTypePionLOGSupply.h"
 #include "Entities/Specialisations/LOG/Convoy/MIL_AgentTypePionLOGConvoy.h"
+#include "Entities/Specialisations/Remote/MIL_AgentTypePion_Remote.h"
 
 #include "Entities/Agents/Roles/Humans/PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RolePion_Dotations.h"
@@ -126,6 +127,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
     pionTypeAllocators_[ "Pion Notable"                ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Journalist"             ] = &MIL_AgentTypePion               ::Create;
     pionTypeAllocators_[ "Pion Civilian"               ] = &MIL_AgentTypePion               ::Create;
+    pionTypeAllocators_[ "Pion Remote"                 ] = &MIL_AgentTypePion_Remote        ::Create;
 
     LoadingWrapper loader;
     xis >> xml::start( "units" )

@@ -91,6 +91,7 @@ ADN_Tr::T_ConverterAgentTypePion ADN_Tr::agentTypePionConverter_[] =
     T_ConverterAgentTypePion( "Pion Notable"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Notable" ),                            eAgentTypePionNotable ),
     T_ConverterAgentTypePion( "Pion Journalist"                 ,QT_TRANSLATE_NOOP( "ADN_Tr", "Journalist" ),                         eAgentTypePionJournalist ),
     T_ConverterAgentTypePion( "Pion Civilian"                   ,QT_TRANSLATE_NOOP( "ADN_Tr", "Civilian" ),                           eAgentTypePionCivilian ),
+    T_ConverterAgentTypePion( "Pion Remote"                     ,QT_TRANSLATE_NOOP( "ADN_Tr", "Remote" ),                             eAgentTypePionRemote ),
     T_ConverterAgentTypePion( "", "", (E_AgentTypePion)-1 )
 };
 
