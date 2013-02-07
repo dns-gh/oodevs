@@ -983,6 +983,17 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SplitPionLocalisationInParts
+// Created: LDC 2013-02-07
+// -----------------------------------------------------------------------------
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitPionLocalisationInParts( DEC_Decision_ABC* caller, TER_Localisation* pLocalisation, unsigned int nNbrParts, const MT_Vector2D* direction )
+{
+    if( !caller )
+         throw std::runtime_error( "Null unit when splitting location in parts" );
+    return SplitLocalisationInParts< MIL_AgentPion >( caller->GetPion(), pLocalisation, nNbrParts, direction);
+}
+    
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeLocalisationBarycenter
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
