@@ -11,7 +11,7 @@
 #define _SCL_SECURE_NO_WARNINGS
 #endif
 
-#include "Serializers.h"
+#include "XmlReaders.h"
 
 #include "Helpers.h"
 
@@ -26,7 +26,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace protocol;
-using namespace serializer;
 using namespace sword;
 
 namespace
@@ -920,7 +919,7 @@ namespace
     }
 }
 
-void serializer::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
 {
     dst.set_null_value( true );
     const auto type = TestLowCaseAttribute( xis, "type" );
@@ -955,7 +954,7 @@ namespace
     }
 }
 
-void serializer::Read( const Reader_ABC& reader, MissionParameters& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, MissionParameters& dst, xml::xistream& xis )
 {
     xis >> xml::list( "parameter", boost::bind( &AddParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
 }
@@ -997,48 +996,48 @@ namespace
     }
 }
 
-void serializer::Read( const Reader_ABC& reader, UnitOrder& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, UnitOrder& dst, xml::xistream& xis )
 {
     dst.mutable_tasker()->set_id( xis.attribute< int32_t >( "target" ) );
     ReadOrder( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, AutomatOrder& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, AutomatOrder& dst, xml::xistream& xis )
 {
     dst.mutable_tasker()->set_id( xis.attribute< int32_t >( "target" ) );
     ReadOrder( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, CrowdOrder& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, CrowdOrder& dst, xml::xistream& xis )
 {
     dst.mutable_tasker()->set_id( xis.attribute< int32_t >( "target" ) );
     ReadOrder( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, FragOrder& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, FragOrder& dst, xml::xistream& xis )
 {
     SetTasker( reader, *dst.mutable_tasker(), xis.attribute< int32_t >( "target" ) );
     ReadOrder( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, MagicAction& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, MagicAction& dst, xml::xistream& xis )
 {
     ReadMagic< mapping::MagicAction >( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, UnitMagicAction& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, UnitMagicAction& dst, xml::xistream& xis )
 {
     SetTasker( reader, *dst.mutable_tasker(), xis.attribute< int32_t >( "target" ) );
     ReadMagic< mapping::MagicUnitAction >( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, ObjectMagicAction& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, ObjectMagicAction& dst, xml::xistream& xis )
 {
     dst.mutable_object()->set_id( xis.attribute< int32_t >( "target" ) );
     ReadMagic< mapping::MagicObjectAction >( reader, dst, xis );
 }
 
-void serializer::Read( const Reader_ABC& reader, KnowledgeMagicAction& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, KnowledgeMagicAction& dst, xml::xistream& xis )
 {
     dst.mutable_knowledge_group()->set_id( xis.attribute< int32_t >( "target" ) );
     ReadMagic< mapping::MagicKnowledgeAction >( reader, dst, xis );
@@ -1053,7 +1052,7 @@ namespace
     }
 }
 
-void serializer::Read( const Reader_ABC&, SetAutomatMode& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC&, SetAutomatMode& dst, xml::xistream& xis )
 {
     dst.mutable_automate()->set_id( xis.attribute< int32_t >( "target" ) );
     dst.set_mode( ReadAutomatMode( xis ) );
@@ -1117,7 +1116,7 @@ namespace
     };
 }
 
-void serializer::Read( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
+void protocol::Read( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
 {
     const auto type = TestLowCaseAttribute( xis, "type" );
     if( !type )

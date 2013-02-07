@@ -10,12 +10,11 @@
 #include "protocol_test_pch.h"
 
 #include "protocol/Helpers.h"
-#include "protocol/Serializers.h"
+#include "protocol/XmlReaders.h"
 
 #include <xeumeuleu/xml.hpp>
 
 using namespace protocol;
-using namespace serializer;
 using namespace sword;
 
 namespace
@@ -44,7 +43,7 @@ namespace
             xml::xistringstream xis( input );
             xis >> xml::start( "action" );
             T dst;
-            serializer::Read( reader, dst, xis );
+            protocol::Read( reader, dst, xis );
             return dst;
         }
 

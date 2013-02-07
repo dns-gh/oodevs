@@ -142,11 +142,11 @@
     <ClInclude Include="..\..\src\libraries\protocol\Replay.h" />
     <ClInclude Include="..\..\src\libraries\protocol\ReplaySenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Senders.h" />
-    <ClInclude Include="..\..\src\libraries\protocol\Serializers.h" />
     <ClInclude Include="..\..\src\libraries\protocol\ServerPublisher_ABC.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Simulation.h" />
     <ClInclude Include="..\..\src\libraries\protocol\SimulationSenders.h" />
     <ClInclude Include="..\..\src\libraries\protocol\Version.h" />
+    <ClInclude Include="..\..\src\libraries\protocol\XmlReaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp" />
@@ -163,10 +163,10 @@
     <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\LauncherToAdmin.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\MessengerToClient.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ReadSerializers.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\ReplayToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\SimulationToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\Version.cpp" />
+    <ClCompile Include="..\..\src\libraries\protocol\XmlReaders.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">

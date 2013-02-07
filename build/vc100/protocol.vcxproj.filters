@@ -78,7 +78,7 @@
     <ClInclude Include="..\..\src\libraries\protocol\Helpers.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\protocol\Serializers.h">
+    <ClInclude Include="..\..\src\libraries\protocol\XmlReaders.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\protocol\ReadSerializers.cpp">
+    <ClCompile Include="..\..\src\libraries\protocol\XmlReaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

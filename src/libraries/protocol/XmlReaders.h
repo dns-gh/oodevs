@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef PROTOCOL_SERIALIZERS_H__
-#define PROTOCOL_SERIALIZERS_H__
+#ifndef PROTOCOL_XML_READERS_H__
+#define PROTOCOL_XML_READERS_H__
 
 #include "Simulation.h"
 
@@ -21,8 +21,6 @@ namespace xml
 };
 
 namespace protocol
-{
-namespace serializer
 {
     struct Reader_ABC : public boost::noncopyable
     {
@@ -69,6 +67,5 @@ namespace serializer
     void Read( const Reader_ABC& reader, sword::SetAutomatMode& dst,       xml::xistream& xis );
     void Read( const Reader_ABC& reader, sword::ClientToSim_Content& dst,  xml::xistream& xis );
 }
-}
 
-#endif // PROTOCOL_SERIALIZERS_H__
+#endif // PROTOCOL_XML_READERS_H__
