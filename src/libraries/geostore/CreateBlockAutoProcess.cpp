@@ -70,13 +70,13 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     blocks.clear();
 
     // Find intersecting urban areas
-    auto it = database_.tables_.find( "urban" );
-    if( it != database_.tables_.end() )
+    auto it = database_.GetTables().find( "urban" );
+    if( it != database_.GetTables().end() )
         urbans = it->second->GetFeaturesIntersectingWith( poly );
 
     // Find intersecting buildings
-    it = database_.tables_.find( "building" );
-    if( it != database_.tables_.end() )
+    it = database_.GetTables().find( "building" );
+    if( it != database_.GetTables().end() )
         buildings = it->second->GetFeaturesIntersectingWith( poly );
         
     AddBuildingsToUrban( urbans, buildings );
@@ -122,7 +122,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& lines )
 {
-    for( auto it = database_.tables_.begin(); it != database_.tables_.end(); ++it )
+    for( auto it = database_.GetTables().begin(); it != database_.GetTables().end(); ++it )
     {
         if( it->first == "urban" || it->first == "building" )
             continue;

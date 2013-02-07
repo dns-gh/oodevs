@@ -16,14 +16,15 @@
 #include <boost/ptr_container/ptr_map.hpp>
 #include <boost/filesystem/path.hpp>
 #include <string>
-#include <map>
 
 class PointProjector_ABC;
 struct sqlite3;
 
 namespace geostore
 {
-    class GeoTable;
+class GeoTable;
+
+typedef boost::ptr_map< std::string, GeoTable > T_GeoTables;
 
 // =============================================================================
 /** @class  Database
@@ -40,6 +41,8 @@ public:
     ~Database();
     //@}
 
+    const T_GeoTables& GetTables() const;
+
 private:
     //! @name Helpers
     //@{
@@ -47,15 +50,10 @@ private:
     GeoTable* LoadLayer( PointProjector_ABC& projector, const boost::filesystem::path& file, const std::string& layer );
     //@}
 
-public:
-    //! @name Member data
-    //@{
-    boost::ptr_map< std::string, GeoTable > tables_; // $$$$ MCO 2013-02-04: public only for tests but WTF anyway !
-    //@}
-
 private:
     //! @name Member data
     //@{
+    boost::ptr_map< std::string, GeoTable > tables_;
     boost::filesystem::path path_;
     boost::shared_ptr< sqlite3 > db_;
     LogTable log_;

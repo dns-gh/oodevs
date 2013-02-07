@@ -44,7 +44,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( CreateDatabase_Test, Fixture )
 {
     geostore::GeoStoreManager manager( terrain, indexer );
-    BOOST_CHECK_EQUAL( manager.GetDatabase().tables_.size(), 11u );
+    BOOST_CHECK_EQUAL( manager.GetDatabase().GetTables().size(), 11u );
 }
 
 BOOST_FIXTURE_TEST_CASE( LoadDatabase_Test, Fixture )

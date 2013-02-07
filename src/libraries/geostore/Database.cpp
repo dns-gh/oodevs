@@ -56,6 +56,11 @@ Database::~Database()
     // NOTHING
 }
 
+const T_GeoTables& Database::GetTables() const
+{
+    return tables_;
+}
+
 void Database::LoadLayers( PointProjector_ABC& projector )
 {
     for( bfs::directory_iterator it( path_ / "Graphics" ); it != bfs::directory_iterator(); ++it )
