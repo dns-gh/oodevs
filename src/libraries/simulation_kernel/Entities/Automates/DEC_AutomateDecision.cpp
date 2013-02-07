@@ -249,6 +249,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Geometry_SplitLocalisation",
         boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitPionLocalisationInParts );
     brain.RegisterFunction( "DEC_Geometrie_DecoupeFuseauEnTroncons",
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_Automate >, boost::ref( GetAutomate() ), _1  ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionObstacle",
