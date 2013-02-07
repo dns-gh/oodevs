@@ -11,6 +11,7 @@
 #define __GeoTable_h_
 
 #include "Table.h"
+#include <vector>
 
 class TerrainObject;
 class PointProjector_ABC;
@@ -42,6 +43,7 @@ public:
     //! @name Operations
     //@{
     void LoadTable();
+    void FillTable( int geomType, const std::vector< TerrainObject* >& features );
     void FillTable( const boost::filesystem::path& path, PointProjector_ABC& proj );
 
     GeometryType GetGeometryType() const;

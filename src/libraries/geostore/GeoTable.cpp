@@ -58,11 +58,16 @@ void GeoTable::LoadTable()
     SetGeometry( results.back().back() );
 }
 
+void GeoTable::FillTable( int geomType, const std::vector< TerrainObject* >& features )
+{
+    AddGeometryColumn( geomType );
+    Fill( features );
+}
+
 void GeoTable::FillTable( const boost::filesystem::path& path, PointProjector_ABC& projector )
 {
     TerrainFileReader reader( path.string(), projector );
-    AddGeometryColumn( reader.geomType_ );
-    Fill( reader.features_ );
+    FillTable( reader.geomType_, reader.features_ );
 }
 
 // -----------------------------------------------------------------------------

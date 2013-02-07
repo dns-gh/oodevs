@@ -15,9 +15,11 @@
 #include <boost/ptr_container/ptr_map.hpp>
 #include <boost/filesystem/path.hpp>
 #include <string>
+#include <vector>
 
 class PointProjector_ABC;
 struct sqlite3;
+class TerrainObject;
 
 namespace geostore
 {
@@ -43,6 +45,8 @@ public:
     //@}
 
     const T_GeoTables& GetTables() const;
+    void AddLayer( std::string layer, int geomType,
+            const std::vector< TerrainObject* >& features );
 
 private:
     //! @name Helpers

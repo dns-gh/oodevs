@@ -85,3 +85,14 @@ GeoTable* Database::LoadLayer( PointProjector_ABC& projector, const bfs::path& f
         table->LoadTable();
     return table.release();
 }
+
+void Database::AddLayer( std::string layer, int geomType,
+            const std::vector< TerrainObject* >& features )
+{
+    std::auto_ptr< GeoTable > table( new GeoTable( db_.get(), layer ));
+    table->FillTable( geomType, features );
+    auto other = tables_.insert( layer, table.get() );
+    table.release();
+    if( !other.second )
+        delete other.first->second;
+}

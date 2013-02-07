@@ -72,6 +72,8 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     auto it = tables_.find( "urban" );
     if( it != tables_.end() )
         urbans = it->second->GetFeaturesIntersectingWith( poly );
+    if( !urbans )
+        urbans = geometryFactory_->InitGeometryCollection();
 
     // Find intersecting buildings
     it = tables_.find( "building" );
@@ -82,6 +84,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     if( !GeometryFactory::Validate( urbans ) )
     {
         gaiaFreeGeomColl( buildings );
+        gaiaFreeGeomColl( urbans );
         return;
     }
 
