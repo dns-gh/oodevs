@@ -9,21 +9,23 @@
 
 #include "geostore_pch.h"
 #include "GeoTable.h"
-#include "terrain/TerrainObject.h"
-#include "terrain/TerrainFileReader.h"
+#include <terrain/TerrainObject.h>
 
 using namespace geostore;
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable constructor
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
 GeoTable::GeoTable( sqlite3* db, const std::string& name )
+    : Table( db, name )
+{
+    LoadTable();
+}
+
+GeoTable::GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features )
     : Table( db, name )
 {
     ExecuteQuery(
         "CREATE TABLE IF NOT EXISTS " + GetName()
         + " ( id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(256) )" );
+    FillTable( geomType, features );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,12 +64,6 @@ void GeoTable::FillTable( int geomType, const std::vector< TerrainObject* >& fea
 {
     AddGeometryColumn( geomType );
     Fill( features );
-}
-
-void GeoTable::FillTable( const boost::filesystem::path& path, PointProjector_ABC& projector )
-{
-    TerrainFileReader reader( path.string(), projector );
-    FillTable( reader.geomType_, reader.features_ );
 }
 
 // -----------------------------------------------------------------------------

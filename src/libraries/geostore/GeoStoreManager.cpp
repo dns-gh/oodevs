@@ -12,7 +12,6 @@
 #include "Database.h"
 #include "CreateBlockAutoProcess.h"
 #include "CreateBlockProcess.h"
-#include <terrain/TerrainFileReader.h>
 #include <terrain/PointProjector.h>
 
 using namespace geostore;

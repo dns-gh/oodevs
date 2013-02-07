@@ -14,7 +14,6 @@
 #include <vector>
 
 class TerrainObject;
-class PointProjector_ABC;
 
 namespace geostore
 {
@@ -37,15 +36,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              GeoTable( sqlite3* db, const std::string& name );
+             GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features );
     virtual ~GeoTable();
     //@}
 
     //! @name Operations
     //@{
-    void LoadTable();
-    void FillTable( int geomType, const std::vector< TerrainObject* >& features );
-    void FillTable( const boost::filesystem::path& path, PointProjector_ABC& proj );
-
     GeometryType GetGeometryType() const;
     gaiaGeomCollPtr GetFeaturesIntersectingWith( gaiaGeomCollPtr poly ) const;
     //@}
@@ -53,6 +49,9 @@ public:
 private:
     //! @name Helpers
     //@{
+    void LoadTable();
+    void FillTable( int geomType, const std::vector< TerrainObject* >& features );
+
     std::vector< gaiaGeomCollPtr > CreatePolygonGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateLineGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateGeometry( const TerrainObject& shape );

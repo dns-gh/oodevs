@@ -18,15 +18,15 @@
 #include <vector>
 
 class PointProjector_ABC;
-struct sqlite3;
 class TerrainObject;
+struct sqlite3;
 
 namespace geostore
 {
-class GeoTable;
-class LogTable;
+    class GeoTable;
+    class LogTable;
 
-typedef boost::ptr_map< std::string, GeoTable > T_GeoTables;
+    typedef boost::ptr_map< std::string, GeoTable > T_GeoTables;
 
 // =============================================================================
 /** @class  Database
@@ -39,29 +39,27 @@ class Database : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     Database( const boost::filesystem::path& dbFile,
-         const boost::filesystem::path& layersDir, PointProjector_ABC& projector );
+     Database( const boost::filesystem::path& dbFile, const boost::filesystem::path& layersDir, PointProjector_ABC& projector );
     ~Database();
     //@}
 
+    void AddLayer( std::string layer, int geomType, const std::vector< TerrainObject* >& features );
+
     const T_GeoTables& GetTables() const;
-    void AddLayer( std::string layer, int geomType,
-            const std::vector< TerrainObject* >& features );
 
 private:
     //! @name Helpers
     //@{
-    void LoadLayers( PointProjector_ABC& projector,
-            const boost::filesystem::path& layersDir );
-    GeoTable* LoadLayer( PointProjector_ABC& projector, const boost::filesystem::path& file, const std::string& layer );
+    void LoadLayers( PointProjector_ABC& projector, const boost::filesystem::path& layersDir );
+    void LoadLayer( std::string layer, PointProjector_ABC& projector, const boost::filesystem::path& file );
     //@}
 
 private:
     //! @name Member data
     //@{
-    boost::ptr_map< std::string, GeoTable > tables_;
     boost::shared_ptr< sqlite3 > db_;
     boost::scoped_ptr< LogTable > log_;
+    boost::ptr_map< std::string, GeoTable > tables_;
     //@}
 };
 

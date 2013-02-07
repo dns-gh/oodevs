@@ -91,4 +91,3 @@ BOOST_AUTO_TEST_CASE( CreateBlockAutoProcessTest_NoUrban )
     process.Run( area, result );
     BOOST_CHECK_EQUAL( 1u, result.size() );
 }
-

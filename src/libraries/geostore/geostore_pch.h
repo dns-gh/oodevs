@@ -17,7 +17,6 @@
 #include <boost/noncopyable.hpp>
 #pragma warning ( pop )
 #include <sqlite/sqlite3.h>
-#include <spatialite/gaiageo.h>
 #include <spatialite.h>
 #include <tools/Exception.h>
 #include <geometry/Types.h>
