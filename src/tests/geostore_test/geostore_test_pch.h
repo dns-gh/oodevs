@@ -10,7 +10,6 @@
 #ifndef __dispatcher_kernel_test_pch_h_
 #define __dispatcher_kernel_test_pch_h_
 
-#include <geostore/GeoStoreManager.h>
 #include <boost/test/floating_point_comparison.hpp>
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>

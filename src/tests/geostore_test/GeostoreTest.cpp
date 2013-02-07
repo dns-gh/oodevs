@@ -11,6 +11,7 @@
 #include <geostore/Database.h>
 #include <geostore/GeoStoreManager.h>
 #include <geostore/SpatialIndexer.h>
+#include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
 

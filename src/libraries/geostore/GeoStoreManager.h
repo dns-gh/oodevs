@@ -10,8 +10,8 @@
 #ifndef __GeoStoreManager_h_
 #define __GeoStoreManager_h_
 
-#include <boost/filesystem.hpp>
 #include <geometry/Types.h>
+#include <boost/filesystem/path.hpp>
 
 namespace kernel
 {

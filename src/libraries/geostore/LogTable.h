@@ -11,6 +11,7 @@
 #define __LogTable_h_
 
 #include "Table.h"
+#include <ctime>
 
 namespace geostore
 {
