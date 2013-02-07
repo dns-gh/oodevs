@@ -297,7 +297,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_Time_ABC&  time_;
+    const MIL_Time_ABC& time_;
     PHY_RoleInterface_Composantes* pRole_;
     const PHY_ComposanteState* pState_;
     const PHY_ComposanteTypePion* pType_;
@@ -305,6 +305,7 @@ private:
     const bool bLoadable_;
     const bool bCanBePartOfConvoy_;
     bool bUsedForLogistic_;
+    bool bRepairEvacuationNoMeansChecked_;
     T_WeaponVector weapons_;
     T_HumanProtectionVector protections_;
     T_SensorVector sensors_;
@@ -316,7 +317,6 @@ private:
     // Random breakdowns
     unsigned int nRandomBreakdownNextTimeStep_;
     const PHY_ComposanteState* pRandomBreakdownState_;
-    bool bRepairEvacuationNoMeansChecked_;
     //@}
 
 public:

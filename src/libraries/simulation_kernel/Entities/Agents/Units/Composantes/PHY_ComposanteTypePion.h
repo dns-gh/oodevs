@@ -366,21 +366,21 @@ private:
     T_WoundCapabilityVector woundCollectionCapabilities_;
     bool                    bCanCollectMentalDiseases_;
     bool                    bCanCollectContaminated_;
-    unsigned int            nAmbulanceCollectionCapacity_;
-    double                  rNbrHumansLoadedForCollectionPerTimeStep_;
-    double                  rNbrHumansUnloadedForCollectionPerTimeStep_;
-    T_WoundCapabilityVector woundEvacuationCapabilities_;
     bool                    bCanEvacuateMentalDiseases_;
     bool                    bCanEvacuateContaminated_;
-    unsigned int            nAmbulanceEvacuationCapacity_;
-    double                  rNbrHumansLoadedForEvacuationPerTimeStep_;
-    double                  rNbrHumansUnloadedForEvacuationPerTimeStep_;
-    T_WoundCapabilityVector woundHealingCapabilities_;
     bool                    bCanHealWounds_;
     bool                    bCanHealMentalDiseases_;
     bool                    bCanHealContaminated_;
     bool                    bCanSortHumans_;
     bool                    bCanDiagnoseHumans_;
+    unsigned int            nAmbulanceCollectionCapacity_;
+    double                  rNbrHumansLoadedForCollectionPerTimeStep_;
+    double                  rNbrHumansUnloadedForCollectionPerTimeStep_;
+    T_WoundCapabilityVector woundEvacuationCapabilities_;
+    unsigned int            nAmbulanceEvacuationCapacity_;
+    double                  rNbrHumansLoadedForEvacuationPerTimeStep_;
+    double                  rNbrHumansUnloadedForEvacuationPerTimeStep_;
+    T_WoundCapabilityVector woundHealingCapabilities_;
 
     // Logistic : supply
     const PHY_DotationNature* pStockTransporterNature_;
