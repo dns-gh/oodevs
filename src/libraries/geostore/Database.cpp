@@ -28,10 +28,9 @@ namespace
     {
         sqlite3* db = 0;
         spatialite_init( 0 );
-        const bfs::path file( path / "Graphics" / "geostore.sqlite" );
         if( SQLITE_OK !=
             sqlite3_open_v2(
-                blc::utf_to_utf< char >( file.wstring() ).c_str(),
+                blc::utf_to_utf< char >( path.wstring() ).c_str(),
                 &db,
                 SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
                 0 ) )
@@ -41,15 +40,15 @@ namespace
     }
 }
 
-Database::Database( const bfs::path& path, PointProjector_ABC& projector )
-    : path_( path )
-    , db_  ( Open( path ), &sqlite3_close )
+Database::Database( const bfs::path& dbFile, const bfs::path& layersDir,
+        PointProjector_ABC& projector )
+    : db_  ( Open( dbFile ), &sqlite3_close )
     , log_ ( new LogTable( db_.get() ))
 {
     if( sqlite3_exec( db_.get(), "SELECT load_extension('spatialite.dll')", 0, 0, 0 ) != SQLITE_OK )
         throw std::runtime_error( "cannot find spatialite DLL to load as sqlite extension" );
     ProjectionTable projection( db_.get() ); // Just used to initialize the projection table
-    LoadLayers( projector );
+    LoadLayers( projector, layersDir );
 }
 
 Database::~Database()
@@ -62,9 +61,9 @@ const T_GeoTables& Database::GetTables() const
     return tables_;
 }
 
-void Database::LoadLayers( PointProjector_ABC& projector )
+void Database::LoadLayers( PointProjector_ABC& projector, const bfs::path& layersDir )
 {
-    for( bfs::directory_iterator it( path_ / "Graphics" ); it != bfs::directory_iterator(); ++it )
+    for( bfs::directory_iterator it( layersDir ); it != bfs::directory_iterator(); ++it )
     {
         std::string layer = bfs::basename( *it );
         if( bfs::extension( *it ) == ".bin" && layer != "preview" )

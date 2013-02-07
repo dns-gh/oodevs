@@ -37,7 +37,8 @@ class Database : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     Database( const boost::filesystem::path& path, PointProjector_ABC& projector );
+     Database( const boost::filesystem::path& dbFile,
+         const boost::filesystem::path& layersDir, PointProjector_ABC& projector );
     ~Database();
     //@}
 
@@ -46,7 +47,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    void LoadLayers( PointProjector_ABC& projector );
+    void LoadLayers( PointProjector_ABC& projector,
+            const boost::filesystem::path& layersDir );
     GeoTable* LoadLayer( PointProjector_ABC& projector, const boost::filesystem::path& file, const std::string& layer );
     //@}
 
@@ -54,7 +56,6 @@ private:
     //! @name Member data
     //@{
     boost::ptr_map< std::string, GeoTable > tables_;
-    boost::filesystem::path path_;
     boost::shared_ptr< sqlite3 > db_;
     boost::scoped_ptr< LogTable > log_;
     //@}

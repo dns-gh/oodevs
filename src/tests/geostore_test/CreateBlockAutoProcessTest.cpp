@@ -35,11 +35,10 @@ public:
 BOOST_AUTO_TEST_CASE( CreateBlockAutoProcessTest_EmptyRun )
 {
     tools::TemporaryDirectory dir( "geostoretest-", temp_directory );
-    boost::filesystem::create_directories( dir.path() / "Graphics" ); 
 
     DummyPointProjector proj;
     DummySpatialIndexer index;
-    Database db( dir.path(), proj );
+    Database db( dir.path() / "geostore.sqlite", dir.path(), proj );
 
     std::vector< geometry::Point2f > points;
     points.push_back( geometry::Point2f( 0, 0 ));

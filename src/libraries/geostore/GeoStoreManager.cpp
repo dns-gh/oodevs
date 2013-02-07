@@ -22,14 +22,16 @@ GeoStoreManager::GeoStoreManager( const bfs::path& path, const SpatialIndexer& i
     : index_    ( index )
     , projector_( new PointProjector( path ) )
 {
+    bfs::path layersDir = path / "Graphics";
+    bfs::path dbFile = layersDir / "geostore.sqlite";
     try
     {
-        database_.reset( new Database( path, *projector_ ) );
+        database_.reset( new Database( dbFile, layersDir, *projector_ ) );
     }
     catch( ... )
     {
-        bfs::remove( path / "Graphics" / "geostore.sqlite" );
-        database_.reset( new Database( path, *projector_ ) );
+        bfs::remove( dbFile );
+        database_.reset( new Database( dbFile, layersDir, *projector_ ) );
     }
 }
 
