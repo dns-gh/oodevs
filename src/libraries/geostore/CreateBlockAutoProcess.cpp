@@ -84,7 +84,6 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     if( !GeometryFactory::Validate( urbans ) )
     {
         gaiaFreeGeomColl( buildings );
-        gaiaFreeGeomColl( urbans );
         return;
     }
 
