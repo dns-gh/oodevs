@@ -759,13 +759,19 @@ namespace
         res.set_quantity( pair->second );
     }
 
+    void WalkPoints( const Reader_ABC& reader, CoordLatLongList& dst, const std::string& key,
+                     const std::string&, const std::string& name, xml::xistream& xis )
+    {
+        const std::string lower = boost::algorithm::to_lower_copy( name );
+        if( lower == key )
+            xis >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( reader ), boost::ref( dst ), _1 ) );
+    }
+
     template< typename T >
     void AddPointList( const Reader_ABC& reader, T& dst, const std::string& key, xml::xisubstream xis )
     {
         CoordLatLongList next;
-        xis >> xml::optional
-            >> xml::start( key )
-            >> xml::list( "point", boost::bind( &AddCoordinate, boost::cref( reader ), boost::ref( next ), _1 ) );
+        xis >> xml::list( boost::bind( &WalkPoints, boost::cref( reader ), boost::ref( next ), boost::cref( key ), _1, _2, _3 ) );
         const auto& list = next.elem();
         for( auto it = list.begin(); it != list.end(); ++it )
         {
@@ -804,7 +810,7 @@ namespace
         xis >> xml::list( "recipient", boost::bind( &AddSupplyFlowRecipient, boost::cref( reader ), boost::ref( push ), _1 ) );
         const auto add_transporter = &AddSupplyFlowTransporter< PushFlowParameters >;
         xis >> xml::list( "transporter", boost::bind( add_transporter, boost::ref( push ), _1 ) );
-        AddPointList( reader, *push.mutable_waybackpath(), "wayBackPath", xis );
+        AddPointList( reader, *push.mutable_waybackpath(), "waybackpath", xis );
     }
 
     void ReadPullFlowParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
@@ -825,8 +831,8 @@ namespace
             next.mutable_formation()->set_id( *supplier );
         xis >> xml::list( "resource", boost::bind( &AddSupplyFlowResource< PullFlowParameters >, boost::ref( pull ), _1 ) );
         xis >> xml::list( "transporter", boost::bind( &AddSupplyFlowTransporter< PullFlowParameters >, boost::ref( pull ), _1 ) );
-        AddPointList( reader, *pull.mutable_wayoutpath(), "wayOutPath", xis );
-        AddPointList( reader, *pull.mutable_waybackpath(), "wayBackPath", xis );
+        AddPointList( reader, *pull.mutable_wayoutpath(), "wayoutpath", xis );
+        AddPointList( reader, *pull.mutable_waybackpath(), "waybackpath", xis );
     }
 
     void Skip( MissionParameter&, xml::xistream& )
