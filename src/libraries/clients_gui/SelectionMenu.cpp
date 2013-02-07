@@ -60,11 +60,11 @@ SelectionMenu::~SelectionMenu()
 
 namespace
 {
-    void ApplyMousePress( Layer_ABC& layer, const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, QMouseEvent* mouse )
+    void ApplyMousePress( Layer_ABC& layer, const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, QMouseEvent* mouse, Qt::MouseButton button )
     {
-        if( mouse->button() == Qt::LeftButton )
+        if( button == Qt::LeftButton )
             layer.Select( selectable, ( mouse->modifiers() & Qt::ControlModifier ) != 0, ( mouse->modifiers() & Qt::ShiftModifier ) != 0 );
-        else if( mouse->button() == Qt::RightButton && !layer.IsReadOnly() )
+        else if( button == Qt::RightButton && !layer.IsReadOnly() )
             layer.ContextMenu( selectable, point, mouse->globalPos() );
     }
 
@@ -228,6 +228,28 @@ bool SelectionMenu::GenerateIcons()
     return allIconsGenerated;
 }
 
+namespace
+{
+    class RichMenu : public QMenu
+    {
+    public:
+                 RichMenu() : QMenu(), button_( Qt::NoButton ) {}
+        virtual ~RichMenu() {}
+
+        Qt::MouseButton GetButton() const { return button_; }
+
+        virtual void mousePressEvent( QMouseEvent* event )
+        {
+            const Qt::MouseButton newButton = event->button();
+            button_ = ( newButton == Qt::LeftButton || newButton == Qt::RightButton ) ? newButton : Qt::NoButton;
+            QMenu::mousePressEvent( event );
+        }
+
+    private:
+        Qt::MouseButton button_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: SelectionMenu::GenerateMenu
 // Created: ABR 2013-01-28
@@ -240,7 +262,7 @@ void SelectionMenu::GenerateMenu()
         return;
     }
 
-    QMenu menu;
+    RichMenu menu;
     menu.setStyle( new StandardIconProxyStyle() );
     QAction* dummyEntry = menu.addAction( "" ); // Can't have a separator without an item before
     dummyEntry->setEnabled( false );
@@ -292,7 +314,7 @@ void SelectionMenu::GenerateMenu()
                     continue;
                 if( graphicalEntity->GetTooltip() == actionText )
                 {
-                    ApplyMousePress( *layer, *graphicalEntity, point_, &*mouseEvent_ );
+                    ApplyMousePress( *layer, *graphicalEntity, point_, &*mouseEvent_, menu.GetButton() );
                     icons_.clear();
                     return;
                 }
@@ -314,7 +336,7 @@ void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElement
     if( extractedElements.size() == 1 && extractedElements.begin()->second.size() == 1 &&
         extractedElements.begin()->first && *extractedElements.begin()->second.begin() )    // Only one element extracted, classic way
     {
-        ApplyMousePress( *extractedElements.begin()->first, **extractedElements.begin()->second.begin(), point, &*mouseEvent_ );
+        ApplyMousePress( *extractedElements.begin()->first, **extractedElements.begin()->second.begin(), point, &*mouseEvent_, mouseEvent_->button() );
         return;
     }
 
