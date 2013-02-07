@@ -5316,6 +5316,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Crowd</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

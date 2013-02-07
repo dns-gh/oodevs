@@ -5300,6 +5300,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Crowd</source>
         <translation type="unfinished">الحشد</translation>
     </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

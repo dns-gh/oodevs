@@ -5324,6 +5324,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Crowd</source>
         <translation>Foule</translation>
     </message>
+    <message>
+        <source>Remote</source>
+        <translation>Distant</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

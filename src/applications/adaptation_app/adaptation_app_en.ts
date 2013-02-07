@@ -5313,6 +5313,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Crowd</source>
         <translation>Crowd</translation>
     </message>
+    <message>
+        <source>Remote</source>
+        <translation>Remote</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
