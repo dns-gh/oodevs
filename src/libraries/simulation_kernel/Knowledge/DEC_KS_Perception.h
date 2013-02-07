@@ -85,10 +85,9 @@ private:
     //@}
 
 public:
-    //! @name
+    //! @name Types
     //@{
-    typedef std::map< MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_AgentPerceptionMap;
-    typedef T_AgentPerceptionMap::const_iterator                 CIT_AgentPerceptionMap;
+    typedef std::map< unsigned int, std::pair< MIL_Agent_ABC*, const PHY_PerceptionLevel* > > T_AgentPerceptionMap;
     //@}
 
 private:
