@@ -61,13 +61,13 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     , bLoadable_( bLoadable )
     , bCanBePartOfConvoy_( bCanBePartOfConvoy )
     , bUsedForLogistic_( false )
+    , bRepairEvacuationNoMeansChecked_( false )
     , pHumans_( new PHY_HumansComposante( time, *this, nNbrHumanInCrew ) )
     , nAutoRepairTimeStep_( 0 )
     , pBreakdown_( 0 )
     , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
-    , bRepairEvacuationNoMeansChecked_( false )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
@@ -90,13 +90,13 @@ PHY_ComposantePion::PHY_ComposantePion()
     , bLoadable_( false )
     , bCanBePartOfConvoy_( false )
     , bUsedForLogistic_( false )
+    , bRepairEvacuationNoMeansChecked_( false )
     , pHumans_( 0 )
     , nAutoRepairTimeStep_( 0 )
     , pBreakdown_( 0 )
     , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
-    , bRepairEvacuationNoMeansChecked_( false )
 {
     // NOTHING
 }
