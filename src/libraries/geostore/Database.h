@@ -10,9 +10,8 @@
 #ifndef __Database_h_
 #define __Database_h_
 
-#include "LogTable.h"
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <boost/filesystem/path.hpp>
 #include <string>
@@ -23,6 +22,7 @@ struct sqlite3;
 namespace geostore
 {
 class GeoTable;
+class LogTable;
 
 typedef boost::ptr_map< std::string, GeoTable > T_GeoTables;
 
@@ -56,7 +56,7 @@ private:
     boost::ptr_map< std::string, GeoTable > tables_;
     boost::filesystem::path path_;
     boost::shared_ptr< sqlite3 > db_;
-    LogTable log_;
+    boost::scoped_ptr< LogTable > log_;
     //@}
 };
 

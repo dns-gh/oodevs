@@ -12,6 +12,7 @@
 #include "DatabaseException.h"
 #include "ProjectionTable.h"
 #include "GeoTable.h"
+#include "LogTable.h"
 #pragma warning ( push, 0 )
 #include <boost/locale.hpp>
 #pragma warning ( pop )
@@ -43,7 +44,7 @@ namespace
 Database::Database( const bfs::path& path, PointProjector_ABC& projector )
     : path_( path )
     , db_  ( Open( path ), &sqlite3_close )
-    , log_ ( db_.get() )
+    , log_ ( new LogTable( db_.get() ))
 {
     if( sqlite3_exec( db_.get(), "SELECT load_extension('spatialite.dll')", 0, 0, 0 ) != SQLITE_OK )
         throw std::runtime_error( "cannot find spatialite DLL to load as sqlite extension" );
@@ -75,11 +76,11 @@ GeoTable* Database::LoadLayer( PointProjector_ABC& projector, const bfs::path& f
 {
     std::auto_ptr< GeoTable > table( new GeoTable( db_.get(), layer ) );
     std::time_t time;
-    log_.GetLastAccessTime( layer, time );
+    log_->GetLastAccessTime( layer, time );
     if( bfs::last_write_time( file ) > time )
     {
         table->FillTable( file, projector );
-        log_.SetLastAccessTime( layer, bfs::last_write_time( file ) );
+        log_->SetLastAccessTime( layer, bfs::last_write_time( file ) );
     }
     else
         table->LoadTable();
