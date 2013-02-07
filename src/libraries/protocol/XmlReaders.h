@@ -10,15 +10,30 @@
 #ifndef PROTOCOL_XML_READERS_H__
 #define PROTOCOL_XML_READERS_H__
 
-#include "Simulation.h"
-
 #include <boost/noncopyable.hpp>
 #include <cstdint>
+#include <string>
 
 namespace xml
 {
     class xistream;
-};
+}
+
+namespace sword
+{
+    class AutomatOrder;
+    class ClientToSim_Content;
+    class CrowdOrder;
+    class FragOrder;
+    class KnowledgeMagicAction;
+    class MagicAction;
+    class MissionParameter;
+    class MissionParameters;
+    class ObjectMagicAction;
+    class SetAutomatMode;
+    class UnitMagicAction;
+    class UnitOrder;
+}
 
 namespace protocol
 {
@@ -51,7 +66,6 @@ namespace protocol
         };
         virtual EntityType Resolve( uint32_t id ) const = 0;
         //@}
-
     };
 
     void Read( const Reader_ABC& reader, sword::MissionParameter& dst,     xml::xistream& xis );
