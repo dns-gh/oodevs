@@ -47,7 +47,8 @@ void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& foot
 {
     try
     {
-        CreateBlockAutoProcess process( *database_, index_, *projector_, roadWidth );
+        CreateBlockAutoProcess process( database_->GetTables(), index_,
+                *projector_, roadWidth );
         process.Run( footprint, urbanBlocks );
     }
     catch( ... ) // Created: AME 2010-08-02 Improve exception catching

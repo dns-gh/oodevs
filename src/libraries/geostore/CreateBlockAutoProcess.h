@@ -11,6 +11,8 @@
 #define __CreateBlockAutoProcess_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/ptr_container/ptr_map.hpp>
+#include <string>
 
 class PointProjector_ABC;
 class UrbanModel;
@@ -22,9 +24,10 @@ namespace kernel
 
 namespace geostore
 {
-    class Database;
     class GeometryFactory;
     class SpatialIndexer;
+    class GeoTable;
+    typedef boost::ptr_map< std::string, GeoTable > T_GeoTables;
 
 // =============================================================================
 /** @class  CreateBlockAutoProcess
@@ -37,7 +40,7 @@ class CreateBlockAutoProcess : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateBlockAutoProcess( const Database& database, const SpatialIndexer& index, PointProjector_ABC& projector, double roadWidth );
+             CreateBlockAutoProcess( const T_GeoTables& tables, const SpatialIndexer& index, PointProjector_ABC& projector, double roadWidth );
     virtual ~CreateBlockAutoProcess();
     //@}
 
@@ -59,7 +62,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const Database&         database_;
+    const T_GeoTables&      tables_;
     const SpatialIndexer&   index_;
     PointProjector_ABC&     projector_;
     double                  roadWidth_;

@@ -9,7 +9,6 @@
 
 #include "geostore_pch.h"
 #include "CreateBlockAutoProcess.h"
-#include "Database.h"
 #include "GeometryFactory.h"
 #include "GeoTable.h"
 #include "SpatialIndexer.h"
@@ -23,8 +22,8 @@ using namespace geostore;
 // Name: CreateBlockAutoProcess constructor
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, const SpatialIndexer& index, PointProjector_ABC& projector, double roadWidth )
-    : database_( database )
+CreateBlockAutoProcess::CreateBlockAutoProcess( const T_GeoTables& tables, const SpatialIndexer& index, PointProjector_ABC& projector, double roadWidth )
+    : tables_( tables )
     , index_( index )
     , projector_( projector )
     , roadWidth_( roadWidth )
@@ -70,13 +69,13 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     blocks.clear();
 
     // Find intersecting urban areas
-    auto it = database_.GetTables().find( "urban" );
-    if( it != database_.GetTables().end() )
+    auto it = tables_.find( "urban" );
+    if( it != tables_.end() )
         urbans = it->second->GetFeaturesIntersectingWith( poly );
 
     // Find intersecting buildings
-    it = database_.GetTables().find( "building" );
-    if( it != database_.GetTables().end() )
+    it = tables_.find( "building" );
+    if( it != tables_.end() )
         buildings = it->second->GetFeaturesIntersectingWith( poly );
         
     AddBuildingsToUrban( urbans, buildings );
@@ -122,7 +121,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& lines )
 {
-    for( auto it = database_.GetTables().begin(); it != database_.GetTables().end(); ++it )
+    for( auto it = tables_.begin(); it != tables_.end(); ++it )
     {
         if( it->first == "urban" || it->first == "building" )
             continue;
