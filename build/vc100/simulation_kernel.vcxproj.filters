@@ -538,6 +538,9 @@
     <Filter Include="Source Files\Adapters\Hooks">
       <UniqueIdentifier>{99448d1a-7e0f-4e76-9636-d37ede59dae3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities\Specialisations\Remote">
+      <UniqueIdentifier>{04029669-91cd-4336-af33-5e4ef282f242}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp">
@@ -2657,6 +2660,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.cpp">
       <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.cpp">
+      <Filter>Source Files\Adapters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5440,6 +5446,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.h">
       <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.h">
+      <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\RoleExtender_ABC.h">
+      <Filter>Source Files\Entities\Agents\Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

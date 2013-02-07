@@ -14,6 +14,7 @@
 #include "AlgorithmsFactories.h"
 #include "MIL_AgentPion.h"
 #include "MIL_AgentServer.h"
+#include "RoleExtender_ABC.h"
 
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_HumanRepartition.h"
@@ -347,7 +348,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
@@ -379,6 +380,8 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
         pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );
     else
         pion.RegisterRole( *new PHY_RoleAction_InterfaceFlying() );
+    if( ext )
+        ext->RegisterRoles( pion );
 }
 
 // -----------------------------------------------------------------------------

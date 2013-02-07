@@ -690,7 +690,7 @@ void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned in
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = sink_->Create( type, automate, xis );
+    MIL_AgentPion* pPion = sink_->Create( type, automate, xis, 0 );
     return *pPion;
 }
 
@@ -700,7 +700,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx )
 {
-    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition );
+    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, 0 );
     if( !pPion )
         throw MASA_EXCEPTION( "Pion couldn't be created." );
     pPion->SendCreation ( nCtx );
@@ -716,7 +716,7 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx,
     const MIL_DictionaryExtensions& extensions )
 {
-    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name );
+    MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name, 0 );
     if( !pPion )
         throw MASA_EXCEPTION( "Pion couldn't be created." );
     pPion->SetExtensions( extensions );

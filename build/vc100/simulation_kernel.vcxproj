@@ -148,6 +148,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\Brain.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFindRequest.cpp" />
@@ -882,6 +883,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\Brain.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainIterate.h" />
@@ -899,6 +901,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\PHY_RoleAction_InterfaceMoving.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\RoleExtender_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RoleInterface_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.h" />

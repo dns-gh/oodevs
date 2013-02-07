@@ -47,10 +47,10 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
+MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
-    type.RegisterRoles( *pPion );
+    type.RegisterRoles( *pPion, ext );
     pPion->Register( missionController_ );
     return pPion;
 }
@@ -59,19 +59,19 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 // Name: AgentFactory::Create
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
+MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext )
 {
-    return Create( type, automate, vPosition, type.GetName() );
+    return Create( type, automate, vPosition, type.GetName(), ext );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string& name )
+MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& /*vPosition*/, const std::string& name, RoleExtender_ABC* ext )
 {
     MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, name );
-    type.RegisterRoles( *pPion );
+    type.RegisterRoles( *pPion, ext );
     pPion->Register( missionController_ );
     return pPion;
 }

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
+#include "SinkRoleExtender.h"
 #include "Hook.h"
 #include "MovementHooks.h"
 #include "FloodModel.h"
@@ -693,13 +694,15 @@ void Sink::Clean()
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext )
 {
     if( MIL_AgentPion* pPion = Find( xis.attribute< unsigned long >( "id" ) ) )
         throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), vPosTmp );
-    MIL_AgentPion& pion = Configure( *agents_.Create( type, automate, xis ), vPosTmp );
+
+    SinkRoleExtender chainExt( ext, boost::bind(&Sink::Configure, boost::ref( *this ), _1, vPosTmp ) );
+    MIL_AgentPion& pion = *agents_.Create( type, automate, xis, &chainExt );
     pion.ReadOverloading( xis );
     pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
     return &pion;
@@ -709,18 +712,20 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext )
 {
-    return &::Finalize( Configure( *agents_.Create( type, automate, vPosition ), vPosition ) );
+    SinkRoleExtender chainExt( ext, boost::bind(&Sink::Configure, boost::ref( *this ), _1, vPosition ) );
+    return &::Finalize( *agents_.Create( type, automate, vPosition, &chainExt ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext )
 {
-    return &::Finalize( Configure( *agents_.Create( type, automate, vPosition, name ), vPosition ) );
+    SinkRoleExtender chainExt( ext, boost::bind(&Sink::Configure, boost::ref( *this ), _1, vPosition ) );
+    return &::Finalize( *agents_.Create( type, automate, vPosition, name, &chainExt ) );
 }
 
 // -----------------------------------------------------------------------------

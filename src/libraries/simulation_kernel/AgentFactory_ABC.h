@@ -17,6 +17,8 @@ class MIL_AgentTypePion;
 class MIL_Automate;
 class MT_Vector2D;
 
+struct RoleExtender_ABC;
+
 namespace xml
 {
     class xistream;
@@ -39,9 +41,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis ) = 0;
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition ) = 0;
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext ) = 0;
     //@}
 
     //! @name CheckPoint
