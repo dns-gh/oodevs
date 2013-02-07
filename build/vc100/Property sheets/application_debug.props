@@ -28,7 +28,7 @@
     <SrcDir>..\..\src\applications\$(ProjectName)</SrcDir>
     <Suffix>-gd</Suffix>
     <libExtractor>extractor_d.lib</libExtractor>
-    <libSqlite>sqlite3-$(CurrentPlatform)-mt-gd</libSqlite>
+    <libSqlite>sqlite3-$(CurrentPlatform)-mt-gd.lib</libSqlite>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
