@@ -16,6 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_gui/StandardIconProxyStyle.h"
 #include "gaming/Attributes.h"
 
 Q_DECLARE_METATYPE( const kernel::Entity_ABC* );
@@ -66,11 +67,13 @@ InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Control
     , icons_( icons )
     , selected_( controllers )
 {
-    setGridSize( QSize( 60, 60 ) );
     setViewMode( QListView::IconMode );
     setFixedWidth( 345 );
     setWordWrap( true );
     setItemDelegate( new ItemDelegate( this ) );
+    setStyle( new gui::StandardIconProxyStyle() );
+    setResizeMode( QListView::Adjust );
+
     connect( this, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ), SLOT( OpenItem( QListWidgetItem* ) ) );
     hide();
     controllers_.Register( *this );

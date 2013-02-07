@@ -26,6 +26,7 @@ InfoSubordinateItem::InfoSubordinateItem( QListWidget* parent, kernel::Controlle
     , icons_( icons )
     , oldRawState_( -1 )
 {
+    setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
     setData( Qt::UserRole + 1, QVariant::fromValue( &entity ) );
     controllers_.Register( *this );
 }
@@ -51,7 +52,7 @@ QVariant InfoSubordinateItem::data( int role ) const
         const QPixmap& p = icons_.GetSymbol( GetEntity() );
         if( p.isNull() )
             QTimer::singleShot( 0, listWidget(), SLOT( doItemsLayout() ) );
-        return p;
+        return QIcon( p );
     }
     return QListWidgetItem::data( role );
 }
