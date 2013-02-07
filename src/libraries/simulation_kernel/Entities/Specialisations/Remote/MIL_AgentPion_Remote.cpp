@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
+#include "simulation_kernel_pch.h"
 #include "MIL_AgentPion_Remote.h"
-
 
 MIL_AgentPion_Remote::MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
     : MIL_AgentPion( type, automate, algorithmFactories, xis )
