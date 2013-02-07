@@ -16,7 +16,10 @@ using namespace geostore;
 GeoTable::GeoTable( sqlite3* db, const std::string& name )
     : Table( db, name )
 {
-    LoadTable();
+    Table::T_ResultSet results = ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'" );
+    if( results.empty() )
+        throw MASA_EXCEPTION( "Could not load table " + GetName() );
+    SetGeometry( results.back().back() );
 }
 
 GeoTable::GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features )
@@ -25,16 +28,8 @@ GeoTable::GeoTable( sqlite3* db, const std::string& name, int geomType, const st
     ExecuteQuery(
         "CREATE TABLE IF NOT EXISTS " + GetName()
         + " ( id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(256) )" );
-    FillTable( geomType, features );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoTable destructor
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
-GeoTable::~GeoTable()
-{
-    // NOTHING
+    AddGeometryColumn( geomType );
+    Fill( features );
 }
 
 GeoTable::GeometryType GeoTable::GetGeometryType() const
@@ -50,20 +45,6 @@ void GeoTable::SetGeometry( const std::string& name )
         geometryType_ = LineString;
     else
         throw MASA_EXCEPTION( "Invalid geometry name." );
-}
-
-void GeoTable::LoadTable()
-{
-    Table::T_ResultSet results = ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'" );
-    if( results.empty() )
-        throw MASA_EXCEPTION( "Could not load table " + GetName() );
-    SetGeometry( results.back().back() );
-}
-
-void GeoTable::FillTable( int geomType, const std::vector< TerrainObject* >& features )
-{
-    AddGeometryColumn( geomType );
-    Fill( features );
 }
 
 // -----------------------------------------------------------------------------

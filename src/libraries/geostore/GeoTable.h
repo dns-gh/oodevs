@@ -23,7 +23,7 @@ namespace geostore
 */
 // Created: AME 2010-07-19
 // =============================================================================
-class GeoTable : public Table
+class GeoTable : private Table
 {
 public:
     enum GeometryType
@@ -35,9 +35,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             GeoTable( sqlite3* db, const std::string& name );
-             GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features );
-    virtual ~GeoTable();
+    GeoTable( sqlite3* db, const std::string& name );
+    GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features );
     //@}
 
     //! @name Operations
@@ -49,9 +48,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void LoadTable();
-    void FillTable( int geomType, const std::vector< TerrainObject* >& features );
-
     std::vector< gaiaGeomCollPtr > CreatePolygonGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateLineGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateGeometry( const TerrainObject& shape );

@@ -30,12 +30,3 @@ ProjectionTable::ProjectionTable( sqlite3* db )
             );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: ProjectionTable destructor
-// Created: AME 2010-08-02
-// -----------------------------------------------------------------------------
-ProjectionTable::~ProjectionTable()
-{
-    // NOTHING
-}

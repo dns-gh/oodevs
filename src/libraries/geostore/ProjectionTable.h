@@ -14,23 +14,18 @@
 
 namespace geostore
 {
-
 // =============================================================================
 /** @class  ProjectionTable
     @brief  ProjectionTable
 */
 // Created: AME 2010-08-02
 // =============================================================================
-class ProjectionTable : public Table
+class ProjectionTable : private Table
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit ProjectionTable( sqlite3* db );
-    virtual ~ProjectionTable();
-    //@}
 };
 
-} //! namespace geostore
+}
 
 #endif // __ProjectionTable_h_

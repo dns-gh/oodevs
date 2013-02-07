@@ -21,14 +21,10 @@ namespace geostore
 */
 // Created: AME 2010-07-28
 // =============================================================================
-class LogTable : public Table
+class LogTable : private Table
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit LogTable( sqlite3* db );
-    virtual ~LogTable();
-    //@}
 
     bool GetLastAccessTime( const std::string& layerName, std::time_t& time );
     void SetLastAccessTime( const std::string& layerName, const std::time_t& time );

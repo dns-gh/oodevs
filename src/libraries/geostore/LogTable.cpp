@@ -23,15 +23,6 @@ LogTable::LogTable( sqlite3* db )
     ExecuteQuery( "CREATE TABLE IF NOT EXISTS " + GetName() + " ( table_name TEXT PRIMARY KEY, last_modification INTEGER );" );
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogTable destructor
-// Created: AME 2010-07-28
-// -----------------------------------------------------------------------------
-LogTable::~LogTable()
-{
-    // NOTHING
-}
-
 bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& time )
 {
     bool result = false;
