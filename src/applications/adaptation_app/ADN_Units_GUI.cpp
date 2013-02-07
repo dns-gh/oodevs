@@ -22,7 +22,6 @@
 #include "ADN_MultiPercentage.h"
 #include "ADN_Nature_GUI.h"
 #include "ADN_Point_GUI.h"
-#include "ADN_SearchListView.h"
 #include "ADN_SymbolWidget.h"
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
@@ -42,7 +41,7 @@
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
-    : ADN_GUI_ABC( "ADN_Units_GUI" )
+    : ADN_GUI_ABC( eUnits )
     , data_( data )
     , pOfficersEditLine_( 0 )
     , pNCOfficersEditLine_( 0 )
@@ -81,46 +80,43 @@ void ADN_Units_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    ADN_EditLine_String* pNameEditLine = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_String* pNameEditLine = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     connect( pNameEditLine, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNameChanged() ) );
     pNameEditLine->ConnectWithRefValidity( data_.GetUnitsInfos() );
     // Unit type
-    pTypeCombo_ = builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[ eTypeId ] );
+    pTypeCombo_ = builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eTypeId ] );
     builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Pawn );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "doctrine-model", tr( "Doctrine model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     builder.SetToolTip( tr( "The decisional model associated to the unit." ) );
 
     // nbc suit
-    builder.AddEnumField( pInfoHolder, tr( "NBC suit" ), vInfosConnectors[ eNbcSuit ] );
+    builder.AddEnumField( pInfoHolder, "nbc-suit", tr( "NBC suit" ), vInfosConnectors[ eNbcSuit ] );
 
     // Decontamination delay
-    ADN_TimeField* pTimeField = builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ], 0, eGreaterZero );
+    ADN_TimeField* pTimeField = builder.AddField< ADN_TimeField >( pInfoHolder, "decontamination-delay", tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ], 0, eGreaterZero );
     pTimeField->SetMinimumValueInSecond( 1 );
     // Feedback time
-    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, tr( "Force ratio feedback time" ), vInfosConnectors[ eHasStrengthRatioFeedbackTime ], vInfosConnectors[ eStrengthRatioFeedbackTime ] );
+    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[ eHasStrengthRatioFeedbackTime ], vInfosConnectors[ eStrengthRatioFeedbackTime ] );
     // Can fly
-    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Can fly" ), vInfosConnectors[ eCanFly ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, "can-fly", tr( "Can fly" ), vInfosConnectors[ eCanFly ] );
     // Crossing height
-    builder.AddEnumField( pInfoHolder, tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ] );
+    builder.AddEnumField( pInfoHolder, "crossing-height", tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ] );
     // Is autonomous
-    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Is autonomous (UAV)" ), vInfosConnectors[ eIsAutonomous ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, "is-autonomous", tr( "Is autonomous (UAV)" ), vInfosConnectors[ eIsAutonomous ] );
     builder.AddStretcher( pInfoHolder, Qt::Vertical );
 
     // Coup de sonde
-    ADN_GroupBox* pReconGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scan" ) );
-    vInfosConnectors[eCanProbe] = &pReconGroup->GetConnector();
-    builder.AddField< ADN_EditLine_Double >( pReconGroup, tr( "Width" ), vInfosConnectors[eProbeWidth], tr( "m" ) );
-    builder.AddField< ADN_EditLine_Double >( pReconGroup, tr( "Depth" ), vInfosConnectors[eProbeLength], tr( "m" ) );
+    ADN_GroupBox* pReconGroup = builder.AddGroupBox( 0, "can-probe", tr( "Scan" ), vInfosConnectors[eCanProbe], 3 );
+    builder.AddField< ADN_EditLine_Double >( pReconGroup, "width", tr( "Width" ), vInfosConnectors[eProbeWidth], tr( "m" ) );
+    builder.AddField< ADN_EditLine_Double >( pReconGroup, "depth", tr( "Depth" ), vInfosConnectors[eProbeLength], tr( "m" ) );
 
     // sensor & equipment ranges
-    ADN_GroupBox* pRangeGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Ranges" ) );
-    pRangeGroup->setObjectName( strClassName_ + "_Ranges" );
-    vInfosConnectors[ eRanges ] = &pRangeGroup->GetConnector();
-    builder.AddField< ADN_EditLine_Int >( pRangeGroup, tr( "Sensors" ), vInfosConnectors[ eSensorRange ], tr( "m" ) );
-    builder.AddField< ADN_EditLine_Int >( pRangeGroup, tr( "Equipments" ), vInfosConnectors[ eEquipmentRange ], tr( "m" ) );
+    ADN_GroupBox* pRangeGroup = builder.AddGroupBox( 0, "ranges", tr( "Ranges" ), vInfosConnectors[ eRanges ], 3 );
+    builder.AddField< ADN_EditLine_Int >( pRangeGroup, "sensors", tr( "Sensors" ), vInfosConnectors[ eSensorRange ], tr( "m" ) );
+    builder.AddField< ADN_EditLine_Int >( pRangeGroup, "equipments", tr( "Equipments" ), vInfosConnectors[ eEquipmentRange ], tr( "m" ) );
 
     // Nature group
     Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ) );
@@ -134,22 +130,20 @@ void ADN_Units_GUI::Build()
         subLayout->setMargin( 0 );
         subLayout->setInsideMargin( 0 );
         subLayout->setFrameStyle( Q3Frame::Plain );
-        builder.AddEnumField( subLayout, tr( "Level:" ), vInfosConnectors[ eNatureLevel ] );
-        builder.AddEnumField( subLayout, tr( "Atlas:" ), vInfosConnectors[ eNatureAtlas ] );
+        builder.AddEnumField( subLayout, "level", tr( "Level:" ), vInfosConnectors[ eNatureLevel ] );
+        builder.AddEnumField( subLayout, "atlas", tr( "Atlas:" ), vInfosConnectors[ eNatureAtlas ] );
         // Separator
         QFrame* separator = new QFrame;
         separator->setFrameStyle( QFrame::HLine | QFrame::Raised );
         pNatureInternalGroupLayout->addWidget( separator, 1, 0, 1, 2, Qt::AlignTop );
         // Nature GUI
         pNatureInternalGroupLayout->addWidget( subLayout, 0, 0, 1, 2, Qt::AlignTop );
-        pNatureGui_ = new ADN_Nature_GUI( pNatureInternalGroupLayout, 2 );
-        pNatureGui_->setObjectName( strClassName_ + "Nature" );
+        pNatureGui_ = builder.AddWidget< ADN_Nature_GUI >( "nature", pNatureInternalGroupLayout, 2 );
         vInfosConnectors[ eNatureNature ] = &pNatureGui_->GetConnector();
         // Symbol
         Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
         QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
-        pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout, ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData().GetGlSymbols() );
-        pSymbolWidget_->setObjectName( strClassName_ + "_Symbols" );
+        pSymbolWidget_ = builder.AddWidget< ADN_SymbolWidget, QWidget*, gui::GLSymbols& >( "symbols", pSymbolLayout, ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData().GetGlSymbols() );
         pSymbolWidget_->makeCurrent();
         pSymbolWidget_->initializeGL();
         pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
@@ -159,7 +153,7 @@ void ADN_Units_GUI::Build()
         connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
         // Symbol combo
         QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
-        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, tr( "UnitSymbol" ), vInfosConnectors[ eNatureSymbol ] );
+        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, "unit-symbol", tr( "UnitSymbol" ), vInfosConnectors[ eNatureSymbol ] );
         unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
         connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
         connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
@@ -171,12 +165,12 @@ void ADN_Units_GUI::Build()
     pCommandGroup->setInsideSpacing( 10 );
 
     // officer
-    pOfficersEditLine_ = builder.AddField< ADN_EditLine_Int >( pCommandGroup, tr( "Nbr of officer(s)" ), vInfosConnectors[ eNbOfficer ] );
+    pOfficersEditLine_ = builder.AddField< ADN_EditLine_Int >( pCommandGroup, "nbr-officers", tr( "Nbr of officer(s)" ), vInfosConnectors[ eNbOfficer ] );
     pOfficersEditLine_->GetValidator().setRange( 0, 0 );
     connect( pOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfOfficersChanged() ) );
 
     // nc officer
-    pNCOfficersEditLine_ = builder.AddField< ADN_EditLine_Int >( pCommandGroup, tr( "Nbr of warrant officer(s)" ), vInfosConnectors[ eNbNCOfficer ] );
+    pNCOfficersEditLine_ = builder.AddField< ADN_EditLine_Int >( pCommandGroup, "nbr-warrant", tr( "Nbr of warrant officer(s)" ), vInfosConnectors[ eNbNCOfficer ] );
     pNCOfficersEditLine_->GetValidator().setRange( 0, 0 );
     connect( pNCOfficersEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNbrOfNCOfficersChanged() ) );
 
@@ -184,66 +178,58 @@ void ADN_Units_GUI::Build()
 
     // Postures
     Q3VGroupBox* pPosturesGroup = new Q3VGroupBox( tr( "Stances" ), postureInstallationBox );
-    new ADN_Units_Postures_GUI( strClassName_ + "_Postures", vInfosConnectors[ ePostures ], pPosturesGroup );
+    new ADN_Units_Postures_GUI( builder.GetChildName( "postures-table" ), vInfosConnectors[ ePostures ], pPosturesGroup );
 
     // Installation
-    pInstallationGroup_ = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Deployment" ), postureInstallationBox );
-    pInstallationGroup_->setObjectName( strClassName_ + "_Installation" );
-    vInfosConnectors[ eHasInstallation ] = &pInstallationGroup_->GetConnector();
-    builder.AddField< ADN_TimeField >( pInstallationGroup_, tr( "Deployment duration" ), vInfosConnectors[ eInstallationDelay ] );
-    builder.AddField< ADN_TimeField >( pInstallationGroup_, tr( "Un-deployment duration" ), vInfosConnectors[ eUninstallationDelay ] );
+    pInstallationGroup_ = builder.AddGroupBox( postureInstallationBox, "installation", tr( "Deployment" ), vInfosConnectors[ eHasInstallation ], 3 );
+    builder.AddField< ADN_TimeField >( pInstallationGroup_, "deployment-duration", tr( "Deployment duration" ), vInfosConnectors[ eInstallationDelay ] );
+    builder.AddField< ADN_TimeField >( pInstallationGroup_, "un-deployment-duration", tr( "Un-deployment duration" ), vInfosConnectors[ eUninstallationDelay ] );
 
     // Distances before point on path
     Q3GroupBox* pDistancesGroup = new Q3HGroupBox( tr( "Key terrain features range" ) );
-    new ADN_Point_GUI( strClassName_ + "_TerrainFeatures", vInfosConnectors[ ePointInfos ], pDistancesGroup );
+    new ADN_Point_GUI( builder.GetChildName( "terrain-features-table" ), vInfosConnectors[ ePointInfos ], pDistancesGroup );
 
     // Composantes
     Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ) );
-    ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( strClassName_ + "_Equipments", vInfosConnectors[ eComposantes ], pComposantesGroup );
+    ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( builder.GetChildName( "equipments-table" ), vInfosConnectors[ eComposantes ], pComposantesGroup );
     pComposantes->SetGoToOnDoubleClick( ::eEquipments );
     if( QAbstractProxyModel* model = static_cast< QAbstractProxyModel* >( pComposantes->model() ) )
         connect( model->sourceModel(), SIGNAL( itemChanged( QStandardItem* ) ), this, SLOT( OnComponentChanged() ) );
 
     // Dotations
-    ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ) );
-    pDotationsGroup->setObjectName( strClassName_ + "_ComplementaryResources" );
-    vInfosConnectors[ eHasTC1 ] = &pDotationsGroup->GetConnector();
-    ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ + "_Dotations", vInfosConnectors[ eContenancesTC1 ], pDotationsGroup, ADN_Equipments_Dotations_GUI::eColumn_All ^ ADN_Equipments_Dotations_GUI::eColumn_Consumption, QHeaderView::ResizeToContents );
+    ADN_GroupBox* pDotationsGroup = builder.AddGroupBox( 0, "complementary-resources", tr( "Complementary resources" ), vInfosConnectors[ eHasTC1 ], 1 );
+    ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( builder.GetChildName( "resources-table" ), vInfosConnectors[ eContenancesTC1 ], pDotationsGroup, ADN_Equipments_Dotations_GUI::eColumn_All ^ ADN_Equipments_Dotations_GUI::eColumn_Consumption, QHeaderView::ResizeToContents );
     pDotations->SetGoToOnDoubleClick( ::eResources );
 
     // Stock
-    pStockGroup_ = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Stock" ) );
-    pStockGroup_->setObjectName( strClassName_ + "_Stock" );
-    vInfosConnectors[ eHasStock ] = &pStockGroup_->GetConnector();
-    pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( strClassName_ + "_StockThreshold", vInfosConnectors[ eStock ], pStockGroup_ );
+    pStockGroup_ = builder.AddGroupBox( 0, "stock", tr( "Stock" ), vInfosConnectors[ eHasStock ], 1 );
+    pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( builder.GetChildName( "stock-threshold-table" ), vInfosConnectors[ eStock ], pStockGroup_ );
 
     // Aptitudes
     Q3GroupBox* pSkillsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Skills" ) );
     pSkillsGroup->setInsideMargin( 20 );
     pSkillsGroup->setInsideSpacing( 10 );
 
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "recon", tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "combat-support", tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "combat", tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "mobility-support", tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "counter-mobility-support", tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "protection-support", tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, "engineering-recon", tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
 
     // Efficiencies
     Q3GroupBox* pEfficienciesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ) );
     pEfficienciesGroup->setInsideMargin( 20 );
     pEfficienciesGroup->setInsideSpacing( 10 );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, "urban-area-efficiency", tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
 
     // Civilian
-    ADN_GroupBox* pCivilianGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Civilian" ) );
-    pCivilianGroup->setObjectName( strClassName_ + "_IsCivilian" );
-    vInfosConnectors[ eIsCivilian ] = &pCivilianGroup->GetConnector();
-    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pCivilianGroup, builder, strClassName_ + "_CivilianRepartition" );
-    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMalesPercent ] );
-    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemalesPercent ] );
-    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildrenPercent ] );
+    ADN_GroupBox* pCivilianGroup = builder.AddGroupBox( 0, "is-civilian", tr( "Civilian" ), vInfosConnectors[ eIsCivilian ], 1 );
+    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pCivilianGroup, builder, builder.GetChildName( "civilian-repartition" ) );
+    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMalesPercent ], "males" );
+    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemalesPercent ], "females" );
+    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildrenPercent ], "children" );
     pMultiPercentage->AddWarning();
 
     // -------------------------------------------------------------------------
@@ -270,14 +256,11 @@ void ADN_Units_GUI::Build()
     pContentLayout->addMultiCellWidget( pCivilianGroup, 6, 6, 4, 5 );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( this, data_.GetUnitsInfos(), vInfosConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Units >( this, data_.GetUnitsInfos(), vInfosConnectors );
     connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnTypeChanged() ) );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------

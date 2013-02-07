@@ -17,7 +17,6 @@
 #include "ADN_NBC_NbcAgentListView.h"
 #include "ADN_NBC_Intox_GUI.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_SearchListView.h"
 #include "ADN_Validator.h"
 #include "ADN_TimeField.h"
 #include "ADN_GroupBox.h"
@@ -27,7 +26,7 @@
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 ADN_NBC_GUI::ADN_NBC_GUI( ADN_NBC_Datas& data )
-    : ADN_GUI_ABC( "ADN_NBC_GUI" )
+    : ADN_GUI_ABC( eNBC )
     , data_( data )
 {
     // NOTHING
@@ -57,39 +56,35 @@ void ADN_NBC_GUI::Build()
 
     // Propagation
     Q3GroupBox* pPropagationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Propagation" ) );
-    builder.AddField< ADN_EditLine_Double >( pPropagationGroup, tr( "Contamination distance" ), data_.rContaminationDistance_, tr( "m" ), eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pPropagationGroup, tr( "Contamination quantity given" ), data_.rContaminationQuantityGiven_, 0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pPropagationGroup, tr( "Wind speed limit" ), data_.rWindSpeedLimitForSpreading_, tr( "km/h" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pPropagationGroup, "contamination-distance", tr( "Contamination distance" ), data_.rContaminationDistance_, tr( "m" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pPropagationGroup, "contamination-quantity", tr( "Contamination quantity given" ), data_.rContaminationQuantityGiven_, 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pPropagationGroup, "wind-speed-limit", tr( "Wind speed limit" ), data_.rWindSpeedLimitForSpreading_, tr( "km/h" ), eGreaterEqualZero );
     // NBC Suit
     Q3GroupBox* pNBCSuitGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "NBC Suit" ) );
-    builder.AddField< ADN_EditLine_Double >( pNBCSuitGroup, tr( "Max speed modifier" ), data_.rNbcSuitMaxSpeedMultiplier_, 0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Double >( pNBCSuitGroup, tr( "Reloading time modifier" ), data_.rNbcSuitReloadSpeedMultiplier_, 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pNBCSuitGroup, "max-speed-modifier", tr( "Max speed modifier" ), data_.rNbcSuitMaxSpeedMultiplier_, 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pNBCSuitGroup, "reloading-time-modifier", tr( "Reloading time modifier" ), data_.rNbcSuitReloadSpeedMultiplier_, 0, eGreaterEqualZero );
 
     // Specific parameter
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     nameField->ConnectWithRefValidity( data_.GetNbcAgentVector() );
     // effect
     Q3HBox* effectGroup = new Q3HBox();
     effectGroup->setSpacing( 5 );
     // Liquid
-    ADN_GroupBox* liquidGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Liquid" ), effectGroup );
-    liquidGroup->setObjectName( strClassName_ + "_Liquid" );
-    ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup, strClassName_ + "_LiquidIntox" );
+    ADN_GroupBox* liquidGroup = builder.AddGroupBox( effectGroup, "liquid", tr( "Liquid" ), vInfosConnectors[ eLiquidGroupPresent ], 3 );
+    ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup, builder.GetChildName( "liquid-intox" ) );
     vInfosConnectors[ eLiquidGroup ] = &liquid->GetConnector();
-    vInfosConnectors[ eLiquidGroupPresent ] = &liquidGroup->GetConnector();
-    // Gasous
-    ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaseous" ), effectGroup );
-    gazGroup->setObjectName( strClassName_ + "_Gaz" );
-    vInfosConnectors[ eGazGroupPresent ] = &gazGroup->GetConnector();
-    ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup, strClassName_ + "_GazIntox" );
+    // Gaseous
+    ADN_GroupBox* gazGroup = builder.AddGroupBox( effectGroup, "gaz", tr( "Gaseous" ), vInfosConnectors[ eGazGroupPresent ], 1 );
+    ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup, builder.GetChildName( "gaz-intox" ) );
     vInfosConnectors[ eGazGroup ] = &gaz->GetConnector();
-    QWidget* pHolder = builder.AddFieldHolder( gazGroup );
     // Span
-    ADN_TimeField* pField = builder.AddField< ADN_TimeField >( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
+    QWidget* pHolder = builder.AddFieldHolder( gazGroup );
+    ADN_TimeField* pField = builder.AddField< ADN_TimeField >( pHolder, "span", tr( "Span" ), vInfosConnectors[eGazLifetime] );
     pField->SetMinimumValueInSecond( 1 );
-    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
+    builder.AddField< ADN_EditLine_Double >( pHolder, "spread-angle", tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
     builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
 
     // -------------------------------------------------------------------------
@@ -114,10 +109,10 @@ void ADN_NBC_GUI::Build()
     pSpecificLayout->addWidget( effectGroup );
 
     // List view
-    ADN_SearchListView< ADN_NBC_NbcAgentListView >* pSearchListView = new ADN_SearchListView< ADN_NBC_NbcAgentListView >( this, data_.GetNbcAgentVector(), vInfosConnectors );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_NBC_NbcAgentListView >( this, data_.GetNbcAgentVector(), vInfosConnectors );
 
     // Sub content
-    QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView, false, false, true, 0, 0 );
+    QWidget* pSubContent = CreateScrollArea( builder.GetChildName( "content" ), *pSpecificContent, pSearchListView, false, false, true, 0, 0 );
 
     // Content layout
     QWidget* pContent = new QWidget();
@@ -129,6 +124,5 @@ void ADN_NBC_GUI::Build()
     pContentLayout->addWidget( pSubContent, 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

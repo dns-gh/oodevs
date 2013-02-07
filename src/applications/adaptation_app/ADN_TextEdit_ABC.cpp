@@ -18,7 +18,7 @@
 // Name: ADN_TextEdit_ABC constructor
 // Created: JSR 21-11-11
 //-----------------------------------------------------------------------------
-ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent, const char * name)
+ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent /* = 0 */, const char * name)
     : QTextEdit( parent,name )
     , ADN_Gfx_ABC()
     , originalPalette_( palette() )

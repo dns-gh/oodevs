@@ -39,7 +39,7 @@ QString ADN_GUI_ABC::tr( const char* s, const char* c )
 // Name: ADN_GUI_ABC::CreateMainWidget
 // Created: ABR 2012-01-20
 // -----------------------------------------------------------------------------
-QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /* = 0*/, bool paintSplitter /* = true*/, bool paintBackground /* = false*/, bool showFrameBorder /* = true*/, int margin /* = 10*/, int spacing /* = 10*/ )
+QWidget* ADN_GUI_ABC::CreateScrollArea( const char* objectName, QWidget& content, QWidget* list /* = 0*/, bool paintSplitter /* = true*/, bool paintBackground /* = false*/, bool showFrameBorder /* = true*/, int margin /* = 10*/, int spacing /* = 10*/ )
 {
     // Content area
     QScrollArea* scrollArea = new QScrollArea();
@@ -77,6 +77,8 @@ QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /* = 0*/
     scrollArea->setBackgroundColor( ( paintBackground ) ? Qt::white : color );
     if( !showFrameBorder )
         scrollArea->setFrameShape( QFrame::NoFrame );
+
+    mainWidget->setObjectName( objectName );
 
     return mainWidget;
 }
@@ -156,4 +158,24 @@ void ADN_Tabbed_GUI_ABC::FindSubTabAndSelectItem( const QString& name )
             break;
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC::AddListView
+// Created: ABR 2013-02-07
+// -----------------------------------------------------------------------------
+void ADN_GUI_ABC::AddListView( ADN_ListView* listView )
+{
+    assert( listView != 0 );
+    pListView_ = listView;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tabbed_GUI_ABC::AddListView
+// Created: ABR 2013-02-07
+// -----------------------------------------------------------------------------
+void ADN_Tabbed_GUI_ABC::AddListView( ADN_ListView* listView )
+{
+    assert( listView != 0 );
+    vListViews_.push_back( listView );
 }

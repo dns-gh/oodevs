@@ -15,8 +15,8 @@
 // Name: ADN_GUI_Container constructor
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-ADN_GUI_Container::ADN_GUI_Container( const char* szClassName, ADN_Data_Container& data )
-    : ADN_GUI_ABC( szClassName )
+ADN_GUI_Container::ADN_GUI_Container( E_WorkspaceElements workspaceElement, ADN_Data_Container& data )
+    : ADN_GUI_ABC( workspaceElement )
     , data_( data )
 {
     // NOTHING

@@ -69,9 +69,9 @@ public:
 
     //! @name Operations
     //@{
-    void AddLine( const char* szName, ADN_Connector_ABC*& itemConnector )
+    void AddLine( const char* szName, ADN_Connector_ABC*& itemConnector, const char* lineObjectName )
     {
-        EditLine* pLine = builder_.AddField< EditLine >( parent_, szName, itemConnector, tr( "%" ), ePercentage );
+        EditLine* pLine = builder_.AddField< EditLine >( parent_, lineObjectName, szName, itemConnector, tr( "%" ), ePercentage );
         connect( pLine, SIGNAL( textEdited( const QString& ) ), this, SLOT( OnPercentageChanged() ) );
         connect( pLine, SIGNAL( StartEditing() ), this, SLOT( OnPercentageChanged() ) );
         connect( pLine, SIGNAL( editingFinished() ), this, SLOT( OnEditingFinished() ) );
@@ -81,6 +81,7 @@ public:
     {
         parent_->addSpace( 0 );
         warning_ = new QLabel( parent_ );
+        warning_->setObjectName( objectName() + "_warning" );
         parent_->addSpace( 0 );
     }
     //@}

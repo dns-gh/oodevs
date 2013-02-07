@@ -21,7 +21,7 @@ enum E_WorkspaceElements
     eUnitSymbols,
     eUrban,
     eNBC,
-    eLaunchers,
+    eLaunchers, // $$$$ ABR 2013-02-05: Here I am !
     eResources,
     eFireClasses,
     eDrawings, // Must be before eObjects

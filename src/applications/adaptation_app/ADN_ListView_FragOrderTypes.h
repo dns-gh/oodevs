@@ -27,7 +27,7 @@ class ADN_ListView_FragOrderTypes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* pParent = 0, const char* szName = 0 );
+             ADN_ListView_FragOrderTypes( QWidget* pParent, ADN_Missions_Data::T_FragOrder_Vector& orders );
     virtual ~ADN_ListView_FragOrderTypes();
     //@}
 

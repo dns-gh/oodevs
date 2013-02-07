@@ -17,14 +17,13 @@
 #include "ADN_Consumptions_Table.h"
 #include "ADN_MultiPercentage.h"
 #include "ADN_Schedule_Table.h"
-#include "ADN_SearchListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Inhabitants_GUI constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_GUI::ADN_Inhabitants_GUI( ADN_Inhabitants_Data& data )
-    : ADN_GUI_ABC( "ADN_Inhabitants_GUI" )
+    : ADN_GUI_ABC( eInhabitants )
     , data_      ( data )
 {
     // NOTHING
@@ -54,37 +53,37 @@ void ADN_Inhabitants_GUI::Build()
 
     // Population parameters
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetInhabitants() );
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eCrowds );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Associated Crowd" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "associated-crowd", tr( "Associated Crowd" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, "angry-crowd-misison", tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
     // repartition
     Q3GroupBox* pRepartition = new Q3GroupBox( 3, Qt::Horizontal, tr( "Distribution" ) );
-    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pRepartition, builder, strClassName_ + "_Distribution" );
-    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
-    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
-    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
+    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pRepartition, builder, builder.GetChildName( "distribution" ) );
+    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ], "males" );
+    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ], "females" );
+    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ], "children" );
     pMultiPercentage->AddWarning();
 
     // Security
     Q3GroupBox* pSecurityGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ) );
-    builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Double >( pSecurityGroup, "loss-on-fire", tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Double >( pSecurityGroup, "gain-per-hour", tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
 
     // Health
     Q3GroupBox* pHealthGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Health satisfaction" ) );
-    builder.AddField< ADN_EditLine_Int >( pHealthGroup, tr( "Number of people per medical infrastructure" ), vInfosConnectors[ eHealthNeed ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pHealthGroup, "number-of-people-per-medical", tr( "Number of people per medical infrastructure" ), vInfosConnectors[ eHealthNeed ], 0, eGreaterEqualZero );
 
     // Schedule
     Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ) );
-    builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
+    builder.AddField< ADN_TimeField >( pScheduleGroup, "transfer-time", tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
 
-    new ADN_Schedule_Table( strClassName_ + "_ScheduleTable", vInfosConnectors[ eSchedule ], pScheduleGroup );
+    new ADN_Schedule_Table( builder.GetChildName( "schedule-table" ), vInfosConnectors[ eSchedule ], pScheduleGroup );
 
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
-    new ADN_Consumptions_Table( strClassName_ + "_Consumptions" , vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
+    new ADN_Consumptions_Table( builder.GetChildName( "consumptions-table" ), vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -103,11 +102,8 @@ void ADN_Inhabitants_GUI::Build()
     pContentLayout->addWidget( pConsumptionsGroup, 5, 1 );
 
     // List view
-    ADN_SearchListView< ADN_Inhabitants_ListView >* pSearchListView = new ADN_SearchListView< ADN_Inhabitants_ListView >( this, data_.GetInhabitants(), vInfosConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_Inhabitants_ListView >( this, data_.GetInhabitants(), vInfosConnectors );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }

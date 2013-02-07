@@ -286,7 +286,7 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "urban",            QT_TRANSLATE_NOOP("ADN_Tr", "Urban" ),                eUrban ),
     T_ConverterWorkspaceElements( "nbc",              QT_TRANSLATE_NOOP("ADN_Tr", "NBC" ),                  eNBC ),
     T_ConverterWorkspaceElements( "launcher",         QT_TRANSLATE_NOOP("ADN_Tr", "Launchers" ),            eLaunchers ),
-    T_ConverterWorkspaceElements( "equipment",        QT_TRANSLATE_NOOP("ADN_Tr", "Resources" ),            eResources ),
+    T_ConverterWorkspaceElements( "resources",        QT_TRANSLATE_NOOP("ADN_Tr", "Resources" ),            eResources ),
     T_ConverterWorkspaceElements( "fireclasses",      QT_TRANSLATE_NOOP("ADN_Tr", "Fires" ),                eFireClasses ),
     T_ConverterWorkspaceElements( "drawings",         QT_TRANSLATE_NOOP("ADN_Tr", "Drawings" ),             eDrawings ),
     T_ConverterWorkspaceElements( "objects",          QT_TRANSLATE_NOOP("ADN_Tr", "Objects" ),              eObjects ),
@@ -294,7 +294,7 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "activeprotection", QT_TRANSLATE_NOOP("ADN_Tr", "Active Protections" ),   eActiveProtections ),
     T_ConverterWorkspaceElements( "sensors",          QT_TRANSLATE_NOOP("ADN_Tr", "Sensors" ),              eSensors ),
     T_ConverterWorkspaceElements( "breakdowns",       QT_TRANSLATE_NOOP("ADN_Tr", "Breakdowns" ),           eBreakdowns ),
-    T_ConverterWorkspaceElements( "composantes",      QT_TRANSLATE_NOOP("ADN_Tr", "Equipments" ),           eEquipments ),
+    T_ConverterWorkspaceElements( "equipments",       QT_TRANSLATE_NOOP("ADN_Tr", "Equipments" ),           eEquipments ),
     T_ConverterWorkspaceElements( "resourcenetworks", QT_TRANSLATE_NOOP("ADN_Tr", "Resource networks" ),    eResourceNetworks ),
     T_ConverterWorkspaceElements( "aiengine",         QT_TRANSLATE_NOOP("ADN_Tr", "Op. indicators" ),       eAiEngine ),
     T_ConverterWorkspaceElements( "missions",         QT_TRANSLATE_NOOP("ADN_Tr", "Missions" ),             eMissions ),
@@ -304,8 +304,8 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "communications",   QT_TRANSLATE_NOOP("ADN_Tr", "Jamming" ),              eCommunications ),
     T_ConverterWorkspaceElements( "humanfactors",     QT_TRANSLATE_NOOP("ADN_Tr", "Human factors" ),        eHumanFactors ),
     T_ConverterWorkspaceElements( "knowledgegroups",  QT_TRANSLATE_NOOP("ADN_Tr", "Knowledge groups" ),     eKnowledgeGroups ),
-    T_ConverterWorkspaceElements( "population",       QT_TRANSLATE_NOOP("ADN_Tr", "Crowds" ),               eCrowds ),
-    T_ConverterWorkspaceElements( "people",           QT_TRANSLATE_NOOP("ADN_Tr", "Populations" ),          eInhabitants ),
+    T_ConverterWorkspaceElements( "crowds",           QT_TRANSLATE_NOOP("ADN_Tr", "Crowds" ),               eCrowds ),
+    T_ConverterWorkspaceElements( "inhabitant",       QT_TRANSLATE_NOOP("ADN_Tr", "Populations" ),          eInhabitants ),
     T_ConverterWorkspaceElements( "reports",          QT_TRANSLATE_NOOP("ADN_Tr", "Reports" ),              eReports ),
     T_ConverterWorkspaceElements( "logistic",         QT_TRANSLATE_NOOP("ADN_Tr", "Log" ),                  eLogistic ),
     T_ConverterWorkspaceElements( "disasters",        QT_TRANSLATE_NOOP("ADN_Tr", "Disasters" ),            eDisasters ),
@@ -333,6 +333,15 @@ ADN_Tr::T_ConverterContextParameters ADN_Tr::contextParametersConverter_[] =
     T_ConverterContextParameters( "boundaryLimit2_",    QT_TRANSLATE_NOOP( "ADN_Tr", "Limit 2" ),           eContextParameters_Limit2 ),
 
     T_ConverterContextParameters( "", "", (E_ContextParameters)-1 )
+};
+
+ADN_Tr::T_ConverterEntityType ADN_Tr::entityTypeConverter_[] =
+{
+    T_ConverterEntityType( "unit",    QT_TRANSLATE_NOOP( "ADN_Tr", "Unit" ),    eEntityType_Pawn ),
+    T_ConverterEntityType( "automat", QT_TRANSLATE_NOOP( "ADN_Tr", "Automat" ), eEntityType_Automat ),
+    T_ConverterEntityType( "crowd",   QT_TRANSLATE_NOOP( "ADN_Tr", "Crowd" ),   eEntityType_Population ),
+
+    T_ConverterEntityType( "", "", (E_EntityType)-1 )
 };
 
 // -----------------------------------------------------------------------------
@@ -543,6 +552,15 @@ const std::string& ADN_Tr::ConvertFromContextParameters( E_ContextParameters nVa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromEntityType
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromEntityType( E_EntityType nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( entityTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToConsumptionType
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -750,6 +768,15 @@ E_ContextParameters ADN_Tr::ConvertToContextParameters( const std::string& strNa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToEntityType
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+E_EntityType ADN_Tr::ConvertToEntityType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( entityTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -778,4 +805,5 @@ void ADN_Tr::InitTranslations()
     InitTr( workspaceElementsConverter_, "ADN_Tr" );
     InitTr( daysConverter_, "ADN_Tr" );
     InitTr( contextParametersConverter_, "ADN_Tr" );
+    InitTr( entityTypeConverter_, "ADN_Tr" );
 }

@@ -84,7 +84,7 @@ protected slots:
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Health_GUI::ADN_Health_GUI( ADN_Health_Data& data )
-    : ADN_GUI_ABC( "ADN_Health_GUI" )
+    : ADN_GUI_ABC( eLogistic )
     , data_      ( data )
 {
     // NOTHING
@@ -110,26 +110,26 @@ void ADN_Health_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
+    builder.PushSubName( "health-tab" );
 
     // Health
     QWidget* pHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic duration" ), data_.diagnosticTime_ );
-    builder.AddField< ADN_TimeField >( pHolder, tr( "Triage duration" ), data_.sortingTime_ );
+    builder.AddField< ADN_TimeField >( pHolder, "diagnostic-duration", tr( "Diagnostic duration" ), data_.diagnosticTime_ );
+    builder.AddField< ADN_TimeField >( pHolder, "triage-duration", tr( "Triage duration" ), data_.sortingTime_ );
     builder.AddStretcher( pHolder, Qt::Vertical );
 
     // wounds
-    ADN_WoundTable* woundTable = new ADN_WoundTable( strClassName_ + "_WoundsTable", &data_ );
-    woundTable->setObjectName( strClassName_ + "_WoundsTable" );
+    ADN_WoundTable* woundTable = new ADN_WoundTable( builder.GetChildName( "wounds-table" ), &data_ );
 
     // Warning tables
     Q3HGroupBox* pEvacuationBox = new Q3HGroupBox( tr( "Ambulances (evacuation) availability warnings" ) );
-    new ADN_AvailabilityWarningTable( strClassName_ + "_EvacuationTable", data_.vChangeOverWarnings_, pEvacuationBox );
+    new ADN_AvailabilityWarningTable( builder.GetChildName( "evacuation-table" ), data_.vChangeOverWarnings_, pEvacuationBox );
 
     Q3HGroupBox* pCollectionBox = new Q3HGroupBox( tr( "Ambulances (collection) availability warnings" ) );
-    new ADN_AvailabilityWarningTable( strClassName_ + "_CollectTable", data_.vCollectingWarnings_, pCollectionBox );
+    new ADN_AvailabilityWarningTable( builder.GetChildName( "collect-table" ), data_.vCollectingWarnings_, pCollectionBox );
 
     Q3HGroupBox* pDoctorsBox = new Q3HGroupBox( tr( "Doctors availability warnings" ) );
-    new ADN_AvailabilityWarningTable( strClassName_ + "_DoctorsTable", data_.vDoctorsWarnings_, pDoctorsBox );
+    new ADN_AvailabilityWarningTable( builder.GetChildName( "doctors-table" ), data_.vDoctorsWarnings_, pDoctorsBox );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -160,6 +160,5 @@ void ADN_Health_GUI::Build()
     pContentLayout->addStretch( 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

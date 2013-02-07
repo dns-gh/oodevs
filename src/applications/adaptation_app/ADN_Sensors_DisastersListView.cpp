@@ -43,7 +43,7 @@ namespace
 // Name: ADN_Sensors_DisastersListView constructor
 // Created: LGY 2012-12-03
 // -----------------------------------------------------------------------------
-ADN_Sensors_DisastersListView::ADN_Sensors_DisastersListView( QWidget* pParent )
+ADN_Sensors_DisastersListView::ADN_Sensors_DisastersListView( QWidget* pParent /* = 0 */ )
     : ADN_ListView( pParent, "ADN_Sensors_DisastersListView", tools::translate( "ADN_Sensors_DisastersListView", "Disasters" ) )
 {
     pConnector_ = new ADN_Connector_Disasters( *this );

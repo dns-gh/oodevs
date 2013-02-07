@@ -27,7 +27,7 @@ class ADN_ListView_Models
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_ListView_Models( E_EntityType eEntityType, QWidget* pParent );
+    ADN_ListView_Models( QWidget* pParent, E_EntityType eEntityType );
     virtual ~ADN_ListView_Models();
     //@}
 

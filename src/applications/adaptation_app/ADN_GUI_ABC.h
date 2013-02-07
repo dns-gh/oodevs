@@ -21,6 +21,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "ADN_NavigationInfos.h"
+#include "ADN_Tr.h"
 
 class ADN_MainWindow;
 class ADN_HtmlBuilder;
@@ -56,7 +57,11 @@ class ADN_GUI_ABC : public ADN_BaseGui_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_GUI_ABC( const char* szClassName ) : pMainWidget_ ( 0 ), strClassName_( szClassName ), pListView_( 0 ) {};
+             ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
+                 : pMainWidget_ ( 0 )
+                 , pListView_( 0 )
+                 , strClassName_( ADN_Tr::ConvertFromWorkspaceElement( workspaceElement, ADN_Tr::eToSim ).c_str() )
+             {}
     virtual ~ADN_GUI_ABC() {};
     //@}
 
@@ -74,7 +79,8 @@ public:
 
     QWidget* GetMainWidget() const { return pMainWidget_; }
     ADN_ListView* GetListView() const { return pListView_; }
-    QWidget* CreateScrollArea( QWidget& content, QWidget* list = 0, bool paintSplitter = true, bool paintBackground = false, bool showFrameBorder = true, int margin = 10, int spacing = 10 );
+    virtual void AddListView( ADN_ListView* listView );
+    QWidget* CreateScrollArea( const char* objectName, QWidget& content, QWidget* list = 0, bool paintSplitter = true, bool paintBackground = false, bool showFrameBorder = true, int margin = 10, int spacing = 10 );
     //@}
 
     //! @name Qt reimplementation.
@@ -85,8 +91,8 @@ public:
 protected:
     //! @name Member data
     //@{
-    QWidget*      pMainWidget_;
-    QString       strClassName_;
+    const QString strClassName_;
+    QWidget* pMainWidget_;
     ADN_ListView* pListView_;
     //@}
 };
@@ -102,8 +108,8 @@ class ADN_Tabbed_GUI_ABC : public ADN_GUI_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Tabbed_GUI_ABC( const char* szClassName )
-                 : ADN_GUI_ABC( szClassName)
+             ADN_Tabbed_GUI_ABC( E_WorkspaceElements workspaceElement )
+                 : ADN_GUI_ABC( workspaceElement )
                  , pTabWidget_( 0 ) {}
     virtual ~ADN_Tabbed_GUI_ABC() {};
     //@}
@@ -113,6 +119,7 @@ public:
     virtual void ChangeCurrentSubTab( int subTab );
     virtual bool SelectItem( const QString& name );
     virtual void FindSubTabAndSelectItem( const QString& name );
+    virtual void AddListView( ADN_ListView* listView );
     //@}
 
 protected:

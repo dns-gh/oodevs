@@ -24,7 +24,7 @@ class ADN_Resources_GenericListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Resources_GenericListView( E_DotationFamily nType, QWidget* pParent );
+    ADN_Resources_GenericListView( QWidget* pParent, E_DotationFamily nType );
     virtual ~ADN_Resources_GenericListView();
     //@}
 

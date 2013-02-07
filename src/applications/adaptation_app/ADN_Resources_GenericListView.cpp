@@ -31,7 +31,7 @@ typedef ADN_Resources_Data::CategoryInfo CategoryInfo;
 // Name: ADN_Resources_GenericListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Resources_GenericListView::ADN_Resources_GenericListView( E_DotationFamily nType, QWidget* pParent )
+ADN_Resources_GenericListView::ADN_Resources_GenericListView( QWidget* pParent, E_DotationFamily nType )
     : ADN_ListView( pParent, "ADN_Resources_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() )
     , nType_      ( nType )
 {

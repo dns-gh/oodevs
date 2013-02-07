@@ -27,7 +27,6 @@
 #include "ADN_Crowds_FireEffectRoe_GUI.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
-#include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 #include <QtGui/qlabel.h>
 #include <QtGui/qlayout.h>
@@ -41,7 +40,7 @@
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
 ADN_Crowds_GUI::ADN_Crowds_GUI( ADN_Crowds_Data& data )
-    : ADN_GUI_ABC( "ADN_Crowds_GUI" )
+    : ADN_GUI_ABC( eCrowds )
     , data_( data )
 {
     // NOTHING
@@ -71,109 +70,112 @@ void ADN_Crowds_GUI::Build()
 
     // Global parameters
     Q3GroupBox* pGlobalGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Global parameters" ) );
+    builder.PushSubName( "global" );
     Q3GroupBox* pReloadingEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units firing capability" ), pGlobalGroup );
     // Density
-    builder.AddField< ADN_EditLine_Double >( pReloadingEffectGroup, tr( "Density" ), vInfosConnectors[ eReloadingEffectDensity ], tr( "people/m²" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pReloadingEffectGroup, "density", tr( "Density" ), vInfosConnectors[ eReloadingEffectDensity ], tr( "people/m²" ), eGreaterZero );
     vInfosConnectors[ eReloadingEffectDensity ]->Connect( &data_.reloadingSpeedEffectInfos_.rDensity_ );
     // Modifier
-    builder.AddField< ADN_EditLine_Double >( pReloadingEffectGroup, tr( "Modifier" ), vInfosConnectors[ eReloadingEffectModifier ], 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pReloadingEffectGroup, "modifier", tr( "Modifier" ), vInfosConnectors[ eReloadingEffectModifier ], 0, eGreaterZero );
     vInfosConnectors[ eReloadingEffectModifier ]->Connect( &data_.reloadingSpeedEffectInfos_.rModifier_ );
     //Time between NBC application
-    builder.AddField< ADN_TimeField >( pGlobalGroup, tr( "Time between two NBC applications" ), vInfosConnectors[ eTimeBetweenNBCApplication ] );
+    builder.AddField< ADN_TimeField >( pGlobalGroup, "time-between-two-nbc", tr( "Time between two NBC applications" ), vInfosConnectors[ eTimeBetweenNBCApplication ] );
     vInfosConnectors[ eTimeBetweenNBCApplication ]->Connect( &data_.timeBetweenNbcApplication_ );
+
+    builder.PopSubName(); //! global
 
     // Population parameters
     Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 5, Qt::Vertical, tr( "Details" ) );
     //{
         // Information
         QWidget* pInfoHolder = builder.AddFieldHolder( pPropertiesGroup );
-        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+        ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
         nameField->ConnectWithRefValidity( data_.GetCrowds() );
         ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, eEntityType_Population );
-        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Behavior model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
+        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "behavior-model", tr( "Behavior model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
         // Density
-        Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
-        builder.AddField< ADN_EditLine_Double >( pDensity, tr( "Density" ), vInfosConnectors[ eConcentrationDensity ], tr( "people/m²" ), eGreaterZero );
-        builder.AddField< ADN_EditLine_Double >( pDensity, tr( "Density while moving" ), vInfosConnectors[ eMoveDensity ], tr( "people/m²" ), eGreaterZero );
-        builder.AddField< ADN_EditLine_Double >( pDensity, tr( "Average movement speed" ), vInfosConnectors[ eMoveSpeed ], tr( "km/h" ), eGreaterZero );
+        Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, pPropertiesGroup );
+        builder.AddField< ADN_EditLine_Double >( pDensity, "density", tr( "Density" ), vInfosConnectors[ eConcentrationDensity ], tr( "people/m²" ), eGreaterZero );
+        builder.AddField< ADN_EditLine_Double >( pDensity, "density-while-moving", tr( "Density while moving" ), vInfosConnectors[ eMoveDensity ], tr( "people/m²" ), eGreaterZero );
+        builder.AddField< ADN_EditLine_Double >( pDensity, "average-movement-speed", tr( "Average movement speed" ), vInfosConnectors[ eMoveSpeed ], tr( "km/h" ), eGreaterZero );
 
         // Armed
         Q3GroupBox* pArmed = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
-        builder.AddField< ADN_EditLine_Int >( pArmed, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
+        builder.AddField< ADN_EditLine_Int >( pArmed, "armed-individuals", tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
 
         // Human
         Q3GroupBox* pHuman = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
-        ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pHuman, builder, strClassName_ + "_HumanRepartition" );
-        pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
-        pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
-        pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
+        ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pHuman, builder, builder.GetChildName( "human-repartition" ) );
+        pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ], "males" );
+        pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ], "females" );
+        pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ], "children" );
         pMultiPercentage->AddWarning();
 
         // NBC
         Q3GroupBox* pNBC = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
-        builder.AddField< ADN_TimeField >( pNBC, tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ] );
+        builder.AddField< ADN_TimeField >( pNBC, "decontamination-delay", tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ] );
     //}
 
     // Speed effects
     Q3GroupBox* pSpeedEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units movement capability" ) );
     pSpeedEffectGroup->setFixedHeight( 200 );
-    ADN_Crowds_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Crowds_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
-    pSpeedEffectAttitudeList->setObjectName( strClassName_ + "_AttitudeList" );
+    ADN_Crowds_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = builder.AddWidget< ADN_Crowds_SpeedEffect_Attitude_ListView >( "attitude-list", pSpeedEffectGroup );
     vInfosConnectors[ eSpeedEffectAttitude ] = &pSpeedEffectAttitudeList->GetConnector();
-    ADN_Crowds_SpeedEffect_Volume_ListView* pVolumeList = new ADN_Crowds_SpeedEffect_Volume_ListView( pSpeedEffectGroup );
-    pVolumeList->setObjectName( strClassName_ + "_VolumeList" );
+    ADN_Crowds_SpeedEffect_Volume_ListView* pVolumeList = builder.AddWidget< ADN_Crowds_SpeedEffect_Volume_ListView >( "volume-list", pSpeedEffectGroup );
     vInfosConnectors[ eSpeedEffectVolume ] = &pVolumeList->GetConnector();
     Q3GroupBox* pSpeedEffectVolumeGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
-    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, "density", tr( "Density" ), vInfosConnectors[eSpeedEffectDensity], tr( "people/m²" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pSpeedEffectVolumeGroup, "max-speed", tr( "Max speed" ), vInfosConnectors[eSpeedEffectMaxSpeed], tr( "km/h" ), eGreaterEqualZero );
 
     // Fire effects
     Q3GroupBox* pFireEffectGlobalGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Attritions" ) );
     //{
+        builder.PushSubName( "attritions" );
         Q3GroupBox* pFireEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd -> Units" ), pFireEffectGlobalGroup );
-        ADN_Crowds_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Crowds_FireEffect_Attitude_ListView( pFireEffectGroup );
-        pFireEffectAttitudeList->setObjectName( strClassName_ + "_FireAttitudeList" );
+        ADN_Crowds_FireEffect_Attitude_ListView* pFireEffectAttitudeList = builder.AddWidget< ADN_Crowds_FireEffect_Attitude_ListView >( "fire-attitude-list", pFireEffectGroup );
         vInfosConnectors[ eFireEffectAttitude ] = &pFireEffectAttitudeList->GetConnector();
         Q3VBox* pFireEffectProtectionBox = new Q3VBox( pFireEffectGroup );
         pFireEffectProtectionBox->setSpacing( 5 );
         // Protection
-        ADN_Crowds_FireEffect_Protection_ListView* pProtectionList = new ADN_Crowds_FireEffect_Protection_ListView( pFireEffectProtectionBox );
-        pProtectionList->setObjectName( strClassName_ + "_ProtectionList" );
+        ADN_Crowds_FireEffect_Protection_ListView* pProtectionList = builder.AddWidget< ADN_Crowds_FireEffect_Protection_ListView >( "protection-list", pFireEffectProtectionBox );
         vInfosConnectors[ eFireEffectProtection ] = &pProtectionList->GetConnector();
         // Intensity
         Q3GroupBox* pFireEffectIntensityGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Intensity" ), pFireEffectProtectionBox );
-        builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, tr( "Density" ), vInfosConnectors[ eFireEffectIntensityDensity ], tr( "people/m²" ), eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, tr( "Intensity" ), vInfosConnectors[ eFireEffectIntensityFactor ], 0, eGreaterEqualZero );
+        builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, "density", tr( "Density" ), vInfosConnectors[ eFireEffectIntensityDensity ], tr( "people/m²" ), eGreaterEqualZero );
+        builder.AddField< ADN_EditLine_Double >( pFireEffectIntensityGroup, "intensity", tr( "Intensity" ), vInfosConnectors[ eFireEffectIntensityFactor ], 0, eGreaterEqualZero );
 
         // Effects
         Q3GroupBox* pFireEffectProtectionGroup = new Q3GroupBox( 2, Qt::Vertical, tr( "Effect" ), pFireEffectGroup );
 
         Q3GroupBox* pFireEffectUnarmedProtectionGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Unarmed" ), pFireEffectProtectionGroup );
-        ADN_MultiPercentage_Double* pMultiPercentageUnarmed = new ADN_MultiPercentage_Double( pFireEffectUnarmedProtectionGroup, builder, strClassName_ + "_Unarmed_Effects" );
-        pMultiPercentageUnarmed->AddLine( tr( "Destruction" ), vInfosConnectors[ eFireEffectUnarmedDestruction ] );
-        pMultiPercentageUnarmed->AddLine( tr( "Fixable with evacuation" ), vInfosConnectors[ eFireEffectUnarmedFixableWithEvacuation ] );
-        pMultiPercentageUnarmed->AddLine( tr( "Fixable without evacuation" ), vInfosConnectors[ eFireEffectUnarmedFixableWithoutEvacuation ] );
+        ADN_MultiPercentage_Double* pMultiPercentageUnarmed = new ADN_MultiPercentage_Double( pFireEffectUnarmedProtectionGroup, builder, builder.GetChildName( "unarmed-effects" ) );
+        pMultiPercentageUnarmed->AddLine( tr( "Destruction" ), vInfosConnectors[ eFireEffectUnarmedDestruction ], "destruction" );
+        pMultiPercentageUnarmed->AddLine( tr( "Fixable with evacuation" ), vInfosConnectors[ eFireEffectUnarmedFixableWithEvacuation ], "fixable-with-evacuation" );
+        pMultiPercentageUnarmed->AddLine( tr( "Fixable without evacuation" ), vInfosConnectors[ eFireEffectUnarmedFixableWithoutEvacuation ], "fixable-without-evacuation" );
 
         Q3GroupBox* pFireEffectArmedProtectionGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Armed" ), pFireEffectProtectionGroup );
-        ADN_MultiPercentage_Double* pMultiPercentageArmed = new ADN_MultiPercentage_Double( pFireEffectArmedProtectionGroup, builder, strClassName_ + "_Armed_Effects" );
-        pMultiPercentageArmed->AddLine( tr( "Destruction" ), vInfosConnectors[ eFireEffectArmedDestruction ] );
-        pMultiPercentageArmed->AddLine( tr( "Fixable with evacuation" ), vInfosConnectors[ eFireEffectArmedFixableWithEvacuation ] );
-        pMultiPercentageArmed->AddLine( tr( "Fixable without evacuation" ), vInfosConnectors[ eFireEffectArmedFixableWithoutEvacuation ] );
+        ADN_MultiPercentage_Double* pMultiPercentageArmed = new ADN_MultiPercentage_Double( pFireEffectArmedProtectionGroup, builder, builder.GetChildName( "armed-effects" ) );
+        pMultiPercentageArmed->AddLine( tr( "Destruction" ), vInfosConnectors[ eFireEffectArmedDestruction ], "destruction" );
+        pMultiPercentageArmed->AddLine( tr( "Fixable with evacuation" ), vInfosConnectors[ eFireEffectArmedFixableWithEvacuation ], "fixable-without-evacuation" );
+        pMultiPercentageArmed->AddLine( tr( "Fixable without evacuation" ), vInfosConnectors[ eFireEffectArmedFixableWithoutEvacuation ], "fixable-without-evacuation" );
 
         // Fire Roe effects
         Q3GroupBox* pFireEffectRoeGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Units -> Crowd" ), pFireEffectGlobalGroup );
-        new ADN_Crowds_FireEffectRoe_GUI( strClassName_ + "_FireEffectRoe", vInfosConnectors[ eFireEffectRoe ], pFireEffectRoeGroup );
+        new ADN_Crowds_FireEffectRoe_GUI( builder.GetChildName( "fire-effects-roe-table" ), vInfosConnectors[ eFireEffectRoe ], pFireEffectRoeGroup );
+
+        builder.PopSubName(); //! attritions
     //}
 
     // Urban area destruction
+    builder.PushSubName( "urban-area-destruction" );
     Q3GroupBox* pUrbanAreaDestructionlGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban area destruction" ) );
     pUrbanAreaDestructionlGroup->setFixedHeight( 200 );
-    ADN_Crowds_UrbanEffect_Attitude_ListView* pUrbanEffectAttitudeList = new ADN_Crowds_UrbanEffect_Attitude_ListView( pUrbanAreaDestructionlGroup );
-    pUrbanEffectAttitudeList->setObjectName( strClassName_+ "_UrbanDestructionList" );
+    ADN_Crowds_UrbanEffect_Attitude_ListView* pUrbanEffectAttitudeList = builder.AddWidget< ADN_Crowds_UrbanEffect_Attitude_ListView >( "urban-destruction-list", pUrbanAreaDestructionlGroup );
     vInfosConnectors[ eUrbanBlocDestructionAttitude ] = &pUrbanEffectAttitudeList->GetConnector();
     Q3GroupBox* pTimeDestructUrbanGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Time to destruct a urban block" ), pUrbanAreaDestructionlGroup );
-    builder.AddField< ADN_EditLine_Double >( pTimeDestructUrbanGroup, tr( "Density" ), vInfosConnectors[ eUrbanBlocDestructionDensity ], tr( "people/m²" ), eGreaterEqualZero );
-    builder.AddField< ADN_TimeField >( pTimeDestructUrbanGroup, tr( "Time" ), vInfosConnectors[ eUrbanBlocDestructionTime ] );
+    builder.AddField< ADN_EditLine_Double >( pTimeDestructUrbanGroup, "density", tr( "Density" ), vInfosConnectors[ eUrbanBlocDestructionDensity ], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddField< ADN_TimeField >( pTimeDestructUrbanGroup, "time", tr( "Time" ), vInfosConnectors[ eUrbanBlocDestructionTime ] );
+    builder.PopSubName(); //! urban-area-destruction
 
     // Connectors
     pSpeedEffectAttitudeList->SetItemConnectors( vInfosConnectors );
@@ -204,12 +206,10 @@ void ADN_Crowds_GUI::Build()
     pSpecificLayout->addWidget( pUrbanAreaDestructionlGroup );
 
     // List view
-    ADN_SearchListView< ADN_Crowds_ListView >* pSearchListView = new ADN_SearchListView< ADN_Crowds_ListView >( this, data_.GetCrowds(), vInfosConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_Crowds_ListView >( this, data_.GetCrowds(), vInfosConnectors );
 
     // Sub content
-    QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView );
+    QWidget* pSubContent = CreateScrollArea( builder.GetChildName( "content" ), *pSpecificContent, pSearchListView );
 
     // Content layout
     QWidget* pContent = new QWidget();
@@ -221,5 +221,5 @@ void ADN_Crowds_GUI::Build()
     pContentLayout->addWidget( pSubContent, 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

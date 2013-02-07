@@ -12,7 +12,7 @@
 // Created: JSR 21-11-11
 //-----------------------------------------------------------------------------
 template< class Connector >
-ADN_TextEdit< Connector >::ADN_TextEdit( QWidget* parent, const char * name)
+ADN_TextEdit< Connector >::ADN_TextEdit( QWidget* parent /* = 0 */, const char * name)
     : ADN_TextEdit_ABC( parent,name )
 {
     pConnector_ = new Connector( this );

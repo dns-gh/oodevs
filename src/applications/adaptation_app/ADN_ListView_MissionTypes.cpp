@@ -24,8 +24,8 @@ typedef ADN_Missions_Mission Mission;
 // Name: ADN_ListView_MissionTypes constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
-    : ADN_ListView( parent, szName, ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() )
+ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( QWidget* parent, E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions )
+    : ADN_ListView( parent, "ADN_ListView_MissionTypes", ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() )
     , missions_   ( missions )
     , eEntityType_( eEntityType )
 {

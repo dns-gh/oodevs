@@ -37,8 +37,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const QString& szName );
-    QWidget* BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName );
+    QWidget* BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const char* objectName, const QString& szName );
+    QWidget* BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const char* objectName, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName );
     //@}
 
 private:

@@ -29,14 +29,15 @@
 // Name: ADN_GuiBuilder constructor
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-ADN_GuiBuilder::ADN_GuiBuilder( const QString& name /*= ""*/ )
+ADN_GuiBuilder::ADN_GuiBuilder( const QString& name )
     : pCurrentFieldWidget1_ ( 0 )
     , pCurrentFieldWidget2_ ( 0 )
     , pCurrentFieldGfx2_    ( 0 )
     , pCurrentFieldWidget3_ ( 0 )
-    , name_                 ( name + "_" )
+    , name_                 ( name )
+    , nameCount_            ( 0 )
 {
-    // NOTHING
+    assert( !name_.isEmpty() );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,11 +64,12 @@ QWidget* ADN_GuiBuilder::AddFieldHolder( QWidget* pParent )
 // Name: ADN_GuiBuilder::AddFileField
 // Created: APE 2005-04-06
 // -----------------------------------------------------------------------------
-ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter /* = "(*.*)"*/ )
+ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter /* = "(*.*)"*/ )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     ADN_FileChooser* pChooser = new ADN_FileChooser( pParent, szFilter );
+    pChooser->setObjectName( GetChildName( objectName ) );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pChooser;
@@ -86,11 +88,12 @@ ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szN
 // Name: ADN_GuiBuilder::AddFileField
 // Created: APE 2005-03-23
 // -----------------------------------------------------------------------------
-ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter )
+ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     ADN_FileChooser* pChooser = new ADN_FileChooser( pParent, szFilter );
+    pChooser->setObjectName( GetChildName( objectName ) );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pChooser;
@@ -197,4 +200,88 @@ void ADN_GuiBuilder::AddStretcher( QLayout* pLayout, Qt::Orientation nOrientatio
 {
     QSpacerItem* pSpacer = new QSpacerItem( 1, 1, (nOrientation == Qt::Vertical) ? QSizePolicy::Minimum : QSizePolicy::Expanding, (nOrientation == Qt::Vertical) ? QSizePolicy::Expanding : QSizePolicy::Minimum );
     pLayout->addItem( pSpacer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddGroupBox
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+ADN_GroupBox* ADN_GuiBuilder::AddGroupBox( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, int strips /* = -1 */, Qt::Orientation orientation /* = Qt::Horizontal */ )
+{
+    ADN_GroupBox* groupBox = 0;
+    if( strips > 0 )
+        groupBox = new ADN_GroupBox( strips, orientation, szName, pParent );
+    else
+        groupBox = new ADN_GroupBox( szName, pParent );
+
+    groupBox->setObjectName( GetChildName( objectName ) );
+    pGuiConnector = &groupBox->GetConnector();
+    return groupBox;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddGroupBox
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+ADN_GroupBox* ADN_GuiBuilder::AddGroupBox( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, int strips /* = -1 */, Qt::Orientation orientation /* = Qt::Horizontal */ )
+{
+    ADN_GroupBox* groupBox = 0;
+    if( strips > 0 )
+        groupBox = new ADN_GroupBox( strips, orientation, szName, pParent );
+    else
+        groupBox = new ADN_GroupBox( szName, pParent );
+
+    groupBox->setObjectName( GetChildName( objectName ) );
+    ADN_Connector_ABC* pConnector = &groupBox->GetConnector();
+    assert( pConnector );
+    pConnector->Connect( &itemConnector );
+    return groupBox;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::GetName
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+const QString& ADN_GuiBuilder::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::PushSubName
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+void ADN_GuiBuilder::PushSubName( QString subName )
+{
+    assert( !subName.isEmpty() );
+
+    ++nameCount_;
+    name_ += "_";
+    name_ += subName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::PopSubName
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+void ADN_GuiBuilder::PopSubName()
+{
+    if( nameCount_ > 0 )
+    {
+        --nameCount_;
+        int index = name_.lastIndexOf( '_' );
+        if( index != -1 )
+            name_.truncate( index );
+    }
+    else
+        std::cerr << "ADN_GuiBuilder: Error: The number of pushes ands pops are different: " << name_.toStdString() << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::GetChildName
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+QString ADN_GuiBuilder::GetChildName( QString childName ) const
+{
+    return name_ + "_" + childName;
 }

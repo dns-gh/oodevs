@@ -172,12 +172,12 @@ private:
     //! @name Helpers
     //@{
     QWidget* BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
-    QWidget* BuildAmbulance( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
+    QWidget* BuildAmbulance( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
 
     QWidget* BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
 
     QWidget* BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
-    QWidget* BuildNTI( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
+    QWidget* BuildNTI( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
 
     QWidget* BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
 

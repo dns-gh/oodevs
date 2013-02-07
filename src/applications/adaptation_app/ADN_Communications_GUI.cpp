@@ -27,7 +27,7 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Communications_GUI::ADN_Communications_GUI( ADN_Communications_Data& data )
-    : ADN_GUI_ABC( "ADN_Communications_GUI" )
+    : ADN_GUI_ABC( eCommunications )
     , data_      ( data )
 {
     // NOTHING
@@ -56,8 +56,8 @@ void ADN_Communications_GUI::Build()
 
     // Info holders
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
-    builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, "effect-on-reloading-duration", tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, "effect-on-movement-speed", tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
     builder.AddStretcher( pInfoHolder, Qt::Vertical );
 
     // -------------------------------------------------------------------------
@@ -72,6 +72,5 @@ void ADN_Communications_GUI::Build()
     pContentLayout->addWidget( pInfoHolder );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

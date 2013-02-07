@@ -18,14 +18,13 @@
 #include "ADN_Launchers_ModifPhs_GUI.h"
 #include "ADN_GroupBox.h"
 #include "ADN_HtmlBuilder.h"
-#include "ADN_SearchListView.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_GUI constructor
 // Created: JDY 03-07-11
 //-----------------------------------------------------------------------------
 ADN_Launchers_GUI::ADN_Launchers_GUI( ADN_Launchers_Data& data )
-    : ADN_GUI_ABC( "ADN_Launchers_GUI" )
+    : ADN_GUI_ABC( eLaunchers )
     , data_( data )
     , pModifPhs_( 0 )
 {
@@ -56,26 +55,23 @@ void ADN_Launchers_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetLaunchersInfos() );
 
     // Indirect fire
-    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Indirect fire" ), vConnectors[ eIndirect ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, "indirect-fire", tr( "Indirect fire" ), vConnectors[ eIndirect ] );
 
     // Direct fire
-    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Direct fire" ) );
-    pDirectGroup->setObjectName( strClassName_ + "DirectFire" );
-    vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
+    ADN_GroupBox* pDirectGroup = builder.AddGroupBox( 0, "direct-fire", tr( "Direct fire" ), vConnectors[ eDirect ], 1 );
     QGroupBox* pGroupModificators = new QGroupBox( tr( "Phs modifiers" ), pDirectGroup );
 
     QLabel* pTargetLabel = new QLabel( tr( "Target's stance" ) );
     pTargetLabel->setAlignment( Qt::AlignHCenter );
 
     QLabel* pShooterLabel = new QLabel( tr( "Shooter's\nstance" ) );
-    //pShooterLabel->setAlignment( Qt::AlignVCenter );
 
     // modifiers tab
-    pModifPhs_ = new ADN_Launchers_ModifPhs_GUI( strClassName_ + "ModifPh", vConnectors[ ePhModifiers ] );
+    pModifPhs_ = new ADN_Launchers_ModifPhs_GUI( builder.GetChildName( "modif-ph" ), vConnectors[ ePhModifiers ] );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -99,13 +95,10 @@ void ADN_Launchers_GUI::Build()
     pContentLayout->addStretch( 1 );
 
     // ListView
-    ADN_SearchListView< ADN_ListView_Launchers >* pSearchListView = new ADN_SearchListView< ADN_ListView_Launchers >( this, data_.GetLaunchersInfos(), vConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Launchers >( this, data_.GetLaunchersInfos(), vConnectors );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------

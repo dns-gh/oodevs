@@ -25,8 +25,8 @@ typedef ADN_Missions_FragOrder FragOrder;
 // Name: ADN_ListView_FragOrderTypes constructor
 // Created: SBO 2006-12-06
 // -----------------------------------------------------------------------------
-ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
-    : ADN_ListView( parent, szName, tr( "Fragmentary orders" ) )
+ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( QWidget* parent, ADN_Missions_Data::T_FragOrder_Vector& orders )
+    : ADN_ListView( parent, "ADN_ListView_FragOrderTypes", tr( "Fragmentary orders" ) )
     , orders_( orders )
 {
     pConnector_ = new ADN_Connector_ListView< FragOrder >( *this );

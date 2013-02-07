@@ -24,7 +24,7 @@ class ADN_Tab_Container : public ADN_GUI_Container
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Tab_Container( const char* szClassName, ADN_Data_Container& data );
+             ADN_Tab_Container( E_WorkspaceElements workspaceElement, ADN_Data_Container& data );
     virtual ~ADN_Tab_Container();
     //@}
 

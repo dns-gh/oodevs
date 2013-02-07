@@ -28,7 +28,7 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_GUI::ADN_HumanFactors_GUI( ADN_HumanFactors_Data& data )
-    : ADN_GUI_ABC( "ADN_HumanFactors_GUI" )
+    : ADN_GUI_ABC( eHumanFactors )
     , data_      ( data )
 {
     // NOTHING
@@ -58,42 +58,42 @@ void ADN_HumanFactors_GUI::Build()
     // Experience
     Q3GroupBox* pExperienceBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
     {
-        BuildModifiers( pExperienceBox, data_.newbieModifiers_, tr( "Newbie" ) );
-        BuildModifiers( pExperienceBox, data_.xpModifiers_, tr( "Experienced" ) );
-        BuildModifiers( pExperienceBox, data_.veteranModifiers_, tr( "Veteran" ) );
+        BuildModifiers( pExperienceBox, data_.newbieModifiers_, "experience-newbie", tr( "Newbie" ) );
+        BuildModifiers( pExperienceBox, data_.xpModifiers_, "experience-experienced", tr( "Experienced" ) );
+        BuildModifiers( pExperienceBox, data_.veteranModifiers_, "experience-veteran", tr( "Veteran" ) );
     }
     // Tiredness
     Q3GroupBox* pTirednessBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Tiredness modifiers" ), pMainWidget_ );
     {
-        BuildModifiers( pTirednessBox, data_.normalModifiers_, tr( "Not tired" ) );
-        BuildModifiers( pTirednessBox, data_.tirednessModifiers_, tr( "Tired" ) );
-        BuildModifiers( pTirednessBox, data_.exhaustedModifiers_, tr( "Exhausted" ) );
+        BuildModifiers( pTirednessBox, data_.normalModifiers_, "tiredness-not-tired", tr( "Not tired" ) );
+        BuildModifiers( pTirednessBox, data_.tirednessModifiers_, "tiredness-tired", tr( "Tired" ) );
+        BuildModifiers( pTirednessBox, data_.exhaustedModifiers_, "tiredness-exhausted", tr( "Exhausted" ) );
     }
     // Stress
     Q3GroupBox* pStressBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Stress modifiers" ), pMainWidget_ );
     {
-        BuildModifiers( pStressBox, data_.calmModifiers_, tr( "Calm" ) );
-        BuildModifiers( pStressBox, data_.worriedModifiers_, tr( "Worried" ) );
-        BuildModifiers( pStressBox, data_.stressedModifiers_, tr( "Stressed" ) );
+        BuildModifiers( pStressBox, data_.calmModifiers_, "stress-calm", tr( "Calm" ) );
+        BuildModifiers( pStressBox, data_.worriedModifiers_, "stress-worried", tr( "Worried" ) );
+        BuildModifiers( pStressBox, data_.stressedModifiers_, "stress-stressed", tr( "Stressed" ) );
     }
     // Evolution
     Q3GroupBox* pEvolutionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Automatic evolution" ), pMainWidget_ );
     {
         Q3GroupBox* vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Fatigue" ), pEvolutionBox );
-        BuildThresholds( vBox, data_.tirednessThresholds_, tr( "Thresholds" ), tr( "Tiredness" ), tr( "Exhaustion" ) );
+        BuildThresholds( vBox, data_.tirednessThresholds_, "fatigue-thresholds", tr( "Thresholds" ), tr( "Tiredness" ), tr( "Exhaustion" ) );
         {
             Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution (per hour)" ), vBox );
-            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Parked, engine stopped" ), data_.tirednessEngineStopped_ );
-            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Parked, engine running" ), data_.tirednessEngineRunning_ );
-            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Moving" ), data_.tirednessMoving_ );
-            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Working" ), data_.tirednessWorking_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, "parked-engine-stopped", tr( "Parked, engine stopped" ), data_.tirednessEngineStopped_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, "parked-engine-running", tr( "Parked, engine running" ), data_.tirednessEngineRunning_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, "moving", tr( "Moving" ), data_.tirednessMoving_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, "working", tr( "Working" ), data_.tirednessWorking_ );
         }
         vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Stress" ), pEvolutionBox );
-        BuildThresholds( vBox, data_.stressThresholds_, tr( "Thresholds" ), tr( "Worry" ), tr( "Stress" ) );
+        BuildThresholds( vBox, data_.stressThresholds_, "stress-thresholds", tr( "Thresholds" ), tr( "Worry" ), tr( "Stress" ) );
         {
             Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution" ), vBox );
-            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Increase per fire" ), data_.stressIncPerShot_, 0, eGreaterEqualZero );
-            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Decrease per hour" ), data_.stressDecPerHour_, 0, eLowerEqualZero  );
+            builder.AddField< ADN_EditLine_Int >( hBox, "increase-per-fire", tr( "Increase per fire" ), data_.stressIncPerShot_, 0, eGreaterEqualZero );
+            builder.AddField< ADN_EditLine_Int >( hBox, "decrease-per-hour", tr( "Decrease per hour" ), data_.stressDecPerHour_, 0, eLowerEqualZero  );
         }
     }
 
@@ -112,28 +112,23 @@ void ADN_HumanFactors_GUI::Build()
     pContentLayout->addWidget( pEvolutionBox );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_GUI::BuildModifiers
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const QString& szName )
+QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const char* objectName, const QString& szName )
 {
     ADN_GuiBuilder builder( strClassName_ );
+    builder.PushSubName( objectName );
     Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
-    ADN_EditLine_Double* editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
-    editDouble->setObjectName( editDouble->objectName() + szName );
-    editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
-    editDouble->setObjectName( editDouble->objectName() + szName );
-    editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
-    editDouble->setObjectName( editDouble->objectName() + szName );
-    ADN_PH_EditLine_Double* phEditDouble = builder.AddField< ADN_PH_EditLine_Double >( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
-    phEditDouble->setObjectName( phEditDouble->objectName() + szName );
-    editDouble = builder.AddField< ADN_EditLine_Double >( pGroupBox, tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
-    editDouble->setObjectName( editDouble->objectName() + szName );
+    builder.AddField< ADN_EditLine_Double >( pGroupBox, "effect-on-movement-speed", tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pGroupBox, "effect-on-reloading-duration", tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pGroupBox, "effect-on-stance-changes-duration", tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
+    builder.AddField< ADN_PH_EditLine_Double >( pGroupBox, "effect-on-ph", tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pGroupBox, "effect-on-detection-ranges", tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
     return pGroupBox;
 }
 
@@ -141,13 +136,12 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
 // Name: ADN_HumanFactors_GUI::BuildThresholds
 // Created: ABR 2011-12-08
 // -----------------------------------------------------------------------------
-QWidget* ADN_HumanFactors_GUI::BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName )
+QWidget* ADN_HumanFactors_GUI::BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const char* objectName, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName )
 {
     ADN_GuiBuilder builder( strClassName_ );
+    builder.PushSubName( objectName );
     Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, szName, pParent );
-    ADN_EditLine_Int* editInt = builder.AddField< ADN_EditLine_Int >( pGroupBox, firstThresholdName, thresholds.firstThreshold_, 0, eGreaterZero );
-    editInt->setObjectName( editInt->objectName() + firstThresholdName );
-    editInt = builder.AddField< ADN_EditLine_Int >( pGroupBox, secondThresholdName, thresholds.secondThreshold_, 0, eGreaterZero );
-    editInt->setObjectName( editInt->objectName() + secondThresholdName );
+    builder.AddField< ADN_EditLine_Int >( pGroupBox, "first-threshold", firstThresholdName, thresholds.firstThreshold_, 0, eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pGroupBox, "second-threshold", secondThresholdName, thresholds.secondThreshold_, 0, eGreaterZero );
     return pGroupBox;
 }

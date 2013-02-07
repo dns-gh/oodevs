@@ -15,7 +15,7 @@
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Symbols_GUI::ADN_Symbols_GUI( ADN_Symbols_Data& /*data*/ )
-    : ADN_GUI_ABC( "ADN_Symbols_GUI" )
+    : ADN_GUI_ABC( eSymbols )
 {
     // NOTHING
 }

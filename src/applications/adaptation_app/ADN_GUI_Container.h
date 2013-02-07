@@ -27,7 +27,7 @@ class ADN_GUI_Container : public ADN_GUI_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_GUI_Container( const char* szClassName, ADN_Data_Container& data );
+             ADN_GUI_Container( E_WorkspaceElements workspaceElement, ADN_Data_Container& data );
     virtual ~ADN_GUI_Container();
     //@}
 

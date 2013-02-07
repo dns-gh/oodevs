@@ -14,8 +14,8 @@
 // Name: ADN_Linear_Container constructor
 // Created: ABR 2012-01-24
 // -----------------------------------------------------------------------------
-ADN_Linear_Container::ADN_Linear_Container( Qt::Orientation orientation, bool useScrollBar, const char* szClassName, ADN_Data_Container& data )
-    : ADN_GUI_Container( szClassName, data )
+ADN_Linear_Container::ADN_Linear_Container( Qt::Orientation orientation, bool useScrollBar, E_WorkspaceElements workspaceElement, ADN_Data_Container& data )
+    : ADN_GUI_Container( workspaceElement, data )
     , orientation_ ( orientation )
     , useScrollBar_( useScrollBar)
 {
@@ -63,7 +63,7 @@ void ADN_Linear_Container::Build()
     {
         QWidget* pContent = new QWidget();
         pContent->setLayout( pLayout );
-        pMainWidget_ = CreateScrollArea( *pContent );
+        pMainWidget_ = CreateScrollArea( strClassName_, *pContent );
     }
     else
     {

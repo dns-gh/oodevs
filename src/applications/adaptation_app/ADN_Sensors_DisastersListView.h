@@ -24,7 +24,7 @@ class ADN_Sensors_DisastersListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Sensors_DisastersListView( QWidget* pParent );
+    explicit ADN_Sensors_DisastersListView( QWidget* pParent = 0 );
     virtual ~ADN_Sensors_DisastersListView();
     //@}
 

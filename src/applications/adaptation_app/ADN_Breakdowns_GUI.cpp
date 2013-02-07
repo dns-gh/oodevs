@@ -16,7 +16,6 @@
 #include "ADN_Breakdowns_PartsTable.h"
 #include "ADN_EditLine.h"
 #include "ADN_TimeField.h"
-#include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -24,7 +23,7 @@
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_GUI::ADN_Breakdowns_GUI( ADN_Breakdowns_Data& data )
-    : ADN_GUI_ABC( "ADN_Breakdowns_GUI" )
+    : ADN_GUI_ABC( eBreakdowns )
     , data_      ( data )
 {
     // NOTHING
@@ -54,23 +53,22 @@ void ADN_Breakdowns_GUI::Build()
 
     // General
     Q3GroupBox* pGeneralGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "General parameters" ) );
-    //QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
-    builder.AddField< ADN_TimeField >( pGeneralGroup, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
+    builder.AddField< ADN_TimeField >( pGeneralGroup, "average-diagnostic-duration", tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
 
     // Specific parameter
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     nameField->ConnectWithRefValidity( data_.GetBreakdowns() );
-    builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[eType] );
-    builder.AddEnumField( pInfoHolder, tr( "Seriousness" ), vInfosConnectors[eNTI] );
-    builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
-    builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
+    builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[eType] );
+    builder.AddEnumField( pInfoHolder, "seriousness", tr( "Seriousness" ), vInfosConnectors[eNTI] );
+    builder.AddField< ADN_TimeField >( pInfoHolder, "repair-duration", tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
+    builder.AddField< ADN_TimeField >( pInfoHolder, "repair-duration-variance", tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 
     // Parts
     QGroupBox* pPartsGroup = new QGroupBox( tr( "Required parts" ) );
     QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
-    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( strClassName_ + "_Parts", vInfosConnectors[ eParts ] );
+    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( builder.GetChildName( "parts-table" ), vInfosConnectors[ eParts ] );
     pPartsTable->SetGoToOnDoubleClick( ::eResources );
     pPartsLayout->addWidget( pPartsTable );
 
@@ -87,12 +85,10 @@ void ADN_Breakdowns_GUI::Build()
     pSpecificLayout->addWidget( pPartsGroup, 1 );
 
     // List view
-    ADN_SearchListView< ADN_Breakdowns_ListView >* pSearchListView = new ADN_SearchListView< ADN_Breakdowns_ListView >( this, data_.vBreakdowns_, vInfosConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_Breakdowns_ListView >( this, data_.vBreakdowns_, vInfosConnectors );
 
     // Sub content
-    QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView, false, false, true, 0, 0 );
+    QWidget* pSubContent = CreateScrollArea( builder.GetChildName( "content" ), *pSpecificContent, pSearchListView, false, false, true, 0, 0 );
 
     // Content layout
     QWidget* pContent = new QWidget();
@@ -104,6 +100,5 @@ void ADN_Breakdowns_GUI::Build()
     pContentLayout->addWidget( pSubContent, 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

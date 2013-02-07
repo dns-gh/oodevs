@@ -15,7 +15,7 @@
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
 ADN_UnitSymbols_GUI::ADN_UnitSymbols_GUI( ADN_UnitSymbols_Data& /*data*/ )
-: ADN_GUI_ABC( "ADN_UnitSymbols_GUI" )
+    : ADN_GUI_ABC( eUnitSymbols )
 {
     // NOTHING
 }

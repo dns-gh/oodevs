@@ -5292,6 +5292,14 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Phase lines</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished">الحشد</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

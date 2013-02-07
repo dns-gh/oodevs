@@ -17,7 +17,6 @@
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_MultiPercentage.h"
-#include "ADN_SearchListView.h"
 #include "ADN_SurfaceFireInfos_Table.h"
 #include "ADN_UrbanModifiersTable.h"
 
@@ -26,7 +25,7 @@
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_FireClass_GUI::ADN_FireClass_GUI( ADN_FireClass_Data& data )
-    : ADN_GUI_ABC( "ADN_FireClass_GUI" )
+    : ADN_GUI_ABC( eFireClasses )
     , data_( data )
 {
     // NOTHING
@@ -56,42 +55,41 @@ void ADN_FireClass_GUI::Build()
 
     // Global fire parameters
     Q3GroupBox* pGlobalFireParametersDataGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Global fire parameters" ) );
-    builder.AddField< ADN_EditLine_Int >( pGlobalFireParametersDataGroup, tr( "Cell size" ), vInfosConnectors[ eCellSize ], tr( "m" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Int >( pGlobalFireParametersDataGroup, "cell-size", tr( "Cell size" ), vInfosConnectors[ eCellSize ], tr( "m" ), eGreaterZero );
     vInfosConnectors[ eCellSize ]->Connect( &data_.GetCellSize() );
 
     // Local fire parameters
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetFireClassesInfos() );
-    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Initial heat" ), vInfosConnectors[ eInitialHeat ] );
-    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Max heat" ), vInfosConnectors[ eMaxHeat ] );
-    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Increase rate" ), vInfosConnectors[ eIncreaseRate ] );
-    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Decrease rate" ), vInfosConnectors[ eDecreaseRate ] );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, "initial-heat", tr( "Initial heat" ), vInfosConnectors[ eInitialHeat ] );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, "max-heat", tr( "Max heat" ), vInfosConnectors[ eMaxHeat ] );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, "increase-rate", tr( "Increase rate" ), vInfosConnectors[ eIncreaseRate ] );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, "decrease-rate", tr( "Decrease rate" ), vInfosConnectors[ eDecreaseRate ] );
     // Injuries
     Q3GroupBox* pInjuriesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Injuries" ) );
-    ADN_MultiPercentage_Int* pMultiPercentage = new ADN_MultiPercentage_Int( pInjuriesGroup, builder, strClassName_ + "_Distribution" );
-    pMultiPercentage->AddLine( tr( "Wounded seriousness level 1" ), vInfosConnectors[ eNbrHurtU1 ] );
-    pMultiPercentage->AddLine( tr( "Wounded seriousness level 2" ), vInfosConnectors[ eNbrHurtU2 ] );
-    pMultiPercentage->AddLine( tr( "Wounded seriousness level 3" ), vInfosConnectors[ eNbrHurtU3 ] );
-    pMultiPercentage->AddLine( tr( "Wounded extreme seriousness" ), vInfosConnectors[ eNbrHurtUE ] );
-    pMultiPercentage->AddLine( tr( "Killed" ), vInfosConnectors[ eNbrDead ] );
+    ADN_MultiPercentage_Int* pMultiPercentage = new ADN_MultiPercentage_Int( pInjuriesGroup, builder, builder.GetChildName( "distribution" ) );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 1" ), vInfosConnectors[ eNbrHurtU1 ], "u1" );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 2" ), vInfosConnectors[ eNbrHurtU2 ], "u2" );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 3" ), vInfosConnectors[ eNbrHurtU3 ], "u3" );
+    pMultiPercentage->AddLine( tr( "Wounded extreme seriousness" ), vInfosConnectors[ eNbrHurtUE ], "ue" );
+    pMultiPercentage->AddLine( tr( "Killed" ), vInfosConnectors[ eNbrDead ], "killed" );
     pMultiPercentage->AddWarning();
 
     // Urban
     Q3GroupBox* pUrbanModifiersGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ) );
-    new helpers::ADN_UrbanModifiersTable( strClassName_ + "Urban", vInfosConnectors[ eUrbanAttrition ], pUrbanModifiersGroup );
+    new helpers::ADN_UrbanModifiersTable( builder.GetChildName( "urban-modifiers" ), vInfosConnectors[ eUrbanAttrition ], pUrbanModifiersGroup );
     // Extinguisher
     Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ) );
-    ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( strClassName_ + "Extinguisher", vInfosConnectors[ eExtinguisherAgents ], pExtinguisherAgentsGroup );
+    ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( builder.GetChildName( "extinguisher" ), vInfosConnectors[ eExtinguisherAgents ], pExtinguisherAgentsGroup );
     pExtinguisherAgentInfosTable->SetGoToOnDoubleClick( ::eResources );
     // Weather fire effects
     Q3GroupBox* pWeatherFireEffectsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ) );
-    new ADN_WeatherFireEffects_Table( strClassName_ + "Weather", vInfosConnectors[ eWeatherFireEffects ], pWeatherFireEffectsGroup );
+    new ADN_WeatherFireEffects_Table( builder.GetChildName( "weather" ), vInfosConnectors[ eWeatherFireEffects ], pWeatherFireEffectsGroup );
     // Surface
-    ADN_GroupBox* surfaceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Surface" ) );
-    vInfosConnectors[ eSurface ] = &surfaceGroup->GetConnector();
-    new ADN_SurfaceFireInfos_Table( strClassName_ + "Surface", vInfosConnectors[ eSurfaceEffects ], surfaceGroup );
+    ADN_GroupBox* surfaceGroup = builder.AddGroupBox( 0, "surface", tr( "Surface" ), vInfosConnectors[ eSurface ], 1 );
+    new ADN_SurfaceFireInfos_Table( builder.GetChildName( "surface-effect" ), vInfosConnectors[ eSurfaceEffects ], surfaceGroup );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -110,12 +108,9 @@ void ADN_FireClass_GUI::Build()
     pFireClassLayout->addWidget( surfaceGroup );
 
     // List view
-    ADN_SearchListView< ADN_FireClass_ListView >* pSearchListView = new ADN_SearchListView< ADN_FireClass_ListView >( this, data_.GetFireClassesInfos(), vInfosConnectors );
-    pSearchListView->GetListView()->setObjectName( strClassName_ + "_List" );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_FireClass_ListView >( this, data_.GetFireClassesInfos(), vInfosConnectors );
     // Sub content
-    QWidget* pSubContent = CreateScrollArea( *pFireClassContent, pSearchListView, false, false, true, 0, 0 );
+    QWidget* pSubContent = CreateScrollArea( builder.GetChildName( "content" ), *pFireClassContent, pSearchListView, false, false, true, 0, 0 );
 
     // Content layout
     QWidget* pContent = new QWidget();
@@ -127,6 +122,5 @@ void ADN_FireClass_GUI::Build()
     pContentLayout->addWidget( pSubContent, 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }

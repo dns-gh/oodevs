@@ -15,7 +15,7 @@
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Drawings_GUI::ADN_Drawings_GUI( ADN_Drawings_Data& /*data*/ )
-    : ADN_GUI_ABC( "ADN_Drawings_GUI" )
+    : ADN_GUI_ABC( eDrawings )
 {
     // NOTHING
 }

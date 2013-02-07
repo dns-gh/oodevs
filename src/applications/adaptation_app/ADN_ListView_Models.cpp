@@ -26,7 +26,7 @@ typedef ADN_Models_Data::ModelInfos ModelInfos;
 // Name: ADN_ListView_Models constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Models::ADN_ListView_Models( E_EntityType eEntityType, QWidget* pParent )
+ADN_ListView_Models::ADN_ListView_Models( QWidget* pParent, E_EntityType eEntityType )
     : ADN_ListView( pParent, "ADN_ListView_Models", ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str() )
     , eEntityType_( eEntityType )
 {

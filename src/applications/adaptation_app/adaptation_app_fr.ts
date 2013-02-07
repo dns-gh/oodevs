@@ -5316,6 +5316,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Limit 2</source>
         <translation>Limite 2</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Pion</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

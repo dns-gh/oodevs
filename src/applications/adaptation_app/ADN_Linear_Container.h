@@ -24,7 +24,7 @@ class ADN_Linear_Container : public ADN_GUI_Container
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Linear_Container( Qt::Orientation orientation, bool useScrollBar, const char* szClassName, ADN_Data_Container& data );
+             ADN_Linear_Container( Qt::Orientation orientation, bool useScrollBar, E_WorkspaceElements workspaceElement, ADN_Data_Container& data );
     virtual ~ADN_Linear_Container();
     //@}
 

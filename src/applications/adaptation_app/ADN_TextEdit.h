@@ -20,7 +20,7 @@ template < class Connector >
 class ADN_TextEdit : public ADN_TextEdit_ABC
 {
 public:
-    explicit ADN_TextEdit( QWidget* parent, const char * name = 0 );
+    explicit ADN_TextEdit( QWidget* parent = 0, const char * name = 0 );
     virtual ~ADN_TextEdit();
 
 protected:

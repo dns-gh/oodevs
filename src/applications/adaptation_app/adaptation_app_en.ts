@@ -5305,6 +5305,14 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Limit 2</source>
         <translation>Limit 2</translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation>Unit</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Crowd</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

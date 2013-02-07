@@ -12,7 +12,6 @@
 #include "ADN_ColorSelector.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_ListView_ResourceNetworks.h"
-#include "ADN_SearchListView.h"
 #include "ADN_ResourceNetworks_Data.h"
 
 // -----------------------------------------------------------------------------
@@ -20,7 +19,7 @@
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
 ADN_ResourceNetworks_GUI::ADN_ResourceNetworks_GUI( ADN_ResourceNetworks_Data& data )
-    : ADN_GUI_ABC( "ADN_ResourceNetworks_GUI" )
+    : ADN_GUI_ABC( eResourceNetworks )
     , data_( data )
 {
     // NOTHING
@@ -50,12 +49,12 @@ void ADN_ResourceNetworks_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetResourceNetworksInfos() );
-    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Category" ), vInfosConnectors[ eCategory ] );
-    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Default production" ), vInfosConnectors[ eProduction ] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "resource", tr( "Category" ), vInfosConnectors[ eCategory ] );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, "default-production", tr( "Default production" ), vInfosConnectors[ eProduction ] );
     builder.SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
-    builder.AddField< ADN_ColorSelector >( pInfoHolder, tr( "Color" ), vInfosConnectors[ eColor ] );
+    builder.AddField< ADN_ColorSelector >( pInfoHolder, "color", tr( "Color" ), vInfosConnectors[ eColor ] );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -69,10 +68,8 @@ void ADN_ResourceNetworks_GUI::Build()
     pContentLayout->addWidget( pInfoHolder );
 
     // Create the list view.
-    ADN_SearchListView< ADN_ListView_ResourceNetworks >* pSearchListView = new ADN_SearchListView< ADN_ListView_ResourceNetworks >( this, data_.GetResourceNetworksInfos(), vInfosConnectors );
-    pSearchListView->GetListView()->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_ResourceNetworks >( this, data_.GetResourceNetworksInfos(), vInfosConnectors );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }

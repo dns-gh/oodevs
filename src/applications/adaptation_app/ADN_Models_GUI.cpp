@@ -20,7 +20,6 @@
 #include "ADN_ListView_Orders.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_SearchListView.h"
 #include <boost/lexical_cast.hpp>
 
 //-----------------------------------------------------------------------------
@@ -28,7 +27,7 @@
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Models_GUI::ADN_Models_GUI( ADN_Models_Data& data )
-    : ADN_Tabbed_GUI_ABC( "ADN_Models_GUI" )
+    : ADN_Tabbed_GUI_ABC( eModels )
     , data_( data )
 {
     // NOTHING
@@ -74,35 +73,32 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
-    const QString builderName = strClassName_ + boost::lexical_cast< std::string >( static_cast< int >( eEntityType ) ).c_str();
-    ADN_GuiBuilder builder( builderName );
+    ADN_GuiBuilder builder( strClassName_ );
+    builder.PushSubName( std::string( ADN_Tr::ConvertFromEntityType( eEntityType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements,static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameField->ConnectWithRefValidity( model );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
-    builder.AddFileField( pInfoHolder, tr( "File" ), vInfosConnectors[ eFile ] );
-    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Masalife" ), vInfosConnectors[ eMasalife ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, "dia-type", tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
+    builder.AddFileField( pInfoHolder, "file", tr( "File" ), vInfosConnectors[ eFile ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, "masalife", tr( "Masalife" ), vInfosConnectors[ eMasalife ] );
 
     // Missions
     Q3GroupBox* pMissionsGroup = new Q3HGroupBox( tr( "Missions" ) );
-    ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pMissionsGroup );
-    pListMissions->setObjectName( builderName + "_Missions" );
+    ADN_ListView_Missions* pListMissions = builder.AddWidget< ADN_ListView_Missions >( "mission-list", eEntityType, pMissionsGroup );
     vInfosConnectors[ eMissions ] = &pListMissions->GetConnector();
     pListMissions->SetGoToOnDoubleClick( ::eMissions, static_cast< int >( eEntityType ) );
 
-    ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( true, pMissionsGroup );
-    pListOrders->setObjectName( builderName + "_Orders" );
+    ADN_ListView_Orders* pListOrders = builder.AddWidget< ADN_ListView_Orders >( "orders-list", true, pMissionsGroup );
     T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     vMissionConnector[ eOrders ] = &pListOrders->GetConnector();
     pListOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
     // Frag order
     Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( tr( "FragOrders" ) );
-    ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( false , pFragOdersGroup );
-    pListFragOrders->setObjectName( builderName + "_FragOrders" );
+    ADN_ListView_Orders* pListFragOrders = builder.AddWidget< ADN_ListView_Orders >( "fragorders-list", false , pFragOdersGroup );
     vInfosConnectors[ eFragOrders ] = &pListFragOrders->GetConnector();
     pListFragOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
@@ -123,12 +119,10 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     pContentLayout->addWidget( pFragOdersGroup );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Models >* pSearchListView = new ADN_SearchListView< ADN_ListView_Models >( this, eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
-    pSearchListView->GetListView()->setObjectName( builderName + "_List" );
-    vListViews_.push_back( pSearchListView->GetListView() );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Models >( this, eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
 
     // Main page
-    return CreateScrollArea( *pWidgets_[ eEntityType ], pSearchListView );
+    return CreateScrollArea( builder.GetName(), *pWidgets_[ eEntityType ], pSearchListView );
 }
 
 // -----------------------------------------------------------------------------

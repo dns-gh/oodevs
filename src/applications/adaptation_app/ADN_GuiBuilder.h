@@ -25,6 +25,8 @@
 #include "ADN_CheckBox.h"
 #include "ADN_TimeField.h"
 #include "ADN_Validator.h"
+#include "ADN_GroupBox.h"
+#include "ADN_SearchListView.h"
 
 class ADN_FileChooser;
 class ADN_Gfx_ABC;
@@ -54,32 +56,56 @@ class ADN_GuiBuilder : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_GuiBuilder( const QString& name = "" );
+    explicit ADN_GuiBuilder( const QString& name );
     virtual ~ADN_GuiBuilder();
     //@}
 
-    //! @name Field Operations
+    //! @name Name operations
+    //@{
+    const QString& GetName() const;
+    QString GetChildName( QString childName ) const;
+
+    void PushSubName( QString subName );
+    void PopSubName();
+    //@}
+
+    //! @name Field operations
     //@{
     QWidget* AddFieldHolder( QWidget* pParent );
 
+    // $$$$ ABR 2013-02-07: TODO Change ADN_Table constructor (remove objectName parameter) so it can use the following helpers
     template< class T >
-        T* AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
+    T* AddWidget( const char* objectName );
+    template< class T, class Param1 >
+    T* AddWidget( const char* objectName, Param1 param1 );
+    template< class T, class Param1, class Param2 >
+    T* AddWidget( const char* objectName, Param1 param1, Param2 param2 );
+
+    ADN_GroupBox* AddGroupBox( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, int strips = -1, Qt::Orientation orientation = Qt::Horizontal );
+    ADN_GroupBox* AddGroupBox( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, int strips = -1, Qt::Orientation orientation = Qt::Horizontal );
 
     template< class T >
-        T* AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
+    ADN_SearchListView* AddSearchListView( ADN_GUI_ABC* gui, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
+    template< class T, class Param1 >
+    ADN_SearchListView* AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
+    template< class T, class Param1, class Param2 >
+    ADN_SearchListView* AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, Param2& param2, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab = -1, QWidget* parent = 0 );
 
     template< class T >
-        T* AddOptionnalField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+    T* AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
+    template< class T >
+    T* AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
 
     template< class T >
-        T* AddOptionnalField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+    T* AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+    template< class T >
+    T* AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
 
-        ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector );
+    ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector );
+    ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector );
 
-        ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector );
-
-    ADN_FileChooser* AddFileField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter = "(*.*)" );
-    ADN_FileChooser* AddFileField( QWidget* pParent, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter = "(*.*)" );
+    ADN_FileChooser* AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter = "(*.*)" );
+    ADN_FileChooser* AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter = "(*.*)" );
 
     void AddStretcher( QWidget* pParent, Qt::Orientation nOrientation );
     void AddStretcher( QLayout* pLayout, Qt::Orientation nOrientation );
@@ -94,9 +120,9 @@ private:
     //@{
     void DoFieldLayout( QWidget* pParent, QWidget* pWidget1, QWidget* pWidget2, QWidget* pWidget3 );
     template< class T >
-        void DoValidator( T* pWidget, E_Validator nValidator );
+    void DoValidator( T* pWidget, E_Validator nValidator );
     template< class T >
-        void SetValidator( T& validator, E_Validator nValidator );
+    void SetValidator( T& validator, E_Validator nValidator );
     //@}
 
 private:
@@ -107,21 +133,98 @@ private:
     ADN_Gfx_ABC* pCurrentFieldGfx2_; //!< Same object as above
     QWidget* pCurrentFieldWidget3_;
     QString name_;
+    int nameCount_;
     //@}
 };
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddWidget
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+template< class T >
+T* ADN_GuiBuilder::AddWidget( const char* objectName )
+{
+    T* pField = new T();
+    pField->setObjectName( GetChildName( objectName ) );
+    return pField;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddWidget
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+template< class T, class Param1 >
+T* ADN_GuiBuilder::AddWidget( const char* objectName, Param1 param1 )
+{
+    T* pField = new T( param1 );
+    pField->setObjectName( GetChildName( objectName ) );
+    return pField;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddWidget
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+template< class T, class Param1, class Param2 >
+T* ADN_GuiBuilder::AddWidget( const char* objectName, Param1 param1, Param2 param2 )
+{
+    T* pField = new T( param1, param2 );
+    pField->setObjectName( GetChildName( objectName ) );
+    return pField;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddSearchListView
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+template< class T >
+ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+{
+    T* pListView = new T( parent );
+    ADN_SearchListView* searchListView = new ADN_SearchListView( GetChildName( "list" ), gui, *pListView, reference, connector, subTab, parent );
+    gui->AddListView( pListView );
+    return searchListView;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddSearchListView
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+template< class T, class Param1 >
+ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+{
+    T* pListView = new T( parent, param1 );
+    ADN_SearchListView* searchListView = new ADN_SearchListView( GetChildName( "list" ), gui, *pListView, reference, connector, subTab, parent );
+    gui->AddListView( pListView );
+    return searchListView;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddSearchListView
+// Created: ABR 2013-02-06
+// -----------------------------------------------------------------------------
+template< class T, class Param1, class Param2 >
+ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, Param2& param2, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+{
+    T* pListView = new T( parent, param1, param2 );
+    ADN_SearchListView* searchListView = new ADN_SearchListView( GetChildName( "list" ), gui, *pListView, reference, connector, subTab, parent );
+    gui->AddListView( pListView );
+    return searchListView;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddField
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator, QWidget* sideWidget )
+T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator, QWidget* sideWidget )
 {
     assert( szUnit == 0 || sideWidget == 0 );
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     T* pField = new T( pParent );
-    pField->setObjectName( name_ + szName );
+    pField->setObjectName( GetChildName( objectName ) );
     QWidget* thirdWidget = 0;
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
@@ -146,13 +249,13 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator, QWidget* sideWidget )
+T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator, QWidget* sideWidget )
 {
     assert( szUnit == 0 || sideWidget == 0 );
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     T* pField = new T( pParent );
-    pField->setObjectName( name_ + szName );
+    pField->setObjectName( GetChildName( objectName ) );
     QWidget* thirdWidget = 0;
     if( szUnit != 0 )
         thirdWidget = new QLabel( szUnit, pParent );
@@ -179,12 +282,13 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator )
+T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator )
 {
     // Create the field and labels.
     ADN_CheckBox* pCheckbox = new ADN_CheckBox( szName, pParent );
+    pCheckbox->setObjectName( GetChildName( std::string( std::string( "has-" ) + objectName ).c_str() ) );
     T* pField = new T( pParent );
-    pField->setObjectName( name_ + szName );
+    pField->setObjectName( GetChildName( objectName ) );
     pField->SetAutoEnabled( false );
     QLabel* pUnitLabel = 0;
     if( szUnit != 0 )
@@ -211,13 +315,14 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename T >
-T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator )
+T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator )
 {
     // Create the field and labels.
     ADN_CheckBox* pCheckbox = new ADN_CheckBox( szName, pParent );
+    pCheckbox->setObjectName( GetChildName( std::string( std::string( "has-" ) + objectName ).c_str() ) );
     T* pField = new T( pParent );
     pField->SetAutoEnabled( false );
-    pField->setObjectName( name_ + szName );
+    pField->setObjectName( GetChildName( objectName ) );
     QLabel* pUnitLabel = 0;
     if( szUnit != 0 )
         pUnitLabel = new QLabel( szUnit, pParent );
@@ -243,12 +348,12 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 inline
-ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector )
+ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     ADN_ComboBox_Enum* pField = new ADN_ComboBox_Enum( pParent );
-    pField->setObjectName( name_ + szName );
+    pField->setObjectName( GetChildName( objectName ) );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
@@ -266,12 +371,12 @@ ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* s
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 inline
-ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector )
+ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     ADN_ComboBox_Enum* pField = new ADN_ComboBox_Enum( pParent );
-    pField->setObjectName( name_ + szName );
+    pField->setObjectName( GetChildName( objectName ) );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;

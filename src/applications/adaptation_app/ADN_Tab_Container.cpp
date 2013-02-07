@@ -14,8 +14,8 @@
 // Name: ADN_Tab_Container constructor
 // Created: ABR 2012-01-24
 // -----------------------------------------------------------------------------
-ADN_Tab_Container::ADN_Tab_Container( const char* szClassName, ADN_Data_Container& data )
-    : ADN_GUI_Container( szClassName, data )
+ADN_Tab_Container::ADN_Tab_Container( E_WorkspaceElements workspaceElement, ADN_Data_Container& data )
+    : ADN_GUI_Container( workspaceElement, data )
 {
     // NOTHING
 }

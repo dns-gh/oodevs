@@ -30,7 +30,6 @@
 #include "ADN_Automata_SubUnitsTable.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
-#include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
 #include "ADN_ListView.h"
@@ -44,7 +43,7 @@
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
 ADN_Automata_GUI::ADN_Automata_GUI( ADN_Automata_Data& data )
-    : ADN_GUI_ABC( "ADN_Automata_GUI" )
+    : ADN_GUI_ABC( eAutomata )
     , data_         ( data )
     , pFilter_      ( 0 )
 {
@@ -76,22 +75,22 @@ void ADN_Automata_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     nameField->ConnectWithRefValidity( data_.GetAutomata() );
     // Automaton type
-    builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType] );
+    builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[eAgentType] );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Automat );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "doctrine-model", tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
     // Unit
-    pFilter_ = builder.AddField< UnitsFilter >( pInfoHolder, tr( "Command post" ), vInfosConnectors[eUnit] );
+    pFilter_ = builder.AddField< UnitsFilter >( pInfoHolder, "command-post", tr( "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time
-    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
     // Sub units
     QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
-    ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( strClassName_ + "_Subunits", vInfosConnectors[eSubUnit], pSubUnitsGroup );
+    ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( builder.GetChildName( "sub-units-table" ), vInfosConnectors[eSubUnit], pSubUnitsGroup );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
     pSubUnitsLayout->addWidget( pSubUnitsTable, 1 );
     connect( pSubUnitsTable, SIGNAL( ItemAdded( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
@@ -110,13 +109,10 @@ void ADN_Automata_GUI::Build()
     pContentLayout->addWidget( pSubUnitsGroup, 1 );
 
     // List view
-    ADN_SearchListView< ADN_Automata_ListView >* pSearchListView = new ADN_SearchListView< ADN_Automata_ListView >( this, data_.GetAutomata(), vInfosConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_Automata_ListView >( this, data_.GetAutomata(), vInfosConnectors );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }
 
 namespace
@@ -153,7 +149,7 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 {
-    ADN_Table* pTable = new ADN_CompositionTable( strClassName_ + "_AutomataCompositions" );
+    ADN_Table* pTable = new ADN_CompositionTable( std::string( std::string( strClassName_ ) + "automata-compositions-consistency-table" ).c_str() );
     // Fill the table.
     int nRow = 0;
     for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )

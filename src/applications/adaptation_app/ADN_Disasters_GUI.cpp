@@ -11,7 +11,6 @@
 #include "ADN_Disasters_GUI.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_SearchListView.h"
 #include "ADN_ListView_Disasters.h"
 #include "ADN_Disasters_Data.h"
 #include "ADN_ThresholdConcentrationsTable.h"
@@ -23,7 +22,7 @@
 // Created: LGY 2012-11-13
 //-----------------------------------------------------------------------------
 ADN_Disasters_GUI::ADN_Disasters_GUI( ADN_Disasters_Data& data )
-    : ADN_GUI_ABC( "ADN_Disasters_GUI" )
+    : ADN_GUI_ABC( eDisasters )
     , data_( data )
 {
     // NOTHING
@@ -53,21 +52,21 @@ void ADN_Disasters_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetDisastersInfos() );
-    builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Toxicity exponent" ), vConnectors[ eToxicityExponent ] );
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, "toxicity-exponent", tr( "Toxicity exponent" ), vConnectors[ eToxicityExponent ] );
 
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
     Q3GroupBox* pNbcSuit = new Q3VGroupBox( tr( "Protections" ) );
-    new ADN_NbcSuitTable( strClassName_ + "NbcSuitTable", vConnectors[ eNbcSuitRatio ], pNbcSuit );
+    new ADN_NbcSuitTable( builder.GetChildName( "nbc-suite-table" ), vConnectors[ eNbcSuitRatio ], pNbcSuit );
 
     Q3GroupBox* pConcentrationThresholds = new Q3VGroupBox( tr( "Concentration thresholds" ) );
-    new ADN_ThresholdConcentrationsTable( strClassName_ + "ConcentrationThresholds", vConnectors[ eConcentrationThresholds ], pConcentrationThresholds );
+    new ADN_ThresholdConcentrationsTable( builder.GetChildName( "concentration-thresholds" ), vConnectors[ eConcentrationThresholds ], pConcentrationThresholds );
 
     Q3GroupBox* pAttritionThresholds = new Q3VGroupBox( tr( "Attrition thresholds" ) );
-    new ADN_ThresholdAttritionsTable( strClassName_ + "AttritionThresholds", vConnectors[ eAttritionThresholds ], pAttritionThresholds );
+    new ADN_ThresholdAttritionsTable( builder.GetChildName( "attrition-thresholds" ), vConnectors[ eAttritionThresholds ], pAttritionThresholds );
 
     // Content layout
     QWidget* pContent = new QWidget();
@@ -82,11 +81,8 @@ void ADN_Disasters_GUI::Build()
     pContentLayout->setRowStretch( 3, 1 );
 
     // ListView
-    ADN_SearchListView< ADN_ListView_Disasters >* pSearchListView = new ADN_SearchListView< ADN_ListView_Disasters >( this, data_.GetDisastersInfos(), vConnectors );
-    pListView_ = pSearchListView->GetListView();
-    pListView_->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Disasters >( this, data_.GetDisastersInfos(), vConnectors );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }

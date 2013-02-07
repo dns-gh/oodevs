@@ -13,7 +13,6 @@
 #include "ADN_KnowledgeGroups_ListView.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
-#include "ADN_SearchListView.h"
 #include "ADN_TimeField.h"
 
 // -----------------------------------------------------------------------------
@@ -21,7 +20,7 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_GUI::ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data )
-    : ADN_GUI_ABC( "ADN_KnowledgeGroups_GUI" )
+    : ADN_GUI_ABC( eKnowledgeGroups )
     , data_( data )
 {
     // NOTHING
@@ -51,19 +50,19 @@ void ADN_KnowledgeGroups_GUI::Build()
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     nameField->ConnectWithRefValidity( data_.GetGroupInfos() );
 
     Q3GroupBox* pDelayGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ) );
-    builder.AddField< ADN_TimeField >( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
+    builder.AddField< ADN_TimeField >( pDelayGroup, "communication-delay", tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
 
     Q3GroupBox* pAgentGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ) );
-    builder.AddField< ADN_TimeField >( pAgentGroup, tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
-    builder.AddField< ADN_EditLine_Double >( pAgentGroup, tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
-    builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
+    builder.AddField< ADN_TimeField >( pAgentGroup, "maximum-life-span", tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
+    builder.AddField< ADN_EditLine_Double >( pAgentGroup, "maximum-distance-between-known-unit", tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
+    builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, "extrapolation-duration", tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
 
     Q3GroupBox* pPopulationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ) );
-    builder.AddField< ADN_TimeField >( pPopulationGroup, tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );
+    builder.AddField< ADN_TimeField >( pPopulationGroup, "maximum-life-span", tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -80,10 +79,8 @@ void ADN_KnowledgeGroups_GUI::Build()
     pContentLayout->addWidget( pPopulationGroup );
 
     // List view
-    ADN_SearchListView< ADN_KnowledgeGroups_ListView >* pSearchListView = new ADN_SearchListView< ADN_KnowledgeGroups_ListView >( this, data_.vGroups_, vInfosConnectors );
-    pSearchListView->GetListView()->setObjectName( strClassName_ + "_List" );
+    QWidget* pSearchListView = builder.AddSearchListView< ADN_KnowledgeGroups_ListView >( this, data_.vGroups_, vInfosConnectors );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent, pSearchListView );
 }

@@ -65,7 +65,7 @@ namespace
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Maintenance_GUI::ADN_Maintenance_GUI( ADN_Maintenance_Data& data )
-    : ADN_GUI_ABC( "ADN_Maintenance_GUI" )
+    : ADN_GUI_ABC( eLogistic )
     , data_      ( data )
 {
     // NOTHING
@@ -92,19 +92,20 @@ void ADN_Maintenance_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Maintenance
-
+    ADN_GuiBuilder builder( strClassName_ );
+    builder.PushSubName( "maintenance-tab" );
     Q3GroupBox* workingShemeBox = new Q3HGroupBox( tr( "Shifts durations" ) );
     workingShemeBox->setFixedHeight( 200 );
-    ADN_WorkingSchemeTable* pWorkingSchemeTable = new ADN_WorkingSchemeTable( strClassName_ + "_Durations", workingShemeBox );
+    ADN_WorkingSchemeTable* pWorkingSchemeTable = new ADN_WorkingSchemeTable( builder.GetChildName( "durations-table" ), workingShemeBox );
     pWorkingSchemeTable->Initialize( data_ );
 
     //vRepairerWarnings_
     Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers availability warnings" ) );
-    new ADN_AvailabilityWarningTable( strClassName_ + "_Repairers", data_.vRepairerWarnings_, pRepairerGroup );
+    new ADN_AvailabilityWarningTable( builder.GetChildName( "repairers-table" ), data_.vRepairerWarnings_, pRepairerGroup );
 
     //vHaulerWarnings_
     Q3HGroupBox* pHaulerGroup = new Q3HGroupBox( tr( "Tow trucks availability warnings" ) );
-    new ADN_AvailabilityWarningTable( strClassName_+ "_Haulers", data_.vHaulerWarnings_, pHaulerGroup );
+    new ADN_AvailabilityWarningTable( builder.GetChildName( "haulers-table" ), data_.vHaulerWarnings_, pHaulerGroup );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -127,7 +128,6 @@ void ADN_Maintenance_GUI::Build()
     pContentLayout->addStretch( 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }
 

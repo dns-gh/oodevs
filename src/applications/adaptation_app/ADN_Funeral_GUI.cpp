@@ -25,7 +25,7 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Funeral_GUI::ADN_Funeral_GUI( ADN_Funeral_Data& data )
-    : ADN_GUI_ABC( "ADN_Funeral_GUI" )
+    : ADN_GUI_ABC( eLogistic )
     , data_      ( data )
     , resourceTable_( 0 )
 {
@@ -52,27 +52,28 @@ void ADN_Funeral_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
+    builder.PushSubName( "funeral-tab" );
     static const int maxSize = 500;
 
     // Funeral
     QWidget* pHolder = builder.AddFieldHolder( 0 );
 
-    ADN_EditLine_Int* pTransporterSpeed = builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Fake transporter speed" ), data_.fakeTransporterSpeed_ );
+    ADN_EditLine_Int* pTransporterSpeed = builder.AddField< ADN_EditLine_Int >( pHolder, "fake-transporter-speed", tr( "Fake transporter speed" ), data_.fakeTransporterSpeed_ );
     pTransporterSpeed->GetValidator().setBottom( 1 );
     pHolder->setMaximumWidth( maxSize );
 
-    resourceTable_ = new ADN_FuneralPackagingResources_GUI( strClassName_ + "FuneralTable", data_.funeralPackagingResources_ );
+    resourceTable_ = new ADN_FuneralPackagingResources_GUI( builder.GetChildName( "funeral-table" ), data_.funeralPackagingResources_ );
     resourceTable_->SetGoToOnDoubleClick( ::eResources );
     resourceTable_->setMaximumWidth( maxSize );
     resourceTable_->setFixedHeight( 200 );
     resourceTable_->setSortingEnabled( false );
     resourceTable_->setSelectionMode( QTableView::SingleSelection );
 
-    QPushButton* moveUpButton_ = new QPushButton();
+    QPushButton* moveUpButton_ = builder.AddWidget< QPushButton >( "up" );
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
     moveUpButton_->setMaximumWidth( maxSize );
 
-    QPushButton* moveDownButton_ = new QPushButton();
+    QPushButton* moveDownButton_ = builder.AddWidget< QPushButton >( "down" );
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     moveDownButton_->setMaximumWidth( maxSize );
 
@@ -95,8 +96,7 @@ void ADN_Funeral_GUI::Build()
     pContentLayout->addStretch( 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }
 
 // -----------------------------------------------------------------------------

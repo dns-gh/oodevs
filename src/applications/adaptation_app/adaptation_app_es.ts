@@ -5308,6 +5308,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Phase lines</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished">Unidad</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

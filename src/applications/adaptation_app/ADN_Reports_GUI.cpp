@@ -15,7 +15,7 @@
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
 ADN_Reports_GUI::ADN_Reports_GUI( ADN_Reports_Data& data )
-    : ADN_GUI_ABC( "ADN_Reports_GUI" )
+    : ADN_GUI_ABC( eReports )
     , data_      ( data )
 {
     // NOTHING

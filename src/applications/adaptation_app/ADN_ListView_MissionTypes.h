@@ -30,7 +30,7 @@ class ADN_ListView_MissionTypes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_MissionTypes( E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent = 0, const char* szName = 0 );
+             ADN_ListView_MissionTypes( QWidget* pParent, E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions );
     virtual ~ADN_ListView_MissionTypes();
     //@}
 

@@ -26,7 +26,7 @@
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
 ADN_Logistic_GUI::ADN_Logistic_GUI( ADN_Logistic_Data& data )
-    : ADN_Tab_Container( "ADN_Logistic_GUI", data )
+    : ADN_Tab_Container( eLogistic, data )
 {
     AddElement< ADN_Maintenance_GUI, ADN_Maintenance_Data >( eMaintenance, tr( "Maintenance" ) );
     AddElement< ADN_Supply_GUI, ADN_Supply_Data >( eSupply, tr( "Supply" ) );

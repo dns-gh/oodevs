@@ -21,7 +21,7 @@ class ADN_TextEdit_ABC : public QTextEdit
     Q_OBJECT
 
 public:
-    explicit ADN_TextEdit_ABC( QWidget* parent, const char * name = 0 );
+    explicit ADN_TextEdit_ABC( QWidget* parent = 0, const char * name = 0 );
     virtual ~ADN_TextEdit_ABC();
 
     void setEnabled( bool b );

@@ -26,7 +26,7 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Supply_GUI::ADN_Supply_GUI( ADN_Supply_Data& data )
-    : ADN_GUI_ABC( "ADN_Supply_GUI" )
+    : ADN_GUI_ABC( eLogistic )
     , data_( data )
 {
     // NOTHING
@@ -52,33 +52,33 @@ void ADN_Supply_GUI::Build()
     // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder( strClassName_ );
-
+    builder.PushSubName( "supply-tab" );
     // Supply
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    builder.AddField< ADN_SupplyUnitSelector >( pInfoHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Mission" ),  data_.infos_.ptrSupplyMission_ );
+    builder.AddField< ADN_SupplyUnitSelector >( pInfoHolder, "unit-type", tr( "Unit type" ), data_.infos_.ptrUnit_ );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "mission", tr( "Mission" ),  data_.infos_.ptrSupplyMission_ );
 
     Q3GroupBox* pTypeGroup = new Q3GroupBox( 2, Qt::Vertical, tr( "Convoy type" ) );
     {
         QWidget* pHolder = builder.AddFieldHolder( pTypeGroup );
-        builder.AddEnumField( pHolder, tr( "Between logistic bases" ), data_.infos_.stockSupplyConvoyType_ );
-        builder.AddEnumField( pHolder, tr( "For final unit supply " ), data_.infos_.dotationSupplyConvoyType_ );
+        builder.AddEnumField( pHolder, "between-logistic-bases", tr( "Between logistic bases" ), data_.infos_.stockSupplyConvoyType_ );
+        builder.AddEnumField( pHolder, "for-final-unit-supply", tr( "For final unit supply " ), data_.infos_.dotationSupplyConvoyType_ );
     }
 
     Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ) );
-    new ADN_AvailabilityWarningTable( strClassName_ + "_Conveyors", data_.infos_.vVectorWarnings_, pVectorGroup );
+    new ADN_AvailabilityWarningTable( builder.GetChildName( "conveyors-availability-warnings-table" ), data_.infos_.vVectorWarnings_, pVectorGroup );
 
     Q3HGroupBox* pSetupGroup = new Q3HGroupBox( tr( "Convoy setup duration" ) );
-    new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoySetup", data_.infos_.vConvoySetupInfos_, pSetupGroup );
+    new ADN_Supply_TrucksTimeTable( builder.GetChildName( "convoy-setup-table" ), data_.infos_.vConvoySetupInfos_, pSetupGroup );
 
     Q3HGroupBox* pLoadingGroup = new Q3HGroupBox( tr( "Convoy loading duration" ) );
-    new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoyLoading", data_.infos_.vConvoyLoadingInfos_, pLoadingGroup );
+    new ADN_Supply_TrucksTimeTable( builder.GetChildName( "convoy-loading-table" ), data_.infos_.vConvoyLoadingInfos_, pLoadingGroup );
 
     Q3HGroupBox* pUnloadingGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ) );
-    new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoyUnloading", data_.infos_.vConvoyUnloadingInfos_, pUnloadingGroup );
+    new ADN_Supply_TrucksTimeTable( builder.GetChildName( "convoy-unloading-table" ), data_.infos_.vConvoyUnloadingInfos_, pUnloadingGroup );
 
     Q3HGroupBox* pSpeedGroup = new Q3HGroupBox( tr( "Convoy speed modifiers" ) );
-    new ADN_Supply_TrucksDoubleTable( strClassName_ + "ConvoyModifiers", data_.infos_.vConvoySpeedModificatorInfos_, pSpeedGroup );
+    new ADN_Supply_TrucksDoubleTable( builder.GetChildName( "convoy-modifiers-table" ), data_.infos_.vConvoySpeedModificatorInfos_, pSpeedGroup );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -116,6 +116,5 @@ void ADN_Supply_GUI::Build()
     pContentLayout->addStretch( 1 );
 
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent );
-    pMainWidget_->setObjectName( strClassName_ );
+    pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
 }
