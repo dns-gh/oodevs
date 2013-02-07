@@ -55,7 +55,6 @@ protected:
     //@}
 
 private:
-
     //! @name ItemDecorationGetter_ABC
     //@{
     virtual const QPixmap* GetDecoration( const QModelIndex &index );
@@ -68,6 +67,8 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void contextMenuEvent( QContextMenuEvent* event );
+
     void UpdateLongName( const kernel::Entity_ABC& entity );
     void NotifyDeletedInternal( const kernel::Entity_ABC& entity );
 

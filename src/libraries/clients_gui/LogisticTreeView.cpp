@@ -493,3 +493,17 @@ void LogisticTreeView::Drop( const QString& mimeType, void* data, QStandardItem&
         ( *safePtr )->MultipleSelect( controllers_.actions_, list );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticTreeView::contextMenuEvent
+// Created: ABR 2013-02-07
+// -----------------------------------------------------------------------------
+void LogisticTreeView::contextMenuEvent( QContextMenuEvent* event )
+{
+    if( !IsReadOnly() && event )
+    {
+        QStandardItem* targetItem = dataModel_.GetItemFromIndex( indexAt( event->pos() ) );
+        if( targetItem && !dnd::IsA< kernel::LogisticLevel >( *targetItem ) )
+            HierarchyTreeView_ABC::contextMenuEvent( event );
+    }
+}
