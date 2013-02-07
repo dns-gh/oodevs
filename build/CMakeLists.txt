@@ -51,7 +51,9 @@ masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
+
 masa_set_internal_library( GLEW_LIBRARIES             glew )
+masa_set_internal_library( SQLITE3_LIBRARIES          sqlite3 )
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -207,6 +209,8 @@ target_link_libraries( shield_app shield )
 
 # geostore
 add_target( geostore common "libraries/geostore" )
+# spatialite is stupid and has spatialite.h and spatialite/spatialite.h
+masa_add_target_include( geostore "${root_dir}/include/spatialite" )
 target_link_libraries( geostore
     libiconv
     ${GEOCOORD_LIBRARIES}
@@ -215,6 +219,7 @@ target_link_libraries( geostore
     ${GRAPHICS_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${PROJ_I_LIBRARIES}
+    ${SQLITE3_LIBRARIES}
     ${SPATIALCONTAINER_LIBRARIES}
     ${SPATIALITE_LIBRARIES}
     ${TERRAIN_LIBRARIES}
