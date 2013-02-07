@@ -24,10 +24,9 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/StandardIconProxyStyle.h"
 
 using namespace gui;
-
-#define ICON_SIZE 32 // $$$$ ABR 2013-02-01: Need to set the icon size and the empty pixmap size to the same value so row won't crop the symbol
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC constructor
@@ -37,10 +36,14 @@ HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, 
     : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
     , symbols_( symbols )
     , activated_( true )
+    , emptyPixmap_( 0 )
 {
     dataModel_.SetDecorationGetter( this );
     EnableDragAndDrop( true );
-    setIconSize( QSize( ICON_SIZE, ICON_SIZE ) );
+    gui::StandardIconProxyStyle* style = new gui::StandardIconProxyStyle();
+    setStyle( style );
+    emptyPixmap_ = new QPixmap( 1, style->GetIconSize() );
+    emptyPixmap_->fill( Qt::transparent );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,20 +206,6 @@ void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewIt
     RichTreeView::drawRow( painter, options, index );
 }
 
-namespace
-{
-    QPixmap* GetEmptyPixmap()
-    {
-        static QPixmap* emptyPixmap = 0;
-        if( !emptyPixmap )
-        {
-            emptyPixmap = new QPixmap( 1, ICON_SIZE );
-            emptyPixmap->fill( Qt::transparent );
-        }
-        return emptyPixmap;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::GetDecoration
 // Created: JSR 2012-09-14
@@ -239,7 +228,7 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
                 const_cast< HierarchyTreeView_ABC* >( this )->doItemsLayout();
             }
         }
-        return GetEmptyPixmap();
+        return emptyPixmap_;
     }
     return 0;
 }

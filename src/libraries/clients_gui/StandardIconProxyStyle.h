@@ -29,6 +29,11 @@ public:
     virtual ~StandardIconProxyStyle();
     //@}
 
+    //! @name Accessors
+    //@{
+    int GetIconSize() const;
+    //@}
+
     //! @name Operations
     //@{
     virtual int pixelMetric( PixelMetric metric, const QStyleOption* option = 0, const QWidget * widget = 0 ) const;

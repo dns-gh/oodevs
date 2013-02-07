@@ -99,6 +99,7 @@ private:
     //@{
     const EntitySymbols& symbols_;
     bool activated_;
+    QPixmap* emptyPixmap_;
     //@}
 };
 

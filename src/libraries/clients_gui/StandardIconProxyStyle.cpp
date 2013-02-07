@@ -39,3 +39,12 @@ int StandardIconProxyStyle::pixelMetric( PixelMetric metric, const QStyleOption*
 {
     return ( metric == QStyle::PM_SmallIconSize ) ? iconSize_ : QCleanlooksStyle::pixelMetric( metric, option, widget );
 }
+
+// -----------------------------------------------------------------------------
+// Name: StandardIconProxyStyle::GetIconSize
+// Created: ABR 2013-02-07
+// -----------------------------------------------------------------------------
+int StandardIconProxyStyle::GetIconSize() const
+{
+    return iconSize_;
+}
