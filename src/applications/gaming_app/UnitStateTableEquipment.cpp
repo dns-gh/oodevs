@@ -76,7 +76,7 @@ bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int si
 {
     for( int i = 0; row < dataModel_.rowCount() && i < size && GetDisplayData( row, eName ) == name; ++i, ++row )
         if( GetEnumData< E_EquipmentState >( row, eState ) != state ||
-            GetEnumData< unsigned int >( row, eBreakdown ) != ( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] ) )
+             ( state == eEquipmentState_RepairableWithEvacuation || state == eEquipmentState_InMaintenance ) && GetEnumData< unsigned int >( row, eBreakdown ) != ( currentBreakdowns.empty() ? 0 : currentBreakdowns[ i ] ) )
             return true;
     return false;
 }
