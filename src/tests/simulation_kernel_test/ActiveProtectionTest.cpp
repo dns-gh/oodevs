@@ -147,6 +147,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( composanteRole->Neutralize ).once();
         MOCK_EXPECT( urbanRole->ComputeRatioPionInsideEllipse ).once().returns( 1.f );
         MOCK_EXPECT( composanteRole->ApplyIndirectFire ).once();
+        MOCK_EXPECT( pion.CanEmitReports ).returns( true );
         MOCK_EXPECT( mockArmy.IsAFriend ).once().returns( eTristate_False );
         effectManager.Update();
         mock::verify( entityManager );
