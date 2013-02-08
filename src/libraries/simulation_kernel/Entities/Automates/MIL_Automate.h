@@ -126,6 +126,8 @@ public:
           bool                              IsEngaged        () const;
     const MT_Vector2D&                      GetPosition      () const;
           logistic::LogisticHierarchy_ABC&  GetLogisticHierarchy() const;
+  virtual bool                              CanEmitReports   () const;
+
 
           MIL_StockSupplyManager& GetStockSupplyManager() const;
 

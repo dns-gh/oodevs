@@ -45,6 +45,7 @@ public:
     //@{
     const std::string& GetName() const;
     virtual MIL_Army_ABC& GetArmy() const = 0;
+    virtual bool CanEmitReports() const = 0;
     //@}
 
     //! @name CheckPoints

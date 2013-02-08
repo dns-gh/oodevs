@@ -356,6 +356,16 @@ unsigned int MIL_Formation::GetID() const
 {
     return nID_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::CanEmitReports
+// Created: NPT 2013-02-07
+// -----------------------------------------------------------------------------
+bool MIL_Formation::CanEmitReports() const
+{
+ return true;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::RegisterAutomate
 // Created: NLD 2006-10-13

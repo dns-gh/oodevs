@@ -561,3 +561,12 @@ float MIL_Inhabitant::GetAffinity( unsigned long teamID ) const
 {
     return pAffinities_->GetAffinity( teamID );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::CanEmitReports
+// Created: NPT 2013-02-07
+// -----------------------------------------------------------------------------
+bool MIL_Inhabitant::CanEmitReports() const
+{
+    return true;
+}

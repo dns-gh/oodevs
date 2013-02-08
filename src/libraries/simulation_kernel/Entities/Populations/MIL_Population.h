@@ -92,6 +92,7 @@ public:
     bool HasFlow() const;
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;
+    virtual bool CanEmitReports() const;
 
     bool HasReachedBlockBorder          ( const MIL_UrbanObject_ABC* pUrbanKnowledge ) const;
     bool HasReachedDestination          ( const MT_Vector2D& destination ) const;
