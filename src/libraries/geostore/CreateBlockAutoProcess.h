@@ -10,6 +10,7 @@
 #ifndef __CreateBlockAutoProcess_h_
 #define __CreateBlockAutoProcess_h_
 
+#include "GeometryCollection.h"
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
@@ -53,11 +54,11 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ExtractTerrainComponents( gaiaGeomCollPtr footprint, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& buffers );
-    gaiaGeomCollPtr SubstractTerrainComponentsFromAreas( gaiaGeomCollPtr urbans, gaiaGeomCollPtr areas, gaiaGeomCollPtr lines );
-    gaiaGeomCollPtr ClipBlocksWithCollection( gaiaGeomCollPtr blocks, gaiaGeomCollPtr collection );
-    gaiaGeomCollPtr GetUrbanBlocksInAreaFromIndex( const geometry::Polygon2f& footprint );
-    void FillPolygonVector( gaiaGeomCollPtr blocks, std::vector< geometry::Polygon2f >& vec );
+    void ExtractTerrainComponents( GeometryCollection footprint, GeometryCollection& areas, GeometryCollection& buffers );
+    GeometryCollection SubstractTerrainComponentsFromAreas( GeometryCollection urbans, GeometryCollection areas, GeometryCollection lines );
+    GeometryCollection ClipBlocksWithCollection( GeometryCollection blocks, GeometryCollection collection );
+    GeometryCollection GetUrbanBlocksInAreaFromIndex( const geometry::Polygon2f& footprint );
+    void FillPolygonVector( GeometryCollection blocks, std::vector< geometry::Polygon2f >& vec );
     //@}
 
 private:

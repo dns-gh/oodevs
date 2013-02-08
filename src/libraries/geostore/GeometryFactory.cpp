@@ -35,9 +35,9 @@ GeometryFactory::~GeometryFactory()
 // Name: GeometryFactory::CreatePolygonGeometry
 // Created: AME 2010-07-30
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr GeometryFactory::CreatePolygonGeometry(const geometry::Polygon2f& footPrint, PointProjector_ABC& projector )
+GeometryCollection GeometryFactory::CreatePolygonGeometry(const geometry::Polygon2f& footPrint, PointProjector_ABC& projector )
 {
-    gaiaGeomCollPtr poly = InitGeometryCollection();
+    GeometryCollection poly = InitGeometryCollection();
     gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( poly, static_cast< int >( footPrint.Vertices().size() + 1 ), 0 );
     FillPolygon( footPrint, projector, polyg );
     gaiaMbrGeometry( poly );
@@ -48,9 +48,9 @@ gaiaGeomCollPtr GeometryFactory::CreatePolygonGeometry(const geometry::Polygon2f
 // Name: GeometryFactory::GetGeometryCollection
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr GeometryFactory::InitGeometryCollection()
+GeometryCollection GeometryFactory::InitGeometryCollection()
 {
-    gaiaGeomCollPtr geom = gaiaAllocGeomColl();
+    GeometryCollection geom = gaiaAllocGeomColl();
     geom->Srid = 4326; // Set the Spatial Reference ID !!
     return geom;
 }
@@ -59,13 +59,10 @@ gaiaGeomCollPtr GeometryFactory::InitGeometryCollection()
 // Name: GeometryFactory::CheckValidity
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
+GeometryCollection GeometryFactory::Validate( GeometryCollection geom )
 {
     if( geom && ( gaiaDimension( geom ) < 0 || gaiaIsValid( geom ) == 0 ) )
-    {
-        gaiaFreeGeomColl( geom );
         geom = 0;
-    }
     return geom;
 }
 
@@ -73,7 +70,7 @@ gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
 // Name: GeometryFactory::AddPolygonGeometryToCollection
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaGeomCollPtr& geomColl )
+void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, GeometryCollection& geomColl )
 {
     geomColl = Validate( geomColl );
     if( geomColl )

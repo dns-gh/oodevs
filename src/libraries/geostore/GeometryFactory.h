@@ -10,6 +10,7 @@
 #ifndef __GeometryFactory_h_
 #define __GeometryFactory_h_
 
+#include "GeometryCollection.h"
 #include <boost/noncopyable.hpp>
 
 class PointProjector_ABC;
@@ -33,10 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    static gaiaGeomCollPtr Validate( gaiaGeomCollPtr geom );
-    gaiaGeomCollPtr InitGeometryCollection();
-    gaiaGeomCollPtr CreatePolygonGeometry( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector );
-    void AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaGeomCollPtr& geomColl );
+    static GeometryCollection Validate( GeometryCollection geom );
+    GeometryCollection InitGeometryCollection();
+    GeometryCollection CreatePolygonGeometry( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector );
+    void AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, GeometryCollection& geomColl );
     //@}
 
 private:

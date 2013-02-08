@@ -47,20 +47,18 @@ std::vector< const kernel::UrbanObject_ABC* > CreateBlockProcess::IntersectedBlo
 
     if( !urbanBlocks.empty() )
     {
-        gaiaGeomCollPtr newBlock = geometryFactory_->CreatePolygonGeometry( footprint, projector );
+        GeometryCollection newBlock = geometryFactory_->CreatePolygonGeometry( footprint, projector );
         for( auto it = urbanBlocks.begin(); it != urbanBlocks.end(); ++it )
             if( const kernel::UrbanPositions_ABC* attribute = ( *it )->Retrieve< kernel::UrbanPositions_ABC >() )
             {
-                gaiaGeomCollPtr getBlocks = 0;
+                GeometryCollection getBlocks = 0;
                 geometryFactory_->AddPolygonGeometryToCollection( attribute->Polygon(), projector, getBlocks );
                 if( getBlocks )
                 {
                     if( gaiaGeomCollIntersects( newBlock, getBlocks ) != 0 )
                         intersectedBlocks.push_back( *it );
-                    gaiaFreeGeomColl( getBlocks );
                 }
             }
-        gaiaFreeGeomColl( newBlock );
     }
     return intersectedBlocks;
 }

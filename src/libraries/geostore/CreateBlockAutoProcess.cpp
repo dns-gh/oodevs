@@ -43,7 +43,7 @@ CreateBlockAutoProcess::~CreateBlockAutoProcess()
 
 namespace
 {
-    void AddBuildingsToUrban( gaiaGeomCollPtr urbans, gaiaGeomCollPtr buildings )
+    void AddBuildingsToUrban( GeometryCollection urbans, GeometryCollection buildings )
     {
         if( !buildings )
             return;
@@ -62,9 +62,9 @@ namespace
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vector< geometry::Polygon2f >& blocks )
 {
-    gaiaGeomCollPtr poly = geometryFactory_->CreatePolygonGeometry( footprint , projector_ );
-    gaiaGeomCollPtr buildings = 0;
-    gaiaGeomCollPtr urbans = 0;
+    GeometryCollection poly = geometryFactory_->CreatePolygonGeometry( footprint , projector_ );
+    GeometryCollection buildings = 0;
+    GeometryCollection urbans = 0;
 
     blocks.clear();
 
@@ -82,10 +82,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
         
     AddBuildingsToUrban( urbans, buildings );
     if( !GeometryFactory::Validate( urbans ) )
-    {
-        gaiaFreeGeomColl( buildings );
         return;
-    }
 
     // Compute the road width
     double lat0, lon0, lat1, lon1;
@@ -94,34 +91,27 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, std::vec
     roadWidth_ = std::abs( lon1 - lon0 );
 
     // Fill areas with surface elements and lines with linear elements
-    gaiaGeomCollPtr lines = 0;
-    gaiaGeomCollPtr areas = 0;
+    GeometryCollection lines = 0;
+    GeometryCollection areas = 0;
     ExtractTerrainComponents( poly, areas, lines );
-    gaiaFreeGeomColl( poly );
 
     // Clip urban areas with the areas and lines, yielding the discretized urban blocks
-    gaiaGeomCollPtr urbanBlocks = SubstractTerrainComponentsFromAreas( urbans, areas, lines );
-    gaiaFreeGeomColl( areas );
-    gaiaFreeGeomColl( urbans );
-    gaiaFreeGeomColl( lines );
+    GeometryCollection urbanBlocks = SubstractTerrainComponentsFromAreas( urbans, areas, lines );
 
     // Remove blocks that intersect with existing urban blocks in the index/model
-    gaiaGeomCollPtr blocksFromIndex = GeometryFactory::Validate( GetUrbanBlocksInAreaFromIndex( footprint ) );
-    gaiaGeomCollPtr temp = ClipBlocksWithCollection( urbanBlocks, blocksFromIndex );
-    gaiaFreeGeomColl( urbanBlocks );
-    gaiaFreeGeomColl( blocksFromIndex );
+    GeometryCollection blocksFromIndex = GeometryFactory::Validate( GetUrbanBlocksInAreaFromIndex( footprint ) );
+    GeometryCollection temp = ClipBlocksWithCollection( urbanBlocks, blocksFromIndex );
     urbanBlocks = temp;
 
     // Populate the resulting polygons vector
     FillPolygonVector( urbanBlocks, blocks );
-    gaiaFreeGeomColl( urbanBlocks );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CreateBlockAutoProcess::PrepareTerrainComponent
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& lines )
+void CreateBlockAutoProcess::ExtractTerrainComponents( GeometryCollection footprint, GeometryCollection& areas, GeometryCollection& lines )
 {
     for( auto it = tables_.begin(); it != tables_.end(); ++it )
     {
@@ -130,7 +120,7 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint
 
         if( it->second->GetGeometryType() == GeoTable::Polygon ) // Aggregation des surfaces;
         {
-            gaiaGeomCollPtr inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( footprint ) );
+            GeometryCollection inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( footprint ) );
             if( !inter )
                 continue;
 
@@ -139,24 +129,19 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint
             else
             {
                 // Incorporate the intersection in the areas.
-                gaiaGeomCollPtr merged = GeometryFactory::Validate( gaiaGeometryUnion( inter, areas ) );
-                gaiaFreeGeomColl( inter );
+                GeometryCollection merged = GeometryFactory::Validate( gaiaGeometryUnion( inter, areas ) );
                 if( merged )
-                {
-                    gaiaFreeGeomColl( areas );
                     areas = merged;
-                }
             }
         }
         else if( it->second->GetGeometryType() == GeoTable::LineString ) 
         {
-            gaiaGeomCollPtr inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( footprint ) );
+            GeometryCollection inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( footprint ) );
             if( !inter )
                 continue;
 
             // Upgrade the geometry with the width of the roads...
-            gaiaGeomCollPtr temp = gaiaGeomCollBuffer( inter, roadWidth_, 3 );
-            gaiaFreeGeomColl( inter );
+            GeometryCollection temp = gaiaGeomCollBuffer( inter, roadWidth_, 3 );
             inter = temp;
 
             if( !lines )
@@ -164,13 +149,9 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint
             else
             {
                 // Merge
-                gaiaGeomCollPtr merged = GeometryFactory::Validate( gaiaGeometryUnion( inter, lines ) );
-                gaiaFreeGeomColl( inter );
+                GeometryCollection merged = GeometryFactory::Validate( gaiaGeometryUnion( inter, lines ) );
                 if( merged )
-                {
-                    gaiaFreeGeomColl( lines );
                     lines = merged;
-                }
             }
         }
         else
@@ -185,26 +166,21 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( gaiaGeomCollPtr footprint
 // Name: CreateBlockAutoProcess::ClippingUrbanAreaWithTerrainComponent
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr CreateBlockAutoProcess::SubstractTerrainComponentsFromAreas( gaiaGeomCollPtr urbans, gaiaGeomCollPtr areas, gaiaGeomCollPtr lines )
+GeometryCollection CreateBlockAutoProcess::SubstractTerrainComponentsFromAreas( GeometryCollection urbans, GeometryCollection areas, GeometryCollection lines )
 {
     // clipping urban area with buffers
-    gaiaGeomCollPtr blocks = lines
+    GeometryCollection blocks = lines
         ? gaiaGeometryDifference( urbans, lines )
         : gaiaCloneGeomColl( urbans );
 
     // clipping blocks with others areas 
     if( gaiaDimension( areas ) == 2 )
     {
-        gaiaGeomCollPtr temp = gaiaGeometryDifference( blocks, areas );
+        GeometryCollection temp = gaiaGeometryDifference( blocks, areas );
 
         // geometry valid and type POLYGON
         if( gaiaDimension( temp ) == 2 )
-        {
-            gaiaFreeGeomColl( blocks );
             blocks = temp;
-        }
-        else
-            gaiaFreeGeomColl( temp );
     }
     return blocks;
 }
@@ -213,12 +189,12 @@ gaiaGeomCollPtr CreateBlockAutoProcess::SubstractTerrainComponentsFromAreas( gai
 // Name: CreateBlockAutoProcess::GetUrbanBlockInArea
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlocksInAreaFromIndex( const geometry::Polygon2f& footprint )
+GeometryCollection CreateBlockAutoProcess::GetUrbanBlocksInAreaFromIndex( const geometry::Polygon2f& footprint )
 {
     const geometry::Rectangle2f bbox = footprint.BoundingBox();
     float radius = 0.5f * sqrt( bbox.Width() * bbox.Width() + bbox.Height() * bbox.Height() );
 
-    gaiaGeomCollPtr blocksFromIndex = 0;
+    GeometryCollection blocksFromIndex = 0;
 
     std::vector< const kernel::UrbanObject_ABC* > urbanBlocks;
     index_.GetListWithinCircle( bbox.Center(), radius, urbanBlocks ); // to add more blocks (quad tree accuracy not very good)
@@ -234,19 +210,19 @@ gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlocksInAreaFromIndex( const geo
 // Name: CreateBlockAutoProcess::UpdateBuildingTable
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr CreateBlockAutoProcess::ClipBlocksWithCollection( gaiaGeomCollPtr blocks, gaiaGeomCollPtr collection )
+GeometryCollection CreateBlockAutoProcess::ClipBlocksWithCollection( GeometryCollection blocks, GeometryCollection collection )
 {
     if( !collection )
         return gaiaCloneGeomColl( blocks );
     if( !blocks )
         return nullptr;
 
-    gaiaGeomCollPtr result = geometryFactory_->InitGeometryCollection();
+    GeometryCollection result = geometryFactory_->InitGeometryCollection();
 
     for( gaiaPolygonPtr block = blocks->FirstPolygon; block; block = block->Next )
     {
         // Create an empty collection
-        gaiaGeomCollPtr geom = geometryFactory_->InitGeometryCollection();
+        GeometryCollection geom = geometryFactory_->InitGeometryCollection();
 
         // Insert a copy of the block in that collection
         gaiaInsertPolygonInGeomColl( geom, gaiaCloneRing( block->Exterior ) );
@@ -257,7 +233,6 @@ gaiaGeomCollPtr CreateBlockAutoProcess::ClipBlocksWithCollection( gaiaGeomCollPt
             // Add a copy of this polygon to the result as it does not intersect with the collection
             gaiaInsertPolygonInGeomColl( result, gaiaCloneRing( block->Exterior ) );
         }
-        gaiaFreeGeomColl( geom );
     }
     return result;
 }
@@ -266,7 +241,7 @@ gaiaGeomCollPtr CreateBlockAutoProcess::ClipBlocksWithCollection( gaiaGeomCollPt
 // Name: CreateBlockAutoProcess::FillPolygonVector
 // Created: RCI 2012-12-06
 // -----------------------------------------------------------------------------
-void CreateBlockAutoProcess::FillPolygonVector( gaiaGeomCollPtr blocks, std::vector< geometry::Polygon2f >& vec )
+void CreateBlockAutoProcess::FillPolygonVector( GeometryCollection blocks, std::vector< geometry::Polygon2f >& vec )
 {
     gaiaPolygonPtr block = blocks->FirstPolygon;
     double x, y;

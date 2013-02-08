@@ -10,6 +10,7 @@
 #ifndef __GeoTable_h_
 #define __GeoTable_h_
 
+#include "GeometryCollection.h"
 #include "Table.h"
 #include <vector>
 
@@ -42,15 +43,15 @@ public:
     //! @name Operations
     //@{
     GeometryType GetGeometryType() const;
-    gaiaGeomCollPtr GetFeaturesIntersectingWith( gaiaGeomCollPtr poly ) const;
+    GeometryCollection GetFeaturesIntersectingWith( GeometryCollection poly ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    std::vector< gaiaGeomCollPtr > CreatePolygonGeometry( const TerrainObject& shape );
-    std::vector< gaiaGeomCollPtr > CreateLineGeometry( const TerrainObject& shape );
-    std::vector< gaiaGeomCollPtr > CreateGeometry( const TerrainObject& shape );
+    std::vector< GeometryCollection > CreatePolygonGeometry( const TerrainObject& shape );
+    std::vector< GeometryCollection > CreateLineGeometry( const TerrainObject& shape );
+    std::vector< GeometryCollection > CreateGeometry( const TerrainObject& shape );
     void SetGeometryType( const std::string& name );
     void Fill( const std::vector< TerrainObject* >& features );
     void AddGeometryColumn( int geomType );

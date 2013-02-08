@@ -78,19 +78,19 @@ void GeoTable::AddGeometryColumn( int geomType )
 
 namespace
 {
-    gaiaGeomCollPtr InitGeomCollPtr()
+    GeometryCollection InitGeomCollPtr()
     {
-        gaiaGeomCollPtr ptr = gaiaAllocGeomColl();
+        GeometryCollection ptr = gaiaAllocGeomColl();
         ptr->Srid = 4326;
         return ptr;
     }
 
-    void AddPolygon( const geodata::Primitive_ABC& shape, std::vector< gaiaGeomCollPtr >& result )
+    void AddPolygon( const geodata::Primitive_ABC& shape, std::vector< GeometryCollection >& result )
     {
         int numVertices = static_cast< int >( shape.GetCoordinates().size() );
         if( numVertices < 3 )
             return;
-        gaiaGeomCollPtr currentGeomCollPtr = InitGeomCollPtr();
+        GeometryCollection currentGeomCollPtr = InitGeomCollPtr();
         result.push_back( currentGeomCollPtr );
         gaiaRingPtr ring;
         gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( currentGeomCollPtr, numVertices + 1, 0 );
@@ -105,9 +105,9 @@ namespace
 // Name: GeoTable::CreatePolygonGeometry
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
-std::vector< gaiaGeomCollPtr > GeoTable::CreatePolygonGeometry( const TerrainObject& shape )
+std::vector< GeometryCollection > GeoTable::CreatePolygonGeometry( const TerrainObject& shape )
 {
-    std::vector< gaiaGeomCollPtr > result;
+    std::vector< GeometryCollection > result;
     if( shape.GetCoordinates().size() < 3 )
         return result;
     AddPolygon( shape, result );
@@ -121,9 +121,9 @@ std::vector< gaiaGeomCollPtr > GeoTable::CreatePolygonGeometry( const TerrainObj
 // Name: GeoTable::CreateLineGeometry
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
-std::vector< gaiaGeomCollPtr > GeoTable::CreateLineGeometry( const TerrainObject& shape )
+std::vector< GeometryCollection > GeoTable::CreateLineGeometry( const TerrainObject& shape )
 {
-    std::vector< gaiaGeomCollPtr > result;
+    std::vector< GeometryCollection > result;
     result.push_back( InitGeomCollPtr() );
     int numVertices = static_cast< int >( shape.GetCoordinates().size() );
     gaiaLinestringPtr line = gaiaAddLinestringToGeomColl( result[0], numVertices );
@@ -144,21 +144,17 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
     int counter = 0;
     for( auto it = features.begin(); it != features.end(); ++it, ++counter )
     {
-        std::vector< gaiaGeomCollPtr > geo = CreateGeometry( **it );
+        std::vector< GeometryCollection > geo = CreateGeometry( **it );
         for( auto geoIt = geo.begin(); geoIt != geo.end(); ++geoIt, ++i )
         {
             if( !gaiaIsValid( *geoIt ) )
-            {
-                gaiaFreeGeomColl( *geoIt );
                 continue;
-            }
 
             // Create a blob for the geomColl
             unsigned char* blob;
             int blob_size;
             gaiaToSpatiaLiteBlobWkb( *geoIt, &blob, &blob_size );
             // Not needed anymore, everything is in the blob!
-            gaiaFreeGeomColl( *geoIt );
 
             sqlite3_reset( stmt );
             sqlite3_clear_bindings( stmt );
@@ -185,12 +181,12 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
 // Name: GeoTable::CreateGeometry
 // Created: AME 2010-07-20
 // -----------------------------------------------------------------------------
-std::vector< gaiaGeomCollPtr > GeoTable::CreateGeometry( const TerrainObject& shape )
+std::vector< GeometryCollection > GeoTable::CreateGeometry( const TerrainObject& shape )
 {
     switch( geometryType_ )
     {
         case Point:
-            return std::vector< gaiaGeomCollPtr >();
+            return std::vector< GeometryCollection >();
         case Polygon:
             return CreatePolygonGeometry( shape );
         case LineString:
@@ -204,9 +200,9 @@ std::vector< gaiaGeomCollPtr > GeoTable::CreateGeometry( const TerrainObject& sh
 // Name: GeoTable::GetFeaturesIntersectsWith
 // Created: AME 2010-07-21
 // -----------------------------------------------------------------------------
-gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly ) const
+GeometryCollection GeoTable::GetFeaturesIntersectingWith( GeometryCollection poly ) const
 {
-    gaiaGeomCollPtr result = 0;
+    GeometryCollection result = 0;
     sqlite3_stmt* stmt = CreateStatement( "SELECT GUnion( geom ) FROM " + GetName() + " WHERE MbrIntersects( geom, BuildMbr( ?, ?, ?, ? ) );" );
     sqlite3_bind_double( stmt, 1, poly->MinX );
     sqlite3_bind_double( stmt, 2, poly->MinY );
@@ -218,10 +214,9 @@ gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly ) co
         const unsigned char* blob = static_cast< const unsigned char * >( sqlite3_column_blob( stmt, 0 ) );
         unsigned int blobSize = sqlite3_column_bytes( stmt, 0 );
         // Create the geometry...
-        gaiaGeomCollPtr temp = gaiaFromSpatiaLiteBlobWkb( blob, blobSize );
+        GeometryCollection temp = gaiaFromSpatiaLiteBlobWkb( blob, blobSize );
         // Clip with the polygon
         result = gaiaGeometryIntersection( temp, poly );
-        gaiaFreeGeomColl( temp );
     }
     sqlite3_finalize( stmt );
     return result;
