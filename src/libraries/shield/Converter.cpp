@@ -365,6 +365,7 @@ void Converter::ReceiveSimToClient( const sword::SimToClient& msg )
     FORWARD( client_, SimulationToClient, crowd_destruction )
     FORWARD( client_, SimulationToClient, population_creation )
     FORWARD( client_, SimulationToClient, population_update )
+    FORWARD( client_, SimulationToClient, log_history_request_for_play_ack )
 }
 
 // -----------------------------------------------------------------------------

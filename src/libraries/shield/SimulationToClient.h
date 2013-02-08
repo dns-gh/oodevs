@@ -102,6 +102,7 @@ public:
     static void Convert( const sword::KnowledgeGroupMagicActionAck& from, MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* to );
     static void Convert( const sword::KnowledgeGroupUpdate& from, MsgsSimToClient::MsgKnowledgeGroupUpdate* to );
     static void Convert( const sword::KnowledgeGroupUpdateAck& from, MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* to );
+    static void Convert( const sword::LogHistoryRequestForPlayAck& from, Common::MsgLogHistoryRequestForPlayAck* to );
     static void Convert( const sword::LogMaintenanceHandlingCreation& from, MsgsSimToClient::MsgLogMaintenanceHandlingCreation* to );
     static void Convert( const sword::LogMaintenanceHandlingDestruction& from, MsgsSimToClient::MsgLogMaintenanceHandlingDestruction* to );
     static void Convert( const sword::LogMaintenanceHandlingUpdate& from, MsgsSimToClient::MsgLogMaintenanceHandlingUpdate* to );

@@ -2541,3 +2541,15 @@ void SimulationToClient::Convert( const sword::ControlExportRequest& from, Commo
 {
     CONVERT( directory_name );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: MMC 2013-02-07
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::LogHistoryRequestForPlayAck& from, Common::MsgLogHistoryRequestForPlayAck* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( profile );
+    CONVERT_DATE_TO( date_time, date_time );
+}
