@@ -24,7 +24,7 @@ OrderType::OrderType( xml::xistream& xis )
         >> xml::attribute( "id", id_ )
         >> xml::optional >> xml::start( "description" )
             >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
-            >> xml::optional >> xml::attribute( "doctrine", usage_ )
+            >> xml::optional >> xml::attribute( "usage", usage_ )
         >> xml ::end;
 }
 

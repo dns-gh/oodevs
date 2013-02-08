@@ -108,7 +108,7 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data&
         >> xml::optional >> xml::attribute( "package", strPackage_ )
         >> xml::optional >> xml::start( "description" )
             >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
-            >> xml::optional >> xml::attribute( "doctrine", usage_ )
+            >> xml::optional >> xml::attribute( "usage", usage_ )
         >> xml ::end
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
     const std::string code = symbol.empty() ? " - " : symbol;
