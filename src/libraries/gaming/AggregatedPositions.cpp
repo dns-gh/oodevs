@@ -153,7 +153,7 @@ void AggregatedPositions::Accept( LocationVisitor_ABC& visitor ) const
 void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && !aggregated_ && HasSubordinate( entity_, boost::bind( &AggregatedPositions::IsAggregated, this, _1 ) ) )
-        tools.DrawCross( where, GL_CROSSSIZE );
+        tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

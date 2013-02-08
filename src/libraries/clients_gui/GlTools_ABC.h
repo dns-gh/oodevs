@@ -72,7 +72,7 @@ public:
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
     virtual unsigned short  StipplePattern( int factor = 1 ) const = 0;
     virtual float           Zoom() const = 0;
-    virtual float           GetAdaptiveZoomFactor() const = 0;
+    virtual float           GetAdaptiveZoomFactor( bool bVariableSize = true ) const = 0;
     //@}
 
     //! @name Operations
@@ -105,7 +105,8 @@ public:
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const = 0;
     virtual void DrawCell         ( const geometry::Point2f& center ) const = 0;
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const = 0;
-    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const = 0;
+    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const = 0;
+    virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const = 0;
     //@}
 };
 

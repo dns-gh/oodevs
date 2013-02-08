@@ -122,8 +122,8 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6Symbol( symbolPath_, where, -1.f );
-        tools.DrawApp6Symbol( levelPath_, where, -1.f );
+        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -1.f );
+        tools.DrawApp6SymbolFixedSize( levelPath_, where, -1.f );
     }
 }
 

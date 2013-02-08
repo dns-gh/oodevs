@@ -40,6 +40,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     : SetGlOptions()
     , MapWidget( context_, pParent, width, height )
     , GlToolsBase( controllers )
+    , baseWidth_( 600.f )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
     , circle_      ( 0 )
@@ -49,6 +50,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , passes_      ( passLess( "" ) )
     , currentPass_ ()
     , bMulti_      ( false )
+    , SymbolSize_  ( 3.f )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -304,8 +306,11 @@ void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2
 // Name: GlWidget::GetAdaptiveZoomFactor
 // Created: RPD 2009-12-04
 // -----------------------------------------------------------------------------
-float GlWidget::GetAdaptiveZoomFactor() const
+float GlWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
+    if( !bVariableSize )
+        return SymbolSize_ * Pixels() / 60;
+
     float zoom = Zoom();
     float pixels = Pixels();
     if( zoom <= .00024f )
@@ -359,11 +364,10 @@ unsigned short GlWidget::StipplePattern( int factor /* = 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    size *= GetAdaptiveZoomFactor();
     if( size < 0 )
         size = 10.f * Pixels();
     else if( unit == pixels )
-        size *= Pixels();
+        size *= GetAdaptiveZoomFactor( false );;
 
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
@@ -643,23 +647,30 @@ void GlWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, c
 // -----------------------------------------------------------------------------
 void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( size < 0 )
+    Point2f end = to;
+    float tipFactor = 1.f;
+    if( unit == gui::GlTools_ABC::pixels )
+    {
+        tipFactor = 0.4f;
+        size = 900.f * GetAdaptiveZoomFactor( false );
+    }
+    else if( size < 0.f )
         size = 15.f * Pixels();
-    else if( unit == pixels )
-        size *= Pixels();
 
     const Vector2f u = Vector2f( from, to ).Normalize() * size;
     const Vector2f v = 0.5f * u.Normal();
-    const Point2f left  = to - u + v;
-    const Point2f right = to - u - v;
+    if( unit == pixels )
+        end = from + u;
+    const Point2f left  = end + ( - u + v ) * tipFactor;
+    const Point2f right = end + ( - u - v ) * tipFactor;
 
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
-        glVertex2f( to.X(), to.Y() );
+        glVertex2f( end.X(), end.Y() );
         glVertex2f( left.X(), left.Y() );
-        glVertex2f( to.X(), to.Y() );
+        glVertex2f( end.X(), end.Y() );
         glVertex2f( right.X(), right.Y() );
-        glVertex2f( to.X(), to.Y() );
+        glVertex2f( end.X(), end.Y() );
         glVertex2f( from.X(), from.Y() );
     glEnd();
 }
@@ -772,7 +783,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
 void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/ ) const
 {
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
-    factor *= GetAdaptiveZoomFactor();
+    factor *= GetAdaptiveZoomFactor( false );
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
 
@@ -826,6 +837,17 @@ void GlWidget::Print( const std::string& message, const geometry::Point2f& where
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::ComputeZoomFactor
+// Created: MMC 2012-02-04
+// -----------------------------------------------------------------------------
+float GlWidget::ComputeZoomFactor( float& factor, bool bVariableSize /*= true*/ ) const
+{
+    float adaptiveZoomFactor = factor < 0.f ? GetAdaptiveZoomFactor( bVariableSize ) : 1.f;
+    factor = fabs( factor ) * adaptiveZoomFactor;
+    return adaptiveZoomFactor;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
@@ -840,21 +862,33 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
 {
+    thickness *= ComputeZoomFactor( factor );
+    DrawApp6Symbol( symbol, style, where, baseWidth_ * factor, viewport_
+                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawApp6SymbolFixedSize
+// Created: MMC 2012-02-04
+// -----------------------------------------------------------------------------
+void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const
+{
+    ComputeZoomFactor( factor, false );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawApp6Symbol
+// Created: MMC 2012-02-04
+// -----------------------------------------------------------------------------
+void GlWidget::DrawApp6Symbol ( const std::string& symbol, const std::string& style, const geometry::Point2f& where
+                              , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight ) const
+{
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
-    float adaptiveFactor = 1;
-    if( factor < 0 )
-    {
-        adaptiveFactor = GetAdaptiveZoomFactor();
-        factor = - factor;
-    }
-    factor *= adaptiveFactor;
-    thickness *= adaptiveFactor;
-    const float expectedWidth  = 600.f * factor;
     const float expectedHeight = expectedWidth * 0.660f;
     const Point2f center = Point2f( where.X() - expectedWidth * 0.5f, where.Y() + expectedHeight );
-
     const float scaleRatio = ( expectedWidth / svgWidth );
 
     gl::Initialize();
@@ -865,7 +899,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
             glTranslatef( center.X(), center.Y(), 0.0f );
             glScalef( scaleRatio, -scaleRatio, 1 );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-            Base().PrintApp6( symbol, style, viewport_, int( windowWidth_ * thickness ), int( windowHeight_ * thickness ) );
+            Base().PrintApp6( symbol, style, viewport, printWidth, printHeight );
         glPopMatrix();
     glPopAttrib();
 }
@@ -874,9 +908,9 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
 // Name: GlWidget::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
+void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize /*= true*/ ) const
 {
-    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined, GetAdaptiveZoomFactor() );
+    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined, GetAdaptiveZoomFactor( !fixedSize ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -981,6 +1015,8 @@ void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVaria
         minVisuScale_ = value.To< int >();
     else if( name == "VisuScaleMax13" ) // see VisualisationScalesPanel.cpp
         maxVisuScale_ = value.To< int >();
+    else if( name == "SymbolSize" )
+        SymbolSize_ = value.To< float >();
     else
         GlToolsBase::OptionChanged( name, value );
 }

@@ -57,7 +57,7 @@ public:
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
-    virtual float   GetAdaptiveZoomFactor() const;
+    virtual float   GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
 
     virtual boost::tuple< bool, bool, bool > UnSelect() const;
     virtual void Select( bool, bool, bool ) const;
@@ -95,7 +95,8 @@ public:
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const;
-    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const;
+    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
+    virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const;
     //@}
 
 private:

@@ -68,8 +68,8 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6Symbol( symbol_, where, 2 );
-        tools.DrawApp6Symbol( level_, where, 2 );
+        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f );
+        tools.DrawApp6SymbolFixedSize( level_, where, -1.5f );
     }
 }
 

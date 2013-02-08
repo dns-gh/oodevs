@@ -45,7 +45,7 @@ namespace
         virtual float           Pixels( const geometry::Point2f& ) const { return 0.001f; } // $$$$ ABR 2011-04-21: hard coded
         virtual unsigned short  StipplePattern( int ) const { return 0; }
         virtual float           Zoom() const { return 0.f; }
-        virtual float           GetAdaptiveZoomFactor() const { return 0.f; }
+        virtual float           GetAdaptiveZoomFactor( bool ) const { return 0.f; }
         //@}
 
         //! @name Operations
@@ -76,7 +76,8 @@ namespace
         virtual void DrawImage        ( const QImage&, const geometry::Point2f& ) const {}
         virtual void DrawCell         ( const geometry::Point2f& ) const {}
         virtual void DrawSvg          ( const std::string&, const geometry::Point2f&, float ) const {}
-        virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool ) const {}
+        virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool, bool ) const {}
+        virtual void DrawApp6SymbolFixedSize( const std::string&, const geometry::Point2f&, float) const {}
         //@}
     };
 }

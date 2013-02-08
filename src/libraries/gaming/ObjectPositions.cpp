@@ -13,6 +13,7 @@
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Point.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -75,7 +76,7 @@ void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewp
     if( const kernel::Location_ABC* location = GetLocation() )
     {
         if( viewport.IsVisible( boundingBox_ ) )
-            tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay() );
+            tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location ) != nullptr );
     }
 }
 

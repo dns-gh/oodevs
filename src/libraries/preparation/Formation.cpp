@@ -117,8 +117,8 @@ void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
     if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsVisible( where ) )
     {
         InitializeSymbol();
-        tools.DrawApp6Symbol( symbolPath_, where, 4 );
-        tools.DrawApp6Symbol( levelPath_, where, 4 );
+        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f );
+        tools.DrawApp6SymbolFixedSize( levelPath_, where, -2.f );
     }
 }
 

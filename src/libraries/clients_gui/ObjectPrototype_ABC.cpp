@@ -26,6 +26,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Point.h"
 #include "tools/Iterator.h"
 
 using namespace kernel;
@@ -333,7 +334,7 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )
         {
             const std::string locationType = location.GetTypeName();
-            tools.DrawTacticalGraphics( type->GetSymbol( locationType ), location, true );
+            tools.DrawTacticalGraphics( type->GetSymbol( locationType ), location, true, dynamic_cast< const kernel::Point* >( &location ) != nullptr );
         }
 }
 

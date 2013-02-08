@@ -133,7 +133,7 @@ void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
-        tools.DrawCross( where, GL_CROSSSIZE );
+        tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

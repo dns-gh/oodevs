@@ -76,5 +76,5 @@ void Speeds::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& view
     // $$$$ AGE 2007-12-17: borner la speed_ ou mettre un log
     const float factor = 10.f;
     if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "Direction" ) )
-        tools.DrawArrow( where, where + direction_ * speed_ * factor );
+        tools.DrawArrow( where, where + direction_ * speed_ * factor, -1.f, gui::GlTools_ABC::pixels );
 }

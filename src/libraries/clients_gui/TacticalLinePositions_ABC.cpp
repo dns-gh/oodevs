@@ -131,7 +131,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
             tools.DrawDisc( *it, 5.f, GlTools_ABC::pixels );
     glPopAttrib();
 
-    tools.DrawTacticalGraphics( symbol, *location_, false );
+    tools.DrawTacticalGraphics( symbol, *location_, false, false );
 }
 
 // -----------------------------------------------------------------------------

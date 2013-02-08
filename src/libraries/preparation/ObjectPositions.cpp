@@ -291,7 +291,7 @@ void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& v
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() ) // $$$$ SBO 2009-05-29: location_->IsValid()
         return;
-    tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay() );
+    tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
 }
 
 // -----------------------------------------------------------------------------

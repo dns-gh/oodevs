@@ -169,8 +169,8 @@ void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6Symbol( symbol_, where, -1.f );
-        tools.DrawApp6Symbol( GetLevelSymbol(), where, -1.f );
+        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.f );
+        tools.DrawApp6SymbolFixedSize( GetLevelSymbol(), where, -1.f );
     }
 }
 

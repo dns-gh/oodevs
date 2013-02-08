@@ -139,7 +139,7 @@ float Gl3dWidget::Pixels( const Point2f& at ) const
 // Name: Gl3dWidget::GetAdaptiveZoomFactor
 // Created: RPD 2009-12-14
 // -----------------------------------------------------------------------------
-float Gl3dWidget::GetAdaptiveZoomFactor() const
+float Gl3dWidget::GetAdaptiveZoomFactor( bool /* bVariableSize = true*/ ) const
 {
     return 1.f;
 }
@@ -539,7 +539,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // Name: Gl3dWidget::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& location, bool /*overlined*/ ) const
+void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& location, bool /*overlined*/, bool /*fixedSize = true*/ ) const
 {
     // $$$$ SBO 2009-05-29: TODO: use SVG renderer instead
     glPushAttrib( GL_LINE_BIT );

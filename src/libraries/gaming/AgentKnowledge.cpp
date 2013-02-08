@@ -241,12 +241,12 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
     if( viewport.IsVisible( where ) )
     {
         const boost::tuple< bool, bool, bool > backupState = tools.UnSelect();
-        tools.DrawApp6Symbol( currentSymbol_, where, -1 );
+        tools.DrawApp6SymbolFixedSize( currentSymbol_, where, -1 );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
-            tools.DrawApp6Symbol( realAgent_.GetType().GetLevelSymbol(), where, -1 );
+            tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetLevelSymbol(), where, -1 );
             if( bIsPC_.IsSet() && bIsPC_ )
-                tools.DrawApp6Symbol( realAgent_.GetType().GetHQSymbol(), where, -1 );
+                tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -1 );
         }
         tools.Select( backupState.get< 0 >(), backupState.get< 1 >(), backupState.get< 2 >() );
     }

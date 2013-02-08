@@ -65,7 +65,7 @@ public:
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
     virtual float Zoom() const;
-    virtual float GetAdaptiveZoomFactor() const;
+    virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
 
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
@@ -77,7 +77,7 @@ public:
     virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, unsigned int height, bool selected ) const;
     virtual void DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected ) const;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const;
-    virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;
+    virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;    
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
@@ -86,11 +86,12 @@ public:
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const;
+    virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const;
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const;
-    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const;
+    virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
@@ -101,6 +102,14 @@ protected:
     //! @name Operations
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
+    void DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
+        , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight ) const;
     //@}
 
 private:
@@ -148,6 +157,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const float baseWidth_;
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
@@ -160,6 +170,7 @@ private:
     std::string currentPass_;
     QFont currentFont_;
     bool bMulti_;
+    float SymbolSize_;
     //@}
 };
 

@@ -23,6 +23,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/SymbolSizeOptionChooser.h"
 #include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
@@ -224,6 +225,11 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
         toolBar->addWidget( populationBox );
         toolBar->addWidget( populationEnabled );
         connect( populationEnabled, SIGNAL( clicked() ), populationOptions, SLOT( Show() ) );
+    }
+
+    subMenu->insertSeparator();
+    {
+        new SymbolSizeOptionChooser( pParent, toolBar, MakePixmap( "symbol_increase" ), MakePixmap( "symbol_decrease" ), controllers );
     }
 
     menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );

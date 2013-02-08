@@ -11,6 +11,7 @@
 #include "ObjectKnowledgePositions.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/Point.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -50,5 +51,5 @@ void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& mes
 void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
-        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay() );
+        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location ) != nullptr );
 }

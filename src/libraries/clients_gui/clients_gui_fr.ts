@@ -170,6 +170,17 @@
     </message>
 </context>
 <context>
+    <name>Menu</name>
+    <message>
+        <source>Increase symbol size</source>
+        <translation>Augmenter la taille des symboles</translation>
+    </message>
+    <message>
+        <source>Decrease symbol size</source>
+        <translation>Réduire la taille des symboles</translation>
+    </message>
+</context>
+<context>
     <name>NumericLimitsEditor</name>
     <message>
         <source>Min</source>

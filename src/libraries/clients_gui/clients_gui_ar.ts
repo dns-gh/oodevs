@@ -72,7 +72,7 @@
     <name>ApplicationMonitor</name>
     <message>
         <source>Unexpected exception</source>
-        <translation type="unfinished">استثناء غير متوقع</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -166,6 +166,17 @@
     </message>
     <message>
         <source>Info/Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Menu</name>
+    <message>
+        <source>Increase symbol size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decrease symbol size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

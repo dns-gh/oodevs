@@ -186,9 +186,9 @@ float GlProxy::Zoom() const
 // Name: GlProxy::GetAdaptiveZoomFactor
 // Created: RPD 2009-12-14
 // -----------------------------------------------------------------------------
-float GlProxy::GetAdaptiveZoomFactor() const
+float GlProxy::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
-    return tools_->GetAdaptiveZoomFactor();
+    return tools_->GetAdaptiveZoomFactor( bVariableSize );
 }
 
 // -----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ void GlProxy::DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, co
 // -----------------------------------------------------------------------------
 void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    tools_->DrawArrow( from, to, size,unit );
+    tools_->DrawArrow( from, to, size, unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,6 +391,15 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& styl
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawApp6SymbolFixedSize
+// Created: MMC 2013-02-05
+// -----------------------------------------------------------------------------
+void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const
+{
+    tools_->DrawApp6SymbolFixedSize( symbol, where, factor );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
@@ -430,9 +439,9 @@ void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, 
 // Name: GlProxy::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
+void GlProxy::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize /*= true*/ ) const
 {
-    tools_->DrawTacticalGraphics( symbol, location, overlined );
+    tools_->DrawTacticalGraphics( symbol, location, overlined, fixedSize );
 }
 
 // -----------------------------------------------------------------------------

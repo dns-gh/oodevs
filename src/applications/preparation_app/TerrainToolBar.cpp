@@ -13,6 +13,7 @@
 #include "RemoveBlocksDialog.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -64,6 +65,11 @@ namespace
     }
 }
 
+QPixmap MakePixmap( const std::string& name )
+{    
+    return QPixmap( QString( "resources/images/gui/" ) + QString::fromStdString( name ) + QString( ".png" ) );
+}
+
 // -----------------------------------------------------------------------------
 // Name: TerrainToolBar constructor
 // Created: ABR 2012-05-15
@@ -94,6 +100,7 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     addWidget( blockCreationButton_ );
     addWidget( blockCreationAutoButton_ );
     addWidget( blockRemoveButton_ );
+    new SymbolSizeOptionChooser( parent, this, MakePixmap( "symbol_increase" ), MakePixmap( "symbol_decrease" ), controllers );
     // Disable buttons
     EnableBlockCreationButtons( false );
     blockRemoveButton_->setEnabled( false );
