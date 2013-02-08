@@ -19,7 +19,7 @@ GeoTable::GeoTable( sqlite3* db, const std::string& name )
     Table::T_ResultSet results = ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'" );
     if( results.empty() )
         throw MASA_EXCEPTION( "Could not load table " + GetName() );
-    SetGeometry( results.back().back() );
+    SetGeometryType( results.back().back() );
 }
 
 GeoTable::GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features )
@@ -37,7 +37,7 @@ GeoTable::GeometryType GeoTable::GetGeometryType() const
     return geometryType_;
 }
 
-void GeoTable::SetGeometry( const std::string& name )
+void GeoTable::SetGeometryType( const std::string& name )
 {
     if( "POLYGON" == name )
         geometryType_ = Polygon;
@@ -51,11 +51,11 @@ void GeoTable::SetGeometry( const std::string& name )
 // Name: GeoTable::AddGeometryColumn
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
-void GeoTable::AddGeometryColumn( int geom_type )
+void GeoTable::AddGeometryColumn( int geomType )
 {
     std::stringstream query;
     query << "SELECT AddGeometryColumn( '" << GetName() << "', 'geom', 4326, '";
-    switch( geom_type )
+    switch( geomType )
     {
     case Point:
         query << "POINT";

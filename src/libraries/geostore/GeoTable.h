@@ -51,9 +51,9 @@ private:
     std::vector< gaiaGeomCollPtr > CreatePolygonGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateLineGeometry( const TerrainObject& shape );
     std::vector< gaiaGeomCollPtr > CreateGeometry( const TerrainObject& shape );
-    void SetGeometry( const std::string& name );
+    void SetGeometryType( const std::string& name );
     void Fill( const std::vector< TerrainObject* >& features );
-    void AddGeometryColumn( int geom_type );
+    void AddGeometryColumn( int geomType );
     //@}
 
 private:
