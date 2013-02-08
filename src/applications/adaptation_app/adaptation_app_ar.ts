@@ -4484,12 +4484,12 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contamination</source>
         <translation type="unfinished">تلوث</translation>
+    </message>
+    <message>
+        <source>UE (%)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>UE (%)</source>
