@@ -56,6 +56,7 @@ private:
 class Units
 {
 public:
+    static const Unit seconds;
     static const Unit meters;
     static const Unit degrees;
     static const Unit percentage;

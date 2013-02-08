@@ -426,6 +426,10 @@
         <source>mines/m</source>
         <translation>mines/m</translation>
     </message>
+    <message>
+        <source>s</source>
+        <translation>s</translation>
+    </message>
 </context>
 <context>
     <name>XmlDescription</name>

@@ -56,8 +56,8 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true );
     activationTimeParameter.SetKeyName( "ActivationTime" );
     activationTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activationTimeParameter, false ) );
-    activityTime_->SetSuffix( kernel::Units::meters.AsString() );
-    activationTime_->SetSuffix( kernel::Units::meters.AsString() );
+    activityTime_->SetSuffix( kernel::Units::seconds.AsString() );
+    activationTime_->SetSuffix( kernel::Units::seconds.AsString() );
 
     name_ = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toStdString(), "string", true ), false ) );
     timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toStdString() ) );

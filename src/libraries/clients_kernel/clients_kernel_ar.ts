@@ -426,6 +426,10 @@
         <source>mines/m</source>
         <translation type="unfinished">الألغام/م</translation>
     </message>
+    <message>
+        <source>s</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>XmlDescription</name>

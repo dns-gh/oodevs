@@ -26,6 +26,7 @@ Unit::Unit( const QString& symbol, const QString& /*dummy*/, double minValue, do
     // NOTHING
 }
 
+const Unit Units::seconds           ( "s",       tools::translate( "Units", "s" )      , 0., std::numeric_limits< int >::max(), 2 );
 const Unit Units::meters            ( "m",       tools::translate( "Units", "m" )      , 0., std::numeric_limits< int >::max(), 2 );
 const Unit Units::degrees           ( "°",       tools::translate( "Units", "°" )      , 0., 360.                             , 2 );
 const Unit Units::percentage        ( "%",       tools::translate( "Units", "%" )      , 0., 100.                             , 2 );
