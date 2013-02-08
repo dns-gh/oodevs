@@ -1386,7 +1386,11 @@
         <safe-move file="${out.dir}/SWORD_debug_${platform}_${version.project}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
+                    <fileset dir="${out.dir}/release/applications" includes="**/*.pdb"/>
+                    <flattenmapper/>
+                </mappedresources>
+                <mappedresources>
+                    <fileset dir="${out.dir}/release/libraries" includes="**/*_dll/*.pdb"/>
                     <flattenmapper/>
                 </mappedresources>
              </zip>
