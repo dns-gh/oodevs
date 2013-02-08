@@ -140,6 +140,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
     , menuManager_        ( new UrbanMenuManager( controllers, *this, staticModel_ ) )
+    , cleanedLinks_       ( false )
 {
     //NOTHING
 }
