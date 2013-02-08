@@ -822,11 +822,13 @@ namespace
     void TestOrder( Fixture& fix )
     {
         fix.xos << xml::attribute( "target", 27u )
-                << xml::attribute( "id", 17 );
+                << xml::attribute( "id", 17 )
+                << xml::attribute( "type", "mission" );
         const auto msg = fix.Read< T >();
         BOOST_CHECK_EQUAL( msg.tasker().id(), 27u );
         BOOST_CHECK_EQUAL( msg.type().id(), 17u );
         BOOST_CHECK( !msg.has_parameters() );
+        fix.CheckCycle( msg );
     }
 }
 
@@ -848,60 +850,72 @@ BOOST_FIXTURE_TEST_CASE( read_crowd_order, Fixture )
 BOOST_FIXTURE_TEST_CASE( read_frag_order, Fixture )
 {
     xos << xml::attribute( "target", 27u )
-        << xml::attribute( "id", 1 );
+        << xml::attribute( "id", 1 )
+        << xml::attribute( "type", "fragorder" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< FragOrder >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type().id(), 1u );
     BOOST_CHECK( !msg.has_parameters() );
+    CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_magic_action, Fixture )
 {
-    xos << xml::attribute( "id", mapping::MagicAction::data_[1].name );
+    xos << xml::attribute( "id", mapping::MagicAction::data_[1].name )
+        << xml::attribute( "type", "magic" );
     const auto msg = Read< MagicAction >();
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicAction::data_[1].type );
     BOOST_CHECK( !msg.has_parameters() );
+    CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
-        << xml::attribute( "id", mapping::MagicUnitAction::data_[10].name );
+        << xml::attribute( "id", mapping::MagicUnitAction::data_[10].name )
+        << xml::attribute( "type", "magicunit" );
     MOCK_EXPECT( reader.Resolve ).once().with( 27u ).returns( Reader_ABC::PARTY );
     const auto msg = Read< UnitMagicAction >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicUnitAction::data_[10].type );
     BOOST_CHECK( !msg.has_parameters() );
+    CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_object_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
-        << xml::attribute( "id", mapping::MagicObjectAction::data_[0].name );
+        << xml::attribute( "id", mapping::MagicObjectAction::data_[0].name )
+        << xml::attribute( "type", "magicobject" );
     const auto msg = Read< ObjectMagicAction >();
     BOOST_CHECK_EQUAL( msg.object().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicObjectAction::data_[0].type );
     BOOST_CHECK( !msg.has_parameters() );
+    CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_knowledge_magic_action, Fixture )
 {
     xos << xml::attribute( "target", 27u )
-        << xml::attribute( "id", mapping::MagicKnowledgeAction::data_[0].name );
+        << xml::attribute( "id", mapping::MagicKnowledgeAction::data_[0].name )
+        << xml::attribute( "type", "magicknowledge" );
     const auto msg = Read< KnowledgeMagicAction >();
     BOOST_CHECK_EQUAL( msg.knowledge_group().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicKnowledgeAction::data_[0].type );
     BOOST_CHECK( !msg.has_parameters() );
+    CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_set_automat_mode, Fixture )
 {
     xos << xml::attribute( "target", 27u )
-        << xml::attribute( "engaged", true );
+        << xml::attribute( "engaged", true )
+        << xml::attribute( "type", "change_mode" );
     const auto msg = Read< SetAutomatMode >();
     BOOST_CHECK_EQUAL( msg.automate().id(), 27u );
     BOOST_CHECK_EQUAL( msg.mode(), engaged );
+    CheckCycle( msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
@@ -914,6 +928,7 @@ BOOST_FIXTURE_TEST_CASE( read_client_to_sim, Fixture )
     BOOST_CHECK( msg.has_automat_order() );
     BOOST_CHECK_EQUAL( msg.automat_order().tasker().id(), 8323u );
     BOOST_CHECK_EQUAL( msg.automat_order().type().id(), 2053u );
+    CheckCycle( msg );
 }
 
 #if 0
