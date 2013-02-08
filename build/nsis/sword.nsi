@@ -63,7 +63,6 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\service-config.xml"
     File "${RUNDIR}\log4cxx.dll"
     File /x "Qt*d.dll" /x "Qt*d4.dll" "${RUNDIR}\Qt*.dll"
-    File /r /x "q*d4.dll" "${RUNDIR}\imageformats\q*.dll"
     File /x "*D.dll" "${RUNDIR}\xerces*.dll"
     File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
     File /x "*D.dll" "${RUNDIR}\phonon4.dll"
@@ -111,6 +110,12 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\release\applications\simulation_app\*.pdb"
     File "${OUTDIR}\release\libraries\dispatcher_dll\*.pdb"
     File "${OUTDIR}\release\libraries\launcher_dll\*.pdb"
+
+    ; Qt imageformats plugins
+    SetOutPath "$INSTDIR\applications\imageformats"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x "q*d4.dll" "${RUNDIR}\imageformats\q*.dll"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ; evaluation licence
     !ifdef EVALUATION
