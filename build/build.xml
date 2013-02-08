@@ -1611,7 +1611,7 @@
 
     <target name="all" depends="configure,check,build,test,documentation,package" description="build and package distribution"/>
 
-    <target name="cmake.update" depends="configure,generate-license">
+    <target name="cmake.update" depends="update,deploy-application-data,generate-license">
         <update name="cmake"/>
     </target>
 
@@ -1631,6 +1631,10 @@
         <cmake_build target="all"/>
     </target>
 
+    <target name="cmake.install">
+        <cmake_build target="install"/>
+    </target>
+
     <target name="cmake.unit_tests">
         <cmake_test/>
     </target>
@@ -1644,6 +1648,6 @@
         ,scripts_test
         "/>
 
-    <target name="cmake.all" depends="cmake.update,cmake.configure,cmake.build,cmake.test"/>
+    <target name="cmake.all" depends="cmake.update,check,cmake.configure,cmake.build,cmake.install,cmake.test,documentation,package"/>
 
 </project>
