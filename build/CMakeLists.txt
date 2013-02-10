@@ -135,7 +135,7 @@ target_link_libraries( sword_tools
 )
 
 # ent
-add_target( ent common "libraries/ent" )
+add_target( ent common "libraries/ent" OPTIONS qt )
 target_link_libraries( ent ${QT_QTCORE_LIBRARY} )
 
 # meteo
@@ -180,11 +180,11 @@ target_link_libraries( actions
 )
 
 # reports
-add_target( reports common "libraries/reports" OPTIONS protocol )
+add_target( reports common "libraries/reports" OPTIONS protocol qt )
 target_link_libraries( reports clients_kernel )
 
 # indicators
-add_target( indicators common "libraries/indicators" )
+add_target( indicators common "libraries/indicators" OPTIONS qt )
 target_link_libraries( indicators clients_kernel )
 
 # license_gui
@@ -265,7 +265,7 @@ add_plugin( aar_plugin )
 add_plugin( dis_plugin )
 add_plugin( hla_plugin )
 add_plugin( logger_plugin )
-add_plugin( logistic_plugin )
+add_plugin( logistic_plugin OPTIONS qt )
 add_plugin( messenger_plugin )
 add_plugin( order_plugin )
 add_plugin( positions_plugin )
