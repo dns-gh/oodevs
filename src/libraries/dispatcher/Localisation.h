@@ -10,6 +10,8 @@
 #ifndef __Localisation_h_
 #define __Localisation_h_
 
+#include <vector>
+
 namespace sword
 {
     class Location;
