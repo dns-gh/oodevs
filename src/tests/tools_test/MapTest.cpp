@@ -58,31 +58,16 @@ BOOST_AUTO_TEST_CASE( map_erase_removes_elements )
 
 BOOST_AUTO_TEST_CASE( map_iterates_in_the_insertion_order )
 {
-    int k1, k2;
-    BOOST_REQUIRE( &k1 < &k2 );
-    {
-        tools::Map< int*, int > map;
-        map[ &k1 ] = 1;
-        map[ &k2 ] = 2;
-        BOOST_REQUIRE_EQUAL( 2u, map.size() );
-        auto it = map.begin();
-        BOOST_REQUIRE( it != map.end() );
-        BOOST_CHECK_EQUAL( 1, it->second );
-        ++it;
-        BOOST_REQUIRE( it != map.end() );
-        BOOST_CHECK_EQUAL( 2, it->second );
-    }
-    {
-        tools::Map< int*, int > map;
-        map[ &k2 ] = 1;
-        map[ &k1 ] = 2;
-        auto it = map.begin();
-        BOOST_REQUIRE( it != map.end() );
-        BOOST_CHECK_EQUAL( 1, it->second );
-        ++it;
-        BOOST_REQUIRE( it != map.end() );
-        BOOST_CHECK_EQUAL( 2, it->second );
-    }
+    tools::Map< int, int > map;
+    map[ 2 ] = 1;
+    map[ 1 ] = 2;
+    BOOST_REQUIRE_EQUAL( 2u, map.size() );
+    auto it = map.begin();
+    BOOST_REQUIRE( it != map.end() );
+    BOOST_CHECK_EQUAL( 1, it->second );
+    ++it;
+    BOOST_REQUIRE( it != map.end() );
+    BOOST_CHECK_EQUAL( 2, it->second );
 }
 
 BOOST_AUTO_TEST_CASE( map_find_finds_elements_in_insertion_order )
