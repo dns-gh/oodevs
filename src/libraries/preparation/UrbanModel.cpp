@@ -152,6 +152,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
     , geostore_           ( new geostore::GeoStoreManager( *this ) )
     , menuManager_        ( new UrbanMenuManager( controllers, *this, staticModel_ ) )
+    , cleanedLinks_       ( false )
 {
     controllers_.Register( *this );
 }
