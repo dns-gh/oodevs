@@ -70,6 +70,8 @@ void ADN_Weapons_Data::PhInfos::ApplyPhModifiers()
 {
     nModifiedDistance_ = ( int ) ( nDistance_.GetData() * distModifier_ );
     rModifiedPerc_ = rPerc_.GetData() * phModifier_;
+    if( rModifiedPerc_.GetData() > 100. )
+        rModifiedPerc_ = 100.;
 }
 
 // -----------------------------------------------------------------------------
