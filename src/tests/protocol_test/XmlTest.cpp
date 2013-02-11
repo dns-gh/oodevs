@@ -152,6 +152,14 @@ BOOST_FIXTURE_TEST_CASE( read_datetime, Fixture )
     CheckCycle( msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_datetime_converts, Fixture )
+{
+    AddParameterValue( xos, "datetime", "2009-11-26T17:04:28" );
+    const auto msg = Read< MissionParameters >();
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).datetime().data(), "20091126T170428" );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_location, Fixture )
 {
     const std::string input =

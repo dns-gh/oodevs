@@ -18,6 +18,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/erase.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/optional.hpp>
@@ -124,10 +125,17 @@ namespace
             dst.add_value()->set_enumeration( *opt );
     }
 
+    std::string NormalizeTime( std::string value )
+    {
+        boost::algorithm::erase_all( value, ":" );
+        boost::algorithm::erase_all( value, "-" );
+        return value;
+    }
+
     void ReadDateTime( MissionParameter& dst, xml::xistream& xis )
     {
         if( const auto opt = ReadValue< std::string >( dst, xis ) )
-            dst.add_value()->mutable_datetime()->set_data( *opt );
+            dst.add_value()->mutable_datetime()->set_data( NormalizeTime( *opt ) );
     }
 
     void AddCoordinate( const Reader_ABC& reader, CoordLatLongList& list, xml::xistream& xis )
