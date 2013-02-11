@@ -470,6 +470,25 @@ Do really you want to replace it ?</source>
     </message>
 </context>
 <context>
+    <name>OrbatConfigPanel</name>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No side.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create objects with no sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create entities for those sides only:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Page_ABC</name>
     <message>
         <source>Back</source>

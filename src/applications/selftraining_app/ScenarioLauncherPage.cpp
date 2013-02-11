@@ -12,6 +12,7 @@
 #include "moc_ScenarioLauncherPage.cpp"
 #include "CompositeProcessWrapper.h"
 #include "DebugConfigPanel.h"
+#include "OrbatConfigPanel.h"
 #include "ExerciseList.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -188,6 +189,10 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
         connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
         connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const QString& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const QString& ) ) );
     }
+
+    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin< OrbatConfigPanel >();
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();

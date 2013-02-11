@@ -145,6 +145,9 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\DebugConfigPanel.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\OrbatConfigPanel.cpp">
+      <Filter>Source Files\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\selftraining_app\Config.h">
@@ -281,6 +284,9 @@
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\DebugConfigPanel.h">
+      <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\OrbatConfigPanel.h">
       <Filter>Source Files\Widgets</Filter>
     </CustomBuild>
   </ItemGroup>

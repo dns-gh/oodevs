@@ -232,14 +232,17 @@ QString DebugConfigPanel::GetName() const
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::Commit( const std::string& exercise, const std::string& session )
 {
-    frontend::CreateSession action( config_, exercise, session );
-    if( decCallsBox_->isChecked() )
-        action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
-    if( commandsBox_->isChecked() )
-        action.SetOption( "session/config/simulation/profiling/@command", "true" );
-    if( hooksBox_->isChecked() )
-        action.SetOption( "session/config/simulation/profiling/@hook", "true" );
-    action.Commit();
+    if( decCallsBox_->isChecked() || commandsBox_->isChecked() || hooksBox_->isChecked() )
+    {
+        frontend::CreateSession action( config_, exercise, session );
+        if( decCallsBox_->isChecked() )
+            action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
+        if( commandsBox_->isChecked() )
+            action.SetOption( "session/config/simulation/profiling/@command", "true" );
+        if( hooksBox_->isChecked() )
+            action.SetOption( "session/config/simulation/profiling/@hook", "true" );
+        action.Commit();
+    }
 }
 
 // -----------------------------------------------------------------------------

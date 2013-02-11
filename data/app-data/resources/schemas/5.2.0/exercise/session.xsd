@@ -298,6 +298,14 @@
             <xs:documentation xml:lang="en">Defines the ORBAT related features configuration.</xs:documentation>
           </xs:annotation>
           <xs:complexType>
+            <xs:sequence>
+              <xs:element name="subset" maxOccurs="1" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="parties" type="xs:string" use="optional">
+                  <xs:attribute name="no-party" type="xs:boolean" use="optional">
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
             <xs:attribute name="checkcomposition" type="xs:boolean">
               <xs:annotation>
                 <xs:documentation xml:lang="en">Enables additional checks on ORBAT loading (number of humans of each ranks...)</xs:documentation>

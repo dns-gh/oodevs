@@ -39,6 +39,7 @@ namespace frontend
         QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = "" );
         QStringList ListSessions        ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise );
+        std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListCheckpoints     ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
         QStringList ListModels          ( const tools::GeneralConfig& config );
         QStringList ListPropagations    ( const tools::GeneralConfig& config );
@@ -55,6 +56,7 @@ namespace frontend
                                                      const std::string& session, const std::vector< std::string >& checkpoints );
 
         bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
+        bool HasObjectWithoutSide( const tools::GeneralConfig& config, const std::string& exercise );
         bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
         bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint );
         bool TerrainExists( const tools::GeneralConfig& config, const std::string& terrain );

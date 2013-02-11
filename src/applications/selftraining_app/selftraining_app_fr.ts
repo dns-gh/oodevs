@@ -474,6 +474,25 @@ Voulez-vous vraiment le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>OrbatConfigPanel</name>
+    <message>
+        <source>Create entities for those sides only:</source>
+        <translation>Créer les unités pour les camps suivants :</translation>
+    </message>
+    <message>
+        <source>Orbat</source>
+        <translation>Orbat</translation>
+    </message>
+    <message>
+        <source>No side.</source>
+        <translation>Aucun camp.</translation>
+    </message>
+    <message>
+        <source>Create objects with no sides</source>
+        <translation>Créer les objets sans camp</translation>
+    </message>
+</context>
+<context>
     <name>Page_ABC</name>
     <message>
         <source>Back</source>

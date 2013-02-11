@@ -19,6 +19,8 @@
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
+#include <boost/lambda/lambda.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <QtCore/qstringlist.h>
 
@@ -123,6 +125,50 @@ namespace frontend
         QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
         {
             return gui::ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
+        }
+
+        void ReadSide( xml::xistream& xis, std::map< unsigned int, QString >& result )
+        {
+            result[ xis.attribute< unsigned int >( "id" ) ] = xis.attribute< std::string >( "name", "" ).c_str();
+        }
+
+        bfs::path GetOrbatFile( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            std::string fileName = config.GetExerciseDir( exercise );
+            return bfs::path( bfs::path( fileName ) / "orbat.xml" );
+        }
+
+        std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            std::map< unsigned int, QString > result;
+            const bfs::path path( GetOrbatFile( config, exercise ) );
+            if( bfs::exists( path ) )
+            {
+                xml::xifstream xis( path.string() );
+                xis >> xml::start( "orbat" )
+                        >> xml::start( "parties" )
+                            >> xml::list( "party", boost::bind( &ReadSide, _1, boost::ref( result ) ) );
+            }
+            return result;
+        }
+
+        bool HasObjectWithoutSide( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            const bfs::path path( GetOrbatFile( config, exercise ) );
+            if( bfs::exists( path ) )
+            {
+                xml::xifstream xis( path.string() );
+                bool hasObject = false;
+                xis >> xml::start( "orbat" )
+                        >> xml::start( "parties" )
+                            >> xml::optional
+                            >> xml::start( "no-party" )
+                                >> xml::optional
+                                >> xml::start( "objects" )
+                                    >> xml::list( "object", boost::lambda::var( hasObject ) = true );
+                return hasObject;
+            }
+            return false;
         }
 
         std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
