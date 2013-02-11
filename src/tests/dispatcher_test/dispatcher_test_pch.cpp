@@ -40,15 +40,18 @@ std::string BOOST_RESOLVE( const std::string& filename )
     return data_directory + '/' + filename;
 }
 
-struct ProtobufConfig {
-    ProtobufConfig()
+namespace
+{
+    struct ProtobufConfig
     {
-        GOOGLE_PROTOBUF_VERIFY_VERSION;
-    }
-    ~ProtobufConfig()
-    {
-        google::protobuf::ShutdownProtobufLibrary();
-    }
-};
-
-BOOST_GLOBAL_FIXTURE( ProtobufConfig );
+        ProtobufConfig()
+        {
+            GOOGLE_PROTOBUF_VERIFY_VERSION;
+        }
+        ~ProtobufConfig()
+        {
+            google::protobuf::ShutdownProtobufLibrary();
+        }
+    };
+    BOOST_GLOBAL_FIXTURE( ProtobufConfig );
+}

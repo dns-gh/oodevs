@@ -60,16 +60,18 @@ std::string GetTestTempDirectory()
     return temp_directory;
 }
 
-struct ProtobufConfig
+namespace
 {
-    ProtobufConfig()
+    struct ProtobufConfig
     {
-        GOOGLE_PROTOBUF_VERIFY_VERSION;
-    }
-    ~ProtobufConfig()
-    {
-        google::protobuf::ShutdownProtobufLibrary();
-    }
-};
-
-BOOST_GLOBAL_FIXTURE( ProtobufConfig );
+        ProtobufConfig()
+        {
+            GOOGLE_PROTOBUF_VERIFY_VERSION;
+        }
+        ~ProtobufConfig()
+        {
+            google::protobuf::ShutdownProtobufLibrary();
+        }
+    };
+    BOOST_GLOBAL_FIXTURE( ProtobufConfig );
+}

@@ -40,7 +40,8 @@ std::string BOOST_RESOLVE( const std::string& filename )
     return data_directory + '/' + filename;
 }
 
-struct ProtobufConfig {
+struct ProtobufConfig
+{
     ProtobufConfig()
     {
         GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -50,6 +51,7 @@ struct ProtobufConfig {
         google::protobuf::ShutdownProtobufLibrary();
     }
 };
+BOOST_GLOBAL_FIXTURE( ProtobufConfig );
 
 namespace plugins
 {
@@ -65,5 +67,3 @@ namespace hla
     }
 }
 }
-
-BOOST_GLOBAL_FIXTURE( ProtobufConfig );

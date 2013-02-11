@@ -41,7 +41,6 @@ std::string BOOST_RESOLVE( const std::string& filename )
 
 namespace
 {
-
     struct ProtobufConfig
     {
         ProtobufConfig()
@@ -53,7 +52,5 @@ namespace
             google::protobuf::ShutdownProtobufLibrary();
         }
     };
-
     BOOST_GLOBAL_FIXTURE( ProtobufConfig );
-
 }

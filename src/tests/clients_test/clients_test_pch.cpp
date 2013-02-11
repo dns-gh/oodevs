@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "clients_test_pch.h"
+#include <google/protobuf/stubs/common.h>
 #include <string>
 
 namespace
@@ -37,4 +38,20 @@ std::string BOOST_RESOLVE( const std::string& filename )
     if( data_directory.empty() )
         return filename;
     return data_directory + '/' + filename;
+}
+
+namespace
+{
+    struct ProtobufConfig
+    {
+        ProtobufConfig()
+        {
+            GOOGLE_PROTOBUF_VERIFY_VERSION;
+        }
+        ~ProtobufConfig()
+        {
+            google::protobuf::ShutdownProtobufLibrary();
+        }
+    };
+    BOOST_GLOBAL_FIXTURE( ProtobufConfig );
 }

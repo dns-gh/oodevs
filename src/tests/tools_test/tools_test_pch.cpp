@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "tools_test_pch.h"
-#include <string>
+#include <google/protobuf/stubs/common.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 
@@ -123,4 +123,20 @@ void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actu
     }
     BOOST_CHECK( itExpected == expectedTokens.end() );
     BOOST_CHECK( itActual == actualTokens.end() );
+}
+
+namespace
+{
+    struct ProtobufConfig
+    {
+        ProtobufConfig()
+        {
+            GOOGLE_PROTOBUF_VERIFY_VERSION;
+        }
+        ~ProtobufConfig()
+        {
+            google::protobuf::ShutdownProtobufLibrary();
+        }
+    };
+    BOOST_GLOBAL_FIXTURE( ProtobufConfig );
 }
