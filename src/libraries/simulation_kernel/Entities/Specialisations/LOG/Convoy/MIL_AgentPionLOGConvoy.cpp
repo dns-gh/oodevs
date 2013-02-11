@@ -12,6 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGConvoy.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 
 #include <xeumeuleu/xml.hpp>
@@ -98,4 +100,19 @@ void MIL_AgentPionLOGConvoy::save( MIL_CheckPointOutArchive& file, const unsigne
 void MIL_AgentPionLOGConvoy::WriteODB( xml::xostream& /*xos*/ ) const
 {
     // NOTHING : don't serialize Convoys
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOGConvoy::SpecializedDelete
+// Created: JSR 2013-02-06
+// -----------------------------------------------------------------------------
+void MIL_AgentPionLOGConvoy::SpecializedDelete()
+{
+    MIL_AutomateLOG* logBrain = GetAutomate().GetBrainLogistic();
+    if( logBrain )
+    {
+        //logBrain->SupplyDestroyConvoyPion( *this );
+        logBrain->ResetConsignForConvoyPion( *this );
+    }
+    GetAutomate().GetStockSupplyManager().ResetAutoConsignForConvoyPion( *this );
 }

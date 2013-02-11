@@ -218,6 +218,7 @@ public:
     //! @name Dynamic pions
     //@{
     MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx = 0 );
+    void           ForceRemovePion( MIL_AgentPion& pion );
     void           DestroyPion( MIL_AgentPion& pion );
     //@}
 

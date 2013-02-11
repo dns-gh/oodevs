@@ -145,6 +145,8 @@ public:
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
 
     void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
+
+    void ResetConsignForConvoyPion( const MIL_AgentPion& pion );
     //@}
 
     //! @name Funeral

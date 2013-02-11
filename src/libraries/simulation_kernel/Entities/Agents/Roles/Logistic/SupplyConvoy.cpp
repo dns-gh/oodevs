@@ -228,12 +228,31 @@ void SupplyConvoy::Supply( SupplyRecipient_ABC& /*supplyRecipient*/, const PHY_D
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyConvoy::ResetConveyors
+// Created: JSR 2013-02-11
+// -----------------------------------------------------------------------------
+void SupplyConvoy::ResetConveyors( SupplyConvoyEventsObserver_ABC& observer )
+{
+    for( auto it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        it->second->Destroy( observer );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConvoy::Finish
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
 void SupplyConvoy::Finish()
 {
     conveyors_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::HasConvoy
+// Created: JSR 2013-02-07
+// -----------------------------------------------------------------------------
+bool SupplyConvoy::HasConvoy( const MIL_AgentPion& /*pion*/ ) const
+{
+    return false;
 }
 
 // =============================================================================

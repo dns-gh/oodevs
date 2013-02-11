@@ -48,6 +48,8 @@ public:
     virtual ~SupplyRequestContainer();
     //@}
 
+    void ResetConsignForConvoyPion( const MIL_AgentPion& pion );
+
     //! @name SupplyRequestContainer_ABC
     //@{
     virtual void SetTransportersProvider      ( SupplySupplier_ABC* provider );

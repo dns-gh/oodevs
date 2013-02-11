@@ -137,6 +137,17 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::ResetAutoConsignForConvoyPion
+// Created: JSR 2013-02-08
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::ResetAutoConsignForConvoyPion( const MIL_AgentPion& pion )
+{
+    if( autoSupplyRequest_.get() )
+        autoSupplyRequest_->ResetConsignForConvoyPion( pion );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::IsSupplyInProgress
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------

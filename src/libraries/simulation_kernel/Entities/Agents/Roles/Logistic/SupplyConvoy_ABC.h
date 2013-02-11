@@ -12,14 +12,17 @@
 
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
+class MIL_AgentPion;
 
-namespace sword {
+namespace sword
+{
     class UnitId;
 }
 
 namespace logistic {
     class SupplyRecipient_ABC;
     class SupplySupplier_ABC;
+    class SupplyConvoyEventsObserver_ABC;
 
 // =============================================================================
 /** @class  SupplyConvoy_ABC
@@ -48,6 +51,8 @@ public:
     virtual void     SetCurrentSupplyRecipient ( SupplyRecipient_ABC* supplyRecipient ) = 0;
     virtual void     Supply                    ( SupplyRecipient_ABC& supplyRecipient, const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
     virtual void     Finish                    () = 0;
+    virtual void     ResetConveyors( SupplyConvoyEventsObserver_ABC& observer ) = 0;
+    virtual bool     HasConvoy( const MIL_AgentPion& pion ) const = 0;
     //@}
 
     //! @name Accessors

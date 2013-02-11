@@ -205,7 +205,22 @@ bool SupplyConsign::IsFinished() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: (Supply)Consign::SetState
+// Name: SupplyConsign::ResetConsignForConvoyPion
+// Created: JSR 2013-02-06
+// -----------------------------------------------------------------------------
+void SupplyConsign::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
+{
+    if( convoy_ && convoy_->HasConvoy( pion ) )
+    {
+        convoy_->ResetConveyors( *this );
+        convoy_->Finish();
+        SetState( eConvoyWaitingForTransporters );
+        SendChangedState();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::SetState
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 void SupplyConsign::SetState( E_State newState )

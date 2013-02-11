@@ -811,6 +811,15 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SpecializedDelete
+// Created: JSR 2013-02-06
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SpecializedDelete()
+{
+    // NOTHING, specific stuff for specialized units
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveDeleteUnit
 // Created: JSR 2013-01-29
 // -----------------------------------------------------------------------------
@@ -818,13 +827,16 @@ void MIL_AgentPion::OnReceiveDeleteUnit()
 {
     CancelCurrentMission();
     pOrderManager_->StopAllMissions();
+
+    SpecializedDelete();
+
     GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
     GetRole< PHY_RolePion_Composantes >().RetrieveAllLentComposantes();
     GetRole< PHY_RolePion_Composantes >().ReturnAllBorrowedComposantes();
     GetRole< transport::PHY_RoleAction_Transport >().Cancel();
 
     if( pAutomate_ )
-        pAutomate_->UnregisterPion( *this );
+        pAutomate_->ForceRemovePion( *this );
 
     markedForDestruction_ = true;
 

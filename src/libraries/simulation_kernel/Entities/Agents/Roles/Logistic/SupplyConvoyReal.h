@@ -83,6 +83,7 @@ private:
     //! @name Operations
     //@{
     unsigned int ReturnTimeRemainingForAction( E_Action action );
+    virtual bool HasConvoy( const MIL_AgentPion& pion ) const;
     //@}
 
 private:

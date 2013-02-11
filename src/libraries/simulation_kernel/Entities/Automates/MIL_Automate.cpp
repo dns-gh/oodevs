@@ -393,6 +393,18 @@ MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::ForceRemovePion
+// Created: JSR 2013-02-06
+// -----------------------------------------------------------------------------
+void MIL_Automate::ForceRemovePion( MIL_AgentPion& pion )
+{
+    auto it = std::find( recycledPions_.begin(), recycledPions_.end(), &pion );
+    if( it != recycledPions_.end() )
+        recycledPions_.erase( it );
+    UnregisterPion( pion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::DestroyPion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
@@ -1433,6 +1445,7 @@ void MIL_Automate::SetCommandPost( MIL_AgentPion* pion )
 void MIL_Automate::UnregisterPion( MIL_AgentPion& pion )
 {
     pions_.erase( std::remove( pions_.begin(), pions_.end(), &pion ), pions_.end() );
+    recycledPions_.erase( std::remove( recycledPions_.begin(), recycledPions_.end(), &pion ), recycledPions_.end() );
     if( pPionPC_ == &pion )
         SetCommandPost( 0 );
 }

@@ -72,7 +72,6 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLe
     , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , pLogLevel_                  ( &logLevel )
     , supplyConsigns_             ()
- //   , pExplicitStockSupplyState_  ( 0 )
 {
 }
 
@@ -86,7 +85,6 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLeve
     , pLogLevel_                  ( &logLevel )
     , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , supplyConsigns_             ()
-//    , pExplicitStockSupplyState_  ( 0 )
 {
 }
 // -----------------------------------------------------------------------------
@@ -99,7 +97,6 @@ MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
     , pLogLevel_                  ( &level )
     , pLogisticHierarchy_         ( 0 )
     , supplyConsigns_             ()
-//  , pExplicitStockSupplyState_  ( 0 )
 {
 }
 // -----------------------------------------------------------------------------
@@ -508,6 +505,18 @@ void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::ResetConsignForConvoyPion
+// Created: JSR 2013-02-06
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
+{
+    for( auto it = supplyConsigns_.begin(); it != supplyConsigns_.end(); ++it )
+        ( *it )->ResetConsignForConvoyPion( pion );
+    for( auto it = supplyRequests_.begin(); it != supplyRequests_.end(); ++it )
+        ( *it )->ResetConsignForConvoyPion( pion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnSupplyConvoyArriving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
@@ -596,7 +605,7 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateLogistic()
 {
-    for( T_SupplyConsigns::iterator it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
+    for( auto it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
     {
         if( (*it)->Update() )
             it = supplyConsigns_.erase( it );
@@ -604,7 +613,7 @@ void MIL_AutomateLOG::UpdateLogistic()
             ++it;
     }
 
-    for( T_SupplyRequests::iterator it = supplyRequests_.begin(); it != supplyRequests_.end(); )
+    for( auto it = supplyRequests_.begin(); it != supplyRequests_.end(); )
     {
         if( (*it)->Update() )
             it = supplyRequests_.erase( it );

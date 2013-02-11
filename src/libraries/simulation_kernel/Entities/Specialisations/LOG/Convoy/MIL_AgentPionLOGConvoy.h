@@ -41,6 +41,13 @@ public:
 
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void SpecializedDelete();
+    //@}
+
 private:
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ );

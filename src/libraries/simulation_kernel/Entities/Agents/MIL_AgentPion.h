@@ -177,6 +177,7 @@ private:
     void UpdatePhysicalState();
     void ChangeSuperiorSilently( MIL_Automate& newAutomate );
     void CancelCurrentMission();
+    virtual void SpecializedDelete();
     //@}
 
     //! @name Magic actions
