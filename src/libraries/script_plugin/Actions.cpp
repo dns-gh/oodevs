@@ -55,6 +55,13 @@ Actions::~Actions()
     assert( schedulers_.empty() );
 }
 
+namespace directia
+{
+    // Why does directia compile but break without this ?!?
+    void UsedByDIA( Actions* ) {}
+    void ReleasedByDIA( Actions* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Actions::RegisterIn
 // Created: AGE 2008-07-16
