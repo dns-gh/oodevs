@@ -16,6 +16,7 @@
 #include "FileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Version.h"
 #include "resource.h"
 #include "SIM_NetworkLogger.h"
@@ -152,27 +153,42 @@ LRESULT SIM_App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: SIM_App::RunDispatcher
-// Created: RDS 2008-07-25
-// -----------------------------------------------------------------------------
-void SIM_App::RunDispatcher()
+namespace
+{
+
+void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
+        tools::WaitEvent* quit )
 {
     try
     {
-        dispatcher::DispatcherLoader loader( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ), maxConnections_ );
-        while( !quit_->IsSignaled() )
+        dispatcher::DispatcherLoader loader( winArguments->Argc(),
+            const_cast< char** >( winArguments->Argv() ), maxConnections );
+        while( !quit->IsSignaled() )
         {
             loader.Update();
-            quit_->Wait( boost::posix_time::milliseconds( 25 ) );
+            quit->Wait( boost::posix_time::milliseconds( 25 ) );
         }
     }
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( "dispatcher: " << tools::GetExceptionMsg( e ) );
     }
-    quit_->Signal();
+    quit->Signal();
 }
+
+void RunDispatcherWrapper( const tools::WinArguments* winArguments, int maxConnections,
+        tools::WaitEvent* quit )
+{
+    __try
+    {
+        return RunDispatcher( winArguments, maxConnections, quit );
+    }
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+    }
+}
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: SIM_App::RunGUI
@@ -276,7 +292,8 @@ void SIM_App::Initialize()
     if( config_->IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcher_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
+        dispatcher_.reset( new boost::thread( boost::bind( &RunDispatcherWrapper,
+            winArguments_.get(), maxConnections_, quit_.get() ) ) );
     }
     MIL_Random::Initialize( config_->GetRandomSeed(), config_->GetRandomGaussian(), config_->GetRandomDeviation(), config_->GetRandomMean() );
     MIL_AgentServer::CreateWorkspace( *config_ );

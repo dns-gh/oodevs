@@ -55,7 +55,6 @@ private:
     void Run();
 
     void RunGUI();
-    void RunDispatcher();
     void AnimateIcon();
     void StartIconAnimation();
     void StopIconAnimation();
