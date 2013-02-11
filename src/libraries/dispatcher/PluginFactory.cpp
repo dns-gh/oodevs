@@ -48,7 +48,7 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const dispatch
     , handler_     ( handler )
     , registrables_( registrables )
     , rights_      ( new plugins::rights::RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables, maxConnections ) )
-    , pOrder_      ( new plugins::order::OrderPlugin( config_, staticModel_ ,model_, simulation_ ) )
+    , pOrder_      ( new plugins::order::OrderPlugin( config_, model_, simulation_ ) )
     , services_    ( services )
 {
     handler_.Add( rights_ );

@@ -1137,6 +1137,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\GraphicalEntity_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XmlAdapter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

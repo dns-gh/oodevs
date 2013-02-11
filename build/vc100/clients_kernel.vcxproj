@@ -381,6 +381,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionDependency.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionTypes.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\XmlAdapter.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h" />
     <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Controller.h" />

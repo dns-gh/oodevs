@@ -7,18 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __OrderPlugin_h_
-#define __OrderPlugin_h_
+#ifndef PLUGINS_ORDER_PLUGIN_H__
+#define PLUGINS_ORDER_PLUGIN_H__
 
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/OrderResolver_ABC.h"
 #include <memory>
-
-namespace actions
-{
-    class ActionFactory_ABC;
-    class ParameterFactory_ABC;
-}
 
 namespace dispatcher
 {
@@ -29,13 +23,8 @@ namespace dispatcher
 
 namespace kernel
 {
-    class StaticModel;
     class CoordinateConverter_ABC;
     class EntityResolver_ABC;
-    class AgentKnowledgeConverter_ABC;
-    class ObjectKnowledgeConverter_ABC;
-    class Controller;
-    class Time_ABC;
 }
 
 namespace xml
@@ -59,33 +48,20 @@ class OrderPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderPlugin( const dispatcher::Config& config, const kernel::StaticModel& staticModel,
-                          const dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation );
+             OrderPlugin( const dispatcher::Config& config,
+                          const dispatcher::Model_ABC& model,
+                          dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~OrderPlugin();
     //@}
 
     //! @name Operations
     //@{
     virtual void Resolve( const sword::ClientToSim& message );
-
-    virtual void Receive( const sword::SimToClient& message );
+    virtual void Receive( const sword::SimToClient& ) {}
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    OrderPlugin( const OrderPlugin& );            //!< Copy constructor
-    OrderPlugin& operator=( const OrderPlugin& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    struct Publisher;
-    //@}
-
-private:
-    //! @name Helpers
+    //! @name Helper
     //@{
     void ReadAction( xml::xistream& xis );
     //@}
@@ -93,18 +69,12 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< kernel::CoordinateConverter_ABC > pConverter_;
-    std::auto_ptr< kernel::EntityResolver_ABC > pEntities_;
-    std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > pAgentsKnowledges_;
-    std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > pObjectsKnowledges_;
-    std::auto_ptr< kernel::Controller > pController_;
-    std::auto_ptr< actions::ParameterFactory_ABC > pParameters_;
-    std::auto_ptr< kernel::Time_ABC > pTime_;
-    std::auto_ptr< actions::ActionFactory_ABC > pFactory_;
-    std::auto_ptr< Publisher > pPublisher_;
+    dispatcher::SimulationPublisher_ABC& publisher_;
+    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::auto_ptr< kernel::EntityResolver_ABC > entities_;
     //@}
 };
 }
 }
 
-#endif // __OrderPlugin_h_
+#endif // PLUGINS_ORDER_PLUGIN_H__
