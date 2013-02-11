@@ -20,9 +20,19 @@
 template< typename T > 
 int DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
-    //$$$ A réencapsuler    
-    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &caller.GetArmy(), type, pLocalisation, sword::ObstacleType_DemolitionTargetType_preliminary );
-    if( !object )
+    if( !pLocalisation )
         return 0;
-    return object->GetID();
+    return MagicCreateObject( caller.GetArmy(), type, *pLocalisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static int DEC_ObjectFunctions::MagicGetOrCreateObject
+// Created: LDC 2013-02-11
+// -----------------------------------------------------------------------------
+template< typename T > 
+int DEC_ObjectFunctions::MagicGetOrCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        return 0;
+    return MagicGetOrCreateObject( caller.GetArmy(), type, *pLocalisation );
 }

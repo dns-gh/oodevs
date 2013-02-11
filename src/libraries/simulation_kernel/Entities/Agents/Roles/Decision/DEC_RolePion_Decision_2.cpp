@@ -259,6 +259,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_CreerObjetSansDelais",
         boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_GenObject_CreateInstantaneously", &DEC_AgentFunctions::CreateInstantaneously );
+    RegisterFunction( "DEC_MagicGetOrCreateObject",
+        boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicGetOrCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) ) );
 
     // Perception
     RegisterFunction( "DEC_Identification_DistanceMaxCompMajeure",

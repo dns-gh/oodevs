@@ -15,9 +15,12 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
+#include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -183,4 +186,38 @@ boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObjectF
 boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject( std::string type, TER_Localisation* location, bool preliminary )
 {
     return boost::shared_ptr< DEC_Gen_Object >( new DEC_Gen_Object( type, location, preliminary ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::MagicCreateObject
+// Created: LDC 2013-02-11
+// -----------------------------------------------------------------------------
+int DEC_ObjectFunctions::MagicCreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
+{
+        //$$$ A réencapsuler    
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &army, type, &localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
+    if( !object )
+        return 0;
+    return object->GetID();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::MagicGetOrCreateObject
+// Created: LDC 2013-02-11
+// -----------------------------------------------------------------------------
+int DEC_ObjectFunctions::MagicGetOrCreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
+{
+    std::vector< TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle( localisation.ComputeBarycenter(), 1., objects );
+    for( auto it = objects.begin(); it != objects.end(); ++it )
+    {
+        const TER_Object_ABC* object = *it;
+        if( object && object->GetLocalisation() == localisation )
+        {
+            const MIL_Object_ABC* obj = dynamic_cast< const MIL_Object_ABC* >( object );
+            if( obj && obj->GetType().GetName() == type && obj->GetArmy() == &army )
+                return obj->GetID();
+        }
+    }
+    return DEC_ObjectFunctions::MagicCreateObject( army, type, localisation );
 }

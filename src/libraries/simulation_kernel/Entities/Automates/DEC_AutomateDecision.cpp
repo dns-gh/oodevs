@@ -364,6 +364,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
     // Objects
     brain.RegisterFunction( "DEC_CreerObjetSansDelais",
         boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_MagicGetOrCreateObject",
+        boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicGetOrCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
 
     // Populations
     brain.RegisterFunction( "DEC_KnowledgePopulation_Domination",
