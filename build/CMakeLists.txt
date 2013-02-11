@@ -378,6 +378,7 @@ target_link_libraries( logistic_plugin_dll
 # web_control_plugin_dll
 add_target( web_control_plugin_dll plugins "libraries/web_control_plugin_dll" OPTIONS protocol plugin shared )
 masa_add_target_definition( web_control_plugin_dll WEB_CONTROL_PLUGIN_DLL_EXPORTS )
+masa_set_target_output_name( web_control_plugin_dll web_control_plugin_d web_control_plugin )
 target_link_libraries( web_control_plugin_dll web_control_plugin )
 
 # web_control_plugin_test
