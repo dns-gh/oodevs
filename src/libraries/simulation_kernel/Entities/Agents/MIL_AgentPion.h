@@ -105,6 +105,7 @@ public:
     virtual float GetAffinity( unsigned long teamID ) const;
     virtual const MIL_HumanRepartition& GetHumanRepartition() const;
     virtual bool IsCivilian() const;
+    virtual bool CanEmitReports() const;
 
     bool IsImmobilized() const;
     bool IsAutonomous() const; // Drones

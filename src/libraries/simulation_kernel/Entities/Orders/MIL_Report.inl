@@ -9,6 +9,7 @@
 
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Decision/DEC_Tools.h"
 
@@ -44,6 +45,8 @@ void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, std::
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport )
 {
+    if( !receiver.CanEmitReports() )
+        return;
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     PostEvent( receiver, nReport, parameters );
 }

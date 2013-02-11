@@ -157,7 +157,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
-            if( target.IsDead() || target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+            if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
             PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
             if( targetRoleProtection.DestroyIndirectFire( dotationCategory_ ) )
@@ -210,7 +210,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
-            if( target.IsDead() || target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
+            if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
             target.GetRole< PHY_RoleInterface_HumanFactors >().NotifyAttacked();
             PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
@@ -227,7 +227,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 double ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
                     targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit * phFactor );
-                if( pFirer && !bRCSent && pFirer->GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
+                if( pFirer && !bRCSent && pFirer->GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True && !target.IsDead() )
                 {
                     MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_TirIndirectFratricide );
                     bRCSent = true;

@@ -83,6 +83,7 @@ public:
     MIL_AutomateLOG* FindLogisticManager() const;
     const MIL_Color& GetColor() const;
     const std::string& GetNationality() const;
+    virtual bool CanEmitReports() const;
     //@}
 
     //! @name Visitor

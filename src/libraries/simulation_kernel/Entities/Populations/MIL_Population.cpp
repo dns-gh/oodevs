@@ -1636,6 +1636,15 @@ float MIL_Population::GetAffinity( unsigned long teamID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::CanEmitReports
+// Created: NPT 2013-02-07
+// -----------------------------------------------------------------------------
+bool MIL_Population::CanEmitReports() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::HasReachedDestination
 // Created: NLD 2011-03-18
 // -----------------------------------------------------------------------------

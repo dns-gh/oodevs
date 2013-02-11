@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "BorderCapacity.h"
 #include "MIL_Object_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 

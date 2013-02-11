@@ -1842,3 +1842,12 @@ bool MIL_AgentPion::IsCivilian() const
 {
     return pHumanRepartition_->IsCivilian();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanEmitReports
+// Created: NPT 2013-02-07
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanEmitReports() const
+{
+    return !IsDead();
+}
