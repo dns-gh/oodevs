@@ -9,48 +9,72 @@
 
 #include "script_plugin_pch.h"
 #include "ActionScheduler.h"
+
 #include "MiscEvents.h"
-#include "actions/Action_ABC.h"
-#include "actions/ActionsModel.h"
-#include "actions/ActionTiming.h"
-#include "clients_kernel/Controller.h"
-#include "tools/ExerciseConfig.h"
+
+#include "clients_kernel/XmlAdapter.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include "MT_Tools/MT_Logger.h"
+#include "protocol/Simulation.h"
+#include "protocol/XmlReaders.h"
+
+#include <boost/bind.hpp>
+#include <boost/algorithm/string/erase.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/date_time.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::script;
 
-bool ActionScheduler::sTimingComparator::operator()( const actions::Action_ABC* lhs, const actions::Action_ABC* rhs ) const
+namespace
 {
-    if( !lhs || !rhs )
-        return false;
-    const actions::ActionTiming* lTiming = lhs->Retrieve< actions::ActionTiming >();
-    const actions::ActionTiming* rTiming = rhs->Retrieve< actions::ActionTiming >();
-    if( !lTiming || !rTiming )
-        return false;
-    const QDateTime ltime = lTiming->GetTime();
-    const QDateTime rtime = rTiming->GetTime();
-    if( ltime == rtime )
-        return lhs->GetId() < rhs->GetId();
-    return ltime < rtime;
+    boost::posix_time::ptime MakeTime( std::string value )
+    {
+        boost::algorithm::erase_all( value, "-" );
+        boost::algorithm::erase_all( value, ":" );
+        return boost::posix_time::from_iso_string( value );
+    }
+
+    typedef ActionScheduler::T_Actions T_Actions;
+
+    void ReadAction( T_Actions& dst, const kernel::XmlAdapter& adapter, xml::xistream& xis )
+    {
+        try
+        {
+            std::string time;
+            xis >> xml::attribute( "time", time );
+            sword::ClientToSim msg;
+            msg.set_context( 0 );
+            protocol::Read( adapter, *msg.mutable_message(), xis );
+            dst.insert( std::make_pair( MakeTime( time ), msg ) );
+        }
+        catch( const std::exception& err )
+        {
+            MT_LOG_ERROR_MSG( "Unable to process action: " << tools::GetExceptionMsg( err ) );
+        }
+    }
+
+    T_Actions ReadActions( xml::xistream& xis, const kernel::XmlAdapter& adapter )
+    {
+        T_Actions rpy;
+        xis >> xml::start( "actions" )
+            >> xml::list( "action", boost::bind( &ReadAction, boost::ref( rpy ), boost::cref( adapter ), _1 ) );
+        return rpy;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionScheduler constructor
 // Created: SBO 2011-03-29
 // -----------------------------------------------------------------------------
-ActionScheduler::ActionScheduler( const tools::ExerciseConfig& config, const std::string& filename, kernel::Controller& controller, actions::ActionFactory_ABC& factory, Publisher_ABC& publisher )
-    : controller_( controller )
-    , publisher_ ( publisher )
-    , model_     ( new actions::ActionsModel( factory, publisher_, publisher_ ) )
+ActionScheduler::ActionScheduler( xml::xistream& xis,
+                                  const kernel::XmlAdapter& adapter,
+                                  dispatcher::SimulationPublisher_ABC& publisher )
+    : publisher_ ( publisher )
+    , actions_   ( ReadActions( xis, adapter ) )
+    , cursor_    ( actions_.begin() )
 {
-    model_->Load( config.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ), config.GetLoader() );
-    tools::Iterator< const actions::Action_ABC& > it = model_->CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const actions::Action_ABC& action = it.NextElement();
-        actions_.insert( &action );
-    }
-    cursor_ = actions_.begin();
-    controller_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -59,31 +83,17 @@ ActionScheduler::ActionScheduler( const tools::ExerciseConfig& config, const std
 // -----------------------------------------------------------------------------
 ActionScheduler::~ActionScheduler()
 {
-    controller_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionScheduler::Tick
 // Created: SBO 2011-03-29
 // -----------------------------------------------------------------------------
-void ActionScheduler::Tick( const QDateTime& time )
+void ActionScheduler::Tick( const boost::posix_time::ptime& time )
 {
-    while( cursor_ != actions_.end() && (*cursor_)->Get< actions::ActionTiming >().GetTime() <= time )
-    {
-        (*cursor_)->Publish( publisher_, 0 );
-        ++cursor_;
-    }
-}
-
-namespace
-{
-    QDateTime MakeDate( const std::string& str )
-    {
-        QString extended( str.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' );
-        extended.insert(  6, '-' ); extended.insert(  4, '-' );
-        return QDateTime::fromString( extended, Qt::ISODate );
-    }
+    for( ; cursor_ != actions_.end() && cursor_->first <= time; ++cursor_ )
+        publisher_.Send( cursor_->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,5 +102,5 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionScheduler::NotifyUpdated( const events::SimulationTimeChanged& event )
 {
-    Tick( MakeDate( event.time ) );
+    Tick( MakeTime( event.time ) );
 }

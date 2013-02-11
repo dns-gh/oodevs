@@ -10,74 +10,37 @@
 #include "script_plugin_pch.h"
 #include "Actions.h"
 #include "ActionScheduler.h"
-#include "actions/Action_ABC.h"
-#include "actions/ActionFactory.h"
-#include "actions/ActionParameterFactory.h"
-#include "actions/ActionsModel.h"
+
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
-#include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/XmlAdapter.h"
 #include "directia/brain/Brain.h"
-#include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ModelAdapter.h"
-#include "dispatcher/Model_ABC.h"
-#include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "protocol/Protocol.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include "protocol/Simulation.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
+
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::script;
-
-namespace
-{
-    struct SimulationTime : public kernel::Time_ABC
-    {
-        virtual QDateTime GetDateTime() const { return QDateTime(); }
-        virtual QDateTime GetInitialDateTime() const { return QDateTime(); }
-        virtual unsigned int GetTickDuration() const { return 0; }
-        virtual QString GetTimeAsString() const { return QString(); }
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: Actions Publisher
-// Created: AGE 2008-07-16
-// -----------------------------------------------------------------------------
-struct Actions::Publisher : public Publisher_ABC
-{
-    explicit Publisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_( &sim ) {}
-
-    virtual void Send( const sword::ClientToSim& message )
-    {
-        sim_->Send( message );
-    }
-    virtual void Send( const sword::ClientToAuthentication&  ) {}
-    virtual void Send( const sword::ClientToReplay& ){}
-    virtual void Send( const sword::ClientToAar& ) {}
-    virtual void Send( const sword::ClientToMessenger& ) {}
-
-    dispatcher::SimulationPublisher_ABC* sim_;
-};
 
 // -----------------------------------------------------------------------------
 // Name: Actions constructor
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
-    : config_           ( config )
-    , controller_       ( controller )
-    , entities_         ( new dispatcher::ModelAdapter( model ) )
-    , publisher_        ( new Publisher( sim ) )
-    , converter_        ( new kernel::CoordinateConverter( config ) )
-    , time_             ( new SimulationTime() )
-    , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
-    , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
-    , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
+Actions::Actions( kernel::Controller& controller,
+                  const tools::ExerciseConfig& config,
+                  const dispatcher::Model_ABC& model,
+                  dispatcher::SimulationPublisher_ABC& publisher )
+    : config_    ( config )
+    , controller_( controller )
+    , publisher_ ( publisher )
+    , entities_  ( new dispatcher::ModelAdapter( model ) )
+    , converter_ ( new kernel::CoordinateConverter( config ) )
 {
     // NOTHING
 }
@@ -88,13 +51,8 @@ Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& c
 // -----------------------------------------------------------------------------
 Actions::~Actions()
 {
-    // NOTHING
-}
-
-namespace directia
-{
-    void UsedByDIA( Actions* ) {}
-    void ReleasedByDIA( Actions* ) {}
+    StopScheduler();
+    assert( schedulers_.empty() );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +69,20 @@ void Actions::RegisterIn( directia::brain::Brain& brain )
     brain.Register( "StopScheduler", &Actions::StopScheduler );
 }
 
+namespace
+{
+    typedef void( Actions::*T_Read)( xml::xistream& );
+
+    void ReadWith( const std::string& name, Actions& actions, T_Read read, xml::xistream& xis )
+    {
+        std::string check;
+        xis >> xml::optional
+            >> xml::attribute( "name", check );
+        if( name == check )
+            ( actions.*read )( xis );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Actions::IssueOrderFromFile
 // Created: PHC 2010-09-16
@@ -119,15 +91,10 @@ void Actions::IssueOrderFromFile( const std::string& name, const std::string& fi
 {
     try
     {
-        actions::ActionsModel model( *factory_, *publisher_, *publisher_ );
-        model.Load( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ), config_.GetLoader() );
-        tools::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const actions::Action_ABC& action = it.NextElement();
-            if( action.GetName() == name.c_str() )
-                action.Publish( *publisher_, 0 );
-        }
+        const auto& loader = config_.GetLoader();
+        const auto file = loader.LoadFile( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ) );
+        *file >> xml::start( "actions" )
+                >> xml::list( "action", boost::bind( &ReadWith, boost::cref( name ), boost::ref( *this ), &Actions::Send, _1 ) );
     }
     catch( const std::exception& e )
     {
@@ -162,14 +129,30 @@ void Actions::IssueXmlOrder( const std::string& name )
 
 // -----------------------------------------------------------------------------
 // Name: Actions::Read
+// Created: BAX 2013-02-08
+// -----------------------------------------------------------------------------
+void Actions::Send( xml::xistream& xis )
+{
+    try
+    {
+        sword::ClientToSim msg;
+        msg.set_context( 0 );
+        protocol::Read( kernel::XmlAdapter( *converter_, *entities_ ), *msg.mutable_message(), xis );
+        publisher_.Send( msg );
+    }
+    catch( const std::exception& err )
+    {
+        MT_LOG_ERROR_MSG( "Unable to process action: " << tools::GetExceptionMsg( err ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Actions::Read
 // Created: LGY 2012-08-03
 // -----------------------------------------------------------------------------
 void Actions::Read( xml::xistream& xis )
 {
-    xis >> xml::start( "action" );
-    std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
-    if( action.get() )
-        action->Publish( *publisher_, 0 );
+    Send( xml::xisubstream( xis ) >> xml::start( "action" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +163,12 @@ void Actions::StartScheduler( const std::string& filename )
 {
     try
     {
-        schedulers_.push_back( boost::shared_ptr< ActionScheduler >( new ActionScheduler( config_, filename, controller_, *factory_, *publisher_ ) ) );
+        const auto file = config_.GetLoader().LoadFile( filename );
+        const kernel::XmlAdapter xml( *converter_, *entities_ );
+        const auto ptr = boost::make_shared< ActionScheduler >( *file, xml, publisher_ );
+        controller_.Register( *ptr );
+        schedulers_.push_back( ptr );
+
     }
     catch( const std::exception& e )
     {
@@ -194,5 +182,7 @@ void Actions::StartScheduler( const std::string& filename )
 // -----------------------------------------------------------------------------
 void Actions::StopScheduler()
 {
+    for( auto it = schedulers_.begin(); it != schedulers_.end(); ++it )
+        controller_.Unregister( **it );
     schedulers_.clear();
 }

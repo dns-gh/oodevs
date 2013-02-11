@@ -13,41 +13,56 @@
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
-class Publisher_ABC;
-class QDateTime;
-
-namespace actions
+namespace dispatcher
 {
-    class Action_ABC;
-    class ActionFactory_ABC;
-    class ActionsModel;
+    class SimulationPublisher_ABC;
 }
 
 namespace kernel
 {
-    class Controller;
+    class XmlAdapter;
 }
 
-namespace tools
+namespace sword
 {
-    class ExerciseConfig;
+    class ClientToSim;
 }
 
 namespace plugins
 {
 namespace script
 {
-    namespace events
-    {
-        struct SimulationTimeChanged;
-    }
+namespace events
+{
+    struct SimulationTimeChanged;
+}
+}
+}
+
+namespace boost
+{
+namespace posix_time
+{
+    class ptime;
+}
+}
+
+namespace xml
+{
+    class xistream;
+}
+
+namespace plugins
+{
+namespace script
+{
 // =============================================================================
 /** @class  ActionScheduler
     @brief  ActionScheduler
 */
 // Created: SBO 2011-03-29
 // =============================================================================
-class ActionScheduler : private boost::noncopyable
+class ActionScheduler : public boost::noncopyable
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< events::SimulationTimeChanged >
 {
@@ -55,38 +70,34 @@ class ActionScheduler : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionScheduler( const tools::ExerciseConfig& config, const std::string& filename, kernel::Controller& controller, actions::ActionFactory_ABC& factory, Publisher_ABC& publisher );
+             ActionScheduler( xml::xistream& xis,
+                              const kernel::XmlAdapter& adapter,
+                              dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~ActionScheduler();
     //@}
 
-    //! @name Operations
+    //! @name Typedef helpers
     //@{
-    void Tick( const QDateTime& time );
+    typedef std::map< boost::posix_time::ptime, sword::ClientToSim > T_Actions;
     //@}
 
-private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const events::SimulationTimeChanged& event );
     //@}
 
-    //! @name Types
+private:
+    //! @name Helpers
     //@{
-    struct sTimingComparator
-    {
-        bool operator()( const actions::Action_ABC* lhs, const actions::Action_ABC* rhs ) const;
-    };
-    typedef std::set< const actions::Action_ABC*, sTimingComparator > T_Actions;
+    void Tick( const boost::posix_time::ptime& time );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    Publisher_ABC& publisher_;
-    std::auto_ptr< actions::ActionsModel > model_;
-    T_Actions actions_;
-    T_Actions::const_iterator cursor_;
+    dispatcher::SimulationPublisher_ABC& publisher_;
+    const T_Actions                      actions_;
+    T_Actions::const_iterator            cursor_;
     //@}
 };
 }

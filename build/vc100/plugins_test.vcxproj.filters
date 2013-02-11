@@ -25,6 +25,9 @@
     <ClCompile Include="..\..\src\tests\plugins_test\LogisticPluginTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\ScriptSchedulerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\plugins_test\plugins_test_pch.h">

@@ -47,9 +47,13 @@ using namespace dispatcher;
 // Name: ScriptPlugin constructor
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticModel, const Config& config,
-                            SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher,
-                            ClientPublisher_ABC& clients, LinkResolver_ABC& resolver, CompositeRegistrable& registrables )
+ScriptPlugin::ScriptPlugin( Model_ABC& model,
+                            const Config& config,
+                            SimulationPublisher_ABC& publisher,
+                            tools::MessageDispatcher_ABC& dispatcher,
+                            ClientPublisher_ABC& clients,
+                            LinkResolver_ABC& resolver,
+                            CompositeRegistrable& registrables )
     : model_       ( model )
     , config_      ( config )
     , controller_  ( new kernel::Controller() )
@@ -63,7 +67,7 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticM
 {
     model_.RegisterFactory( *factory_ );
     registrables_.Add( new RegistrableProxy( *this ) );
-    registrables_.Add( new Actions( *controller_, config_, model, staticModel, publisher ) );
+    registrables_.Add( new Actions( *controller_, config_, model, publisher ) );
     registrables_.Add( new ConditionFacade( *controller_, *converter_, model_, config_ ) );
     registrables_.Add( new AgentManipulator::Registrar() );
     registrables_.Add( new AutomatManipulator::Registrar() );

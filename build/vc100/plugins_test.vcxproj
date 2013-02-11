@@ -162,6 +162,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\plugins_test\ScriptSchedulerTest.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\ScriptTest.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\TestCoordinates.cpp" />
   </ItemGroup>

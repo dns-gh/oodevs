@@ -32,7 +32,6 @@ namespace kernel
     class Controller;
     class CoordinateConverter_ABC;
     class CoordinateConverter;
-    class StaticModel;
 }
 
 namespace tools
@@ -59,9 +58,13 @@ class ScriptPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScriptPlugin( dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const dispatcher::Config& config,
-                           dispatcher::SimulationPublisher_ABC& publisher, tools::MessageDispatcher_ABC& dispatcher,
-                           dispatcher::ClientPublisher_ABC& clients, dispatcher::LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables );
+             ScriptPlugin( dispatcher::Model_ABC& model,
+                           const dispatcher::Config& config,
+                           dispatcher::SimulationPublisher_ABC& publisher,
+                           tools::MessageDispatcher_ABC& dispatcher,
+                           dispatcher::ClientPublisher_ABC& clients,
+                           dispatcher::LinkResolver_ABC& resolver,
+                           dispatcher::CompositeRegistrable& registrables );
     virtual ~ScriptPlugin();
     //@}
 
