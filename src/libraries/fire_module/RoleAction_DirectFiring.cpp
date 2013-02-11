@@ -97,7 +97,8 @@ namespace
 // Name: RoleAction_DirectFiring::GetComposantesAbleToBeFired
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, unsigned int nNbrWeaponsUsable ) const
+RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposantesAbleToBeFired(
+    const wrapper::View& components, const wrapper::View& parameters, std::size_t nNbrWeaponsUsable ) const
 {
     T_ComposanteVector availableTargets;
     for( std::size_t c = 0; c < components.GetSize(); ++c )
@@ -106,9 +107,9 @@ RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposan
         if( GET_HOOK( CanComponentBeFiredAt )( fired, parameters ) )
             availableTargets.push_back( fired );
     }
-    if( availableTargets.empty() )
-        return availableTargets;
     T_ComposanteVector targets;
+    if( availableTargets.empty() )
+        return targets;
     while( targets.size() < nNbrWeaponsUsable )
     {
         random_shuffle( availableTargets );
@@ -155,7 +156,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
                 data.ApplyOnWeapon( model, component, weapons.GetElement( w ) );
         }
     }
-    const unsigned int nNbrWeaponsUsable = data.GetNbrWeaponsUsable();
+    const std::size_t nNbrWeaponsUsable = data.GetUsableWeapons();
     if( nNbrWeaponsUsable == 0 )
     {
         if( data.HasWeaponsNotReady() )
@@ -292,7 +293,7 @@ int RoleAction_DirectFiring::FirePopulation( const wrapper::View& model, const w
                 data.ApplyOnWeapon( model, component, weapons.GetElement( w ) );
         }
     }
-    const unsigned int nNbrWeaponsUsable = data.GetNbrWeaponsUsable();
+    const std::size_t nNbrWeaponsUsable = data.GetUsableWeapons();
     if( nNbrWeaponsUsable == 0 )
     {
         if( data.HasWeaponsNotReady() )

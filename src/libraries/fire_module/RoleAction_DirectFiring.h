@@ -79,7 +79,7 @@ private:
     //! @name Helpers
     //@{
     void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const;
-    T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, unsigned int nNbrWeaponsUsable ) const;
+    T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, std::size_t nNbrWeaponsUsable ) const;
     //@}
 
 private:

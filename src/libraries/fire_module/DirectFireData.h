@@ -67,7 +67,7 @@ public:
     bool HasWeaponsNotReady () const;
     bool HasWeaponsAndNoAmmo() const;
     bool IsTemporarilyBlocked() const;
-    unsigned int GetNbrWeaponsUsable() const;
+    std::size_t GetUsableWeapons() const;
     //@}
 
 private:
@@ -80,17 +80,14 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< Weapon >            T_WeaponVector;
-    typedef T_WeaponVector::const_iterator CIT_WeaponVector;
-
-    struct sComposanteWeapons
+    struct ComposanteWeapons
     {
-         sComposanteWeapons();
+         ComposanteWeapons();
 
         //! @name Accessors
         //@{
-        unsigned int GetNbrWeaponsUsable() const;
-        bool IsFiring           () const;
+        std::size_t GetUsableWeapons() const;
+        bool IsFiring() const;
         //@}
 
         //! @name Operations
@@ -103,12 +100,9 @@ private:
         //@}
 
     private:
-        bool            bIsFiring_;
-        T_WeaponVector  weapons_;
+        bool firing_;
+        std::vector< Weapon > weapons_;
     };
-
-    typedef std::map< const SWORD_Model*, sComposanteWeapons > T_ComposanteWeaponsMap;
-    typedef T_ComposanteWeaponsMap::const_iterator                    CIT_ComposanteWeaponsMap;
     //@}
 
 private:
@@ -117,11 +111,11 @@ private:
     ModuleFacade& module_;
     const wrapper::View firer_;
     const wrapper::View parameters_;
-          T_ComposanteWeaponsMap composantesWeapons_;
-          bool                   bHasWeaponsReady_;
-          bool                   bHasWeaponsNotReady_;
-          bool                   bHasWeaponsAndNoAmmo_;
-          bool                   bTemporarilyBlocked_;
+    std::map< const SWORD_Model*, ComposanteWeapons > weapons_;
+    bool bHasWeaponsReady_;
+    bool bHasWeaponsNotReady_;
+    bool bHasWeaponsAndNoAmmo_;
+    bool bTemporarilyBlocked_;
     //@}
 
 public:
