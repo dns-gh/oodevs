@@ -11,6 +11,7 @@
 #define movement_module_PathWalker_h_
 
 #include "PathResult.h"
+#include "tools/Set.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <spatialcontainer/TerrainData.h>
 #include <boost/noncopyable.hpp>
@@ -82,8 +83,7 @@ public:
 private:
      //! @name Types
     //@{
-    typedef std::set< const SWORD_Model* >   T_ObjectSet;
-    typedef T_ObjectSet::const_iterator    CIT_ObjectSet;
+    typedef tools::Set< const SWORD_Model* > T_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep

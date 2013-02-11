@@ -11,13 +11,13 @@
 #include "PerceptionLevel.h"
 #include "SensorType.h"
 #include "SensorTypeAgent.h"
+#include "tools/Set.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include <tools/Exception.h>
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
+#include <tools/Exception.h>
 #include <boost/foreach.hpp>
 #include <limits>
-#include <set>
 
 using namespace sword;
 using namespace sword::perception;
@@ -88,7 +88,7 @@ const PerceptionLevel& ZURBPerceptionComputer::GetLevelWithDelay( unsigned int d
 
 namespace
 {
-    typedef std::set< const SensorTypeAgent* > T_Sensors;
+    typedef tools::Set< const SensorTypeAgent* > T_Sensors;
     void FillSensorTypeAgents( const wrapper::View& perceiver, T_Sensors& sensors )
     {
         for( std::size_t i = 0; i < perceiver[ "components" ].GetSize(); ++i )

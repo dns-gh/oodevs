@@ -13,6 +13,7 @@
 #include "Perception_ABC.h"
 #include "PerceptionRadarData.h"
 #include "tools/Map.h"
+#include "tools/Set.h"
 #include <boost/shared_ptr.hpp>
 
 namespace sword
@@ -48,7 +49,7 @@ private:
     typedef std::vector< PerceptionRadarData::T_ZoneSet >   T_RadarZonesVector;
     typedef std::vector< bool >                             T_RadarOnUnitPositionVector;
     typedef boost::shared_ptr< PerceptionRadarData > T_Data;
-    typedef std::set< const RadarType* > T_RadarSet;
+    typedef tools::Set< const RadarType* > T_RadarSet;
     typedef std::map< int, T_RadarSet > T_RadarTypesMap;
     typedef tools::Map< const RadarType*, T_Data > T_RadarDataMap;
     //@}

@@ -370,7 +370,7 @@ void PathWalker::ComputeObjectsCollision( const wrapper::View& model, const MT_V
 bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove, const wrapper::View& entity ) const
 {
     static const double rDistanceBeforeBlockingObject = GET_HOOK( GetWorldWeldValue )();
-    CIT_ObjectSet it;
+    T_ObjectSet::const_iterator it;
 
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( it = itCurMoveStep->ponctualObjectsOnSet_.begin(); it != itCurMoveStep->ponctualObjectsOnSet_.end(); ++it )

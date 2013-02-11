@@ -10,10 +10,10 @@
 #ifndef fire_module_ModuleFacade_h
 #define fire_module_ModuleFacade_h
 
+#include "tools/Map.h"
 #include <wrapper/Module.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <map>
 
 namespace sword
 {
@@ -44,7 +44,7 @@ public:
 
     //! @name Member data
     //@{
-    std::map< const SWORD_Model*, std::pair< double, std::size_t > > weapons;
+    tools::Map< const SWORD_Model*, std::pair< double, std::size_t > > weapons;
     //@}
 };
 

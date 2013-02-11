@@ -11,9 +11,9 @@
 #define SWORD_PERCEPTION_PERCEPTION_RADAR_DATA_H
 
 #include "Perception_ABC.h"
+#include "tools/Set.h"
 #include <module_api/Model.h>
 #include <boost/noncopyable.hpp>
-#include <set>
 #include <map>
 
 namespace sword
@@ -37,7 +37,7 @@ class PerceptionRadarData : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::set< const SWORD_Model* > T_ZoneSet;
+    typedef tools::Set< const SWORD_Model* > T_ZoneSet;
     //@}
 
 public:
