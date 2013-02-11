@@ -71,7 +71,7 @@
     <name>Crowd</name>
     <message>
         <source>Info/Mood</source>
-        <translation>Info/Moral</translation>
+        <translation>Info/Attitude</translation>
     </message>
     <message>
         <source>Humans/Healthy</source>
