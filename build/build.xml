@@ -800,7 +800,7 @@
     </target>
 
     <target name="plugins_test" depends="hla_plugin,tic,script_plugin,web_control_plugin_test,logistic_plugin">
-        <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt4"
+        <build-test name="plugins" depends="xalan,xerces,terrain,boost,openssl,protobuf,qt4"
             libs="directia-${platform}-mt-4_6,gdal_i,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
