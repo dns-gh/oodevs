@@ -38,6 +38,10 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+        
+        if meKnowledge:isSurrendered() then  -- I surrendered so nothing
+            return
+        end
 
         -- No entities to safeguard from issued. Get nearby enemies by default
         if self.params.entities == NIL then
@@ -68,11 +72,9 @@ rootnode
             self.noEntitiesToSafeguardFrom = true
             return -- evaluation of other conditions is useless
         end
-
-        self.isSurrendered = meKnowledge:isSurrendered()
-
+        
         -- Take cover once ME is not opérationnal but not if unit is surrendered.
-        if not meKnowledge:isOperational() and not self.isSurrendered then
+        if not meKnowledge:isOperational() then
             Activate( skill.links.takeCover, skill.modifiers.importance, { entities = self.entitiesToSafeguardFrom } )
             return -- evaluation of other conditions is useless
         end
@@ -92,7 +94,7 @@ rootnode
         end
 
         -- If detected by elements to safeguard from and agent is not surrendered, active cover posture and dismount 
-        if self.detected and not self.isSurrendered then
+        if self.detected then
             Activate( skill.nodes.CoverAttitude, skill.modifiers.importance )
             Activate( skill.links.dismount, 1 )
 
