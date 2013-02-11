@@ -1425,7 +1425,7 @@
                     <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
                     <flattenmapper/>
                 </mappedresources>
-                <fileset dir="${run.dir}"/>
+                <fileset dir="${run.dir}" excludes="Debug/**"/>
             </zip>
             <check-depends file="@{file}"/>
         </safe-move>
