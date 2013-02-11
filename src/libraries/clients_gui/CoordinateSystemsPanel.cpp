@@ -31,8 +31,8 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     listCoordSys_ = new QComboBox( box );
     listCoordSys_->setEditable( false );
 
-    for( kernel::CoordinateSystems::CIT_spatialReference it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
-        listCoordSys_->insertItem( it->second->c_str(), it->first );
+    for( auto it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
+        listCoordSys_->insertItem( it->second, it->first );
 
     setWidget( box );
     controllers_.Register( *this );
@@ -53,9 +53,9 @@ CoordinateSystemsPanel::~CoordinateSystemsPanel()
 // -----------------------------------------------------------------------------
 void CoordinateSystemsPanel::Commit()
 {
-    coordinateSystems_.defaultCoordinateSystem_ = listCoordSys_->currentItem();
-    options_.Change( "CoordSystem", coordinateSystems_.defaultCoordinateSystem_ );
-    previousCoordinateSystem_ = coordinateSystems_.defaultCoordinateSystem_;
+    coordinateSystems_.default_ = listCoordSys_->currentItem();
+    options_.Change( "CoordSystem", coordinateSystems_.default_ );
+    previousCoordinateSystem_ = coordinateSystems_.default_;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ void CoordinateSystemsPanel::Commit()
 void CoordinateSystemsPanel::Reset()
 {
     listCoordSys_->setCurrentItem( previousCoordinateSystem_ );
-    coordinateSystems_.defaultCoordinateSystem_ = previousCoordinateSystem_;
+    coordinateSystems_.default_ = previousCoordinateSystem_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ void CoordinateSystemsPanel::OptionChanged( const std::string& name, const kerne
     if( option == "CoordSystem" )
     {
         listCoordSys_->setCurrentItem( value.To< int >() );
-        coordinateSystems_.defaultCoordinateSystem_ = listCoordSys_->currentItem();
+        coordinateSystems_.default_ = listCoordSys_->currentItem();
     }
 }
 

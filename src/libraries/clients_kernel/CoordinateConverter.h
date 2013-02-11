@@ -88,8 +88,9 @@ private:
     mutable geocoord::PlanarCartesian             planar_;
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
-    mutable geocoord::UTM utm_;
-    const CoordinateSystems&   coordinateSystems_;
+    mutable geocoord::UTM                         utm_;
+    std::auto_ptr< CoordinateSystems >            private_;
+    const CoordinateSystems&                      systems_;
     //@}
 };
 

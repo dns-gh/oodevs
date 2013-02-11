@@ -56,7 +56,7 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
     singleField_ = new QLineEdit( valueBox_ );
 
     FillDefaultMenu();
-    SelectParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
+    SelectParser( converter.GetCoordSystem().default_ );
 
     subMenu_ = new kernel::ContextMenu();
     list_ = new QListWidget( subMenu_ );
@@ -80,8 +80,8 @@ LocationEditorBox::~LocationEditorBox()
 // -----------------------------------------------------------------------------
 void LocationEditorBox::FillDefaultMenu()
 {
-    for( kernel::CoordinateSystems::CIT_spatialReference it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
-        parserMenu_->insertItem( it->second->c_str(), it->first );
+    for( auto it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
+        parserMenu_->insertItem( it->second, it->first );
 }
 
 // -----------------------------------------------------------------------------

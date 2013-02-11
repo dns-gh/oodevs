@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "PropertyDisplayer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Moveable_ABC.h"

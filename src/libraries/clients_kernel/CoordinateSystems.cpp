@@ -11,6 +11,8 @@
 #include "CoordinateSystems.h"
 #include "Tools.h"
 
+#include <boost/assign/list_of.hpp>
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -18,14 +20,16 @@ using namespace kernel;
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
 CoordinateSystems::CoordinateSystems()
+    : systems_( boost::assign::map_list_of
+                ( E_Mgrs,     tools::translate( "CoordinateSystems", "UTM MGRS" ) )
+                ( E_Wgs84Dd,  tools::translate( "CoordinateSystems", "LatLong WGS84 DD" ) )
+                ( E_Wgs84Dms, tools::translate( "CoordinateSystems", "LatLong WGS84 DMS" ) )
+                ( E_Local,    tools::translate( "CoordinateSystems", "Local coordinates" ) ) )
+    , default_( E_Mgrs )
 {
-    systems_[ E_Mgrs ]      = tools::translate( "CoordinateSystems", "UTM MGRS" );
-    systems_[ E_Wgs84Dd ]   = tools::translate( "CoordinateSystems", "LatLong WGS84 DD" );
-    systems_[ E_Wgs84Dms ]  = tools::translate( "CoordinateSystems", "LatLong WGS84 DMS" );
-    systems_[ E_Local ]     = tools::translate( "CoordinateSystems", "Local coordinates" );
-
-    defaultCoordinateSystem_ = E_Mgrs;
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateSystems destructor
 // Created: AME 2010-03-12

@@ -32,7 +32,6 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/Tools.h"

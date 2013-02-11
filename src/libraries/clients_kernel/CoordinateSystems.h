@@ -10,10 +10,8 @@
 #ifndef __CoordinateSystems_h_
 #define __CoordinateSystems_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4512 )
-#include <boost/ptr_container/ptr_map.hpp>
-#pragma warning( pop )
+#include <boost/noncopyable.hpp>
+#include <map>
 
 namespace kernel
 {
@@ -23,30 +21,10 @@ namespace kernel
 */
 // Created: AME 2010-03-12
 // =============================================================================
-class CoordinateSystems
+class CoordinateSystems : public boost::noncopyable
 {
 public:
-
-    typedef boost::ptr_map< int, std::string > T_spatialReference;
-    typedef T_spatialReference::const_iterator CIT_spatialReference;
-
-    //! @name Constructors/Destructor
-    //@{
-             CoordinateSystems();
-    virtual ~CoordinateSystems();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    CoordinateSystems( const CoordinateSystems& );            //!< Copy constructor
-    CoordinateSystems& operator=( const CoordinateSystems& ); //!< Assignment operator
-    //@}
-
-public:
-     //! @name Member data
-    //@{
-    enum paramProj
+    enum Projection
     {
         E_Mgrs,
         E_Wgs84Dd,
@@ -54,8 +32,19 @@ public:
         E_Local
     };
 
-    int defaultCoordinateSystem_;
-    T_spatialReference systems_;
+    typedef std::map< int, QString > T_SpatialReference;
+
+    //! @name Constructors/Destructor
+    //@{
+             CoordinateSystems();
+    virtual ~CoordinateSystems();
+    //@}
+
+public:
+     //! @name Member data
+    //@{
+    int default_;
+    const T_SpatialReference systems_;
     //@}
 
 };

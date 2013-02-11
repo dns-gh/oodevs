@@ -22,8 +22,9 @@ using namespace kernel;
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter()
-    : planar_( parameters_ )
-    , coordinateSystems_( *new CoordinateSystems() )
+    : planar_ ( parameters_ )
+    , private_( new CoordinateSystems() )
+    , systems_( *private_ )
 {
     // NOTHING
 }
@@ -33,8 +34,8 @@ CoordinateConverter::CoordinateConverter()
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems )
-    : planar_           ( parameters_ )
-    , coordinateSystems_( coordSystems )
+    : planar_ ( parameters_ )
+    , systems_( coordSystems )
 {
     // NOTHING
 }
@@ -44,8 +45,9 @@ CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems 
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
-    : planar_           ( parameters_ )
-    , coordinateSystems_( *new CoordinateSystems() )
+    : planar_ ( parameters_ )
+    , private_( new CoordinateSystems() )
+    , systems_( *private_ )
 {
     Load( config );
 }
@@ -192,7 +194,7 @@ geometry::Point2f CoordinateConverter::ConvertFromGeoDms ( const std::string& lo
 // -----------------------------------------------------------------------------
 const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
 {
-    return coordinateSystems_;
+    return systems_;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +204,7 @@ const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
 std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position ) const
 {
     std::string positionStr;
-    switch( coordinateSystems_.defaultCoordinateSystem_ )
+    switch( systems_.default_ )
     {
         case CoordinateSystems::E_Mgrs: positionStr = ConvertToMgrs( position ); break;
         case CoordinateSystems::E_Wgs84Dd:
