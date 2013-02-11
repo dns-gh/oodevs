@@ -58,31 +58,16 @@ BOOST_AUTO_TEST_CASE( set_erase_removes_elements )
 
 BOOST_AUTO_TEST_CASE( set_iterates_in_the_insertion_order )
 {
-    int k1, k2;
-    BOOST_REQUIRE( &k1 < &k2 );
-    {
-        tools::Set< int* > set;
-        set.insert( &k1 );
-        set.insert( &k2 );
-        BOOST_REQUIRE_EQUAL( 2u, set.size() );
-        auto it = set.begin();
-        BOOST_REQUIRE( it != set.end() );
-        BOOST_CHECK_EQUAL( &k1, *it );
-        ++it;
-        BOOST_REQUIRE( it != set.end() );
-        BOOST_CHECK_EQUAL( &k2, *it );
-    }
-    {
-        tools::Set< int* > set;
-        set.insert( &k2 );
-        set.insert( &k1 );
-        auto it = set.begin();
-        BOOST_REQUIRE( it != set.end() );
-        BOOST_CHECK_EQUAL( &k2, *it );
-        ++it;
-        BOOST_REQUIRE( it != set.end() );
-        BOOST_CHECK_EQUAL( &k1, *it );
-    }
+    tools::Set< int > set;
+    set.insert( 2 );
+    set.insert( 1 );
+    BOOST_REQUIRE_EQUAL( 2u, set.size() );
+    auto it = set.begin();
+    BOOST_REQUIRE( it != set.end() );
+    BOOST_CHECK_EQUAL( 2, *it );
+    ++it;
+    BOOST_REQUIRE( it != set.end() );
+    BOOST_CHECK_EQUAL( 1, *it );
 }
 
 BOOST_AUTO_TEST_CASE( set_find_finds_elements_in_insertion_order )
