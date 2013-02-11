@@ -71,15 +71,15 @@ private:
         eTemporarilyBlocked // -> Le tir ne peut pas etre effectue tout de suite pour cause d'encombrement en zone urbaine
     };
 
-    typedef std::vector< wrapper::View >         T_ComposanteVector;
-    typedef T_ComposanteVector::const_iterator CIT_ComposanteVector;
+    typedef std::vector< wrapper::View >         T_Components;
+    typedef T_Components::const_iterator CIT_ComposanteVector;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const;
-    T_ComposanteVector GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, std::size_t nNbrWeaponsUsable ) const;
+    void FirePion( DirectFireData& firerWeapons, const wrapper::View& entity, const wrapper::View& target, const T_Components& compTargets ) const;
+    T_Components GetComposantesAbleToBeFired( const wrapper::View& components, const wrapper::View& parameters, std::size_t nNbrWeaponsUsable ) const;
     //@}
 
 private:

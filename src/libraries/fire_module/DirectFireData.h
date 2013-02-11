@@ -10,7 +10,7 @@
 #ifndef fire_module_DirectFireData_h
 #define fire_module_DirectFireData_h
 
-#include "Weapon.h"
+#include "ComponentWeapons.h"
 #include <boost/noncopyable.hpp>
 #include <vector>
 #include <map>
@@ -34,6 +34,9 @@ namespace fire
 // =============================================================================
 class DirectFireData : boost::noncopyable
 {
+private:
+    typedef std::vector< wrapper::View > T_Components;
+
 public:
     //! @name Types
     //@{
@@ -54,68 +57,37 @@ public:
     //@{
     void ApplyOnWeapon( const wrapper::View& model, const wrapper::View& component, const wrapper::View& weapon );
 
-    void ChooseRandomWeapon  ( const wrapper::View& target, const wrapper::View& compTarget, const SWORD_Model*& pBestFirer, const Weapon*& pBestWeapon ) const;
-    void ChooseBestWeapon    ( const wrapper::View& target, const wrapper::View& compTarget, const SWORD_Model*& pBestFirer, const Weapon*& pBestWeapon ) const;
-    bool GetUnusedFirerWeapon( const SWORD_Model*& pUnusedFirer, const Weapon*& pUnusedFirerWeapon ) const;
-    void ReleaseWeapon       ( const SWORD_Model* firer, const Weapon& weapon );
+    void Fire( const wrapper::View& target, const T_Components& compTargets );
+    void Fire( const wrapper::View& element );
 
     bool CanFire( const wrapper::View& firer );
     //@}
 
     //! @name Accessors
     //@{
-    bool HasWeaponsNotReady () const;
+    bool HasWeaponsNotReady() const;
     bool HasWeaponsAndNoAmmo() const;
     bool IsTemporarilyBlocked() const;
     std::size_t GetUsableWeapons() const;
     //@}
 
 private:
-    //! @name Tools
-    //@{
-    void RemoveFirer ( const SWORD_Model* component );
-    void RemoveWeapon( const SWORD_Model* component, const Weapon& weapon );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    struct ComposanteWeapons
-    {
-         ComposanteWeapons();
-
-        //! @name Accessors
-        //@{
-        std::size_t GetUsableWeapons() const;
-        bool IsFiring() const;
-        //@}
-
-        //! @name Operations
-        //@{
-        void        AddWeapon      ( const Weapon& weapon );
-        void        RemoveWeapon   ( const Weapon& weapon );
-        bool        GetBestWeapon  ( double& rBestScore, const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pBestWeapon ) const;
-        bool        GetRandomWeapon( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pRandomWeapon ) const;
-        const Weapon* GetUnusedWeapon() const;
-        //@}
-
-    private:
-        bool firing_;
-        std::vector< Weapon > weapons_;
-    };
-    //@}
+    void FireBestWeapon( const wrapper::View& target, const wrapper::View& compTarget );
+    void FireRemainingWeapons( const wrapper::View& target, const T_Components& targets );
+    bool GetUnusedFirerWeapon( const SWORD_Model*& firer, const Weapon*& weapon ) const;
+    void ReleaseWeapon( const SWORD_Model* firer, const Weapon& weapon );
 
 private:
     //! @name Member data
     //@{
     ModuleFacade& module_;
-    const wrapper::View firer_;
+    const wrapper::View entity_;
     const wrapper::View parameters_;
-    std::map< const SWORD_Model*, ComposanteWeapons > weapons_;
     bool bHasWeaponsReady_;
     bool bHasWeaponsNotReady_;
     bool bHasWeaponsAndNoAmmo_;
     bool bTemporarilyBlocked_;
+    std::map< const SWORD_Model*, ComponentWeapons > weapons_;
     //@}
 
 public:

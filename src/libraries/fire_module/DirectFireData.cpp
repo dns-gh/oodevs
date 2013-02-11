@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "DirectFireData.h"
-#include "Weapon.h"
 #include <wrapper/View.h>
 #include <wrapper/Hook.h>
 #include <module_api/Log.h>
@@ -46,7 +45,7 @@ std::size_t DirectFireData::nUrbanCoefficient_ = 100;
 // -----------------------------------------------------------------------------
 DirectFireData::DirectFireData( ModuleFacade& module, const wrapper::View& firer, const wrapper::View& parameters )
     : module_              ( module )
-    , firer_               ( firer )
+    , entity_               ( firer )
     , parameters_          ( parameters )
     , bHasWeaponsReady_    ( true )
     , bHasWeaponsNotReady_ ( false )
@@ -66,12 +65,12 @@ std::size_t DirectFireData::GetUsableWeapons() const
         return 0;
     const auto weapons = weapons_ | boost::adaptors::map_values;
     if( parameters_[ "mode" ] == static_cast< int >( eFiringModeFree ) )
-        return boost::accumulate( weapons | boost::adaptors::transformed( boost::mem_fn( &ComposanteWeapons::GetUsableWeapons ) ), 0 );
+        return boost::accumulate( weapons | boost::adaptors::transformed( boost::mem_fn( &ComponentWeapons::GetUsableWeapons ) ), 0 );
     const double percentage = parameters_[ "percentage" ];
     if( percentage < 0 || percentage > 1 )
         throw std::invalid_argument( "percentage parameter must be >= 0 and <= 1" );
     const std::size_t wanted = static_cast< std::size_t >( std::max( 1., weapons_.size() * percentage ) );
-    const std::size_t used = boost::count_if( weapons, boost::mem_fn( &ComposanteWeapons::IsFiring ) );
+    const std::size_t used = boost::count_if( weapons, boost::mem_fn( &ComponentWeapons::IsFiring ) );
     if( wanted >= used )
         return wanted - used;
     return 0;
@@ -96,72 +95,86 @@ void DirectFireData::ApplyOnWeapon( const wrapper::View& model, const wrapper::V
     const Weapon w( module_, model, weapon );
     if( ! w.CanDirectFire( component, parameters_ ) )
         return;
-    if( ! w.HasDotation( firer_ ) )
+    if( ! w.HasDotation( entity_ ) )
         bHasWeaponsAndNoAmmo_ = true;
     else
     {
-        ComposanteWeapons& data = weapons_[ component ];
+        ComponentWeapons& data = weapons_[ component ];
         data.AddWeapon( w );
         bHasWeaponsNotReady_ |= data.IsFiring();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireData::RemoveWeapon
+// Name: DirectFireData::Fire
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-void DirectFireData::RemoveWeapon( const SWORD_Model* component, const Weapon& weapon )
+void DirectFireData::Fire( const wrapper::View& target, const T_Components& targets )
 {
-    weapons_[ component ].RemoveWeapon( weapon );
+    assert( GetUsableWeapons() == targets.size() );
+    for( auto it = targets.begin(); it != targets.end(); ++it )
+        FireBestWeapon( target, *it );
+    FireRemainingWeapons( target, targets );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireData::RemoveFirer
-// Created: NLD 2004-10-05
+// Name: DirectFireData::Fire
+// Created: MCO 2013-02-08
 // -----------------------------------------------------------------------------
-void DirectFireData::RemoveFirer( const SWORD_Model* component )
+void DirectFireData::Fire( const wrapper::View& element )
 {
-    weapons_.erase( component );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ChooseBestWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void DirectFireData::ChooseBestWeapon( const wrapper::View& target, const wrapper::View& compTarget, const SWORD_Model*& pBestFirer, const Weapon*& pBestWeapon ) const
-{
-    double rBestScore = 0;
-    pBestFirer  = 0;
-    pBestWeapon = 0;
-    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+    const SWORD_Model* pFirer = 0;
+    const Weapon* pFirerWeapon = 0;
+    while( GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
     {
-        const ComposanteWeapons& data = it->second;
-        bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );
-        if( bUpdated )
-            pBestFirer = it->first;
+        pFirerWeapon->DirectFire( entity_, element );
+        ReleaseWeapon( pFirer, *pFirerWeapon );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireData::ChooseRandomWeapon
-// Created: NLD 2004-10-27
+// Name: DirectFireData::FireRemainingWeapons
+// Created: MCO 2013-02-08
 // -----------------------------------------------------------------------------
-void DirectFireData::ChooseRandomWeapon( const wrapper::View& target, const wrapper::View& compTarget, const SWORD_Model*& pRandomFirer, const Weapon*& pRandomWeapon ) const
+void DirectFireData::FireRemainingWeapons( const wrapper::View& target, const T_Components& targets )
 {
-    const std::size_t nRnd = GET_HOOK( GetFireRandomInteger )( 0, weapons_.size() );
-    auto it = weapons_.begin();
-    std::advance( it, nRnd );
-    for( std::size_t i = 0; i < weapons_.size(); ++i )
+    const SWORD_Model* firer = 0;
+    const Weapon* weapon = 0;
+    while( GetUnusedFirerWeapon( firer, weapon ) )
     {
-        const ComposanteWeapons& data = it->second;
-        if( data.GetRandomWeapon( firer_, target, compTarget, pRandomWeapon ) )
+        const wrapper::View* pBestCompTarget = 0;
+        double bestScore = 0;
+        for( auto it = targets.begin(); it != targets.end(); ++it )
         {
-            pRandomFirer = it->first;
-            return;
+            const double score = weapon->GetDangerosity( entity_, target, *it, true, true ); // 'true' is for 'use ph' and true for 'use ammo'
+            if( score > bestScore )
+            {
+                bestScore = score;
+                pBestCompTarget = &*it;
+            }
         }
-        ++it;
-        if( it == weapons_.end() )
-            it = weapons_.begin();
+        if( pBestCompTarget )
+            weapon->DirectFire( entity_, target, *pBestCompTarget, true ); // 'true' is for 'use ph'
+        ReleaseWeapon( firer, *weapon );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireData::FireBestWeapon
+// Created: NLD 2004-10-05
+// -----------------------------------------------------------------------------
+void DirectFireData::FireBestWeapon( const wrapper::View& target, const wrapper::View& compTarget )
+{
+    const SWORD_Model* firer = 0;
+    const Weapon* weapon = 0;
+    double score = 0;
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+        if( it->second.GetBestWeapon( score, entity_, target, compTarget, weapon ) )
+            firer = it->first;
+    if( firer )
+    {
+        weapon->DirectFire( entity_, target, compTarget, true ); // 'true' is for 'use ph'
+        ReleaseWeapon( firer, *weapon );
     }
 }
 
@@ -169,17 +182,18 @@ void DirectFireData::ChooseRandomWeapon( const wrapper::View& target, const wrap
 // Name: DirectFireData::GetUnusedFirerWeapon
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-bool DirectFireData::GetUnusedFirerWeapon( const SWORD_Model*& pUnusedFirer, const Weapon*& pUnusedFirerWeapon ) const
+bool DirectFireData::GetUnusedFirerWeapon( const SWORD_Model*& firer, const Weapon*& weapon ) const
 {
-    pUnusedFirerWeapon = 0;
-    pUnusedFirer       = 0;
+    weapon = 0;
+    firer = 0;
     if( weapons_.empty() )
         return false;
     auto it = weapons_.begin();
-    pUnusedFirerWeapon = it->second.GetUnusedWeapon();
-    if( !pUnusedFirerWeapon )
+    weapon = it->second.GetUnusedWeapon();
+    assert( weapon );
+    if( !weapon )
         return false;
-    pUnusedFirer = it->first;
+    firer = it->first;
     return true;
 }
 
@@ -190,9 +204,9 @@ bool DirectFireData::GetUnusedFirerWeapon( const SWORD_Model*& pUnusedFirer, con
 void DirectFireData::ReleaseWeapon( const SWORD_Model* firer, const Weapon& weapon )
 {
     if( parameters_[ "mode" ] == static_cast< int >( eFiringModeNormal ) )
-        RemoveFirer( firer );
+        weapons_.erase( firer );
     else
-        RemoveWeapon( firer, weapon );
+        weapons_[ firer ].RemoveWeapon( weapon );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,109 +234,4 @@ bool DirectFireData::HasWeaponsAndNoAmmo() const
 bool DirectFireData::IsTemporarilyBlocked() const
 {
     return bTemporarilyBlocked_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ComposanteWeapons::ComposanteWeapons
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-DirectFireData::ComposanteWeapons::ComposanteWeapons()
-    : firing_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ComposanteWeapons::AddWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void DirectFireData::ComposanteWeapons::AddWeapon( const Weapon& weapon )
-{
-    if( weapon.IsReady() )
-        weapons_.push_back( weapon );
-    else
-        firing_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ComposanteWeapons::RemoveWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void DirectFireData::ComposanteWeapons::RemoveWeapon( const Weapon& weapon )
-{
-    weapons_.erase( std::remove( weapons_.begin(), weapons_.end(), weapon ), weapons_.end() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::GetUsableWeapons
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-std::size_t DirectFireData::ComposanteWeapons::GetUsableWeapons() const
-{
-    return weapons_.size();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::IsFiring
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool DirectFireData::ComposanteWeapons::IsFiring() const
-{
-    return firing_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ComposanteWeapons::GetUnusedWeapon
-// Created: NLD 2004-10-06
-// -----------------------------------------------------------------------------
-const Weapon* DirectFireData::ComposanteWeapons::GetUnusedWeapon() const
-{
-    if( weapons_.empty() )
-        return 0;
-    return &weapons_.front();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ComposanteWeapons::GetBestWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool DirectFireData::ComposanteWeapons::GetBestWeapon( double& rBestScore, const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pBestWeapon ) const
-{
-    bool bUpdated = false;
-    for( auto itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-    {
-        const Weapon& weapon = *itWeapon;
-        double rCurrentScore = weapon.GetDangerosity( firer, target, compTarget, true, true ); // 'true' = 'use PH', true = "use ammo"
-        if( rCurrentScore >= rBestScore )
-        {
-            bUpdated = true;
-            rBestScore  = rCurrentScore;
-            pBestWeapon = &weapon;
-        }
-    }
-    return bUpdated;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireData::ComposanteWeapons::GetRandomWeapon
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-bool DirectFireData::ComposanteWeapons::GetRandomWeapon( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, const Weapon*& pRandomWeapon ) const
-{
-    const std::size_t nRnd = GET_HOOK( GetFireRandomInteger )( 0, weapons_.size() );
-    auto it = weapons_.begin();
-    std::advance( it, nRnd );
-    for( std::size_t i = 0; i < weapons_.size(); ++i )
-    {
-        const Weapon& weapon = *it;
-        if( weapon.GetDangerosity( firer, target, compTarget, false, true ) > 0 ) // 'false' = 'don't use PH' 'true' = 'use ammo'
-        {
-            pRandomWeapon = &weapon;
-            return true;
-        }
-        ++it;
-        if( it == weapons_.end() )
-            it = weapons_.begin();
-    }
-    return false;
 }

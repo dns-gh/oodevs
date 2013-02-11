@@ -8,14 +8,11 @@
 // *****************************************************************************
 
 #include "RoleAction_DirectFiring.h"
-#include "Weapon.h"
 #include "simulation_kernel/MIL_Random.h"
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
 #include <wrapper/Event.h>
-#include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include <iterator>
 
 using namespace sword;
 using namespace sword::fire;
@@ -36,59 +33,12 @@ RoleAction_DirectFiring::RoleAction_DirectFiring( ModuleFacade& module )
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: RoleAction_DirectFiring::FirePion
-// Created: NLD 2004-10-05
-// -----------------------------------------------------------------------------
-void RoleAction_DirectFiring::FirePion( DirectFireData& data, const wrapper::View& entity, const wrapper::View& target, const T_ComposanteVector& compTargets ) const
-{
-    // Pour chaque cible, choix de la meilleure arme
-    unsigned int nNbrWeaponsUsed = 0;
-    for( auto it = compTargets.begin(); it != compTargets.end(); ++it )
-    {
-        const wrapper::View& compTarget = *it;
-        const SWORD_Model* pBestFirer = 0;
-        const Weapon* pBestFirerWeapon = 0;
-        data.ChooseBestWeapon( target, compTarget, pBestFirer, pBestFirerWeapon );
-        if( !pBestFirer )
-            continue;
-        assert( pBestFirerWeapon );
-        pBestFirerWeapon->DirectFire( entity, target, compTarget, true ); // 'true' is for 'use ph'
-        ++nNbrWeaponsUsed;
-        data.ReleaseWeapon( pBestFirer, *pBestFirerWeapon );
-    }
-    // Pour toutes les armes non utilisées, choix de la meilleure cible
-    const SWORD_Model* pUnusedFirer = 0;
-    const Weapon* pUnusedFirerWeapon = 0;
-    while( data.GetUnusedFirerWeapon( pUnusedFirer, pUnusedFirerWeapon ) && nNbrWeaponsUsed < compTargets.size() ) // $$$$ MCO 2012-08-30: not sure why we stop firing when nNbrWeaponsUsed reaches compTargets.size()
-    {
-        const wrapper::View* pBestCompTarget = 0;
-        double rBestScore = 0;
-        for( auto it = compTargets.begin(); it != compTargets.end(); ++it )
-        {
-            const wrapper::View& compTarget = *it;
-            const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( entity, target, compTarget, true, true ); // 'true' is for 'use ph' and true for 'use ammo'
-            if( rCurrentScore > rBestScore )
-            {
-                rBestScore = rCurrentScore;
-                pBestCompTarget = &compTarget;
-            }
-        }
-        if( pBestCompTarget )
-        {
-            pUnusedFirerWeapon->DirectFire( entity, target, *pBestCompTarget, true ); // 'true' is for 'use ph'
-            ++nNbrWeaponsUsed;
-        }
-        data.ReleaseWeapon( pUnusedFirer, *pUnusedFirerWeapon );
-    }
-}
-
 namespace
 {
     template< typename C >
     void random_shuffle( C& c )
     {
-        boost::function< std::size_t( std::size_t ) > func = boost::bind( GET_HOOK( GetFireRandomInteger ), 0u, _1 );
+        auto func = boost::bind( GET_HOOK( GetFireRandomInteger ), 0u, _1 );
         std::random_shuffle( c.begin(), c.end(), func );
     }
 }
@@ -97,17 +47,17 @@ namespace
 // Name: RoleAction_DirectFiring::GetComposantesAbleToBeFired
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-RoleAction_DirectFiring::T_ComposanteVector RoleAction_DirectFiring::GetComposantesAbleToBeFired(
+RoleAction_DirectFiring::T_Components RoleAction_DirectFiring::GetComposantesAbleToBeFired(
     const wrapper::View& components, const wrapper::View& parameters, std::size_t nNbrWeaponsUsable ) const
 {
-    T_ComposanteVector availableTargets;
+    T_Components availableTargets;
     for( std::size_t c = 0; c < components.GetSize(); ++c )
     {
         const wrapper::View& fired = components.GetElement( c );
         if( GET_HOOK( CanComponentBeFiredAt )( fired, parameters ) )
             availableTargets.push_back( fired );
     }
-    T_ComposanteVector targets;
+    T_Components targets;
     if( availableTargets.empty() )
         return targets;
     while( targets.size() < nNbrWeaponsUsable )
@@ -168,12 +118,12 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
         return eNoCapacity;
     }
     const wrapper::View& targets = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ][ "components" ];
-    T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, parameters, nNbrWeaponsUsable );
+    T_Components compTargets = GetComposantesAbleToBeFired( targets, parameters, nNbrWeaponsUsable );
     if( compTargets.empty() )
         return eEnemyDestroyed;
     NotifyAttacking( entity, target, mustReport, false );
     assert( compTargets.size() == nNbrWeaponsUsable );
-    FirePion( data, entity, target, compTargets );
+    data.Fire( target, compTargets );
     return eRunning;
 }
 
@@ -313,13 +263,7 @@ int RoleAction_DirectFiring::FirePopulation( const wrapper::View& model, const w
         event.Post();
     }
     // Tir
-    const SWORD_Model* pFirer = 0;
-    const Weapon* pFirerWeapon = 0;
-    while( data.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) )
-    {
-        pFirerWeapon->DirectFire( entity, element );
-        data.ReleaseWeapon( pFirer, *pFirerWeapon );
-    }
+    data.Fire( element );
     return eRunning;
 }
 
