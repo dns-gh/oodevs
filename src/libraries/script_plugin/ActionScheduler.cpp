@@ -20,7 +20,6 @@
 
 #include <boost/bind.hpp>
 #include <boost/algorithm/string/erase.hpp>
-#include <boost/algorithm/string/classification.hpp>
 #include <boost/date_time.hpp>
 #include <xeumeuleu/xml.hpp>
 
