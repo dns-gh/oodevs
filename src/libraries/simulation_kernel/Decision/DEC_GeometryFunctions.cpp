@@ -930,6 +930,19 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ClipLocalisation
+// Created: LDC 2013-02-11
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ClipLocalisation( const TER_Localisation& localisation, const MIL_Fuseau& fuseau )
+{
+    boost::shared_ptr< TER_Localisation > result;
+    TER_Localisation clippedResult;
+    if( ClipLocalisationInFuseau( localisation, fuseau, clippedResult ) )
+        result.reset( new TER_Localisation( clippedResult ) );
+    return result;
+}    
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitLocalisation
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
