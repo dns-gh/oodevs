@@ -6,6 +6,7 @@ include "integration/BaseTaskKnowledge.lua"
 
 integration = {}
 
+include "integration/GeometryIntegration.lua"
 include "integration/GetDestructionState.lua"
 include "integration/GetIdentificationState.lua"
 include "integration/GetOperationalCapacity.lua"

@@ -27,15 +27,22 @@ return
   
         for i = 1, #params.objectives do
             local objective = params.objectives[i]
+            if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
+               local subArea = integration.clipperLocalisation( objective, fuseau )
+               if subArea then
+                  positions[ #positions + 1 ] = CreateKnowledge( integration.ontology.types.area, subArea )
+               end
+            else
             -- ajout d'objectif si un des coins ou le centre est dans le sous-fuseau
-            local myPositions = objective:getPositions()
-            for i = 1, #myPositions do
-                if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau.source, myPositions[i] ) then
-                    if DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( objective:getPosition() ) >= myself.leadData.advanceMax then
-                      addLastPoint = false
-                    end
-                    if not exists(positions, objective) then
-                        positions[ #positions + 1 ] = objective
+                local myPositions = objective:getPositions()
+                for i = 1, #myPositions do
+                    if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau.source, myPositions[i] ) then
+                        if DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( objective:getPosition() ) >= myself.leadData.advanceMax then
+                          addLastPoint = false
+                        end
+                        if not exists(positions, objective) then
+                            positions[ #positions + 1 ] = objective
+                        end
                     end
                 end
             end
