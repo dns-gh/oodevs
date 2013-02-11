@@ -99,3 +99,7 @@ end
 integration.splitAORInSections = function( length )
     return DEC_Geometrie_DecoupeFuseauEnTroncons( length )
 end
+
+integration.clipperLocalisation = function( area, fuseau )
+    return DEC_Geometrie_ClipperLocalisation( area.source, fuseau.source )
+end
