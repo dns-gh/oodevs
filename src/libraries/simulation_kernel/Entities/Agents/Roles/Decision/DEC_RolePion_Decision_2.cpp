@@ -278,6 +278,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     // Objects
     brain[ "DEC_CreerObjetSansDelais" ] =
         boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_MagicGetOrCreateObject" ] =
+        boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicGetOrCreateObject < MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
 
     // Path
     brain[ "DEC_CreerItineraire" ] =

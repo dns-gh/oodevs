@@ -14,8 +14,6 @@
 #include "MIL_AutomateType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Orders/MIL_MissionType_ABC.h"
-#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Decision/DEC_AutomateFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
@@ -27,6 +25,8 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
@@ -358,6 +358,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     // Objects
     brain[ "DEC_CreerObjetSansDelais" ] =
         boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
+    brain[ "DEC_MagicGetOrCreateObject" ] =
+        boost::function< int( const std::string&, const TER_Localisation* ) > (boost::bind( &DEC_ObjectFunctions::MagicGetOrCreateObject < MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) );
 
     // Populations
     brain[ "DEC_KnowledgePopulation_Domination" ] =
