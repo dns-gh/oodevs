@@ -11,6 +11,7 @@
 #define fire_module_DirectFireData_h
 
 #include "ComponentWeapons.h"
+#include "tools/Map.h"
 #include <boost/noncopyable.hpp>
 #include <vector>
 #include <map>
@@ -87,7 +88,8 @@ private:
     bool bHasWeaponsNotReady_;
     bool bHasWeaponsAndNoAmmo_;
     bool bTemporarilyBlocked_;
-    std::map< const SWORD_Model*, ComponentWeapons > weapons_;
+
+    tools::Map< const SWORD_Model*, ComponentWeapons > weapons_;
     //@}
 
 public:

@@ -332,5 +332,8 @@
     <ClInclude Include="..\..\src\libraries\tools\ZipExtractor.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Map.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

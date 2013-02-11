@@ -37,16 +37,14 @@
 #include "wrapper/Hook.h"
 #include "wrapper/Event.h"
 #include "wrapper/Effect.h"
+#include "tools/Map.h"
 #include <module_api/Log.h>
 #include <geometry/Types.h>
-#include <map>
-#include <set>
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <boost/shared_ptr.hpp>
-#include <vector>
 
 using namespace sword;
 using namespace sword::perception;
@@ -133,12 +131,10 @@ namespace
     const unsigned int nNbrStepsBetweenPeriphericalVision = 12; //$$$ En dur ...
 
     typedef std::pair< const SensorTypeAgent* , double /*height*/ >   T_SurfaceAgentKeyPair;
-    typedef std::map< T_SurfaceAgentKeyPair, PerceptionSurfaceAgent > T_SurfaceAgentMap;
-    typedef T_SurfaceAgentMap::const_iterator                         CIT_SurfaceAgentMap;
+    typedef tools::Map< T_SurfaceAgentKeyPair, PerceptionSurfaceAgent > T_SurfaceAgentMap;
 
     typedef std::pair< const SensorTypeObject* , double /*height*/ >    T_SurfaceObjectKeyPair;
-    typedef std::map< T_SurfaceObjectKeyPair, PerceptionSurfaceObject > T_SurfaceObjectMap;
-    typedef T_SurfaceObjectMap::const_iterator                          CIT_SurfaceObjectMap;
+    typedef tools::Map< T_SurfaceObjectKeyPair, PerceptionSurfaceObject > T_SurfaceObjectMap;
 
     // -----------------------------------------------------------------------------
     // Name: RolePion_Perceiver::CanPerceive
