@@ -34,7 +34,7 @@ tools::IdManager ADN_Units_Data::idManager_;
 // Name: ComposanteInfos::ComposanteInfos
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
-ADN_Units_Data::ComposanteInfos::ComposanteInfos( ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment /* = 0 */ )
+ADN_Units_Data::ComposanteInfos::ComposanteInfos( const ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment /* = 0 */ )
     : ADN_CrossedRef( equipments, equipment, true )
     , bLoadable_    ( false )
     , bMajor_       ( false )

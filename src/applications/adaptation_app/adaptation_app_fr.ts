@@ -357,12 +357,8 @@ Arrêt moteur allumé</translation>
         <translation>Nb. max</translation>
     </message>
     <message>
-        <source>Add subordinate</source>
-        <translation>Ajouter un subordonné</translation>
-    </message>
-    <message>
-        <source>Remove subordinate</source>
-        <translation>Enlever un subordonné</translation>
+        <source>Subordinates</source>
+        <translation>Subordonnés</translation>
     </message>
 </context>
 <context>

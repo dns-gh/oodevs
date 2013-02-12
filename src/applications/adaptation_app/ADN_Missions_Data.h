@@ -78,7 +78,7 @@ public:
     T_Mission_Vector&       GetAutomatMissions();
     T_Mission_Vector&       GetPopulationMissions();
     ADN_Missions_FragOrder* FindFragOrder( const std::string& strName );
-    ADN_Missions_Mission* FindMission( T_Mission_Vector& missions, const std::string& strName );
+    ADN_Missions_Mission* FindMission( const T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
 

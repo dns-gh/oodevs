@@ -357,12 +357,8 @@ estacionado con motor encendido</translation>
         <translation>N° Máximo</translation>
     </message>
     <message>
-        <source>Add subordinate</source>
-        <translation>Agregar subordinado</translation>
-    </message>
-    <message>
-        <source>Remove subordinate</source>
-        <translation>Enlever un subordonné</translation>
+        <source>Subordinates</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

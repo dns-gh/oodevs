@@ -345,12 +345,8 @@ Parked engine running</source>
         <translation type="unfinished">ماكس Nbr</translation>
     </message>
     <message>
-        <source>Add subordinate</source>
-        <translation type="unfinished">أضف تابعة</translation>
-    </message>
-    <message>
-        <source>Remove subordinate</source>
-        <translation type="unfinished">إزالة تابعة</translation>
+        <source>Subordinates</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

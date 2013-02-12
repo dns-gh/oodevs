@@ -83,7 +83,7 @@ ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 // Name: MissionInfos::~MissionInfos
 // Created: AGN 2003-12-03
 // -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission /* = 0 */ )
+ADN_Models_Data::MissionInfos::MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission /* = 0 */ )
     : ADN_CrossedRef< ADN_Missions_Mission >( missions, mission, true )
 {
     // NOTHING

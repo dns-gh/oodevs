@@ -113,8 +113,8 @@ void ADN_AutomatLog_ListView::BuildBody()
         for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); ++it2 )
         {
             ADN_Automata_Data::UnitInfos* pUnitInfos = *it2;
-            assert( pUnitInfos->ptrUnit_.GetData() != 0 );
-            pUnit = pUnitInfos->ptrUnit_.GetData();
+            assert( pUnitInfos->GetCrossedElement() != 0 );
+            pUnit = pUnitInfos->GetCrossedElement();
             std::string pionName = pUnit->strName_.GetData();
             uint quantity = pUnitInfos->min_.GetData();
             if( quantity == 0 )

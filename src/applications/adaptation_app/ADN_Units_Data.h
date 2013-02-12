@@ -33,7 +33,7 @@ public:
     class ComposanteInfos : public ADN_CrossedRef< ADN_Equipments_Data::EquipmentInfos >
     {
     public:
-        ComposanteInfos( ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment = 0 );
+        ComposanteInfos( const ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment = 0 );
 
         ComposanteInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );

@@ -28,19 +28,17 @@ class ADN_Automata_Data : public ADN_Data_ABC
 
 public:
 // *****************************************************************************
-    class UnitInfos : public ADN_Ref_ABC
+    class UnitInfos : public ADN_CrossedRef< ADN_Units_Data::UnitInfos >
     {
 
     public:
-        UnitInfos();
-
+        UnitInfos( const ADN_Units_Data::T_UnitInfos_Vector& vector, ADN_Units_Data::UnitInfos* element = 0 );
         UnitInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output, const ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>& pc );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
         ADN_Type_Int min_;
         ADN_Type_Int max_;
     };

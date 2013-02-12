@@ -21,12 +21,12 @@ tools::IdManager ADN_Automata_Data::idManager_;
 // Name: UnitInfos::UnitInfos
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-ADN_Automata_Data::UnitInfos::UnitInfos()
-    : ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
+ADN_Automata_Data::UnitInfos::UnitInfos( const ADN_Units_Data::T_UnitInfos_Vector& vector, ADN_Units_Data::UnitInfos* element /* = 0 */ )
+    : ADN_CrossedRef( vector, element, true )
     , min_( 0 )
     , max_( -1 )
 {
-    BindExistenceTo( &ptrUnit_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +35,7 @@ ADN_Automata_Data::UnitInfos::UnitInfos()
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 {
-    UnitInfos* pCopy = new UnitInfos();
-    pCopy->ptrUnit_ = ptrUnit_.GetData();
+    UnitInfos* pCopy = new UnitInfos( GetVector(), GetCrossedElement() );
     pCopy->min_     = min_.GetData();
     pCopy->max_     = max_.GetData();
     return pCopy;
@@ -53,7 +52,7 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( type );
     if( ! pUnit )
         throw MASA_EXCEPTION( tools::translate( "Automata_Data", "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).toStdString() );
-    ptrUnit_ = pUnit;
+    SetCrossedElement( pUnit );
     input >> xml::optional >> xml::attribute( "min-occurs", min_ )
           >> xml::optional >> xml::attribute( "max-occurs", max_ );
 }
@@ -65,12 +64,12 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>& pc )
 {
     output << xml::start( "unit" )
-             << xml::attribute( "type", ptrUnit_.GetData()->strName_ );
+             << xml::attribute( "type", GetCrossedElement()->strName_ );
     if( min_.GetData() != 0 )
         output << xml::attribute( "min-occurs", min_ );
     if( max_.GetData() >= 0 )
         output << xml::attribute( "max-occurs", max_ );
-    if( ptrUnit_ == pc )
+    if( GetCrossedElement() == pc.GetData() )
         output << xml::attribute( "command-post", true );
     output << xml::end;
 }
@@ -141,12 +140,12 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::AutomatonInfos::CreateCopy
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 {
-    std::auto_ptr<UnitInfos> spNew( new UnitInfos() );
+    std::auto_ptr<UnitInfos> spNew( new UnitInfos( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() ) );
     spNew->ReadArchive( input );
     bool cp = false;
     input >> xml::optional >> xml::attribute( "command-post", cp );
     if( cp )
-        ptrUnit_ = spNew->ptrUnit_.GetData();
+        ptrUnit_ = spNew->GetCrossedElement();
     vSubUnits_.AddItem( spNew.release() );
 }
 
@@ -203,7 +202,7 @@ void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyCh
     {
         const ADN_Automata_Data::UnitInfos& unit = **it;
         assert( unit.ptrUnit_.GetData() != 0 );
-        const ADN_Units_Data::UnitInfos& agent = *unit.ptrUnit_.GetData();
+        const ADN_Units_Data::UnitInfos& agent = *unit.GetCrossedElement();
         if( unit.min_.GetData() == 0 && pc.strName_.GetData() == agent.strName_.GetData() )
             checker.AddError( eMissingPCOnAutomat, strName_.GetData(), eAutomata );
     }
@@ -312,7 +311,7 @@ QStringList ADN_Automata_Data::GetAutomataThatUseForElement( ADN_Units_Data::Uni
     {
         for( IT_UnitInfosVector it2 = ( *it )->vSubUnits_.begin(); it2 != ( *it )->vSubUnits_.end(); ++it2 )
         {
-            if( ( *it )->ptrUnit_.GetData() != ( *it2 )->ptrUnit_.GetData() && ( *it2 )->ptrUnit_.GetData() == &unit ) // all units except pc
+            if( ( *it )->ptrUnit_.GetData() != ( *it2 )->GetCrossedElement() && ( *it2 )->GetCrossedElement() == &unit ) // all units except pc
             {
                 result << ( *it )->strName_.GetData().c_str();
                 break;

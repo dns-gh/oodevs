@@ -364,9 +364,9 @@ ADN_Missions_FragOrder* ADN_Missions_Data::FindFragOrder( const std::string& str
 // Name: ADN_Missions_Data::FindMission
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T_Mission_Vector& missions, const std::string& strName )
+ADN_Missions_Mission* ADN_Missions_Data::FindMission( const ADN_Missions_Data::T_Mission_Vector& missions, const std::string& strName )
 {
-    IT_Mission_Vector it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< ADN_Missions_Mission >( strName ) );
+    CIT_Mission_Vector it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< ADN_Missions_Mission >( strName ) );
     if( it == missions.end() )
         return 0;
     return *it;

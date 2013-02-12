@@ -27,7 +27,7 @@ public:
 public:
              ADN_TypePtr_InVector_ABC();
     explicit ADN_TypePtr_InVector_ABC( const T_TypePtr& value );
-    explicit ADN_TypePtr_InVector_ABC( T_TypeVector& v, const T_TypePtr& value );
+    explicit ADN_TypePtr_InVector_ABC( const T_TypeVector& v, const T_TypePtr& value );
     virtual ~ADN_TypePtr_InVector_ABC();
 
     //-------------------------------------------------------------------------
@@ -41,7 +41,7 @@ public:
     const T_TypePtr GetData() const;
 
     void          SetVector(const T_TypeVector& v);
-    T_TypeVector& GetVector();
+    const T_TypeVector& GetVector() const;
     //@}
 
     //-------------------------------------------------------------------------

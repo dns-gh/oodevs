@@ -452,7 +452,7 @@ public:
     {
 
     public:
-        ConsumptionItem( E_ConsumptionType nConsumptionType, T_CategoryInfos_Vector& resources, ADN_Equipments_Data::CategoryInfos& equipmentCategory );
+        ConsumptionItem( E_ConsumptionType nConsumptionType, const T_CategoryInfos_Vector& resources, ADN_Equipments_Data::CategoryInfos& equipmentCategory );
 
         ConsumptionItem* CreateCopy();
         void ReadArchive( xml::xistream& input );

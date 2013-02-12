@@ -25,7 +25,7 @@ class ADN_CrossedRef : public ADN_RefWithName
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_CrossedRef( ADN_Type_Vector_ABC< T >& vector, T* element = 0, bool linked = false );
+             ADN_CrossedRef( const ADN_Type_Vector_ABC< T >& vector, T* element = 0, bool linked = false );
     virtual ~ADN_CrossedRef();
     //@}
 
@@ -33,12 +33,7 @@ public:
     //@{
     void SetCrossedElement( T* element );
     T* GetCrossedElement() const;
-    ADN_Type_Vector_ABC< T >& GetVector();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
+    const ADN_Type_Vector_ABC< T >& GetVector() const;
     //@}
 
 private:
@@ -53,7 +48,7 @@ private:
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_CrossedRef< T >::ADN_CrossedRef( ADN_Type_Vector_ABC< T >& vector, T* element /* = 0 */, bool linked /* = false */ )
+ADN_CrossedRef< T >::ADN_CrossedRef( const ADN_Type_Vector_ABC< T >& vector, T* element /* = 0 */, bool linked /* = false */ )
     : ADN_RefWithName()
     , ptr_( vector, 0 )
 {
@@ -77,7 +72,7 @@ ADN_CrossedRef< T >::~ADN_CrossedRef()
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_Type_Vector_ABC< T >& ADN_CrossedRef< T >::GetVector()
+const ADN_Type_Vector_ABC< T >& ADN_CrossedRef< T >::GetVector() const
 {
     return ptr_.GetVector();
 }

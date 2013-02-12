@@ -1214,7 +1214,7 @@ void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output ) con
 // Name: ConsumptionItem::ConsumptionItem
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, T_CategoryInfos_Vector& equipmentCategories, CategoryInfos& equipmentCategory )
+ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, const T_CategoryInfos_Vector& equipmentCategories, CategoryInfos& equipmentCategory )
     : nConsumptionType_    ( nConsumptionType )
     , nQuantityUsedPerHour_( 0 )
     , ptrCategory_( equipmentCategories, &equipmentCategory )

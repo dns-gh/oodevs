@@ -171,8 +171,8 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             else
             {
                 pUnitInfos = *it2;
-                assert( pUnitInfos->ptrUnit_.GetData() != 0 );
-                pUnit = pUnitInfos->ptrUnit_.GetData();
+                assert( pUnitInfos->GetCrossedElement() != 0 );
+                pUnit = pUnitInfos->GetCrossedElement();
             }
             ADN_Units_Data::UnitInfos& unit = *pUnit;
             pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + 1 ) );

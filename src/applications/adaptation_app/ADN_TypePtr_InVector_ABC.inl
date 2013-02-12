@@ -38,7 +38,7 @@ ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePt
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v, const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
+ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v, const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
     : pData_(0)
     , pVector_(0)
 {
@@ -132,7 +132,7 @@ typename const ADN_TypePtr_InVector_ABC<T>::T_TypePtr ADN_TypePtr_InVector_ABC<T
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& ADN_TypePtr_InVector_ABC<T>::GetVector()
+const typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& ADN_TypePtr_InVector_ABC<T>::GetVector() const
 {
     return *pVector_;
 }

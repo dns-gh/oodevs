@@ -54,7 +54,7 @@ public:
     {
 
     public:
-        explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission = 0 );
+        explicit MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission = 0 );
         virtual ~MissionInfos();
 
         MissionInfos* CreateCopy();

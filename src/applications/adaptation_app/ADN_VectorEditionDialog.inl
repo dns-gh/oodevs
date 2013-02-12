@@ -126,7 +126,7 @@ namespace
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename SourceType, typename TargetType >
-void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString& vectorName, T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector )
+void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString& vectorName, const T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector )
 {
     editionInfos_.push_back( std::auto_ptr< T_EditionInfo >( new T_EditionInfo( vectorName, sourceVector, targetConnector ) ) );
 

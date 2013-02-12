@@ -235,9 +235,6 @@
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.inl">
-      <FileType>CppCode</FileType>
-    </ClInclude>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.cpp" />
@@ -1685,7 +1682,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

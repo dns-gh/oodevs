@@ -35,7 +35,7 @@ public:
 
     struct T_EditionInfo : private boost::noncopyable
     {
-        T_EditionInfo( const QString& name, T_SourceVector& source, ADN_Connector_Vector_ABC& targetConnector )
+        T_EditionInfo( const QString& name, const T_SourceVector& source, ADN_Connector_Vector_ABC& targetConnector )
             : name_( name )
             , source_( source )
             , targetConnector_( targetConnector )
@@ -44,7 +44,7 @@ public:
         virtual ~T_EditionInfo() {}
 
         const QString name_;
-        T_SourceVector& source_;
+        const T_SourceVector& source_;
         ADN_Connector_Vector_ABC& targetConnector_;
     };
 
@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddVector( const QString& vectorName, T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector );
+    void AddVector( const QString& vectorName, const T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector );
     //@}
 
 private:

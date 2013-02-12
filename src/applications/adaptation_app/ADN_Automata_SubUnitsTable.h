@@ -11,8 +11,6 @@
 #define __ADN_Automata_SubUnitsTable_h_
 
 #include "ADN_Table.h"
-#include <boost/noncopyable.hpp>
-#include "ADN_Units_Data.h"
 
 // =============================================================================
 /** @class  ADN_Automata_SubUnitsTable
@@ -21,7 +19,6 @@
 // Created: APE 2005-01-07
 // =============================================================================
 class ADN_Automata_SubUnitsTable : public ADN_Table
-                                 , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -36,22 +33,16 @@ public:
     //@{
     virtual void OnContextMenu( const QPoint& pt );
     virtual void AddRow( int row, void* data );
+    virtual void RemoveCurrentElement();
     void AddSubItems( const std::string& name );
     //@}
 
-private:
-    void AddNewElement( ADN_Units_Data::UnitInfos* );
-    void RemoveCurrentElement();
-
-private slots:
-    void MenuListItemSelected();
-
 signals:
+    //! @name Signals
+    //@{
     void ItemAdded( const std::string& name );
     void ItemRemoved( const std::string& name );
-
-private:
-    bool bMenuListItemSelected_;
+    //@}
 };
 
 #endif // __ADN_Automata_SubUnitsTable_h_

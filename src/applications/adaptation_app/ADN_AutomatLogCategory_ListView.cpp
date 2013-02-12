@@ -117,8 +117,8 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                     else
                     {
                         pUnitInfos = *it2;
-                        assert( pUnitInfos->ptrUnit_.GetData() != 0 );
-                        pUnit = pUnitInfos->ptrUnit_.GetData();
+                        assert( pUnitInfos->GetCrossedElement() != 0 );
+                        pUnit = pUnitInfos->GetCrossedElement();
                         ++it2;
                         nUnit += pUnitInfos->min_.GetData();
                     }

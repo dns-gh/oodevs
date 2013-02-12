@@ -357,12 +357,8 @@ Parked engine running</translation>
         <translation>Max Nbr</translation>
     </message>
     <message>
-        <source>Add subordinate</source>
-        <translation>Add subordinate</translation>
-    </message>
-    <message>
-        <source>Remove subordinate</source>
-        <translation>Remove subordinate</translation>
+        <source>Subordinates</source>
+        <translation>Subordinates</translation>
     </message>
 </context>
 <context>
