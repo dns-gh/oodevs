@@ -54,6 +54,7 @@ public:
     void*               GetCurrentData();
     void*               GetData( const QPoint& pt );
     void                SetItemConnectors( const T_ConnectorVector& v );
+    const QStandardItemModel& GetModel() const;
 
     void InsertItem( ADN_StandardItem* item );
     void InsertItems( const QList< QStandardItem* >& items );
@@ -198,6 +199,16 @@ inline
 std::string ADN_ListView::GetToolTipFor( const QModelIndex& /*index*/ )
 {
     return std::string( "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::GetModel
+// Created: ABR 2013-02-12
+// -----------------------------------------------------------------------------
+inline
+const QStandardItemModel& ADN_ListView::GetModel() const
+{
+    return dataModel_;
 }
 
 #endif // __ADN_ListView_h_

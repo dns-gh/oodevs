@@ -2149,18 +2149,6 @@ PNG (*.png)
         <source>Missions</source>
         <translation type="unfinished">البعثات</translation>
     </message>
-    <message>
-        <source>Configure missions</source>
-        <translation type="unfinished">تكوين بعثات</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configure</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
@@ -2511,6 +2499,21 @@ PNG (*.png)
     <message>
         <source>New parameter</source>
         <translation type="unfinished">معلمة جديدة</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Mission_ConfigurationDlg</name>
+    <message>
+        <source>Mission configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
 </context>
 <context>
@@ -4359,17 +4362,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
-    <name>ADN_Table</name>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4512,6 +4504,18 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">حقاً حذف هذا العنصر؟
 انقر فوق &quot;موافق&quot; لحذف ذلك.</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5316,14 +5320,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Crew size</source>
         <translation type="unfinished">حجم الطاقم</translation>
-    </message>
-    <message>
-        <source>Add equipment</source>
-        <translation type="unfinished">إضافة معدات</translation>
-    </message>
-    <message>
-        <source>Remove equipment</source>
-        <translation type="unfinished">إزالة المعدات</translation>
     </message>
 </context>
 <context>

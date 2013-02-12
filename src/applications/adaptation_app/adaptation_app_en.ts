@@ -2162,18 +2162,6 @@ PNG (*.png)
         <source>Missions</source>
         <translation>Missions</translation>
     </message>
-    <message>
-        <source>Configure missions</source>
-        <translation>Configure missions</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished">Remove</translation>
-    </message>
-    <message>
-        <source>Configure</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
@@ -2524,6 +2512,21 @@ PNG (*.png)
     <message>
         <source>New parameter</source>
         <translation>New parameter</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Mission_ConfigurationDlg</name>
+    <message>
+        <source>Mission configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
     </message>
 </context>
 <context>
@@ -4372,17 +4375,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
-    <name>ADN_Table</name>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished">Add</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished">Remove</translation>
-    </message>
-</context>
-<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4521,6 +4513,18 @@ Click &quot;Ok&quot; to destroy it and all its references.</translation>
 Click &quot;Ok&quot; to delete it.</source>
         <translation>Really delete this item?
 Click &quot;Ok&quot; to delete it.</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Add</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Remove</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edit</translation>
     </message>
 </context>
 <context>
@@ -5326,14 +5330,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Crew size</source>
         <translation>Crew size</translation>
     </message>
-    <message>
-        <source>Add equipment</source>
-        <translation>Add equipment</translation>
-    </message>
-    <message>
-        <source>Remove equipment</source>
-        <translation>Remove equipment</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Units_GUI</name>
@@ -5720,11 +5716,11 @@ Click &quot;Ok&quot; to delete it.</translation>
     <name>ADN_VectorEditionDialog</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>

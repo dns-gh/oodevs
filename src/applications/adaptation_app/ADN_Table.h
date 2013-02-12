@@ -47,6 +47,7 @@ public:
 
     QStandardItem* GetItem( int row, int col ) const;
     QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
+    void* GetData( const QPoint& pt );
 
     void AddBoldGridRow( int nIndex );
     void AddBoldGridCol( int nIndex );
@@ -57,8 +58,6 @@ public:
 
     template< typename T >
     T* CreateNewElement();
-    template< typename T >
-    void GenerateStandardContextMenu( const QPoint& pt, const QString& elementName = "" );
 
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
@@ -69,6 +68,7 @@ public:
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
     ADN_TableDelegate& GetDelegate();
+    const QStandardItemModel& GetModel() const;
     //@}
 
 protected:
@@ -77,7 +77,6 @@ protected:
     void* GetData( int row, int col ) const;
     void* GetDataFromIndex( const QModelIndex& index ) const;
     void* GetSelectedData() const;
-    void* GetData( const QPoint& pt );
     virtual void OnContextMenu( const QPoint& pt );
     //@}
 
@@ -131,33 +130,6 @@ T* ADN_Table::CreateNewElement()
     connector.AddItem( newElement );
     connector.AddItem( 0 );
     return newElement;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::GenerateStandardContextMenu
-// Created: ABR 2013-02-12
-// -----------------------------------------------------------------------------
-template< typename T >
-void ADN_Table::GenerateStandardContextMenu( const QPoint& pt, const QString& elementName /*= ""*/ )
-{
-    Q3PopupMenu popup( this );
-    QString addText = tools::translate( "ADN_Table", "Add");
-    QString removeText = tools::translate( "ADN_Table", "Remove");
-    if( !elementName.isEmpty() )
-    {
-        addText = addText + " " + elementName;
-        removeText = removeText + " " + elementName;
-    }
-
-    popup.insertItem( addText, 0 );
-    if( GetData( pt ) )
-        popup.insertItem( removeText, 1 );
-
-    int result = popup.exec( pt );
-    if( result == 1 )
-        RemoveCurrentElement();
-    else if( result == 0 )
-        CreateNewElement< T >();
 }
 
 // -----------------------------------------------------------------------------
@@ -295,6 +267,16 @@ inline
 ADN_TableDelegate& ADN_Table::GetDelegate()
 {
     return delegate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetModel
+// Created: ABR 2013-02-12
+// -----------------------------------------------------------------------------
+inline
+const QStandardItemModel& ADN_Table::GetModel() const
+{
+    return dataModel_;
 }
 
 #endif // __ADN_Table_h_

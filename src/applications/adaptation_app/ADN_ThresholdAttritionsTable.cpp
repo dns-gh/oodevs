@@ -79,5 +79,5 @@ void ADN_ThresholdAttritionsTable::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_ThresholdAttritionsTable::OnContextMenu( const QPoint& pt )
 {
-    ADN_Table::GenerateStandardContextMenu< ADN_Disasters_Data::AttritionThresholdInfos >( pt );
+    ADN_Tools::GenerateStandardContextMenu< ADN_Disasters_Data::AttritionThresholdInfos >( *this, pt );
 }

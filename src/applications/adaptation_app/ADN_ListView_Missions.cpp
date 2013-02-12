@@ -27,7 +27,6 @@
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
-#include "ADN_VectorEditionDialog.h"
 
 typedef ADN_Models_Data::MissionInfos MissionInfos;
 
@@ -36,7 +35,7 @@ typedef ADN_Models_Data::MissionInfos MissionInfos;
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
 ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget* parent )
-    : ADN_ListView  ( parent, "ADN_ListView_Missions", tools::translate( "ADN_ListView_Missions", "Missions") )
+    : ADN_ListView  ( parent, "ADN_ListView_Missions", tools::translate( "ADN_ListView_Missions", "Missions" ) )
     , eEntityType_  ( eEntityType )
     , currentMissions_( 0 )
 {
@@ -78,38 +77,15 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
         return;
 
-    Q3PopupMenu menu;
-    menu.insertItem( tools::translate( "ADN_ListView_Missions", "Edit" ), 0 );
-    if( GetData( pt ) )
-        menu.insertItem( tools::translate( "ADN_ListView_Missions", "Remove" ), 1 );
+    ADN_Missions_Data::T_Mission_Vector* vector = 0;
+    if( eEntityType_ == eEntityType_Pawn )
+        vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
+    else if( eEntityType_ == eEntityType_Automat )
+        vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
+    else
+        vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
 
-    int menuResult = menu.exec( pt );
-    if( menuResult == 1 )
-        RemoveCurrentElement();
-    else if( menuResult == 0 )
-    {
-        ADN_Missions_Data::T_Mission_Vector* vector = 0;
-        QString name = objectName();
-
-        if( eEntityType_ == eEntityType_Pawn )
-        {
-            name += "_unit-config-dialog";
-            vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
-        }
-        else if( eEntityType_ == eEntityType_Automat )
-        {
-            name += "_automata-config-dialog";
-            vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
-        }
-        else
-        {
-            name += "_crowd-config-dialog";
-            vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
-        }
-
-        ADN_VectorEditionDialog< ADN_Missions_Mission, ADN_Models_Data::MissionInfos >* dialog;
-        dialog = new ADN_VectorEditionDialog< ADN_Missions_Mission, ADN_Models_Data::MissionInfos >( name, tools::translate( "ADN_ListView_Missions", "Missions" ), this );
-        dialog->AddVector( ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), *vector, dataModel_, static_cast< ADN_Connector_Vector_ABC& >( *pConnector_ ) );
-        dialog->exec();
-    }
+    ADN_Tools::GenerateStandardEditionDialog< ADN_Missions_Mission, ADN_Models_Data::MissionInfos >(
+        *this, pt, std::string( ADN_Tr::ConvertFromEntityType( eEntityType_, ADN_Tr::eToSim ) + "-list" ).c_str(), tools::translate( "ADN_ListView_Missions", "Missions" ),
+        ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), *vector );
 }

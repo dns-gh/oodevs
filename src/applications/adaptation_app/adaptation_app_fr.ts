@@ -2169,18 +2169,6 @@ PNG (*.png)</translation>
         <source>Missions</source>
         <translation>Missions</translation>
     </message>
-    <message>
-        <source>Configure missions</source>
-        <translation>Configurer les missions</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Configure</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
@@ -2446,7 +2434,7 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>
@@ -2531,6 +2519,21 @@ PNG (*.png)</translation>
     <message>
         <source>DirectIA name</source>
         <translation>Nom DirectIA</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Mission_ConfigurationDlg</name>
+    <message>
+        <source>Mission configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
     </message>
 </context>
 <context>
@@ -4379,17 +4382,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
 </context>
 <context>
-    <name>ADN_Table</name>
-    <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
-</context>
-<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4528,6 +4520,18 @@ Cliquer sur &quot;Ok&quot; pour le supprimer ainsi que tous les éléments qui l
 Click &quot;Ok&quot; to delete it.</source>
         <translation>Confirmer la destruction de cet élément ?
 Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
     </message>
 </context>
 <context>
@@ -5337,14 +5341,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Crew size</source>
         <translation>Equipage</translation>
     </message>
-    <message>
-        <source>Add equipment</source>
-        <translation>Ajouter un équipement</translation>
-    </message>
-    <message>
-        <source>Remove equipment</source>
-        <translation>Supprimer équipement</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Units_Data::UnitInfos</name>
@@ -5738,11 +5734,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>ADN_VectorEditionDialog</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>

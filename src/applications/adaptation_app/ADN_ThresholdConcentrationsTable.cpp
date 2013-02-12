@@ -68,5 +68,5 @@ void ADN_ThresholdConcentrationsTable::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_ThresholdConcentrationsTable::OnContextMenu( const QPoint& pt )
 {
-    ADN_Table::GenerateStandardContextMenu< ADN_Disasters_Data::ConcentrationThresholdInfos >( pt );
+    ADN_Tools::GenerateStandardContextMenu< ADN_Disasters_Data::ConcentrationThresholdInfos >( *this, pt );
 }

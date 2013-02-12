@@ -2165,18 +2165,6 @@ PNG (*.png)
         <source>Missions</source>
         <translation>Misiones</translation>
     </message>
-    <message>
-        <source>Configure missions</source>
-        <translation>Configurar misiones</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configure</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Objects</name>
@@ -2527,6 +2515,21 @@ PNG (*.png)
     <message>
         <source>Range max</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Mission_ConfigurationDlg</name>
+    <message>
+        <source>Mission configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -4373,17 +4376,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
-    <name>ADN_Table</name>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4519,6 +4511,18 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>This item is referenced by at least one other item.
 Click &quot;Ok&quot; to destroy it and all its references.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5327,14 +5331,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Crew size</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Add equipment</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Remove equipment</source>
         <translation></translation>
     </message>
 </context>

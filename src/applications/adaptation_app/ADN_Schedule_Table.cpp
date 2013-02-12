@@ -68,5 +68,5 @@ void ADN_Schedule_Table::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::OnContextMenu( const QPoint& pt )
 {
-    ADN_Table::GenerateStandardContextMenu< ADN_Inhabitants_Data::EventInfos >( pt );
+    ADN_Tools::GenerateStandardContextMenu< ADN_Inhabitants_Data::EventInfos >( *this, pt );
 }

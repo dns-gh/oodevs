@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+#include "clients_kernel/VariantPointer.h"
+
 // -----------------------------------------------------------------------------
 // Name: ADN_VectorEditionDialog constructor
 // Created: ABR 2013-02-11
@@ -19,7 +21,7 @@ ADN_VectorEditionDialog< SourceType, TargetType >::ADN_VectorEditionDialog( cons
     setModal( true );
     setObjectName( objectName );
     setCaption( title );
-    setMinimumSize( 400, 400 );
+    setMinimumSize( 400, 600 );
 
     // List
     treeView_ = new QTreeWidget( this );
@@ -111,7 +113,7 @@ void ADN_VectorEditionDialog< SourceType, TargetType >::accept()
 
 namespace
 {
-    void AddVariantOnItem( QTreeWidgetItem* item, int role, void* ptr )
+    void AddVariantOnItem( QTreeWidgetItem* item, int role, const void* ptr )
     {
         QVariant* variant = new QVariant();
         variant->setValue( kernel::VariantPointer( ptr ) );
@@ -124,7 +126,7 @@ namespace
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename SourceType, typename TargetType >
-void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString& vectorName, T_SourceVector& sourceVector, QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector )
+void ADN_VectorEditionDialog< SourceType, TargetType >::AddVector( const QString& vectorName, T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector )
 {
     editionInfos_.push_back( std::auto_ptr< T_EditionInfo >( new T_EditionInfo( vectorName, sourceVector, targetConnector ) ) );
 

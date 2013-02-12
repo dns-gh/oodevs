@@ -10,8 +10,7 @@
 #ifndef __ADN_VectorEditionDialog_h_
 #define __ADN_VectorEditionDialog_h_
 
-#include "ADN_Type_Vector_ABC.h"
-#include "clients_kernel/VariantPointer.h"
+template< typename T > class ADN_Type_Vector_ABC;
 
 // =============================================================================
 /** @class  ADN_VectorEditionDialog
@@ -32,7 +31,7 @@ public:
 
     //! @name Types
     //@{
-    typedef ADN_Type_Vector_ABC< SourceType >                       T_SourceVector;
+    typedef ADN_Type_Vector_ABC< SourceType > T_SourceVector;
 
     struct T_EditionInfo : private boost::noncopyable
     {
@@ -49,12 +48,12 @@ public:
         ADN_Connector_Vector_ABC& targetConnector_;
     };
 
-    typedef std::vector< std::auto_ptr< T_EditionInfo > >     T_EditionInfos;
+    typedef std::vector< std::auto_ptr< T_EditionInfo > > T_EditionInfos;
     //@}
 
     //! @name Operations
     //@{
-    void AddVector( const QString& vectorName, T_SourceVector& sourceVector, QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector );
+    void AddVector( const QString& vectorName, T_SourceVector& sourceVector, const QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector );
     //@}
 
 private:
