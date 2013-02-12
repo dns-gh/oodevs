@@ -33,11 +33,11 @@ namespace
         return boost::algorithm::join( slice, "." );
     }
 
-    const std::string g_version = APP_VERSION;
-    const std::string g_model   = APP_MODEL;
-    const T_Tokens    g_tokens  = Split( g_version );
-    const std::string g_project = Splice( g_tokens, 2 );
-    const std::string g_major   = Splice( g_tokens, 3 );
+    const std::string version = APP_VERSION;
+    const std::string model   = APP_MODEL;
+    const T_Tokens    tokens  = Split( version );
+    const std::string project = Splice( tokens, 2 );
+    const std::string major   = Splice( tokens, 3 );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ namespace
 // -----------------------------------------------------------------------------
 const char* tools::AppVersion()
 {
-    return g_version.c_str();
+    return ::version.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ const char* tools::AppVersion()
 // -----------------------------------------------------------------------------
 const char* tools::AppMajorVersion()
 {
-    return g_major.c_str();
+    return ::major.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ const char* tools::AppMajorVersion()
 // -----------------------------------------------------------------------------
 const char* tools::AppModelVersion()
 {
-    return g_model.c_str();
+    return ::model.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ const char* tools::AppModelVersion()
 // -----------------------------------------------------------------------------
 const char* tools::AppProjectVersion()
 {
-    return g_project.c_str();
+    return ::project.c_str();
 }
 
 // -----------------------------------------------------------------------------
