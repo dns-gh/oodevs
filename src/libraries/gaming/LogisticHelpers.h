@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Availability;
     class Entity_ABC;
     class Positions;
 }
@@ -32,61 +33,30 @@ class Dotation;
 namespace logistic_helpers
 {
     void VisitBaseStocksDotations( const kernel::Entity_ABC& logisticBase, boost::function< void( const Dotation& ) > func );    
+    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< void( const kernel::Entity_ABC& ) > func );
     bool CheckEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > func );
     geometry::Point2f GetLogisticPosition( const kernel::Entity_ABC& entity, bool onlySupply = false );
 
-    template< typename UnaryFunction >
-    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, UnaryFunction& func )
+    template< typename Extension >
+    struct RetrieveFunc
     {
-        func( entity );
-        if( auto tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            auto it = tactical->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                if( !kernel::EntityHelpers::IsLogisticBase( child ) )
-                    VisitEntityAndSubordinatesUpToBaseLog( child, func );
-            }
+        RetrieveFunc( const Extension* pExtension = 0 ) : pExtension_( pExtension ) {}
+        bool Check( const kernel::Entity_ABC& entity )
+        { 
+            if( pExtension_ && entity.Retrieve< Extension >() == pExtension_ )
+                return true;
+            if( !pExtension_ && entity.Retrieve< Extension >() )
+                return true;
+            return false;
         }
-    }
+        const Extension* pExtension_;
+    };
 
     template< typename Extension >
-    bool HasRetrieveEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const Extension& extension )
+    bool HasRetrieveEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, const Extension* pExtension = 0 )
     {
-        if( entity.Retrieve< Extension >() == &extension )
-            return true;
-        if( auto tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            auto it = tactical->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                if( !kernel::EntityHelpers::IsLogisticBase( child ) )
-                    if( HasRetrieveEntityAndSubordinatesUpToBaseLog( child, extension ) )
-                        return true;
-            }
-        }
-        return false;
-    }
-
-    template< typename Extension >
-    bool HasRetrieveEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity )
-    {
-        if( entity.Retrieve< Extension >() )
-            return true;
-        if( auto tactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            auto it = tactical->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                if( !kernel::EntityHelpers::IsLogisticBase( child ) )
-                    if( HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( child ) )
-                        return true;
-            }
-        }
-        return false;
+        RetrieveFunc< Extension > retrieve( pExtension );
+        return CheckEntityAndSubordinatesUpToBaseLog( entity, boost::bind( &RetrieveFunc< Extension >::Check, &retrieve, _1 ) );
     }
 
 } // namespace

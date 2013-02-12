@@ -84,7 +84,7 @@ struct AddLogisticConsignsToSetFunctor
     std::set< const Consign* > requestedConsigns_;
     std::set< const Consign* > handledConsigns_;
 
-    void operator()( const kernel::Entity_ABC& entity )
+    void Add( const kernel::Entity_ABC& entity )
     {
         const Extension* pConsigns = entity.Retrieve< Extension >();
         if( pConsigns )

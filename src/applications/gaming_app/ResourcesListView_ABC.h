@@ -61,7 +61,10 @@ protected:
     virtual void NotifyUpdated( const Extension& a ) = 0;
     bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity );
     bool HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a );
-    void DisplayModelWithAvailabilities( const std::map< std::string, kernel::Availability >& availabilities );
+    void DisplayModelWithAvailabilities();
+    void DisplaySelectionAvailabilities();
+    void AddAvailability( const kernel::Entity_ABC& entity );
+    virtual const std::vector< kernel::Availability >* GetAvailities( const Extension& ) const { return nullptr; }
     //@}
 
     //! @name Member data
@@ -72,6 +75,7 @@ private:
 protected:
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QStandardItemModel model_;
+    std::map< std::string, kernel::Availability > availabilities_;
     //@}
 };
 
@@ -167,7 +171,7 @@ void ResourcesListView_ABC< Extension >::UpdateSelected( const kernel::Entity_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: resizeModelOnContent
+// Name: ResourcesListView_ABC::ResizeModelOnContent
 // Created: NPT 2012-10-23
 // -----------------------------------------------------------------------------
 template< typename Extension >
@@ -187,7 +191,7 @@ void ResourcesListView_ABC< Extension >::ResizeModelOnNewContent( int wantedSize
 }
 
 // -----------------------------------------------------------------------------
-// Name: HasRetrieveForLogistic
+// Name: ResourcesListView_ABC::HasRetrieveForLogistic
 // Created: MMC 2013-01-23
 // -----------------------------------------------------------------------------
 template< typename Extension >
@@ -197,13 +201,13 @@ bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::E
 }
 
 // -----------------------------------------------------------------------------
-// Name: HasRetrieveForLogistic
+// Name: ResourcesListView_ABC::HasRetrieveForLogistic
 // Created: MMC 2013-01-23
 // -----------------------------------------------------------------------------
 template< typename Extension >
 bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::Entity_ABC& entity, const Extension& a )
 {
-    return logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( entity, a );
+    return logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog( entity, &a );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,11 +215,11 @@ bool ResourcesListView_ABC< Extension >::HasRetrieveForLogistic( const kernel::E
 // Created: MMC 2013-01-23
 // -----------------------------------------------------------------------------
 template< typename Extension >
-void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities( const std::map< std::string, kernel::Availability >& availabilities )
+void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities()
 {
-    ResizeModelOnNewContent( static_cast< int >( availabilities.size() ) );
+    ResizeModelOnNewContent( static_cast< int >( availabilities_.size() ) );
     unsigned int index = 0;
-    for( auto it = availabilities.begin(); it != availabilities.end(); ++it )
+    for( auto it = availabilities_.begin(); it != availabilities_.end(); ++it )
     {
         model_.item( index, 0 )->setText( QString( it->first.c_str() ) );
         model_.item( index, 1 )->setText( QString::number( it->second.total_ ) );
@@ -224,6 +228,36 @@ void ResourcesListView_ABC< Extension >::DisplayModelWithAvailabilities( const s
         model_.item( index, 4 )->setText( QString::number( it->second.atRest_ ) );
         ++index;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplaySelectionAvailabilities
+// Created: MMC 2013-02-08
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void ResourcesListView_ABC< Extension >::AddAvailability( const kernel::Entity_ABC& entity )
+{
+    if( const Extension* pState = entity.Retrieve< Extension >() )
+    {
+        const std::vector< kernel::Availability >* curAvailabilies = GetAvailities( *pState );
+        if( curAvailabilies )
+            for( auto it = curAvailabilies->begin(); it != curAvailabilies->end(); ++it )
+                availabilities_[ it->type_->GetName() ] += *it;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplaySelectionAvailabilities
+// Created: MMC 2013-02-08
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void ResourcesListView_ABC< Extension >::DisplaySelectionAvailabilities()
+{
+    if( !selected_  )
+        return;
+    availabilities_.clear();
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_, boost::bind( &ResourcesListView_ABC< Extension >::AddAvailability, this, _1 ) );
+    DisplayModelWithAvailabilities();
 }
 
 #endif // __ResourcesListView_ABC_h_

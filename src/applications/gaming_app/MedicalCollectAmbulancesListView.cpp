@@ -12,6 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Availability.h"
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MedicalCollectAmbulancesListView constructor
@@ -38,26 +39,13 @@ MedicalCollectAmbulancesListView::~MedicalCollectAmbulancesListView()
     // NOTHING
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: MedicalCollectAmbulancesListView::GetAvailities
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+const std::vector< kernel::Availability >* MedicalCollectAmbulancesListView::GetAvailities( const MedicalStates& states ) const
 {
-    struct MergeAvailabilities
-    {
-        std::map< std::string, kernel::Availability > availabilities_;
-
-        void operator()( const kernel::Entity_ABC& element )
-        {
-            if( const MedicalStates* pState = element.Retrieve< MedicalStates >() )
-                for( unsigned int i = 0; i < pState->dispoRamassageAmbulances_.size(); ++i )
-                {
-                    kernel::Availability curAvailability( 0
-                        , pState->dispoRamassageAmbulances_[ i ].total_
-                        , pState->dispoRamassageAmbulances_[ i ].available_
-                        , pState->dispoRamassageAmbulances_[ i ].atWork_
-                        , pState->dispoRamassageAmbulances_[ i ].atRest_ );
-                    availabilities_[ pState->dispoRamassageAmbulances_[ i ].type_->GetName() ] += curAvailability;
-                }
-        }
-    };
+    return &states.dispoRamassageAmbulances_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,9 +58,7 @@ void MedicalCollectAmbulancesListView::NotifyUpdated( const MedicalStates& a )
         return;
     if( !HasRetrieveForLogistic( *selected_, a ) )
         return;
-    MergeAvailabilities merged;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
-    DisplayModelWithAvailabilities( merged.availabilities_ );
+    DisplaySelectionAvailabilities();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +84,6 @@ void MedicalCollectAmbulancesListView::UpdateSelected( const kernel::Entity_ABC*
         hide();
         return;
     }
-    MergeAvailabilities merged;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
-    DisplayModelWithAvailabilities( merged.availabilities_ );
+    DisplaySelectionAvailabilities();
     show();
 }

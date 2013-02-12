@@ -12,6 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Availability.h"
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: SupplyTransportersListView constructor
@@ -38,26 +39,13 @@ SupplyTransportersListView::~SupplyTransportersListView()
     // NOTHING
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: SupplyTransportersListView::GetAvailities
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+const std::vector< kernel::Availability >* SupplyTransportersListView::GetAvailities( const SupplyStates& states ) const
 {
-    struct MergeAvailabilities
-    {
-        std::map< std::string, kernel::Availability > availabilities_;
-
-        void operator()( const kernel::Entity_ABC& element )
-        {
-            if( const SupplyStates* pState = element.Retrieve< SupplyStates >() )
-                for( unsigned int i = 0; i < pState->dispoTransporters_.size(); ++i )
-                {
-                    kernel::Availability curAvailability( 0
-                        , pState->dispoTransporters_[ i ].total_
-                        , pState->dispoTransporters_[ i ].available_
-                        , pState->dispoTransporters_[ i ].atWork_
-                        , pState->dispoTransporters_[ i ].atRest_ );
-                    availabilities_[ pState->dispoTransporters_[ i ].type_->GetName() ] += curAvailability;
-                }
-        }
-    };
+    return &states.dispoTransporters_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,10 +58,7 @@ void SupplyTransportersListView::NotifyUpdated( const SupplyStates& a )
         return;
     if( !HasRetrieveForLogistic( *selected_, a ) )
         return;
-
-    MergeAvailabilities merged;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
-    DisplayModelWithAvailabilities( merged.availabilities_ );
+    DisplaySelectionAvailabilities();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,8 +84,6 @@ void SupplyTransportersListView::UpdateSelected( const kernel::Entity_ABC* entit
         hide();
         return;
     }
-    MergeAvailabilities merged;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
-    DisplayModelWithAvailabilities( merged.availabilities_ );
+    DisplaySelectionAvailabilities();
     show();
 }

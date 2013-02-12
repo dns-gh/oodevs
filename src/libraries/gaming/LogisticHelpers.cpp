@@ -21,6 +21,7 @@
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/SupplyStates.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace EntityHelpers;
@@ -28,27 +29,55 @@ using namespace EntityHelpers;
 namespace logistic_helpers
 {
     // -----------------------------------------------------------------------------
+    namespace
+    {
+        struct VisitDotationsFunc
+        {
+            VisitDotationsFunc( boost::function< void( const Dotation& ) > func ) : func_( func ) {}
+            void Call( const kernel::Entity_ABC& entity )
+            {
+                if( entity.Retrieve< SupplyStates >() )
+                {
+                    auto it = entity.Get< SupplyStates >().CreateIterator();
+                    while( it.HasMoreElements() )
+                        func_( it.NextElement() );
+                }
+            }
+
+            boost::function< void( const Dotation& ) > func_;
+        };
+    }
+
+    // -----------------------------------------------------------------------------
     // Name: VisitBaseStocksDotations
     // Created: MMC 2012-10-10
     // -----------------------------------------------------------------------------
     void VisitBaseStocksDotations( const Entity_ABC& entity, boost::function< void( const Dotation& ) > func )
     {
-        if( entity.Retrieve< SupplyStates >() )
+        VisitDotationsFunc visitFunc( func );
+        VisitEntityAndSubordinatesUpToBaseLog( entity, boost::bind( &VisitDotationsFunc::Call, &visitFunc, _1 ) );
+    }
+
+    // -----------------------------------------------------------------------------
+    namespace
+    {
+        struct ProxyReturnFalseFunc
         {
-            auto it = entity.Get< SupplyStates >().CreateIterator();
-            while( it.HasMoreElements() )
-                func( it.NextElement() );
-        }
-        else if( auto tactical = entity.Retrieve< TacticalHierarchies >() )
-        {
-            auto it = tactical->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const Entity_ABC& child = it.NextElement();
-                if( !IsLogisticBase( child ) )
-                    VisitBaseStocksDotations( child, func );
-            }
-        }
+            ProxyReturnFalseFunc( boost::function< void( const kernel::Entity_ABC& ) > func ) : func_( func ) {}
+            bool Call( const kernel::Entity_ABC& entity ) { func_( entity ); return false; }
+
+            boost::function< void( const kernel::Entity_ABC& ) > func_;
+        };
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: VisitEntityAndSubordinatesUpToBaseLog
+    // Created: MMC 2012-01-23
+    // -----------------------------------------------------------------------------
+    void VisitEntityAndSubordinatesUpToBaseLog( const kernel::Entity_ABC& entity, boost::function< void( const kernel::Entity_ABC& ) > func )
+    {
+        logistic_helpers::ProxyReturnFalseFunc checkFunc( func );
+        CheckEntityAndSubordinatesUpToBaseLog( entity, boost::bind( &ProxyReturnFalseFunc::Call, &checkFunc, _1 ) );
     }
 
     // -----------------------------------------------------------------------------

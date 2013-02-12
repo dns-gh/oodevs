@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "SupplyStates.h"
+#include "clients_kernel/Availability.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -62,7 +63,7 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
     {
         dispoTransporters_.resize( message.transporters().elem_size() );
         for( int i = 0; i < message.transporters().elem_size(); ++i )
-            dispoTransporters_[i] = SupplyAvailability( resolver_, message.transporters().elem( i ) );
+            dispoTransporters_[i] = Availability( resolver_, message.transporters().elem( i ) );
     }
     if( message.has_stocks() )
     {

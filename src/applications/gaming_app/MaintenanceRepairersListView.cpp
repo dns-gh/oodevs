@@ -12,6 +12,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Availability.h"
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceRepairersListView constructor
@@ -38,26 +39,13 @@ MaintenanceRepairersListView::~MaintenanceRepairersListView()
     // NOTHING
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: MaintenanceRepairersListView::GetAvailities
+// Created: MMC 2013-01-28
+// -----------------------------------------------------------------------------
+const std::vector< kernel::Availability >* MaintenanceRepairersListView::GetAvailities( const kernel::MaintenanceStates_ABC& states ) const
 {
-    struct MergeAvailabilities
-    {
-        std::map< std::string, kernel::Availability > availabilities_;
-
-        void operator()( const kernel::Entity_ABC& element )
-        {
-            if( const kernel::MaintenanceStates_ABC* pState = element.Retrieve< kernel::MaintenanceStates_ABC >() )
-                for( unsigned int i = 0; i < pState->GetDispoRepairers().size(); ++i )
-                {
-                    kernel::Availability curAvailability( 0
-                        , pState->GetDispoRepairers()[ i ].total_
-                        , pState->GetDispoRepairers()[ i ].available_
-                        , pState->GetDispoRepairers()[ i ].atWork_
-                        , pState->GetDispoRepairers()[ i ].atRest_ );
-                    availabilities_[ pState->GetDispoRepairers()[ i ].type_->GetName() ] += curAvailability;
-                }
-        }
-    };
+    return &states.GetDispoRepairers();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,9 +58,7 @@ void MaintenanceRepairersListView::NotifyUpdated( const kernel::MaintenanceState
         return;
     if( !HasRetrieveForLogistic( *selected_, a ) )
         return;
-    MergeAvailabilities merged;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
-    DisplayModelWithAvailabilities( merged.availabilities_ );
+    DisplaySelectionAvailabilities();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +84,6 @@ void MaintenanceRepairersListView::UpdateSelected( const kernel::Entity_ABC* ent
         hide();
         return;
     }
-    MergeAvailabilities merged;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< MergeAvailabilities >( *selected_, merged );
-    DisplayModelWithAvailabilities( merged.availabilities_ );
+    DisplaySelectionAvailabilities();
     show();
 }

@@ -10,7 +10,6 @@
 #ifndef __SupplyStates_h_
 #define __SupplyStates_h_
 
-#include "SupplyAvailability.h"
 #include "Dotation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -24,14 +23,13 @@ namespace kernel
     class DotationType;
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Availability;
 }
 
 namespace sword
 {
     class LogSupplyState;
 }
-
-class SupplyAvailability;
 
 // =============================================================================
 /** @class  SupplyStates
@@ -74,7 +72,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< SupplyAvailability >         T_Availabilities;
+    typedef std::vector< kernel::Availability >         T_Availabilities;
     //@}
 
 public:

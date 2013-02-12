@@ -83,7 +83,7 @@ void LogisticConsignsWidget< Consign, Extension >::NotifyUpdated( const Extensio
 {
     if( !selected_ )
         return;
-    if( logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( *selected_, consigns ) )
+    if( logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( *selected_, &consigns ) )
         UpdateConsigns();
 }
 
@@ -97,7 +97,9 @@ void LogisticConsignsWidget< Consign, Extension >::UpdateConsigns()
     if( !selected_ )
         return;
     AddLogisticConsignsToSetFunctor< Consign, Extension > merge;
-    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog< AddLogisticConsignsToSetFunctor< Consign, Extension > >( *selected_, merge );
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *selected_
+                                                           , boost::bind( &AddLogisticConsignsToSetFunctor< Consign, Extension >::Add
+                                                           , &merge, _1 ) );
     DisplayConsigns( merge.requestedConsigns_, *pConsignTreeView_->invisibleRootItem() );
     DisplayConsigns( merge.handledConsigns_, *pConsignHandledTreeView_->invisibleRootItem() );
 }

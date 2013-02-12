@@ -175,9 +175,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\Sector.cpp">
       <Filter>Source Files\stuff a dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\SupplyAvailability.cpp">
-      <Filter>Source Files\stuff a dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\Surface.cpp">
       <Filter>Source Files\stuff a dispatcher</Filter>
     </ClCompile>
@@ -847,9 +844,6 @@
       <Filter>Source Files\stuff a dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Sector.h">
-      <Filter>Source Files\stuff a dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\SupplyAvailability.h">
       <Filter>Source Files\stuff a dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Surface.h">
@@ -1538,6 +1532,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Propagation.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogConsignDisplayer_ABC.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
