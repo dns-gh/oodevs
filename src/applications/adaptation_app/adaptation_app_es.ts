@@ -3555,16 +3555,16 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <translation>Nombre</translation>
     </message>
     <message>
-        <source>Category</source>
-        <translation>Categoría</translation>
-    </message>
-    <message>
         <source>Default production</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Color</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Dotación</translation>
     </message>
 </context>
 <context>

@@ -3541,16 +3541,16 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-        <source>Category</source>
-        <translation type="unfinished">الفئة</translation>
-    </message>
-    <message>
         <source>Default production</source>
         <translation type="unfinished">إنتاج الافتراضي</translation>
     </message>
     <message>
         <source>Color</source>
         <translation type="unfinished">لون</translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
 </context>
 <context>

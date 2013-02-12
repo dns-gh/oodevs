@@ -3561,16 +3561,16 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <translation>Nom</translation>
     </message>
     <message>
-        <source>Category</source>
-        <translation>Catégorie</translation>
-    </message>
-    <message>
         <source>Default production</source>
         <translation>Production par défaut</translation>
     </message>
     <message>
         <source>Color</source>
         <translation>Couleur</translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation>Dotation</translation>
     </message>
 </context>
 <context>

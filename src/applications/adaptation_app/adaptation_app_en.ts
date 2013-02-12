@@ -3554,16 +3554,16 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation>Name</translation>
     </message>
     <message>
-        <source>Category</source>
-        <translation>Category</translation>
-    </message>
-    <message>
         <source>Default production</source>
         <translation>Default production</translation>
     </message>
     <message>
         <source>Color</source>
         <translation>Color</translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation>Resource</translation>
     </message>
 </context>
 <context>
