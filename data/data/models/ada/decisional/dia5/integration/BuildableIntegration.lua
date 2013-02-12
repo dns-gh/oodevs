@@ -164,7 +164,7 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
         local checkpoint = integration.obtenirObjetProcheDe( localisation, 
                         eTypeObjectCheckpoint, 10 )
         if checkpoint == nil then -- need to create a checkpoint object
-            DEC_CreerObjetSansDelais( 
+            DEC_MagicGetOrCreateObject( 
                 eTypeObjectCheckpoint, localisation )
         end
         meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
@@ -234,7 +234,7 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appe
     if object ~= nil then -- rebuild the already existing object
         DEC_DetruireObjetSansDelais( object )
     end
-    position.id = DEC_CreerObjetSansDelais( typeObject, localisation )
+    position.id = DEC_MagicGetOrCreateObject( typeObject, localisation )
 end
 -- -------------------------------------------------------------------------------- 
 -- Destroy object on position
@@ -250,12 +250,12 @@ end
 -- --------------------------------------------------------------------------------
 integration.buildInstantlyDecontaminatePlotOn = function( position )  -- A appeler une seule fois.
     if not position.constructedObject then
-    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-    local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
-                        eTypeObjectSiteDecontamination, 10 )
-    if DecontaminatePlot == nil then -- need to create a decontamination site object
-        DEC_CreerObjetSansDelais( 
-                eTypeObjectSiteDecontamination, localisation )
+        local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+        local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
+                            eTypeObjectSiteDecontamination, 10 )
+        if DecontaminatePlot == nil then -- need to create a decontamination site object
+           DEC_MagicGetOrCreateObject( 
+                    eTypeObjectSiteDecontamination, localisation )
         end
     end
 end
