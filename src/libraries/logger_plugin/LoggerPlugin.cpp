@@ -47,7 +47,7 @@ LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::St
     , enabled_     ( true )
     , initialized_ ( false )
     , simulation_  ( new Simulation() )
-    , actions_     ( new ActionsLogger( config, model, staticModel, *simulation_ ) )
+    , actions_     ( new ActionsLogger( config, model, *simulation_ ) )
     , nCurrentTick_( 0 )
 {
     objectTypes_.Load( config );
@@ -93,7 +93,7 @@ bool LoggerPlugin::Initialize()
         if( !services_.HasService< replay::Service >() )
         {
             if( !pLogger_.get() )
-                pLogger_.reset( new MT_FileLogger( filename_.c_str(), 
+                pLogger_.reset( new MT_FileLogger( filename_.c_str(),
                                                     sessionConfig_.GetLoggerPluginLogFiles(),
                                                     sessionConfig_.GetLoggerPluginLogSize(),
                                                     sessionConfig_.GetLoggerPluginLogLevel(),

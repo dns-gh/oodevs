@@ -8,63 +8,44 @@
 // *****************************************************************************
 
 #include "ActionsLogger.h"
-#include "actions/Action_ABC.h"
-#include "actions/ActionFactory.h"
-#include "actions/ActionParameterFactory.h"
-#include "actions/ActionsModel.h"
-#include "actions/Mission.h"
-#include "actions/ActionsFilter_ABC.h"
-#include "clients_kernel/Controller.h"
+
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Time_ABC.h"
-#include "dispatcher/AgentKnowledgeConverter.h"
-#include "dispatcher/ModelAdapter.h"
-#include "dispatcher/Model_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/XmlAdapter.h"
 #include "dispatcher/Agent.h"
+#include "dispatcher/ModelAdapter.h"
 #include "dispatcher/Population.h"
-#include "dispatcher/ObjectKnowledgeConverter.h"
-#include "protocol/Protocol.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include "MT_Tools/MT_Logger.h"
+#include "protocol/Simulation.h"
+#include "protocol/XmlWriters.h"
+#include "tools/Exception.h"
+#include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
-#pragma warning( push, 0 )
-#include <boost/filesystem/path.hpp>
+
+#include <boost/bind.hpp>
 #include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/algorithm/string/erase.hpp>
+#include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
+using namespace plugins::logger;
 
-using namespace plugins;
-using namespace logger;
-
-namespace
-{
-    struct NullPublisher : public Publisher_ABC
-    {
-        virtual void Send( const sword::ClientToSim& /*message*/ ) {}
-        virtual void Send( const sword::ClientToAuthentication& /*message*/ ) {}
-        virtual void Send( const sword::ClientToReplay& /*message*/ ) {}
-        virtual void Send( const sword::ClientToAar& /*message*/ ) {}
-        virtual void Send( const sword::ClientToMessenger& /*message*/ ) {}
-
-    };
-}
+typedef sword::ClientToSim_Content Content;
 
 // -----------------------------------------------------------------------------
 // Name: ActionsLogger constructor
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation )
-    : config_           ( config )
-    , entities_         ( new dispatcher::ModelAdapter( model ) )
-    , controller_       ( new kernel::Controller() )
-    , converter_        ( new kernel::CoordinateConverter( config ) )
-    , publisher_        ( new NullPublisher() )
-    , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
-    , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *controller_ ) )
-    , factory_          ( new actions::ActionFactory( *controller_, *parameters_, *entities_, staticModel, simulation ) )
-    , actions_          ( new actions::ActionsModel( *factory_, *publisher_, *publisher_ ) )
-    , ordersLoaded_     ( !config_.HasCheckpoint() )
+ActionsLogger::ActionsLogger( const tools::SessionConfig& config,
+                              const dispatcher::Model_ABC& model,
+                              const kernel::Time_ABC& timer )
+    : config_   ( config )
+    , timer_    ( timer )
+    , entities_ ( new dispatcher::ModelAdapter( model ) )
+    , converter_( new kernel::CoordinateConverter( config ) )
+    , loaded_   ( !config_.HasCheckpoint() )
 {
     // NOTHING
 }
@@ -78,16 +59,45 @@ ActionsLogger::~ActionsLogger()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ActionsLogger::LogAction
-// Created: SBO 2010-05-11
-// -----------------------------------------------------------------------------
-template< typename T >
-void ActionsLogger::LogAction( const T& message )
+namespace
 {
-    LoadOrdersIfCheckpoint();
-    actions::Action_ABC* action = factory_->CreateAction( message );
-    actions_->Register( action->GetId(), *action );
+    struct Adapter : public protocol::Writer_ABC
+    {
+        Adapter( const kernel::CoordinateConverter_ABC& converter )
+            : converter_( converter )
+        {
+            // NOTHING
+        }
+
+        std::string Convert( double x, double y ) const
+        {
+            const auto p2d = geometry::Point2d( x, y );
+            const auto p2f = converter_.ConvertFromGeo( p2d );
+            return converter_.ConvertToMgrs( p2f );
+        }
+
+        const kernel::CoordinateConverter_ABC& converter_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::SaveTo
+// Created: BAX 2013-02-11
+// -----------------------------------------------------------------------------
+void ActionsLogger::SaveTo( const std::string& filename, const T_Filter& filter ) const
+{
+    xml::xofstream xos( filename );
+    xos << xml::start( "actions" );
+    const Adapter adapter( *converter_ );
+    for( auto it = actions_.begin(); it != actions_.end(); ++it )
+    {
+        if( filter && !filter( it->second ) )
+            continue;
+        xml::xosubstream sub( xos );
+        sub << xml::start( "action" )
+            << xml::attribute( "time", boost::posix_time::to_iso_string( it->first ) );
+        protocol::Write( sub, adapter, it->second.message() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +106,34 @@ void ActionsLogger::LogAction( const T& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Commit() const
 {
-    actions_->Save( config_.BuildSessionChildFile( "actions.ord" ) );
+    SaveTo( config_.BuildSessionChildFile( "actions.ord" ), T_Filter() );
+}
+
+namespace
+{
+    boost::posix_time::ptime MakeTime( std::string value )
+    {
+        boost::algorithm::erase_all( value, "-" );
+        boost::algorithm::erase_all( value, ":" );
+        return boost::posix_time::from_iso_string( value );
+    }
+
+    void ReadAction( ActionsLogger::T_Actions& dst, const kernel::XmlAdapter& adapter, xml::xistream& xis )
+    {
+        try
+        {
+            std::string time;
+            xis >> xml::attribute( "time", time );
+            sword::ClientToSim msg;
+            msg.set_context( 0 );
+            protocol::Read( adapter, *msg.mutable_message(), xis );
+            dst.insert( std::make_pair( MakeTime( time ), msg ) );
+        }
+        catch( const std::exception& err )
+        {
+            MT_LOG_ERROR_MSG( "Unable to process action: " << tools::GetExceptionMsg( err ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +142,34 @@ void ActionsLogger::Commit() const
 // -----------------------------------------------------------------------------
 void ActionsLogger::LoadOrdersIfCheckpoint()
 {
-    if( !ordersLoaded_ && config_.HasCheckpoint()  )
-    {
-        std::string actionsPath( config_.BuildSessionChildFile( "actions.ord" ) );
-        ordersLoaded_ = true;
-        if( bfs::exists( bfs::path( actionsPath ) ) )
-            actions_->Load( actionsPath, config_.GetLoader() );
-    }
+    if( loaded_ || !config_.HasCheckpoint() )
+        return;
+
+    loaded_ = true;
+    std::string filename( config_.BuildSessionChildFile( "actions.ord" ) );
+    if( !bfs::exists( filename ) )
+        return;
+
+    const kernel::XmlAdapter adapter( *converter_, *entities_ );
+    const auto xis = config_.GetLoader().LoadFile( filename );
+    *xis >> xml::start( "actions" )
+         >> xml::list( "action", boost::bind( &ReadAction,
+                       boost::ref( actions_ ), boost::cref( adapter ), _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::LogAction
+// Created: BAX 2013-02-11
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+void ActionsLogger::LogAction( const T& message, const U& mutator )
+{
+    if( !message.has_type() || !message.type().id() )
+        return;
+    LoadOrdersIfCheckpoint();
+    sword::ClientToSim msg;
+    *( msg.mutable_message()->*mutator )() = message;
+    actions_.insert( std::make_pair( tools::QTimeToBoostTime( timer_.GetDateTime() ), msg ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,8 +178,7 @@ void ActionsLogger::LoadOrdersIfCheckpoint()
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const sword::UnitOrder& message )
 {
-    if( message.has_type() && message.type().id() != 0 )
-        LogAction( message );
+    LogAction( message, &Content::mutable_unit_order );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,8 +187,7 @@ void ActionsLogger::Log( const sword::UnitOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const sword::AutomatOrder& message )
 {
-    if( message.has_type() && message.type().id() != 0 )
-        LogAction( message );
+    LogAction( message, &Content::mutable_automat_order );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +196,7 @@ void ActionsLogger::Log( const sword::AutomatOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const sword::CrowdOrder& message )
 {
-    if( message.has_type() && message.type().id() != 0 )
-        LogAction( message );
+    LogAction( message, &Content::mutable_crowd_order );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,33 +205,25 @@ void ActionsLogger::Log( const sword::CrowdOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const sword::FragOrder& message )
 {
-    if( message.has_type() && message.type().id() != 0 )
-        LogAction( message );
+    LogAction( message, &Content::mutable_frag_order );
 }
 
 namespace
 {
-    struct CheckPointFilter : public actions::ActionsFilter_ABC
-                            , private boost::noncopyable
+    bool ActiveFilter( const kernel::EntityResolver_ABC& resolver,
+                       const sword::ClientToSim& pkt )
     {
-        CheckPointFilter( const kernel::EntityResolver_ABC& resolver )
-            : resolver_( resolver )
-        {
-            // NOTHING
-        }
-        virtual bool Allows( const actions::Action_ABC& action ) const
-        {
-            if( const actions::Mission* m = dynamic_cast< const actions::Mission* >( &action ) )
-            {
-                if( const kernel::Agent_ABC* agent = resolver_.FindAgent( m->GetEntityId() ) )
-                    return static_cast< const dispatcher::Agent* >( agent )->GetOrder() != 0;
-                else if( const kernel::Population_ABC* population = resolver_.FindPopulation( m->GetEntityId() ) )
-                    return static_cast< const dispatcher::Population* >( population )->GetOrder() != 0;
-            }
+        if( !pkt.has_message() )
             return false;
-        }
-        const kernel::EntityResolver_ABC& resolver_;
-    };
+        const auto& content = pkt.message();
+        if( content.has_unit_order() )
+            if( auto ptr = resolver.FindAgent( content.unit_order().tasker().id() ) )
+                return !!static_cast< dispatcher::Agent* >( ptr )->GetOrder();
+        if( content.has_crowd_order() )
+            if( auto ptr = resolver.FindPopulation( content.crowd_order().tasker().id() ) )
+                return !!static_cast< dispatcher::Population* >( ptr )->GetOrder();
+        return false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +232,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionsLogger::SaveCheckpointActiveMissions( std::string name )
 {
-    CheckPointFilter filter( *entities_ );
-    actions_->Save( config_.BuildOnLocalCheckpointChildFile( name, "current.ord" ), &filter );
+    const auto filename = config_.BuildOnLocalCheckpointChildFile( name, "current.ord" );
+    SaveTo( filename, boost::bind( &ActiveFilter, boost::cref( *entities_ ), _1 ) );
     Commit();
 }

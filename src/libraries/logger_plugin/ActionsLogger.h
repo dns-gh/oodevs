@@ -10,15 +10,11 @@
 #ifndef __ActionsLogger_h_
 #define __ActionsLogger_h_
 
+#include <map>
 #include <memory>
 #include <string>
 
-namespace actions
-{
-    class ActionFactory_ABC;
-    class ActionsModel;
-    class ParameterFactory_ABC;
-}
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -26,6 +22,7 @@ namespace sword
     class CrowdOrder;
     class UnitOrder;
     class FragOrder;
+    class ClientToSim;
 }
 
 namespace dispatcher
@@ -35,12 +32,8 @@ namespace dispatcher
 
 namespace kernel
 {
-    class AgentKnowledgeConverter_ABC;
-    class Controller;
     class CoordinateConverter_ABC;
     class EntityResolver_ABC;
-    class ObjectKnowledgeConverter_ABC;
-    class StaticModel;
     class Time_ABC;
 }
 
@@ -49,7 +42,14 @@ namespace tools
     class SessionConfig;
 }
 
-class Publisher_ABC;
+namespace boost
+{
+    template< typename T > class function;
+namespace posix_time
+{
+    class ptime;
+}
+}
 
 namespace plugins
 {
@@ -61,12 +61,14 @@ namespace logger
 */
 // Created: SBO 2010-05-11
 // =============================================================================
-class ActionsLogger
+class ActionsLogger : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsLogger( const tools::SessionConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation );
+             ActionsLogger( const tools::SessionConfig& config,
+                            const dispatcher::Model_ABC& model,
+                            const kernel::Time_ABC& timer );
     virtual ~ActionsLogger();
     //@}
 
@@ -83,35 +85,31 @@ public:
     void SaveCheckpointActiveMissions( std::string name );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Typedef helpers
     //@{
-    ActionsLogger( const ActionsLogger& );            //!< Copy constructor
-    ActionsLogger& operator=( const ActionsLogger& ); //!< Assignment operator
+    typedef std::map< boost::posix_time::ptime, sword::ClientToSim > T_Actions;
+    typedef boost::function< bool( const sword::ClientToSim& ) > T_Filter;
     //@}
 
+private:
     //! @name Helpers
     //@{
-    template< typename T >
-    void LogAction( const T& message );
+    void SaveTo( const std::string& filename, const T_Filter& filter ) const;
     void Commit() const;
     void LoadOrdersIfCheckpoint();
+    template< typename T, typename U >
+    void LogAction( const T& message, const U& mutator );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::SessionConfig& config_;
-    std::auto_ptr< kernel::EntityResolver_ABC > entities_;
-    std::auto_ptr< kernel::Controller > controller_;
+    const tools::SessionConfig&                      config_;
+    const kernel::Time_ABC&                          timer_;
+    std::auto_ptr< kernel::EntityResolver_ABC >      entities_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
-    std::auto_ptr< Publisher_ABC > publisher_;
-    std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentsKnowledges_;
-    std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
-    std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
-    std::auto_ptr< actions::ActionFactory_ABC > factory_;
-    std::auto_ptr< actions::ActionsModel > actions_;
-    bool ordersLoaded_;
+    T_Actions                                        actions_;
+    bool                                             loaded_;
     //@}
 };
 
