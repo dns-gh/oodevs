@@ -562,9 +562,8 @@ void MIL_EntityManager::InitializeDiplomacy( xml::xistream& xis )
 void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
 {
     MIL_Army_ABC* pArmy = armyFactory_->Find( xis.attribute< unsigned long >( "id" ) );
-    if( !pArmy )
-        xis.error( "Unknown side" );
-    pArmy->InitializeDiplomacy( xis );
+    if( pArmy )
+        pArmy->InitializeDiplomacy( xis );
 }
 
 // -----------------------------------------------------------------------------
