@@ -243,13 +243,13 @@ void ADN_Objects_GUI::Build()
         builder.PopSubName(); // !explosive
 
         QSignalMapper* mapper = new QSignalMapper( this );
-        connect( attrition_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        connect( attrition_, SIGNAL( clicked( bool ) ), mapper, SLOT( map() ) );
         mapper->setMapping( attrition_, attrition_ );
-        connect( attritionDotation_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        connect( attritionDotation_, SIGNAL( clicked( bool ) ), mapper, SLOT( map() ) );
         mapper->setMapping( attritionDotation_, attritionDotation_ );
-        connect( attritionMine_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        connect( attritionMine_, SIGNAL( clicked( bool ) ), mapper, SLOT( map() ) );
         mapper->setMapping( attritionMine_, attritionMine_ );
-        connect( attritionExplosive_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        connect( attritionExplosive_, SIGNAL( clicked( bool ) ), mapper, SLOT( map() ) );
         mapper->setMapping( attritionExplosive_, attritionExplosive_ );
         connect( mapper, SIGNAL( mapped( QWidget* ) ), this, SLOT( OnAttritionToggled( QWidget* ) ) );
 
@@ -494,7 +494,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 
 namespace
 {
-    void UpdateCheckedState( Q3GroupBox* capacity, ADN_ComboBox_Vector* combo, Q3GroupBox* current, Q3GroupBox* first, Q3GroupBox* second )
+    void UpdateCheckedState( ADN_ComboBox_Vector* combo, Q3GroupBox* current, Q3GroupBox* first, Q3GroupBox* second )
     {
         if( current->isChecked() )
         {
@@ -502,20 +502,25 @@ namespace
             {
                 first->setChecked( false );
                 second->setChecked( false );
-                combo->setCurrentItem( 0 );
             }
             else
             {
                 current->setChecked( false );
             }
         }
-        else if( !first->isChecked() && !second->isChecked() )
+        else
+            current->setChecked( true );
+    }
+
+    bool CheckAttritionIfNeeded( ADN_ComboBox_Vector* combo, Q3GroupBox* groupBox )
+    {
+        if( combo->count() > 0 )
         {
-            if( combo->count() > 0 )
-                current->setChecked( true );
-            else
-                capacity->setChecked( false );
+            groupBox->setChecked( true );
+            combo->setCurrentItem( 0 );
+            return true;
         }
+        return false;
     }
 }
 
@@ -527,21 +532,19 @@ void ADN_Objects_GUI::OnAttritionToggled( QWidget* widget )
 {
     if( !widget )
         return;
-    if( widget == attrition_ && attrition_->isChecked())
+    if( widget == attrition_ && attrition_->isChecked() )
     {
-        if( attritionDotationVector_->count() == 0 && attritionMineVector_->count() == 0 && attritionExplosiveVector_->count() == 0 )
-            attrition_->setChecked( false );
-        else if( attritionDotationVector_->count() > 0 )
-            attritionDotation_->setChecked( true );
-        else if( attritionMineVector_->count() > 0 )
-            attritionMine_->setChecked( true );
-        else if( attritionExplosiveVector_->count() > 0 )
-            attritionExplosive_->setChecked( true );
+        if( ( attritionDotationVector_->count() == 0 && attritionMineVector_->count() == 0 && attritionExplosiveVector_->count() == 0 ) ||  // nothing available, uncheck attrition
+            ( !attritionDotation_->isChecked() && !attritionMine_->isChecked() && !attritionExplosive_->isChecked() &&                      // nothing is check, check the first available
+              !CheckAttritionIfNeeded( attritionDotationVector_, attritionDotation_ ) &&                                                    // if successfully check something, do nothing
+              !CheckAttritionIfNeeded( attritionMineVector_, attritionMine_ ) &&
+              !CheckAttritionIfNeeded( attritionExplosiveVector_, attritionExplosive_ ) ) )
+            attrition_->setChecked( false );                                                                                                // if can't check anything, uncheck attrition
     }
     else if( widget == attritionDotation_ )
-        UpdateCheckedState( attrition_, attritionDotationVector_, attritionDotation_, attritionMine_, attritionExplosive_ );
+        UpdateCheckedState( attritionDotationVector_, attritionDotation_, attritionMine_, attritionExplosive_ );
     else if( widget == attritionMine_ )
-        UpdateCheckedState( attrition_, attritionMineVector_, attritionMine_, attritionDotation_, attritionExplosive_ );
+        UpdateCheckedState( attritionMineVector_, attritionMine_, attritionDotation_, attritionExplosive_ );
     else if( widget == attritionExplosive_ )
-        UpdateCheckedState( attrition_, attritionExplosiveVector_, attritionExplosive_, attritionDotation_, attritionMine_ );
+        UpdateCheckedState( attritionExplosiveVector_, attritionExplosive_, attritionDotation_, attritionMine_ );
 }
