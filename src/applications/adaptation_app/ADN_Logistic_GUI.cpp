@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Logistic_GUI.h"
+#include "moc_ADN_Logistic_GUI.cpp"
 #include "ADN_Logistic_Data.h"
 
 #include "ADN_Maintenance_GUI.h"

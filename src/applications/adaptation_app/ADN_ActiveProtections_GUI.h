@@ -22,8 +22,9 @@ class ADN_ActiveProtections_Data;
 // =============================================================================
 class ADN_ActiveProtections_GUI : public ADN_GUI_ABC
 {
-public:
+    Q_OBJECT
 
+public:
     enum E_ActiveProtectionsGuiElements
     {
         eActiveProtectionName,

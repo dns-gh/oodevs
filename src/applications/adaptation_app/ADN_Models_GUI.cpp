@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Models_GUI.h"
+#include "moc_ADN_Models_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Models_Data.h"

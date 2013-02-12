@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_HumanFactors_GUI.h"
+#include "moc_ADN_HumanFactors_GUI.cpp"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"

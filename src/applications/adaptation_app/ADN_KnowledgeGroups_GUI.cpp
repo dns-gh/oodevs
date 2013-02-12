@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_KnowledgeGroups_GUI.h"
+#include "moc_ADN_KnowledgeGroups_GUI.cpp"
 #include "ADN_KnowledgeGroups_Data.h"
 #include "ADN_KnowledgeGroups_ListView.h"
 #include "ADN_GuiBuilder.h"

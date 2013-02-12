@@ -22,6 +22,7 @@ class ADN_Logistic_Data;
 // =============================================================================
 class ADN_Logistic_GUI : public ADN_Tab_Container
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

@@ -22,6 +22,7 @@ class ADN_Breakdowns_Data;
 // =============================================================================
 class ADN_Breakdowns_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     enum E_BreakdownGuiElements

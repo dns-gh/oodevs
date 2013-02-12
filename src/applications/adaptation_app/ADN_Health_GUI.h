@@ -11,10 +11,8 @@
 #define __ADN_Health_GUI_h_
 
 #include "ADN_GUI_ABC.h"
-#include "ADN_Enums.h"
 
 class ADN_Health_Data;
-class ADN_Table;
 
 // =============================================================================
 /** @class  ADN_Health_GUI
@@ -24,6 +22,7 @@ class ADN_Table;
 // =============================================================================
 class ADN_Health_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

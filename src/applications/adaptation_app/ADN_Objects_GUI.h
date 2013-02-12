@@ -26,8 +26,7 @@ class ADN_Objects_Data;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Objects_GUI
-    : public ADN_GUI_ABC
+class ADN_Objects_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
 

@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Inhabitants_GUI.h"
+#include "moc_ADN_Inhabitants_GUI.cpp"
 #include "ADN_GuiBuilder.h"
 #include "ADN_GoToButton.h"
 #include "ADN_Inhabitants_Data.h"

@@ -38,11 +38,11 @@ class QWidget;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Units_GUI
-    : public ADN_GUI_ABC
+class ADN_Units_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
-        friend class ADN_Units;
+
+    friend class ADN_Units;
 
 public:
     //! @name Types

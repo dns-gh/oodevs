@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ActiveProtections_GUI.h"
+#include "moc_ADN_ActiveProtections_GUI.cpp"
 #include "ADN_ActiveProtectionsListView.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_WeaponsTable.h"

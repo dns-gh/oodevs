@@ -22,6 +22,8 @@ class ADN_Crowds_Data;
 // =============================================================================
 class ADN_Crowds_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
+
 public:
     enum E_GuiElements
     {

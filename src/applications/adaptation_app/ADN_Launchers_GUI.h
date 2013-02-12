@@ -23,9 +23,10 @@ class ADN_HtmlBuilder;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Launchers_GUI
-: public ADN_GUI_ABC
+class ADN_Launchers_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
+
 public:
     enum E_GuiElements
     {

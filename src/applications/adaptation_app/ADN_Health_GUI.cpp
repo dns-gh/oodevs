@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Health_GUI.h"
+#include "moc_ADN_Health_GUI.cpp"
 #include "ADN_Health_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"

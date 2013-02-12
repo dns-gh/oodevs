@@ -1356,17 +1356,11 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.h">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.h">
-      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_Data.h">
       <Filter>Source Files\Workspace\Models\Models Data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_Data.h">
       <Filter>Source Files\Workspace\AI Engine\AI Engine data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_GUI.h">
-      <Filter>Source Files\Workspace\AI Engine\AI Engine GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_Data.h">
       <Filter>Source Files\Workspace\Automata\Automata data</Filter>
@@ -1380,14 +1374,8 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_Data.h">
       <Filter>Source Files\Workspace\Communications\Communications data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Communications_GUI.h">
-      <Filter>Source Files\Workspace\Communications\Communications GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_Data.h">
       <Filter>Source Files\Workspace\Human factors\Human factors data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_GUI.h">
-      <Filter>Source Files\Workspace\Human factors\Human factors GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarning.h">
       <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance data</Filter>
@@ -1398,17 +1386,11 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AvailabilityWarningTable.h">
       <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Maintenance_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Data.h">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.h">
       <Filter>Source Files\Workspace\Breakdowns\Breakdowns data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.h">
-      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_ListView.h">
       <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
@@ -1419,23 +1401,14 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_Data.h">
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_GUI.h">
-      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_ListView.h">
       <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_Data.h">
       <Filter>Source Files\Workspace\Logistic\Health\Health data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Health\Health GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.h">
       <Filter>Source Files\Workspace\Logistic\Supply\Supply data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h">
       <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
@@ -1445,9 +1418,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h">
       <Filter>Source Files\Workspace\Radars\Radars data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.h">
-      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h">
       <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
@@ -1650,9 +1620,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_Data.h">
       <Filter>Source Files\Workspace\Logistic\Logistic\Logistic data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Logistic\Logistic GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Data_Container.h">
       <Filter>Source Files\Workspace\Container\Container data</Filter>
     </ClInclude>
@@ -1748,12 +1715,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.h">
-      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.h">
-      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.h">
       <Filter>Source Files\Workspace\Disasters\Disasters Data</Filter>
@@ -1961,37 +1922,19 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Workspace.h">
       <Filter>Source Files\Workspace</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_NBC_GUI.h">
-      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_NBC_Intox_GUI.h">
       <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.h">
-      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Launchers.h">
       <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.h">
-      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.h">
       <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Weapons_GUI.h">
-      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Sensors.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_DetectionAlgorithmPrevision.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Nature_GUI.h">
@@ -2003,14 +1946,8 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Units_Composantes_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Units_GUI.h">
-      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
-      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Automata_SubUnitsTable.h">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
@@ -2024,20 +1961,8 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameters_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Missions_GUI.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_GUI.h">
-      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
-      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">
-      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_Plot.h">
       <Filter>Source Files\GQ</Filter>
@@ -2108,9 +2033,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.h">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
-      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
@@ -2144,16 +2066,7 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.h">
       <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.h">
-      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.h">
-      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionGraph.h">
-      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.h">
       <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_ActiveProtectionsListView.h">
@@ -2163,9 +2076,6 @@
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_Dotations_GUI.h">
-      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_GUI.h">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_RadarsListView.h">
@@ -2196,6 +2106,96 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.h">
       <Filter>Source Files\Common widgets</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.h">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Launchers_GUI.h">
+      <Filter>Source Files\Workspace\Launchers\Launchers GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Weapons_GUI.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.h">
+      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_GUI.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.h">
+      <Filter>Source Files\Workspace\Breakdowns\Breakdowns GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">
+      <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_NBC_GUI.h">
+      <Filter>Source Files\Workspace\Nbc\Nbc GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.h">
+      <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Missions_GUI.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.h">
+      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Equipments_GUI.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Units_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Maintenance_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Maintenance\Maintenance GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Health\Health GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Logistic\Logistic GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_KnowledgeGroups_GUI.h">
+      <Filter>Source Files\Workspace\Knowledge groups\Knowledge groups GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_HumanFactors_GUI.h">
+      <Filter>Source Files\Workspace\Human factors\Human factors GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_AiEngine_GUI.h">
+      <Filter>Source Files\Workspace\AI Engine\AI Engine GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.h">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Communications_GUI.h">
+      <Filter>Source Files\Workspace\Communications\Communications GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.h">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

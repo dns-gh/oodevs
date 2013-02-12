@@ -21,18 +21,28 @@
 #include "moc_ADN_GUI_ABC.cpp"
 #include "ADN_NavigationInfos.h"
 #include "ADN_ListView.h"
+#include "ADN_Tr.h"
 #include <QtGui/qsizepolicy.h>
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GUI_ABC::tr
-// Created: APE 2005-04-11
+// Name: ADN_GUI_ABC constructor
+// Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
-QString ADN_GUI_ABC::tr( const char* s, const char* c )
+ADN_GUI_ABC::ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
+    : pMainWidget_ ( 0 )
+    , pListView_( 0 )
+    , strClassName_( ADN_Tr::ConvertFromWorkspaceElement( workspaceElement, ADN_Tr::eToSim ).c_str() )
 {
-    if( qApp )
-        return qApp->translate( strClassName_, s, c, QApplication::DefaultCodec );
-    else
-        return QString::fromLatin1( s );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC destructor
+// Created: ABR 2013-02-11
+// -----------------------------------------------------------------------------
+ADN_GUI_ABC::~ADN_GUI_ABC()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

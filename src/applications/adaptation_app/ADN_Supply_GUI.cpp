@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_GUI.h"
-
+#include "moc_ADN_Supply_GUI.cpp"
 #include "ADN_Supply_Data.h"
 #include "ADN_Supply_TrucksDoubleTable.h"
 #include "ADN_Supply_TrucksTimeTable.h"

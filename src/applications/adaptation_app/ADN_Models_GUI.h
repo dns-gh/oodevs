@@ -25,6 +25,8 @@
 // =============================================================================
 class ADN_Models_GUI : public ADN_Tabbed_GUI_ABC
 {
+    Q_OBJECT
+
 public:
     enum E_GuiElements
     {

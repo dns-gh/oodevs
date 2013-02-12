@@ -21,6 +21,7 @@
 // =============================================================================
 class ADN_HumanFactors_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

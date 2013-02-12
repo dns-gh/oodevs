@@ -26,7 +26,6 @@ class UnitsFilter;
 // =============================================================================
 class ADN_Automata_GUI : public ADN_GUI_ABC
 {
-
     Q_OBJECT
 
 public:

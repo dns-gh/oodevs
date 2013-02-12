@@ -28,8 +28,7 @@ class ADN_ComboBox;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Categories_GUI
-: public ADN_GUI_ABC
+class ADN_Categories_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
 

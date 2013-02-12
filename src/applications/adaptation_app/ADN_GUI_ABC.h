@@ -21,7 +21,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "ADN_NavigationInfos.h"
-#include "ADN_Tr.h"
+#include "ADN_Enums.h"
 
 class ADN_MainWindow;
 class ADN_HtmlBuilder;
@@ -57,12 +57,8 @@ class ADN_GUI_ABC : public ADN_BaseGui_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_GUI_ABC( E_WorkspaceElements workspaceElement )
-                 : pMainWidget_ ( 0 )
-                 , pListView_( 0 )
-                 , strClassName_( ADN_Tr::ConvertFromWorkspaceElement( workspaceElement, ADN_Tr::eToSim ).c_str() )
-             {}
-    virtual ~ADN_GUI_ABC() {};
+             ADN_GUI_ABC( E_WorkspaceElements workspaceElement );
+    virtual ~ADN_GUI_ABC();
     //@}
 
     //! @name Operations
@@ -81,11 +77,6 @@ public:
     ADN_ListView* GetListView() const { return pListView_; }
     virtual void AddListView( ADN_ListView* listView );
     QWidget* CreateScrollArea( const char* objectName, QWidget& content, QWidget* list = 0, bool paintSplitter = true, bool paintBackground = false, bool showFrameBorder = true, int margin = 10, int spacing = 10 );
-    //@}
-
-    //! @name Qt reimplementation.
-    //@{
-    QString tr( const char* s, const char* c = 0 );
     //@}
 
 protected:

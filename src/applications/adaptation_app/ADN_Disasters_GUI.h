@@ -22,6 +22,8 @@ class ADN_Disasters_Data;
 // =============================================================================
 class ADN_Disasters_GUI: public ADN_GUI_ABC
 {
+    Q_OBJECT
+
 public:
     enum E_GuiElements
     {

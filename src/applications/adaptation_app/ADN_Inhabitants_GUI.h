@@ -24,6 +24,7 @@ class ADN_Inhabitants_ListView;
 // =============================================================================
 class ADN_Inhabitants_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Types
