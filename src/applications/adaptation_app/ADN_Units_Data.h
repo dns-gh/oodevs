@@ -30,17 +30,16 @@ class ADN_Units_Data : public ADN_Data_ABC
 
 public:
     //*****************************************************************************
-    class ComposanteInfos : public ADN_Ref_ABC
+    class ComposanteInfos : public ADN_CrossedRef< ADN_Equipments_Data::EquipmentInfos >
     {
     public:
-        ComposanteInfos();
+        ComposanteInfos( ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment = 0 );
 
         ComposanteInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output, bool bIsAutonomous ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Equipments_Data::EquipmentInfos> ptrComposante_;
         ADN_Type_Bool                                                   bMajor_;
         ADN_Type_Bool                                                   bLoadable_;
         ADN_Type_Bool                                                   bConveyor_;
@@ -55,8 +54,9 @@ public:
             ~Cmp() {}
 
             bool operator()( ComposanteInfos* tgtnfos ) const
-            { return tgtnfos->ptrComposante_.GetData() && tgtnfos->ptrComposante_.GetData()->strName_==val_; }
-
+            {
+                return tgtnfos->GetCrossedElement() && tgtnfos->GetCrossedElement()->strName_ == val_;
+            }
         private:
             std::string val_;
         };

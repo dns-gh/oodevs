@@ -162,13 +162,13 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
     for( ADN_Units_Data::CIT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
     {
         ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, Qt::AlignCenter );
-        pCompItem->setText( eColumnTarget, (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() );
+        pCompItem->setText( eColumnTarget, (*it3)->GetCrossedElement()->strName_.GetData().c_str() );
         pCompItem->setText( eColumnNbrComp, QString::number( (*it3)->nNb_.GetData() ) );
         nCompInUnit += (*it3)->nNb_.GetData();
 
         // Consumption
-        ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->ptrComposante_.GetData()->consumptions_.vConsumptions_;
-        ADN_Equipments_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->resources_.categories_;
+        ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->GetCrossedElement()->consumptions_.vConsumptions_;
+        ADN_Equipments_Data::T_CategoryInfos_Vector&   categories   = (*it3)->GetCrossedElement()->resources_.categories_;
         for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
         {
             ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();

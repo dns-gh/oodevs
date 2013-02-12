@@ -169,11 +169,11 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
                                                          ADN_Resources_Data::CategoryInfo& category,
                                                          ADN_Units_Data::ComposanteInfos&   comp )
 {
-    item.setText( eColumnTarget, comp.ptrComposante_.GetData()->strName_.GetData().c_str() );
+    item.setText( eColumnTarget, comp.GetCrossedElement()->strName_.GetData().c_str() );
     item.setText( eColumnNbrComp, QString::number( comp.nNb_.GetData() ) );
 
     // retrieve corresponding dotation category
-    ADN_Equipments_Data::T_CategoryInfos_Vector& categories = comp.ptrComposante_.GetData()->resources_.categories_;
+    ADN_Equipments_Data::T_CategoryInfos_Vector& categories = comp.GetCrossedElement()->resources_.categories_;
     ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
     for( ; itCategory != categories.end(); ++itCategory )
         if( (*itCategory)->ptrCategory_.GetData() == &category )
@@ -186,7 +186,7 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
     compTotal_.rNormalizedConsumption_ = (*itCategory)->rNormalizedConsumption_.GetData();
 
     // consumption
-    ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = comp.ptrComposante_.GetData()->consumptions_.vConsumptions_;
+    ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = comp.GetCrossedElement()->consumptions_.vConsumptions_;
     for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
     {
         ADN_Equipments_Data::ConsumptionItem& conso = **itConso;

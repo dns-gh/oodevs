@@ -190,14 +190,14 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                     strText = strText.arg( pUnitInfos->min_.GetData() )
                                      .arg( pUnitInfos->max_.GetData() )
                                      .arg( composantes->nNb_.GetData() )
-                                     .arg( composantes->ptrComposante_.GetData()->strName_.GetData().c_str() )
+                                     .arg( composantes->GetCrossedElement()->strName_.GetData().c_str() )
                                      .arg( composantes->nNbrHumanInCrew_.GetData() );
                 }
                 else
                 {
                     strText = tr( "%1 x %2 [ %3 ]" );
                     strText = strText.arg( composantes->nNb_.GetData() )
-                                     .arg( composantes->ptrComposante_.GetData()->strName_.GetData().c_str() )
+                                     .arg( composantes->GetCrossedElement()->strName_.GetData().c_str() )
                                      .arg( composantes->nNbrHumanInCrew_.GetData() );
                 }
                 pTable->AddItem( nRow + nSubRow + nSubSubRow, 2, composantes, strText );

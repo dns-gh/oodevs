@@ -15,14 +15,11 @@
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_MenuListView.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
 
 typedef ADN_Equipments_Data::EquipmentInfos   ComposanteInfos;
-typedef ADN_Units_Data::ComposanteInfos         UnitComposanteInfos;
-
-Q_DECLARE_METATYPE( ComposanteInfos* )
+typedef ADN_Units_Data::ComposanteInfos       UnitComposanteInfos;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Composantes_GUI constructor
@@ -30,7 +27,6 @@ Q_DECLARE_METATYPE( ComposanteInfos* )
 //-----------------------------------------------------------------------------
 ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table            ( objectName, connector, pParent )
-    , bMenuListItemSelected_( false )
 {
     dataModel_.setColumnCount( 6 );
     QStringList horizontalHeaders;
@@ -72,10 +68,10 @@ ADN_Units_Composantes_GUI::~ADN_Units_Composantes_GUI()
 void ADN_Units_Composantes_GUI::AddRow( int row, void* data )
 {
     UnitComposanteInfos* composante = static_cast< UnitComposanteInfos* >( data );
-    if( !composante )
+    if( !composante || !composante->GetCrossedElement() )
         return;
 
-    AddItem( row, 0, data, &composante->ptrComposante_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &composante->GetCrossedElement()->strName_, ADN_StandardItem::eString );
     AddItem( row, 1, data, &composante->nNb_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 2, data, &composante->bMajor_, ADN_StandardItem::eBool, Qt::ItemIsEditable );
     AddItem( row, 3, data, &composante->bLoadable_, ADN_StandardItem::eBool, Qt::ItemIsEditable );
@@ -89,47 +85,7 @@ void ADN_Units_Composantes_GUI::AddRow( int row, void* data )
 //-----------------------------------------------------------------------------
 void ADN_Units_Composantes_GUI::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popupMenu( this );
-    Q3PopupMenu& addMenu = *new Q3PopupMenu( &popupMenu );
-
-    ADN_MenuListView< ComposanteInfos >* list = new ADN_MenuListView< ComposanteInfos >( this, ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments(), &addMenu );
-    addMenu.addAction( list );
-    // Get the list of the possible munitions
-
-    popupMenu.insertItem( tr( "Add equipment"), &addMenu ,0 );
-    if( GetData( pt ) )
-        popupMenu.insertItem( tr( "Remove equipment"), 1 );
-
-    bMenuListItemSelected_ = false;
-    int nMenuResult = popupMenu.exec(pt);
-    if( nMenuResult == 1 )
-        RemoveCurrentElement();
-    else if( bMenuListItemSelected_ )
-        AddNewElement( list ->SelectedValue() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Composantes_GUI::AddNewElement
-// Created: AGN 2003-12-08
-// -----------------------------------------------------------------------------
-void ADN_Units_Composantes_GUI::AddNewElement( ComposanteInfos* info )
-{
-    if( !info )
-        return;
-
-    UnitComposanteInfos* pNewInfo = new UnitComposanteInfos();
-    pNewInfo->ptrComposante_ = info;
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Composantes_GUI::MenuListItemSelected
-// Created: APE 2005-04-15
-// -----------------------------------------------------------------------------
-void ADN_Units_Composantes_GUI::MenuListItemSelected()
-{
-    bMenuListItemSelected_ = true;
-    QApplication::exit_loop();
+    ADN_Tools::GenerateStandardEditionDialog< ComposanteInfos, UnitComposanteInfos >(
+        *this, pt, "equipment-list", tr( "Equipments" ), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+        ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments() );
 }

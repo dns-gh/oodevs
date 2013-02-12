@@ -29,14 +29,7 @@ public:
     virtual ~ADN_Units_Composantes_GUI();
 
     void AddRow( int row, void* data );
-    void AddNewElement( ADN_Equipments_Data::EquipmentInfos* info );
     virtual void OnContextMenu( const QPoint& pt );
-
-private slots:
-    void MenuListItemSelected();
-
-private:
-    bool bMenuListItemSelected_;
 };
 
 #endif // __ADN_Units_Composantes_GUI_h_

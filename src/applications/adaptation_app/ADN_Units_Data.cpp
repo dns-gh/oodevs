@@ -34,16 +34,15 @@ tools::IdManager ADN_Units_Data::idManager_;
 // Name: ComposanteInfos::ComposanteInfos
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
-ADN_Units_Data::ComposanteInfos::ComposanteInfos()
-: ADN_Ref_ABC   ()
-, ptrComposante_( ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments(),0)
-, bLoadable_    ( false )
-, bMajor_       ( false )
-, bConveyor_    ( false )
-, nNbrHumanInCrew_( 0 )
-, nNb_          ( 1 )
+ADN_Units_Data::ComposanteInfos::ComposanteInfos( ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment /* = 0 */ )
+    : ADN_CrossedRef( equipments, equipment, true )
+    , bLoadable_    ( false )
+    , bMajor_       ( false )
+    , bConveyor_    ( false )
+    , nNbrHumanInCrew_( 0 )
+    , nNb_          ( 1 )
 {
-    BindExistenceTo( &ptrComposante_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,8 +51,7 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
 // -----------------------------------------------------------------------------
 ADN_Units_Data::ComposanteInfos* ADN_Units_Data::ComposanteInfos::CreateCopy()
 {
-    ComposanteInfos* pCopy = new ComposanteInfos();
-    pCopy->ptrComposante_ = ptrComposante_.GetData();
+    ComposanteInfos* pCopy = new ComposanteInfos( GetVector(), GetCrossedElement() );
     pCopy->bMajor_ = bMajor_.GetData();
     pCopy->bLoadable_ = bLoadable_.GetData();
     pCopy->bConveyor_ = bConveyor_.GetData();
@@ -78,7 +76,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     ADN_Equipments_Data::EquipmentInfos* pComposante = ADN_Workspace::GetWorkspace().GetEquipments().GetData().FindEquipment( strName );
     if( pComposante == 0 )
         throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).toStdString() );
-    ptrComposante_ = pComposante;
+    SetCrossedElement( pComposante );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,10 +86,10 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous ) const
 {
     if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
-        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit has no crew in equipment '%1'" ).arg( ptrComposante_.GetData()->strName_.GetData().c_str() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit has no crew in equipment '%1'" ).arg( GetCrossedElement()->strName_.GetData().c_str() ).toStdString() );
 
     output << xml::start( "equipment" )
-            << xml::attribute( "type", ptrComposante_.GetData()->strName_ )
+            << xml::attribute( "type", GetCrossedElement()->strName_ )
             << xml::attribute( "count", nNb_ )
             << xml::attribute( "crew", nNbrHumanInCrew_ );
 
@@ -503,7 +501,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadEquipment( xml::xistream& input )
 {
-    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos() );
+    std::auto_ptr<ComposanteInfos> spNew( new ComposanteInfos( ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments() ) );
     spNew->ReadArchive( input );
     vComposantes_.AddItem( spNew.release() );
 }
@@ -918,7 +916,7 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos
     {
         UnitInfos* pUnit = *it;
         for( IT_ComposanteInfos_Vector it2 = pUnit->vComposantes_.begin(); it2 != pUnit->vComposantes_.end(); ++it2 )
-            if( (*it2)->ptrComposante_.GetData() == &composante )
+            if( (*it2)->GetCrossedElement() == &composante )
             {
                 result << pUnit->strName_.GetData().c_str();
                 break;
