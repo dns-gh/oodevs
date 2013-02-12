@@ -189,9 +189,6 @@
     <ProjectReference Include="3a.vcxproj">
       <Project>{428d1458-2ad1-40af-b98d-72253de09e0a}</Project>
     </ProjectReference>
-    <ProjectReference Include="actions.vcxproj">
-      <Project>{f8eb9126-da8e-4166-8d1d-4d0f76198a93}</Project>
-    </ProjectReference>
     <ProjectReference Include="clients_kernel.vcxproj">
       <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
     </ProjectReference>

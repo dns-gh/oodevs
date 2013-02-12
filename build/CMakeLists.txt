@@ -311,7 +311,7 @@ add_target( dispatcher server "libraries/dispatcher" OPTIONS protocol )
 target_link_libraries( dispatcher
     3a
     aar_plugin
-    actions
+    clients_kernel
     indicators
     logger_plugin
     messenger_plugin
