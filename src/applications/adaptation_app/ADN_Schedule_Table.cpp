@@ -68,38 +68,5 @@ void ADN_Schedule_Table::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popup( this );
-
-    popup.insertItem( tools::translate( "ADN_Schedule_Table", "Add"), 0 );
-    if( GetSelectedData() != 0 )
-        popup.insertItem( tools::translate( "ADN_Schedule_Table", "Remove"), 1 );
-
-    int result = popup.exec( pt );
-    if( result == 1 )
-        RemoveCurrentElement();
-    else if( result == 0 )
-        AddNewElement();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Schedule_Table::AddNewElement
-// Created: ABR 2012-10-25
-// -----------------------------------------------------------------------------
-void ADN_Schedule_Table::AddNewElement()
-{
-    ADN_Inhabitants_Data::EventInfos* newElement = new ADN_Inhabitants_Data::EventInfos();
-    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    connector->AddItem( newElement );
-    connector->AddItem( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Schedule_Table::RemoveCurrentElement
-// Created: ABR 2012-10-25
-// -----------------------------------------------------------------------------
-void ADN_Schedule_Table::RemoveCurrentElement()
-{
-    ADN_Inhabitants_Data::EventInfos* param = static_cast< ADN_Inhabitants_Data::EventInfos* >( GetSelectedData() );
-    if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
+    ADN_Table::GenerateStandardContextMenu< ADN_Inhabitants_Data::EventInfos >( pt );
 }

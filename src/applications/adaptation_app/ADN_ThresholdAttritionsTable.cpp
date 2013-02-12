@@ -16,8 +16,7 @@
 // Name: ADN_ThresholdAttritionsTable constructor
 // Created: LGY 2012-11-13
 // -----------------------------------------------------------------------------
-ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objectName, ADN_Connector_ABC*& connector,
-                                                            QWidget* pParent )
+ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 8 );
@@ -78,40 +77,7 @@ void ADN_ThresholdAttritionsTable::AddRow( int row, void* data )
 // Name: ADN_ThresholdAttritionsTable::OnContextMenu
 // Created: LGY 2012-11-16
 // -----------------------------------------------------------------------------
-void ADN_ThresholdAttritionsTable::OnContextMenu( const QPoint& point )
+void ADN_ThresholdAttritionsTable::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popup( this );
-
-    popup.insertItem( tools::translate( "ADN_ThresholdAttritionsTable", "Add"), 0 );
-    if( GetSelectedData() != 0 )
-        popup.insertItem( tools::translate( "ADN_ThresholdAttritionsTable", "Remove"), 1 );
-
-    int result = popup.exec( point );
-    if( result == 1 )
-        RemoveCurrentElement();
-    else if( result == 0 )
-        AddNewElement();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ThresholdAttritionsTable::AddNewElement
-// Created: LGY 2012-11-16
-// -----------------------------------------------------------------------------
-void ADN_ThresholdAttritionsTable::AddNewElement()
-{
-    ADN_Disasters_Data::AttritionThresholdInfos* newElement = new ADN_Disasters_Data::AttritionThresholdInfos();
-    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    connector->AddItem( newElement );
-    connector->AddItem( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ThresholdAttritionsTable::RemoveCurrentElement
-// Created: LGY 2012-11-16
-// -----------------------------------------------------------------------------
-void ADN_ThresholdAttritionsTable::RemoveCurrentElement()
-{
-    ADN_Disasters_Data::AttritionThresholdInfos* param = static_cast< ADN_Disasters_Data::AttritionThresholdInfos* >( GetSelectedData() );
-    if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
+    ADN_Table::GenerateStandardContextMenu< ADN_Disasters_Data::AttritionThresholdInfos >( pt );
 }

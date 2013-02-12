@@ -47,7 +47,7 @@ private:
     //! @name Helpers
     //@{
     void AddNewElement();
-    void RemoveCurrentElement();
+    virtual void RemoveCurrentElement();
     void ResetCurrent();
     void Reconnect( const QModelIndex& index );
     void Disconnect( ADN_Missions_Parameter* param );

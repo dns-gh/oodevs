@@ -127,7 +127,7 @@ void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add parameter"), 0 );
-    if( void* data = GetSelectedData() )
+    if( void* data = GetData( pt ) )
     {
         if( ADN_Missions_Parameter* pMissionParameter = static_cast< ADN_Missions_Parameter* >( data ) )
         {
@@ -163,9 +163,7 @@ void ADN_MissionParameters_Table::AddNewElement()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::RemoveCurrentElement()
 {
-    ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( GetSelectedData() );
-    if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
+    ADN_Table::RemoveCurrentElement();
     ResetCurrent();
 }
 

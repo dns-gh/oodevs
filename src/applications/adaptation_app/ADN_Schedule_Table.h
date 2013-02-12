@@ -35,13 +35,6 @@ protected:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void AddNewElement();
-    void RemoveCurrentElement();
-    //@}
-
-private:
     //! @name Member data
     //@{
     QStringList days_;

@@ -31,7 +31,7 @@ typedef ADN_Objects_Data::ScoreLocationInfos ScoreLocationInfos;
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
 ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-: ADN_Table( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
@@ -74,14 +74,12 @@ void ADN_Table_Objects_LocationScore::OnContextMenu( const QPoint& pt )
 
     ADN_Tools::SortMenu( addMenu );
     popupMenu.insertItem( tr( "Add terrain" ), &addMenu , 0 );
-    if( this->GetSelectedData() != 0 )
+    if( GetData( pt ) != 0 )
         popupMenu.insertItem( tr( "Remove terrain" ), 1 );
 
     int nResult = popupMenu.exec( pt );
     if( nResult == 1 )
-    {
         RemoveCurrentElement();
-    }
     else if( nResult > 1 )
     {
         assert( nResult - 2 < eNbrLocation );
@@ -95,25 +93,9 @@ void ADN_Table_Objects_LocationScore::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Table_Objects_LocationScore::AddNewElement( int n )
 {
-    // Get the list of the defined targets
-    ScoreLocationInfos* pNewInfo = new ScoreLocationInfos();
-    pNewInfo->nLocation_ = (E_Location)n;
-
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( pNewInfo );
-    pCTable->AddItem( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table_Objects_LocationScore::RemoveCurrentElement
-// Created: AGN 2004-05-24
-// -----------------------------------------------------------------------------
-void ADN_Table_Objects_LocationScore::RemoveCurrentElement()
-{
-    // delete composante
-    ScoreLocationInfos* pCurComposante = static_cast< ScoreLocationInfos*>( GetSelectedData() );
-    assert( pCurComposante != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurComposante );
+    ScoreLocationInfos* pNewInfo = CreateNewElement< ScoreLocationInfos >();
+    if( pNewInfo )
+        pNewInfo->nLocation_ = (E_Location)n;
 }
 
 // -----------------------------------------------------------------------------

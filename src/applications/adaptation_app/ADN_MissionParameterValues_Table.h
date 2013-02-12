@@ -31,7 +31,6 @@ private:
     //! @name Helpers
     //@{
     void AddNewElement();
-    void RemoveCurrentElement();
     virtual void AddRow( int row, void* data );
     virtual void OnContextMenu( const QPoint& pt );
     //@}

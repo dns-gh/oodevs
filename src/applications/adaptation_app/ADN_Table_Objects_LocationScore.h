@@ -44,7 +44,6 @@ public:
     //! @name Helpers
     //@{
     void AddNewElement( int n );
-    void RemoveCurrentElement();
     bool Contains( const std::string& strMunitionName );
     //@}
 };

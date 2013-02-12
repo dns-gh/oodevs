@@ -50,17 +50,6 @@ void ADN_MissionParameterValues_Table::AddNewElement()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MissionParameterValues_Table::RemoveCurrentElement
-// Created: SBO 2006-12-05
-// -----------------------------------------------------------------------------
-void ADN_MissionParameterValues_Table::RemoveCurrentElement()
-{
-    ADN_Missions_ParameterValue* param = static_cast< ADN_Missions_ParameterValue* >( GetSelectedData() );
-    if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MissionParameterValues_Table::OnContextMenu
 // Created: SBO 2006-12-05
 // -----------------------------------------------------------------------------
@@ -69,7 +58,7 @@ void ADN_MissionParameterValues_Table::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add value"), 0 );
-    if( GetSelectedData() != 0 )
+    if( GetData( pt ) )
         popup.insertItem( tr( "Remove value"), 1 );
 
     int result = popup.exec( pt );

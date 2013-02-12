@@ -30,7 +30,6 @@ public:
 
     void AddRow( int row, void* data );
     void AddNewElement( ADN_Equipments_Data::EquipmentInfos* info );
-    void RemoveCurrentElement();
     virtual void OnContextMenu( const QPoint& pt );
 
 private slots:

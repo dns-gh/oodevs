@@ -69,13 +69,13 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( const QPoint& pt )
     ADN_MenuListView< UnitInfos >* list = new ADN_MenuListView< UnitInfos >( this, ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), &addMenu );
     addMenu.addAction( list );
 
-    popupMenu.insertItem( tr( "Add subordinate"), &addMenu );
-    popupMenu.insertItem( tr( "Remove subordinate"), 0 );
-    popupMenu.setItemEnabled( 0, GetSelectedData() != 0 );
+    popupMenu.insertItem( tr( "Add subordinate"), &addMenu, 0 );
+    if( GetData( pt ) )
+        popupMenu.insertItem( tr( "Remove subordinate"), 1 );
 
     bMenuListItemSelected_ = false;
     int nMenuResult = popupMenu.exec(pt);
-    if( nMenuResult == 0 )
+    if( nMenuResult == 1 )
         RemoveCurrentElement();
     else if( bMenuListItemSelected_ )
         AddNewElement( list ->SelectedValue() );

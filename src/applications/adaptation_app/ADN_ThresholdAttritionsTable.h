@@ -23,22 +23,14 @@ class ADN_ThresholdAttritionsTable : public ADN_Table
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ThresholdAttritionsTable( const QString& objectName, ADN_Connector_ABC*& connector,
-                                           QWidget* pParent /*= 0*/ );
+             ADN_ThresholdAttritionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent );
     virtual ~ADN_ThresholdAttritionsTable();
     //@}
 
     //! @name Operations
     //@{
     virtual void AddRow( int row, void* data );
-    virtual void OnContextMenu( const QPoint& point );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void AddNewElement();
-    void RemoveCurrentElement();
+    virtual void OnContextMenu( const QPoint& pt );
     //@}
 };
 

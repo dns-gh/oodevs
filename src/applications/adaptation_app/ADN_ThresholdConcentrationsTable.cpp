@@ -66,40 +66,7 @@ void ADN_ThresholdConcentrationsTable::AddRow( int row, void* data )
 // Name: ADN_ThresholdConcentrationsTable::OnContextMenu
 // Created: LGY 2012-11-16
 // -----------------------------------------------------------------------------
-void ADN_ThresholdConcentrationsTable::OnContextMenu( const QPoint& point )
+void ADN_ThresholdConcentrationsTable::OnContextMenu( const QPoint& pt )
 {
-    Q3PopupMenu popup( this );
-
-    popup.insertItem( tools::translate( "ADN_ThresholdConcentrationsTable", "Add"), 0 );
-    if( GetSelectedData() != 0 )
-        popup.insertItem( tools::translate( "ADN_ThresholdConcentrationsTable", "Remove"), 1 );
-
-    int result = popup.exec( point );
-    if( result == 1 )
-        RemoveCurrentElement();
-    else if( result == 0 )
-        AddNewElement();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ThresholdConcentrationsTable::AddNewElement
-// Created: LGY 2012-11-16
-// -----------------------------------------------------------------------------
-void ADN_ThresholdConcentrationsTable::AddNewElement()
-{
-    ADN_Disasters_Data::ConcentrationThresholdInfos* newElement = new ADN_Disasters_Data::ConcentrationThresholdInfos();
-    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    connector->AddItem( newElement );
-    connector->AddItem( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ThresholdConcentrationsTable::RemoveCurrentElement
-// Created: LGY 2012-11-16
-// -----------------------------------------------------------------------------
-void ADN_ThresholdConcentrationsTable::RemoveCurrentElement()
-{
-    ADN_Disasters_Data::ConcentrationThresholdInfos* param = static_cast< ADN_Disasters_Data::ConcentrationThresholdInfos* >( GetSelectedData() );
-    if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
+    ADN_Table::GenerateStandardContextMenu< ADN_Disasters_Data::ConcentrationThresholdInfos >( pt );
 }

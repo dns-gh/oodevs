@@ -97,7 +97,7 @@ void ADN_Units_Composantes_GUI::OnContextMenu( const QPoint& pt )
     // Get the list of the possible munitions
 
     popupMenu.insertItem( tr( "Add equipment"), &addMenu ,0 );
-    if( GetSelectedData() != 0 )
+    if( GetData( pt ) )
         popupMenu.insertItem( tr( "Remove equipment"), 1 );
 
     bMenuListItemSelected_ = false;
@@ -122,17 +122,6 @@ void ADN_Units_Composantes_GUI::AddNewElement( ComposanteInfos* info )
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
     pCTable->AddItem( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Composantes_GUI::RemoveCurrentElement
-// Created: AGN 2003-12-08
-// -----------------------------------------------------------------------------
-void ADN_Units_Composantes_GUI::RemoveCurrentElement()
-{
-    UnitComposanteInfos* param = static_cast< UnitComposanteInfos* >( GetSelectedData() );
-    if( param )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }
 
 // -----------------------------------------------------------------------------

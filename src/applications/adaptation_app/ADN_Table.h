@@ -40,7 +40,7 @@ public:
 
     virtual void AddRow( int row, void* data );
     void RemoveItem( void* item );
-    void RemoveCurrentElement();
+    virtual void RemoveCurrentElement();
 
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
     void Sort( int column, Qt::SortOrder order );
@@ -54,6 +54,11 @@ public:
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
     void SaveToXls( const QString& path, const QString& sheetName ) const;
+
+    template< typename T >
+    T* CreateNewElement();
+    template< typename T >
+    void GenerateStandardContextMenu( const QPoint& pt, const QString& elementName = "" );
 
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
@@ -113,6 +118,47 @@ protected:
     ADN_NavigationInfos::GoTo goToInfo_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::CreateNewElement
+// Created: ABR 2013-02-12
+// -----------------------------------------------------------------------------
+template< typename T >
+T* ADN_Table::CreateNewElement()
+{
+    T* newElement = new T();
+    ADN_Connector_Vector_ABC& connector = static_cast< ADN_Connector_Vector_ABC& >( GetConnector() );
+    connector.AddItem( newElement );
+    connector.AddItem( 0 );
+    return newElement;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GenerateStandardContextMenu
+// Created: ABR 2013-02-12
+// -----------------------------------------------------------------------------
+template< typename T >
+void ADN_Table::GenerateStandardContextMenu( const QPoint& pt, const QString& elementName /*= ""*/ )
+{
+    Q3PopupMenu popup( this );
+    QString addText = tools::translate( "ADN_Table", "Add");
+    QString removeText = tools::translate( "ADN_Table", "Remove");
+    if( !elementName.isEmpty() )
+    {
+        addText = addText + " " + elementName;
+        removeText = removeText + " " + elementName;
+    }
+
+    popup.insertItem( addText, 0 );
+    if( GetData( pt ) )
+        popup.insertItem( removeText, 1 );
+
+    int result = popup.exec( pt );
+    if( result == 1 )
+        RemoveCurrentElement();
+    else if( result == 0 )
+        CreateNewElement< T >();
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AddItem
