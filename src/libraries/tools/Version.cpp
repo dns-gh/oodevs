@@ -27,17 +27,17 @@ namespace
         return tokens;
     }
 
-    std::string Splice( const T_Tokens& src, int begin, int end )
+    std::string Splice( const T_Tokens& src, size_t end )
     {
-        const T_Tokens slice( src.begin() + begin, src.begin() + end );
+        const T_Tokens slice( src.begin(), src.begin() + std::min( end, src.size() ) );
         return boost::algorithm::join( slice, "." );
     }
 
     const std::string g_version = APP_VERSION;
     const std::string g_model   = APP_MODEL;
     const T_Tokens    g_tokens  = Split( g_version );
-    const std::string g_project = Splice( g_tokens, 0, 2 );
-    const std::string g_major   = Splice( g_tokens, 0, 3 );
+    const std::string g_project = Splice( g_tokens, 2 );
+    const std::string g_major   = Splice( g_tokens, 3 );
 }
 
 // -----------------------------------------------------------------------------
