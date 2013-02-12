@@ -7,7 +7,7 @@ local startSealOffLocation = function( location, knowledge )
         local sealoffarea = nil
         local sealoffarea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
         if sealoffarea == nil then -- need to create seal off area
-            DEC_CreerObjetSansDelais( eTypeObjectSealOffArea, border )
+            DEC_MagicGetOrCreateObject( eTypeObjectSealOffArea, border )
             meKnowledge:RC( eRC_DebutBouclageZone )			
         end
     end

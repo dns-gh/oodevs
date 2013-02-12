@@ -282,7 +282,7 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
     local checkpoint = integration.obtenirObjetProcheDe( localisation, 
                         eTypeObjectCheckpoint, 10 )
     if checkpoint == nil then -- need to create a checkpoint object
-        DEC_CreerObjetSansDelais( 
+        DEC_MagicGetOrCreateObject( 
                 eTypeObjectCheckpoint, localisation )
         end
         meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
@@ -362,7 +362,7 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appe
     local localisation = integration.deleteObjectWithSameLocalisation( typeObject, position ) 
     myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
-    myself.constructedInstantlyObject[ typeObject ].id = DEC_CreerObjetSansDelais( typeObject, localisation )
+    myself.constructedInstantlyObject[ typeObject ].id = DEC_MagicGetOrCreateObject( typeObject, localisation )
 end
 
 
@@ -375,7 +375,7 @@ integration.buildInstantlyPolyligneOnArea = function( typeObject, area )  -- A a
     local polyligne = DEC_Geometrie_CreerLocalisationPolyligne( points )
     myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
-    myself.constructedInstantlyObject[ typeObject ].id = DEC_CreerObjetSansDelais( typeObject, polyligne )
+    myself.constructedInstantlyObject[ typeObject ].id = DEC_MagicGetOrCreateObject( typeObject, polyligne )
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -398,7 +398,7 @@ integration.buildInstantlyDecontaminatePlotOn = function( position )  -- A appel
     local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
                         eTypeObjectSiteDecontamination, 10 )
     if DecontaminatePlot == nil then -- need to create a decontamination site object
-        DEC_CreerObjetSansDelais( 
+        DEC_MagicGetOrCreateObject( 
                 eTypeObjectSiteDecontamination, localisation )
         end
     end
