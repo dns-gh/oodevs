@@ -663,6 +663,7 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
           >> xml::start( "usages" )
             >> xml::list( "usage", *this, &ADN_Urban_Data::UrbanTemplateInfos::ReadUsage )
           >> xml::end;
+    occupation_ = occupation_.GetData() * 100.f;
     QColor color( red, green, blue );
     color.setAlphaF( alpha );
     color_ = color.name().toStdString();
@@ -712,7 +713,7 @@ void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
                    << xml::attribute( "floor-number", floor_ )
                    << xml::attribute( "height", height_ )
                    << xml::attribute( "material", ptrMaterial_.GetData()->strName_ )
-                   << xml::attribute( "occupation", occupation_ )
+                   << xml::attribute( "occupation", occupation_.GetData() / 100.f )
                    << xml::attribute( "roof-shape", ptrRoofShape_.GetData()->strName_ )
                    << xml::attribute( "trafficability", trafficability_ )
                    << xml::attribute( "parking-floors", parking_ )

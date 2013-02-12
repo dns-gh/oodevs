@@ -181,7 +181,7 @@ void ADN_Urban_GUI::Build()
         pArchitectureBox->setSpacing( 10 );
         builder.AddField< ADN_EditLine_Int >( pArchitectureBox, "floor-number", tr( "Floor number" ), vUsageInfosConnectors[ eUrbanUsageFloorNumber ], 0, eGreaterEqualZero );
         builder.AddField< ADN_EditLine_Int >( pArchitectureBox, "parking-floors", tr( "Parking floors" ), vUsageInfosConnectors[ eUrbanUsageParkingFloors ], 0, eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Double >( pArchitectureBox, "occupation", tr( "Occupation" ), vUsageInfosConnectors[ eUrbanUsageOccupation ], 0, eZeroOne );
+        builder.AddField< ADN_EditLine_Double >( pArchitectureBox, "occupation", tr( "Occupation" ), vUsageInfosConnectors[ eUrbanUsageOccupation ], 0, ePercentage );
         Q3HBox* pArchitectureBox2 = new Q3HBox( pArchitecture );
         pArchitectureBox2->setSpacing( 10 );
         builder.AddField< ADN_EditLine_Int >( pArchitectureBox2, "height", tr( "Height" ), vUsageInfosConnectors[ eUrbanUsageHeight ], 0, eGreaterEqualZero );
@@ -211,11 +211,11 @@ void ADN_Urban_GUI::Build()
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pGroupMaterials );
-    pContentLayout->addWidget( pGroupInfrastructures );
-    pContentLayout->addWidget( pGroupAccommodations );
-    pContentLayout->addWidget( pTemplates );
-    pContentLayout->addWidget( pGroupRoofShapes );
+    pContentLayout->addWidget( pGroupMaterials, 0, 0 );
+    pContentLayout->addWidget( pGroupInfrastructures, 0, 1 );
+    pContentLayout->addWidget( pGroupAccommodations, 1, 0 );
+    pContentLayout->addWidget( pTemplates, 1, 1, 2, 1 );
+    pContentLayout->addWidget( pGroupRoofShapes, 2, 0 );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
