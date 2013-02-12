@@ -2170,15 +2170,11 @@ PNG (*.png)
         <translation>Configurar misiones</translation>
     </message>
     <message>
-        <source>Unit</source>
-        <translation>Unidad</translation>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate</source>
-        <translation>Autómata</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
+        <source>Configure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2531,21 +2527,6 @@ PNG (*.png)
     <message>
         <source>Range max</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Mission_ConfigurationDlg</name>
-    <message>
-        <source>Mission configuration</source>
-        <translation>Configuración de misión</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -3916,14 +3897,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Activity</source>
         <translation>Actividad</translation>
     </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Sensors_Data</name>
@@ -4400,6 +4373,17 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
+    <name>ADN_Table</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4494,14 +4478,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contamination</source>
         <translation type="unfinished">Contaminación</translation>
     </message>
@@ -4518,14 +4494,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5749,6 +5717,17 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Alpha</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_VectorEditionDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
     </message>
 </context>
 <context>

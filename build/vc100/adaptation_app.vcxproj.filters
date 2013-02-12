@@ -221,9 +221,6 @@
     <Filter Include="Source Files\Workspace\Drawings\GUI">
       <UniqueIdentifier>{a0aa9113-e72c-42ed-8591-3b26acaec938}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\open mode dialog">
-      <UniqueIdentifier>{edbd886b-23e1-408f-bf88-9f60dcbbae86}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GQ">
       <UniqueIdentifier>{83bb80a1-77e9-492e-959d-9de81d1415b5}</UniqueIdentifier>
     </Filter>
@@ -386,6 +383,9 @@
     <Filter Include="Source Files\Workspace\Missions\Missions GUI\Missions Wizard">
       <UniqueIdentifier>{8b66110f-17e8-4ab3-ba1d-cfbba8926b6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs">
+      <UniqueIdentifier>{edbd886b-23e1-408f-bf88-9f60dcbbae86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -397,16 +397,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.cpp">
@@ -421,9 +412,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.cpp">
       <Filter>Source Files\Common types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DialogLog.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GuiBuilder.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -431,9 +419,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiPercentage.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tools.cpp">
@@ -611,9 +596,6 @@
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.cpp">
-      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.cpp">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Models_GUI.cpp">
@@ -839,7 +821,7 @@
       <Filter>Source Files\Workspace\Drawings\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_OpenMode_Dialog.cpp">
-      <Filter>Source Files\open mode dialog</Filter>
+      <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\GQ_Plot.cpp">
       <Filter>Source Files\GQ</Filter>
@@ -1021,9 +1003,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.cpp">
       <Filter>Source Files\Tools\Consistency</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp">
       <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
     </ClCompile>
@@ -1201,6 +1180,27 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DialogLog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CrossedRef.cpp">
+      <Filter>Source Files\Common types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1210,9 +1210,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Config.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h">
@@ -1240,9 +1237,6 @@
       <Filter>Source Files\Common types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Callback.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DialogLog.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GuiBuilder.h">
@@ -1345,9 +1339,6 @@
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.h">
-      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.h">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Models_Data.h">
@@ -1501,7 +1492,7 @@
       <Filter>Source Files\Workspace\Drawings\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenMode_Dialog.h">
-      <Filter>Source Files\open mode dialog</Filter>
+      <Filter>Source Files\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\GQ_PlotDataBBox.h">
       <Filter>Source Files\GQ</Filter>
@@ -1653,9 +1644,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GridDelegate.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
@@ -1806,6 +1794,21 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.h">
       <Filter>Source Files\Common widgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DialogLog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_CrossedRef.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_VectorEditionDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -1875,18 +1878,12 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo.inl">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_VectorEditionDialog.inl">
+      <Filter>Source Files\Dialogs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">
-      <Filter>Source Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.h">
-      <Filter>Source Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainWindow.h">
-      <Filter>Source Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TableDialog.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.h">
@@ -1899,9 +1896,6 @@
       <Filter>Source Files\Common types</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MultiPercentage.h">
-      <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.h">
       <Filter>Source Files\Tools</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_GUI_ABC.h">
@@ -2042,9 +2036,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.h">
       <Filter>Source Files\Tools\Consistency</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.h">
-      <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_MissionTypes.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
@@ -2080,6 +2071,21 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments_Objects.h">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TableDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.h">
+      <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

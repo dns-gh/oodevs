@@ -17,6 +17,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Tools.h"
 #include "ADN_Missions_Data.h"
+#include "ADN_CrossedRef.h"
 
 enum E_EntityType;
 
@@ -49,11 +50,11 @@ public:
     typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
 
 //*****************************************************************************
-    class MissionInfos : public ADN_RefWithName
+    class MissionInfos : public ADN_CrossedRef< ADN_Missions_Mission >
     {
 
     public:
-        explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions );
+        explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission = 0 );
         virtual ~MissionInfos();
 
         MissionInfos* CreateCopy();
@@ -62,7 +63,6 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_Mission > mission_;
         T_OrderInfos_Vector                      vOrders_;
     };
 

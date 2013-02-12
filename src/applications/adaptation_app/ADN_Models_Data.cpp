@@ -83,10 +83,10 @@ ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 // Name: MissionInfos::~MissionInfos
 // Created: AGN 2003-12-03
 // -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions )
-    : mission_( missions, 0 )
+ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission /* = 0 */ )
+    : ADN_CrossedRef< ADN_Missions_Mission >( missions, mission, true )
 {
-    this->BindExistenceTo( &mission_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -104,9 +104,7 @@ ADN_Models_Data::MissionInfos::~MissionInfos()
 // -----------------------------------------------------------------------------
 ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
 {
-    MissionInfos* pMission = new MissionInfos( mission_.GetVector() );
-    pMission->mission_ = mission_.GetData();
-    pMission->strName_ = strName_.GetData();
+    MissionInfos* pMission = new MissionInfos( GetVector(), GetCrossedElement() );
 
     pMission->vOrders_.reserve( vOrders_.size() );
     for( T_OrderInfos_Vector::iterator it = vOrders_.begin(); it != vOrders_.end(); ++it )
@@ -137,11 +135,10 @@ void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
 void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
-    ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
+    ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( GetVector(), strName_.GetData() );
     if( !mission )
         throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
-    mission_ = mission;
-    mission_.GetData()->strName_.Connect( &strName_ );
+    SetCrossedElement( mission );
     input >> xml::list( "fragorder", *this, &ADN_Models_Data::MissionInfos::ReadFragOrder );
 }
 
@@ -152,7 +149,7 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "mission" )
-            << xml::attribute( "name", mission_.GetData()->strName_ );
+            << xml::attribute( "name", GetCrossedElement()->strName_ );
     for( IT_OrderInfos_Vector it = vOrders_.begin(); it != vOrders_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
@@ -465,7 +462,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_M
         if( !pModel )
             continue;
         for( IT_MissionInfos_Vector missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
-            if( ( *missionIt )->mission_ == &mission )
+            if( ( *missionIt )->GetCrossedElement() == &mission )
             {
                 result << pModel->strName_.GetData().c_str();
                 break;

@@ -2167,16 +2167,12 @@ PNG (*.png)
         <translation>Configure missions</translation>
     </message>
     <message>
-        <source>Unit</source>
-        <translation>Unit</translation>
+        <source>Remove</source>
+        <translation type="unfinished">Remove</translation>
     </message>
     <message>
-        <source>Automate</source>
-        <translation>Automaton</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation>Crowd</translation>
+        <source>Configure</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2528,21 +2524,6 @@ PNG (*.png)
     <message>
         <source>New parameter</source>
         <translation>New parameter</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Mission_ConfigurationDlg</name>
-    <message>
-        <source>Mission configuration</source>
-        <translation>Mission configuration</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
     </message>
 </context>
 <context>
@@ -3915,14 +3896,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Activity</source>
         <translation>Activity</translation>
     </message>
-    <message>
-        <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Remove</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Sensors_Data</name>
@@ -4399,6 +4372,17 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
+    <name>ADN_Table</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Add</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Remove</translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4493,14 +4477,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation>Dead (%)</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Remove</translation>
-    </message>
-    <message>
         <source>Contamination</source>
         <translation>Contamination</translation>
     </message>
@@ -4518,14 +4494,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Color</source>
         <translation>Color</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Remove</translation>
     </message>
     <message>
         <source>Name</source>
@@ -5746,6 +5714,17 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Roof shape</source>
         <translation>Roof shape</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_VectorEditionDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
     </message>
 </context>
 <context>

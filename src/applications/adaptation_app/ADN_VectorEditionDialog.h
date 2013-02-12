@@ -1,0 +1,87 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2013 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __ADN_VectorEditionDialog_h_
+#define __ADN_VectorEditionDialog_h_
+
+#include "ADN_Type_Vector_ABC.h"
+#include "clients_kernel/VariantPointer.h"
+
+// =============================================================================
+/** @class  ADN_VectorEditionDialog
+    @brief  ADN_VectorEditionDialog
+*/
+// Created: ABR 2013-02-11
+// =============================================================================
+template< typename SourceType, typename TargetType >
+class ADN_VectorEditionDialog : public QDialog
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit ADN_VectorEditionDialog( const QString& objectName, const QString& title, QWidget* parent = 0 );
+    virtual ~ADN_VectorEditionDialog();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef ADN_Type_Vector_ABC< SourceType >                       T_SourceVector;
+
+    struct T_EditionInfo : private boost::noncopyable
+    {
+        T_EditionInfo( const QString& name, T_SourceVector& source, ADN_Connector_Vector_ABC& targetConnector )
+            : name_( name )
+            , source_( source )
+            , targetConnector_( targetConnector )
+        {}
+
+        virtual ~T_EditionInfo() {}
+
+        const QString name_;
+        T_SourceVector& source_;
+        ADN_Connector_Vector_ABC& targetConnector_;
+    };
+
+    typedef std::vector< std::auto_ptr< T_EditionInfo > >     T_EditionInfos;
+    //@}
+
+    //! @name Operations
+    //@{
+    void AddVector( const QString& vectorName, T_SourceVector& sourceVector, QStandardItemModel& targetModel, ADN_Connector_Vector_ABC& targetConnector );
+    //@}
+
+private:
+    //! @name QDialog
+    //@{
+    virtual void accept();
+    virtual void setVisible( bool visible );
+    void InitializeTranslation()
+    {
+        // Must be here cause .inl files aren't translated
+        if( okButton_ )
+            okButton_->setText( tools::translate( "ADN_VectorEditionDialog", "OK" ) );
+        if( cancelButton_ )
+            cancelButton_->setText( tools::translate( "ADN_VectorEditionDialog", "Cancel" ) );
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_EditionInfos editionInfos_;
+    QTreeWidget* treeView_;
+    QPushButton* okButton_;
+    QPushButton* cancelButton_;
+    //@}
+};
+
+#include "ADN_VectorEditionDialog.inl"
+
+#endif // __ADN_VectorEditionDialog_h_

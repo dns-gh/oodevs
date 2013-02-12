@@ -2154,16 +2154,12 @@ PNG (*.png)
         <translation type="unfinished">تكوين بعثات</translation>
     </message>
     <message>
-        <source>Unit</source>
-        <translation type="unfinished">وحدة</translation>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate</source>
-        <translation type="unfinished">أتمتة</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation type="unfinished">الحشد</translation>
+        <source>Configure</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2515,21 +2511,6 @@ PNG (*.png)
     <message>
         <source>New parameter</source>
         <translation type="unfinished">معلمة جديدة</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Mission_ConfigurationDlg</name>
-    <message>
-        <source>Mission configuration</source>
-        <translation type="unfinished">تكوين البعثة</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
 </context>
 <context>
@@ -3902,14 +3883,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Activity</source>
         <translation type="unfinished">النشاط</translation>
     </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Sensors_Data</name>
@@ -4386,6 +4359,17 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
+    <name>ADN_Table</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4480,10 +4464,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Contamination</source>
         <translation type="unfinished">تلوث</translation>
     </message>
@@ -4505,14 +4485,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Color</source>
         <translation type="unfinished">لون</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
@@ -5733,6 +5705,17 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Roof shape</source>
         <translation type="unfinished">شكل السقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_VectorEditionDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
 </context>
 <context>

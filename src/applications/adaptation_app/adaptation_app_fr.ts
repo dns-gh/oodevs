@@ -2174,16 +2174,12 @@ PNG (*.png)</translation>
         <translation>Configurer les missions</translation>
     </message>
     <message>
-        <source>Unit</source>
-        <translation>Pion</translation>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
     </message>
     <message>
-        <source>Automate</source>
-        <translation>Automate</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation>Foule</translation>
+        <source>Configure</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2535,21 +2531,6 @@ PNG (*.png)</translation>
     <message>
         <source>DirectIA name</source>
         <translation>Nom DirectIA</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Mission_ConfigurationDlg</name>
-    <message>
-        <source>Mission configuration</source>
-        <translation>Configuration des missions</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -3922,14 +3903,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <source>Activity</source>
         <translation>Activité</translation>
     </message>
-    <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Sensors_Data</name>
@@ -4406,6 +4379,17 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
 </context>
 <context>
+    <name>ADN_Table</name>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -4507,14 +4491,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <source>Contamination</source>
         <translation>Contamination</translation>
     </message>
-    <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ThresholdConcentrationsTable</name>
@@ -4525,14 +4501,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Color</source>
         <translation>Couleur</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Name</source>
@@ -5764,6 +5732,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Alpha</source>
         <translation>Alpha</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_VectorEditionDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
     </message>
 </context>
 <context>
