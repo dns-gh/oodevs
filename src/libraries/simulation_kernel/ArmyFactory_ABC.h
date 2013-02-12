@@ -18,6 +18,8 @@ namespace xml
     class xistream;
 }
 
+class MIL_Config;
+
 // =============================================================================
 /** @class  ArmyFactory_ABC
     @brief  Army factory declaration
@@ -35,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Army_ABC* Create( const std::string& tag, xml::xistream& xis ) = 0;
+    virtual MIL_Army_ABC* Create( const std::string& tag, xml::xistream& xis, const MIL_Config& config ) = 0;
     virtual void Finalize() = 0;
     //@}
 

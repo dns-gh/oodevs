@@ -19,6 +19,7 @@
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
@@ -58,6 +59,8 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , setpause_( 0 )
     , setstepmul_( 0 )
     , integrationDir_( "resources" )
+    , createNoPartyObjects_( true )
+    , subset_( false )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
@@ -115,6 +118,17 @@ void MIL_Config::ReadSessionFile( const std::string& file )
     GetLoader().LoadFile( file, boost::bind( &MIL_Config::ReadSessionXml, this, _1 ) );
 }
 
+namespace
+{
+    void ExtractParties( std::string subset, std::set< unsigned int >& parties )
+    {
+        std::vector< std::string > result;
+        boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
+        for( auto it = result.begin(); it != result.end(); ++it )
+            parties.insert( boost::lexical_cast< unsigned int >( *it ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Config::ReadSessionXml
 // Created: LDC 2010-12-02
@@ -122,11 +136,20 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 void MIL_Config::ReadSessionXml( xml::xistream& xis )
 {
     unsigned short port;
+    std::string subsetParties;
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "simulation" )
                     >> xml::start( "orbat" )
                         >> xml::attribute( "checkcomposition", bCheckAutomateComposition_ )
+                        >> xml::optional
+                        >> xml::start( "subset" )
+                        >> xml::optional
+                        >> xml::attribute( "no-party", createNoPartyObjects_ );
+    subset_ = xis.has_attribute( "parties" );
+    xis                 >> xml::optional
+                        >> xml::attribute( "parties", subsetParties )
+                        >> xml::end
                     >> xml::end
                     >> xml::start( "profiling" )
                         >> xml::optional >> xml::attribute( "enabled", bDecisionalProfilingEnabled_ )
@@ -167,6 +190,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::end;
     if( ! networkPort_ )
         networkPort_ = port;
+    if( subset_ )
+        ExtractParties( subsetParties, subsetParties_ );
     ConfigureRandom( xis );
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );
@@ -318,4 +343,24 @@ const std::string& MIL_Config::GetPathfindDir() const
 const std::string& MIL_Config::GetPathfindFilter() const
 {
     return pathfindFilter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::CanCreateNoPartyObjects
+// Created: LGY 2013-02-11
+// -----------------------------------------------------------------------------
+bool MIL_Config::CanCreateNoPartyObjects() const
+{
+    return createNoPartyObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::CanCreateParty
+// Created: LGY 2013-02-11
+// -----------------------------------------------------------------------------
+bool MIL_Config::CanCreateParty( unsigned int id ) const
+{
+    if( !subset_ )
+        return true;
+    return subsetParties_.find( id ) != subsetParties_.end();
 }

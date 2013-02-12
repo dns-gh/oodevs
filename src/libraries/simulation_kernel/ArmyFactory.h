@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_Army_ABC* Create( const std::string& tag, xml::xistream& xis );
+    virtual MIL_Army_ABC* Create( const std::string& tag, xml::xistream& xis, const MIL_Config& config );
     virtual void Finalize();
     //@}
 

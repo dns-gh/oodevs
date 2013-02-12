@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ArmyFactory.h"
+#include "simulation_kernel/Tools/MIL_Config.h"
 #include "AutomateFactory.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -95,22 +96,20 @@ ArmyFactory::~ArmyFactory()
 // Name: ArmyFactory::Create
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Army_ABC* ArmyFactory::Create( const std::string& tag, xml::xistream& xis )
+MIL_Army_ABC* ArmyFactory::Create( const std::string& tag, xml::xistream& xis, const MIL_Config& config )
 {
     MIL_Army_ABC* army = 0;
-    if( tag == "party")
+    if( tag == "party" &&  config.CanCreateParty( xis.attribute< unsigned int >( "id" ) ) )
     {
         MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, inhabitantFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
         Register( army->GetID(), *army );
     }
-    else if( tag == "no-party" )
+    else if( tag == "no-party" && config.CanCreateNoPartyObjects() )
     {
         xis >> xml::optional >> xml::start( "objects" )
             >> xml::list( "object", *this, &ArmyFactory::ReadNoSideObject )
             >> xml::end;
     }
-    else
-        xis.error( "Unknown tag in parties" );
     return army;
 }
 

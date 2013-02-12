@@ -351,7 +351,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
 
     const std::string strOrbat = config.GetOrbatFile();
     MT_LOG_INFO_MSG( "ODB file name : '" << strOrbat << "'" );
-    config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) );
+    config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1, boost::cref( config ) ) );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"       , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"           , sink_->Count() ) );
@@ -377,10 +377,10 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
 // Name: MIL_EntityManager::ReadOrbat
 // Created: LDC 2010-11-24
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
+void MIL_EntityManager::ReadOrbat( xml::xistream& xis, const MIL_Config& config )
 {
     xis >> xml::start( "orbat" );
-    InitializeArmies   ( xis );
+    InitializeArmies   ( xis, config );
     InitializeDiplomacy( xis );
 }
 
@@ -652,14 +652,14 @@ void MIL_EntityManager::LogInfo()
 // Name: MIL_EntityManager::InitializeArmies
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
+void MIL_EntityManager::InitializeArmies( xml::xistream& xis, const MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing armies" );
 
     assert( armyFactory_->Count() == 0 );
 
     xis >> xml::start( "parties" )
-        >> xml::list( boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _2, _3 ) )
+        >> xml::list( boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _2, _3, boost::cref( config ) ) )
         >> xml::end;
 
     pObjectManager_->FinalizeObjects( *pFloodModel_ );

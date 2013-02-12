@@ -243,11 +243,11 @@ private:
 private:
     //! @name Init
     //@{
-    void ReadOrbat          ( xml::xistream& xis );
+    void ReadOrbat          ( xml::xistream& xis, const MIL_Config& config );
     void ReadUrban          ( xml::xistream& xis, std::vector< const MIL_UrbanObject_ABC* >& cities );
     void ReadCity           ( xml::xistream& xis, std::vector< const MIL_UrbanObject_ABC* >& cities );
     void ReadUrbanObject    ( xml::xistream& xis, MIL_UrbanObject_ABC& parent );
-    void InitializeArmies   ( xml::xistream& xis );
+    void InitializeArmies   ( xml::xistream& xis, const MIL_Config& config );
     void InitializeDiplomacy( xml::xistream& xis );
     void ReadDiplomacy      ( xml::xistream& xis );
     //@}
