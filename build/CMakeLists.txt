@@ -13,6 +13,9 @@ add_definitions(
     -DWINVER=0x501
 )
 
+set( COMPANY "MASA Group" )
+set( PRODUCT "Sword" )
+
 find_package( Protobuf REQUIRED )
 find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )

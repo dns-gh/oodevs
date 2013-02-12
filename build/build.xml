@@ -12,14 +12,10 @@
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="version.project.major" value="trunk"/>
-    <property name="version.project" value="${version.project.major}"/>
-    <property name="version.company" value="MASA Group"/>
-    <property name="version.product" value="Sword"/>
+    <property name="version.project" value="trunk"/>
     <property name="version.major" value="5.2.0"/>
-    <property name="svn.revision" value="0"/>
-    <property name="version.minor" value="${version.major}.${svn.revision}"/>
-    <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
+    <property name="svn.revision" value="0"/>    
+    <property name="version.version" value="${version.major}.${svn.revision}"/>
 
     <!-- local extensions -->
     <import file="protobuf.xml" />
@@ -459,9 +455,9 @@
     <macrodef name="package-plugin">
         <attribute name="name"/>
         <sequential>
-            <safe-move file="${out.dir}/SWORD_plugin-@{name}_${platform}_${version.project.major}.exe">
+            <safe-move file="${out.dir}/SWORD_plugin-@{name}_${platform}_${version.project}.exe">
                 <nsis name="sword-plugin" script="sword-plugin.nsi" license="true" todir="${out.dir}">
-                    <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
+                    <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
                     <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
                     <arg value="/DPLUGIN=plugin-@{name}"/>
                     <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -585,9 +581,9 @@
      <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
         <check-depends file="${out.dir}/terraintools_${platform}.zip"/>
-        <safe-move file="${out.dir}/SWORD_${platform}_${version.project.major}.exe">
+        <safe-move file="${out.dir}/SWORD_${platform}_${version.project}.exe">
             <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
-                <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
+                <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
                 <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
                 <arg value="/DOUTFILE=@{file}"/>
                 <arg value="/X!include sword.nsh"/>
@@ -717,7 +713,8 @@
     </target>
 
     <target name="cmake.msvc">
-        <cmake_msvc input="${root.dir}/build"/>
+        <cmake_msvc input="${root.dir}/build"
+            version="${version.version}"/>
         <python taskname="fixmsvc" failonerror="true">
             <arg value="fixmsvc.py"/>
             <arg value="${out.dir}/msvc"/>
@@ -725,7 +722,9 @@
     </target>
 
     <target name="cmake.configure">
-        <cmake_configure input="${root.dir}/build" configuration="release"/>
+        <cmake_configure input="${root.dir}/build" 
+            configuration="release"
+            version="${version.version}"/>
     </target>
 
     <target name="build">

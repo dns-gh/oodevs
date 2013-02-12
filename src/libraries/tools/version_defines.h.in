@@ -1,0 +1,2 @@
+#define APP_VERSION "@VERSION@"
+#define APP_MODEL   "4.8.2"

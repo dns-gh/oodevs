@@ -9,30 +9,36 @@
 
 #include "tools_pch.h"
 #include "Version.h"
-#include <boost/preprocessor/stringize.hpp>
-#pragma warning( push, 0 )
+
 #include <boost/algorithm/string.hpp>
-#pragma warning( pop )
 #include <boost/regex.hpp>
-#include <algorithm>
 #include <vector>
 
-#ifndef APP_MAJOR_VERSION
-#   define APP_MAJOR_VERSION 5.2.0
-#endif
+#include "version_defines.h"
 
-#ifndef APP_PROJECT_VERSION
-#   define APP_PROJECT_VERSION trunk
-#endif
+namespace
+{
+    typedef std::vector< std::string > T_Tokens;
 
-#ifndef APP_VERSION
-#   define APP_VERSION APP_MAJOR_VERSION##.dev
-#endif
+    T_Tokens Split( const std::string& value )
+    {
+        T_Tokens tokens;
+        boost::algorithm::split( tokens, value, boost::is_any_of( "." ) );
+        return tokens;
+    }
 
-//$$$ Crap for Thales
-#ifndef APP_MODEL_VERSION
-#   define APP_MODEL_VERSION 4.8.2
-#endif
+    std::string Splice( const T_Tokens& src, int begin, int end )
+    {
+        const T_Tokens slice( src.begin() + begin, src.begin() + end );
+        return boost::algorithm::join( slice, "." );
+    }
+
+    const std::string g_version = APP_VERSION;
+    const std::string g_model   = APP_MODEL;
+    const T_Tokens    g_tokens  = Split( g_version );
+    const std::string g_project = Splice( g_tokens, 0, 2 );
+    const std::string g_major   = Splice( g_tokens, 0, 3 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: tools::AppVersion
@@ -40,7 +46,7 @@
 // -----------------------------------------------------------------------------
 const char* tools::AppVersion()
 {
-    return BOOST_PP_STRINGIZE( APP_VERSION );
+    return g_version.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +55,7 @@ const char* tools::AppVersion()
 // -----------------------------------------------------------------------------
 const char* tools::AppMajorVersion()
 {
-    return BOOST_PP_STRINGIZE( APP_MAJOR_VERSION );
+    return g_major.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +64,7 @@ const char* tools::AppMajorVersion()
 // -----------------------------------------------------------------------------
 const char* tools::AppModelVersion()
 {
-    return BOOST_PP_STRINGIZE( APP_MODEL_VERSION );
+    return g_model.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +73,7 @@ const char* tools::AppModelVersion()
 // -----------------------------------------------------------------------------
 const char* tools::AppProjectVersion()
 {
-    return BOOST_PP_STRINGIZE( APP_PROJECT_VERSION );
+    return g_project.c_str();
 }
 
 // -----------------------------------------------------------------------------
