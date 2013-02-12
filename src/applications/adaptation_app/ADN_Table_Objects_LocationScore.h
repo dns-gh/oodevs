@@ -27,9 +27,10 @@
 */
 // Created: AGN 2004-05-24
 // =============================================================================
-class ADN_Table_Objects_LocationScore
-: public ADN_Table
+class ADN_Table_Objects_LocationScore : public ADN_Table
 {
+    Q_OBJECT
+
 public:
     explicit ADN_Table_Objects_LocationScore( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Table_Objects_LocationScore();

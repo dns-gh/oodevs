@@ -2074,7 +2074,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </Qt_file_Mocing>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_FirePropagationModifier.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Table_Objects_LocationScore.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_WeaponFilter.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -2477,7 +2477,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Point_GUI.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Point_GUI.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

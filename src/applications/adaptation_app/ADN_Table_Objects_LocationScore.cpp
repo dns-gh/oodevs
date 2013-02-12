@@ -18,7 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Table_Objects_LocationScore.h"
-
+#include "moc_ADN_Table_Objects_LocationScore.cpp"
 #include "ADN_App.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tr.h"
