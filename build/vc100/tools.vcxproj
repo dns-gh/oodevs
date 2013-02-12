@@ -111,7 +111,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\Version.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Version.cpp">
+      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\tools\CommandLineConfig_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ExerciseConfig.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\GeneralConfig.cpp" />
