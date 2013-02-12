@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<sensors model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.2/physical/Sensors.xsd">
+<sensors model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.3/physical/Sensors.xsd">
   <alat-monitoring-times>
     <alat-monitoring-time terrain="Vide" time="1s"/>
     <alat-monitoring-time terrain="Foret" time="5s"/>
@@ -7531,4 +7531,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="1788062763" -->
+<!-- signature="0508474539" -->

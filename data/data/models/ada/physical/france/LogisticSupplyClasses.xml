@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<logistic-supply-classes model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.2/physical/LogisticSupplyClasses.xsd">
+<logistic-supply-classes model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.3/physical/LogisticSupplyClasses.xsd">
   <logistic-supply-class id="12" type="Funeraire"/>
   <logistic-supply-class id="11" type="Unite essence"/>
   <logistic-supply-class id="10" type="Unite vivre"/>
@@ -7,4 +7,4 @@
   <logistic-supply-class id="8" type="Unite non tranche D"/>
   <logistic-supply-class id="7" type="Pieces"/>
 </logistic-supply-classes>
-<!-- signature="3907303936" -->
+<!-- signature="2744228786" -->

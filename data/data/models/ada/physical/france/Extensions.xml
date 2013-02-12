@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<extensions model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.2/physical/Extensions.xsd">
+<extensions model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.3/physical/Extensions.xsd">
   <orbat-attributes>
     <attribute extends="unit;automat;formation" name="NomLong" type="alphanumeric">
       <labels>
@@ -28,4 +28,4 @@
     </attribute>
   </orbat-attributes>
 </extensions>
-<!-- signature="2706707130" -->
+<!-- signature="2306988080" -->
