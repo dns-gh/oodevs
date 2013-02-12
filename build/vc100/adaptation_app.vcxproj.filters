@@ -1443,9 +1443,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.h">
       <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.h">
-      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
@@ -1771,9 +1768,6 @@
       <Filter>Source Files\Workspace\Resources\Resources GUI\Resources Wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_AmmoListView.h">
-      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionTable.h">
       <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_GenericListView.h">
@@ -2196,6 +2190,12 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.h">
       <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionTable.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.h">
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

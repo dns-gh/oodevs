@@ -14,6 +14,8 @@
 
 class ADN_Urban_AttritionTable : public ADN_Table
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{

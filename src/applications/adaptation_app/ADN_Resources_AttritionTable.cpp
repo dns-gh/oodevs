@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Resources_AttritionTable.h"
+#include "moc_ADN_Resources_AttritionTable.cpp"
 #include "ADN_Resources_Data.h"
 #include "ADN_Resources_GUI.h"
 

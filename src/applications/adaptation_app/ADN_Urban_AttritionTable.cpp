@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_AttritionTable.h"
+#include "moc_ADN_Urban_AttritionTable.cpp"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 
