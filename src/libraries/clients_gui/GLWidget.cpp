@@ -780,10 +780,10 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
 // Name: GlWidget::DrawLife
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/ ) const
+void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/, bool fixedSize /*= true*/ ) const
 {
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
-    factor *= GetAdaptiveZoomFactor( false );
+    factor *= GetAdaptiveZoomFactor( !fixedSize );
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
 
@@ -925,7 +925,7 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* =
         size *= Pixels();
 
     size *= 0.7f;
-    float factor = GetAdaptiveZoomFactor();
+    float factor = GetAdaptiveZoomFactor( false );
     size *= factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );

@@ -349,9 +349,9 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /* = -1.f*
 // Name: GlProxy::DrawLife
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /* = 1.f*/ ) const
+void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /* = 1.f*/, bool fixedSize /*= true */ ) const
 {
-    tools_->DrawLife( center, height, factor );
+    tools_->DrawLife( center, height, factor, fixedSize );
 }
 
 // -----------------------------------------------------------------------------

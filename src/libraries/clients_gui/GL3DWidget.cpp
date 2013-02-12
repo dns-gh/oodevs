@@ -441,7 +441,7 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Un
 // Name: Gl3dWidget::DrawLife
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f*/ ) const
+void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f*/, bool /*fixedSize = true */ ) const
 {
     // $$$$ AGE 2006-09-11:
     const float halfWidth   = factor * 600.f * 0.5f;

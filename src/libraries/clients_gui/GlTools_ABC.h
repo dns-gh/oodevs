@@ -96,7 +96,7 @@ public:
     virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
-    virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f ) const = 0;
+    virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const = 0;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const = 0;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const = 0;

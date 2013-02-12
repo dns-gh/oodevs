@@ -124,7 +124,7 @@ void ConstructionAttribute::Draw( const geometry::Point2f& where, const gui::Vie
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 250.f ), nConstructionPercentage_ / 100.f );
+            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 250.f ), nConstructionPercentage_ / 100.f, 1.f, false );
         glPopAttrib();
     }
 }

@@ -67,7 +67,7 @@ namespace
         virtual void DrawArc          ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& ) const {}
         virtual void DrawCircle       ( const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawDisc         ( const geometry::Point2f&, float, E_Unit ) const {}
-        virtual void DrawLife         ( const geometry::Point2f&, float, float ) const {}
+        virtual void DrawLife         ( const geometry::Point2f&, float, float, bool ) const {}
         virtual void Print            ( const std::string&, const geometry::Point2f& ) const {}
         virtual void Print            ( const std::string&, const geometry::Point2f&, const QFont& ) const {}
         virtual void DrawApp6Symbol   ( const std::string&, const geometry::Point2f&, float, float ) const {}

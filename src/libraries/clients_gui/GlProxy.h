@@ -86,7 +86,7 @@ public:
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const;
-    virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f ) const;
+    virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const;
