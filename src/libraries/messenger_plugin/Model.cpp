@@ -168,10 +168,13 @@ void Model::ReadOrbat( xml::xistream& xis )
 void Model::ReadSide( xml::xistream& xis )
 {
     unsigned int id ;
-    xis >> xml::attribute( "id", id )
-        >> xml::start( "tactical" )
-            >> xml::list( "formation", *this, &Model::ReadFormation )
-        >> xml::end;
+    xis >> xml::attribute( "id", id );
+    if( config_.CanCreateParty( id ) )
+    {
+        xis >> xml::start( "tactical" )
+                >> xml::list( "formation", *this, &Model::ReadFormation )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------

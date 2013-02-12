@@ -14,6 +14,7 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
+#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
@@ -34,6 +35,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , timeStep_                ( 0 )
     , reportsClearFrequency_   ( 100 )
     , useShieldUtf8Encoding_   ( true )
+    , subset_                  ( false )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -51,6 +53,17 @@ Config::~Config()
     // NOTHING
 }
 
+namespace
+{
+    void ExtractParties( std::string subset, std::set< unsigned int >& parties )
+    {
+        std::vector< std::string > result;
+        boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
+        for( auto it = result.begin(); it != result.end(); ++it )
+            parties.insert( boost::lexical_cast< unsigned int >( *it ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Config::Parse
 // Created: NLD 2007-01-10
@@ -60,10 +73,19 @@ void Config::Parse( int argc, char** argv )
     LogSettingsData logShield, logDispatcherProtobuf, logDispatcher, logLoggerPlugin;
     tools::SessionConfig::Parse( argc, argv );
     unsigned short port;
+    std::string subsetParties;
     xml::xifstream xis( GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "simulation" )
+                    >> xml::start( "orbat" )
+                        >> xml::optional
+                        >> xml::start( "subset" );
+    subset_ = xis.has_attribute( "parties" );
+    xis                     >> xml::optional
+                            >> xml::attribute( "parties", subsetParties )
+                        >> xml::end
+                    >> xml::end
                     >> xml::start( "time" )
                         >> xml::attribute( "step", timeStep_ )
                     >> xml::end
@@ -107,6 +129,8 @@ void Config::Parse( int argc, char** argv )
                     >> xml::optional >> xml::start( "reports" )
                         >> xml::attribute( "frequency", reportsClearFrequency_ )
                     >> xml::end;
+    if( subset_ )
+        ExtractParties( subsetParties, subsetParties_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
@@ -198,4 +222,15 @@ unsigned int Config::GetTickDuration() const
 unsigned int Config::GetReportsClearFrequency() const
 {
     return reportsClearFrequency_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::CanCreateParty
+// Created: LGY 2013-02-12
+// -----------------------------------------------------------------------------
+bool Config::CanCreateParty( unsigned int id ) const
+{
+    if( !subset_ )
+        return true;
+    return subsetParties_.find( id ) != subsetParties_.end();
 }
