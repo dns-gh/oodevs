@@ -96,7 +96,8 @@ function( add_target target group dir )
             string( REGEX REPLACE "(.+)_plugin_dll" "\\1" next ${target} )
             set( rundir "${root_dir}/run/${platform}/plugins/${next}" )
         endif()
-        install( TARGETS ${target} RUNTIME DESTINATION ${rundir} CONFIGURATIONS RelWithDebInfo )
+        add_custom_command( TARGET ${target} POST_BUILD COMMAND 
+            ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> ${rundir} )
     elseif( test )
         if( MSVC AND CMAKE_CONFIGURATION_TYPES )
             #add_custom_command( TARGET ${target} POST_BUILD COMMAND ${target}

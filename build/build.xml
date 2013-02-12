@@ -732,10 +732,6 @@
         <cmake_build target="all"/>
     </target>
 
-    <target name="install">
-        <cmake_build target="install"/>
-    </target>
-
     <target name="unit_tests">
         <cmake_test/>
     </target>
@@ -749,6 +745,6 @@
         ,scripts_test
         "/>
 
-    <target name="all" depends="configure,check,cmake.configure,build,install,test,documentation,package"/>
+    <target name="all" depends="configure,check,cmake.configure,build,test,documentation,package"/>
 
 </project>
