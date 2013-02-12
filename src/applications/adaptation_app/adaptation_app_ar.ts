@@ -4459,10 +4459,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>UE (%)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>UE (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_ThresholdConcentrationsTable</name>
