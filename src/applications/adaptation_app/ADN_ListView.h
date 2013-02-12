@@ -52,6 +52,7 @@ public:
     ADN_StandardItem*   FindItem( void* pData );
     ADN_StandardItem*   FindItem( const QString& itemName );
     void*               GetCurrentData();
+    void*               GetData( const QPoint& pt );
     void                SetItemConnectors( const T_ConnectorVector& v );
 
     void InsertItem( ADN_StandardItem* item );
@@ -64,6 +65,7 @@ public:
     void Clear();
     void ClearFilters();
     void CreateTableFrom( std::stringstream& stream ) const;
+    void RemoveCurrentElement();
 
     void setEnabled( bool b );
 
@@ -150,6 +152,21 @@ inline
 void* ADN_ListView::GetCurrentData()
 {
     return pCurData_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::GetData
+// Created: ABR 2013-02-11
+// -----------------------------------------------------------------------------
+inline
+void* ADN_ListView::GetData( const QPoint& pt )
+{
+    if( !viewport() )
+        return 0;
+    QModelIndex index = indexAt( viewport()->mapFromGlobal( pt ) );
+    if( index.isValid() )
+        return GetCurrentData();
+    return 0;
 }
 
 //-----------------------------------------------------------------------------

@@ -931,3 +931,14 @@ void ADN_ListView::Warn( ADN_ErrorStatus /* errorStatus */, const QString& )
 
     // $$$$ ABR 2013-01-15: ListView Border color depending on errorStatus ??
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::RemoveCurrentElement
+// Created: ABR 2013-02-11
+// -----------------------------------------------------------------------------
+void ADN_ListView::RemoveCurrentElement()
+{
+    void* data = GetCurrentData();
+    if( data )
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( data );
+}

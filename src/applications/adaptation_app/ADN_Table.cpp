@@ -147,6 +147,17 @@ void ADN_Table::RemoveItem( void* pData )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Table::RemoveCurrentElement
+// Created: ABR 2013-02-11
+// -----------------------------------------------------------------------------
+void ADN_Table::RemoveCurrentElement()
+{
+    void* data = GetSelectedData();
+    if( data )
+        static_cast< ADN_Connector_Vector_ABC& >( GetConnector() ).RemItem( data );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Table::PrivateOnContextMenu
 // Created: ABR 2012-11-08
 // -----------------------------------------------------------------------------
@@ -296,6 +307,20 @@ void* ADN_Table::GetSelectedData() const
     QModelIndexList indexes = selectedIndexes();
     if( indexes.size() > 0 )
         return GetDataFromIndex( indexes[ 0 ] );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetData
+// Created: ABR 2013-02-11
+// -----------------------------------------------------------------------------
+void* ADN_Table::GetData( const QPoint& pt )
+{
+    if( !viewport() )
+        return 0;
+    QModelIndex index = indexAt( viewport()->mapFromGlobal( pt ) );
+    if( index.isValid() )
+       return GetDataFromIndex( index );
     return 0;
 }
 

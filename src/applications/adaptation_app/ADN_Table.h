@@ -40,6 +40,7 @@ public:
 
     virtual void AddRow( int row, void* data );
     void RemoveItem( void* item );
+    void RemoveCurrentElement();
 
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
     void Sort( int column, Qt::SortOrder order );
@@ -71,6 +72,7 @@ protected:
     void* GetData( int row, int col ) const;
     void* GetDataFromIndex( const QModelIndex& index ) const;
     void* GetSelectedData() const;
+    void* GetData( const QPoint& pt );
     virtual void OnContextMenu( const QPoint& pt );
     //@}
 
