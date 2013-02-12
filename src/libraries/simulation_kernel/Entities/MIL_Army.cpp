@@ -463,13 +463,14 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
     if( nDiplomacy == eUnknown )
         xis.error( "Unknown diplomacy relation between armies" );
     MIL_Army_ABC* pArmy = armyFactory_.Find( xis.attribute< unsigned int >( "party" ) );
-    if( !pArmy )
-        xis.error( "Unknown army" );
-    if( diplomacies_.find( pArmy ) != diplomacies_.end() )
-        xis.error( "Diplomacy between armies already exist" );
-    if( pArmy == this )
-        xis.error( "Self diplomacy not allowed" );
-    diplomacies_[ pArmy ] = nDiplomacy;
+    if( pArmy )
+    {
+        if( diplomacies_.find( pArmy ) != diplomacies_.end() )
+            xis.error( "Diplomacy between armies already exist" );
+        if( pArmy == this )
+            xis.error( "Self diplomacy not allowed" );
+        diplomacies_[ pArmy ] = nDiplomacy;
+    }
 }
 
 // -----------------------------------------------------------------------------
