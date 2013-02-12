@@ -732,11 +732,11 @@
         <cmake_build target="all"/>
     </target>
 
-    <target name="unit_tests">
+    <target name="unit_test">
         <cmake_test/>
     </target>
 
-    <target name="test" depends="unit_tests
+    <target name="test" depends="unit_test
         ,adaptation_test
         ,app_test
         ,checkpoint_test
