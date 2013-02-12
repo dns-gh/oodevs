@@ -11,16 +11,26 @@
 #include <google/protobuf/stubs/common.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+#include <cstdlib>
 
-unsigned short PORT = 55000;
+unsigned short PORT = 30000;
 std::string temp_directory;
 
 namespace
 {
     std::string data_directory;
 
+    unsigned short GetMasaPort( unsigned short defval )
+    {
+        const char* value = getenv( "MASA_TEST_PORT" );
+        if( !value )
+            return defval;
+        return boost::lexical_cast< unsigned short >( value );
+    }
+
     void parse_options( int argc, char* argv[] )
     {
+        PORT = GetMasaPort( PORT ) + 4;
         while( argc-- )
         {
             const std::string argument = argv[argc];
@@ -40,6 +50,7 @@ namespace
     parse_options( argc, argv );
     if( temp_directory.empty() )
         throw MASA_EXCEPTION( "Test --temp_directory option was not supplied" );
+    BOOST_MESSAGE( "tools_test test port: " << PORT );
     return 0;
 }
 

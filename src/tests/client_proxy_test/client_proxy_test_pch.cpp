@@ -13,14 +13,23 @@
 #include <iostream>
 #include <string>
 
-unsigned short PORT = 55000;
+unsigned short PORT = 30000;
 
 namespace
 {
+    unsigned short GetMasaPort( unsigned short defval )
+    {
+        const char* value = getenv( "MASA_TEST_PORT" );
+        if( !value )
+            return defval;
+        return boost::lexical_cast< unsigned short >( value );
+    }
+
     std::string data_directory;
 
     void set_data_directory( int argc, char* argv[] )
     {
+        PORT = GetMasaPort( PORT );
         while( argc-- )
         {
             const std::string argument = argv[argc];
@@ -36,6 +45,7 @@ namespace
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
     set_data_directory( argc, argv );
+    BOOST_MESSAGE( "client_proxy_test test port: " << PORT );
     return 0;
 }
 

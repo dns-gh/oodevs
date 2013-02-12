@@ -10,6 +10,10 @@
 #ifndef shield_test_pch_h
 #define shield_test_pch_h
 
+#ifdef _MSC_VER
+    #define _CRT_SECURE_NO_WARNINGS
+#endif // _MSC_VER
+
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
