@@ -31,6 +31,7 @@
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_TerrainFunctions.h"
+#include "Decision/DEC_Logger_ABC.h"
 #include "DEC_ResourceNetwork.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -1579,7 +1580,7 @@ namespace
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
                   const std::string& includePath, const std::string& brainFile, bool isMasalife,
-                  const std::string& type, bool reload, const std::string& integrationDir )
+                  const std::string& type, bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC& logger )
 {
     const std::string& idx = isMasalife ? type : brainFile;
     pArchetypeBrain = brainTable[idx];
@@ -1587,7 +1588,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
         pArchetypeBrain.reset();
     if( pArchetypeBrain )
     {
-        pBrain.reset( new sword::Brain( *pArchetypeBrain ) );
+        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
         return false;
     }
     if( isMasalife )
@@ -1597,14 +1598,14 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN( "knowledge" )
             + PLUGIN( "communication" )
             + PLUGIN46( "errorhandler" )
-            + "} cwd='" + includePath + "'" ) );
+            + "} cwd='" + includePath + "'", logger ) );
     else
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
             + PLUGIN46( "eventmanager" )
             + PLUGIN46( "motivation" )
             + PLUGIN46( "errorhandler" )
-            + "} cwd='" + includePath + "'" ) );
+            + "} cwd='" + includePath + "'", logger ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
     pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
@@ -1613,7 +1614,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
     if( reload )
         pBrain = pArchetypeBrain;
     else
-        pBrain.reset( new sword::Brain( *pArchetypeBrain ) );
+        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
     return true;
 }
 

@@ -60,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult ) const;
+//    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult ) const;
     //@}
 
     //! @name Effects

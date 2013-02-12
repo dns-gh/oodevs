@@ -32,7 +32,7 @@ class PHY_RoePopulation;
 class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 public:
-             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult );
+             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints
@@ -169,8 +169,9 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, const unsigned int /*version*/ )
 {
     archive << role->pEntity_
-        << role->gcPause_
-        << role->gcMult_;
+            << role->gcPause_
+            << role->gcMult_
+            << role->logEnabled_;
 }
 
 template< typename Archive >
@@ -179,10 +180,12 @@ void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const un
     MIL_Automate* automate;
     unsigned int gcPause;
     unsigned int gcMult;
+    bool logEnabled;
     archive >> automate
-        >> gcPause
-        >> gcMult;
-    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult );
+            >> gcPause
+            >> gcMult
+            >> logEnabled;
+    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, logEnabled );
 }
 
 #endif // __DEC_AutomateDecision_h_

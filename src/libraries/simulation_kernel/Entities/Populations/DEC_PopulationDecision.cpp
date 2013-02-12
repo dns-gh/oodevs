@@ -41,8 +41,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
 // Name: DEC_PopulationDecision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult )
-    : DEC_Decision( population, gcPause, gcMult )
+DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+    : DEC_Decision( population, gcPause, gcMult, logEnabled )
     , rDominationState_    ( 0. )
     , rLastDominationState_( 0. )
     , bStateHasChanged_    ( true )

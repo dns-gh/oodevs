@@ -40,6 +40,16 @@ bool MIL_Config::IsDecisionalProfilingEnabled() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::IsDecisionalLoggerEnabled
+// Created: SLI 2013-02-11
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsDecisionalLoggerEnabled() const
+{
+    return bDecisionalLoggerEnabled_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::IsHookProfilingEnabled
 // Created: SLI 2012-12-04
 // -----------------------------------------------------------------------------

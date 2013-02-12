@@ -5465,5 +5465,11 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentTypePion_Remote.h">
       <Filter>Source Files\Entities\Specialisations\Remote</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger_ABC.h">
+      <Filter>Source Files\Decision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger.h">
+      <Filter>Source Files\Decision</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

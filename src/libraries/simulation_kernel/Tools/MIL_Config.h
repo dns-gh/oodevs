@@ -49,6 +49,7 @@ public:
     bool               UseDecDebug                 () const;
     bool               UsePathDebug                () const;
     bool               IsDecisionalProfilingEnabled() const;
+    bool               IsDecisionalLoggerEnabled   () const;
     bool               IsHookProfilingEnabled      () const;
     bool               IsCommandProfilingEnabled   () const;
     bool               IsSaveCheckpointTestMode    () const;
@@ -143,6 +144,7 @@ private:
     bool           bUsePathDebug_;
     bool           bUseNetworkLogger_;
     bool           bDecisionalProfilingEnabled_;
+    bool           bDecisionalLoggerEnabled_;
     bool           bHookProfilingEnabled_;
     bool           bCommandProfilingEnabled_;
     bool           bTestMode_;

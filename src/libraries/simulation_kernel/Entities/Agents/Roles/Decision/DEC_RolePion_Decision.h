@@ -44,7 +44,7 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
-             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult );
+             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
     virtual ~DEC_RolePion_Decision();
 
     //! @name CheckPoints
@@ -256,11 +256,13 @@ BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, const unsigned int /*version*/ )
 {
-    unsigned int gcPause = role->gcPause_;
-    unsigned int gcMult = role->gcMult_;
+    const unsigned int gcPause = role->gcPause_;
+    const unsigned int gcMult = role->gcMult_;
+    const bool logEnabled = role->logEnabled_;
     archive << role->pEntity_
-        << gcPause
-        << gcMult;
+            << gcPause
+            << gcMult
+            << logEnabled;
 }
 
 template< typename Archive >
@@ -269,10 +271,12 @@ void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const u
     MIL_AgentPion* pion;
     unsigned int gcPause;
     unsigned int gcMult;
+    bool logEnabled;
     archive >> pion
-        >> gcPause
-        >> gcMult;
-    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult );
+            >> gcPause
+            >> gcMult
+            >> logEnabled;
+    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult, logEnabled );
 }
 
 #endif // __DEC_RolePion_Decision_h_

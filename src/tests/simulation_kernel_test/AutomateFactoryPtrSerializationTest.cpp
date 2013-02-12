@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
     {
         MIL_IDManager manager;
         MIL_CheckPointOutArchive* out = new MIL_CheckPointOutArchive( s );
-        AutomateFactory_ABC* factory = new AutomateFactory( manager, 100, 100 );
+        AutomateFactory_ABC* factory = new AutomateFactory( manager, 100, 100, false );
         ( *out ) << factory;
         delete factory;
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash

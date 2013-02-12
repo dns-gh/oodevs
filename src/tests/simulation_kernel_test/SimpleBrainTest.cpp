@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    DEC_RolePion_Decision decision( *fixture.pPion_, 100, 100 );
+    DEC_RolePion_Decision decision( *fixture.pPion_, 100, 100, false );
     decision.Reload();
 }
 
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 BOOST_AUTO_TEST_CASE( InstantiateDEC_AutomateDecision )
 {
     FixtureAutomate fixture;
-    DEC_AutomateDecision decision( *fixture.pAutomat_, 100, 100 );
+    DEC_AutomateDecision decision( *fixture.pAutomat_, 100, 100, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     MockArmy army;
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type, army );
-    DEC_PopulationDecision decision( population, 100, 100 );
+    DEC_PopulationDecision decision( population, 100, 100, false );
 }
 
 class DEC_TestPopulationDecision;
@@ -71,7 +71,7 @@ class DEC_TestPopulationDecision : public DEC_Decision< MIL_Population >
 {
 public:
     DEC_TestPopulationDecision( MIL_Population& population, DEC_TestPopulationDecision* pOther )
-        : DEC_Decision( population, 100, 100 )
+        : DEC_Decision( population, 100, 100, false )
         , pOther_( pOther )
     {
         const DEC_Model_ABC& model = population.GetType().GetModel();

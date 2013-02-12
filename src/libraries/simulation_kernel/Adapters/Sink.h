@@ -41,7 +41,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
-                   unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects );
+                   unsigned int gcPause, unsigned int gcMult, bool logEnabled,
+                   const std::vector< unsigned int >& dangerousObjects );
     virtual ~Sink();
     //@}
 
@@ -97,7 +98,8 @@ private:
     //! @name Constructors/Destructor
     //@{
     Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
-          std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects );
+          std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
+          bool logEnabled, const std::vector< unsigned int >& dangerousObjects );
     //@}
 
     //! @name Helpers
@@ -114,6 +116,7 @@ private:
     const PopulationFactory_ABC& populations_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
+    const bool logEnabled_;
     const std::vector< unsigned int > dangerousObjects_;
     xml::xistringstream modules_;
     std::auto_ptr< core::Logger_ABC > logger_;

@@ -31,8 +31,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_RolePion_Decision )
 // Name: DEC_RolePion_Decision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult )
-    : DEC_Decision( pion, gcPause, gcMult )
+DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+    : DEC_Decision( pion, gcPause, gcMult, logEnabled )
     , nForceRatioState_         ( eForceRatioStateNone )
     , nRulesOfEngagementState_  ( eRoeStateFreeFire )
     , nCloseCombatState_        ( eCloseCombatStateNone )

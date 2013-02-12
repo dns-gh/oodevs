@@ -60,6 +60,7 @@ namespace legacy
         archive << factory
                 << sink->gcPause_
                 << sink->gcMult_
+                << sink->logEnabled_
                 << elements;
     }
 
@@ -69,12 +70,14 @@ namespace legacy
         AgentFactory_ABC* factory;
         unsigned int gcPause;
         unsigned int gcMult;
+        bool logEnabled;
         Sink::T_Elements elements;
         archive >> factory
                 >> gcPause
                 >> gcMult
+                >> logEnabled
                 >> elements;
-        ::new( sink )Sink( *factory, gcPause, gcMult );
+        ::new( sink )Sink( *factory, gcPause, gcMult, logEnabled );
         sink->elements_ = elements;
     }
 }
@@ -84,11 +87,12 @@ namespace legacy
 // Name: Sink constructor
 // Created: SLI 2012-01-13
 // -----------------------------------------------------------------------------
-Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult )
+Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
     : pElevation_( new ElevationGetter() )
     , factory_   ( factory )
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
+    , logEnabled_( logEnabled )
 {
     // NOTHING
 }
@@ -213,7 +217,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     pion.RegisterRole( *new sword::legacy::NullRoleAdapter() );
     try
     {
-        pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_ ) );
+        pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_, logEnabled_ ) );
     }
     catch( const tools::Exception& e )
     {

@@ -69,11 +69,13 @@ namespace sword
         const sword::Sink* sink = &role->sink_;
         unsigned int gcPause = role->gcPause_;
         unsigned int gcMult = role->gcMult_;
+        bool logEnabled = role->logEnabled_;
         archive << role->pEntity_
                 << model
                 << sink
                 << gcPause
-                << gcMult;
+                << gcMult
+                << logEnabled;
     }
 
     template< typename Archive >
@@ -84,12 +86,14 @@ namespace sword
         Sink* sink;
         unsigned int gcPause;
         unsigned int gcMult;
+        bool logEnabled;
         archive >> pion
                 >> model
                 >> sink
                 >> gcPause
-                >> gcMult;
-        ::new( role )sword::RolePion_Decision( *pion, *model, gcPause, gcMult, *sink );
+                >> gcMult
+                >> logEnabled;
+        ::new( role )sword::RolePion_Decision( *pion, *model, gcPause, gcMult, logEnabled, *sink );
     }
 }
 
@@ -129,8 +133,8 @@ DECLARE_HOOK( GetAmmunitionForIndirectFire, int, ( const SWORD_Model* model, con
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------
-RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, Sink& sink )
-    : DEC_RolePion_Decision( pion, gcPause, gcMult )
+RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, bool logEnabled, Sink& sink )
+    : DEC_RolePion_Decision( pion, gcPause, gcMult, logEnabled )
     , sink_ ( sink )
     , model_( model )
 {

@@ -62,10 +62,12 @@
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
+#include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
@@ -288,13 +290,13 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
-    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_ ) )
+    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , sink_                         ( config.IsLegacy() ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_ ) )
-                                                        : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause_, gcMult_, objectFactory.GetDangerousObjects() ) ) )
+    , sink_                         ( config.IsLegacy() ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
+                                                        : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled(), objectFactory.GetDangerousObjects() ) ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
-    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_ ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_, config.IsDecisionalLoggerEnabled() ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
@@ -837,23 +839,12 @@ void MIL_EntityManager::UpdateKnowledges()
 
 namespace
 {
-    void UpdateAutomate( float duration, MIL_Automate& automate, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
+    template< typename T >
+    void UpdateDecision( float duration, T& entity, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
     {
         profiler.Start();
-        automate.UpdateDecision( duration );
-        profilerManager.NotifyDecisionUpdated( automate, profiler.Stop() );
-    }
-    void UpdatePion( float duration, MIL_AgentPion& pion, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
-    {
-        profiler.Start();
-        pion.UpdateDecision( duration );
-        profilerManager.NotifyDecisionUpdated( pion, profiler.Stop() );
-    }
-    void UpdatePopulation( float duration, MIL_Population& population, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
-    {
-        profiler.Start();
-        population.UpdateDecision( duration );
-        profilerManager.NotifyDecisionUpdated( population, profiler.Stop() );
+        entity.UpdateDecision( duration );
+        profilerManager.NotifyDecisionUpdated( entity, profiler.Stop() );
     }
 }
 
@@ -867,15 +858,15 @@ void MIL_EntityManager::UpdateDecisions()
     MT_Profiler decisionUpdateProfiler;
     {
         Profiler profiler( rAutomatesDecisionTime_ );
-        automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
+        automateFactory_->Apply( boost::bind( &UpdateDecision< MIL_Automate >, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
     }
     {
         Profiler profiler( rPionsDecisionTime_ );
-        sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
+        sink_->Apply( boost::bind( &UpdateDecision< MIL_AgentPion >, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
     }
     {
         Profiler profiler( rPopulationsDecisionTime_ );
-        populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
+        populationFactory_->Apply( boost::bind( &UpdateDecision< MIL_Population >, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
     }
 }
 

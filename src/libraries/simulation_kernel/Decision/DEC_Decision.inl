@@ -11,6 +11,7 @@
 #include "Brain.h"
 #include "DEC_PathFunctions.h"
 #include "DEC_DIAFunctions.h"
+#include "DEC_Logger.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
@@ -22,12 +23,15 @@
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
 template< class T >
-DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult )
-    : pEntity_ ( &entity )
-    , gcPause_ ( gcPause)
-    , gcMult_  ( gcMult )
-    , nDIARef_ ( 0 )
-    , model_   ( 0 )
+DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+    : pEntity_   ( &entity )
+    , gcPause_   ( gcPause)
+    , gcMult_    ( gcMult )
+    , logEnabled_( logEnabled )
+    , nDIARef_   ( 0 )
+    , model_     ( 0 )
+    , logger_    ( logEnabled ? static_cast< sword::DEC_Logger_ABC* >( new sword::DEC_Logger< T >( entity ) ) :
+                                static_cast< sword::DEC_Logger_ABC* >( new sword::DEC_NullLogger() ) )
 {
     // NOTHING
 }
@@ -49,7 +53,7 @@ namespace DEC_DecisionImpl
     bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
                       boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath,
                       const std::string& brainFile, bool isMasalife, const std::string& type,
-                      bool reload, const std::string& integrationDir );
+                      bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC& logger );
 }
 
 namespace directia
@@ -80,7 +84,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< sword::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir, *logger_ );
 
     if( newBrain )
     {
@@ -105,8 +109,8 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     
     if ( newBrain )//Call GC only for a new archetype
     {
-        pRefs_->collectgarbage_("setpause", gcPause_);
-        pRefs_->collectgarbage_("setstepmul", gcMult_);
+        pRefs_->collectgarbage_( "setpause", gcPause_ );
+        pRefs_->collectgarbage_( "setstepmul", gcMult_ );
     }
 }
 

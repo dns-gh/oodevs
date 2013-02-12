@@ -11,6 +11,7 @@
 #define SWORD_BRAIN_H
 
 #include "MT_Tools/MT_ProfilerGuard.h"
+#include "DEC_Logger_ABC.h"
 #include <directia/tools/binders/ScriptRef.h>
 #define private public
 #include <directia/brain/Brain.h>
@@ -52,8 +53,8 @@ class Brain : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Brain( const std::string& config );
-    explicit Brain( Brain& parent );
+    Brain( const std::string& config, DEC_Logger_ABC& logger );
+    Brain( Brain& parent, DEC_Logger_ABC& logger );
     //@}
 
     //! @name Operations
@@ -75,7 +76,7 @@ public:
     template< typename Signature >
     void RegisterFunction( const char* const name, const boost::function< Signature >& function )
     {
-        (*brain_)[ name ] = ProfilerProxy< Signature >( profilers_[ name ], function );
+        (*brain_)[ name ] = ProfilerProxy< Signature >( logger_, name, profilers_[ name ], function );
     }
     template< typename Function >
     void RegisterFunction( const char* const name, const Function& function )
@@ -97,6 +98,7 @@ private:
 private:
     //! @name Member data
     //@{
+    DEC_Logger_ABC& logger_;
     std::auto_ptr< directia::brain::Brain > brain_;
     static T_Profilers profilers_;
     //@}

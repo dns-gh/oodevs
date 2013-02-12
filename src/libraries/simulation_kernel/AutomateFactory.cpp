@@ -24,10 +24,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AutomateFactory )
 // Name: AutomateFactory constructor
 // Created: MGD 2009-08-17
 // -----------------------------------------------------------------------------
-AutomateFactory::AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult )
-    : idManager_( idManager )
-    , gcPause_( gcPause )
-    , gcMult_( gcMult )
+AutomateFactory::AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+    : idManager_ ( idManager )
+    , gcPause_   ( gcPause )
+    , gcMult_    ( gcMult )
+    , logEnabled_( logEnabled )
 {
     //NOTHING
 }
@@ -57,7 +58,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
     if( !pType )
         xis.error( "Unknown automat type" );
 
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, gcPause_, gcMult_ );
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, gcPause_, gcMult_, logEnabled_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
@@ -70,7 +71,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context, const MIL_DictionaryExtensions& extensions )
 {
-    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, context, extensions );
+    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, logEnabled_, context, extensions );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;

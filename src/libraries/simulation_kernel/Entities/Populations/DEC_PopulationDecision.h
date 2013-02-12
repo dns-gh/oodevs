@@ -30,7 +30,7 @@ class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
 {
 
 public:
-             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult );
+             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
     virtual ~DEC_PopulationDecision();
 
     //! @name CheckPoints
@@ -108,7 +108,8 @@ void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, 
 {
     archive << role->pEntity_
             << role->gcPause_
-            << role->gcMult_;
+            << role->gcMult_
+            << role->logEnabled_;
 }
 
 template< typename Archive >
@@ -117,10 +118,12 @@ void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const 
     MIL_Population* population;
     unsigned int gcPause;
     unsigned int gcMult;
+    bool logEnabled;
     archive >> population
             >> gcPause
-            >> gcMult;
-    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult );
+            >> gcMult
+            >> logEnabled;
+    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult, logEnabled );
 }
 
 #endif // __DEC_PopulationDecision_h_

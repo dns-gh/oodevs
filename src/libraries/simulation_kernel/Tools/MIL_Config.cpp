@@ -48,6 +48,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bUsePathDebug_( false )
     , bUseNetworkLogger_( false )
     , bDecisionalProfilingEnabled_( false )
+    , bDecisionalLoggerEnabled_( false )
     , bHookProfilingEnabled_( false )
     , bCommandProfilingEnabled_( false )
     , bTestMode_( false )
@@ -178,7 +179,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::end
                     >> xml::start( "pathfinder" )
                         >> xml::attribute( "threads", pathFinderThreads_ );
-    if( xis.has_attribute( "max-calculation-time" ) ) {
+    if( xis.has_attribute( "max-calculation-time" ) )
+    {
         unsigned int t;
         if( tools::ReadTimeAttribute( xis, "max-calculation-time", t ))
             pathFinderMaxComputationTime_ = t;
@@ -244,6 +246,7 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::attribute( "decisional", bUseDecDebug_ )
             >> xml::attribute( "pathfind", bUsePathDebug_ )
             >> xml::attribute( "networklogger", bUseNetworkLogger_ )
+            >> xml::optional >> xml::attribute( "decisional-logger", bDecisionalLoggerEnabled_ )
             >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
             >> xml::optional >> xml::attribute( "loglevel", logSim.level_ )
             >> xml::optional >> xml::attribute( "logfiles", logSim.files_ )

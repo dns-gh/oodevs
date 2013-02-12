@@ -33,7 +33,7 @@ class Sink : public Sink_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult );
+             Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
     virtual ~Sink();
     //@}
 
@@ -96,7 +96,8 @@ private:
     std::auto_ptr< propagation::ElevationGetter_ABC > pElevation_;
     AgentFactory_ABC& factory_;
     const unsigned int gcPause_;
-    unsigned int gcMult_;
+    const unsigned int gcMult_;
+    const bool logEnabled_;
     //@}
 };
 }

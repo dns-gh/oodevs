@@ -10,7 +10,7 @@ class StubDEC_Decision : public DEC_Decision< T >
 {
 public:
     StubDEC_Decision( T& entity )
-        : DEC_Decision< T >( entity, 100, 100 )
+        : DEC_Decision< T >( entity, 100, 100, false )
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );

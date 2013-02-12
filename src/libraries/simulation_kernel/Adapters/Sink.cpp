@@ -99,6 +99,7 @@ void save_construct_data( Archive& archive, const Sink* sink, const unsigned int
             << model
             << sink->gcPause_
             << sink->gcMult_
+            << sink->logEnabled_
             << sink->dangerousObjects_
             << sink->elements_;
 }
@@ -111,14 +112,16 @@ void load_construct_data( Archive& archive, Sink* sink, const unsigned int /*ver
     core::Model* model;
     unsigned int gcPause;
     unsigned int gcMult;
+    bool logEnabled;
     std::vector< unsigned int > dangerousObjects;
     archive >> agents
             >> populations
             >> model
             >> gcPause
             >> gcMult
+            >> logEnabled
             >> dangerousObjects;
-    ::new( sink )Sink( *agents, *populations, std::auto_ptr< core::Model >( model ), gcPause, gcMult, dangerousObjects );
+    ::new( sink )Sink( *agents, *populations, std::auto_ptr< core::Model >( model ), gcPause, gcMult, logEnabled, dangerousObjects );
     archive >> sink->elements_;
 }
 }
@@ -196,11 +199,13 @@ namespace
 // Created: SBO 2011-06-06
 // -----------------------------------------------------------------------------
 Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
-            unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects )
+            unsigned int gcPause, unsigned int gcMult, bool logEnabled,
+            const std::vector< unsigned int >& dangerousObjects )
     : agents_          ( agents )
     , populations_     ( populations )
     , gcPause_         ( gcPause )
     , gcMult_          ( gcMult )
+    , logEnabled_      ( logEnabled )
     , dangerousObjects_( dangerousObjects )
     , modules_         ( configuration )
     , logger_          ( new CoreLogger() )
@@ -215,11 +220,13 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
 Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
-            std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects )
+            std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
+            bool logEnabled, const std::vector< unsigned int >& dangerousObjects )
     : agents_          ( agents )
     , populations_     ( populations )
     , gcPause_         ( gcPause )
     , gcMult_          ( gcMult )
+    , logEnabled_      ( logEnabled )
     , dangerousObjects_( dangerousObjects )
     , modules_         ( configuration )
     , logger_          ( new CoreLogger() )
@@ -622,7 +629,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     pion.RegisterRole( *new sword::RolePion_Location( *this, pion, entity, position ) );
     try
     {
-        pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
+        pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, logEnabled_, *this ) );
     }
     catch( const tools::Exception& e )
     {

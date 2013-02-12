@@ -216,7 +216,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter )
     MockMIL_EntityManager_ABC entityManager;
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, 100, 100 ) );
+    fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, 100, 100, false ) );
     MOCK_EXPECT( entityManager.FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( in, entityManager );
     MissionParameter_Value out;

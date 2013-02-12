@@ -12,11 +12,17 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include <boost/scoped_ptr.hpp>
 
 class DEC_Knowledge_Object;
 class DEC_Model_ABC;
 class MIL_Entity_ABC;
 class MIL_Mission_ABC;
+
+namespace sword
+{
+    class DEC_Logger_ABC;
+}
 
 // =============================================================================
 /** @class  DEC_Decision
@@ -31,7 +37,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Constructor
     //@{
-             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult );
+             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
     virtual ~DEC_Decision();
     //@}
 
@@ -194,6 +200,7 @@ protected:
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     unsigned int                    gcPause_;
     unsigned int                    gcMult_;
+    bool                            logEnabled_;
     unsigned int                    nDIARef_;
     const DEC_Model_ABC*            model_;
     //@}
@@ -201,6 +208,7 @@ protected:
 private:
     //!@name Data
     //@{
+    boost::scoped_ptr< sword::DEC_Logger_ABC > logger_;
     boost::shared_ptr< sword::Brain > pBrain_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     bool                               isMasalife_;
