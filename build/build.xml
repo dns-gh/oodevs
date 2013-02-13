@@ -262,7 +262,7 @@
                 </filterset>
             </copy>
             <!-- SIM -->
-            <!-- <run-simulation exercise="@{temporary-name}" session="@{session}"/> -->
+            <run-simulation exercise="@{temporary-name}" session="@{session}"/>
             <!-- cleanup -->
             <delete dir="${out.dir}/@{temporary-name}"/>
             <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"/>
