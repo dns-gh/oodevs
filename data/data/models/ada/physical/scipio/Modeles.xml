@@ -3048,6 +3048,7 @@
           <fragorder name="Modifier Priorites Blesses"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION LOGISTIQUE Trier et Traiter Blesses"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7570,4 +7571,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2396311381" -->
+<!-- signature="4118699694" -->
