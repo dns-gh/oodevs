@@ -16,10 +16,12 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/foreach.hpp>
+
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace actions;
@@ -36,6 +38,19 @@ PushFlowParameters::PushFlowParameters( const OrderParameter& parameter, const C
     // NOTHING
 }
 
+namespace
+{
+    typedef void ( PushFlowParameters::*T_ReadPoint )( xml::xistream& xis, T_PointVector& points );
+
+    void WalkPath( PushFlowParameters* it, T_PointVector& path, T_ReadPoint reader,
+                   const std::string&, std::string name, xml::xistream& xis )
+    {
+        boost::algorithm::to_lower( name );
+        if( name == "waybackpath" )
+            xis >> xml::list( "point", *it, reader, path );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PushFlowParameters constructor
 // Created: SBO 2007-06-26
@@ -44,14 +59,12 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
     : Parameter< QString >( parameter )
     , converter_          ( converter )
 {
-    if( xis.has_child( "wayBackPath" ) )
-    {
-        xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
-            >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver )
-            >> xml::start( "wayBackPath" )
-                >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, wayBackPath_ )
-            >> xml::end;
-    }
+    xml::list( boost::bind( &WalkPath, this, boost::ref( wayBackPath_ ), &PushFlowParameters::ReadPoint, _1, _2, _3 ) );
+    if( wayBackPath_.empty() )
+        return;
+    xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
+        >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +271,7 @@ void PushFlowParameters::Serialize( xml::xostream& xos ) const
                 << xml::attribute( "quantity", equipment.second )
             << xml::end;
     }
-    Serialize( wayBackPath_, "wayBackPath", xos );
+    Serialize( wayBackPath_, "waybackpath", xos );
 }
 
 // -----------------------------------------------------------------------------
