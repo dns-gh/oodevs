@@ -22,6 +22,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
+#include <boost/algorithm/string/case_conv.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -164,6 +165,7 @@ EngineerConstruction::~EngineerConstruction()
 void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
 {
     std::string type = xis.attribute< std::string >( "type" );
+    boost::algorithm::to_lower( type );
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
@@ -172,9 +174,10 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         AddParameter( *new Automat( xis, entities, controller ) );
     else if( type == "string" )
         AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toStdString(), "string", true ), xis ) );
-    else if( type == "quantity" )
+    else if( type == "quantity" || type == "integer" || type == "numeric" )
     {
         std::string identifier = xis.attribute( "identifier", std::string() );
+        boost::algorithm::to_lower( identifier );
         if( identifier == "altitude_modifier" )
         {
             Quantity* numeric = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toStdString(), "integer", true ), xis );
@@ -187,17 +190,13 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
-    }
-    else if( type == "Integer" )
-    {
-        std::string identifier = xis.attribute( "identifier", std::string() );
-        if( identifier == "ActivityTime" )
+        if( identifier == "activitytime" )
         {
             Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
-        else if( identifier == "ActivationTime" )
+        else if( identifier == "activationtime" )
         {
             Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
@@ -280,9 +279,9 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
             static_cast< const String* >( it->second )->CommitTo( *message.mutable_name() );
         else if( type == "integer" || type == "quantity" )
         {
-            if( keyName == "ActivityTime" )
+            if( keyName == "activitytime" )
                 message.set_activity_time( static_cast< int >( static_cast< const Numeric* >( it->second )->GetValue() ) );
-            else if( keyName == "ActivationTime" )
+            else if( keyName == "activationtime" )
                 message.set_activation_time( static_cast< int >( static_cast< const Numeric* >( it->second )->GetValue() ) );
             else if( keyName == "altitude_modifier" )
                 static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
