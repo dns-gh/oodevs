@@ -40,9 +40,9 @@ MIL_AgentTypePionLOGMaintenance::~MIL_AgentTypePionLOGMaintenance()
 // Name: MIL_AgentTypePionLOGMaintenance::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis, const MIL_Config& config ) const
 {
-    return new MIL_AgentPionLOGMaintenance( *this, automate, algorithmFactories, xis );
+    return new MIL_AgentPionLOGMaintenance( *this, automate, algorithmFactories, xis, config );
 }
 
 // -----------------------------------------------------------------------------

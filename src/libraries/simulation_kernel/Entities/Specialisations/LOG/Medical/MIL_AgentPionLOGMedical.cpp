@@ -41,8 +41,8 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGMedical* pion, const
 // Name: MIL_AgentPionLOGMedical constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis )
+MIL_AgentPionLOGMedical::MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis, const MIL_Config& config )
+    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis, config )
 {
     // NOTHING
 }

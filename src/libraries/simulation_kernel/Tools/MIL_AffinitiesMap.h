@@ -23,6 +23,7 @@ namespace sword
     class UnitMagicAction;
 }
 
+class MIL_Config;
 // =============================================================================
 /** @class  MIL_AffinitiesMap
     @brief  MIL_AffinitiesMap
@@ -44,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AffinitiesMap();
-    explicit MIL_AffinitiesMap( xml::xistream& xis );
+    explicit MIL_AffinitiesMap( xml::xistream& xis, const MIL_Config& config );
     virtual ~MIL_AffinitiesMap();
     //@}
 
@@ -78,7 +79,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAffinity( xml::xistream& xis );
+    void ReadAffinity( xml::xistream& xis, const MIL_Config& config );
     //@}
 
 private:

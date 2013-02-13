@@ -17,7 +17,7 @@ class MIL_AgentPion_Remote : public MIL_AgentPion
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
+    MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis, const MIL_Config& config );
     MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
     virtual ~MIL_AgentPion_Remote();
     //@}

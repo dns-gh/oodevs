@@ -24,8 +24,9 @@
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_AgentPion   ( type, automate, algorithmFactories, xis )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis,
+                                            const MIL_Config& config )
+    : MIL_AgentPion   ( type, automate, algorithmFactories, xis, config )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     this->RegisterAction( pLogisticAction_ );

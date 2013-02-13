@@ -72,7 +72,8 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause,
+                                unsigned int gcMult, const MIL_Config& config )
     : MIL_Entity_ABC( xis )
     , pType_                      ( &type )
     , nID_                        ( xis.attribute< unsigned int >( "id" ) )
@@ -91,7 +92,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
-    , pAffinities_                ( new MIL_AffinitiesMap( xis ) )
+    , pAffinities_                ( new MIL_AffinitiesMap( xis, config ) )
     , pExtensions_                ( new MIL_DictionaryExtensions( xis ) )
 {
     idManager_.Lock( nID_ );
@@ -113,7 +114,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
         >> xml::end;
     rNewArmedIndividuals_ = rArmedIndividuals_;
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
-    RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult, logEnabled ) );
+    RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult, config.IsDecisionalLoggerEnabled() ) );
     RegisterRole( *new DEC_Representations() );
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );

@@ -22,11 +22,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 // Name: PopulationFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, const MIL_Config& config )
     : gcPause_          ( gcPause )
     , gcMult_           ( gcMult )
-    , logEnabled_       ( logEnabled )
     , missionController_( missionController )
+    , config_           ( config )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
     const MIL_PopulationType* pType = MIL_PopulationType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, logEnabled_ );
+    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, config_ );
     Register( population.GetID(), population );
     population.Register( missionController_ );
     return population;
@@ -64,7 +64,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, logEnabled_, context );
+    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, config_.IsDecisionalLoggerEnabled(), context );
     Register( population.GetID(), population );
     if( pUrbanObject )
         populationFromUrbanObjectResolver_.Register( pUrbanObject, population );

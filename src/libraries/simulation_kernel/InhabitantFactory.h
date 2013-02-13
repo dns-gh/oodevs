@@ -11,6 +11,9 @@
 #define __InhabitantFactory_h_
 
 #include "InhabitantFactory_ABC.h"
+#include "MIL_AgentServer.h"
+
+class MIL_Config;
 
 // =============================================================================
 /** @class  InhabitantFactory
@@ -23,7 +26,7 @@ class InhabitantFactory : public InhabitantFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantFactory();
+    explicit InhabitantFactory( const MIL_Config& config );
     virtual ~InhabitantFactory();
     //@}
 
@@ -38,6 +41,12 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const MIL_Config& config_;
     //@}
 
 private:
@@ -58,7 +67,7 @@ void save_construct_data( Archive& /*archive*/, const InhabitantFactory* /*facto
 template< typename Archive >
 void load_construct_data( Archive& /*archive*/, InhabitantFactory* factory, const unsigned int /*version*/ )
 {
-    ::new( factory )InhabitantFactory();
+    ::new( factory )InhabitantFactory( MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
 #endif // __InhabitantFactory_h_

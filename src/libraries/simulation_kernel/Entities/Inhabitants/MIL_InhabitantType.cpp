@@ -109,15 +109,6 @@ MIL_InhabitantType::~MIL_InhabitantType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_InhabitantType::InstanciateInhabitant
-// Created: SLG 2010-11-29
-// -----------------------------------------------------------------------------
-MIL_Inhabitant& MIL_InhabitantType::InstanciateInhabitant( xml::xistream& xis, MIL_Army_ABC& army ) const
-{
-    return *new MIL_Inhabitant( xis, *this, army );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_InhabitantType::GetAssociatedCrowdType
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------

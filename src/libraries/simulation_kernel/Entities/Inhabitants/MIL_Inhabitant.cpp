@@ -58,7 +58,7 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 // Name: MIL_Inhabitant constructor
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
+MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army, const MIL_Config& config )
     : MIL_Entity_ABC( xis )
     , type_                   ( type )
     , nID_                    ( xis.attribute< unsigned int >( "id" ) )
@@ -69,7 +69,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrWoundedHumans_      ( 0 )
     , healthStateChanged_     ( false )
     , pSatisfactions_         ( new MIL_InhabitantSatisfactions( xis ) )
-    , pAffinities_            ( new MIL_AffinitiesMap( xis ) )
+    , pAffinities_            ( new MIL_AffinitiesMap( xis, config ) )
     , pExtensions_            ( new MIL_DictionaryExtensions( xis ) )
 {
     idManager_.Lock( nID_ );

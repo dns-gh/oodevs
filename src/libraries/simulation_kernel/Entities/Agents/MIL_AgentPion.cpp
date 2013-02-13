@@ -92,7 +92,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories,
+                              xml::xistream& xis, const MIL_Config& config )
     : MIL_Agent_ABC( xis )
     , pType_               ( &type )
     , bHasChanged_         ( false )
@@ -102,7 +103,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
-    , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
+    , pAffinities_         ( new MIL_AffinitiesMap( xis, config ) )
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
     , pColor_              ( new MIL_Color( xis ) )
     , app6Symbol_          ( "" )

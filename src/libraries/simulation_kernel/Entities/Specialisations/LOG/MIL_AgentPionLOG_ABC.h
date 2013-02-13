@@ -23,6 +23,7 @@ namespace xml
 template < typename T > class PHY_ActionLogistic;
 
 class MIL_AutomateLOG;
+class MIL_Config;
 
 // =============================================================================
 // @class  MIL_AgentPionType
@@ -31,7 +32,8 @@ class MIL_AutomateLOG;
 class MIL_AgentPionLOG_ABC : public MIL_AgentPion
 {
 public:
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
+             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis,
+                                   const MIL_Config& config );
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPionLOG_ABC();

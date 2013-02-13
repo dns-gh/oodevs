@@ -11,6 +11,7 @@
 #define __PopulationFactory_h_
 
 #include "PopulationFactory_ABC.h"
+#include "MIL_AgentServer.h"
 
 class MissionController_ABC;
 
@@ -25,7 +26,7 @@ class PopulationFactory : public PopulationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, const MIL_Config& config );
     virtual ~PopulationFactory();
     //@}
 
@@ -53,9 +54,9 @@ private:
     //! @name Member data
     //@{
     MissionController_ABC& missionController_;
+    const MIL_Config& config_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    const bool logEnabled_;
     //@}
 };
 
@@ -67,8 +68,7 @@ void save_construct_data( Archive& archive, const PopulationFactory* factory, co
     const MissionController_ABC* const missionController = &factory->missionController_;
     archive << missionController
             << factory->gcPause_
-            << factory->gcMult_
-            << factory->logEnabled_;
+            << factory->gcMult_;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ )
@@ -76,12 +76,10 @@ void load_construct_data( Archive& archive, PopulationFactory* factory, const un
     MissionController_ABC* missionController;
     unsigned int gcPause;
     unsigned int gcMult;
-    bool logEnabled;
     archive >> missionController
             >> gcPause
-            >> gcMult
-            >> logEnabled;
-    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, logEnabled );
+            >> gcMult;
+    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
 #endif // __PopulationFactory_h_
