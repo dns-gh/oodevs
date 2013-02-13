@@ -6684,7 +6684,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="189001" codeEMAT8="18900101" codeLFRIL="" codeNNO="1550145377975" comment="" id="62" max-slope="1" name="Drone SDTI" protection="Aeronef" size="Drone" weight="0.2">
+  <equipment codeEMAT6="189001" codeEMAT8="18900101" codeLFRIL="" codeNNO="1550145377975" comment="" id="62" max-slope="1" name="Drone SDTI" protection="CharMoyen" size="Drone" weight="0.2">
     <speeds max="180">
       <speed terrain="unknown" value="180"/>
       <speed terrain="forest" value="180"/>
@@ -19654,6 +19654,7 @@
       <maintenance-functions>
         <repairing category="NTI1" type="EA, M"/>
         <repairing category="NTI2" max-reparation-time="8h" type="EA, M"/>
+        <repairing category="NTI3" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
@@ -26277,6 +26278,7 @@
       <maintenance-functions>
         <repairing category="NTI1" type="EA, M"/>
         <repairing category="NTI2" max-reparation-time="16h" type="EA, M"/>
+        <repairing category="NTI3" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
@@ -29289,7 +29291,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="18401010" codeLFRIL="" codeNNO="1550145526625" comment="" id="305" max-slope="1" name="Drone DRAC" protection="Aeronef" size="Drone" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="18401010" codeLFRIL="" codeNNO="1550145526625" comment="" id="305" max-slope="1" name="Drone DRAC" protection="CharMoyen" size="Drone" weight="0.08">
     <speeds max="72">
       <speed terrain="unknown" value="72"/>
       <speed terrain="forest" value="72"/>
@@ -35745,4 +35747,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0612919871" -->
+<!-- signature="1673854621" -->
