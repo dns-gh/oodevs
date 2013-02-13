@@ -166,16 +166,16 @@
         <translation>Instrumentation</translation>
     </message>
     <message>
-        <source>Decisional function calls</source>
-        <translation>Appel aux fonctions décisionnelles</translation>
+        <source>Decisional functions</source>
+        <translation>Fonctions décisionnelles</translation>
     </message>
     <message>
-        <source>Commands start / stop</source>
-        <translation>Commandes démarrage / arrêt</translation>
+        <source>Commands (non-legacy)</source>
+        <translation>Commandes (non-legacy)</translation>
     </message>
     <message>
-        <source>Hooks function calls</source>
-        <translation>Appel aux points d&apos;insertion </translation>
+        <source>Hooks (non-legacy)</source>
+        <translation>Hooks (non-legacy)</translation>
     </message>
     <message>
         <source>Pathfind settings</source>

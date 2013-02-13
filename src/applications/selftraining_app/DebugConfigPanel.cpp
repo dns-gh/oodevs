@@ -208,9 +208,9 @@ void DebugConfigPanel::OnLanguageChanged()
     legacyCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
-    decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional function calls" ) );
-    commandsBox_->setText( tools::translate( "DebugConfigPanel", "Commands start / stop" ) );
-    hooksBox_->setText( tools::translate( "DebugConfigPanel", "Hooks function calls" ) );
+    decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional functions" ) );
+    commandsBox_->setText( tools::translate( "DebugConfigPanel", "Commands (non-legacy)" ) );
+    hooksBox_->setText( tools::translate( "DebugConfigPanel", "Hooks (non-legacy)" ) );
     pathfindsBox_->setTitle( tools::translate( "DebugConfigPanel", "Pathfind settings" ) );
     filterLabel_->setText( tools::translate( "DebugConfigPanel", "Filter :" ) );
     dumpLabel_->setText( tools::translate( "DebugConfigPanel", "Dump pathfinds directory :" ) );

@@ -166,15 +166,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Decisional function calls</source>
+        <source>Decisional functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Commands start / stop</source>
+        <source>Commands (non-legacy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hooks function calls</source>
+        <source>Hooks (non-legacy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
