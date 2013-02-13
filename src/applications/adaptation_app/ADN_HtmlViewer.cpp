@@ -39,7 +39,7 @@ ADN_HtmlViewer::~ADN_HtmlViewer()
 // -----------------------------------------------------------------------------
 QString ADN_HtmlViewer::text() const
 {
-    return QString();
+    return url().isEmpty() ? "" : url().path();
 }
 
 // -----------------------------------------------------------------------------

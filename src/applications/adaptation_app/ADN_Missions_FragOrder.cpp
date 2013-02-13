@@ -255,11 +255,6 @@ void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& missionDir )
         descriptionComment_ = descriptionComment;
         descriptionMissionEnd_ = descriptionMissionEnd;
     }
-    if( !bfs::exists( fileName + ".html" ) )
-    {
-        std::fstream fileStream( fileName + ".html", std::ios::out | std::ios::trunc );
-        fileStream.close();
-    }
     missionSheetPath_ = fileName + ".html";
 }
 
@@ -319,5 +314,6 @@ void ADN_Missions_FragOrder::WriteMissionSheet( const std::string& missionDir )
     std::fstream fileStream( tools::FromUtf8ToLocalCharset( fileName + ".html" ), std::ios::out | std::ios::trunc );
     fileStream << xst.str();
     fileStream.close();
-    missionSheetPath_ = fileName + ".html";
+    if( missionSheetPath_.GetData().empty() )
+        missionSheetPath_ = fileName + ".html";
 }

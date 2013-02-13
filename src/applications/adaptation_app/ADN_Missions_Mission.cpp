@@ -397,6 +397,8 @@ void ADN_Missions_Mission::WriteMissionSheet( const std::string& missionDir )
         std::fstream fileStream( tools::FromUtf8ToLocalCharset( fileName + ".html" ), std::ios::out | std::ios::trunc );
         fileStream << xst.str();
         fileStream.close();
+        if( missionSheetPath_.GetData().empty() )
+            missionSheetPath_ = fileName + ".html";
     }
 }
 
