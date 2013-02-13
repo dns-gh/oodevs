@@ -184,11 +184,10 @@ return
         return integration.isCivilian( self )
     end,
     firePermitted = function( self )
-        if self:isCivilian() -- la cible est un civil
-           or meKnowledge:isInCrowd()  -- la cible est dans une foule
-           or self:isInCrowd()  -- l'agent est dans une foule
-        then 
+        if self:isCivilian() then -- la cible est un civil 
             return meKnowledge:fireAllowedOnCrowd()
+        elseif meKnowledge:isInCrowd() or self:isInCrowd() then -- la cible est dans une foule ou l'agent est dans une foule
+            return meKnowledge:fireAllowedOnCrowd() and integration.firePermitted( self )
         else
             return integration.firePermitted( self )
         end

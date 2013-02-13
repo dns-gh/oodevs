@@ -53,7 +53,7 @@ rootnode
         end
 
         -- Manage respond on entities
-        Activate( skill.links.respond, 1,{ entities = self.entitiesToSafeguardFrom } )
+        Activate( skill.links.respond, 1,{ entities = self.agentsEngagingMe } )
 
         -- Self protection is disabled when needed
         if myself.desactiveSelfProtection then
