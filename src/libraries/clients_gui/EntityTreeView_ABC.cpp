@@ -156,6 +156,9 @@ void EntityTreeView_ABC::ApplyProfileFilter()
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel::Entity_ABC* >& elements )
 {
+    if( selectionMode() == QAbstractItemView::NoSelection )
+        return;
+
     blockSelect_ = true;
     selectionModel()->clearSelection();
     for( std::vector< const kernel::Entity_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
@@ -177,6 +180,8 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
 void EntityTreeView_ABC::OnSelect( const QItemSelection& /*selected*/, const QItemSelection& /* deselected */ )
 {
     if( blockSelect_ )
+        return;
+    if( selectionMode() == QAbstractItemView::NoSelection )
         return;
 
     QModelIndexList indexes = selectedIndexes();
