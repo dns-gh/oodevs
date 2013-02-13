@@ -181,6 +181,11 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
     connect( advancedPanel, SIGNAL( NoClientSelected( bool ) ), SLOT( OnNoClientSelected( bool ) ) );
 
+    //orbat config panel
+    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin< OrbatConfigPanel >();
+    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
+    connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
+
     //debug config panel
     if( config.IsOnDebugMode() )
     {
@@ -189,10 +194,6 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
         connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
         connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const QString& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const QString& ) ) );
     }
-
-    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin< OrbatConfigPanel >();
-    connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
-    connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
 
     //general settings tab
     QWidget* configBox = new QWidget();

@@ -118,28 +118,33 @@ void OrbatConfigPanel::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void OrbatConfigPanel::Select( const frontend::Exercise_ABC& exercise )
 {
-    ClearSelection();
-    const std::map< unsigned int, QString > map = frontend::commands::ListSides( config_, exercise.GetName() );
-    const std::size_t count = map.size();
-    noSideLabel_->setVisible( count == 0u );
-    if( count > 0 )
+    const std::string currentExercise = exercise.GetId();
+    if( currentExercise_ != currentExercise )
     {
-        sideBox_ = new QGroupBox();
-        QVBoxLayout* layout = new QVBoxLayout( sideBox_ );
-        for( auto it = map.begin(); it != map.end(); ++it )
+        ClearSelection();
+        const std::map< unsigned int, QString > map = frontend::commands::ListSides( config_, exercise.GetName() );
+        const std::size_t count = map.size();
+        noSideLabel_->setVisible( count == 0u );
+        if( count > 0 )
         {
-            QCheckBox* checkbox = new QCheckBox( it->second );
-            checkbox->setChecked( true );
-            layout->addWidget( checkbox );
-            sideCheckBox_[ it->first ] = checkbox;
+            sideBox_ = new QGroupBox();
+            QVBoxLayout* layout = new QVBoxLayout( sideBox_ );
+            for( auto it = map.begin(); it != map.end(); ++it )
+            {
+                QCheckBox* checkbox = new QCheckBox( it->second );
+                checkbox->setChecked( true );
+                layout->addWidget( checkbox );
+                sideCheckBox_[ it->first ] = checkbox;
+            }
+            mainLayout_->addWidget( sideBox_ );
+            OnLanguageChanged();
         }
-        mainLayout_->addWidget( sideBox_ );
-        OnLanguageChanged();
-    }
-    if( frontend::commands::HasObjectWithoutSide( config_, exercise.GetName() ) )
-    {
-        noSideObjectsLabel_->setChecked( true );
-        noSideObjectsLabel_->show();
+        if( frontend::commands::HasObjectWithoutSide( config_, exercise.GetName() ) )
+        {
+            noSideObjectsLabel_->setChecked( true );
+            noSideObjectsLabel_->show();
+        }
+        currentExercise_ = currentExercise;
     }
 }
 
