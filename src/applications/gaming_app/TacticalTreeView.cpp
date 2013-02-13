@@ -153,7 +153,9 @@ bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
 {
     if( !profile_.IsVisible( entity ) )
         return false;
-    if( &entity.Get< kernel::TacticalHierarchies >().GetTop() != &superior.Get< kernel::TacticalHierarchies >().GetTop() )
+    const kernel::TacticalHierarchies* entityHierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+    const kernel::TacticalHierarchies* superiorHierarchy = superior.Retrieve< kernel::TacticalHierarchies >();
+    if( !entityHierarchy || !superiorHierarchy || entityHierarchy->GetTop().GetId() != superiorHierarchy->GetTop().GetId() )
         return false;
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
