@@ -1198,9 +1198,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CrossedRef.cpp">
-      <Filter>Source Files\Common types</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">

@@ -184,7 +184,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyChecker.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ConsistencyDialog.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CrossedRef.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.cpp" />
