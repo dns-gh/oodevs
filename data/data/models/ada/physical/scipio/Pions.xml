@@ -9264,7 +9264,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="313" name="LOG . PC LOG BLD Secteur Transport" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="313" name="LOG . PC LOG BLD Secteur Transport" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
@@ -18074,4 +18074,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1081301277" -->
+<!-- signature="2039449188" -->
