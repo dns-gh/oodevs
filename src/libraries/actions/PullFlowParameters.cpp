@@ -17,10 +17,12 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "protocol/Protocol.h"
-#include <xeumeuleu/xml.hpp>
+
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace actions;
@@ -37,6 +39,19 @@ PullFlowParameters::PullFlowParameters( const OrderParameter& parameter, const k
     , converter_          ( converter )
 {
     // NOTHING
+}
+
+namespace
+{
+    typedef boost::function< void( xml::xistream& ) > T_Operand;
+
+    void WalkList( const std::string& key, const std::string& sub, const T_Operand& operand,
+                   const std::string&, std::string name, xml::xistream& xis )
+    {
+        boost::algorithm::to_lower( name );
+        if( name == key )
+            xis >> xml::list( sub, operand );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -59,13 +74,11 @@ PullFlowParameters::PullFlowParameters( const kernel::OrderParameter& parameter,
         supplierFormation_ = &entityResolver.GetFormation( idTmp) ;
 
     xis >> xml::list( "resource", *this, &PullFlowParameters::ReadResource, dotationTypeResolver )
-        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver )
-        >> xml::start( "wayOutPath" )
-            >> xml::list( "point", *this, &PullFlowParameters::ReadPoint, wayBackPath_ )
-        >> xml::end
-        >> xml::start( "wayBackPath" )
-            >> xml::list( "point", *this, &PullFlowParameters::ReadPoint, wayBackPath_ )
-        >> xml::end;
+        >> xml::list( "transporter", *this, &PullFlowParameters::ReadTransporter, equipmentTypeResolver );
+    const T_Operand outpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayOutPath_ ) );
+    xis >> xml::list( boost::bind( &WalkList, "wayoutpath", "point", outpath, _1, _2, _3 ) );
+    const T_Operand backpath = boost::bind( &PullFlowParameters::ReadPoint, this, _1, boost::ref( wayBackPath_ ) );
+    xis >> xml::list( boost::bind( &WalkList, "waybackpath", "point", backpath, _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,8 +284,8 @@ void PullFlowParameters::Serialize( xml::xostream& xos ) const
                 << xml::attribute( "quantity", equipment.second )
             << xml::end;
     }
-    Serialize( wayBackPath_, "wayOutPath", xos );
-    Serialize( wayBackPath_, "wayBackPath", xos );
+    Serialize( wayOutPath_, "wayoutpath", xos );
+    Serialize( wayBackPath_, "waybackpath", xos );
 }
 
 // -----------------------------------------------------------------------------
