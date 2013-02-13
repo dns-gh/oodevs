@@ -21,12 +21,32 @@
 #include <boost/bind.hpp>
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/date_time.hpp>
+#include <boost/interprocess/detail/atomic.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::script;
 
+typedef ActionScheduler::T_Action  T_Action;
+typedef ActionScheduler::T_Actions T_Actions;
+
+struct ActionScheduler::T_Action
+{
+    uint32_t                 idx;
+    boost::posix_time::ptime time;
+    sword::ClientToSim       msg;
+
+    bool operator<( const T_Action& other ) const
+    {
+        if( time != other.time )
+            return time < other.time;
+        return idx < other.idx;
+    }
+};
+
 namespace
 {
+    uint32_t counter = 0;
+
     boost::posix_time::ptime MakeTime( std::string value )
     {
         boost::algorithm::erase_all( value, "-" );
@@ -34,18 +54,18 @@ namespace
         return boost::posix_time::from_iso_string( value );
     }
 
-    typedef ActionScheduler::T_Actions T_Actions;
-
     void ReadAction( T_Actions& dst, const kernel::XmlAdapter& adapter, xml::xistream& xis )
     {
         try
         {
             std::string time;
             xis >> xml::attribute( "time", time );
-            sword::ClientToSim msg;
-            msg.set_context( 0 );
-            protocol::Read( adapter, *msg.mutable_message(), xis );
-            dst.insert( std::make_pair( MakeTime( time ), msg ) );
+            T_Action action;
+            action.idx = boost::interprocess::ipcdetail::atomic_inc32( &counter );
+            action.time = MakeTime( time );
+            action.msg.set_context( 0 );
+            protocol::Read( adapter, *action.msg.mutable_message(), xis );
+            dst.insert( action );
         }
         catch( const std::exception& err )
         {
@@ -91,8 +111,8 @@ ActionScheduler::~ActionScheduler()
 // -----------------------------------------------------------------------------
 void ActionScheduler::Tick( const boost::posix_time::ptime& time )
 {
-    for( ; cursor_ != actions_.end() && cursor_->first <= time; ++cursor_ )
-        publisher_.Send( cursor_->second );
+    for( ; cursor_ != actions_.end() && cursor_->time <= time; ++cursor_ )
+        publisher_.Send( cursor_->msg );
 }
 
 // -----------------------------------------------------------------------------

@@ -97,3 +97,17 @@ BOOST_FIXTURE_TEST_CASE( scheduler_schedules, Fixture )
     scheduler.NotifyUpdated( events::SimulationTimeChanged( "2009-12-29T12:00:00" ) );
     scheduler.NotifyUpdated( events::SimulationTimeChanged( "2010-12-29T12:00:00" ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( scheduler_schedules_multiple_orders_at_same_timestamp, Fixture )
+{
+    const std::string input =
+    "<actions>"
+    "  <action id='unit_creation' output='3417' target='158' time='2009-11-29T11:38:28' type='magicunit'/>"
+    "  <action id='unit_creation' output='3418' target='159' time='2009-11-29T11:38:28' type='magicunit'/>"
+    "</actions>";
+    xml::xistringstream xis( input );
+    MOCK_EXPECT( resolver.FindAgent ).returns( reinterpret_cast< kernel::Agent_ABC* >( this ) );
+    ActionScheduler scheduler( xis, adapter, publisher );
+    MOCK_EXPECT( publisher.ClientToSim ).exactly( 2 );
+    scheduler.NotifyUpdated( events::SimulationTimeChanged( "2009-11-29T12:00:00" ) );
+}

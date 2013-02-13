@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <set>
 
 namespace dispatcher
 {
@@ -78,7 +79,8 @@ public:
 
     //! @name Typedef helpers
     //@{
-    typedef std::map< boost::posix_time::ptime, sword::ClientToSim > T_Actions;
+    struct T_Action;
+    typedef std::set< T_Action > T_Actions;
     //@}
 
     //! @name Helpers
