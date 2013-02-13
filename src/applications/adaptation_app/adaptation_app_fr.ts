@@ -2518,21 +2518,6 @@ PNG (*.png)</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Mission_ConfigurationDlg</name>
-    <message>
-        <source>Mission configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Missions_Data</name>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>

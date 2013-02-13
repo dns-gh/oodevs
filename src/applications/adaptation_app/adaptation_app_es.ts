@@ -2514,21 +2514,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_Mission_ConfigurationDlg</name>
-    <message>
-        <source>Mission configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Missions_Data</name>
     <message>
         <source>Unit missions</source>
