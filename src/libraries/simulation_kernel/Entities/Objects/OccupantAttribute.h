@@ -64,13 +64,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< MIL_Agent_ABC* >   T_AgentSet;
-    typedef T_AgentSet::const_iterator CIT_AgentSet;
-    //@}
-
-private:
     //! @name Serialization
     //@{
     template< typename Archive > friend void save_construct_data( Archive& archive, const OccupantAttribute* attr, const unsigned int /*version*/ );

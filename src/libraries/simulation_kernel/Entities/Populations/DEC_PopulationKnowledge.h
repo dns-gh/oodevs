@@ -38,10 +38,8 @@ public:
     //! @name Types
     //@{
     typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
-    typedef T_AgentSet::const_iterator     CIT_AgentSet;
 
-    typedef std::vector< TER_Localisation >    T_LocationVector;
-    typedef T_LocationVector::const_iterator CIT_LocationVector;
+    typedef std::vector< TER_Localisation > T_LocationVector;
     //@}
 
 public:
