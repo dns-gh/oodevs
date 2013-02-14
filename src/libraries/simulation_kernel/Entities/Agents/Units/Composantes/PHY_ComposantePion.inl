@@ -16,8 +16,8 @@
 template< typename T >
 inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 {
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-        functor( *this, **itWeapon );
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+        functor( *this, **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -26,8 +26,8 @@ inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 // -----------------------------------------------------------------------------
 template< typename T > void PHY_ComposantePion::ApplyOnWeapons( const T& functor ) const
 {
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-        functor( *this, **itWeapon );
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+        functor( *this, **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,8 +48,8 @@ inline void PHY_ComposantePion::ApplyOnHumanProtection( T& functor ) const
 template< typename T > inline
 void PHY_ComposantePion::ApplyOnSensors( T& func ) const
 {
-    for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
-        func( **itSensor );
+    for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
+        func( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ void PHY_ComposantePion::ApplyOnSensors( T& func ) const
 template< typename T >
 void PHY_ComposantePion::ApplyOnSensors( const T& func ) const
 {
-    for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
-        func( **itSensor );
+    for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
+        func( **it );
 }
 
 // -----------------------------------------------------------------------------

@@ -1735,7 +1735,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypePion.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentTypePion.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RolePion_Composantes.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionWithLocation.inl" />

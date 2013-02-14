@@ -273,14 +273,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< PHY_Weapon* >       T_WeaponVector;
-    typedef T_WeaponVector::const_iterator CIT_WeaponVector;
-
-    typedef std::vector< PHY_HumanProtection* >       T_HumanProtectionVector;
-    typedef T_HumanProtectionVector::const_iterator CIT_HumanProtectionVector;
-
-    typedef std::vector< PHY_Sensor* >       T_SensorVector;
-    typedef T_SensorVector::const_iterator CIT_SensorVector;
+    typedef std::vector< PHY_Weapon* >          T_WeaponVector;
+    typedef std::vector< PHY_HumanProtection* > T_HumanProtectionVector;
+    typedef std::vector< PHY_Sensor* >          T_SensorVector;
     //@}
 
 private:

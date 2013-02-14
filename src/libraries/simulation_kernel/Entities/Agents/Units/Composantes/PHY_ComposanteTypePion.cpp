@@ -11,8 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposanteTypePion.h"
-
-#include <boost/algorithm/string.hpp>
 #include "PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ActiveProtection.h"
@@ -107,8 +105,8 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::Terminate()
 {
-    for( CIT_ComposanteTypeMap itComposante = composantesTypes_.begin(); itComposante != composantesTypes_.end(); ++itComposante )
-        delete itComposante->second;
+    for( auto it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
+        delete it->second;
     composantesTypes_.clear();
 }
 
@@ -185,11 +183,11 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const MIL_Time_ABC& time, const 
 // -----------------------------------------------------------------------------
 PHY_ComposanteTypePion::~PHY_ComposanteTypePion()
 {
-    for( CIT_ObjectDataVector itObjectData = objectData_.begin(); itObjectData != objectData_.end(); ++itObjectData )
-        delete *itObjectData;
+    for( auto it = objectData_.begin(); it != objectData_.end(); ++it )
+        delete *it;
     objectData_.clear();
-    for( CIT_ConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
-        delete *itConsumption;
+    for( auto it = consumptions_.begin(); it != consumptions_.end(); ++it )
+        delete *it;
     consumptions_.clear();
 }
 
@@ -410,9 +408,9 @@ void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
     const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
     if( !pRadarType )
         xis.error( "Unknown radar type" );
-    if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
+    if( std::find( radarTypes_.begin(), radarTypes_.end(), pRadarType ) != radarTypes_.end() )
         xis.error( "Radar type already defined" );
-    radarTypes_.insert( pRadarType );
+    radarTypes_.push_back( pRadarType );
 }
 
 // -----------------------------------------------------------------------------
@@ -822,7 +820,7 @@ PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_
 // Name: PHY_ComposanteTypePion::InstanciateWeapons
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator < std::vector< PHY_Weapon* > > inserter ) const
+void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator< std::vector< PHY_Weapon* > > inserter ) const
 {
     for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
@@ -836,7 +834,7 @@ void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator < std
 // Name: PHY_ComposanteTypePion::InstanciateSensors
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std::vector< PHY_Sensor* > > inserter ) const
+void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator< std::vector< PHY_Sensor* > > inserter ) const
 {
     for( auto it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
     {
@@ -846,7 +844,7 @@ void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std
     }
 }
 
-void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator < std::vector< PHY_HumanProtection* > > inserter ) const
+void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator< std::vector< PHY_HumanProtection* > > inserter ) const
 {
     for( auto it = humanProtections_.begin(); it != humanProtections_.end(); ++it )
     {
@@ -854,10 +852,6 @@ void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator <
         inserter = &humanProtection.InstanciateHumanProtection();
     }
 }
-
-// =============================================================================
-// OBJECTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::HasConstructionSpeeds
@@ -1088,10 +1082,6 @@ const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL
     return capacity ? capacity->GetDefaultConsumptionMode() : PHY_ConsumptionType::working_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetBreakdownType
 // Created: JVT 2005-04-26
@@ -1116,8 +1106,8 @@ const PHY_BreakdownType* PHY_ComposanteTypePion::GetBreakdownType( const T_Break
 double PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget, bool bUseAmmo ) const
 {
     double rScore = 0.;
-    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rScore = std::max( rScore, itWeapon->first->GetDangerosity( firer, target, rDistBtwSourceAndTarget, bUseAmmo ) );
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rScore = std::max( rScore, it->first->GetDangerosity( firer, target, rDistBtwSourceAndTarget, bUseAmmo ) );
     return rScore;
 }
 
@@ -1128,8 +1118,8 @@ double PHY_ComposanteTypePion::GetDangerosity( const MIL_Agent_ABC& firer, const
 double PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation ) const
 {
     double rRange = 0;
-    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH, dotation ) );
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::max( rRange, it->first->GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH, dotation ) );
     return rRange;
 }
 
@@ -1140,8 +1130,8 @@ double PHY_ComposanteTypePion::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, 
 double PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     double rRange = std::numeric_limits< double >::max();
-    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOn( firer, targetComposanteType, rWantedPH ) );
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::min( rRange, it->first->GetMinRangeToFireOn( firer, targetComposanteType, rWantedPH ) );
     return rRange;
 }
 
@@ -1152,8 +1142,8 @@ double PHY_ComposanteTypePion::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, 
 double PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     double rRange = 0;
-    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::max( rRange, it->first->GetMaxRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
     return rRange;
 }
 
@@ -1164,8 +1154,8 @@ double PHY_ComposanteTypePion::GetMaxRangeToFireOnWithPosture( const MIL_Agent_A
 double PHY_ComposanteTypePion::GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
     double rRange = std::numeric_limits< double >::max();
-    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rRange = std::min( rRange, itWeapon->first->GetMinRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::min( rRange, it->first->GetMinRangeToFireOnWithPosture( firer, target, targetComposanteType, rWantedPH ) );
     return rRange;
 }
 
@@ -1221,8 +1211,8 @@ double PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& f
  double PHY_ComposanteTypePion::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, double rWantedPH ) const
  {
     double rRange = 0.;
-    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
-        rRange = std::max( rRange, itWeapon->first->GetMaxRangeToFire( pion, rWantedPH ) );
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::max( rRange, it->first->GetMaxRangeToFire( pion, rWantedPH ) );
     return rRange;
  }
 
@@ -1474,22 +1464,434 @@ bool PHY_ComposanteTypePion::CanHaveBreakdown() const
 {
     return !randomBreakdownTypeProbabilities_.empty();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanHaveBreakdown
 // Created: LDC 2012-08-17
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanHaveBreakdown( const PHY_BreakdownType* type ) const
 {
-    for( T_BreakdownTypeProbabilityVector::const_iterator it = attritionBreakdownTypeProbabilities_.begin(); it != attritionBreakdownTypeProbabilities_.end();++it )
-    {
+    for( auto it = attritionBreakdownTypeProbabilities_.begin(); it != attritionBreakdownTypeProbabilities_.end();++it )
         if( it->pBreakdownType_ == type )
             return true;
-    }
-    for( T_BreakdownTypeProbabilityVector::const_iterator it = randomBreakdownTypeProbabilities_.begin(); it != randomBreakdownTypeProbabilities_.end();++it )
-    {
+    for( auto it = randomBreakdownTypeProbabilities_.begin(); it != randomBreakdownTypeProbabilities_.end();++it )
         if( it->pBreakdownType_ == type )
             return true;
-    }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::Find
+// Created: NLD 2004-08-10
+// -----------------------------------------------------------------------------
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& strName )
+{
+    auto it = composantesTypes_.find( strName );
+    if( it == composantesTypes_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::Find
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( sword::EquipmentType nAsnID )
+{
+    for( auto it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
+    {
+        const PHY_ComposanteTypePion& composanteType = *it->second;
+        if( composanteType.GetMosID().id() == nAsnID.id() )
+            return &composanteType;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetDotationCapacities
+// Created: NLD 2004-08-16
+// -----------------------------------------------------------------------------
+const PHY_DotationCapacities& PHY_ComposanteTypePion::GetDotationCapacities() const
+{
+    return dotationCapacities_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxSpeed
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetMaxSpeed( const TerrainData& data ) const
+{
+    return speeds_.GetMaxSpeed( data );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxSpeed
+// Created: NLD 2004-09-06
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetMaxSpeed() const
+{
+    return speeds_.GetMaxSpeed();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanTransportHumans
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanTransportHumans() const
+{
+    return rNbrHumansLoadedPerTimeStep_ != 0. && rNbrHumansUnloadedPerTimeStep_ != 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetNbrHumansLoadedPerTimeStep
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetNbrHumansLoadedPerTimeStep() const
+{
+    return rNbrHumansLoadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetNbrHumansUnloadedPerTimeStep
+// Created: NLD 2004-09-13
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetNbrHumansUnloadedPerTimeStep() const
+{
+    return rNbrHumansUnloadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanTransportPion
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanTransportPion() const
+{
+    return rPionTransporterWeightCapacity_ > 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetPionTransporterWeightCapacity
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetPionTransporterWeightCapacity() const
+{
+    return rPionTransporterWeightCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetPionTransporterWeightLoadedPerTimeStep() const
+{
+    return rPionTransporterWeightLoadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep
+// Created: NLD 2004-11-19
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetPionTransporterWeightUnloadedPerTimeStep() const
+{
+    return rPionTransporterWeightUnloadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanTransportCrowd
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanTransportCrowd() const
+{
+    return nCrowdTransporterCapacity_ > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetCrowdTransporterCapacity
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+unsigned int PHY_ComposanteTypePion::GetCrowdTransporterCapacity() const
+{
+    return nCrowdTransporterCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetCrowdTransporterLoadedPerTimeStep
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetCrowdTransporterLoadedPerTimeStep() const
+{
+    return rCrowdTransporterLoadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetCrowdTransporterUnloadedPerTimeStep
+// Created: JSR 2011-08-08
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetCrowdTransporterUnloadedPerTimeStep() const
+{
+    return rCrowdTransporterUnloadedPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetSensorRotationAngle_
+// Created: JVT 2004-10-20
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetSensorRotationAngle() const
+{
+    return rSensorRotationAngle_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetWeight
+// Created: NLD 2004-11-18
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetWeight() const
+{
+    return rWeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxSlope
+// Created: AGE 2005-04-13
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetMaxSlope() const
+{
+    return rMaxSlope_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::operator==
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::operator==( const PHY_ComposanteTypePion& rhs ) const
+{
+    return this == &rhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::operator!=
+// Created: NLD 2004-09-08
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::operator!=( const PHY_ComposanteTypePion& rhs ) const
+{
+    return this != &rhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::sNTICapability constructor
+// Created: NLD 2004-12-21
+// -----------------------------------------------------------------------------
+PHY_ComposanteTypePion::sNTICapability::sNTICapability()
+    : pMaintenanceLevel_( 0 )
+    , bMobility_        ( false )
+    , bElectronic_      ( false )
+    , nMaxTime_         ( std::numeric_limits< unsigned int >::max() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::sNTICapability constructor
+// Created: NLD 2004-12-21
+// -----------------------------------------------------------------------------
+PHY_ComposanteTypePion::sNTICapability::sNTICapability( const PHY_MaintenanceLevel& maintenanceLevel )
+    : pMaintenanceLevel_( &maintenanceLevel )
+    , bMobility_        ( false  )
+    , bElectronic_      ( false )
+    , nMaxTime_         ( std::numeric_limits< unsigned int >::max() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::sNTICapability::operator<
+// Created: NLD 2004-12-21
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::sNTICapability::operator < ( const sNTICapability& rhs ) const
+{
+    return pMaintenanceLevel_ < rhs.pMaintenanceLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanRepair
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanRepair() const
+{
+    return !ntiCapabilities_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanHaul
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanHaul() const
+{
+    return rHaulerWeightCapacity_ > 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetHaulerWeightCapacity
+// Created: NLD 2005-03-29
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetHaulerWeightCapacity() const
+{
+    return rHaulerWeightCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetHaulerLoadingTime
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetHaulerLoadingTime() const
+{
+    return rHaulerLoadingTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetHaulerUnloadingTime
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetHaulerUnloadingTime() const
+{
+    return rHaulerUnloadingTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanDiagnoseHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanDiagnoseHumans() const
+{
+    return bCanDiagnoseHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanSortHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanSortHumans() const
+{
+    return bCanSortHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanEvacuateCasualties
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanEvacuateCasualties() const
+{
+    return nAmbulanceEvacuationCapacity_ > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanCollectCasualties
+// Created: NLD 2005-01-10
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanCollectCasualties() const
+{
+    return nAmbulanceCollectionCapacity_ > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetAmbulanceCollectionCapacity
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+unsigned int PHY_ComposanteTypePion::GetAmbulanceCollectionCapacity() const
+{
+    return nAmbulanceCollectionCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetNbrHumansLoadedForCollectionPerTimeStep
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetNbrHumansLoadedForCollectionPerTimeStep() const
+{
+    return rNbrHumansLoadedForCollectionPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetNbrHumansUnloadedForCollectionPerTimeStep
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetNbrHumansUnloadedForCollectionPerTimeStep() const
+{
+    return rNbrHumansUnloadedForCollectionPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetAmbulanceEvacuationCapacity
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+unsigned int PHY_ComposanteTypePion::GetAmbulanceEvacuationCapacity() const
+{
+    return nAmbulanceEvacuationCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetNbrHumansLoadedForEvacuationPerTimeStep
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetNbrHumansLoadedForEvacuationPerTimeStep() const
+{
+    return rNbrHumansLoadedForEvacuationPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetNbrHumansUnloadedForEvacuationPerTimeStep() const
+{
+    return rNbrHumansUnloadedForEvacuationPerTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetStockTransporterCapacity
+// Created: NLD 2005-07-18
+// -----------------------------------------------------------------------------
+void PHY_ComposanteTypePion::GetStockTransporterCapacity( double& rWeightMax, double& rVolumeMax ) const
+{
+    rWeightMax = rStockTransporterWeightCapacity_;
+    rVolumeMax = rStockTransporterVolumeCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetStockTransporterNature
+// Created: NLD 2006-03-27
+// -----------------------------------------------------------------------------
+const PHY_DotationNature* PHY_ComposanteTypePion::GetStockTransporterNature() const
+{
+    return pStockTransporterNature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::sBreakdownTypeProbability constructor
+// Created: JVT 2005-04-26
+// -----------------------------------------------------------------------------
+PHY_ComposanteTypePion::sBreakdownTypeProbability::sBreakdownTypeProbability( const PHY_BreakdownType& breakdownType, double rProbabilityBound )
+    : pBreakdownType_   ( &breakdownType )
+    , rProbabilityBound_( rProbabilityBound )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetRandomBreakdownType
+// Created: JVT 2005-04-26
+// -----------------------------------------------------------------------------
+const PHY_BreakdownType* PHY_ComposanteTypePion::GetRandomBreakdownType() const
+{
+    return GetBreakdownType( randomBreakdownTypeProbabilities_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetAttritionBreakdownType
+// Created: JVT 2005-04-26
+// -----------------------------------------------------------------------------
+const PHY_BreakdownType* PHY_ComposanteTypePion::GetAttritionBreakdownType() const
+{
+    return GetBreakdownType( attritionBreakdownTypeProbabilities_ );
 }

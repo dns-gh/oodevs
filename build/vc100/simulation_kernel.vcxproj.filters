@@ -5089,9 +5089,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.inl">
       <Filter>Source Files\Entities\Agents\Units\Composantes</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposanteTypePion.inl">
-      <Filter>Source Files\Entities\Agents\Units\Composantes\Types</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\MIL_AgentTypePion.inl">
       <Filter>Source Files\Entities\Agents\Types</Filter>
     </None>

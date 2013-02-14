@@ -107,12 +107,12 @@ PHY_ComposantePion::PHY_ComposantePion()
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::~PHY_ComposantePion()
 {
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-        delete *itWeapon;
-    for( CIT_HumanProtectionVector itHumanProtection = protections_.begin(); itHumanProtection != protections_.end(); ++itHumanProtection )
-        delete *itHumanProtection;
-    for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
-        delete *itSensor;
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+        delete *it;
+    for( auto it = protections_.begin(); it != protections_.end(); ++it )
+        delete *it;
+    for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
+        delete *it;
     assert( pRole_ );
     pRole_->NotifyComposanteRemoved( *this );
     delete pHumans_;
@@ -1091,9 +1091,9 @@ const PHY_ComposanteTypePion& PHY_ComposantePion::GetType() const
 float PHY_ComposantePion::GetIdentificationMaxRange() const
 {
     double distance = 0.;
-    for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+    for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
     {
-        const PHY_SensorTypeAgent* pTypeAgent = (*itSensor)->GetType().GetTypeAgent();
+        const PHY_SensorTypeAgent* pTypeAgent = (*it)->GetType().GetTypeAgent();
         if( pTypeAgent )
             distance = std::max( distance, pTypeAgent->IdentificationDistance() );
     }
@@ -1107,9 +1107,9 @@ float PHY_ComposantePion::GetIdentificationMaxRange() const
 float PHY_ComposantePion::GetReconnoissanceMaxRange() const
 {
     double distance = std::numeric_limits< double >::max();
-    for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+    for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
     {
-        const PHY_SensorTypeAgent* pTypeAgent = ( *itSensor )->GetType().GetTypeAgent();
+        const PHY_SensorTypeAgent* pTypeAgent = ( *it )->GetType().GetTypeAgent();
         if( pTypeAgent )
             distance = std::min( distance, pTypeAgent->ReconnoissanceDistance() );
     }
@@ -1574,8 +1574,8 @@ const PHY_RoleInterface_Composantes& PHY_ComposantePion::GetRole() const
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
 {
-    for( CIT_WeaponVector itWeapon = weapons_.begin(); itWeapon != weapons_.end(); ++itWeapon )
-        algorithm.ApplyOnWeapon( *this, **itWeapon );
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+        algorithm.ApplyOnWeapon( *this, **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -1650,11 +1650,11 @@ void PHY_ComposantePion::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigne
 bool PHY_ComposantePion::CanPerceive( const MIL_ObjectType_ABC& objectType ) const
 {
     if( pState_->IsUsable() )
-        for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+        for( auto it = sensors_.begin(); it != sensors_.end(); ++it )
         {
-            if( *itSensor )
+            if( *it )
             {
-                const PHY_SensorTypeObject* pSensorTypeObject = (*itSensor)->GetType().GetTypeObject();
+                const PHY_SensorTypeObject* pSensorTypeObject = (*it)->GetType().GetTypeObject();
                 if( pSensorTypeObject && pSensorTypeObject->CanPerceive( objectType ) )
                     return true;
             }
