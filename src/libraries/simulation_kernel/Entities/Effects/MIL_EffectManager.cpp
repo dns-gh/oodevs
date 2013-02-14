@@ -67,12 +67,13 @@ void MIL_EffectManager::Register( MIL_Effect_ABC& effect )
 void MIL_EffectManager::Update()
 {
     T_Effects effects;
-    for( auto it = effects_.begin(); it != effects_.end(); ++it )
+    effects.swap( effects_ );
+    for( auto it = effects.begin(); it != effects.end(); ++it )
     {
         try
         {
             if( (*it)->Execute() )
-                effects.push_back( *it );
+                effects_.push_back( *it );
         }
         catch( const std::exception& e )
         {
@@ -86,7 +87,6 @@ void MIL_EffectManager::Update()
             MT_LOG_ERROR_MSG( "Effect unknown error" );
         }
     }
-    effects_.swap( effects );
 }
 
 // -----------------------------------------------------------------------------
