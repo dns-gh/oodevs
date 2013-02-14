@@ -465,7 +465,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     const AnimatorAttribute* animatorAttribute = pSplittingObject_->RetrieveAttribute<AnimatorAttribute>();
     if( animatorAttribute )
     {
-        for( AnimatorAttribute::CIT_AgentSet it = animatorAttribute->GetAnimators().begin(); it != animatorAttribute->GetAnimators().end(); ++it )
+        for( auto it = animatorAttribute->GetAnimators().begin(); it != animatorAttribute->GetAnimators().end(); ++it )
             MIL_Report::PostEvent( **it, report::eRC_DebutInterventionFaceAPopulation, GetAttitude().GetID() );
     }
     return true;

@@ -211,25 +211,25 @@ void DetectionCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_AB
     {
         int currentTime = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
         int detectionTime = it->second;
-        int maxAnimators = object.GetAttribute< AnimatorAttribute >().GetMaxAnimators();
-        AnimatorAttribute::T_AgentSet animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
+        auto animators = object.GetAttribute< AnimatorAttribute >().GetAnimators();
         const MIL_Agent_ABC* detector = object.GetAttribute< DetectorAttribute >().GetDetector();
         if( detector )
             animators.insert( detector );
-        for( AnimatorAttribute::CIT_AgentSet itAnimator = animators.begin(); itAnimator != animators.end(); ++itAnimator )
+        for( auto it = animators.begin(); it != animators.end(); ++it )
         {
-            MIL_Agent_ABC* animator = const_cast< MIL_Agent_ABC* >( *itAnimator );
+            MIL_Agent_ABC* animator = const_cast< MIL_Agent_ABC* >( *it );
             if( animator && !animator->IsDead() )
-        {
-                PHY_RoleInterface_Perceiver& role = animator->GetRole< PHY_RoleInterface_Perceiver >();
-                if( detectionTime + rIdentificationTime_ < currentTime )
-                role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
-                else if( detectionTime + rRecognitionTime_ < currentTime )
-                role.NotifyExternalPerception( agent, PHY_PerceptionLevel::recognized_ );
-                else if( detectionTime + rDetectionTime_ < currentTime )
-                role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
+            {
+                    PHY_RoleInterface_Perceiver& role = animator->GetRole< PHY_RoleInterface_Perceiver >();
+                    if( detectionTime + rIdentificationTime_ < currentTime )
+                        role.NotifyExternalPerception( agent, PHY_PerceptionLevel::identified_ );
+                    else if( detectionTime + rRecognitionTime_ < currentTime )
+                        role.NotifyExternalPerception( agent, PHY_PerceptionLevel::recognized_ );
+                    else if( detectionTime + rDetectionTime_ < currentTime )
+                        role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
+            }
         }
-        }
+        int maxAnimators = object.GetAttribute< AnimatorAttribute >().GetMaxAnimators();
         if( animators.empty() && !maxAnimators && object.GetArmy() )
         {
             if( detectionTime + rIdentificationTime_ < currentTime )

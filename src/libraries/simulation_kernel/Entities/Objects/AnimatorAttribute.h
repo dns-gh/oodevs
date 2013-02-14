@@ -11,6 +11,7 @@
 #define __AnimatorAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "tools/Set.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -28,6 +29,12 @@ class MIL_Agent_ABC;
 // =============================================================================
 class AnimatorAttribute : public ObjectAttribute_ABC
 {
+private:
+    //! @name Types
+    //@{
+    typedef tools::Set< const MIL_Agent_ABC* > T_AgentSet;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -65,12 +72,6 @@ public:
     //! @name Operations
     //@{
     AnimatorAttribute& operator=( const AnimatorAttribute& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
-    typedef T_AgentSet::const_iterator     CIT_AgentSet;
     //@}
 
     const T_AgentSet& GetAnimators() const;

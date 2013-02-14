@@ -71,7 +71,7 @@ namespace boost
         {
             std::size_t size = set.size();
             file << size;
-            for( DEC_PopulationKnowledge::CIT_AgentSet it = set.begin(); it != set.end(); ++it )
+            for( auto it = set.begin(); it != set.end(); ++it )
                 file << *it;
         }
 
