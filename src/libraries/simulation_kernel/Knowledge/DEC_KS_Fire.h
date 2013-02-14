@@ -13,6 +13,7 @@
 #define __DEC_KS_Fire_h_
 
 #include "DEC_KnowledgeSource_ABC.h"
+#include "tools/Set.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_AgentPion;
@@ -59,25 +60,9 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    struct PionComparator {
-        bool operator() (const MIL_AgentPion* lhs, const MIL_AgentPion* rhs) const;
-    };
-    typedef std::set< MIL_AgentPion*, PionComparator >  T_PionSet;
-    typedef T_PionSet::const_iterator   CIT_PionSet;
-
-    struct PopulationComparator {
-        bool operator() (const MIL_Population* lhs, const MIL_Population* rhs) const;
-    };
-    typedef std::set< MIL_Population*, PopulationComparator >     T_PopulationSet;
-    typedef T_PopulationSet::const_iterator CIT_PopulationSet;
-    //@}
-
-private:
     DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
-    T_PionSet                          pionsAttacking_;
-    T_PopulationSet                    populationsAttacking_;
+    tools::Set< MIL_AgentPion* > pionsAttacking_;
+    tools::Set< MIL_Population* > populationsAttacking_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_KS_Fire )

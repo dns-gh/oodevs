@@ -15,14 +15,13 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "DEC_Knowledge_AgentPerception.h"
-#include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Agents/Perceptions/PHY_ZURBPerceptionComputer.h"
+#include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Populations/MIL_Population.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Fire )
 
@@ -32,9 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Fire )
 // -----------------------------------------------------------------------------
 DEC_KS_Fire::DEC_KS_Fire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
     : DEC_KnowledgeSource_ABC ( blackBoard, 1 )
-    , pBlackBoard_            ( &blackBoard )
-    , pionsAttacking_         ()
-    , populationsAttacking_   ()
+    , pBlackBoard_( &blackBoard )
 {
     // NOTHING
 }
@@ -44,10 +41,7 @@ DEC_KS_Fire::DEC_KS_Fire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_Fire::DEC_KS_Fire()
-    : DEC_KnowledgeSource_ABC ()
-    , pBlackBoard_            ( 0 )
-    , pionsAttacking_         ()
-    , populationsAttacking_   ()
+    : pBlackBoard_( 0 )
 {
     // NOTHING
 }
@@ -88,9 +82,9 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
 
     const MIL_Agent_ABC& agentInteracting = pBlackBoard_->GetPion();
 
-    for( CIT_PionSet itAttacker = pionsAttacking_.begin(); itAttacker != pionsAttacking_.end(); ++itAttacker )
+    for( auto it = pionsAttacking_.begin(); it != pionsAttacking_.end(); ++it )
     {
-        MIL_AgentPion& attacker = **itAttacker;
+        MIL_AgentPion& attacker = **it;
 
         // Si le pion qui attaque est furtif
         if( attacker.GetRole< PHY_RolePion_Posture>().IsStealth() )
@@ -118,9 +112,9 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
     pionsAttacking_.clear();
 
     // Population
-    for( CIT_PopulationSet itAttacker = populationsAttacking_.begin(); itAttacker != populationsAttacking_.end(); ++itAttacker )
+    for( auto it = populationsAttacking_.begin(); it != populationsAttacking_.end(); ++it )
     {
-        DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( **itAttacker );
+        DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( **it );
         if( pKnowledge )
             pKnowledge->NotifyAttacker();
     }
@@ -152,30 +146,4 @@ void DEC_KS_Fire::NotifyAttackedBy( MIL_AgentPion& attacker )
 void DEC_KS_Fire::NotifyAttackedBy( MIL_Population& attacker )
 {
     populationsAttacking_.insert( &attacker );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_Fire::PionComparator::operator()
-// Created: LDC 2013-02-07
-// -----------------------------------------------------------------------------
-bool DEC_KS_Fire::PionComparator::operator() (const MIL_AgentPion* lhs, const MIL_AgentPion* rhs) const
-{
-    if( !lhs )
-        return false;
-    if( !rhs )
-        return true;
-    return lhs->GetID() < rhs->GetID(); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_Fire::PopulationComparator::operator()
-// Created: LDC 2013-02-07
-// -----------------------------------------------------------------------------
-bool DEC_KS_Fire::PopulationComparator::operator() (const MIL_Population* lhs, const MIL_Population* rhs) const
-{
-    if( !lhs )
-        return false;
-    if( !rhs )
-        return true;
-    return lhs->GetID() < rhs->GetID(); 
 }
