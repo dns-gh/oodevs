@@ -54,6 +54,7 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned 
          >> agentsEntering_
          >> agentsExiting_
          >> agentsMovingInside_
+         >> agentsDelayedEntering_
          >> populationsInside_
          >> height_;
 }
@@ -68,6 +69,7 @@ void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned
          << agentsEntering_
          << agentsExiting_
          << agentsMovingInside_
+         << agentsDelayedEntering_
          << populationsInside_
          << height_;
 }
