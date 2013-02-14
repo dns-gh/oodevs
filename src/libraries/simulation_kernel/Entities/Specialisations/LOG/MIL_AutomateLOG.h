@@ -179,9 +179,8 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr < logistic::SupplyConsign_ABC > >       T_SupplyConsigns;
-    typedef std::list< boost::shared_ptr < logistic::SupplyRequestContainer > >  T_SupplyRequests;
-    typedef std::set< logistic::SupplyConvoysObserver_ABC* > T_SupplyConvoysObservers;
+    typedef std::list< boost::shared_ptr < logistic::SupplyConsign_ABC > >      T_SupplyConsigns;
+    typedef std::list< boost::shared_ptr < logistic::SupplyRequestContainer > > T_SupplyRequests;
     //@}
 
 private:
@@ -200,11 +199,10 @@ private:
     // Supply
     T_SupplyConsigns supplyConsigns_;
     T_SupplyRequests supplyRequests_; // Pushed flows
-    T_SupplyConvoysObservers supplyConvoysObserver_;
+    std::vector< logistic::SupplyConvoysObserver_ABC* > supplyConvoysObserver_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_AutomateLOG )

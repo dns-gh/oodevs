@@ -43,6 +43,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
@@ -522,7 +523,7 @@ void MIL_AutomateLOG::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    T_SupplyConvoysObservers tmp = supplyConvoysObserver_;
+    auto tmp = supplyConvoysObserver_;
     std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, supplyConsign ) );
 }
 
@@ -532,7 +533,7 @@ void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< const logistic:
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    T_SupplyConvoysObservers tmp = supplyConvoysObserver_;
+    auto tmp = supplyConvoysObserver_;
     std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, supplyConsign ) );
 }
 
@@ -555,7 +556,7 @@ bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
 {
-    supplyConvoysObserver_.insert( &observer );
+    supplyConvoysObserver_.push_back( &observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -564,7 +565,7 @@ void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
 {
-    supplyConvoysObserver_.erase( &observer );
+    boost::remove_erase( supplyConvoysObserver_, &observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -605,21 +606,8 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::UpdateLogistic()
 {
-    for( auto it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
-    {
-        if( (*it)->Update() )
-            it = supplyConsigns_.erase( it );
-        else
-            ++it;
-    }
-
-    for( auto it = supplyRequests_.begin(); it != supplyRequests_.end(); )
-    {
-        if( (*it)->Update() )
-            it = supplyRequests_.erase( it );
-        else
-            ++it;
-    }
+    boost::remove_erase_if( supplyConsigns_, boost::mem_fn( &logistic::SupplyConsign_ABC::Update ) );
+    boost::remove_erase_if( supplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Update ) );
 }
 
 // -----------------------------------------------------------------------------
