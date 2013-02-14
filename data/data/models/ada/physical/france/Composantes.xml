@@ -71,7 +71,7 @@
     </breakdowns>
     <equipment-category>AVVF</equipment-category>
   </equipment>
-  <equipment codeEMAT6="502913" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Chaland debarquement Infanterie Chars" id="2" name="CDIC" protection="TransportBlinde" size="Gros" weight="1000">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Chaland debarquement Infanterie Chars" id="2" name="CDIC" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="60">
       <speed terrain="unknown" value="1"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -270,7 +270,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="113223" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="5" name="Fantassin + FAMAS 5.56 INF" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="5" name="Fantassin + FAMAS 5.56 INF" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -332,7 +332,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="114021" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="6" name="Fantassin + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="6" name="Fantassin + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -392,7 +392,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="168511" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar portable tres courte portee" id="7" name="Equipe + ARM A C C P ERYX MLE F1" protection="Combattant" size="Personnel" weight="0.3">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar portable tres courte portee" id="7" name="Equipe + ARM A C C P ERYX MLE F1" protection="Combattant" size="Personnel" weight="0.3">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -453,7 +453,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="113132" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="8" name="Tireur Precision + FRF2" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="8" name="Tireur Precision + FRF2" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -513,7 +513,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="A35201" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar courte portee" id="9" name="Equipe + POST TIR MILAN" protection="Combattant" size="Personnel" weight="0.4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar courte portee" id="9" name="Equipe + POST TIR MILAN" protection="Combattant" size="Personnel" weight="0.4">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -575,7 +575,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="169230" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR tres courte portee" id="10" max-slope="0.6" name="VLRA + PLATE FORME DE TIR MISTRAL" protection="VehiculeNonProtege" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR tres courte portee" id="10" max-slope="0.6" name="VLRA + PLATE FORME DE TIR MISTRAL" protection="VehiculeNonProtege" size="Petit" weight="2.1">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -697,7 +697,7 @@
     </breakdowns>
     <equipment-category>MISGAC</equipment-category>
   </equipment>
-  <equipment codeEMAT6="735911" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Radar associe au ROLAND" id="11" max-slope="0.6" name="VLRA + NC1-40 VR V1" protection="VehiculeNonProtege" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Radar associe au ROLAND" id="11" max-slope="0.6" name="VLRA + NC1-40 VR V1" protection="VehiculeNonProtege" size="Petit" weight="2.1">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -817,7 +817,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200433" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle SA 342 - Missiles HOT" id="12" max-slope="1" name="Gazelle HA HOT" protection="Aeronef" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle SA 342 - Missiles HOT" id="12" max-slope="1" name="Gazelle HA HOT" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -919,7 +919,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200533" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle SA 342 - Missiles MISTRAL" id="13" max-slope="1" name="Gazelle HA MISTRAL" protection="Aeronef" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle SA 342 - Missiles MISTRAL" id="13" max-slope="1" name="Gazelle HA MISTRAL" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -1021,7 +1021,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200535" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tigre" id="14" max-slope="1" name="Tigre" protection="Aeronef" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tigre" id="14" max-slope="1" name="Tigre" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -1105,7 +1105,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200532" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle SA 342 - Cannon 20 mm" id="15" max-slope="1" name="Gazelle HAC CN20" protection="Aeronef" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle SA 342 - Cannon 20 mm" id="15" max-slope="1" name="Gazelle HAC CN20" protection="Aeronef" size="Petit" weight="2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -1207,7 +1207,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="287090" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="16" max-slope="0.6" name="Char LECLERC" protection="Composite" size="Gros" weight="54">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="16" max-slope="0.6" name="Char LECLERC" protection="Composite" size="Gros" weight="54">
     <speeds max="70">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="40"/>
@@ -1355,7 +1355,7 @@
     <equipment-category>CHABAT</equipment-category>
     <operational-information information-origin="Jane's" native-country="France" starting-country="France, EAU" starting-date="1992-01-01"/>
   </equipment>
-  <equipment codeEMAT6="200742" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="17" max-slope="1" name="Puma HM" protection="Aeronef" size="Moyen" weight="5.5">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="17" max-slope="1" name="Puma HM" protection="Aeronef" size="Moyen" weight="5.5">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -1461,7 +1461,7 @@
     </breakdowns>
     <equipment-category>HT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="289490" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char de deminage" id="18" max-slope="0.6" name="Char AMX 30 B2 DT" protection="CharLourd" size="Gros" weight="34">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char de deminage" id="18" max-slope="0.6" name="Char AMX 30 B2 DT" protection="CharLourd" size="Gros" weight="34">
     <speeds max="60">
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="15"/>
@@ -1578,7 +1578,7 @@
     </breakdowns>
     <equipment-category>CHABAT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="575911" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Disperseur de mines antichar courte portee modele F1" id="19" max-slope="0.6" name="MINOTAURE" protection="VehiculeNonProtege" size="Moyen" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Disperseur de mines antichar courte portee modele F1" id="19" max-slope="0.6" name="MINOTAURE" protection="VehiculeNonProtege" size="Moyen" weight="17">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="10"/>
@@ -1692,7 +1692,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="289390" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin blinde du genie" id="20" max-slope="0.6" name="EBG" protection="CharMoyen" size="Gros" weight="42">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin blinde du genie" id="20" max-slope="0.6" name="EBG" protection="CharMoyen" size="Gros" weight="42">
     <speeds max="65">
       <speed terrain="unknown" value="10"/>
       <speed terrain="forest" value="20"/>
@@ -1816,7 +1816,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="508711" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin de franchissement de l'avant" id="21" max-slope="0.6" name="EFA" protection="VehiculeNonProtege" size="Gros" weight="44">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin de franchissement de l'avant" id="21" max-slope="0.6" name="EFA" protection="VehiculeNonProtege" size="Gros" weight="44">
     <speeds max="60">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -1928,7 +1928,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="535411" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engine multifonction d'aide au deploiement" id="22" max-slope="0.6" name="CBH + EMAD" protection="VehiculeNonProtege" size="Gros" weight="45">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engine multifonction d'aide au deploiement" id="22" max-slope="0.6" name="CBH + EMAD" protection="VehiculeNonProtege" size="Gros" weight="45">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -2050,7 +2050,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="576017" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="23" max-slope="0.6" name="Enfouisseur Mines" protection="VehiculeNonProtege" size="Moyen" weight="16">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="23" max-slope="0.6" name="Enfouisseur Mines" protection="VehiculeNonProtege" size="Moyen" weight="16">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="10"/>
@@ -2167,7 +2167,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="576312" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Materiel aerotransportable de depollution de zone" id="24" max-slope="0.6" name="MADEZ" protection="VehiculeNonProtege" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Materiel aerotransportable de depollution de zone" id="24" max-slope="0.6" name="MADEZ" protection="VehiculeNonProtege" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -2280,7 +2280,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="520813" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen de forage rapide et de destruction de modele F1" id="25" max-slope="0.6" name="MFRD" protection="VehiculeNonProtege" size="Moyen" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen de forage rapide et de destruction de modele F1" id="25" max-slope="0.6" name="MFRD" protection="VehiculeNonProtege" size="Moyen" weight="17">
     <speeds max="75">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="10"/>
@@ -2396,7 +2396,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="507214" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen leger de franchissement" id="26" max-slope="0.6" name="MLF" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen leger de franchissement" id="26" max-slope="0.6" name="MLF" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="80">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -2508,7 +2508,7 @@
     </breakdowns>
     <equipment-category>EQFCHT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="535230" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen polyvalent du genie type tracto-chargeur" id="27" max-slope="0.6" name="MPG" protection="VehiculeNonProtege" size="Moyen" weight="23">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen polyvalent du genie type tracto-chargeur" id="27" max-slope="0.6" name="MPG" protection="VehiculeNonProtege" size="Moyen" weight="23">
     <speeds max="55">
       <speed terrain="unknown" value="35"/>
       <speed terrain="forest" value="50"/>
@@ -2622,7 +2622,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="525011" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Excavateur leger aerotransportable de modele F1" id="28" max-slope="0.6" name="NX 7" protection="VehiculeNonProtege" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Excavateur leger aerotransportable de modele F1" id="28" max-slope="0.6" name="NX 7" protection="VehiculeNonProtege" size="Moyen" weight="15">
     <speeds max="65">
       <speed terrain="unknown" value="24"/>
       <speed terrain="forest" value="6"/>
@@ -2743,7 +2743,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="508514" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Pont automoteur d'accompagnement" id="29" max-slope="0.6" name="PAA" protection="VehiculeNonProtege" size="Gros" weight="34">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Pont automoteur d'accompagnement" id="29" max-slope="0.6" name="PAA" protection="VehiculeNonProtege" size="Gros" weight="34">
     <speeds max="60">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="10"/>
@@ -2968,7 +2968,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="520023" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur Niveleur" id="31" max-slope="0.6" name="Tracteur Niveleur" protection="VehiculeNonProtege" size="Moyen" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur Niveleur" id="31" max-slope="0.6" name="Tracteur Niveleur" protection="VehiculeNonProtege" size="Moyen" weight="7">
     <speeds max="90">
       <speed terrain="unknown" value="10"/>
       <speed terrain="forest" value="20"/>
@@ -3088,7 +3088,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281590" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="32" max-slope="0.6" name="VAB GEN 12,7" protection="TransportBlinde" size="Moyen" weight="13">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="32" max-slope="0.6" name="VAB GEN 12,7" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -3225,7 +3225,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="285891" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="33" max-slope="0.6" name="AMX 10 RC" protection="CharMoyen" size="Moyen" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="33" max-slope="0.6" name="AMX 10 RC" protection="CharMoyen" size="Moyen" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="60"/>
@@ -3374,7 +3374,7 @@
     </breakdowns>
     <equipment-category>CHABAT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="246375" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="34" max-slope="0.6" name="VBL 12,7" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="34" max-slope="0.6" name="VBL 12,7" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="60"/>
       <speed terrain="forest" value="60"/>
@@ -3485,7 +3485,7 @@
     </breakdowns>
     <equipment-category>VCD</equipment-category>
   </equipment>
-  <equipment codeEMAT6="246001" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="35" name="VBL 7,62" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="35" name="VBL 7,62" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -3598,7 +3598,7 @@
     </breakdowns>
     <equipment-category>VCD</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281190" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="36" name="VAB CN 20mm" protection="TransportBlinde" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="36" name="VAB CN 20mm" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -3734,7 +3734,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280090" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="37" name="VAB 12,7" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="37" name="VAB 12,7" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -3854,7 +3854,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281890" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="38" name="VAB HOT" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="38" name="VAB HOT" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -4109,7 +4109,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222331" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="40" name="VTC P4" protection="VehiculeNonProtege" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="40" name="VTC P4" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -4219,7 +4219,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244911" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="41" max-slope="0.6" name="TRM 4000 12.7" protection="VehiculeNonProtege" size="Moyen" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="41" max-slope="0.6" name="TRM 4000 12.7" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -4331,7 +4331,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="263114" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de depannage leger" id="42" max-slope="0.6" name="Lot 7" protection="VehiculeNonProtege" size="Gros" weight="5">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de depannage leger" id="42" max-slope="0.6" name="Lot 7" protection="VehiculeNonProtege" size="Gros" weight="5">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -4441,7 +4441,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="298811" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="43" max-slope="0.6" name="PEB" protection="VehiculeNonProtege" size="Gros" weight="30">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="43" max-slope="0.6" name="PEB" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -4553,7 +4553,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="788030" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="44" max-slope="0.6" name="PL PC" protection="VehiculeNonProtege" size="Moyen" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="44" max-slope="0.6" name="PL PC" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="24"/>
       <speed terrain="forest" value="6"/>
@@ -4668,7 +4668,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="242377" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="45" max-slope="0.6" name="TRM 2000 12,7" protection="VehiculeNonProtege" size="Moyen" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="45" max-slope="0.6" name="TRM 2000 12,7" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -4780,7 +4780,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244620" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VEHICULE UTILITAIRE TOUT CHEMIN TRM10000 CARGO AVEC TREUIL" id="46" max-slope="0.6" name="TRM 10000 12,7" protection="VehiculeNonProtege" size="Gros" weight="21">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VEHICULE UTILITAIRE TOUT CHEMIN TRM10000 CARGO AVEC TREUIL" id="46" max-slope="0.6" name="TRM 10000 12,7" protection="VehiculeNonProtege" size="Gros" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -4894,7 +4894,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="245319" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion Benne" id="47" max-slope="0.6" name="CBH 320" protection="VehiculeNonProtege" size="Gros" weight="26">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion Benne" id="47" max-slope="0.6" name="CBH 320" protection="VehiculeNonProtege" size="Gros" weight="26">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -5012,7 +5012,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="526311" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Pelle hydraulique" id="48" max-slope="0.6" name="SRQ + PH 688" protection="VehiculeNonProtege" size="Gros" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Pelle hydraulique" id="48" max-slope="0.6" name="SRQ + PH 688" protection="VehiculeNonProtege" size="Gros" weight="14">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -5130,7 +5130,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="520147" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur niveleur" id="49" max-slope="0.6" name="CBH + TN D6 D" protection="VehiculeNonProtege" size="Gros" weight="30">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur niveleur" id="49" max-slope="0.6" name="CBH + TN D6 D" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="75">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -5255,7 +5255,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="520415" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Niveleuse" id="50" max-slope="0.6" name="CBH + FG 75 A" protection="VehiculeNonProtege" size="Gros" weight="13">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Niveleuse" id="50" max-slope="0.6" name="CBH + FG 75 A" protection="VehiculeNonProtege" size="Gros" weight="13">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -5374,7 +5374,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281990" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="51" max-slope="0.6" name="VAB Reco NBC" protection="TransportBlinde" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="51" max-slope="0.6" name="VAB Reco NBC" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -5484,7 +5484,7 @@
     </breakdowns>
     <equipment-category>EQCHIM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="493512" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="52" max-slope="0.6" name="VLRA NBC GLD F2 11" protection="BlindeLeger" size="Moyen" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="52" max-slope="0.6" name="VLRA NBC GLD F2 11" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -5593,7 +5593,7 @@
     </breakdowns>
     <equipment-category>EQCHIM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281990" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="53" max-slope="0.6" name="VAB NBC ROTA" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="53" max-slope="0.6" name="VAB NBC ROTA" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -5703,7 +5703,7 @@
     </breakdowns>
     <equipment-category>EQCHIM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280490" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule d'implantation topographique" id="54" max-slope="0.6" name="VAB VIT" protection="BlindeLeger" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule d'implantation topographique" id="54" max-slope="0.6" name="VAB VIT" protection="BlindeLeger" size="Moyen" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="50"/>
@@ -5819,7 +5819,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="225014" codeEMAT8="" codeLFRIL="" codeNNO="" comment="CN 155 AUF1TA 39 CAL SUR CHASSIS 30B2 AU" id="55" max-slope="0.6" name="Char AUF1" protection="CharLourd" size="Gros" weight="44">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="CN 155 AUF1TA 39 CAL SUR CHASSIS 30B2 AU" id="55" max-slope="0.6" name="Char AUF1" protection="CharLourd" size="Gros" weight="44">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -5958,7 +5958,7 @@
     </breakdowns>
     <equipment-category>CAN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="164201" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tracte 155 mm par TRM 10000" id="56" max-slope="0.6" name="Canon TRF1" protection="VehiculeNonProtege" size="Petit" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tracte 155 mm par TRM 10000" id="56" max-slope="0.6" name="Canon TRF1" protection="VehiculeNonProtege" size="Petit" weight="8">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -6076,7 +6076,7 @@
     </breakdowns>
     <equipment-category>CAN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="288990" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Lance roquette multiple" id="57" max-slope="0.6" name="LRM" protection="CharLourd" size="Gros" weight="45">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Lance roquette multiple" id="57" max-slope="0.6" name="LRM" protection="CharLourd" size="Gros" weight="45">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -6205,7 +6205,7 @@
     </breakdowns>
     <equipment-category>MISSS</equipment-category>
   </equipment>
-  <equipment codeEMAT6="739302" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="58" max-slope="0.6" name="Radar COBRA" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="58" max-slope="0.6" name="Radar COBRA" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -6323,7 +6323,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="282390" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="59" max-slope="0.6" name="VAB RATAC" protection="TransportBlinde" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="59" max-slope="0.6" name="VAB RATAC" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -6453,7 +6453,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="246490" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VBL Commandement" id="60" name="VBL CDT" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VBL Commandement" id="60" name="VBL CDT" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="50"/>
@@ -6574,7 +6574,7 @@
     </breakdowns>
     <equipment-category>VCD</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244217" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VTL R avec remorque" id="61" max-slope="0.6" name="VTL R Remorque" protection="VehiculeNonProtege" size="Gros" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VTL R avec remorque" id="61" max-slope="0.6" name="VTL R Remorque" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -6686,7 +6686,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="189001" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="62" max-slope="1" name="Drone SDTI" protection="Aeronef" size="Drone" weight="0.2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="62" max-slope="1" name="Drone SDTI" protection="Aeronef" size="Drone" weight="0.2">
     <speeds max="180">
       <speed terrain="unknown" value="180"/>
       <speed terrain="forest" value="180"/>
@@ -6744,7 +6744,7 @@
     </breakdowns>
     <equipment-category>ALT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="212016" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moto appartenant au regiment blinde de recherche de renseignement" id="63" name="Moto CAGIVA 350" protection="VehiculeNonProtege" size="Petit" weight="0.2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moto appartenant au regiment blinde de recherche de renseignement" id="63" name="Moto CAGIVA 350" protection="VehiculeNonProtege" size="Petit" weight="0.2">
     <speeds max="60">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -6829,7 +6829,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="283890" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="64" max-slope="0.6" name="VAB RASIT" protection="TransportBlinde" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="64" max-slope="0.6" name="VAB RASIT" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="60">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -6949,7 +6949,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281490" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="65" max-slope="0.6" name="VAB BROMURE" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="65" max-slope="0.6" name="VAB BROMURE" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -7060,7 +7060,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222306" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="66" max-slope="0.6" name="VTC P4 Circu CDT" protection="VehiculeNonProtege" size="Petit" weight="1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="66" max-slope="0.6" name="VTC P4 Circu CDT" protection="VehiculeNonProtege" size="Petit" weight="1">
     <speeds max="140">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="40"/>
@@ -7184,7 +7184,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="535231" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="67" max-slope="0.6" name="CBH + TC 821 C" protection="VehiculeNonProtege" size="Gros" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="67" max-slope="0.6" name="CBH + TC 821 C" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -7305,7 +7305,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="283190" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="68" max-slope="0.6" name="VAB VOA" protection="BlindeLeger" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="68" max-slope="0.6" name="VAB VOA" protection="BlindeLeger" size="Moyen" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="50"/>
@@ -7417,7 +7417,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="246215" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="69" max-slope="0.6" name="VBL MILAN" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="69" max-slope="0.6" name="VBL MILAN" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="60"/>
@@ -7531,7 +7531,7 @@
     </breakdowns>
     <equipment-category>MISGAC</equipment-category>
   </equipment>
-  <equipment codeEMAT6="282990" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="70" max-slope="0.6" name="ERC 90" protection="BlindeLeger" size="Moyen" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="70" max-slope="0.6" name="ERC 90" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="90">
       <speed terrain="unknown" value="40"/>
       <speed terrain="forest" value="10"/>
@@ -7672,7 +7672,7 @@
     </breakdowns>
     <equipment-category>CHALEG</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200820" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Cougar Rens RADINT" id="71" max-slope="1" name="Cougar Horizon" protection="Aeronef" size="Moyen" weight="12">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Cougar Rens RADINT" id="71" max-slope="1" name="Cougar Horizon" protection="Aeronef" size="Moyen" weight="12">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -7745,7 +7745,7 @@
     </breakdowns>
     <equipment-category>HLO</equipment-category>
   </equipment>
-  <equipment codeEMAT6="521911" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="72" max-slope="0.6" name="TRM 10000 MATS" protection="VehiculeNonProtege" size="Moyen" weight="25">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="72" max-slope="0.6" name="TRM 10000 MATS" protection="VehiculeNonProtege" size="Moyen" weight="25">
     <speeds max="75">
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="30"/>
@@ -7856,7 +7856,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="535013" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="73" max-slope="0.6" name="TC 910" protection="VehiculeNonProtege" size="Gros" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="73" max-slope="0.6" name="TC 910" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8093,7 +8093,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="537213" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="75" max-slope="0.6" name="Compacteur CB 434" protection="VehiculeNonProtege" size="Petit" weight="13">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="75" max-slope="0.6" name="Compacteur CB 434" protection="VehiculeNonProtege" size="Petit" weight="13">
     <speeds max="90">
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="25"/>
@@ -8213,7 +8213,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="520415" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="76" max-slope="0.6" name="Niveleuse" protection="VehiculeNonProtege" size="Moyen" weight="3">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="76" max-slope="0.6" name="Niveleuse" protection="VehiculeNonProtege" size="Moyen" weight="3">
     <speeds max="60">
       <speed terrain="unknown" value="24"/>
       <speed terrain="forest" value="6"/>
@@ -8333,7 +8333,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="535268" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="77" max-slope="0.6" name="TC ALHMANN" protection="VehiculeNonProtege" size="Gros" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="77" max-slope="0.6" name="TC ALHMANN" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8560,7 +8560,7 @@
     </breakdowns>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="659711" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="79" max-slope="0.6" name="Station CHF" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="79" max-slope="0.6" name="Station CHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8905,7 +8905,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="655916" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="82" max-slope="0.6" name="Station FH" protection="VehiculeNonProtege" size="Gros" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="82" max-slope="0.6" name="Station FH" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9020,7 +9020,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="243676" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="83" max-slope="0.6" name="CART" protection="VehiculeNonProtege" size="Gros" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="83" max-slope="0.6" name="CART" protection="VehiculeNonProtege" size="Gros" weight="7">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9135,7 +9135,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="669317" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="84" max-slope="0.6" name="Station SATCOM" protection="VehiculeNonProtege" size="Gros" weight="50">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="84" max-slope="0.6" name="Station SATCOM" protection="VehiculeNonProtege" size="Gros" weight="50">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9250,7 +9250,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="762511" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="85" max-slope="0.6" name="FH Simple" protection="VehiculeNonProtege" size="Gros" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="85" max-slope="0.6" name="FH Simple" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9365,7 +9365,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200633" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle VIVANE - RENS" id="86" max-slope="1" name="Helicoptere HAV" protection="Aeronef" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Gazelle VIVANE - RENS" id="86" max-slope="1" name="Helicoptere HAV" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -9561,7 +9561,7 @@
     </breakdowns>
     <equipment-category>HLO</equipment-category>
   </equipment>
-  <equipment codeEMAT6="768610" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA avec PR4G (Roem)" id="88" max-slope="0.6" name="VLRA STAIR" protection="BlindeLeger" size="Moyen" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA avec PR4G (Roem)" id="88" max-slope="0.6" name="VLRA STAIR" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9678,7 +9678,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="768211" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA avec PR4G (Roem)" id="89" max-slope="0.6" name="VLRA SAEC" protection="BlindeLeger" size="Moyen" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA avec PR4G (Roem)" id="89" max-slope="0.6" name="VLRA SAEC" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -9795,7 +9795,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="282490" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="90" max-slope="0.6" name="VAB LINX" protection="TransportBlinde" size="Moyen" weight="13">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="90" max-slope="0.6" name="VAB LINX" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -9918,7 +9918,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="648400" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA Horizon" id="91" max-slope="0.6" name="VLRA Horizon" protection="BlindeLeger" size="Moyen" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA Horizon" id="91" max-slope="0.6" name="VLRA Horizon" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -10033,7 +10033,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222331" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="92" max-slope="0.6" name="VTC P4 BROD" protection="VehiculeNonProtege" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="92" max-slope="0.6" name="VTC P4 BROD" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -10214,7 +10214,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="285590" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Transport de troupes" id="94" name="AMX10P" protection="CharMoyen" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Transport de troupes" id="94" name="AMX10P" protection="CharMoyen" size="Moyen" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="40"/>
       <speed terrain="forest" value="10"/>
@@ -10350,7 +10350,7 @@
     </breakdowns>
     <equipment-category>VCIMEC</equipment-category>
   </equipment>
-  <equipment codeEMAT6="A11601" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="95" name="Eqp Mortier 81" protection="Combattant" size="Personnel" weight="0.18">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="95" name="Eqp Mortier 81" protection="Combattant" size="Personnel" weight="0.18">
     <speeds max="6">
       <speed terrain="unknown" value="6"/>
       <speed terrain="forest" value="6"/>
@@ -10498,7 +10498,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="116435" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="97" max-slope="0.6" name="120 RTF1" protection="VehiculeNonProtege" size="Petit" weight="0.3">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="97" max-slope="0.6" name="120 RTF1" protection="VehiculeNonProtege" size="Petit" weight="0.3">
     <speeds max="50">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="35"/>
@@ -10612,7 +10612,7 @@
     </breakdowns>
     <equipment-category>MORT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="177612" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Piece HAWK" id="98" max-slope="0.6" name="Piece HAWK" protection="VehiculeNonProtege" size="Gros" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Piece HAWK" id="98" max-slope="0.6" name="Piece HAWK" protection="VehiculeNonProtege" size="Gros" weight="8">
     <speeds max="100">
       <speed terrain="unknown" value="100"/>
       <speed terrain="forest" value="100"/>
@@ -10841,7 +10841,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="285290" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="100" name="AMX10P PC" protection="CharMoyen" size="Moyen" weight="20">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="100" name="AMX10P PC" protection="CharMoyen" size="Moyen" weight="20">
     <speeds max="90">
       <speed terrain="unknown" value="40"/>
       <speed terrain="forest" value="10"/>
@@ -11105,7 +11105,7 @@
     </breakdowns>
     <equipment-category>MISSS</equipment-category>
   </equipment>
-  <equipment codeEMAT6="285390" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VOA" id="103" max-slope="0.6" name="AMX10P VOA" protection="CharMoyen" size="Moyen" weight="20">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VOA" id="103" max-slope="0.6" name="AMX10P VOA" protection="CharMoyen" size="Moyen" weight="20">
     <speeds max="90">
       <speed terrain="unknown" value="40"/>
       <speed terrain="forest" value="10"/>
@@ -11768,7 +11768,7 @@
     </breakdowns>
     <equipment-category>CAN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="289190" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char de depannage" id="110" max-slope="0.6" name="X30 DEPANNAGE AP M1" protection="CharLourd" size="Gros" weight="45">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char de depannage" id="110" max-slope="0.6" name="X30 DEPANNAGE AP M1" protection="CharLourd" size="Gros" weight="45">
     <speeds max="60">
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="15"/>
@@ -12180,7 +12180,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="245315" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="114" max-slope="0.6" name="GBC Benne" protection="VehiculeNonProtege" size="Gros" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="114" max-slope="0.6" name="GBC Benne" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -12829,7 +12829,7 @@
     </breakdowns>
     <equipment-category>EQFCHT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="246115" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile anti char courte portee" id="121" name="VBL APILAS" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile anti char courte portee" id="121" name="VBL APILAS" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -12940,7 +12940,7 @@
     </breakdowns>
     <equipment-category>MISGAC</equipment-category>
   </equipment>
-  <equipment codeEMAT6="246875" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar courte portee" id="122" max-slope="0.6" name="VBL ERYX" protection="BlindeLeger" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar courte portee" id="122" max-slope="0.6" name="VBL ERYX" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -13052,7 +13052,7 @@
     </breakdowns>
     <equipment-category>MISGAC</equipment-category>
   </equipment>
-  <equipment codeEMAT6="281190" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="123" max-slope="0.6" name="VAB T20 APP DIR" protection="TransportBlinde" size="Moyen" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="123" max-slope="0.6" name="VAB T20 APP DIR" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -13188,7 +13188,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280290" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="124" name="VAB PC 7.62" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="124" name="VAB PC 7.62" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -13311,7 +13311,7 @@
     </breakdowns>
     <equipment-category>VCD</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280290" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="125" name="VAB PC 12.7" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="125" name="VAB PC 12.7" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -13441,7 +13441,7 @@
     </breakdowns>
     <equipment-category>VCD</equipment-category>
   </equipment>
-  <equipment codeEMAT6="117212" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="126" name="Fantassin LGI" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="126" name="Fantassin LGI" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -13509,7 +13509,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280090" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="127" name="VAB 7,62" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="127" name="VAB 7,62" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -13621,7 +13621,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="738443" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="128" max-slope="0.6" name="TRM 2000 RASIT" protection="VehiculeNonProtege" size="Moyen" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="128" max-slope="0.6" name="TRM 2000 RASIT" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -13741,7 +13741,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="177115" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="129" max-slope="0.6" name="GBC PAR" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="129" max-slope="0.6" name="GBC PAR" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -13860,7 +13860,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="242306" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="130" max-slope="0.6" name="TRM 2000 CN20" protection="VehiculeNonProtege" size="Moyen" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="130" max-slope="0.6" name="TRM 2000 CN20" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -13974,7 +13974,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="242309" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="131" max-slope="0.6" name="TRM 2000 PC" protection="VehiculeNonProtege" size="Moyen" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="131" max-slope="0.6" name="TRM 2000 PC" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -14084,7 +14084,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="255241" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="132" max-slope="0.6" name="TRM 10000 PFM" protection="VehiculeNonProtege" size="Gros" weight="30">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="132" max-slope="0.6" name="TRM 10000 PFM" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -14197,7 +14197,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222331" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="133" max-slope="0.6" name="VTC P4 Circu" protection="VehiculeNonProtege" size="Petit" weight="1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="133" max-slope="0.6" name="VTC P4 Circu" protection="VehiculeNonProtege" size="Petit" weight="1">
     <speeds max="140">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="40"/>
@@ -14311,7 +14311,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244581" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="134" max-slope="0.6" name="TRM 4000" protection="VehiculeNonProtege" size="Moyen" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="134" max-slope="0.6" name="TRM 4000" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -14421,7 +14421,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244516" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="135" max-slope="0.6" name="GBC 8 KT 12.7" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="135" max-slope="0.6" name="GBC 8 KT 12.7" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -14535,7 +14535,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="538018" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="136" max-slope="0.6" name="SRQ + CA 152D" protection="VehiculeNonProtege" size="Gros" weight="17">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracteur chargeur" id="136" max-slope="0.6" name="SRQ + CA 152D" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -14656,7 +14656,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="502812" codeEMAT8="" codeLFRIL="" codeNNO="" comment="chaland transport maritime" id="137" name="CTM" protection="TransportBlinde" size="Gros" weight="1000">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="chaland transport maritime" id="137" name="CTM" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="60">
       <speed terrain="unknown" value="1"/>
       <speed construction-speed="0" terrain="forest" value="0"/>
@@ -15077,7 +15077,7 @@
     </breakdowns>
     <equipment-category>ACQOBJ</equipment-category>
   </equipment>
-  <equipment codeEMAT6="242304" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="142" name="TRM 2000" protection="VehiculeNonProtege" size="Moyen" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="142" name="TRM 2000" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -15382,7 +15382,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="288890" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char de depannage" id="145" max-slope="0.6" name="XL DEPAN VERS AF A1" protection="CharLourd" size="Gros" weight="60">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char de depannage" id="145" max-slope="0.6" name="XL DEPAN VERS AF A1" protection="CharLourd" size="Gros" weight="60">
     <speeds max="65">
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="15"/>
@@ -15498,7 +15498,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244537" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="146" max-slope="0.6" name="GBC 180" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="146" max-slope="0.6" name="GBC 180" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -15610,7 +15610,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244543" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="147" max-slope="0.6" name="GBC 180 12,7" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="147" max-slope="0.6" name="GBC 180 12,7" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -15725,7 +15725,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="648640" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="148" max-slope="0.6" name="ST CHF DE BASE G4 1" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="148" max-slope="0.6" name="ST CHF DE BASE G4 1" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -15840,7 +15840,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222331" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="149" max-slope="0.6" name="VTC P4 7,62" protection="VehiculeNonProtege" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="149" max-slope="0.6" name="VTC P4 7,62" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -15951,7 +15951,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222331" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="150" name="VTC P4 12,7" protection="VehiculeNonProtege" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="150" name="VTC P4 12,7" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -16060,7 +16060,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="242304" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="151" max-slope="0.6" name="TRM 2000 7,62" protection="VehiculeNonProtege" size="Moyen" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="151" max-slope="0.6" name="TRM 2000 7,62" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -16239,7 +16239,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="245215" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="153" max-slope="0.6" name="GBC 8 KT" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="153" max-slope="0.6" name="GBC 8 KT" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -16351,7 +16351,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244214" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VTL R avec remorque" id="154" max-slope="0.6" name="VTL R" protection="VehiculeNonProtege" size="Gros" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VTL R avec remorque" id="154" max-slope="0.6" name="VTL R" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -16463,7 +16463,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="299999" codeEMAT8="" codeLFRIL="" codeNNO="" comment="camion citerne + citerne remorque" id="155" max-slope="0.6" name="SRQ CITERN 30M3 11" protection="VehiculeNonProtege" size="Gros" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="camion citerne + citerne remorque" id="155" max-slope="0.6" name="SRQ CITERN 30M3 11" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -16573,7 +16573,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="981117" codeEMAT8="" codeLFRIL="" codeNNO="" comment="camion citerne" id="156" max-slope="0.6" name="CCP 10M3 RAV SCANI1" protection="VehiculeNonProtege" size="Gros" weight="15">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="camion citerne" id="156" max-slope="0.6" name="CCP 10M3 RAV SCANI1" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -16683,7 +16683,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280690" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="157" max-slope="0.6" name="VAB SAN" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="157" max-slope="0.6" name="VAB SAN" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -16793,7 +16793,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200746" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="158" max-slope="1" name="SA330 EVASAN" protection="Aeronef" size="Moyen" weight="5.5">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="158" max-slope="1" name="SA330 EVASAN" protection="Aeronef" size="Moyen" weight="5.5">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -16889,7 +16889,7 @@
     </breakdowns>
     <equipment-category>HT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="263310" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="159" max-slope="0.6" name="TBU15 CLD" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="159" max-slope="0.6" name="TBU15 CLD" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -17001,7 +17001,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="270109" codeEMAT8="" codeLFRIL="" codeNNO="" comment="cellule sanitaire" id="160" max-slope="0.6" name="Ambulance 4 Bras" protection="VehiculeNonProtege" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="cellule sanitaire" id="160" max-slope="0.6" name="Ambulance 4 Bras" protection="VehiculeNonProtege" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="15"/>
@@ -17426,7 +17426,7 @@
     </logistic-functions>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244526" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="166" max-slope="0.6" name="TRM 4000 7,62" protection="VehiculeNonProtege" size="Moyen" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="166" max-slope="0.6" name="TRM 4000 7,62" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -17538,7 +17538,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="980030" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="167" max-slope="0.6" name="CCT GBC TD5 11" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="167" max-slope="0.6" name="CCT GBC TD5 11" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -17650,7 +17650,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="263311" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="168" max-slope="0.6" name="TRM 10000 CLD" protection="VehiculeNonProtege" size="Gros" weight="21">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="168" max-slope="0.6" name="TRM 10000 CLD" protection="VehiculeNonProtege" size="Gros" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -17764,7 +17764,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244620" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VEHICULE UTILITAIRE TOUT CHEMIN TRM10000 CARGO SANS TREUIL" id="169" max-slope="0.6" name="TRM 10000" protection="VehiculeNonProtege" size="Gros" weight="21">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VEHICULE UTILITAIRE TOUT CHEMIN TRM10000 CARGO SANS TREUIL" id="169" max-slope="0.6" name="TRM 10000" protection="VehiculeNonProtege" size="Gros" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -17988,7 +17988,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="243628" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA basique" id="171" max-slope="0.6" name="VLRA" protection="BlindeLeger" size="Moyen" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VLRA basique" id="171" max-slope="0.6" name="VLRA" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -18093,7 +18093,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280090" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="172" max-slope="0.6" name="VAB RENS 7,62" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="172" max-slope="0.6" name="VAB RENS 7,62" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -18205,7 +18205,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="261210" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="173" max-slope="0.6" name="GBC 8 KT 7.62" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="173" max-slope="0.6" name="GBC 8 KT 7.62" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -18319,7 +18319,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="763010" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="174" max-slope="0.6" name="GBC ELODEE" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="174" max-slope="0.6" name="GBC ELODEE" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -18542,7 +18542,7 @@
     </breakdowns>
     <equipment-category>VCD</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280090" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="176" max-slope="0.6" name="VAB CIRCU" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="176" max-slope="0.6" name="VAB CIRCU" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -18657,7 +18657,7 @@
     </breakdowns>
     <equipment-category>VTT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="255211" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="177" max-slope="0.6" name="TRM 700 100" protection="VehiculeNonProtege" size="Gros" weight="30">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="177" max-slope="0.6" name="TRM 700 100" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -18827,7 +18827,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="242103" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="179" max-slope="0.6" name="Ambulance J5" protection="VehiculeNonProtege" size="Petit" weight="4">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="179" max-slope="0.6" name="Ambulance J5" protection="VehiculeNonProtege" size="Petit" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="15"/>
@@ -19972,7 +19972,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="A426H1" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Artillerie Animation Haute" id="195" max-slope="0.6" name="Char AUF1 Animation" protection="CharLourd" size="Gros" weight="44">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Artillerie Animation Haute" id="195" max-slope="0.6" name="Char AUF1 Animation" protection="CharLourd" size="Gros" weight="44">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -20087,7 +20087,7 @@
     </breakdowns>
     <equipment-category>CAN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="288999" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Artillerie Animation LRU / LANCE ROQUETTES MULTIPLE SUR CHASSIS BRADLEY VERSION US MODIFIE" id="196" max-slope="0.6" name="LRU Animation" protection="CharLourd" size="Gros" weight="45">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Artillerie Animation LRU / LANCE ROQUETTES MULTIPLE SUR CHASSIS BRADLEY VERSION US MODIFIE" id="196" max-slope="0.6" name="LRU Animation" protection="CharLourd" size="Gros" weight="45">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -20194,7 +20194,7 @@
     </breakdowns>
     <equipment-category>MISSS</equipment-category>
   </equipment>
-  <equipment codeEMAT6="288990" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Artillerie Animation LRM / LANCE ROQUETTES MULTIPLE M270 SUR CHASSIS BRADLEY VERSIE SERIE ARMEE MODIFIE" id="197" max-slope="0.6" name="LRM Animation" protection="CharLourd" size="Gros" weight="45">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Artillerie Animation LRM / LANCE ROQUETTES MULTIPLE M270 SUR CHASSIS BRADLEY VERSIE SERIE ARMEE MODIFIE" id="197" max-slope="0.6" name="LRM Animation" protection="CharLourd" size="Gros" weight="45">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -22842,7 +22842,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="580810" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Groupe de production d'eau" id="229" max-slope="0.6" name="MATEM" protection="VehiculeNonProtege" size="Gros" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Groupe de production d'eau" id="229" max-slope="0.6" name="MATEM" protection="VehiculeNonProtege" size="Gros" weight="8">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -22917,7 +22917,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="S37405" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="230" max-slope="0.6" name="UMTE" protection="VehiculeNonProtege" size="Gros" weight="5">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="230" max-slope="0.6" name="UMTE" protection="VehiculeNonProtege" size="Gros" weight="5">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -22990,7 +22990,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="532021" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="231" max-slope="0.6" name="Centrale GE 400 kW" protection="VehiculeNonProtege" size="Moyen" weight="9">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="231" max-slope="0.6" name="Centrale GE 400 kW" protection="VehiculeNonProtege" size="Moyen" weight="9">
     <speeds max="80">
       <speed terrain="unknown" value="35"/>
       <speed terrain="forest" value="50"/>
@@ -23554,7 +23554,7 @@
     </breakdowns>
     <equipment-category>VCIMEC</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222331" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="238" max-slope="0.6" name="VTC P4 REC LRM" protection="VehiculeNonProtege" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="238" max-slope="0.6" name="VTC P4 REC LRM" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -25312,7 +25312,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="531827" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="269" max-slope="0.6" name="Centrale GE 80 kW" protection="VehiculeNonProtege" size="Moyen" weight="3">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="269" max-slope="0.6" name="Centrale GE 80 kW" protection="VehiculeNonProtege" size="Moyen" weight="3">
     <speeds max="80">
       <speed terrain="unknown" value="35"/>
       <speed terrain="forest" value="50"/>
@@ -25731,7 +25731,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="T04720" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="277" max-slope="0.6" name="Station HF NGF5" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="277" max-slope="0.6" name="Station HF NGF5" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -25846,7 +25846,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="267110" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="278" max-slope="0.6" name="Station HF NGF4" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="278" max-slope="0.6" name="Station HF NGF4" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -25961,7 +25961,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="T02820" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="279" max-slope="0.6" name="Station RDO UHF" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="279" max-slope="0.6" name="Station RDO UHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -26076,7 +26076,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="T02901" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="280" max-slope="0.6" name="Station RDO VHF" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="280" max-slope="0.6" name="Station RDO VHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -26191,7 +26191,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="627410" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="281" max-slope="0.6" name="Station HF NGF3" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="281" max-slope="0.6" name="Station HF NGF3" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -26306,7 +26306,7 @@
     </breakdowns>
     <equipment-category>ANT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="747010" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="282" max-slope="0.6" name="SHELTER HORISON" protection="VehiculeNonProtege" size="Gros" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="282" max-slope="0.6" name="SHELTER HORISON" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -27577,7 +27577,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="169230" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR tres courte portee" id="300" name="Eqp MISTRAL" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR tres courte portee" id="300" name="Eqp MISTRAL" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -28151,7 +28151,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="282790" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="308" name="VAB ATLAS" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="308" name="VAB ATLAS" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -29161,7 +29161,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="214002" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Scooter des neiges Bombardier Type Nordik PSSE 550 avec traineau" id="322" max-slope="0.6" name="Scooter Neige Nordik" protection="VehiculeNonProtege" size="Petit" weight="0.3">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Scooter des neiges Bombardier Type Nordik PSSE 550 avec traineau" id="322" max-slope="0.6" name="Scooter Neige Nordik" protection="VehiculeNonProtege" size="Petit" weight="0.3">
     <speeds max="60">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -29246,7 +29246,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="225014" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VEHICULE HAUTE MOBILITE POSTE DE COMMANDEMENT BAESH" id="323" max-slope="0.6" name="VHM" protection="BlindeLeger" size="Moyen" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VEHICULE HAUTE MOBILITE POSTE DE COMMANDEMENT BAESH" id="323" max-slope="0.6" name="VHM" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="55">
       <speed terrain="unknown" value="40"/>
       <speed terrain="forest" value="10"/>
@@ -29354,7 +29354,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200535" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tigre" id="324" max-slope="1" name="Tigre_HAD" protection="Aeronef" size="Moyen" weight="6.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tigre" id="324" max-slope="1" name="Tigre_HAD" protection="Aeronef" size="Moyen" weight="6.1">
     <speeds max="250">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -29437,7 +29437,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="200535" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tigre" id="325" max-slope="1" name="Tigre_HAP" protection="Aeronef" size="Moyen" weight="6.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tigre" id="325" max-slope="1" name="Tigre_HAP" protection="Aeronef" size="Moyen" weight="6.1">
     <speeds max="250">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -29520,7 +29520,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244543" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="326" max-slope="0.6" name="GBC 180CSIR" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="326" max-slope="0.6" name="GBC 180CSIR" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -29793,7 +29793,7 @@
     </breakdowns>
     <equipment-category>CHABAT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="288999" codeEMAT8="" codeLFRIL="" codeNNO="" comment="LANCE ROQUETTES MULTIPLE SUR CHASSIS BRADLEY VERSION US" id="329" max-slope="0.6" name="LRU" protection="CharLourd" size="Gros" weight="25">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="LANCE ROQUETTES MULTIPLE SUR CHASSIS BRADLEY VERSION US" id="329" max-slope="0.6" name="LRU" protection="CharLourd" size="Gros" weight="25">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -29922,7 +29922,7 @@
     </breakdowns>
     <equipment-category>MISSS</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244322" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="330" max-slope="0.6" name="GBC 180 Lanceur Drones" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="330" max-slope="0.6" name="GBC 180 Lanceur Drones" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -30034,7 +30034,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244578" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="331" max-slope="0.6" name="TRM 4000 Lanceur Drones" protection="VehiculeNonProtege" size="Moyen" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="331" max-slope="0.6" name="TRM 4000 Lanceur Drones" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -30146,7 +30146,7 @@
     </breakdowns>
     <equipment-category>VUT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="177213" codeEMAT8="" codeLFRIL="" codeNNO="" comment="GBC CWAR" id="334" max-slope="0.6" name="GBC CWAR" protection="VehiculeNonProtege" size="Moyen" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="GBC CWAR" id="334" max-slope="0.6" name="GBC CWAR" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -31028,7 +31028,7 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222376" codeEMAT8="" codeLFRIL="" codeNNO="" comment="PETIT VEHICULE PROTEGE TOUT TERRAIN AEROTRANSPORTABLE BLINDE PANHARD VERSION RANG" id="344" max-slope="1" name="PVP Circu" protection="BlindeLeger" size="Petit" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="PETIT VEHICULE PROTEGE TOUT TERRAIN AEROTRANSPORTABLE BLINDE PANHARD VERSION RANG" id="344" max-slope="1" name="PVP Circu" protection="BlindeLeger" size="Petit" weight="7">
     <speeds max="120">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -32899,7 +32899,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222375" codeEMAT8="" codeLFRIL="" codeNNO="" comment="PETIT VEHICULE PROTEGE TOUT TERRAIN AEROTRANSPORTABLE BLINDE PANHARD VERSION COMMANDEMENT" id="366" max-slope="1" name="PVP CDT" protection="BlindeLeger" size="Petit" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="PETIT VEHICULE PROTEGE TOUT TERRAIN AEROTRANSPORTABLE BLINDE PANHARD VERSION COMMANDEMENT" id="366" max-slope="1" name="PVP CDT" protection="BlindeLeger" size="Petit" weight="7">
     <speeds max="120">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -33011,7 +33011,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="222375" codeEMAT8="" codeLFRIL="" codeNNO="" comment="PETIT VEHICULE PROTEGE TOUT CHEMIN AEROTRANSPORTABLE PANHARD VERSION RANG MOTORISATION F1C" id="367" max-slope="1" name="PVP" protection="BlindeLeger" size="Petit" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="PETIT VEHICULE PROTEGE TOUT CHEMIN AEROTRANSPORTABLE PANHARD VERSION RANG MOTORISATION F1C" id="367" max-slope="1" name="PVP" protection="BlindeLeger" size="Petit" weight="7">
     <speeds max="120">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -33126,7 +33126,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="244531" codeEMAT8="" codeLFRIL="" codeNNO="" comment="GBC 180 CHASSIS STANDARD A CABINE TOLEE PLATEAU MULTI-FONCTIONS (CARGO, AT10 OU AT15) RIDELLES BACHE SANS TREUIL" id="368" max-slope="0.6" name="GBC 180 AT15 ATLAS" protection="VehiculeNonProtege" size="Moyen" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="GBC 180 CHASSIS STANDARD A CABINE TOLEE PLATEAU MULTI-FONCTIONS (CARGO, AT10 OU AT15) RIDELLES BACHE SANS TREUIL" id="368" max-slope="0.6" name="GBC 180 AT15 ATLAS" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -33238,7 +33238,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="735911" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Véhicule d'exploitation" id="369" max-slope="0.6" name="VLRA + NC1-40 VE" protection="VehiculeNonProtege" size="Petit" weight="2.1">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Véhicule d'exploitation" id="369" max-slope="0.6" name="VLRA + NC1-40 VE" protection="VehiculeNonProtege" size="Petit" weight="2.1">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -33979,7 +33979,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="280690" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="379" max-slope="0.6" name="VAB SAN RAM" protection="TransportBlinde" size="Moyen" weight="14">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="379" max-slope="0.6" name="VAB SAN RAM" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -34091,4 +34091,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1154210346" -->
+<!-- signature="0340334828" -->
