@@ -58,7 +58,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
     TER_Localisation clippedLocalisation;
     unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
-        errCode = SplitLocalisation( *pLocalisation, nNbrParts, direction, result );
+        errCode = SplitLocalisation( clippedLocalisation, nNbrParts, direction, result );
     return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
 }
 
@@ -78,8 +78,8 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
     unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
-        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( pLocalisation->GetArea() / rAverageArea ) );
-        errCode = SplitLocalisation( *pLocalisation, nNbrParts, direction, result );
+        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( clippedLocalisation.GetArea() / rAverageArea ) );
+        errCode = SplitLocalisation( clippedLocalisation, nNbrParts, direction, result );
     }
     return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
 }
@@ -101,12 +101,12 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
     unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
-        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( pLocalisation->GetArea() / rAverageArea ) );
+        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( clippedLocalisation.GetArea() / rAverageArea ) );
         if( nNbrParts < 4 )
-            pLocalisation->Split( nNbrParts, result );
+            clippedLocalisation.Split( nNbrParts, result );
         else
         {
-            result.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( *pLocalisation ) ) );
+            result.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( clippedLocalisation ) ) );
             for( unsigned int n = 1; n < nNbrParts; n *= 4 )
             {
                 T_ResultVector splitted;
