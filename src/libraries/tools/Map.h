@@ -14,6 +14,7 @@
 #include <boost/multi_index/random_access_index.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/member.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 namespace tools
 {
@@ -32,8 +33,8 @@ template< typename K, typename T >
 class Map
 {
 public:
-    typedef K key_type;
-    typedef T mapped_type;
+    typedef typename boost::remove_const< K >::type key_type;
+    typedef typename boost::remove_const< T >::type mapped_type;
 
     struct value_type
     {

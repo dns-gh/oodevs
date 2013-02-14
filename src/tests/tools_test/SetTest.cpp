@@ -81,3 +81,10 @@ BOOST_AUTO_TEST_CASE( set_find_finds_elements_in_insertion_order )
     BOOST_CHECK( set.find( 2 ) == set.begin() + 2 );
     BOOST_CHECK( set.find( 3 ) == set.begin() + 1 );
 }
+
+BOOST_AUTO_TEST_CASE( set_can_store_const_data )
+{
+    tools::Set< const int > set;
+    set.insert( 1 );
+    BOOST_CHECK( set.find( 1 ) == set.begin() );
+}

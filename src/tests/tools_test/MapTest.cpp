@@ -81,3 +81,10 @@ BOOST_AUTO_TEST_CASE( map_find_finds_elements_in_insertion_order )
     BOOST_CHECK( map.find( 2 ) == map.begin() + 1 );
     BOOST_CHECK( map.find( 3 ) == map.begin() + 2 );
 }
+
+BOOST_AUTO_TEST_CASE( map_can_store_const_data )
+{
+    tools::Map< const int, const int > map;
+    map.insert( std::make_pair( 1, 1 ) );
+    BOOST_CHECK( map.find( 1 ) == map.begin() );
+}

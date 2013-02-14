@@ -14,6 +14,7 @@
 #include <boost/multi_index/random_access_index.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/identity.hpp>
+#include <boost/type_traits/remove_const.hpp>
 
 namespace tools
 {
@@ -32,8 +33,8 @@ template< typename T >
 class Set
 {
 public:
-    typedef T key_type;
-    typedef T value_type;
+    typedef typename boost::remove_const< T >::type key_type;
+    typedef key_type value_type;
 
 private:
     typedef boost::multi_index::multi_index_container<
