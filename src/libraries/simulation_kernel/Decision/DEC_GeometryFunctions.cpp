@@ -1934,8 +1934,7 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
         const T_LimaVector& limas = callerAutomate.GetOrderManager().GetLimas();
         for( auto it = limas.begin(); it != limas.end(); ++it )
         {
-            const MIL_LimaOrder::T_LimaFunctions& functions = it->GetFunctions();
-            for( MIL_LimaOrder::CIT_LimaFunctions fit = functions.begin(); fit != functions.end(); ++fit )
+            for( auto fit = it->GetFunctions().begin(); fit != it->GetFunctions().end(); ++fit )
             {
                 if( !(*fit) )
                     throw MASA_EXCEPTION( "invalid parameter." );
@@ -1945,11 +1944,8 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
                     // Divide lima inside fuseau in divider sections and pick one point per section.
                     fuseau.ComputePointsBeforeLima( *it, 0., divider, nextPoints );
                     std::vector< boost::shared_ptr< MT_Vector2D > > sharedVector;
-                    for( std::vector< MT_Vector2D >::const_iterator vit = nextPoints.begin(); vit != nextPoints.end(); ++vit )
-                    {
-                        boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( *vit );
-                        sharedVector.push_back( point );
-                    }
+                    for( auto vit = nextPoints.begin(); vit != nextPoints.end(); ++vit )
+                        sharedVector.push_back( boost::make_shared< MT_Vector2D >( *vit ) );
                     if( !sharedVector.empty() )
                         result.push_back( sharedVector );
                     break;

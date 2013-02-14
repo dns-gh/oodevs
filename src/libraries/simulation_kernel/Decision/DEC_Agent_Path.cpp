@@ -537,7 +537,7 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
             MT_Vector2D posIntersect;
             if( lima.Intersect2D( segment, posIntersect ) )
             {
-                for( MIL_LimaOrder::CIT_LimaFunctions itFunction = lima.GetFunctions().begin(); itFunction != lima.GetFunctions().end(); ++itFunction )
+                for( auto itFunction = lima.GetFunctions().begin(); itFunction != lima.GetFunctions().end(); ++itFunction )
                 {
                     boost::shared_ptr< DEC_PathPoint > pPoint( new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima.GetID(), **itFunction ) );
                     IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );

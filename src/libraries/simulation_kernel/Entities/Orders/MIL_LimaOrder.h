@@ -33,11 +33,10 @@ class MIL_CheckPointOutArchive;
 // =============================================================================
 class MIL_LimaOrder
 {
-public:
+private:
     //! @name Types
     //@{
-    typedef std::set< const MIL_LimaFunction* > T_LimaFunctions;
-    typedef T_LimaFunctions::const_iterator   CIT_LimaFunctions;
+    typedef std::vector< const MIL_LimaFunction* > T_LimaFunctions;
     //@}
 
 public:

@@ -28,7 +28,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LimaOrder )
 // -----------------------------------------------------------------------------
 MIL_LimaOrder::MIL_LimaOrder()
     : nID_( 0 )
-    , functions_()
     , bFlag_( false )
     , bScheduleFlag_( false )
     , nSchedule_( 0 )
@@ -42,7 +41,6 @@ MIL_LimaOrder::MIL_LimaOrder()
 // -----------------------------------------------------------------------------
 MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
     : nID_          ( ++nNextID_ )
-    , functions_    ()
     , bFlag_        ( false )
     , bScheduleFlag_( false )
 {
@@ -58,7 +56,7 @@ MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
         const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( asn.fonctions(i) );
         if( !pFunction )
             throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_lima_function );
-        functions_.insert( pFunction );
+        functions_.push_back( pFunction );
     }
 }
 
@@ -132,7 +130,7 @@ void MIL_LimaOrder::Serialize( sword::PhaseLineOrder& asn ) const
 // -----------------------------------------------------------------------------
 bool MIL_LimaOrder::HasFunction( const MIL_LimaFunction& function ) const
 {
-    return functions_.find( &function ) != functions_.end();
+    return std::find( functions_.begin(), functions_.end(), &function ) != functions_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -220,15 +218,10 @@ namespace boost
 {
     namespace serialization
     {
-        typedef std::set< const MIL_LimaFunction* > T_LimaFunctions;
-        typedef T_LimaFunctions::const_iterator   CIT_LimaFunctions;
+        typedef std::vector< const MIL_LimaFunction* > T_LimaFunctions;
 
-        // =============================================================================
-        // T_LimaFunctions
-        // =============================================================================
         template< typename Archive >
-        inline
-            void serialize( Archive& file, T_LimaFunctions& functions, const unsigned int nVersion )
+        void serialize( Archive& file, T_LimaFunctions& functions, const unsigned int nVersion )
         {
             split_free( file, functions, nVersion );
         }
@@ -254,7 +247,7 @@ namespace boost
             {
                 unsigned int nID;
                 file >> nID;
-                functions.insert( MIL_LimaFunction::Find( nID ) );
+                functions.push_back( MIL_LimaFunction::Find( nID ) );
             }
         }
     }

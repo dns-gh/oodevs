@@ -168,7 +168,7 @@ namespace
     }
     DEFINE_HOOK( GetLimaOrders, 3, void, ( const MIL_LimaOrder& lima, void(*visitor)( unsigned int limaID, int functionID, void* userData ), void* userData ) )
     {
-        for( MIL_LimaOrder::CIT_LimaFunctions it = lima.GetFunctions().begin(); it != lima.GetFunctions().end(); ++it )
+        for( auto it = lima.GetFunctions().begin(); it != lima.GetFunctions().end(); ++it )
             visitor( lima.GetID(), (*it)->GetID(), userData );
     }
     DEFINE_HOOK( GetLimas, 3, void, ( const SWORD_Model* entity, void(*visitor)( const MIL_LimaOrder& lima, void* userData ), void* userData ) )
