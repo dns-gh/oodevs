@@ -24,7 +24,7 @@ PHY_Population_ActionUrbanDestruction::PHY_Population_ActionUrbanDestruction( MI
     : population_ ( population )
     , pUrbanObjet_ ( pUrbanObjet )
 {
-
+    population_.NotifyUrbanDestructionStart();
 }
 
 // -----------------------------------------------------------------------------

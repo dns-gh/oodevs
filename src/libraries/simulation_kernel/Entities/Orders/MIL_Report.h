@@ -164,6 +164,8 @@ public:
         eRC_TransportedUnitCannotReceiveOrder = 453,
         eRC_LogNoSuperior = 454,
         eRC_LogNoStock = 455,
+        eRC_CloseCrowdAttitudeChanged = 456,
+        eRC_CloseCrowdUrbanDestruction = 457
     };
     //@}
 
@@ -192,6 +194,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const MIL_Effect_IndirectFire& flyingShell );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge );
+    template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters );
     //@}

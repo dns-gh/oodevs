@@ -116,6 +116,7 @@ public:
     void SetPionMaxSpeed( double rSpeed );
     void ResetPionMaxSpeed();
     double GetPionReloadingTimeFactor( double rDensity ) const;
+    void NotifyUrbanDestructionStart();
     //@}
 
     //! @name Effects from pions

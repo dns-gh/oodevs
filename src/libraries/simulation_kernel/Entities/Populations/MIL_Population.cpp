@@ -1054,6 +1054,18 @@ double MIL_Population::GetPionReloadingTimeFactor( double rDensity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::NotifyUrbanDestructionStart
+// Created: NPT 2013-02-13
+// -----------------------------------------------------------------------------
+void MIL_Population::NotifyUrbanDestructionStart()
+{
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        (*it )->NotifyUrbanDestructionStart();
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
+        ( *it )->NotifyUrbanDestructionStart();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetPionMaxSpeed
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

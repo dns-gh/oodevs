@@ -80,6 +80,7 @@ public:
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
     void Attack( MIL_PopulationElement_ABC& element );
+    void NotifyUrbanDestructionStart();
     //@}
 
     //! @name Accessors

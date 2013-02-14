@@ -677,8 +677,20 @@
   <report category="operational" id="455" message="No stock available at logistic superior for %1">
     <parameter type="ResourceType"/>
   </report>
-  <report category="operational" id="456" message="Waiting for a frag order"/>
-  <report category="operational" id="457" message="Not enought munition : %1 interventions will proceed">
+  <report category="operational" id="456" message="La foule : %1 devient %2">
+    <parameter type="CrowdKnowledge"/>
+    <parameter type="Enumeration">
+      <value id="0" name="calme"/>
+      <value id="1" name="agitee"/>
+      <value id="2" name="excitee"/>
+      <value id="3" name="agressive"/>
+    </parameter>
+  </report>
+  <report category="operational" id="457" message="Détérioration de blocs urbains par la foule : %1">
+    <parameter type="CrowdKnowledge"/>
+  </report>
+  <report category="operational" id="458" message="En attente de l'ordre de conduite poursuivre convoi"/>
+  <report category="operational" id="459" message="Seulement %1 interventions prises en compte par manque de munitions">
     <parameter type="String"/>
   </report>
 </reports>
