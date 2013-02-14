@@ -63,17 +63,6 @@ public:
     bool IsOverDelay( unsigned int nTicks ) const;
     //@}
 
-    //! @name Assignment
-    //@{
-    DelayAttribute& operator=( const DelayAttribute& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Copy
-    //@{
-    DelayAttribute( const DelayAttribute& );            //!< Copy constructor
-    //@}
-
 private:
     //! @name Member data
     //@{

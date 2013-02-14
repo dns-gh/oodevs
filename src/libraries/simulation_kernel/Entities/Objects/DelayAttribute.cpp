@@ -33,8 +33,7 @@ DelayAttribute::DelayAttribute()
 DelayAttribute::DelayAttribute( xml::xistream& xis )
     : nDelay_( xis.attribute< unsigned int >( "value" ) )
 {
-    if( nDelay_ < 0 )
-        xis.error( "nDelay_ is not greater than or equal to 0" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,26 +44,6 @@ DelayAttribute::DelayAttribute( const sword::MissionParameter_Value& attributes 
     : nDelay_( attributes.list( 1 ).quantity() )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
-// -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const DelayAttribute& from )
-    : nDelay_( from.nDelay_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DelayAttribute::operator=
-// Created: JSR 2010-07-06
-// -----------------------------------------------------------------------------
-DelayAttribute& DelayAttribute::operator=( const DelayAttribute& from )
-{
-    nDelay_ = from.nDelay_;
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
