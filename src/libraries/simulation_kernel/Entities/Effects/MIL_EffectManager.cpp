@@ -71,12 +71,19 @@ void MIL_EffectManager::Update()
     {
         try
         {
-            if( ! (*it)->Execute() )
+            if( (*it)->Execute() )
                 effects.push_back( *it );
         }
         catch( const std::exception& e )
         {
             MT_LOG_ERROR_MSG( "Effect error : " << tools::GetExceptionMsg( e ) );
+            // $$$$ MCO 2013-02-14: this leaks an effect because the 'delete this' in the effect won't be executed.
+            // We could keep the effect but it would likely fail the next time just as well and clutter the logs.
+            // The proper fix for this would be to have the effect manager take ownership of effects.
+        }
+        catch( ... )
+        {
+            MT_LOG_ERROR_MSG( "Effect unknown error" );
         }
     }
     effects_.swap( effects );
