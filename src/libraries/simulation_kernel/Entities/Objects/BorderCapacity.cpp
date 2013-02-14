@@ -82,17 +82,13 @@ void BorderCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BorderCapacity::Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ )
 {
-    std::set< MIL_Population* >::const_iterator it;
-    if( !populationsNotified_.empty() )
-    {
-        std::set< MIL_Population* > toErase;
-        for( it = populationsNotified_.begin(); it != populationsNotified_.end(); ++it )
-            if( populationsInside_.find( *it ) == populationsInside_.end() )
-                toErase.insert( *it );
-        for( it = toErase.begin(); it != toErase.end(); ++it )
-            populationsNotified_.erase( *it );
-    }
-    for( it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
+    tools::Set< MIL_Population* > toErase;
+    for( auto it = populationsNotified_.begin(); it != populationsNotified_.end(); ++it )
+        if( populationsInside_.find( *it ) == populationsInside_.end() )
+            toErase.insert( *it );
+    for( auto it = toErase.begin(); it != toErase.end(); ++it )
+        populationsNotified_.erase( *it );
+    for( auto it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
         if( populationsNotified_.find( *it ) == populationsNotified_.end() )
         {
             MIL_Report::PostEvent( **it, report::eRC_BorderCrossed );

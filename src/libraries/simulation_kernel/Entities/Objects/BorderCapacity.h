@@ -12,10 +12,11 @@
 
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
+#include "tools/Set.h"
 
 namespace xml
 {
-class xistream;
+    class xistream;
 }
 
 class MIL_Population;
@@ -62,8 +63,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::set< MIL_Population* > populationsInside_;
-    std::set< MIL_Population* > populationsNotified_;
+    tools::Set< MIL_Population* > populationsInside_;
+    tools::Set< MIL_Population* > populationsNotified_;
     //@}
 };
 
