@@ -25,6 +25,7 @@ namespace xml
 
 class MT_Circle;
 class MT_Rect;
+class MT_Ellipse;
 
 //=============================================================================
 // Created: NLD 2003-07-22
@@ -58,6 +59,7 @@ public:
              TER_Localisation( E_LocationType, const T_PointVector& );
              TER_Localisation( const TER_Polygon&  );
              TER_Localisation( const MT_Vector2D& vPos, double rRadius );
+             TER_Localisation( const MT_Ellipse& ellipse );
     virtual ~TER_Localisation();
     //@}
 

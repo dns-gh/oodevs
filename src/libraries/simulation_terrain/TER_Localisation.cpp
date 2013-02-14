@@ -13,6 +13,7 @@
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_Droite.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -97,6 +98,27 @@ TER_Localisation::TER_Localisation( const MT_Vector2D& vPos, double rRadius )
     pointVector_.push_back( vPos );
     pointVector_.push_back( vPos + MT_Vector2D( rRadius, 0. ) );
     Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation constructor
+// Created: LDC 2013-02-13
+// -----------------------------------------------------------------------------
+TER_Localisation::TER_Localisation( const MT_Ellipse& ellipse )
+    : nType_        ( ePolygon )
+    , bWasCircle_   ( false )
+    , rCircleRadius_( 0. )
+{
+    T_PointVector vector;
+    const MT_Vector2D major = ellipse.GetMajorAxisHighPoint();
+    const MT_Vector2D minor = ellipse.GetMinorAxisHighPoint();
+    vector.push_back( MT_Vector2D( major.rX_ + minor.rX_ - ellipse.GetCenter().rX_, major.rY_ + minor.rY_ - ellipse.GetCenter().rY_ ) );
+    vector.push_back( MT_Vector2D( major.rX_ - minor.rX_ + ellipse.GetCenter().rX_, major.rY_ - minor.rY_ + ellipse.GetCenter().rY_ ) );
+    vector.push_back( MT_Vector2D( 3 * ellipse.GetCenter().rX_ - major.rX_ - minor.rX_, 3 * ellipse.GetCenter().rY_ - major.rY_ - minor.rY_ ) );
+    vector.push_back( MT_Vector2D( ellipse.GetCenter().rX_ - major.rX_ + minor.rX_, ellipse.GetCenter().rY_ - major.rY_ + minor.rY_ ) );
+    polygon_.Reset( vector );
+    pointVector_ = polygon_.GetBorderPoints();
+    InitializeBoundingBox( pointVector_ );
 }
 
 //-----------------------------------------------------------------------------

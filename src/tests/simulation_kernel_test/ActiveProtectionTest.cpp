@@ -108,7 +108,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 
         MockPHY_RoleInterface_UrbanLocation* urbanRole = new MockPHY_RoleInterface_UrbanLocation();
         pion.RegisterRole( *urbanRole );
-        MOCK_EXPECT( urbanRole->GetCurrentUrbanBlock ).once().returns( ( MIL_UrbanObject_ABC* )0 );
+
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
