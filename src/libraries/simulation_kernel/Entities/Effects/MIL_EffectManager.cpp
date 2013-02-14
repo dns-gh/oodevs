@@ -13,23 +13,11 @@
 #include "MIL_EffectManager.h"
 #include "MIL_Effect_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
 namespace
 {
-    MIL_EffectManager* pEffectManager_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EffectManager::EffectComparator::operator()
-// Created: JSR 2013-02-04
-// -----------------------------------------------------------------------------
-bool MIL_EffectManager::EffectComparator::operator() (const MIL_Effect_ABC* lhs, const MIL_Effect_ABC* rhs) const
-{
-    if( !lhs )
-        return false;
-    if( !rhs )
-        return true;
-    return lhs->GetId() < rhs->GetId();
+    MIL_EffectManager* manager = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -38,9 +26,9 @@ bool MIL_EffectManager::EffectComparator::operator() (const MIL_Effect_ABC* lhs,
 // -----------------------------------------------------------------------------
 MIL_EffectManager& MIL_EffectManager::GetEffectManager()
 {
-    if( !pEffectManager_ )
+    if( !manager )
         throw MASA_EXCEPTION( "Effect manager unset" );
-    return *pEffectManager_;
+    return *manager;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,9 +37,9 @@ MIL_EffectManager& MIL_EffectManager::GetEffectManager()
 // -----------------------------------------------------------------------------
 MIL_EffectManager::MIL_EffectManager()
 {
-    if( pEffectManager_ )
+    if( manager )
         throw MASA_EXCEPTION( "Effect manager already created" );
-    pEffectManager_ = this;
+    manager = this;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +48,7 @@ MIL_EffectManager::MIL_EffectManager()
 // -----------------------------------------------------------------------------
 MIL_EffectManager::~MIL_EffectManager()
 {
-    pEffectManager_ = 0;
+    manager = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,8 +57,7 @@ MIL_EffectManager::~MIL_EffectManager()
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::Register( MIL_Effect_ABC& effect )
 {
-    if( ! effects_.insert( &effect ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    effects_.push_back( &effect );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,23 +66,20 @@ void MIL_EffectManager::Register( MIL_Effect_ABC& effect )
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::Update()
 {
-    for( auto it = effects_.begin(); it != effects_.end(); )
+    T_Effects effects;
+    for( auto it = effects_.begin(); it != effects_.end(); ++it )
     {
-        MIL_Effect_ABC& effect = **it;
-        bool executed = false;
         try
         {
-            executed = effect.Execute();
+            if( ! (*it)->Execute() )
+                effects.push_back( *it );
         }
         catch( const std::exception& e )
         {
             MT_LOG_ERROR_MSG( "Effect error : " << tools::GetExceptionMsg( e ) );
         }
-        if( executed )
-            ++it;
-        else
-            it = effects_.erase( it );
     }
+    effects_.swap( effects );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,8 +88,7 @@ void MIL_EffectManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::RegisterFlyingShell( const MIL_Effect_IndirectFire& effect )
 {
-    if( ! flyingShells_.insert( &effect ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    flyingShells_.push_back( &effect );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,15 +97,14 @@ void MIL_EffectManager::RegisterFlyingShell( const MIL_Effect_IndirectFire& effe
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::UnregisterFlyingShell( const MIL_Effect_IndirectFire& effect )
 {
-    if( flyingShells_.erase( &effect ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    boost::remove_erase( flyingShells_, &effect );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EffectManager::GetFlyingShells
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-const MIL_EffectManager::T_FlyingShellSet& MIL_EffectManager::GetFlyingShells() const
+const MIL_EffectManager::T_FlyingShells& MIL_EffectManager::GetFlyingShells() const
 {
     return flyingShells_;
 }

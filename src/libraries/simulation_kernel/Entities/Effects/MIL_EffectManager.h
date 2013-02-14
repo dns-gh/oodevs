@@ -12,6 +12,8 @@
 #ifndef __MIL_EffectManager_h_
 #define __MIL_EffectManager_h_
 
+#include <vector>
+
 class MIL_Effect_ABC;
 class MIL_Effect_IndirectFire;
 
@@ -21,11 +23,10 @@ class MIL_Effect_IndirectFire;
 // =============================================================================
 class MIL_EffectManager : private boost::noncopyable
 {
-public:
+private:
     //! @name Types
     //@{
-    typedef std::set< const MIL_Effect_IndirectFire* > T_FlyingShellSet;
-    typedef T_FlyingShellSet::const_iterator           CIT_FlyingShellSet;
+    typedef std::vector< const MIL_Effect_IndirectFire* > T_FlyingShells;
     //@}
 
 public:
@@ -40,9 +41,9 @@ public:
 
     //! @name Flying shells
     //@{
-          void              RegisterFlyingShell  ( const MIL_Effect_IndirectFire& effect );
-          void              UnregisterFlyingShell( const MIL_Effect_IndirectFire& effect );
-    const T_FlyingShellSet& GetFlyingShells      () const;
+    void RegisterFlyingShell( const MIL_Effect_IndirectFire& effect );
+    void UnregisterFlyingShell( const MIL_Effect_IndirectFire& effect );
+    const T_FlyingShells& GetFlyingShells() const;
     //@}
 
     static MIL_EffectManager& GetEffectManager();
@@ -50,15 +51,12 @@ public:
 private:
     //! @name Types
     //@{
-    struct EffectComparator {
-        bool operator() (const MIL_Effect_ABC* lhs, const MIL_Effect_ABC* rhs) const;
-    };
-    typedef std::set< MIL_Effect_ABC*, EffectComparator > T_EffectSet;
+    typedef std::vector< MIL_Effect_ABC* > T_Effects;
     //@}
 
 private:
-    T_EffectSet      effects_;
-    T_FlyingShellSet flyingShells_;
+    T_Effects      effects_;
+    T_FlyingShells flyingShells_;
 };
 
 #endif // __MIL_EffectManager_h_

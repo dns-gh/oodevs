@@ -94,22 +94,19 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 // -----------------------------------------------------------------------------
 void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& /*detectionComputerFactory*/ )
 {
-    const MIL_EffectManager::T_FlyingShellSet& flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
-    const MT_Vector2D&                         source       = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
-
+    const MT_Vector2D& source = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     T_FlyingShellSet perceivedFlyingShells;
-    for( MIL_EffectManager::CIT_FlyingShellSet itFlyingShell = flyingShells.begin(); itFlyingShell != flyingShells.end(); ++itFlyingShell )
+    auto flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
+    for( auto it = flyingShells.begin(); it != flyingShells.end(); ++it )
     {
-        const MIL_Effect_IndirectFire& flyingShell = (**itFlyingShell);
+        const MIL_Effect_IndirectFire& flyingShell = (**it);
         for( CIT_ZoneVector itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
-        {
             if( (**itZone).Intersect2DWithCircle( source, rRadius_ ) && flyingShell.IsFlyingThroughLocalisation( **itZone ) )
             {
                 perceivedFlyingShells.insert( &flyingShell );
                 if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )
                     perceiver_.NotifyPerception( flyingShell );
             }
-        }
     }
     lastPerceivedFlyingShells_.swap( perceivedFlyingShells );
 }

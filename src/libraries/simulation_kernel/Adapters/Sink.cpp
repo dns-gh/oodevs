@@ -495,7 +495,7 @@ namespace
         }
     }
     template< typename T >
-    void UpdateFlyingShells( core::Model& model, T& flyingShells )
+    void UpdateFlyingShells( core::Model& model, const T& flyingShells )
     {
         model.Clear();
         BOOST_FOREACH( const MIL_Effect_IndirectFire* fire, flyingShells )
