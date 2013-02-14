@@ -13,6 +13,7 @@
 #define __DEC_KS_Perception_h_
 
 #include "DEC_KnowledgeSource_ABC.h"
+#include "tools/Map.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
 
 class DEC_KnowledgeBlackBoard_AgentPion;
@@ -85,9 +86,9 @@ private:
     //@}
 
 public:
-    //! @name Types
+    //! @name
     //@{
-    typedef std::map< unsigned int, std::pair< MIL_Agent_ABC*, const PHY_PerceptionLevel* > > T_AgentPerceptionMap;
+    typedef tools::Map< MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_AgentPerceptionMap;
     //@}
 
 private:

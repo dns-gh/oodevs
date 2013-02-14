@@ -81,12 +81,10 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for ( auto it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
-                unsigned id = it->second.second->GetID();
-                file << it->first
-                     << it->second.first
-                     << id;
+                unsigned id = it->second->GetID();
+                file << it->first << id;
             }
         }
 
@@ -95,18 +93,12 @@ namespace boost
         {
             std::size_t nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
-                unsigned int agentId;
-                file >> agentId;
-
                 MIL_Agent_ABC* pAgent;
-                file >> pAgent;
-
                 unsigned int nID;
-                file >> nID;
-
-                map[ agentId ] = std::pair< MIL_Agent_ABC*, const PHY_PerceptionLevel* >( pAgent, &PHY_PerceptionLevel::FindPerceptionLevel( nID ) );
+                file >> pAgent >> nID;
+                map[ pAgent ] = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
             }
         }
     }
@@ -204,8 +196,7 @@ void DEC_KS_Perception::Clean()
 // -----------------------------------------------------------------------------
 void DEC_KS_Perception::NotifyExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level )
 {
-    const PHY_PerceptionLevel*& pLevel = externalPerceptions_[ agentPerceived.GetID() ].second;
-    externalPerceptions_[ agentPerceived.GetID() ].first = &agentPerceived;
+    const PHY_PerceptionLevel*& pLevel = externalPerceptions_[ &agentPerceived ];
     if( !pLevel || *pLevel < level )
         pLevel = &level;
 }
@@ -370,8 +361,8 @@ void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
 
     pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecutePerceptions();
 
-    for( auto itExt = externalPerceptions_.begin(); itExt != externalPerceptions_.end(); ++itExt )
-        NotifyPerception( *itExt->second.first, *itExt->second.second, false );
+    for( auto it = externalPerceptions_.begin(); it != externalPerceptions_.end(); ++it )
+        NotifyPerception( *it->first, *it->second, false );
     externalPerceptions_.clear();
 
     if( bMakePerceptionsAvailable_ )
