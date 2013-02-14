@@ -98,3 +98,10 @@ BOOST_AUTO_TEST_CASE( map_finds_const_elements_in_insertion_order )
     BOOST_CHECK( map.find( 2 ) == map.begin() + 1 );
     BOOST_CHECK( map.find( 3 ) == map.begin() + 2 );
 }
+
+BOOST_AUTO_TEST_CASE( map_supports_swap )
+{
+    tools::Map< int, int > map = boost::assign::map_list_of( 1, 1 );
+    BOOST_REQUIRE_EQUAL( 1u, map.size() );
+    tools::Map< int, int >().swap( map );
+}

@@ -98,3 +98,11 @@ BOOST_AUTO_TEST_CASE( set_finds_const_elements_in_insertion_order )
     BOOST_CHECK( set.find( 2 ) == set.begin() + 2 );
     BOOST_CHECK( set.find( 3 ) == set.begin() + 1 );
 }
+
+BOOST_AUTO_TEST_CASE( set_supports_swap )
+{
+    tools::Set< int > set = boost::assign::list_of( 1 );
+    BOOST_CHECK_EQUAL( 1u, set.size() );
+    tools::Set< int >().swap( set );
+    BOOST_CHECK_EQUAL( 0u, set.size() );
+}

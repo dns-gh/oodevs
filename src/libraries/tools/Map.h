@@ -133,6 +133,10 @@ public:
     {
         v_.clear();
     }
+    void swap( Map& rhs )
+    {
+        v_.swap( rhs.v_ );
+    }
 
 private:
     Container v_;
