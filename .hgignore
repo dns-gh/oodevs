@@ -11,6 +11,7 @@ syntax: glob
 *.sdf
 *.suo
 *.user
+*.pch
 build/build.local.properties
 data/tests/geostore_test/terrain/Graphics/geostore.sqlite
 data/tests/protocol_test/aurige.ord

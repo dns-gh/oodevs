@@ -450,7 +450,7 @@
     <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk,package.proto" description="package the installers and packs"/>
 
     <!-- Package plugins -->
-    <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
+    <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis,package.plugin.timeline" description="package plugin individual installers"/>
 
     <macrodef name="package-plugin">
         <attribute name="name"/>
@@ -473,6 +473,10 @@
 
     <target name="package.plugin.dis" description="create dis plugin installer">
         <package-plugin name="dis"/>
+    </target>
+
+    <target name="package.plugin.timeline" description="create timeline plugin installer">
+        <package-plugin name="timeline"/>
     </target>
 
     <!-- Package misc -->

@@ -29,6 +29,11 @@ set( FLEX_LIBRARIES
     lmgr_md
     lmgr_dongle_stub
 )
+set( OPENSSL_LIBRARIES
+    libeay32
+    ssleay32
+)
+
 masa_set_external_library( ANALYSYS_LIBRARIES         analysis_d analysis )
 masa_set_external_library( CORE_LIBRARIES             core_d core )
 masa_set_external_library( DIRECTIA_LIBRARIES         directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
@@ -283,6 +288,10 @@ add_plugin( saver_plugin )
 add_plugin( score_plugin )
 add_plugin( script_plugin )
 add_plugin( tic )
+add_plugin( timeline_plugin )
+target_link_libraries( timeline_plugin
+    ${OPENSSL_LIBRARIES}
+)
 add_plugin( web_control_plugin )
 target_link_libraries( web_control_plugin
     ws2_32
@@ -306,6 +315,7 @@ target_link_libraries( plugins_test
     rpr
     script_plugin
     tic
+    timeline_plugin
     ${DIRECTIA_LIBRARIES}
 )
 
@@ -391,6 +401,15 @@ target_link_libraries( web_control_plugin_dll web_control_plugin )
 # web_control_plugin_test
 add_target( web_control_plugin_test tests "tests/web_control_plugin_test" OPTIONS protocol test )
 target_link_libraries( web_control_plugin_test web_control_plugin_dll )
+
+# timeline_plugin_dll
+add_target( timeline_plugin_dll plugins "libraries/timeline_plugin_dll" OPTIONS protocol plugin shared )
+masa_add_target_definition( timeline_plugin_dll TIMELINE_PLUGIN_DLL_EXPORTS )
+target_link_libraries( timeline_plugin_dll
+    timeline_plugin
+    dispatcher
+    ${OPENSSL_LIBRARIES}
+)
 
 # resource_network
 add_target( resource_network server "libraries/resource_network" OPTIONS protocol )

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c966a47b-fb18-4e91-9bcd-a388789778c3}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\webservices">
+      <UniqueIdentifier>{10cd0e8c-5872-4907-85fc-b190dec2b45b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\webservices\REST">
+      <UniqueIdentifier>{d79b52e4-f2d2-4e2f-8f80-0959c40694a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Timeline">
+      <UniqueIdentifier>{b1ab8d69-2e83-4f13-9796-480ec5722ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actions">
+      <UniqueIdentifier>{513ba937-d0e7-477a-92fa-ed1701b8c464}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\ResponseHandler_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\timeline_plugin_pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\TimelinePlugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\Publisher.h">
+      <Filter>Source Files\webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\Publisher_ABC.h">
+      <Filter>Source Files\webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\PublisherActor.h">
+      <Filter>Source Files\webservices</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\Connection.h">
+      <Filter>Source Files\webservices\REST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\RestClient.h">
+      <Filter>Source Files\webservices\REST</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\ScenarioManager.h">
+      <Filter>Source Files\Timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\Task.h">
+      <Filter>Source Files\Timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\ActionLoader.h">
+      <Filter>Source Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\timeline_plugin\ActionPublisher.h">
+      <Filter>Source Files\Actions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\timeline_plugin_pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\TimelinePlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\Publisher.cpp">
+      <Filter>Source Files\webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\PublisherActor.cpp">
+      <Filter>Source Files\webservices</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\Connection.cpp">
+      <Filter>Source Files\webservices\REST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\RestClient.cpp">
+      <Filter>Source Files\webservices\REST</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\ScenarioManager.cpp">
+      <Filter>Source Files\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\Task.cpp">
+      <Filter>Source Files\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\ActionLoader.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\timeline_plugin\ActionPublisher.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
