@@ -89,35 +89,8 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, Ur
 // -----------------------------------------------------------------------------
 double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
-    std::vector< bg::point_xy< double > > ellipseKeyPoints;
-    bg::polygon< bg::point_xy< double > > attritionPolygon;
-    MT_Vector2D major = attritionSurface.GetMajorAxisHighPoint();
-    MT_Vector2D minor = attritionSurface.GetMinorAxisHighPoint();
-    MT_Vector2D center = attritionSurface.GetCenter();
-    ellipseKeyPoints.push_back( bg::point_xy< double >( major.rX_ + minor.rX_ - center.rX_, major.rY_ + minor.rY_ - center.rY_ ) );
-    ellipseKeyPoints.push_back( bg::point_xy< double >( major.rX_ - minor.rX_ + center.rX_, major.rY_ - minor.rY_ + center.rY_ ) ) ;
-    ellipseKeyPoints.push_back( bg::point_xy< double >( 3 * center.rX_ - major.rX_ - minor.rX_, 3 * center.rY_ - major.rY_ - minor.rY_ ) );
-    ellipseKeyPoints.push_back( bg::point_xy< double >( center.rX_ - major.rX_ + minor.rX_, center.rY_ - major.rY_ + minor.rY_ ) );
-    bg::assign( attritionPolygon, ellipseKeyPoints );
-    bg::correct( attritionPolygon );
-
-    const T_PointVector& urbanBlockVertices = urbanObject_.GetLocalisation().GetPoints();
-    bg::polygon< bg::point_xy< double > > blockGeometry;
-    std::vector< bg::point_xy< double > > vectorTemp;
-    for( auto it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
-    {
-        bg::point_xy< double > p( it->rX_, it->rY_ );
-        vectorTemp.push_back( p );
-    }
-    bg::assign( blockGeometry, vectorTemp );
-    bg::correct( blockGeometry );
-
-    std::vector< bg::polygon< bg::point_xy< double > > > polygonResult;
-    bg::intersection_inserter< bg::polygon< bg::point_xy< double > > >( attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
-    double intersectArea = 0;
-    for( std::vector< bg::polygon< bg::point_xy< double > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
-        intersectArea += area( *it );
-    return ( intersectArea / ( urbanObject_.GetLocalisation().GetArea() ) ) * result.urbanDeployment_;
+    TER_Localisation attritionPolygon( attritionSurface );
+    return MIL_Geometry::IntersectionArea( attritionSurface, urbanObject_.GetLocalisation() ) * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------

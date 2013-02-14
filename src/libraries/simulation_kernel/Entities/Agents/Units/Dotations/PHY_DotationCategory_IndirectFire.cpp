@@ -38,7 +38,9 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "Tools/MIL_Geometry.h"
 #include <urban/Model.h>
+#include <urban/TerrainObject_ABC.h>
 #include <boost/tuple/tuple.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -92,18 +94,85 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 
 namespace
 {
-    TER_Localisation EllipseToPolygon( const MT_Ellipse& ellipse )
+    void AddAgentsInNearbyUrbanBlocks( TER_Agent_ABC::T_AgentPtrVector& targets, const MT_Vector2D& vTargetPosition, const MT_Ellipse& attritionSurface, double distanceEffectForBlocks )
     {
-        T_PointVector vector;
-        const MT_Vector2D major = ellipse.GetMajorAxisHighPoint();
-        const MT_Vector2D minor = ellipse.GetMinorAxisHighPoint();
-        vector.push_back( MT_Vector2D( major.rX_ + minor.rX_ - ellipse.GetCenter().rX_, major.rY_ + minor.rY_ - ellipse.GetCenter().rY_ ) );
-        vector.push_back( MT_Vector2D( major.rX_ - minor.rX_ + ellipse.GetCenter().rX_, major.rY_ - minor.rY_ + ellipse.GetCenter().rY_ ) );
-        vector.push_back( MT_Vector2D( 3 * ellipse.GetCenter().rX_ - major.rX_ - minor.rX_, 3 * ellipse.GetCenter().rY_ - major.rY_ - minor.rY_ ) );
-        vector.push_back( MT_Vector2D( ellipse.GetCenter().rX_ - major.rX_ + minor.rX_, ellipse.GetCenter().rY_ - major.rY_ + minor.rY_ ) );
-        TER_Polygon polygon;
-        polygon.Reset( vector );
-        return TER_Localisation( polygon );
+        float x = static_cast< float >( vTargetPosition.rX_ );
+        float y = static_cast< float >( vTargetPosition.rY_ );
+        TER_Agent_ABC::T_AgentPtrVector allTargets;
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle( vTargetPosition, distanceEffectForBlocks, allTargets );
+        
+        if( !allTargets.empty() )
+        {
+            std::vector< const urban::TerrainObject_ABC* > urbanList;
+            if( MIL_AgentServer::IsInitialized() )
+                MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( x, y ), static_cast< float >( distanceEffectForBlocks ), urbanList );
+            if( urbanList.empty() )
+                return;
+            
+            TER_Localisation explosionArea( attritionSurface );
+            // explosionArea should be an ellipse, but since I don't have polygon/ellipse intersection code, I make do with a polygon.
+            
+            for( auto it = allTargets.begin(); it != allTargets.end(); ++it )
+            {
+                MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
+                if( const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
+                    if( std::find( targets.begin(), targets.end(), *it ) == targets.end() // Don't damage units twice
+                        && std::find( urbanList.begin(), urbanList.end(), &wrapper->GetObject() ) != urbanList.end() ) // Urban block of unit is in area of effect
+                    {
+                        const TER_Localisation& location = wrapper->GetLocalisation();
+                        double intersection = MIL_Geometry::IntersectionArea( location, explosionArea );
+                        if( 0 < intersection )
+                            targets.push_back( *it );
+                    }
+            }
+        }
+
+    }
+
+    void DamageObjects( const MT_Vector2D& vTargetPosition, double distanceForObjects, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotationCategory, const MIL_Agent_ABC* pFirer )
+    {
+        std::vector< TER_Object_ABC* > objects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, distanceForObjects , objects );
+
+        bool bFireInForbiddenArea = false;
+        bool bInfrastructureDamaged = false;
+        bool bLivingAreaDamaged = false;
+        for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
+        {
+            MIL_Object_ABC& obj = *static_cast< MIL_Object_ABC* >( *it );
+            UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &obj );
+            float state = 0;
+            if( wrapper )
+               if( StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>() )
+                    state = structural->GetStructuralState();
+            TER_Localisation polygon( attritionSurface );
+            obj.ApplyIndirectFire( polygon, dotationCategory, pFirer ? &pFirer->GetArmy() : static_cast< MIL_Army_ABC* >( 0 ) );
+            if( pFirer )
+            {
+                if( obj.Retrieve< FireForbiddenCapacity >() && !bFireInForbiddenArea && obj.GetArmy() && pFirer->GetArmy().IsAFriend( *obj.GetArmy() ) == eTristate_True )
+                {
+                    MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_TirDansZoneInterdite );
+                    bFireInForbiddenArea = true;
+                }
+                if( wrapper )
+                {
+                    StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>();
+                    if( structural && structural->GetStructuralState() < state )
+                    {
+                        if( !bInfrastructureDamaged && wrapper->Retrieve< InfrastructureCapacity >() )
+                        {
+                            MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_InfrastructureDamaged );
+                            bInfrastructureDamaged = true;
+                        }
+                        if( !bLivingAreaDamaged && wrapper->GetTotalInhabitants() > 0 )
+                        {
+                            MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_LivingAreaDamaged );
+                            bLivingAreaDamaged = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -136,23 +205,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
 
-        TER_Agent_ABC::T_AgentPtrVector allTargets;
-        TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
-
-        if( !allTargets.empty() )
-        {
-            std::vector< const urban::TerrainObject_ABC* > urbanList;
-            if( MIL_AgentServer::IsInitialized() )
-                MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
-                                                                   static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
-            for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
-            {
-                MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
-                if( const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
-                    if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), &wrapper->GetObject() ) != urbanList.end() )
-                        targets.push_back( *itAllTarget );
-            }
-        }
+        double distanceEffectForBlocks = rInterventionTypeFired * ( rDispersionX_ + rDispersionY_ );
+        AddAgentsInNearbyUrbanBlocks( targets, vTargetPosition, attritionSurface, distanceEffectForBlocks );
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
@@ -167,44 +221,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
             }
         }
 
-        std::vector< TER_Object_ABC* > objects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
-
-        bool bFireInForbiddenArea = false;
-        bool bInfrastructureDamaged = false;
-        bool bLivingAreaDamaged = false;
-        for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
-        {
-            MIL_Object_ABC& obj = *static_cast< MIL_Object_ABC* >( *it );
-            UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &obj );
-            float state = 0;
-            if( wrapper )
-               if( StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>() )
-                    state = structural->GetStructuralState();
-            obj.ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_, pFirer ? &pFirer->GetArmy() : static_cast< MIL_Army_ABC* >( 0 ) );
-            if( obj.Retrieve< FireForbiddenCapacity >() && pFirer && !bFireInForbiddenArea && obj.GetArmy() && pFirer->GetArmy().IsAFriend( *obj.GetArmy() ) == eTristate_True )
-            {
-                MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_TirDansZoneInterdite );
-                bFireInForbiddenArea = true;
-            }
-            if( wrapper && pFirer )
-            {
-                StructuralCapacity* structural = wrapper->Retrieve< StructuralCapacity>();
-                if( structural && structural->GetStructuralState() < state )
-                {
-                    if( !bInfrastructureDamaged && wrapper->Retrieve< InfrastructureCapacity >() )
-                    {
-                        MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_InfrastructureDamaged );
-                        bInfrastructureDamaged = true;
-                    }
-                    if( !bLivingAreaDamaged && wrapper->GetTotalInhabitants() > 0 )
-                    {
-                        MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_LivingAreaDamaged );
-                        bLivingAreaDamaged = true;
-                    }
-                }
-            }
-        }
+        DamageObjects( vTargetPosition, rInterventionTypeFired * rDispersionX_, attritionSurface, dotationCategory_, pFirer );
 
         bool bRCSent = false;
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
