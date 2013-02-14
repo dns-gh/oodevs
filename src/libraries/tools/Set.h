@@ -51,6 +51,13 @@ public:
     typedef typename Container::iterator iterator;
     typedef typename Container::const_iterator const_iterator;
 
+    Set()
+    {}
+    template< typename I >
+    Set( const I& begin, const I& end )
+        : v_( begin, end )
+    {}
+
     std::size_t erase( const key_type& k )
     {
         return v_.get< 1 >().erase( k );
@@ -59,15 +66,15 @@ public:
     {
         return v_.erase( it );
     }
-    iterator find( key_type k )
+    iterator find( const key_type& k )
     {
         return v_.project< 0 >( v_.get< 1 >().find( k ) );
     }
-    const_iterator find( key_type k ) const
+    const_iterator find( const key_type& k ) const
     {
-        return v_.get< 1 >().find( k );
+        return v_.project< 0 >( v_.get< 1 >().find( k ) );
     }
-    std::pair< iterator, bool > insert( value_type v )
+    std::pair< iterator, bool > insert( const value_type& v )
     {
         auto result = v_.get< 1 >().insert( v );
         return std::make_pair( v_.project< 0 >( result.first ), result.second );

@@ -9,6 +9,7 @@
 
 #include "tools_test_pch.h"
 #include "tools/Set.h"
+#include <boost/assign/list_of.hpp>
 
 using namespace tools;
 
@@ -58,9 +59,7 @@ BOOST_AUTO_TEST_CASE( set_erase_removes_elements )
 
 BOOST_AUTO_TEST_CASE( set_iterates_in_the_insertion_order )
 {
-    tools::Set< int > set;
-    set.insert( 2 );
-    set.insert( 1 );
+    tools::Set< int > set = boost::assign::list_of( 2 )( 1 );
     BOOST_REQUIRE_EQUAL( 2u, set.size() );
     auto it = set.begin();
     BOOST_REQUIRE( it != set.end() );
@@ -70,21 +69,32 @@ BOOST_AUTO_TEST_CASE( set_iterates_in_the_insertion_order )
     BOOST_CHECK_EQUAL( 1, *it );
 }
 
-BOOST_AUTO_TEST_CASE( set_find_finds_elements_in_insertion_order )
+BOOST_AUTO_TEST_CASE( set_finds_elements_in_insertion_order )
 {
-    tools::Set< int > set;
-    set.insert( 1 );
-    set.insert( 3 );
-    set.insert( 2 );
+    tools::Set< int > set = boost::assign::list_of( 1 )( 3 )( 2 );
+    BOOST_REQUIRE_EQUAL( 3u, set.size() );
     BOOST_CHECK( set.find( 42 ) == set.end() );
     BOOST_CHECK( set.find( 1 ) == set.begin() );
     BOOST_CHECK( set.find( 2 ) == set.begin() + 2 );
     BOOST_CHECK( set.find( 3 ) == set.begin() + 1 );
 }
 
-BOOST_AUTO_TEST_CASE( set_can_store_const_data )
+BOOST_AUTO_TEST_CASE( const_set_finds_elements_in_insertion_order )
 {
-    tools::Set< const int > set;
-    set.insert( 1 );
+    const tools::Set< int > set = boost::assign::list_of( 1 )( 3 )( 2 );
+    BOOST_REQUIRE_EQUAL( 3u, set.size() );
+    BOOST_CHECK( set.find( 42 ) == set.end() );
     BOOST_CHECK( set.find( 1 ) == set.begin() );
+    BOOST_CHECK( set.find( 2 ) == set.begin() + 2 );
+    BOOST_CHECK( set.find( 3 ) == set.begin() + 1 );
+}
+
+BOOST_AUTO_TEST_CASE( set_finds_const_elements_in_insertion_order )
+{
+    tools::Set< const int > set = boost::assign::list_of( 1 )( 3 )( 2 );
+    BOOST_REQUIRE_EQUAL( 3u, set.size() );
+    BOOST_CHECK( set.find( 42 ) == set.end() );
+    BOOST_CHECK( set.find( 1 ) == set.begin() );
+    BOOST_CHECK( set.find( 2 ) == set.begin() + 2 );
+    BOOST_CHECK( set.find( 3 ) == set.begin() + 1 );
 }

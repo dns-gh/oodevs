@@ -9,6 +9,7 @@
 
 #include "tools_test_pch.h"
 #include "tools/Map.h"
+#include <boost/assign/list_of.hpp>
 
 using namespace tools;
 
@@ -58,9 +59,7 @@ BOOST_AUTO_TEST_CASE( map_erase_removes_elements )
 
 BOOST_AUTO_TEST_CASE( map_iterates_in_the_insertion_order )
 {
-    tools::Map< int, int > map;
-    map[ 2 ] = 1;
-    map[ 1 ] = 2;
+    tools::Map< int, int > map = boost::assign::map_list_of( 2, 1 )( 1, 2 );
     BOOST_REQUIRE_EQUAL( 2u, map.size() );
     auto it = map.begin();
     BOOST_REQUIRE( it != map.end() );
@@ -70,21 +69,32 @@ BOOST_AUTO_TEST_CASE( map_iterates_in_the_insertion_order )
     BOOST_CHECK_EQUAL( 2, it->second );
 }
 
-BOOST_AUTO_TEST_CASE( map_find_finds_elements_in_insertion_order )
+BOOST_AUTO_TEST_CASE( map_finds_elements_in_insertion_order )
 {
-    tools::Map< int, int > map;
-    map[ 1 ] = 2;
-    map[ 2 ] = 3;
-    map[ 3 ] = 4;
+    tools::Map< int, int > map = boost::assign::map_list_of( 1, 2 )( 2, 3 )( 3, 4 );
+    BOOST_REQUIRE_EQUAL( 3u, map.size() );
     BOOST_CHECK( map.find( 42 ) == map.end() );
     BOOST_CHECK( map.find( 1 ) == map.begin() );
     BOOST_CHECK( map.find( 2 ) == map.begin() + 1 );
     BOOST_CHECK( map.find( 3 ) == map.begin() + 2 );
 }
 
-BOOST_AUTO_TEST_CASE( map_can_store_const_data )
+BOOST_AUTO_TEST_CASE( const_map_finds_elements_in_insertion_order )
 {
-    tools::Map< const int, const int > map;
-    map.insert( std::make_pair( 1, 1 ) );
+    const tools::Map< int, int > map = boost::assign::map_list_of( 1, 2 )( 2, 3 )( 3, 4 );
+    BOOST_REQUIRE_EQUAL( 3u, map.size() );
+    BOOST_CHECK( map.find( 42 ) == map.end() );
     BOOST_CHECK( map.find( 1 ) == map.begin() );
+    BOOST_CHECK( map.find( 2 ) == map.begin() + 1 );
+    BOOST_CHECK( map.find( 3 ) == map.begin() + 2 );
+}
+
+BOOST_AUTO_TEST_CASE( map_finds_const_elements_in_insertion_order )
+{
+    tools::Map< const int, const int > map = boost::assign::map_list_of( 1, 2 )( 2, 3 )( 3, 4 );
+    BOOST_REQUIRE_EQUAL( 3u, map.size() );
+    BOOST_CHECK( map.find( 42 ) == map.end() );
+    BOOST_CHECK( map.find( 1 ) == map.begin() );
+    BOOST_CHECK( map.find( 2 ) == map.begin() + 1 );
+    BOOST_CHECK( map.find( 3 ) == map.begin() + 2 );
 }
