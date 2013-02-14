@@ -154,8 +154,7 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
         bHasWeaponsAndNoAmmo_ = true;
     else
     {
-        sComposanteWeapons& data = composantesWeapons_[ compFirer.GetType().GetName() ];
-        data.SetComposante( &compFirer );
+        sComposanteWeapons& data = composantesWeapons_[ &compFirer ];
         data.AddWeapon( weapon );
 
         bHasWeaponsNotReady_ |= data.IsFiring();
@@ -180,8 +179,7 @@ bool PHY_DirectFireData::CanFire()
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon )
 {
-    sComposanteWeapons& data = composantesWeapons_[ firer.GetType().GetName() ];
-    data.SetComposante( &firer );
+    sComposanteWeapons& data = composantesWeapons_[ &firer ];
     data.RemoveWeapon( weapon );
 }
 
@@ -191,7 +189,7 @@ void PHY_DirectFireData::RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weap
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 {
-    if( composantesWeapons_.erase( firer.GetType().GetName() ) != 1 )
+    if( composantesWeapons_.erase( &firer ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
@@ -258,7 +256,7 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
 
         bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );
         if( bUpdated )
-            pBestFirer = it->second.GetComposante();
+            pBestFirer = it->first;
     }
 }
 
@@ -279,7 +277,7 @@ void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const 
 
         if( data.GetRandomWeapon( firer_, target, compTarget, pRandomWeapon ) )
         {
-            pRandomFirer = it->second.GetComposante();
+            pRandomFirer = it->first;
             return;
         }
 
@@ -304,7 +302,7 @@ bool PHY_DirectFireData::GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnuse
     pUnusedFirerWeapon = it->second.GetUnusedWeapon();
     if( !pUnusedFirerWeapon )
         return false;
-    pUnusedFirer = it->second.GetComposante();
+    pUnusedFirer = it->first;
     return true;
 }
 
@@ -377,22 +375,4 @@ PHY_Weapon* PHY_DirectFireData::sComposanteWeapons::GetUnusedWeapon() const
     if( weaponsReady_.empty() )
         return 0;
     return weaponsReady_.front();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::GetComposante
-// Created: LDC 2013-02-07
-// -----------------------------------------------------------------------------
-const PHY_ComposantePion* PHY_DirectFireData::sComposanteWeapons::GetComposante() const
-{
-    return composante_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DirectFireData::SetComposante
-// Created: LDC 2013-02-07
-// -----------------------------------------------------------------------------
-void PHY_DirectFireData::sComposanteWeapons::SetComposante( const PHY_ComposantePion* composante )
-{
-    composante_ = composante;
 }

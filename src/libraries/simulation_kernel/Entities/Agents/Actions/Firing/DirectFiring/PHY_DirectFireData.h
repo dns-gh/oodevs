@@ -13,7 +13,8 @@
 #define __PHY_DirectFireData_h_
 
 #include "MIL_Random.h"
-#include "simulation_kernel/FireData_ABC.h"
+#include "FireData_ABC.h"
+#include "tools/Map.h"
 
 class PHY_Composante_ABC;
 class PHY_ComposantePion;
@@ -90,17 +91,15 @@ private:
     typedef std::vector< PHY_Weapon* >     T_WeaponVector;
     typedef T_WeaponVector::const_iterator CIT_WeaponVector;
 
-    class sComposanteWeapons
+    struct sComposanteWeapons
     {
-    public:
-        sComposanteWeapons();
+         sComposanteWeapons();
         virtual ~sComposanteWeapons();
 
         //! @name Accessors
         //@{
         unsigned int GetNbrWeaponsUsable() const;
         bool IsFiring           () const;
-        const PHY_ComposantePion* GetComposante () const;
         //@}
 
         //! @name Operations
@@ -110,16 +109,14 @@ private:
         bool        GetBestWeapon  ( double& rBestScore, const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pBestWeapon ) const;
         bool        GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const;
         PHY_Weapon* GetUnusedWeapon() const;
-        void SetComposante( const PHY_ComposantePion* );
         //@}
 
     private:
         bool            bIsFiring_;
         T_WeaponVector  weaponsReady_;
-        const PHY_ComposantePion* composante_;
     };
 
-    typedef std::map< std::string, sComposanteWeapons > T_ComposanteWeaponsMap;
+    typedef tools::Map< const PHY_ComposantePion*, sComposanteWeapons > T_ComposanteWeaponsMap;
     //@}
 
 private:
