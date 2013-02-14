@@ -13,6 +13,7 @@
 #define __DEC_Knowledge_PopulationCollision_h_
 
 #include "DEC_Knowledge_ABC.h"
+#include "tools/Set.h"
 
 class MIL_Population;
 class MIL_PopulationFlow;
@@ -63,22 +64,12 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< MIL_PopulationFlow* >       T_PopulationFlowSet;
-    typedef T_PopulationFlowSet::const_iterator CIT_PopulationFlowSet;
-
-    typedef std::set< MIL_PopulationConcentration* >       T_PopulationConcentrationSet;
-    typedef T_PopulationConcentrationSet::const_iterator CIT_PopulationConcentrationSet;
-    //@}
-
-private:
     //! @name Data Members
     //@{
     const MIL_Agent_ABC* pAgentColliding_;
     MIL_Population* pPopulation_;
-    T_PopulationFlowSet flows_;
-    T_PopulationConcentrationSet concentrations_;
+    tools::Set< MIL_PopulationFlow* > flows_;
+    tools::Set< MIL_PopulationConcentration* > concentrations_;
     //@}
 };
 
