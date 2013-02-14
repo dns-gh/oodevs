@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
-
 #include "Decision/DEC_Representations.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -23,8 +22,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-
-std::set<  boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::enemyRepresentations_;
+#include "tools/Set.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator
@@ -252,39 +250,43 @@ unsigned int DEC_MiscFunctions::GetTimeInSeconds()
     return MIL_Time_ABC::GetTime().GetRealTime();
 }
 
+namespace
+{
+    tools::Set< boost::shared_ptr< DEC_Knowledge_Agent > > enemyRepresentations;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::AddEnemyRepresentation
 // Created: LDC 2011-09-12
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::AddEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent )
 {
-    enemyRepresentations_.insert( agent );
+    enemyRepresentations.insert( agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::AddEnemyRepresentation
+// Name: DEC_MiscFunctions::RemoveEnemyRepresentation
 // Created: LDC 2011-09-12
 // -----------------------------------------------------------------------------
 void DEC_MiscFunctions::RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent )
 {
-    enemyRepresentations_.erase( agent );
+    enemyRepresentations.erase( agent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_MiscFunctions::AddEnemyRepresentation
+// Name: DEC_MiscFunctions::GetEnemyRepresentation
 // Created: LDC 2011-09-12
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > DEC_MiscFunctions::GetEnemyRepresentation( DEC_Decision_ABC* caller )
 {
     if( !caller )
         throw MASA_EXCEPTION( "invalid parameter." );
-    std::vector<  boost::shared_ptr< DEC_Knowledge_Agent > > result;
-    MIL_Army_ABC& army = caller->GetPion().GetArmy();
-    for ( std::set<  boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = enemyRepresentations_.begin(); it != enemyRepresentations_.end(); ++it )
+    std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > result;
+    for( auto it = enemyRepresentations.begin(); it != enemyRepresentations.end(); ++it )
     {
         if( !(*it) )
             throw MASA_EXCEPTION( "invalid parameter." );
-        if( (*it)->IsValid() && (*it)->IsAnEnemy( army ) )
+        if( (*it)->IsValid() && (*it)->IsAnEnemy( caller->GetPion().GetArmy() ) )
             result.push_back( *it );
     }
     return result;

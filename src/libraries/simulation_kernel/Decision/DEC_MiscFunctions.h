@@ -13,10 +13,9 @@
 #define __DEC_MiscFunctions_h_
 
 #include "MIL.h"
-#include <boost/shared_ptr.hpp>
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
+#include <boost/shared_ptr.hpp>
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
@@ -105,8 +104,6 @@ public:
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
     static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission );
-
-    static std::set<  boost::shared_ptr< DEC_Knowledge_Agent > > enemyRepresentations_;
 };
 
 #include "DEC_MiscFunctions.inl"
