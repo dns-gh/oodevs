@@ -10,6 +10,10 @@
 #include "tools_test_pch.h"
 #include "tools/Set.h"
 #include <boost/assign/list_of.hpp>
+#pragma warning( push, 0 )
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#pragma warning( pop )
 
 using namespace tools;
 
@@ -105,4 +109,22 @@ BOOST_AUTO_TEST_CASE( set_supports_swap )
     BOOST_CHECK_EQUAL( 1u, set.size() );
     tools::Set< int >().swap( set );
     BOOST_CHECK_EQUAL( 0u, set.size() );
+}
+
+BOOST_AUTO_TEST_CASE( set_is_serializable )
+{
+    std::stringstream s;
+    {
+        tools::Set< int > set;
+        set.insert( 1 );
+        boost::archive::text_oarchive a( s );
+        a & set;
+    }
+    {
+        tools::Set< int > set;
+        boost::archive::text_iarchive a( s );
+        a & set;
+        BOOST_REQUIRE_EQUAL( 1u, set.size() );
+        BOOST_CHECK_EQUAL( 1, *set.begin() );
+    }
 }

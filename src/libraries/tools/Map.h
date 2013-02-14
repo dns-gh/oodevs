@@ -41,6 +41,8 @@ public:
         typedef key_type first_type;
         typedef mapped_type second_type;
 
+        value_type()
+        {}
         explicit value_type( first_type f )
             : first( f )
         {}
@@ -51,6 +53,11 @@ public:
         operator std::pair< first_type, second_type >() const
         {
             return std::make_pair( first, second );
+        }
+        template< class Archive >
+        void serialize( Archive& archive, const unsigned int /*version*/ )
+        {
+            archive & first & second;
         }
         first_type first;
         mutable second_type second;
@@ -136,6 +143,12 @@ public:
     void swap( Map& rhs )
     {
         v_.swap( rhs.v_ );
+    }
+
+    template< class Archive >
+    void serialize( Archive& archive, const unsigned int /*version*/ )
+    {
+        archive & v_;
     }
 
 private:

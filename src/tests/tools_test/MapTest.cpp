@@ -10,6 +10,10 @@
 #include "tools_test_pch.h"
 #include "tools/Map.h"
 #include <boost/assign/list_of.hpp>
+#pragma warning( push, 0 )
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#pragma warning( pop )
 
 using namespace tools;
 
@@ -104,4 +108,22 @@ BOOST_AUTO_TEST_CASE( map_supports_swap )
     tools::Map< int, int > map = boost::assign::map_list_of( 1, 1 );
     BOOST_REQUIRE_EQUAL( 1u, map.size() );
     tools::Map< int, int >().swap( map );
+}
+
+BOOST_AUTO_TEST_CASE( map_is_serializable )
+{
+    std::stringstream s;
+    {
+        tools::Map< int, int > map;
+        map[ 1 ] = 2;
+        boost::archive::text_oarchive a( s );
+        a & map;
+    }
+    {
+        tools::Map< int, int > map;
+        boost::archive::text_iarchive a( s );
+        a & map;
+        BOOST_REQUIRE_EQUAL( 1u, map.size() );
+        BOOST_CHECK_EQUAL( 2, map[ 1 ] );
+    }
 }

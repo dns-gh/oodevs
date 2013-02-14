@@ -113,6 +113,12 @@ public:
         v_.swap( rhs.v_ );
     }
 
+    template< class Archive >
+    void serialize( Archive& archive, const unsigned int /*version*/ )
+    {
+        archive & v_;
+    }
+
 private:
     Container v_;
 };
