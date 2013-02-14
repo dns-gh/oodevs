@@ -10,13 +10,14 @@
 #ifndef __DEC_PathWalker_h_
 #define __DEC_PathWalker_h_
 
-#include <boost/shared_ptr.hpp>
-#include <set>
-#include <string>
 #include "DEC_PathResult.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
+#include "tools/Set.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <spatialcontainer/TerrainData.h>
+#include <boost/shared_ptr.hpp>
+#include <string>
+#include <set>
 
 namespace sword
 {
@@ -82,7 +83,7 @@ public:
 private:
      //! @name Types
     //@{
-    typedef std::map< int, const MIL_Object_ABC* > T_ObjectSet;
+    typedef tools::Set< const MIL_Object_ABC* > T_ObjectSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep
@@ -103,13 +104,11 @@ private:
     public:
         sMoveStepCmp( const MT_Vector2D& vPosStart )
             : vPosStart_( vPosStart )
-        {
-        };
-
+        {}
         bool operator() ( const T_MoveStep& vPos1, const T_MoveStep& vPos2 ) const
         {
             return vPosStart_.SquareDistance( vPos1.vPos_ ) < vPosStart_.SquareDistance( vPos2.vPos_ );
-        };
+        }
     private:
         MT_Vector2D vPosStart_;
     };
