@@ -55,41 +55,6 @@ DEC_PopulationKnowledge::~DEC_PopulationKnowledge()
     // NOTHING
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
-        {
-            std::size_t size = set.size();
-            file << size;
-            for( auto it = set.begin(); it != set.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Agent_ABC* pAgent;
-                file >> pAgent;
-                set.insert( pAgent );
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: template< typename Archive > void DEC_PopulationKnowledge::serialize
 // Created: NLD 2005-12-01
@@ -141,7 +106,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking() const
     std::vector< unsigned int > container;
     container.reserve( attackers_.size() );
     for( auto it = attackers_.begin(); it != attackers_.end(); ++it )
-        container.push_back( ( **it ).GetID() );
+        container.push_back( (*it)->GetID() );
     return container;
 }
 
@@ -154,7 +119,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring() const
     std::vector< unsigned int > container;
     container.reserve( securers_.size() );
     for( auto it = securers_.begin(); it != securers_.end(); ++it )
-        container.push_back( ( **it ).GetID() );
+        container.push_back( (*it)->GetID() );
     return container;
 }
 
@@ -290,7 +255,7 @@ bool DEC_PopulationKnowledge::HasChannelingChanged() const
 // -----------------------------------------------------------------------------
 void DEC_PopulationKnowledge::NotifyChanneled( const TER_Localisation& location )
 {
-    CIT_LocationVector it = std::find( newChannelingLocations_.begin(), newChannelingLocations_.end(), location );
-    if( it == newChannelingLocations_.end())
+    if( std::find( newChannelingLocations_.begin(), newChannelingLocations_.end(), location )
+        == newChannelingLocations_.end() )
         newChannelingLocations_.push_back( location );
 }

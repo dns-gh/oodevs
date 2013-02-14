@@ -16,6 +16,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "tools/Set.h"
 
 namespace sword
 {
@@ -37,7 +38,6 @@ class DEC_PopulationKnowledge : public DEC_KnowledgeResolver_ABC
 public:
     //! @name Types
     //@{
-    typedef std::set< const MIL_Agent_ABC* > T_AgentSet;
 
     typedef std::vector< TER_Localisation > T_LocationVector;
     //@}
@@ -94,6 +94,9 @@ private:
     template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_PopulationKnowledge* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_PopulationKnowledge* role, const unsigned int /*version*/ );
     //@}
+
+private:
+    typedef tools::Set< const MIL_Agent_ABC* > T_AgentSet;
 
 private:
     //! @name Member data
