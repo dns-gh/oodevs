@@ -593,10 +593,14 @@ namespace
 void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const MissionParameter& src )
 {
     const size_t size = src.value_size();
+    if( !size )
+        return;
     if( size == 1 )
         return WriteValue( xos, writer, src.value( 0 ) );
-    if( size > 1 )
-        throw MASA_EXCEPTION( "Unable to write multiple mission parameter values" );
+    xos << xml::attribute( "type", "locationcomposite" );
+    const auto& list = src.value();
+    for( auto it = list.begin(); it != list.end(); ++it )
+        WriteValue( xml::xosubstream( xos ) << xml::start( "parameter" ), writer, *it );
 }
 
 void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const MissionParameters& src )

@@ -824,6 +824,35 @@ BOOST_FIXTURE_TEST_CASE( read_list, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_locationcomposite, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='locationcomposite'>"
+    "    <parameter type='polygon'>"
+    "      <location type='polygon'>"
+    "        <point coordinates='dummy'/>"
+    "        <point coordinates='dummy'/>"
+    "        <point coordinates='dummy'/>"
+    "      </location>"
+    "    </parameter>"
+    "    <parameter type='point'>"
+    "      <location type='point'>"
+    "        <point coordinates='dummy'/>"
+    "      </location>"
+    "    </parameter>"
+    "  </parameter>"
+    "</action>";
+    MOCK_EXPECT( reader.Convert ).exactly( 4 ).returns( dummy );
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    const auto& list = msg.elem( 0 ).value();
+    BOOST_CHECK_EQUAL( list.size(), 2 );
+    CheckLocation( list.Get( 0 ).area().location(), Location::polygon, 3 );
+    CheckLocation( list.Get( 1 ).point().location(), Location::point, 1 );
+    CheckCycle( input, msg );
+}
+
 namespace
 {
     template< typename T >
