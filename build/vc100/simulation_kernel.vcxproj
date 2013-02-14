@@ -1740,7 +1740,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\composantes\PHY_RolePion_Composantes.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionWithLocation.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_Object_ABC.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionLogistic.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.inl" />

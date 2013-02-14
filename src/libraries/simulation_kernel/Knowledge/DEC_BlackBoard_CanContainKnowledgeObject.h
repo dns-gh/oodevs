@@ -125,6 +125,7 @@ private:
     void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight );
     bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
+    void UpdateUniversalObject( MIL_Object_ABC& object, const MIL_Army_ABC& team );
     //@}
 
 private:

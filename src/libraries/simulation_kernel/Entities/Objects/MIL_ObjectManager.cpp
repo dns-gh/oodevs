@@ -38,6 +38,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/map.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 
@@ -90,7 +91,7 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
         if( dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) == 0 )
             ++nbObjects_;
         if( it->second->IsUniversal() )
-            universalObjects_.insert( it->second );
+            universalObjects_.push_back( it->second );
     }
 }
 
@@ -109,7 +110,7 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::Clean()
 {
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
         it->second->Clean();
 }
 
@@ -138,7 +139,7 @@ void MIL_ObjectManager::ProcessEvents()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::UpdateStates( const propagation::FloodModel_ABC& floodModel )
 {
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); )
+    for( auto it = objects_.begin(); it != objects_.end(); )
     {
         MIL_Object_ABC& object = *it->second;
         if( object.IsReadyForDeletion() )
@@ -149,7 +150,7 @@ void MIL_ObjectManager::UpdateStates( const propagation::FloodModel_ABC& floodMo
                 {
                     const TER_Localisation& localisation = object.GetLocalisation();
                     altitude->ResetAltitude( localisation, object.GetID() );
-                    for( IT_ObjectMap obj = objects_.begin(); obj != objects_.end(); ++obj )
+                    for( auto obj = objects_.begin(); obj != objects_.end(); ++obj )
                         if( FloodAttribute* flood = obj->second->RetrieveAttribute< FloodAttribute >() )
                             if( localisation.IsIntersecting( flood->GetLocalisation() ) )
                                 flood->GenerateFlood( floodModel );
@@ -162,7 +163,7 @@ void MIL_ObjectManager::UpdateStates( const propagation::FloodModel_ABC& floodMo
             }
             if( dynamic_cast< MIL_UrbanObject_ABC* >( &object ) == 0 )
                 --nbObjects_;
-            universalObjects_.erase( &object );
+            boost::remove_erase( universalObjects_, &object );
             delete &object;
             it = objects_.erase( it );
         }
@@ -186,7 +187,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     ++nbObjects_;
     if( pObject->IsUniversal() )
-        universalObjects_.insert( pObject );
+        universalObjects_.push_back( pObject );
     pObject->SendCreation();
     if( pObject->GetArmy() )
         pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
@@ -244,7 +245,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
         if( pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
         {
             const TER_Localisation& localisation = pObject->GetLocalisation();
-            for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+            for( auto it = objects_.begin(); it != objects_.end(); ++it )
                 if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
                     if( localisation.IsIntersecting( flood->GetLocalisation() ) )
                         flood->GenerateFlood( floodModel );
@@ -392,14 +393,14 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 void MIL_ObjectManager::FinalizeObjects( const propagation::FloodModel_ABC& floodModel )
 {
     // $$$$ _RC_ JSR 2011-11-04: TODO passer par une interface? (attention, respecter l'ordre, floods en derniers)
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >() )
             altitude->ModifyAltitude( it->second->GetLocalisation(), it->second->GetID() );
         if( LogisticAttribute* logistic = it->second->RetrieveAttribute< LogisticAttribute >() )
             logistic->Finalize();
     }
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
         if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
             flood->GenerateFlood( floodModel );
 }
@@ -410,7 +411,7 @@ void MIL_ObjectManager::FinalizeObjects( const propagation::FloodModel_ABC& floo
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::SendCreation()
 {
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
         it->second->SendCreation();
 }
 
@@ -420,7 +421,7 @@ void MIL_ObjectManager::SendCreation()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::SendFullState()
 {
-    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
         it->second->SendFullState();
 }
 
@@ -487,12 +488,14 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::GetUniversalObjects
+// Name: MIL_ObjectManager::VisitUniversalObjects
 // Created: LDC 2012-01-26
 // -----------------------------------------------------------------------------
-const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() const
+void MIL_ObjectManager::VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const
 {
-    return universalObjects_;
+    for( auto it = universalObjects_.begin(); it != universalObjects_.end(); ++it )
+        if( !(*it)->IsMarkedForDestruction() )
+            visitor( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -502,4 +505,16 @@ const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() cons
 const std::map< unsigned int, MIL_Object_ABC* >& MIL_ObjectManager::GetObjects() const
 {
     return objects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::Find
+// Created: NLD 2004-09-15
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* MIL_ObjectManager::Find( unsigned int nID ) const
+{
+    auto it = objects_.find( nID );
+    if( it == objects_.end() )
+        return 0;
+    return it->second;
 }

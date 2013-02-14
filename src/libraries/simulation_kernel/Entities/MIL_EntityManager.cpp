@@ -2527,20 +2527,19 @@ MIL_Population* MIL_EntityManager::FindPopulation( MIL_UrbanObject_ABC* urbanObj
 void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
     std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > elements = knowledgeGroupFactory_->GetElements();
-    for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = elements.begin(); it != elements.end(); ++it )
-        (it->second)->Accept( visitor );
+    for( auto it = elements.begin(); it != elements.end(); ++it )
+        it->second->Accept( visitor );
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetUniversalObjects
+// Name: MIL_EntityManager::VisitUniversalObjects
 // Created: LDC 2012-01-26
 // -----------------------------------------------------------------------------
-const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() const
+void MIL_EntityManager::VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const
 {
-    return pObjectManager_->GetUniversalObjects();
+    pObjectManager_->VisitUniversalObjects( visitor );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessFormationChangeSuperior

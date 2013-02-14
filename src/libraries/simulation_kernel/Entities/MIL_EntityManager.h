@@ -129,7 +129,7 @@ public:
     virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
 
-    virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
+    void VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const;
 
     MIL_Population* FindPopulation( MIL_UrbanObject_ABC* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& GetArmies() const;

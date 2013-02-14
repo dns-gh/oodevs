@@ -14,6 +14,9 @@
 
 #include "MIL.h"
 #include <tools/Resolver.h>
+#include <boost/function.hpp>
+#include <vector>
+#include <map>
 
 namespace sword
 {
@@ -80,7 +83,7 @@ public:
     void WriteODB( xml::xostream& xos ) const;
     void ReadUrbanState( xml::xistream& xis );
     MIL_Object_ABC* Find( unsigned int nID ) const;
-    const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
+    void VisitUniversalObjects( const boost::function< void( MIL_Object_ABC& ) >& visitor ) const;
     const std::map< unsigned int, MIL_Object_ABC* >& GetObjects() const;
     //@}
 
@@ -92,16 +95,6 @@ public:
     void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
                                      const propagation::FloodModel_ABC& floodModel );
     void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, MIL_Object_ABC* > T_ObjectMap;
-    typedef T_ObjectMap::iterator                    IT_ObjectMap;
-    typedef T_ObjectMap::const_iterator             CIT_ObjectMap;
-
-    typedef std::set< MIL_Object_ABC* > T_ObjectSet;
     //@}
 
 private:
@@ -121,16 +114,14 @@ private:
 private:
     //! @name
     //@{
-    T_ObjectMap objects_;
-    T_ObjectSet universalObjects_;
     unsigned int nbObjects_;
     MIL_ObjectFactory& factory_;
     sword::Sink_ABC& sink_;
+    std::map< unsigned int, MIL_Object_ABC* > objects_;
+    std::vector< MIL_Object_ABC* > universalObjects_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_ObjectManager )
-
-#include "MIL_ObjectManager.inl"
 
 #endif // __MIL_ObjectManager_h_

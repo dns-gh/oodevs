@@ -329,15 +329,21 @@ void DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeig
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL_Army_ABC& team )
 {
-    const std::set< MIL_Object_ABC* >& universalObjects = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUniversalObjects();
-    for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
+    MIL_AgentServer::GetWorkspace().GetEntityManager().VisitUniversalObjects(
+        boost::bind( &DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject, this, _1, boost::cref( team ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject
+// Created: LDC 2012-02-07
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject( MIL_Object_ABC& object, const MIL_Army_ABC& team )
+{
+    if( !HasKnowledgeObject( object ) )
     {
-        if( !HasKnowledgeObject( **it ) && !(*it)->IsMarkedForDestruction() )
-        {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( team, **it );
-            knowledge->Update( PHY_PerceptionLevel::identified_ );
-            knowledge->SkipPreparation();
-        }
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( team, object );
+        knowledge->Update( PHY_PerceptionLevel::identified_ );
+        knowledge->SkipPreparation();
     }
 }
 

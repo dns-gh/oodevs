@@ -5104,9 +5104,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_Object_ABC.inl">
       <Filter>Source Files\Entities\Objects</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\entities\objects\MIL_ObjectManager.inl">
-      <Filter>Source Files\Entities\Objects</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.inl">
       <Filter>Source Files\Entities\Objects\Models</Filter>
     </None>
