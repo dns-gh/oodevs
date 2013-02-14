@@ -17,6 +17,7 @@
 #include "MockPHY_RoleInterface_ActiveProtection.h"
 #include "MockPHY_RoleInterface_Composantes.h"
 #include "MockPHY_RoleInterface_HumanFactors.h"
+#include "MockPHY_RoleInterface_Perceiver.h"
 #include "MockPHY_RoleInterface_UrbanLocation.h"
 #include "MockRoleDotations.h"
 #include "MockRoleLocation.h"
@@ -85,7 +86,8 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         pion.RegisterRole( *roleIndirectFiring );
         PHY_RoleAction_MovingUnderground* roleMovingUnderground = new PHY_RoleAction_MovingUnderground( pion );
         pion.RegisterRole( *roleMovingUnderground );
-
+        MockPHY_RoleInterface_Perceiver* rolePerceiver = new MockPHY_RoleInterface_Perceiver();
+        pion.RegisterRole( *rolePerceiver );
 
         MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
         MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 10u );
@@ -148,7 +150,9 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( urbanRole->ComputeRatioPionInsideEllipse ).once().returns( 1.f );
         MOCK_EXPECT( composanteRole->ApplyIndirectFire ).once();
         MOCK_EXPECT( pion.CanEmitReports ).returns( true );
-        MOCK_EXPECT( mockArmy.IsAFriend ).once().returns( eTristate_False );
+        MOCK_EXPECT( mockArmy.IsAFriend ).at_least( 1 ).returns( eTristate_False );
+        MOCK_EXPECT( mockArmy.GetID ).at_least( 1 ).returns( 42 );
+        MOCK_EXPECT( rolePerceiver->IsFireObserver ).once().returns ( false );
         effectManager.Update();
         mock::verify( entityManager );
     }

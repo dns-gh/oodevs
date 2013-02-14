@@ -102,13 +102,16 @@ void PHY_FireResults_Pion::DoSendReport( const T& entity, bool& rcSent ) const
 template< typename MSG >
 void PHY_FireResults_Pion::SendReport( const MSG& msg, bool& rcSent ) const
 {
-    for( int i = 0; i < msg.elem_size(); ++i )
+    if( MIL_AgentServer::IsInitialized() )
     {
-        unsigned int targetId = msg.elem( i ).target().id();
-        if( MIL_AgentPion* targetPion = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( targetId ) )
-            DoSendReport( *targetPion, rcSent );
-        else if( MIL_Population* targetPop = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( targetId ) )
-            DoSendReport( *targetPop, rcSent );
+        for( int i = 0; i < msg.elem_size(); ++i )
+        {
+            unsigned int targetId = msg.elem( i ).target().id();
+            if( MIL_AgentPion* targetPion = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( targetId ) )
+                DoSendReport( *targetPion, rcSent );
+            else if( MIL_Population* targetPop = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( targetId ) )
+                DoSendReport( *targetPop, rcSent );
+        }
     }
 }
 
