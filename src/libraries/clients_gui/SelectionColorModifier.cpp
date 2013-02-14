@@ -56,7 +56,7 @@ namespace
 // Name: SelectionColorModifier::Apply
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base )
+QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base ) const
 {
     const bool selected = selectedEntity_ == &entity;
     const bool superiorSelected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( entity, *selectedEntity_ )

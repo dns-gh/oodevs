@@ -36,7 +36,7 @@ OverFlyingColorModifier::~OverFlyingColorModifier()
 // Name: OverFlyingColorModifier::Apply
 // Created: ABR 2011-10-27
 // -----------------------------------------------------------------------------
-QColor OverFlyingColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base )
+QColor OverFlyingColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base ) const
 {
     if( overFlownEntity_ && overFlownEntity_ == &entity )
         return base.light( 150 );

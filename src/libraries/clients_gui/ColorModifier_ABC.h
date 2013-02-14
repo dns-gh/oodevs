@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) = 0;
+    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const = 0;
     //@}
 };
 

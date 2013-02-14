@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base );
+    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const;
     //@}
 
 private slots:
@@ -63,7 +63,7 @@ private slots:
     //@{
     virtual void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );
     virtual void NotifyDeleted( const kernel::Entity_ABC& );
-    QColor Highlight( const QColor& base );
+    QColor Highlight( const QColor& base ) const;
     //@}
 
 private:

@@ -46,7 +46,7 @@ HighlightColorModifier::~HighlightColorModifier()
 // Name: HighlightColorModifier::Apply
 // Created: AGE 2008-05-15
 // -----------------------------------------------------------------------------
-QColor HighlightColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base )
+QColor HighlightColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base ) const
 {
     if( highlighted_.find( &entity ) != highlighted_.end() )
         return Highlight( base );
@@ -101,7 +101,7 @@ void HighlightColorModifier::NotifyDeleted( const kernel::Entity_ABC& entity )
 // Name: HighlightColorModifier::Highlight
 // Created: AGE 2008-05-15
 // -----------------------------------------------------------------------------
-QColor HighlightColorModifier::Highlight( const QColor& base )
+QColor HighlightColorModifier::Highlight( const QColor& base ) const
 {
     return blink_ ? base.light( 150 ) : base;
 }

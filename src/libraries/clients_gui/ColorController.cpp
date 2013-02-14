@@ -36,7 +36,7 @@ ColorController::~ColorController()
 // Name: ColorController::Apply
 // Created: LGY 2011-06-27
 // -----------------------------------------------------------------------------
-QColor ColorController::Apply( const kernel::Entity_ABC& entity, const QColor& base )
+QColor ColorController::Apply( const kernel::Entity_ABC& entity, const QColor& base ) const
 {
     CIT_Colors it = colors_.find( entity.GetId() );
     if( it != colors_.end() )
