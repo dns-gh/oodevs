@@ -19,6 +19,11 @@
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include <boost/serialization/set.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
+#include <boost/range/algorithm.hpp>
+#pragma warning( push, 0 )
+#include <boost/function_output_iterator.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectInteraction constructor
@@ -36,7 +41,7 @@ MIL_ObjectInteraction::MIL_ObjectInteraction()
 // -----------------------------------------------------------------------------
 MIL_ObjectInteraction::~MIL_ObjectInteraction()
 {
-    assert( agentInsideSet_.empty() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,11 +50,11 @@ MIL_ObjectInteraction::~MIL_ObjectInteraction()
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> agentInsideSet_
-         >> agentEnteringSet_
-         >> agentExitingSet_
-         >> agentMovingInsideSet_
-         >> populationInsideSet_
+    file >> agentsInside_
+         >> agentsEntering_
+         >> agentsExiting_
+         >> agentsMovingInside_
+         >> populationsInside_
          >> height_;
 }
 
@@ -59,43 +64,26 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << agentInsideSet_
-         << agentEnteringSet_
-         << agentExitingSet_
-         << agentMovingInsideSet_
-         << populationInsideSet_
+    file << agentsInside_
+         << agentsEntering_
+         << agentsExiting_
+         << agentsMovingInside_
+         << populationsInside_
          << height_;
 }
 
 namespace
 {
-    std::set< MIL_PopulationElement_ABC* > Convert( TER_PopulationConcentration_ABC::T_PopulationConcentrationVector& vector )
+    template< typename C >
+    void RemoveDeletedAgent( C& agents, MIL_Object_ABC* object = 0 )
     {
-        std::set< MIL_PopulationElement_ABC* > elements;
-        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = vector.begin(); it != vector.end(); ++it )
-            elements.insert( static_cast< MIL_PopulationConcentration* >( *it ) );
-        return elements;
-    }
-    std::set< MIL_PopulationElement_ABC* > Convert( TER_PopulationFlow_ABC::T_PopulationFlowVector& vector )
-    {
-        std::set< MIL_PopulationElement_ABC* > elements;
-        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector it = vector.begin(); it != vector.end(); ++it )
-            elements.insert( static_cast< MIL_PopulationFlow* >( *it ) );
-        return elements;
-    }
-}
-
-namespace
-{
-    void RemoveDeletedAgent( std::set< MIL_Agent_ABC* >& agentSet, MIL_Object_ABC* object = 0 )
-    {
-        for( auto it = agentSet.begin(); it != agentSet.end(); )
+        for( auto it = agents.begin(); it != agents.end(); )
         {
-            if( ( *it )->IsMarkedForDestruction() )
+            if( (*it)->IsMarkedForDestruction() )
             {
                 if( object )
                     object->ProcessAgentExiting( **it );
-                it = agentSet.erase( it );
+                it = agents.erase( it );
             }
             else
                 ++it;
@@ -109,65 +97,86 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::Clean( MIL_Object_ABC& object )
 {
-    RemoveDeletedAgent( agentInsideSet_, &object );
-    RemoveDeletedAgent( agentEnteringSet_ );
-    RemoveDeletedAgent( agentExitingSet_ );
-    RemoveDeletedAgent( agentMovingInsideSet_ );
-    RemoveDeletedAgent( agentDelayedEnteringSet_ );
+    RemoveDeletedAgent( agentsInside_, &object );
+    RemoveDeletedAgent( agentsEntering_ );
+    RemoveDeletedAgent( agentsExiting_ );
+    RemoveDeletedAgent( agentsMovingInside_ );
+    RemoveDeletedAgent( agentsDelayedEntering_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectInteraction::UpdateLocation
+// Name: MIL_ObjectInteraction::UpdateInteraction
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER_Localisation& location )
 {
-    TER_Agent_ABC::T_AgentPtrVector newInsideTmp;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location, newInsideTmp );
+    UpdateAgents( object, location );
+    UpdatePopulations( location );
+}
 
-    T_AgentSet newInside;
-    for( TER_Agent_ABC::CIT_AgentPtrVector it = newInsideTmp.begin(); it != newInsideTmp.end(); ++it )
+namespace
+{
+    std::set< MIL_Agent_ABC* > GetAgentsInside( const TER_Localisation& location )
     {
-        MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        newInside.insert( &agent );
+        TER_Agent_ABC::T_AgentPtrVector agents;
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location, agents );
+        std::set< MIL_Agent_ABC* > result;
+        for( auto it = agents.begin(); it != agents.end(); ++it )
+            result.insert( &static_cast< PHY_RoleInterface_Location* >( *it )->GetAgent() );
+        return result;
     }
-
-    T_AgentSet intersection;
-    std::set_difference( agentInsideSet_.begin(), agentInsideSet_.end(),
-                         newInside      .begin(), newInside      .end(),
-                         std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
-    for( auto it = intersection.begin(); it != intersection.end(); ++it )
-        (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
-
-    intersection.clear();
-    std::set_difference( newInside      .begin(), newInside      .end(),
-                         agentInsideSet_.begin(), agentInsideSet_.end(),
-                         std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
-    for( auto it = intersection.begin(); it != intersection.end(); ++it )
-        (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutInsideObject( object );
-
-    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector populationsInsideObject;
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( location, populationsInsideObject );
-    TER_PopulationFlow_ABC::T_PopulationFlowVector populationsFlowInsideObject;
-    TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( location, populationsFlowInsideObject );
-    Update( populationInsideSet_, Convert( populationsInsideObject ), boost::bind( &MIL_ObjectInteraction::NotifyPopulationMovingOutside, this, _1 ) );
-    Update( populationInsideSet_, Convert( populationsFlowInsideObject ), boost::bind( &MIL_ObjectInteraction::NotifyPopulationMovingOutside, this, _1 ) );
-    Update( Convert( populationsInsideObject ), populationInsideSet_, boost::bind( &MIL_ObjectInteraction::NotifyPopulationMovingInside, this, _1 ) );
-    Update( Convert( populationsFlowInsideObject ), populationInsideSet_, boost::bind( &MIL_ObjectInteraction::NotifyPopulationMovingInside, this, _1 ) );
+    void NotifyTerrainPutOutsideObject( MIL_Agent_ABC* agent, MIL_Object_ABC& object )
+    {
+        agent->GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
+    }
+    void NotifyTerrainPutInsideObject( MIL_Agent_ABC* agent, MIL_Object_ABC& object )
+    {
+        agent->GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutInsideObject( object );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectInteraction::Update
-// Created: LGY 2011-04-06
+// Name: MIL_ObjectInteraction::UpdateAgents
+// Created: MCO 2013-02-13
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::Update( const T_PopulationSet& last, const T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun )
+void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location )
 {
-    T_PopulationSet result;
-    std::set_difference( last.begin(), last.end(),
-                         current.begin(), current.end(),
-                         std::insert_iterator< T_PopulationSet >( result, result.end() ) );
-    for( auto it = result.begin(); it != result.end(); ++it )
-        fun( **it );
+    const std::set< MIL_Agent_ABC* > agents( agentsInside_.begin(), agentsInside_.end() );
+    const std::set< MIL_Agent_ABC* > inside = GetAgentsInside( location );
+    boost::set_difference( agents, inside, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutOutsideObject, _1, boost::ref( object ) ) ) );
+    boost::set_difference( inside, agents, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutInsideObject, _1, boost::ref( object ) ) ) );
+}
+
+namespace
+{
+    template< typename P >
+    void GetConcentrations( const TER_Localisation& location, P& populations )
+    {
+        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( location, concentrations );
+        for( auto it = concentrations.begin(); it != concentrations.end(); ++it )
+            populations.insert( static_cast< MIL_PopulationConcentration* >( *it ) );
+    }
+    template< typename P >
+    void GetFlows( const TER_Localisation& location, P& populations )
+    {
+        TER_PopulationFlow_ABC::T_PopulationFlowVector flows;
+        TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( location, flows );
+        for( auto it = flows.begin(); it != flows.end(); ++it )
+            populations.insert( static_cast< MIL_PopulationFlow* >( *it ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectInteraction::UpdatePopulations
+// Created: MCO 2013-02-13
+// -----------------------------------------------------------------------------
+void MIL_ObjectInteraction::UpdatePopulations( const TER_Localisation& location )
+{
+    T_Populations populations;
+    GetConcentrations( location, populations );
+    GetFlows( location, populations );
+    populations.swap( populationsInside_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +185,7 @@ void MIL_ObjectInteraction::Update( const T_PopulationSet& last, const T_Populat
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyPopulationMovingInside( MIL_PopulationElement_ABC& population )
 {
-    populationInsideSet_.insert( &population );
+    populationsInside_.insert( &population );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +194,7 @@ void MIL_ObjectInteraction::NotifyPopulationMovingInside( MIL_PopulationElement_
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population )
 {
-    populationInsideSet_.erase( &population );
+    populationsInside_.erase( &population );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,10 +203,10 @@ void MIL_ObjectInteraction::NotifyPopulationMovingOutside( MIL_PopulationElement
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_.insert( &agent ).second )
-        agentEnteringSet_.insert( &agent );
-    agentMovingInsideSet_.insert( &agent );
-    agentExitingSet_.erase ( &agent );
+    if( agentsInside_.insert( &agent ).second )
+        agentsEntering_.insert( &agent );
+    agentsMovingInside_.insert( &agent );
+    agentsExiting_.erase( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,9 +215,9 @@ void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_.erase( &agent ) == 1 )
-        agentExitingSet_.insert( &agent );
-    agentDelayedEnteringSet_.erase( &agent );
+    if( agentsInside_.erase( &agent ) == 1 )
+        agentsExiting_.insert( &agent );
+    agentsDelayedEntering_.erase( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,9 +235,9 @@ void MIL_ObjectInteraction::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_.erase( &agent ) == 1 )
-        agentExitingSet_.insert( &agent );
-    agentDelayedEnteringSet_.erase( &agent );
+    if( agentsInside_.erase( &agent ) == 1 )
+        agentsExiting_.insert( &agent );
+    agentsDelayedEntering_.erase( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,8 +246,8 @@ void MIL_ObjectInteraction::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 {
-    while( !agentInsideSet_.empty() )
-        (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
+    while( !agentsInside_.empty() )
+        NotifyTerrainPutOutsideObject( *agentsInside_.begin(), object );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,50 +256,47 @@ void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
 {
-    T_AgentSet::const_iterator itAgent;
+    for( auto it = agentsInside_.begin(); it != agentsInside_.end(); ++it )
+        object.PreprocessAgent( **it );
 
-    for( itAgent = agentInsideSet_.begin(); itAgent != agentInsideSet_.end(); ++itAgent )
-        object.PreprocessAgent( **itAgent );
-
-    T_AgentSet agentProcessedSet;
-    for( itAgent = agentDelayedEnteringSet_.begin(); itAgent != agentDelayedEnteringSet_.end(); ++itAgent )
-        if( object.CanInteractWith( **itAgent ) )
+    T_Agents agents;
+    for( auto it = agentsDelayedEntering_.begin(); it != agentsDelayedEntering_.end(); ++it )
+        if( object.CanInteractWith( **it ) )
         {
-            agentProcessedSet.insert( *itAgent );
-            object.ProcessAgentEntering( **itAgent );
-            if( agentMovingInsideSet_.find( *itAgent ) ==  agentMovingInsideSet_.end() )
-                object.ProcessAgentMovingInside( **itAgent );
+            agents.insert( *it );
+            object.ProcessAgentEntering( **it );
+            if( agentsMovingInside_.find( *it ) ==  agentsMovingInside_.end() )
+                object.ProcessAgentMovingInside( **it );
         }
+    for( auto it = agents.begin(); it != agents.end(); ++it )
+        agentsDelayedEntering_.erase( *it );
 
-    for( itAgent = agentProcessedSet.begin(); itAgent != agentProcessedSet.end(); ++itAgent )
-        agentDelayedEnteringSet_.erase( *itAgent );
-
-    for( itAgent = agentEnteringSet_.begin(); itAgent != agentEnteringSet_.end(); ++itAgent )
-        if( object.CanInteractWith( **itAgent ) )
-            object.ProcessAgentEntering( **itAgent );
+    for( auto it = agentsEntering_.begin(); it != agentsEntering_.end(); ++it )
+        if( object.CanInteractWith( **it ) )
+            object.ProcessAgentEntering( **it );
         else
-            agentDelayedEnteringSet_.insert( *itAgent );
+            agentsDelayedEntering_.insert( *it );
 
-    for( itAgent = agentExitingSet_.begin(); itAgent != agentExitingSet_.end(); ++itAgent )
-        object.ProcessAgentExiting( **itAgent );
+    for( auto it = agentsExiting_.begin(); it != agentsExiting_.end(); ++it )
+        object.ProcessAgentExiting( **it );
 
-    for( itAgent = agentMovingInsideSet_.begin(); itAgent != agentMovingInsideSet_.end(); ++itAgent )
-        if( object.CanInteractWith( **itAgent ) )
-            object.ProcessAgentMovingInside( **itAgent );
+    for( auto it = agentsMovingInside_.begin(); it != agentsMovingInside_.end(); ++it )
+        if( object.CanInteractWith( **it ) )
+            object.ProcessAgentMovingInside( **it );
 
-    for( itAgent = agentInsideSet_.begin(); itAgent != agentInsideSet_.end(); ++itAgent )
-        if( object.CanInteractWith( **itAgent ) )
-            object.ProcessAgentInside( **itAgent );
+    for( auto it = agentsInside_.begin(); it != agentsInside_.end(); ++it )
+        if( object.CanInteractWith( **it ) )
+            object.ProcessAgentInside( **it );
 
-    for( auto it = populationInsideSet_.begin(); it != populationInsideSet_.end(); ++it )
+    for( auto it = populationsInside_.begin(); it != populationsInside_.end(); ++it )
     {
         object.PreprocessPopulation( **it );
         if( object.CanInteractWithEntity() )
             object.ProcessPopulationInside( **it );
     }
 
-    agentEnteringSet_.clear();
-    agentExitingSet_.clear();
-    agentMovingInsideSet_.clear();
-    populationInsideSet_.clear();
+    agentsEntering_.clear();
+    agentsExiting_.clear();
+    agentsMovingInside_.clear();
+    populationsInside_.clear();
 }

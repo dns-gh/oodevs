@@ -10,9 +10,10 @@
 #ifndef __MIL_ObjectInteraction_h_
 #define __MIL_ObjectInteraction_h_
 
+#include "tools/Set.h"
 #include <boost/serialization/split_member.hpp>
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
+#include <algorithm>
 
 class MIL_Agent_ABC;
 class TER_Localisation;
@@ -49,10 +50,7 @@ public:
     void UpdateInteraction( MIL_Object_ABC& object, const TER_Localisation& location );
     void ClearInteraction( MIL_Object_ABC& object );
     void ProcessInteractionEvents( MIL_Object_ABC& object );
-    //@}
 
-    //! @name Operations
-    //@{
     void NotifyPopulationMovingInside( MIL_PopulationElement_ABC& population );
     void NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population );
 
@@ -60,49 +58,36 @@ public:
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
     void NotifyAgentPutInside( MIL_Agent_ABC& agent );
     void NotifyAgentPutOutside( MIL_Agent_ABC& agent );
-    //@}
 
-    //! @name Process Agent inside
-    //@{
-    template< typename T > void ProcessInteraction( T functor ) const;
+    template< typename F >
+    void ProcessInteraction( const F& functor ) const
+    {
+        std::for_each( agentsInside_.begin(), agentsInside_.end(), functor );
+    }
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Agent_ABC* > T_AgentSet;
-    typedef std::set< MIL_PopulationElement_ABC* > T_PopulationSet;
+    typedef tools::Set< MIL_Agent_ABC* > T_Agents;
+    typedef tools::Set< MIL_PopulationElement_ABC* > T_Populations;
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void Update( const T_PopulationSet& last, const T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun );
-    //@}
+    void UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location );
+    void UpdatePopulations( const TER_Localisation& location );
 
 private:
     //! @name Member data
     //@{
-    // Links with agents
-    T_AgentSet agentInsideSet_;
-    T_AgentSet agentEnteringSet_;
-    T_AgentSet agentExitingSet_;
-    T_AgentSet agentMovingInsideSet_;
-    T_AgentSet agentDelayedEnteringSet_;
-    // link with population
-    T_PopulationSet populationInsideSet_;
+    T_Agents agentsInside_;
+    T_Agents agentsEntering_;
+    T_Agents agentsExiting_;
+    T_Agents agentsMovingInside_;
+    T_Agents agentsDelayedEntering_;
+    T_Populations populationsInside_;
     double height_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > void MIL_ObjectInteraction::ProcessInteraction
-// Created: JCR 2008-08-28
-// -----------------------------------------------------------------------------
-template< typename T >
-void MIL_ObjectInteraction::ProcessInteraction( T functor ) const
-{
-    std::for_each( agentInsideSet_.begin(), agentInsideSet_.end(), functor );
-}
 
 #endif // __MIL_ObjectInteraction_h_
