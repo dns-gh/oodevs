@@ -38,6 +38,7 @@
 #include <boost/geometry/algorithms/union.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
 #pragma warning( pop )
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_GEOMETRY_REGISTER_POINT_2D(MT_Vector2D, double, cs::cartesian, rX_, rY_)
 
@@ -215,7 +216,7 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
     FindTerrainData( pCell->center_, (float) radius, terrainData );
     const FireAttribute& fireAttribute = object.GetAttribute< FireAttribute >();
     fireAttribute.GetSurfaceFirePotentials( terrainData, pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
-    for( PropagationModifierObjects::const_iterator it = propagationModifierObjects_.begin(); it != propagationModifierObjects_.end(); ++it )
+    for( auto it = propagationModifierObjects_.begin(); it != propagationModifierObjects_.end(); ++it )
     {
         if( (*it)->GetLocalisation().IsInside( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ) ) )
             (*it)->Get< FirePropagationModifierCapacity >().Modify( fireAttribute.GetClass(), pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
@@ -675,7 +676,7 @@ void MIL_BurningCells::OnRequest( double x, double y )
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::StartModifyBurn( MIL_Object_ABC& object )
 {
-    propagationModifierObjects_.insert( &object );
+    propagationModifierObjects_.push_back( &object );
 }
 
 // -----------------------------------------------------------------------------
@@ -684,5 +685,5 @@ void MIL_BurningCells::StartModifyBurn( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::StopModifyBurn( MIL_Object_ABC& object )
 {
-    propagationModifierObjects_.erase( &object );
+    boost::remove_erase( propagationModifierObjects_, &object );
 }

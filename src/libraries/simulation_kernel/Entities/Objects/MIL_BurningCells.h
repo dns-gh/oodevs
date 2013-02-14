@@ -111,10 +111,9 @@ private:
     typedef std::map< MIL_BurningCellOrigin, MIL_BurningCell* > BurningCellsByCoordinatesMap;
     typedef std::vector< MIL_BurningCell* > BurningCellsVector;
     typedef std::map< unsigned int/*object id*/, BurningCellsVector > BurningCellsByObjectsMap;
-    typedef std::set< MIL_Object_ABC* > PropagationModifierObjects;
     BurningCellsByCoordinatesMap burningCellsByCoordinates_;
     BurningCellsByObjectsMap burningCellsByObjects_;
-    PropagationModifierObjects propagationModifierObjects_;
+    std::vector< MIL_Object_ABC* > propagationModifierObjects_;
     std::size_t lastCellIndexIncludedInLocalization_;
     //@}
 };
