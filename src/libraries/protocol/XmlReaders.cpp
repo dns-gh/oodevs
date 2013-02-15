@@ -932,7 +932,9 @@ namespace
 
     const struct { T_ReadConverter Read; std::string name; } services[] = {
         { &ReadLimit,              "limit" },
+        { &ReadList,               "list" },
         { &ReadLocation,           "location" },
+        { &ReadLocationComposite,  "locationcomposite" },
         { &ReadPath,               "path" },
         { &ReadPhaseline,          "phaseline" },
         { &ReadPlannedWork,        "genobject" },
@@ -941,8 +943,6 @@ namespace
         { &ReadPolygon,            "polygon" },
         { &ReadPullFlowParameters, "pullflowparameters" },
         { &ReadPushFlowParameters, "pushflowparameters" },
-        { &ReadList,               "list" },
-        { &ReadLocationComposite,  "locationcomposite" },
     };
 }
 
