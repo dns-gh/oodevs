@@ -89,7 +89,7 @@ namespace
     double GetDestructionDelay( const NBCAttribute::T_NBCAgents& agents )
     {
         double delay = 0;
-        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+        for( auto it = agents.begin(); it != agents.end(); ++it )
             if( (*it)->IsGasPoisonous() )
                 if( (*it)->GetGasLifeTime() > delay )
                     delay = (*it)->GetGasLifeTime();
@@ -99,7 +99,7 @@ namespace
     double GetPropagationAngle( const NBCAttribute::T_NBCAgents& agents )
     {
         double angle = -1.f;
-        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+        for( auto it = agents.begin(); it != agents.end(); ++it )
             if( (*it)->IsGasPoisonous() )
                 if( (*it)->GetGasPropagationAngle() > angle )
                     angle = (*it)->GetGasPropagationAngle();

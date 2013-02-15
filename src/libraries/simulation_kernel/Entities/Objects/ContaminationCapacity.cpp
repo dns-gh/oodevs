@@ -105,18 +105,17 @@ void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agen
 {
     const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
-
     if( !IsInsideDecontaminatedZone( position ) && pNBC && pNBC->IsContaminating() )
     {
         const ToxicAttribute_ABC* pAttribute = object.RetrieveAttribute< ToxicAttribute_ABC >();
         if( pAttribute )
         {
-            MIL_ToxicEffectManipulator contamination( pAttribute->GetContaminationEffect( *pNBC, position ) );
+            const MIL_ToxicEffectManipulator contamination( pAttribute->GetContaminationEffect( *pNBC, position ) );
             agent.GetRole< nbc::PHY_RoleInterface_NBC >().Contaminate( contamination );
         }
         else
         {
-            MIL_ToxicEffectManipulator contamination( object.GetAttribute< NBCAttribute >().GetNBCAgents(), 1 );
+            const MIL_ToxicEffectManipulator contamination( object.GetAttribute< NBCAttribute >().GetNBCAgents(), 1 );
             agent.GetRole< nbc::PHY_RoleInterface_NBC >().Contaminate( contamination );
         }
     }
@@ -132,7 +131,7 @@ void ContaminationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL
     if( pNBC && pNBC->IsContaminating() )
     {
         const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
-        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+        for( auto it = agents.begin(); it != agents.end(); ++it )
             if( (*it)->IsGasContaminating() || (*it)->IsLiquidContaminating() )
                 population.ApplyContamination( **it );
     }

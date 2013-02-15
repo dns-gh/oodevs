@@ -9,9 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ToxicEffectManipulator.h"
-#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "MIL_NbcAgentType.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ToxicEffectManipulator constructor
@@ -68,9 +67,7 @@ const MIL_NbcAgentType& MIL_ToxicEffectManipulator::GetType() const
 // -----------------------------------------------------------------------------
 const PHY_HumanWound& MIL_ToxicEffectManipulator::GetRandomWound( const MIL_NbcAgentType& type ) const
 {
-    return ( type.IsLiquidContaminating() ) ?
-             type.GetLiquidRandomWound() :
-             type.GetGasRandomWound(); // GetGasRandomWound
+    return type.IsLiquidContaminating() ? type.GetLiquidRandomWound() : type.GetGasRandomWound();
 }
 
 // -----------------------------------------------------------------------------

@@ -138,7 +138,7 @@ namespace
     bool IsGas( const NBCAttribute& attribute )
     {
         const NBCAttribute::T_NBCAgents& agents = attribute.GetNBCAgents();
-        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+        for( auto it = agents.begin(); it != agents.end(); ++it )
             if( (*it)->IsGasContaminating() || (*it)->IsGasPoisonous() )
                 return true;
         return false;

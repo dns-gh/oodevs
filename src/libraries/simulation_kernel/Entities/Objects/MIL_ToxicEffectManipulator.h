@@ -26,8 +26,7 @@ class MIL_ToxicEffectManipulator : public WoundEffects_ABC
 public:
     //! @name Types
     //@{
-    typedef std::vector< const MIL_NbcAgentType* >  T_NBCAgents;
-    typedef T_NBCAgents::const_iterator           CIT_NBCAgents;
+    typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
     //@}
 
 public:
@@ -41,7 +40,7 @@ public:
     //! @name Accessors
     //@{
     const MIL_NbcAgentType& GetType() const;
-    double                  GetQuantity() const;
+    double GetQuantity() const;
     //@}
 
     //! @name Operations

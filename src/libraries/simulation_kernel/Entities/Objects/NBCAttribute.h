@@ -11,7 +11,6 @@
 #define __NBCAttribute_h_
 
 #include "ToxicAttribute_ABC.h"
-#include "MIL_ToxicEffectManipulator.h"
 #include "UpdatableAttribute_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include <boost/serialization/export.hpp>
@@ -39,7 +38,6 @@ public:
     //! @name Types
     //@{
     typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
-    typedef T_NBCAgents::const_iterator          CIT_NBCAgents;
 
     typedef DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > T_KnowledgeProxyType;
     //@}

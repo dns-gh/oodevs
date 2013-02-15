@@ -255,10 +255,10 @@ void PHY_RolePion_NBC::Execute( firing::WeaponReloadingComputer_ABC& algorithm )
 void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
 {
     if( !nbcAgentTypesContaminating_.empty() )
-        for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
+        for( CIT_NbcAgentTypeSet it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
         {
             sword::NBCAgentType& data = *msg().mutable_contamination_agents()->add_elem();
-            data.set_id( (**itNbcAgent).GetID() );
+            data.set_id( (**it).GetID() );
         }
     msg().set_protective_suits( bNbcProtectionSuitWorn_ );
     const unsigned int rDecontaminationState = static_cast< unsigned int >( rDecontaminationState_ * 100. );
@@ -384,31 +384,31 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     TER_World::GetWorld().GetAgentManager().GetListWithinCircle( owner_->Get< PHY_RoleInterface_Location >().GetPosition() ,
          MIL_NbcAgentType::GetContaminationDistance() , perceivableAgents );
     double minQuantity = MIL_NbcAgentType::GetMinContaminationQuantity();
-    for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+    for( auto it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
         if( target.GetID() != owner_->GetID() && !target.Get< PHY_RoleInterface_NBC >().IsForcedImmune() &&
-            ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
+            ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity() > minQuantity ) )
         {
-            MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );
             rContaminationQuantity_ -= minQuantity;
             bHasChanged_ = true;
-            target.Get< PHY_RoleInterface_NBC >().Contaminate( *manipulator );
+            const MIL_ToxicEffectManipulator manipulator( typeNbcContaminating, minQuantity );
+            target.Get< PHY_RoleInterface_NBC >().Contaminate( manipulator );
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector<const MIL_NbcAgentType*> PHY_RolePion_NBC::GetContaminating
+// Name: PHY_RolePion_NBC::GetContaminating
 // Created: HBD 2010-06-07
 // -----------------------------------------------------------------------------
 std::vector< const MIL_NbcAgentType* > PHY_RolePion_NBC::GetContaminating() const
 {
     std::vector< const MIL_NbcAgentType* > result;
     if( !nbcAgentTypesContaminating_.empty() )
-        for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
-            if( (*itNbcAgent)->IsLiquidContaminating() || (*itNbcAgent)->IsGasContaminating() )
-                result.push_back( *itNbcAgent );
+        for( auto it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
+            if( (*it)->IsLiquidContaminating() || (*it)->IsGasContaminating() )
+                result.push_back( *it );
     return result;
 }
 

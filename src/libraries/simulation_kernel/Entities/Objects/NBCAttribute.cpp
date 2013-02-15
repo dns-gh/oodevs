@@ -10,12 +10,11 @@
 #include "simulation_kernel_pch.h"
 #include "NBCAttribute.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-
 #include "MIL_NbcAgentType.h"
-#include <boost/lexical_cast.hpp>
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
 

@@ -15,18 +15,14 @@
 #include "PHY_HumanRank.h"
 #include "PHY_HumanWound.h"
 #include "MIL_Time_ABC.h"
+#include "HumansActionsNotificationHandler_ABC.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign.h"
 #include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
-#include "Entities/Objects/MIL_DisasterEffectManipulator.h"
-#include "Entities/Objects/MIL_BurnEffectManipulator.h"
-#include "Entities/Objects/MIL_FloodEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "HumansActionsNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 
