@@ -28,6 +28,7 @@
 #include "NetworkNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/serialization/set.hpp>
 
 double PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
 double PHY_RolePion_Communications::rCoefReloadingTimeModificator_ = 0.;
@@ -92,49 +93,11 @@ PHY_RolePion_Communications::~PHY_RolePion_Communications()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
-        {
-            std::size_t size = set.size();
-            file << size;
-            for ( PHY_RolePion_Communications::CIT_JammerSet it = set.begin(); it != set.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                MIL_Object_ABC* pObject;
-                file >> pObject;
-                set.insert( pObject );
-            }
-        }
-
-        template< typename Archive >
-        inline void serialize( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const unsigned int nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::serialize
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-inline
 void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this );

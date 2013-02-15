@@ -109,13 +109,6 @@ public:
     bool IsInReceptionBlackout() const;
     //@}
 
-public:
-    //! @name Types
-    //@{
-    typedef std::set< const MIL_Object_ABC* > T_JammerSet;
-    typedef T_JammerSet::const_iterator     CIT_JammerSet;
-    //@}
-
 private:
     //! @name Tools
     //@{
@@ -123,21 +116,17 @@ private:
     void CopyKnowledgeGroupPartial();
     //@}
 
+private:
     //! @name Member data
     //@{
     MIL_Agent_ABC*      owner_;
-    T_JammerSet         jammers_;
+    std::set< const MIL_Object_ABC* > jammers_;
     bool                bBlackoutEmmittedActivated_;
     bool                bBlackoutReceivedActivated_;
     bool                bHasChanged_;
     bool                bSilentBeforeCapture_;
     bool                bIsAutonomous_;
     boost::shared_ptr< MIL_KnowledgeGroup > pJammingKnowledgeGroup_;
-
-    //@}
-
-    //! @name Static member data
-    //@{
     static double       rCoefSpeedModificator_;
     static double       rCoefReloadingTimeModificator_;
     //@}
