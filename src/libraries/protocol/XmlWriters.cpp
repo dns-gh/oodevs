@@ -400,11 +400,6 @@ namespace
         VisitList( xos, writer, src, "objectknowledge", &Value::objectknowledgelist, &AddObjectKnowledge );
     }
 
-    void WritePlannedWorkList( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
-    {
-        VisitList( xos, writer, src, "plannedwork", &Value::plannedworklist, &AddPlannedWork );
-    }
-
     void WriteLogMaintenancePriorities( xml::xostream& xos, const Value& src )
     {
         std::vector< std::string > tokens;
@@ -563,7 +558,6 @@ namespace
         { &Value::has_pathlist,             &WritePathList },
         { &Value::has_phaseline,            &WritePhaseLine },
         { &Value::has_plannedwork,          &WritePlannedWork },
-        { &Value::has_plannedworklist,      &WritePlannedWorkList },
         { &Value::has_point,                &WritePoint },
         { &Value::has_pointlist,            &WritePointList },
         { &Value::has_polygonlist,          &WritePolygonList },
@@ -598,6 +592,8 @@ namespace
     {
         if( src.has_phaseline() )
             return "phaseline";
+        if( src.has_plannedwork() )
+            return "plannedwork";
         return "locationcomposite";
     }
 }

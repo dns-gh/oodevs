@@ -585,23 +585,20 @@ namespace
         return next;
     }
 
-    void ReadPlannedWork( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    void AddPlannedWork( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         const auto opt = TryReadPlannedWork( reader, xis );
-        dst.set_null_value( !opt );
         if( opt )
             *dst.add_value()->mutable_plannedwork() = *opt;
     }
 
-    void AddPlannedWork( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
+    void ReadPlannedWork( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
-        if( const auto opt = TryReadPlannedWork( reader, xis ) )
-            *dst.mutable_plannedworklist()->add_elem() = *opt;
-    }
-
-    void ReadPlannedWorkList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, boost::bind( &AddPlannedWork, boost::cref( reader ), _1, _2 ) );
+        if( IsList( xis, "plannedwork" ) )
+            xis >> xml::list( "parameter", boost::bind( &AddPlannedWork, boost::cref( reader ), boost::ref( dst ), _1 ) );
+        else
+            AddPlannedWork( reader, dst, xis );
+        dst.set_null_value( !dst.value_size() );
     }
 
     void ReadNature( MissionParameter& dst, xml::xistream& xis )
@@ -889,7 +886,6 @@ namespace
         { &ReadLocationList,        "location" },
         { &ReadObjectKnowledgeList, "objectknowledge" },
         { &ReadPathList,            "path" },
-        { &ReadPlannedWorkList,     "plannedwork" },
         { &ReadPointList,           "point" },
         { &ReadPolygonList,         "polygon" },
         { &ReadUnitKnowledgeList,   "agentknowledge" },

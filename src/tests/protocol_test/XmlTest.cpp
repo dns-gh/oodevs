@@ -508,10 +508,10 @@ BOOST_FIXTURE_TEST_CASE( read_planned_work, Fixture )
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 2 );
     CheckPlannedWork( msg.elem( 0 ).value( 0 ).plannedwork() );
-    const auto& list = msg.elem( 1 ).value( 0 ).plannedworklist();
-    BOOST_CHECK_EQUAL( list.elem_size(), 2 );
-    CheckPlannedWork( list.elem( 0 ) );
-    CheckPlannedWork( list.elem( 1 ) );
+    const auto& next = msg.elem( 1 );
+    BOOST_CHECK_EQUAL( next.value_size(), 2 );
+    CheckPlannedWork( next.value( 0 ).plannedwork() );
+    CheckPlannedWork( next.value( 1 ).plannedwork() );
     CheckCycle( input, msg );
 }
 
