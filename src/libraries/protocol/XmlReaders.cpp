@@ -298,7 +298,7 @@ namespace
             if( const auto type = FindName< mapping::PhaseLineType >( *it ) )
                 next.add_fonctions( *type );
         xis >> xml::list( "parameter", boost::bind( &ReadLimaParameters, boost::cref( reader ), boost::ref( next ), _1 ) );
-        if( !next.has_line() || !next.has_time() )
+        if( !next.has_line() )
             return;
 
         *dst.add_elem() = next;

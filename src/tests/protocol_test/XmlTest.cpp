@@ -337,7 +337,6 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     "          <point coordinates='dummy'/>"
     "        </location>"
     "      </parameter>"
-    "      <parameter type='datetime' value='20121113T085130'/>"
     "    </parameter>"
     "    <parameter type='phaseline' value='LC,LCA'>"
     "      <parameter type='location'>"
@@ -360,7 +359,7 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     BOOST_CHECK_EQUAL( lima_1.fonctions_size(), 1 );
     BOOST_CHECK_EQUAL( lima_1.fonctions( 0 ), PhaseLineOrder::objective_line );
     CheckLocation( lima_1.line().location(), Location::line, 2 );
-    BOOST_CHECK_EQUAL( lima_1.time().data(), "20121113T085130" );
+    BOOST_CHECK( !lima_1.has_time() );
     const auto& lima_2 = list.Get( 1 ).phaseline().elem( 0 );
     BOOST_CHECK_EQUAL( lima_2.fonctions_size(), 2 );
     BOOST_CHECK_EQUAL( lima_2.fonctions( 0 ), PhaseLineOrder::coordination_line );
