@@ -140,16 +140,20 @@ namespace
 
     void AddCoordinate( const Reader_ABC& reader, CoordLatLongList& list, xml::xistream& xis )
     {
-        const auto coordinates = xis.attribute< std::string >( "coordinates" );
+        const auto coordinates = TestAttribute< std::string >( xis, "coordinates" );
+        if( !coordinates )
+            return;
+
         std::vector< std::string > tokens;
-        boost::algorithm::split( tokens, coordinates, boost::is_any_of( " " ) );
+        boost::algorithm::split( tokens, *coordinates, boost::is_any_of( " " ) );
         const size_t size = tokens.size();
         if( !size || size > 2 )
             return;
+
         Reader_ABC::Point pt;
         if( size == 1 )
         {
-            pt = reader.Convert( coordinates );
+            pt = reader.Convert( *coordinates );
         }
         else
         {

@@ -805,6 +805,21 @@ BOOST_FIXTURE_TEST_CASE( read_pull_flow_parameters, Fixture )
     CheckCycle( input, msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( break_location_reader, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='list'>"
+    "    <parameter type='polygon'>"
+    "      <location type='polygon'>"
+    "        <point/>"
+    "      </location>"
+    "    </parameter>"
+    "  </parameter>"
+    "</action>";
+    Read< MissionParameters >( input );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_list, Fixture )
 {
     const std::string input =
