@@ -63,24 +63,6 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public transport::LoadingChangeNotificationHandler_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::pair< const PHY_SensorTypeAgent* , double /*height*/ >   T_SurfaceAgentKeyPair;
-    typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
-    typedef T_SurfaceAgentMap::const_iterator                           CIT_SurfaceAgentMap;
-
-    typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >    T_SurfaceObjectKeyPair;
-    typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
-    typedef T_SurfaceObjectMap::const_iterator                            CIT_SurfaceObjectMap;
-
-    typedef std::set< const PHY_RadarType* > T_RadarSet;
-    typedef T_RadarSet::const_iterator     CIT_RadarSet;
-
-    typedef std::map< const PHY_RadarClass*, T_RadarSet > T_RadarsPerClassMap;
-    typedef T_RadarsPerClassMap::const_iterator         CIT_RadarsPerClassMap;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              PHY_RolePion_Perceiver();
