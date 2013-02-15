@@ -70,14 +70,13 @@ private:
         unsigned int nFirstTimeStepPerceived_;
         bool bUpdated_;
     };
-    typedef std::map< std::size_t, sAcquisitionData > T_AgentAcquisitionMap;
     //@}
 
 private:
     //! @name Member Data
     //@{
     const RadarType* pRadarType_;
-    T_AgentAcquisitionMap acquisitionData_;
+    std::map< std::size_t, sAcquisitionData > acquisitionData_;
     //@}
 };
 

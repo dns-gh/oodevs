@@ -89,7 +89,7 @@ void PerceptionRadarData::AcquireTargets( const wrapper::View& model, const wrap
         if( GET_HOOK( CanBeSeen )( perceiver, target ) && pRadarType_->CanAcquire( perceiver, target ) )
         {
             const std::size_t& identifier = target[ "identifier" ];
-            T_AgentAcquisitionMap::iterator agentData = acquisitionData_.find( identifier );
+            auto agentData = acquisitionData_.find( identifier );
             if( agentData == acquisitionData_.end() )
             {
                 effect[ identifier ][ "identifier" ] = identifier;
@@ -109,19 +109,19 @@ void PerceptionRadarData::AcquireTargets( const wrapper::View& model, const wrap
 void PerceptionRadarData::Update( const wrapper::View& model, const wrapper::View& acquisitions, PerceptionObserver_ABC& observer )
 {
     assert( pRadarType_ );
-    for( T_AgentAcquisitionMap::iterator itAcquisitionData = acquisitionData_.begin(); itAcquisitionData != acquisitionData_.end(); )
+    for( auto it = acquisitionData_.begin(); it != acquisitionData_.end(); )
     {
-        sAcquisitionData& data      =  itAcquisitionData->second;
-        const wrapper::View& target = model[ "entities" ][ itAcquisitionData->first ];
+        sAcquisitionData& data      =  it->second;
+        const wrapper::View& target = model[ "entities" ][ it->first ];
         if( !data.bUpdated_ )
         {
-            wrapper::Remove( acquisitions[ pRadarType_->GetName() ][ itAcquisitionData->first ] ).Post();
-            itAcquisitionData = acquisitionData_.erase( itAcquisitionData );
+            wrapper::Remove( acquisitions[ pRadarType_->GetName() ][ it->first ] ).Post();
+            it = acquisitionData_.erase( it );
             continue;
         }
         observer.NotifyAgentPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_, model[ "tick" ] ) );
         data.bUpdated_ = false;
-        ++itAcquisitionData;
+        ++it;
     }
 }
 
