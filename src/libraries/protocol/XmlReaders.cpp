@@ -301,6 +301,8 @@ namespace
         if( !next.has_line() )
             return;
 
+        if( !next.has_time() )
+            next.mutable_time()->mutable_data();
         *dst.add_elem() = next;
     }
 

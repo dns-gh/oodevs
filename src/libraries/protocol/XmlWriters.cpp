@@ -55,6 +55,15 @@ namespace
         WritePair< T >( xos, type, value );
     }
 
+    template<>
+    void AddParameter( xml::xosubstream xos, const std::string& type, const std::string& value )
+    {
+        xos << xml::start( "parameter" )
+            << xml::attribute( "type", type );
+        if( !value.empty() )
+            xos << xml::attribute( "value", value );
+    }
+
     template< typename T >
     void AddIdentifier( xml::xosubstream xos, const std::string& type, const std::string& identifier, const T& value )
     {

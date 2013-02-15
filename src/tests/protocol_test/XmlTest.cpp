@@ -13,6 +13,8 @@
 #include "protocol/XmlReaders.h"
 #include "protocol/XmlWriters.h"
 
+#include "tools/MessageSender_ABC.h"
+
 #include <xeumeuleu/xml.hpp>
 
 using namespace protocol;
@@ -57,6 +59,10 @@ namespace
             xis >> xml::start( "action" );
             T dst;
             protocol::Read( reader, dst, xis );
+            if( !dst.IsInitialized() )
+                throw MASA_EXCEPTION( dst.GetDescriptor()->full_name()
+                                    + " is missing field "
+                                    + dst.InitializationErrorString() );
             return dst;
         }
 
@@ -337,6 +343,7 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     "          <point coordinates='dummy'/>"
     "        </location>"
     "      </parameter>"
+    "      <parameter type='datetime'/>"
     "    </parameter>"
     "    <parameter type='phaseline' value='LC,LCA'>"
     "      <parameter type='location'>"
@@ -359,7 +366,7 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     BOOST_CHECK_EQUAL( lima_1.fonctions_size(), 1 );
     BOOST_CHECK_EQUAL( lima_1.fonctions( 0 ), PhaseLineOrder::objective_line );
     CheckLocation( lima_1.line().location(), Location::line, 2 );
-    BOOST_CHECK( !lima_1.has_time() );
+    BOOST_CHECK( lima_1.time().data().empty() );
     const auto& lima_2 = list.Get( 1 ).phaseline().elem( 0 );
     BOOST_CHECK_EQUAL( lima_2.fonctions_size(), 2 );
     BOOST_CHECK_EQUAL( lima_2.fonctions( 0 ), PhaseLineOrder::coordination_line );
