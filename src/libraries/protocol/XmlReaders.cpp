@@ -1143,10 +1143,7 @@ namespace
 
 void protocol::Read( const Reader_ABC& reader, ClientToSim_Content& dst, xml::xistream& xis )
 {
-    const auto type = TestLowCaseAttribute( xis, "type" );
-    if( !type )
-        return;
-    for( size_t i = 0; i < COUNT_OF( orders ); ++i )
-        if( orders[i].name == *type )
-            orders[i].Read( reader, dst, xis );
+    if( const auto type = TestLowCaseAttribute( xis, "type" ) )
+        if( Apply( orders, COUNT_OF( orders ), *type, reader, dst, xis ) )
+            return;
 }
