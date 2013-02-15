@@ -31,6 +31,7 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "Tools/MIL_Geometry.h"
+#include "tools/Set.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer constructor
@@ -118,10 +119,12 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::GetLevelWithDelay( unsign
 
 namespace
 {
+    typedef tools::Set< const PHY_SensorTypeAgent* > T_SensorTypeAgents;
+
     class CollateSensorFunctor
     {
     public:
-        CollateSensorFunctor( std::set< const PHY_SensorTypeAgent* >& sensors )
+        CollateSensorFunctor( T_SensorTypeAgents& sensors )
             : sensors_( &sensors )
         {
             // NOTHING
@@ -133,7 +136,7 @@ namespace
                 sensors_->insert( sensorTypeAgent );
         }
     private:
-        std::set< const PHY_SensorTypeAgent* >* sensors_;
+        T_SensorTypeAgents* sensors_;
     };
 
     class CollateSensorComponentFunctor : public OnComponentFunctor_ABC
@@ -148,7 +151,7 @@ namespace
             CollateSensorFunctor dataFunctor( sensors_ );
             composante.ApplyOnSensors( dataFunctor );
         }
-        std::set< const PHY_SensorTypeAgent* > sensors_;
+        T_SensorTypeAgents sensors_;
         const transport::PHY_RoleAction_Loading* perceiver_;
     };
 }
@@ -188,10 +191,10 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     assert( perceiverUrbanBlockHeight );
 
     int numberOfBlocksInBetween = 0;
-    for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
+    for( auto itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
         double worstFactor = 1.;
-        for( std::vector< const MIL_UrbanObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
+        for( auto it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
             if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
             {
                 const MIL_UrbanObject_ABC& object = **it;
@@ -227,6 +230,5 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
         sensorsParameters.detectionDist_ = std::max( sensorsParameters.detectionDist_, worstFactor * detection );
         sensorsParameters.delay_ = std::min( sensorsParameters.delay_, ( *itSensor )->GetDelay() );
     }
-
     return !( sensorsParameters.identificationDist_ < epsilon && sensorsParameters.recognitionDist_ < epsilon && sensorsParameters.detectionDist_ < epsilon );
 }

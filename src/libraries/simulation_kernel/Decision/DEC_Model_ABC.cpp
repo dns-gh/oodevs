@@ -62,10 +62,6 @@ bool DEC_Model_ABC::FileChanged( const std::string& strFileName, time_t since )
     return itFile->second > since;
 }
 
-// =============================================================================
-//
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::InitializeMissions
 // Created: NLD 2003-11-24
@@ -157,7 +153,7 @@ bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& m
 {
     if( IsFragOrderAvailable( fragOrderType ) )
         return true;
-    CIT_FragOrderPerMissionMap it = availableFragOrdersPerMission_.find( &missionType );
+    auto it = availableFragOrdersPerMission_.find( &missionType );
     if( it == availableFragOrdersPerMission_.end() )
         return false;
     return it->second.find( &fragOrderType ) != it->second.end();

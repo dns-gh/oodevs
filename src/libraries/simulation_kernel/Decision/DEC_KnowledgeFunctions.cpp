@@ -97,18 +97,17 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemiesAttacking( const D
     T_ConstKnowledgeAgentVector attackers;
     std::set< boost::shared_ptr< DEC_Knowledge_Agent > > buffer;
     const std::vector< MIL_Automate* >& allies = callerAgent->GetPion().GetKnowledgeGroup()->GetAutomates();
-    for( std::vector< MIL_Automate* >::const_iterator it = allies.begin(); it != allies.end(); ++it )
+    for( auto it = allies.begin(); it != allies.end(); ++it )
     {
         if( !(*it) )
             throw MASA_EXCEPTION( "invalid parameter." );
         const std::vector< MIL_AgentPion* >& pions = (*it)->GetPions();
-        for( std::vector< MIL_AgentPion* >::const_iterator pit = pions.begin(); pit != pions.end(); ++pit )
+        for( auto pit = pions.begin(); pit != pions.end(); ++pit )
         {
             T_ConstKnowledgeAgentVector enemies = DEC_KnowledgeFunctions::GetAgentsAttacking( **pit );
             for( auto cit = enemies.begin(); cit != enemies.end(); ++cit )
             {
-                std::pair< std::set< boost::shared_ptr< DEC_Knowledge_Agent > >::iterator, bool> insertion = buffer.insert( *cit );
-                if( insertion.second )
+                if( buffer.insert( *cit ).second )
                     attackers.push_back( *cit );
             }
         }

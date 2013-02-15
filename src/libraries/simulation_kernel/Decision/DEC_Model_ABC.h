@@ -86,7 +86,6 @@ private:
     typedef std::set< const MIL_MissionType_ABC* > T_MissionSet;
     typedef std::set< const MIL_FragOrderType* > T_FragOrderSet;
     typedef std::map< const MIL_MissionType_ABC*, T_FragOrderSet > T_FragOrderPerMissionMap;
-    typedef T_FragOrderPerMissionMap::const_iterator             CIT_FragOrderPerMissionMap;
     //@}
 
 private:
