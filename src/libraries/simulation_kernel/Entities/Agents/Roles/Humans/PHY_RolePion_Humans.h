@@ -18,6 +18,7 @@
 #include "simulation_kernel/Entities/Agents/Units/Humans/Human_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
+#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace xml
 {
@@ -141,8 +142,8 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion*     owner_;
-    std::vector< PHY_HumanState* > humansStates_;
-    std::set< Human_ABC* >         humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
+    boost::ptr_vector< PHY_HumanState > humansStates_;
+    std::set< Human_ABC* > humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
     bool               hasChanged_;
     unsigned int       nNbrUsableHumans_;
     // Medical
