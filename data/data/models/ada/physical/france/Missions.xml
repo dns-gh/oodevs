@@ -1866,14 +1866,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.nrbc.tasks.AnimerPlotDecontamination" dia-type="france.military.platoon.combat.support.nrbc.tasks.AnimerPlotDecontamination" id="2466" name="PION NRBC Animer Un Plot De Decontamination" package="control">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4095,14 +4088,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="areas" max-occurs="unbounded" min-occurs="1" name="Zones" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.nrbc.tasks.AnimerPlotDecontamination" dia-type="france.military.company.combat.support.nrbc.tasks.AnimerPlotDecontamination" id="28757" mrt-dia-behavior="france.military.company.combat.support.nrbc.tasks.AnimerPlotDecontamination" name="AUTOMATE NRBC Armer un Site de Decontamination" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -4646,4 +4632,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1763058027" -->
+<!-- signature="3416762687" -->
