@@ -1718,6 +1718,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Ambulances (collection) availability warnings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Diagnosis life span factor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>

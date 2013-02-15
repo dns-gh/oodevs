@@ -1718,6 +1718,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Doctors availability warnings</source>
         <translation>Alertes de disponibilité des médecins</translation>
     </message>
+    <message>
+        <source>Diagnosis life span factor</source>
+        <translation>Coefficient de durée de vie lié au diagnostic</translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>

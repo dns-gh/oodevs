@@ -97,6 +97,7 @@ public:
 
     void NotifyHandledByMedical();
     bool NotifyBackToWar();
+    void NotifyDiagnosed();
     void HealMentalDisease();
     void HealWound();
     void HealContamination();

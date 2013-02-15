@@ -117,6 +117,7 @@ void ADN_Health_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_TimeField >( pHolder, "diagnostic-duration", tr( "Diagnostic duration" ), data_.diagnosticTime_ );
     builder.AddField< ADN_TimeField >( pHolder, "triage-duration", tr( "Triage duration" ), data_.sortingTime_ );
+    builder.AddField< ADN_EditLine_Double >( pHolder, "diagnosis-life-span-factor", tr( "Diagnosis life span factor" ), data_.diagnosisLifeExpectancyFactor_, 0, eGreaterZero );
     builder.AddStretcher( pHolder, Qt::Vertical );
 
     // wounds

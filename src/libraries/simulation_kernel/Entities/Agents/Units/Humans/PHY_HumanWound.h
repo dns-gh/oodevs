@@ -59,6 +59,7 @@ public:
 
     static unsigned int GetDiagnosticTime();
     static unsigned int GetSortingTime();
+    static double       GetDiagnosisLifeExpectancyFactor();
     static unsigned int GetContaminatedHealingTime();
     static unsigned int GetContaminatedRestingTime();
     static unsigned int GetMentalDiseaseHealingTime();
@@ -133,6 +134,7 @@ private:
     static T_HumanWoundMap humanWounds_;
     static unsigned int nDiagnosticTime_;
     static unsigned int nSortingTime_;
+    static double       diagnosisLifeExpectancyFactor_;
     static unsigned int nContaminatedHealingTime_;
     static unsigned int nContaminatedRestingTime_;
     static unsigned int nMentalDiseaseHealingTime_;

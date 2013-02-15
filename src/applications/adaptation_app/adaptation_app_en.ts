@@ -1715,6 +1715,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>Doctors availability warnings</source>
         <translation>Doctor availability warnings</translation>
     </message>
+    <message>
+        <source>Diagnosis life span factor</source>
+        <translation>Diagnosis life span factor</translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>
