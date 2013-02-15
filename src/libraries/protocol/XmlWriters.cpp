@@ -752,4 +752,5 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const Client
         return Write( xos, writer, src.knowledge_magic_action() );
     if( src.has_magic_action() )
         return Write( xos, writer, src.magic_action() );
+    throw MASA_EXCEPTION( "unsupported protobuf message:\n" + src.DebugString() );
 }
