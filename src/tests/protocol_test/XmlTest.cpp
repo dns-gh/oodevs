@@ -863,7 +863,8 @@ namespace
         const auto msg = fix.Read< T >();
         BOOST_CHECK_EQUAL( msg.tasker().id(), 27u );
         BOOST_CHECK_EQUAL( msg.type().id(), 17u );
-        BOOST_CHECK( !msg.has_parameters() );
+        BOOST_CHECK( msg.has_parameters() );
+        BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
         fix.CheckCycle( msg );
     }
 }
@@ -892,7 +893,8 @@ BOOST_FIXTURE_TEST_CASE( read_frag_order, Fixture )
     const auto msg = Read< FragOrder >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type().id(), 1u );
-    BOOST_CHECK( !msg.has_parameters() );
+    BOOST_CHECK( msg.has_parameters() );
+    BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     CheckCycle( msg );
 }
 
@@ -902,7 +904,8 @@ BOOST_FIXTURE_TEST_CASE( read_magic_action, Fixture )
         << xml::attribute( "type", "magic" );
     const auto msg = Read< MagicAction >();
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicAction::data_[1].type );
-    BOOST_CHECK( !msg.has_parameters() );
+    BOOST_CHECK( msg.has_parameters() );
+    BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     CheckCycle( msg );
 }
 
@@ -915,7 +918,8 @@ BOOST_FIXTURE_TEST_CASE( read_unit_magic_action, Fixture )
     const auto msg = Read< UnitMagicAction >();
     BOOST_CHECK_EQUAL( msg.tasker().party().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicUnitAction::data_[10].type );
-    BOOST_CHECK( !msg.has_parameters() );
+    BOOST_CHECK( msg.has_parameters() );
+    BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     CheckCycle( msg );
 }
 
@@ -927,7 +931,8 @@ BOOST_FIXTURE_TEST_CASE( read_object_magic_action, Fixture )
     const auto msg = Read< ObjectMagicAction >();
     BOOST_CHECK_EQUAL( msg.object().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicObjectAction::data_[0].type );
-    BOOST_CHECK( !msg.has_parameters() );
+    BOOST_CHECK( msg.has_parameters() );
+    BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     CheckCycle( msg );
 }
 
@@ -939,7 +944,8 @@ BOOST_FIXTURE_TEST_CASE( read_knowledge_magic_action, Fixture )
     const auto msg = Read< KnowledgeMagicAction >();
     BOOST_CHECK_EQUAL( msg.knowledge_group().id(), 27u );
     BOOST_CHECK_EQUAL( msg.type(), mapping::MagicKnowledgeAction::data_[0].type );
-    BOOST_CHECK( !msg.has_parameters() );
+    BOOST_CHECK( msg.has_parameters() );
+    BOOST_CHECK_EQUAL( msg.parameters().elem_size(), 0 );
     CheckCycle( msg );
 }
 

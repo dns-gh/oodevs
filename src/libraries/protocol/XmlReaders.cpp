@@ -974,8 +974,6 @@ namespace
     void TryAddParameters( const Reader_ABC& reader, T& dst, xml::xistream& xis )
     {
         Read( reader, *dst.mutable_parameters(), xis );
-        if( !dst.parameters().elem_size() )
-            dst.clear_parameters();
     }
 }
 
