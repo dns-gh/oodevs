@@ -13,6 +13,8 @@
 #define __PHY_PerceptionRadarData_h_
 
 #include "simulation_terrain/TER_Agent_ABC.h"
+#include "tools/Map.h"
+#include "tools/Set.h"
 
 class PHY_RadarType;
 class PHY_RoleInterface_Perceiver;
@@ -33,13 +35,12 @@ class PHY_PerceptionRadarData
 public:
     //! @name Types
     //@{
-    typedef std::set< const TER_Localisation* > T_ZoneSet;
-    typedef T_ZoneSet::const_iterator           CIT_ZoneSet;
+    typedef tools::Set< const TER_Localisation* > T_ZoneSet;
     //@}
 
 public:
-     PHY_PerceptionRadarData();
-     PHY_PerceptionRadarData( const PHY_RadarType& radarType );
+             PHY_PerceptionRadarData();
+             PHY_PerceptionRadarData( const PHY_RadarType& radarType );
     virtual ~PHY_PerceptionRadarData();
 
     //! @name Operations
@@ -60,20 +61,14 @@ private:
     struct sAcquisitionData
     {
         sAcquisitionData();
-        sAcquisitionData( const sAcquisitionData& rhs );
-        const unsigned int nFirstTimeStepPerceived_;
-               bool bUpdated_;
-    private:
-        sAcquisitionData& operator= ( const sAcquisitionData& rhs );
+        unsigned int nFirstTimeStepPerceived_;
+        bool bUpdated_;
     };
-
-    typedef std::map< MIL_Agent_ABC*, sAcquisitionData > T_AgentAcquisitionMap;
-    typedef T_AgentAcquisitionMap::iterator              IT_AgentAcquisitionMap;
     //@}
 
 private:
-    const PHY_RadarType*        pRadarType_;
-          T_AgentAcquisitionMap acquisitionData_;
+    const PHY_RadarType* pRadarType_;
+    tools::Map< MIL_Agent_ABC*, sAcquisitionData > acquisitionData_;
 };
 
 #endif // __PHY_PerceptionRadarData_h_

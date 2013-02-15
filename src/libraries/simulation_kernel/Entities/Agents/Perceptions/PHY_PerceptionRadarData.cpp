@@ -35,17 +35,6 @@ PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadarData::PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData
-// Created: NLD 2005-05-02
-// -----------------------------------------------------------------------------
-PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData( const sAcquisitionData& rhs )
-    : nFirstTimeStepPerceived_( rhs.nFirstTimeStepPerceived_ )
-    , bUpdated_               ( rhs.bUpdated_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadarData constructor
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
@@ -126,18 +115,18 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
 void PHY_PerceptionRadarData::Update( PHY_RoleInterface_Perceiver& perceiver )
 {
     assert( pRadarType_ );
-    for( IT_AgentAcquisitionMap itAcquisitionData = acquisitionData_.begin(); itAcquisitionData != acquisitionData_.end(); )
+    for( auto it = acquisitionData_.begin(); it != acquisitionData_.end(); )
     {
-        sAcquisitionData& data   =  itAcquisitionData->second;
-        MIL_Agent_ABC&    target = *itAcquisitionData->first;
+        sAcquisitionData& data   =  it->second;
+        MIL_Agent_ABC&    target = *it->first;
         if( !data.bUpdated_ )
         {
-            itAcquisitionData = acquisitionData_.erase( itAcquisitionData );
+            it = acquisitionData_.erase( it );
             continue;
         }
         perceiver.NotifyPerception( target, pRadarType_->ComputeAcquisitionLevel( target, data.nFirstTimeStepPerceived_ ) );
         data.bUpdated_ = false;
-        ++itAcquisitionData;
+        ++it;
     }
 }
 
@@ -148,20 +137,17 @@ void PHY_PerceptionRadarData::Update( PHY_RoleInterface_Perceiver& perceiver )
 void PHY_PerceptionRadarData::Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition, const detection::DetectionComputerFactory_ABC& detectionComputer )
 {
     assert( pRadarType_ );
-    TER_Agent_ABC::T_AgentPtrVector targets;
-    for( CIT_ZoneSet itZone = zones.begin(); itZone != zones.end(); ++itZone )
+    for( auto it = zones.begin(); it != zones.end(); ++it )
     {
-        targets.clear();
-        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( **itZone, targets );
+        TER_Agent_ABC::T_AgentPtrVector targets;
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( **it, targets );
         AcquireTargets( perceiver, targets, detectionComputer );
     }
-
     if( bAcquireOnPerceiverPosition )
     {
-        targets.clear();
+        TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), pRadarType_->GetRadius(), targets );
         AcquireTargets( perceiver, targets, detectionComputer );
     }
-
     Update( perceiver );
 }
