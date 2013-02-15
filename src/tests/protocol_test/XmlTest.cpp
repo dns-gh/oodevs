@@ -354,14 +354,14 @@ BOOST_FIXTURE_TEST_CASE( read_phaseline, Fixture )
     MOCK_EXPECT( reader.Convert ).exactly( 5 ).returns( dummy );
     const auto msg = Read< MissionParameters >( input );
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
-    const auto& phaseline = msg.elem( 0 ).value( 0 ).phaseline();
-    BOOST_CHECK_EQUAL( phaseline.elem_size(), 2 );
-    const auto& lima_1 = phaseline.elem( 0 );
+    const auto& list = msg.elem( 0 ).value();
+    BOOST_CHECK_EQUAL( list.size(), 2 );
+    const auto& lima_1 = list.Get( 0 ).phaseline().elem( 0 );
     BOOST_CHECK_EQUAL( lima_1.fonctions_size(), 1 );
     BOOST_CHECK_EQUAL( lima_1.fonctions( 0 ), PhaseLineOrder::objective_line );
     CheckLocation( lima_1.line().location(), Location::line, 2 );
     BOOST_CHECK_EQUAL( lima_1.time().data(), "20121113T085130" );
-    const auto& lima_2 = phaseline.elem( 1 );
+    const auto& lima_2 = list.Get( 1 ).phaseline().elem( 0 );
     BOOST_CHECK_EQUAL( lima_2.fonctions_size(), 2 );
     BOOST_CHECK_EQUAL( lima_2.fonctions( 0 ), PhaseLineOrder::coordination_line );
     BOOST_CHECK_EQUAL( lima_2.fonctions( 1 ), PhaseLineOrder::attitude_change_line );

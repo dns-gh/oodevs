@@ -180,7 +180,9 @@ namespace
 
     void WritePhaseLine( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
     {
-        VisitList( xos, writer, src, "phaseline", &Value::phaseline, &WriteLima );
+        xos << xml::attribute( "type", "phaseline" );
+        if( src.phaseline().elem_size() )
+            WriteLima( xos, writer, src.phaseline().elem( 0 ) );
     }
 
     void WriteLimit( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
@@ -590,6 +592,16 @@ namespace
     }
 }
 
+namespace
+{
+    std::string GetType( const Value& src )
+    {
+        if( src.has_phaseline() )
+            return "phaseline";
+        return "locationcomposite";
+    }
+}
+
 void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const MissionParameter& src )
 {
     const size_t size = src.value_size();
@@ -597,7 +609,7 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const Missio
         return;
     if( size == 1 )
         return WriteValue( xos, writer, src.value( 0 ) );
-    xos << xml::attribute( "type", "locationcomposite" );
+    xos << xml::attribute( "type", GetType( src.value( 0 ) ) );
     const auto& list = src.value();
     for( auto it = list.begin(); it != list.end(); ++it )
         WriteValue( xml::xosubstream( xos ) << xml::start( "parameter" ), writer, *it );

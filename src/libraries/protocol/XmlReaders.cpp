@@ -310,8 +310,9 @@ namespace
         xis >> xml::list( "parameter", boost::bind( &AddLima, boost::cref( reader ), boost::ref( next ), _1 ) );
         const size_t size = next.elem_size();
         dst.set_null_value( !size );
-        if( size )
-            *dst.add_value()->mutable_phaseline() = next;
+        const auto& list = next.elem();
+        for( auto it = list.begin(); it != list.end(); ++it )
+            *dst.add_value()->mutable_phaseline()->add_elem() = *it;
     }
 
     bool IsList( xml::xistream& xis, const std::string& type )
