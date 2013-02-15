@@ -47,12 +47,9 @@ private:
     //@{
     void BuildHeaders();
     void BuildBody   ();
-    void FillComponentItem( ADN_Rich_ListViewItem&             item,
-                            ADN_Resources_Data::CategoryInfo& category,
-                            ADN_Units_Data::ComposanteInfos&   comp );
     //@}
 
-private:
+public:
     //! @name Columns
     //@{
     enum E_Columns
@@ -111,7 +108,8 @@ private:
     };
     typedef struct Entry T_Entry;
     //@}
-
+    
+private:
     //! @name CategoryEntry tools
     //@{
     void AddEntryToTotal( const T_Entry& entry, T_Entry& total, uint nArity );
@@ -120,7 +118,6 @@ private:
 
 private:
     ADN_Automata_Data& data_;
-    T_Entry            compTotal_;
     T_Entry            unitTotal_;
     T_Entry            automatTotal_;
     T_Entry            categoryTotal_;
