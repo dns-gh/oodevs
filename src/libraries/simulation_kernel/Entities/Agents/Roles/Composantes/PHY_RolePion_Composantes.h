@@ -350,7 +350,7 @@ private:
     bool bNeutralized_;
 
     // Maintenance
-    T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
+    std::vector< PHY_MaintenanceComposanteState* > maintenanceComposanteStates_;
     unsigned int nTickRcMaintenanceQuerySent_;
 };
 

@@ -51,9 +51,11 @@
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/set.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/map.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
+#include <boost/range/algorithm.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Composantes )
 
@@ -114,6 +116,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +152,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::~PHY_RolePion_Composantes()
 {
-    while( composantes_.size() > 0 )
+    while( ! composantes_.empty() )
         delete composantes_.front(); // removed from composantes_ by NotifyComposanteRemoved
 }
 
@@ -157,38 +160,6 @@ namespace boost
 {
     namespace serialization
     {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_RolePion_Composantes::T_LoanMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Composantes::T_LoanMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Composantes::T_LoanMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                MIL_Agent_ABC* pRole;
-                file >> pRole;
-                file >> map[ pRole ];
-            }
-        }
-
         template< typename Archive >
         inline
         void serialize( Archive& file, PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int nVersion )
@@ -301,17 +272,12 @@ namespace
             xos.attribute( "borrower", id );
         xos.end(); // equipment
     }
-
     bool IsLoanedEquipment( const PHY_ComposantePion& composante, const PHY_RoleInterface_Composantes::T_LoanMap& loanMap )
     {
         for( auto it = loanMap.begin(); it != loanMap.end(); ++it )
-        {
             for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
-            {
                 if( *itComposante == &composante )
                     return true;
-            }
-        }
         return false;
     }
 }
@@ -338,8 +304,7 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& output ) const
     for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
     {
         unsigned int id = it->first->GetID();
-        for( auto itComposante = it->second.begin(); itComposante != it->second.end();
-                ++itComposante )
+        for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
         {
             WriteEquipment( xos, **itComposante, written <= 0, id );
             ++written;
@@ -639,9 +604,7 @@ void PHY_RolePion_Composantes::Clean()
     bExternalMustChange_      = false;
     bTransportHasChanged_     = false;
     bOperationalStateChanged_ = false;
-
-    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        ( **it ).Clean();
+    boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1100,8 +1063,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedState() const
 {
-    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        ( **it ).SendChangedState();
+    boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1383,8 +1345,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( *owner_, composante );
     if( !pMaintenanceComposanteState )
         return 0;
-    if( ! maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    maintenanceComposanteStates_.push_back( pMaintenanceComposanteState );
     return pMaintenanceComposanteState;
 }
 
@@ -1394,8 +1355,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState )
 {
-    if( maintenanceComposanteStates_.erase( &composanteState ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    boost::remove_erase( maintenanceComposanteStates_, &composanteState );
 }
 
 // -----------------------------------------------------------------------------

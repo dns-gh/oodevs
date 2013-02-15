@@ -51,7 +51,6 @@ public:
 
     typedef PHY_RoleInterface_Composantes RoleInterface;
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef std::set< PHY_MaintenanceComposanteState* > T_MaintenanceComposanteStateSet;
     typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
     //@}
 
