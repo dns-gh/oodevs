@@ -270,8 +270,8 @@ namespace
 
     void ReadDatetime( PhaseLineOrder& dst, xml::xistream& xis )
     {
-        if( const auto loc = TestAttribute< std::string >( xis, "value" ) )
-            dst.mutable_time()->set_data( *loc );
+        if( const auto opt = TestAttribute< std::string >( xis, "value" ) )
+            dst.mutable_time()->set_data( *opt );
     }
 
     void ReadLimaParameters( const Reader_ABC& reader, PhaseLineOrder& dst, xml::xistream& xis )
@@ -964,7 +964,7 @@ void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistr
         return;
     if( Apply( services, COUNT_OF( services ), *type, reader, dst, xis ) )
         return;
-    throw MASA_EXCEPTION( "Unknow mission parameter type '" + *type + "'" );
+    throw MASA_EXCEPTION( "Unknown mission parameter type '" + *type + "'" );
 }
 
 namespace
