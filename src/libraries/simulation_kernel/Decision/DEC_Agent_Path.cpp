@@ -219,9 +219,9 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
 double DEC_Agent_Path::GetUnitMajorWeight() const
 {
     double weight = queryMaker_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = queryMaker_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itPion = reinforcements.begin(); itPion != reinforcements.end(); ++itPion )
-        weight = std::max( weight, ( *itPion )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
+    const auto& reinforcements = queryMaker_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        weight = std::max( weight, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
     return weight;
 }
 

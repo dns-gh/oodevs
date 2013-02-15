@@ -33,8 +33,7 @@ public:
     //@{
     typedef PHY_RoleInterface_Reinforcement RoleInterface;
 
-    typedef std::set< MIL_AgentPion* >   T_PionSet;
-    typedef T_PionSet::const_iterator  CIT_PionSet;
+    typedef std::vector< MIL_AgentPion* > T_Pions;
     //@}
 
 public:
@@ -68,7 +67,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const T_PionSet& GetReinforcements() const = 0;
+    virtual const T_Pions& GetReinforcements() const = 0;
     virtual bool CanReinforce() const = 0;
     virtual bool CanBeReinforced() const = 0;
     //@}

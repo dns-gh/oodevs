@@ -75,11 +75,10 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetAgentReinforcements( const 
 // -----------------------------------------------------------------------------
 std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_AgentPion& callerAgent )
 {
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    std::vector<DEC_Decision_ABC*> result;
-    result.reserve( reinforcements.size() );
-    for( PHY_RoleInterface_Reinforcement::CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        result.push_back( &(**it).GetRole< DEC_RolePion_Decision >() );
+    const auto& reinforcements = callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    std::vector< DEC_Decision_ABC* > result;
+    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        result.push_back( &(*it)->GetRole< DEC_RolePion_Decision >() );
     return result;
 }
 
@@ -92,7 +91,7 @@ int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAg
     if( !pAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_AgentPion& pion = pAgent->GetPion();
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    const auto& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     return (int) reinforcements.size();
 }
 

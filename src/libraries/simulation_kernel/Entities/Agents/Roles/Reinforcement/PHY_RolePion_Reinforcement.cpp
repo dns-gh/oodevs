@@ -20,22 +20,22 @@
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Reinforcement )
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement constructor
 // Created: LDC 2013-01-09
 // -----------------------------------------------------------------------------
 PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement()
-    : owner_                         ( 0 )
-    , bReinforcedChanged_            ( false )
-    , bReinforcementsChanged_        ( false )
-    , bExternalCanReinforce_         ( true )
-    , reinforcements_                ()
-    , pPionReinforced_               ( 0 )
+    : owner_                 ( 0 )
+    , bReinforcedChanged_    ( false )
+    , bReinforcementsChanged_( false )
+    , bExternalCanReinforce_ ( true )
+    , pPionReinforced_       ( 0 )
 {
-        // NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,6 @@ PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
     , bReinforcedChanged_    ( false )
     , bReinforcementsChanged_( false )
     , bExternalCanReinforce_ ( true )
-    , reinforcements_        ()
     , pPionReinforced_       ( 0 )
 {
     // NOTHING
@@ -97,9 +96,9 @@ bool PHY_RolePion_Reinforcement::CanBeReinforced() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::IsReinforcedBy( MIL_AgentPion& pion ) const
 {
-    for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
     {
-        const MIL_AgentPion& reinforcement = **itPion;
+        const MIL_AgentPion& reinforcement = **it;
         if( pion == reinforcement || reinforcement.GetRole< PHY_RolePion_Reinforcement >().IsReinforcedBy( pion ) )
             return true;
     }
@@ -159,7 +158,6 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
         else
             owner_->Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
     }
-
     if( HasChanged() )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
@@ -181,11 +179,8 @@ void PHY_RolePion_Reinforcement::Clean()
 void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().mutable_reinforced_unit()->set_id( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
-    if( !reinforcements_.empty() )
-    {
-        for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
-            msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
-    }
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        msg().mutable_reinforcements()->add_elem()->set_id( (*it)->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +195,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
     {
         msg().mutable_reinforcements();
         for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
-            msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
+            msg().mutable_reinforcements()->add_elem()->set_id( (*it)->GetID() );
     }
 }
 
@@ -210,8 +205,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinforcement )
 {
-    if( ! reinforcements_.insert( &reinforcement ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    reinforcements_.push_back( &reinforcement );
     bReinforcementsChanged_ = true;
 }
 
@@ -221,8 +215,7 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinfo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& reinforcement )
 {
-    if( reinforcements_.erase( &reinforcement ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    boost::remove_erase( reinforcements_, &reinforcement );
     bReinforcementsChanged_ = true;
 }
 
@@ -257,7 +250,7 @@ bool PHY_RolePion_Reinforcement::HasChanged() const
 // Name: PHY_RolePion_Reinforcement::GetReinforcements
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetReinforcements() const
+const PHY_RolePion_Reinforcement::T_Pions& PHY_RolePion_Reinforcement::GetReinforcements() const
 {
     return reinforcements_;
 }
@@ -269,9 +262,9 @@ const PHY_RolePion_Reinforcement::T_PionSet& PHY_RolePion_Reinforcement::GetRein
 void PHY_RolePion_Reinforcement::LoadForTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/, bool& /*bTransportedByAnother*/ )
 {
     CancelReinforcement();
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = GetReinforcements();
-    while( !reinforcements.empty() )
-       (**reinforcements.begin()).GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
+    const T_Pions reinforcements = reinforcements_;
+    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
+       (*it)->GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
 }
 
 // -----------------------------------------------------------------------------
@@ -280,17 +273,15 @@ void PHY_RolePion_Reinforcement::LoadForTransport( const MIL_Agent_ABC& /*transp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
-    {
-        MIL_AgentPion& reinforcement = **itPion;
-        algorithm.ApplyOnReinforcement( reinforcement );
-    }
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        algorithm.ApplyOnReinforcement( **it );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::Execute
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) const
+void PHY_RolePion_Reinforcement::Execute( moving::MoveComputer_ABC& algorithm ) const
 {
     if( IsReinforcing() )
         algorithm.NotifyReinforcing();
@@ -300,13 +291,10 @@ void PHY_RolePion_Reinforcement::Execute(moving::MoveComputer_ABC& algorithm) co
 // Name: PHY_RolePion_Reinforcement::Execute
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request)
+void PHY_RolePion_Reinforcement::ChangeConsumptionMode( dotation::ConsumptionModeChangeRequest_ABC& request )
 {
-    for( CIT_PionSet itPion = reinforcements_.begin(); itPion != reinforcements_.end(); ++itPion )
-    {
-        MIL_AgentPion& reinforcement = **itPion;
-        reinforcement.Apply(&ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request);
-    }
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        (*it)->Apply( &ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, request );
 }
 
 // -----------------------------------------------------------------------------
@@ -315,9 +303,8 @@ void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionMode
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
-    const T_PionSet& reinforcements = GetReinforcements();
-    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        (*it)->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -326,9 +313,8 @@ void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& objec
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
-    const T_PionSet& reinforcements = GetReinforcements();
-    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        (*it)->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,9 +323,8 @@ void PHY_RolePion_Reinforcement::NotifyMovingOutsideObject( MIL_Object_ABC& obje
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
-    const T_PionSet& reinforcements = GetReinforcements();
-        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-            (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        (*it)->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,9 +333,8 @@ void PHY_RolePion_Reinforcement::NotifyPutInsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
-    const T_PionSet& reinforcements = GetReinforcements();
-        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-            (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        (*it)->Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,6 +345,7 @@ void PHY_RolePion_Reinforcement::NotifyIsLoadedForTransport()
 {
     bExternalCanReinforce_ = false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::NotifyIsUnLoaded
 // Created: MGD 2009-10-25

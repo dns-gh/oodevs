@@ -196,9 +196,9 @@ void PathAdapter::Initialize( const core::Model& entity )
     MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
     fuseau_= pion.GetOrderManager().GetFuseau();
     automateFuseau_ = pion.GetAutomate().GetOrderManager().GetFuseau();
-    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-    for( auto itPion = reinforcements.begin(); itPion != reinforcements.end(); ++itPion )
-        weight_ = std::max( weight_, ( *itPion )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
+    const auto& reinforcements = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        weight_ = std::max( weight_, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
     InitializePathKnowledges( entity, pion );
 }
 

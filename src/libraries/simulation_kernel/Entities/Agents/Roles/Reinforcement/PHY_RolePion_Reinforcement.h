@@ -42,13 +42,6 @@ class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
                                  , public transport::TransportChangeNotificationHandler_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::set< MIL_AgentPion* > T_PionSet;
-    typedef T_PionSet::const_iterator  CIT_PionSet;
-    //@}
-
-public:
              PHY_RolePion_Reinforcement();
     explicit PHY_RolePion_Reinforcement( MIL_AgentPion& pion );
     virtual ~PHY_RolePion_Reinforcement();
@@ -67,13 +60,14 @@ public:
 
     //! @name Operations
     //@{
-    bool Reinforce          ( MIL_AgentPion& pion );
-    void CancelReinforcement();
-    bool IsReinforcing      () const;
-    bool IsReinforced       () const;
-    bool IsReinforcedBy     ( MIL_AgentPion& pion ) const;
+    virtual bool Reinforce( MIL_AgentPion& pion );
+    virtual void CancelReinforcement();
+    virtual bool IsReinforcing() const;
+    virtual bool IsReinforced() const;
+    virtual bool IsReinforcedBy( MIL_AgentPion& pion ) const;
+
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
-    void ChangeConsumptionMode(dotation::ConsumptionModeChangeRequest_ABC& request);
+    void ChangeConsumptionMode( dotation::ConsumptionModeChangeRequest_ABC& request );
     //@}
 
     //! @name Event handlers
@@ -96,15 +90,15 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PionSet& GetReinforcements() const;
-          bool       CanReinforce     () const;
-          bool       CanBeReinforced  () const;
+    virtual const T_Pions& GetReinforcements() const;
+    virtual bool CanReinforce() const;
+    virtual bool CanBeReinforced() const;
     //@}
 
 private:
     //! @name Notifications
     //@{
-    bool HasChanged() const;
+    virtual bool HasChanged() const;
     //@}
 
     //! @name Notifications
@@ -118,7 +112,7 @@ private:
     //@{
     MIL_AgentPion* owner_;
     MIL_AgentPion* pPionReinforced_;
-    T_PionSet      reinforcements_;
+    T_Pions      reinforcements_;
     bool           bReinforcedChanged_;
     bool           bReinforcementsChanged_;
     bool           bExternalCanReinforce_;

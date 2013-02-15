@@ -790,8 +790,8 @@ bool PHY_RoleAction_Objects::EnoughDotationForBuilding( const std::string& objec
     pion.Execute( *dotationComputer );
     if( bWithLoaded )
     {
-        const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-        for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+        const auto& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+        for( auto itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
             result = result || EnoughDotationForBuilding( objectType, **itReinforcement, bWithLoaded );
     }
     return result || dotationComputer->GetDotationValue( *pDotationCategory ) > 0;

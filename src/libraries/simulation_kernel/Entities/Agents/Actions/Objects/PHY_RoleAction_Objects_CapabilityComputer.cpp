@@ -59,9 +59,9 @@ void PHY_RoleAction_Objects_CapabilityComputer::CollectData( const MIL_AgentPion
         return;
     if( bWithReinforcement )
     {
-        const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-        for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-            CollectData( **itReinforcement, true );
+        const auto& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
+            CollectData( **it, true );
     }
 }
 
