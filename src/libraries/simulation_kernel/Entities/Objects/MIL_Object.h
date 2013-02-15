@@ -114,21 +114,17 @@ protected:
     //@}
 
 private:
-    //! @name Types containers
+    //! @name Types
     //@{
     typedef std::vector< MIL_InteractiveContainer_ABC* > T_InteractiveCapacities;
     typedef std::vector< MIL_StructuralStateNotifier_ABC* > T_StructuralStateNotifiers;
     typedef std::vector< ObjectAttribute_ABC* > T_Attributes;
-    typedef T_Attributes::const_iterator      CIT_Attributes;
     typedef std::vector< ObjectCapacity_ABC* > T_Capacities;
-    //@}
 
-    //! @name Types
-    //@{
     enum E_AttributeUpdate
     {
-        eAttrUpdate_Localisation              = 0x10,
-        eAttrUpdate_All                       = 0xFF
+        eAttrUpdate_Localisation = 0x10,
+        eAttrUpdate_All          = 0xFF
     };
     //@}
 

@@ -27,6 +27,7 @@
 #include <geometry/Types.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 
@@ -46,8 +47,8 @@ StructuralCapacity::StructuralCapacity()
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
-    : structuralState_     ( 0.01f * xis.attribute< unsigned int >( "value" ) )
-    , lastStructuralState_ ( -1.f )
+    : structuralState_    ( 0.01f * xis.attribute< unsigned int >( "value" ) )
+    , lastStructuralState_( -1.f )
 {
     // NOTHING
 }
@@ -185,8 +186,8 @@ bool StructuralCapacity::ApplyDestruction( MIL_Object_ABC& object, const TER_Loc
 
     structuralState_ = static_cast< float >( std::max( 0., (double)structuralState_ - structuralEffectFactor * ratio * factor ) );
     if( ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
-        for( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
-            ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
+        for( auto it = agents_.begin(); it != agents_.end(); ++it )
+            (*it)->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
     object.ApplyStructuralState( structuralState_ );
     return oldStructuralState != structuralState_;
 }
@@ -278,7 +279,7 @@ float StructuralCapacity::GetStructuralState() const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    agents_.insert( &agent );
+    agents_.push_back( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +288,7 @@ void StructuralCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_A
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    agents_.erase( &agent );
+    boost::remove_erase( agents_, &agent );
 }
 
 // -----------------------------------------------------------------------------

@@ -93,18 +93,12 @@ private:
     void CreateCrumbling( MIL_Object_ABC& object, const TER_Localisation& surface, MIL_Army_ABC& army ) const;
     //@}
 
-    //! @name types
-    //@{
-    typedef std::set< MIL_Agent_ABC* > T_Agents;
-    typedef T_Agents::iterator        IT_Agents;
-    //@}
-
 private:
     //! @name Member data
     //@{
     float structuralState_;
     mutable float lastStructuralState_;
-    T_Agents agents_;
+    std::vector< MIL_Agent_ABC* > agents_;
     //@}
 };
 

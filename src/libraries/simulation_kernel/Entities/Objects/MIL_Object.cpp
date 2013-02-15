@@ -40,7 +40,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int forcedId )
     : MIL_Object_ABC( army, type, forcedId )
-    , manipulator_( new MIL_ObjectManipulator( *this ) )
+    , manipulator_  ( new MIL_ObjectManipulator( *this ) )
     , xAttrToUpdate_( 0 )
 {
     // NOTHING
@@ -51,7 +51,7 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsi
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object()
-    : manipulator_( new MIL_ObjectManipulator( *this ) )
+    : manipulator_  ( new MIL_ObjectManipulator( *this ) )
     , xAttrToUpdate_( 0 )
 {
     // NOTHING
@@ -205,7 +205,7 @@ bool MIL_Object::CanBeSeen() const
 // -----------------------------------------------------------------------------
 void MIL_Object::PreprocessAgent( MIL_Agent_ABC& agent )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->PreprocessAgent( *this, agent );
 }
 
@@ -215,7 +215,7 @@ void MIL_Object::PreprocessAgent( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->ProcessAgentEntering( *this, agent );
 }
 
@@ -225,7 +225,7 @@ void MIL_Object::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->ProcessAgentExiting( *this, agent );
 }
 
@@ -235,7 +235,7 @@ void MIL_Object::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->ProcessAgentMovingInside( *this, agent );
 }
 
@@ -245,7 +245,7 @@ void MIL_Object::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->ProcessAgentInside( *this, agent );
 }
 
@@ -255,7 +255,7 @@ void MIL_Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object::PreprocessPopulation( MIL_PopulationElement_ABC& population )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->PreprocessPopulation( *this, population );
 }
 
@@ -265,7 +265,7 @@ void MIL_Object::PreprocessPopulation( MIL_PopulationElement_ABC& population )
 // -----------------------------------------------------------------------------
 void MIL_Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
 {
-    for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); it != interactives_.end(); ++it )
+    for( auto it = interactives_.begin(); it != interactives_.end(); ++it )
         (*it)->ProcessPopulationInside( *this, population );
 }
 
