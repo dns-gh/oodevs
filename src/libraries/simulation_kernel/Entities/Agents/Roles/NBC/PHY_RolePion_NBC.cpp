@@ -44,13 +44,13 @@ namespace boost
         void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
         {
             std::size_t size = set.size();
-            for ( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
+            for ( auto it = set.begin(); it != set.end(); ++it )
             {
                 if( !*it )
                     --size;
             }
             file << size;
-            for( nbc::PHY_RolePion_NBC::CIT_NbcAgentTypeSet it = set.begin(); it != set.end(); ++it )
+            for( auto it = set.begin(); it != set.end(); ++it )
             {
                 if (!*it )
                     continue;
@@ -254,14 +254,10 @@ void PHY_RolePion_NBC::Execute( firing::WeaponReloadingComputer_ABC& algorithm )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
 {
-    if( !nbcAgentTypesContaminating_.empty() )
-        for( CIT_NbcAgentTypeSet it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
-        {
-            sword::NBCAgentType& data = *msg().mutable_contamination_agents()->add_elem();
-            data.set_id( (**it).GetID() );
-        }
+    for( auto it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
+        msg().mutable_contamination_agents()->add_elem()->set_id( (*it)->GetID() );
     msg().set_protective_suits( bNbcProtectionSuitWorn_ );
-    const unsigned int rDecontaminationState = static_cast< unsigned int >( rDecontaminationState_ * 100. );
+    const unsigned int rDecontaminationState = static_cast< unsigned int >( rDecontaminationState_ * 100 );
     msg().mutable_contamination_state()->set_decontamination_process( rDecontaminationState );
     msg().mutable_contamination_state()->set_percentage( 100u - rDecontaminationState );
     msg().mutable_contamination_state()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
@@ -405,10 +401,9 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
 std::vector< const MIL_NbcAgentType* > PHY_RolePion_NBC::GetContaminating() const
 {
     std::vector< const MIL_NbcAgentType* > result;
-    if( !nbcAgentTypesContaminating_.empty() )
-        for( auto it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
-            if( (*it)->IsLiquidContaminating() || (*it)->IsGasContaminating() )
-                result.push_back( *it );
+    for( auto it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
+        if( (*it)->IsLiquidContaminating() || (*it)->IsGasContaminating() )
+            result.push_back( *it );
     return result;
 }
 

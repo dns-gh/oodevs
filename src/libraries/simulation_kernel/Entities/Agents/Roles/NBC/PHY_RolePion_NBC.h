@@ -13,6 +13,7 @@
 #include "PHY_RoleInterface_NBC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "tools/Set.h"
 
 class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
@@ -92,8 +93,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::set< const MIL_NbcAgentType* > T_NbcAgentTypeSet;
-    typedef T_NbcAgentTypeSet::const_iterator CIT_NbcAgentTypeSet;
+    typedef tools::Set< const MIL_NbcAgentType* > T_NbcAgentTypeSet;
     //@}
 
 private:
