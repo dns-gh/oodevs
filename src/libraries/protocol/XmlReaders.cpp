@@ -844,6 +844,38 @@ namespace
         AddPointList( reader, *pull.mutable_waybackpath(), "waybackpath", xis );
     }
 
+    void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        MissionParameter next;
+        Read( reader, next, xis );
+        if( next.has_null_value() && !next.null_value() )
+        {
+            auto& list = dst.value_size() ? *dst.mutable_value( 0 ) : *dst.add_value();
+            *list.add_list() = next.value( 0 );
+        }
+    }
+
+    void ReadList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        xis >> xml::list( "parameter", boost::bind( &AddListParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
+        const bool valid = dst.value_size() && dst.value( 0 ).list_size();
+        dst.set_null_value( !valid );
+    }
+
+    void AddLocationComposite( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        MissionParameter next;
+        Read( reader, next, xis );
+        if( next.has_null_value() && !next.null_value() )
+            *dst.add_value() = next.value( 0 );
+    }
+
+    void ReadLocationComposite( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        xis >> xml::list( "parameter", boost::bind( &AddLocationComposite, boost::cref( reader ), boost::ref( dst ), _1 ) );
+        dst.set_null_value( !dst.value_size() );
+    }
+
     void Skip( MissionParameter&, xml::xistream& )
     {
         // NOTHING
@@ -913,39 +945,9 @@ namespace
         { &ReadPolygon,            "polygon" },
         { &ReadPullFlowParameters, "pullflowparameters" },
         { &ReadPushFlowParameters, "pushflowparameters" },
+        { &ReadList,               "list" },
+        { &ReadLocationComposite,  "locationcomposite" },
     };
-
-    void AddListParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        MissionParameter next;
-        Read( reader, next, xis );
-        if( next.has_null_value() && !next.null_value() )
-        {
-            auto& list = dst.value_size() ? *dst.mutable_value( 0 ) : *dst.add_value();
-            *list.add_list() = next.value( 0 );
-        }
-    }
-
-    void ReadListParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        xis >> xml::list( "parameter", boost::bind( &AddListParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
-        const bool valid = dst.value_size() && dst.value( 0 ).list_size();
-        dst.set_null_value( !valid );
-    }
-
-    void AddCompositeParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        MissionParameter next;
-        Read( reader, next, xis );
-        if( next.has_null_value() && !next.null_value() )
-            *dst.add_value() = next.value( 0 );
-    }
-
-    void ReadCompositeParameters( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        xis >> xml::list( "parameter", boost::bind( &AddCompositeParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
-        dst.set_null_value( !dst.value_size() );
-    }
 }
 
 void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
@@ -962,10 +964,6 @@ void protocol::Read( const Reader_ABC& reader, MissionParameter& dst, xml::xistr
         return;
     if( Apply( services, COUNT_OF( services ), *type, reader, dst, xis ) )
         return;
-    if( *type == "list" )
-        return ReadListParameters( reader, dst, xis );
-    if( *type == "locationcomposite" )
-        return ReadCompositeParameters( reader, dst, xis );
     throw MASA_EXCEPTION( "Unknow mission parameter type '" + *type + "'" );
 }
 
