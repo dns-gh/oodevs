@@ -506,15 +506,30 @@ void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameter
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ResetConsignForConvoyPion
+// Name: MIL_AutomateLOG::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
+void MIL_AutomateLOG::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
 {
     for( auto it = supplyConsigns_.begin(); it != supplyConsigns_.end(); ++it )
-        ( *it )->ResetConsignForConvoyPion( pion );
+        ( *it )->ResetConsignsForConvoyPion( pion );
     for( auto it = supplyRequests_.begin(); it != supplyRequests_.end(); ++it )
-        ( *it )->ResetConsignForConvoyPion( pion );
+        ( *it )->ResetConsignsForConvoyPion( pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::ResetConsignsForProvider
+// Created: JSR 2013-02-11
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::ResetConsignsForProvider( const MIL_AgentPion& pion )
+{
+    for( auto it = supplyConsigns_.begin(); it != supplyConsigns_.end(); )
+    {
+        if( ( *it )->ResetConsignsForProvider( pion ) )
+            it = supplyConsigns_.erase( it );
+        else
+            ++it;
+    }
 }
 
 // -----------------------------------------------------------------------------

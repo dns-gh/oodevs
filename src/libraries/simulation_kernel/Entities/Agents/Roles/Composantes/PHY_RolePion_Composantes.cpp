@@ -1445,7 +1445,8 @@ void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, 
 {
     PHY_ComposantePion::T_ComposantePionVector& lentComps = lentComposantes_[ &borrower ];
     auto itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
-    assert( itComp != lentComps.end() );
+    if( itComp == lentComps.end() )
+        return;
     composante.TransferComposante( *this );
     lentComps.erase( itComp );
     if( lentComps.empty() )

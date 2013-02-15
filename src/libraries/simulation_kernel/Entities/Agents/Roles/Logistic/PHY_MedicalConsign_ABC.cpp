@@ -84,6 +84,17 @@ bool PHY_MedicalConsign_ABC::IsAnEmergency() const
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalConsign_ABC::ClearConsign
+// Created: JSR 2013-02-13
+// -----------------------------------------------------------------------------
+void PHY_MedicalConsign_ABC::ClearConsign()
+{
+    if( pHumanState_ )
+        const_cast< Human_ABC& >( pHumanState_->GetHuman() ).CancelLogisticRequests();
+    pHumanState_ = 0;
+}
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================

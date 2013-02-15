@@ -48,6 +48,7 @@ public:
             void FinishSuccessfullyWithoutDelay();
 
     bool HasValidHumanState() const;
+    void ClearConsign();
     //@}
 
     //! @name Accessors

@@ -143,9 +143,41 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 void MIL_StockSupplyManager::ResetAutoConsignForConvoyPion( const MIL_AgentPion& pion )
 {
     if( autoSupplyRequest_.get() )
-        autoSupplyRequest_->ResetConsignForConvoyPion( pion );
+        autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
+    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
+        if( const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsignsForConvoyPion( pion ) )
+            it = scheduledSupplies_.erase( it );
+        else
+            ++it;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::ResetAutoConsignForProvider
+// Created: JSR 2013-02-14
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::ResetAutoConsignForProvider( const MIL_Agent_ABC& pion )
+{
+    if( autoSupplyRequest_.get() )
+        autoSupplyRequest_->ResetConsignsForProvider( pion );
+    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
+        if( const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsignsForProvider( pion ) )
+            it = scheduledSupplies_.erase( it );
+        else
+            ++it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::ResetAllConsigns
+// Created: JSR 2013-02-14
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::ResetAllConsigns()
+{
+    if( autoSupplyRequest_.get() )
+        autoSupplyRequest_->ResetConsign();
+    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
+        const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsign();
+    scheduledSupplies_.clear();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::IsSupplyInProgress

@@ -116,6 +116,7 @@ PHY_ComposantePion::~PHY_ComposantePion()
     assert( pRole_ );
     pRole_->NotifyComposanteRemoved( *this );
     delete pHumans_;
+    delete pMaintenanceState_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1556,6 +1557,22 @@ unsigned int PHY_ComposantePion::ApproximateTravelTime( const MT_Vector2D& vSour
     assert( pType_ );
     assert( pType_->GetMaxSpeed() != 0. );
     return static_cast< unsigned int >( 1.439 * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() ); //$$$ Deplacer la formule magique (Cf. DEC_GeometryFunctions où elle existe aussi...)
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::DeleteMaintenanceState
+// Created: JSR 2013-02-12
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::DeleteMaintenanceState()
+{
+    if( pMaintenanceState_ )
+    {
+        pHumans_->NotifyComposanteBackFromMaintenance();
+        pRole_->NotifyComposanteBackFromMaintenance( *pMaintenanceState_ );
+        pMaintenanceState_->Cancel();
+        delete pMaintenanceState_;
+        pMaintenanceState_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

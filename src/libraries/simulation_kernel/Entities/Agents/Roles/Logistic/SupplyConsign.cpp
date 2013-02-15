@@ -77,7 +77,7 @@ SupplyConsign::~SupplyConsign()
     convoy_->Finish();
     SendMsgDestruction();
     BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
-        data.first->OnSupplyCanceled( shared_from_this() );
+        data.first->OnSupplyCanceled( shared_from_this() ); // $$$$ JSR 2013-02-14: exception bad_weak_ptr()
 }
 
 // =============================================================================
@@ -205,10 +205,10 @@ bool SupplyConsign::IsFinished() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::ResetConsignForConvoyPion
+// Name: SupplyConsign::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-06
 // -----------------------------------------------------------------------------
-void SupplyConsign::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
+bool SupplyConsign::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
 {
     if( convoy_ && convoy_->HasConvoy( pion ) )
     {
@@ -216,7 +216,46 @@ void SupplyConsign::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
         convoy_->Finish();
         SetState( eConvoyWaitingForTransporters );
         SendChangedState();
+        return true;
     }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::ResetConsignsForProvider
+// Created: JSR 2013-02-11
+// -----------------------------------------------------------------------------
+bool SupplyConsign::ResetConsignsForProvider( const MIL_Agent_ABC& pion )
+{
+    if( provider_ == &pion )
+    {
+        if( convoy_ )
+        {
+            convoy_->ResetConveyors( *this );
+            convoy_->Finish();
+        }
+        SetState( eFinished );
+        return true;
+    }
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConsign::ResetConsign
+// Created: JSR 2013-02-14
+// -----------------------------------------------------------------------------
+void SupplyConsign::ResetConsign()
+{
+    if( convoy_ )
+    {
+        convoy_->ResetConveyors( *this );
+        convoy_->Finish();
+    }
+    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+        data.first->OnSupplyCanceled( shared_from_this() );
+    requestsQueued_.clear();
+    SetState( eFinished );
 }
 
 // -----------------------------------------------------------------------------

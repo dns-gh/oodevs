@@ -146,7 +146,8 @@ public:
 
     void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
 
-    void ResetConsignForConvoyPion( const MIL_AgentPion& pion );
+    void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
+    void ResetConsignsForProvider( const MIL_AgentPion& pion );
     //@}
 
     //! @name Funeral

@@ -57,6 +57,8 @@ public:
             bool HasChanged() const;
 
             void FinishSuccessfullyWithoutDelay();
+
+    void ClearConsign();
     //@}
 
     //! @name Network

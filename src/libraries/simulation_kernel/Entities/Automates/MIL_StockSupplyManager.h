@@ -81,6 +81,8 @@ public:
     //! @name Logistic
     void NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     void ResetAutoConsignForConvoyPion( const MIL_AgentPion& pion );
+    void ResetAutoConsignForProvider( const MIL_Agent_ABC& pion );
+    void ResetAllConsigns();
     //@}
 
 private:

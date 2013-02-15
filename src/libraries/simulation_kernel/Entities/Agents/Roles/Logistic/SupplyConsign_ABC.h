@@ -14,6 +14,7 @@
 
 class PHY_DotationCategory;
 class MIL_AutomateLOG;
+class MIL_Agent_ABC;
 class MIL_AgentPion;
 
 namespace logistic
@@ -45,7 +46,9 @@ public:
     virtual bool Update    () = 0;
     virtual bool IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient ) const = 0;
     virtual bool IsFinished() const = 0;
-    virtual void ResetConsignForConvoyPion( const MIL_AgentPion& pion ) = 0;
+    virtual bool ResetConsignsForConvoyPion( const MIL_AgentPion& pion ) = 0;
+    virtual bool ResetConsignsForProvider( const MIL_Agent_ABC& pion ) = 0;
+    virtual void ResetConsign() = 0;
     //@}
 
     //! @name TMP - A remonter dans une autre interface ?

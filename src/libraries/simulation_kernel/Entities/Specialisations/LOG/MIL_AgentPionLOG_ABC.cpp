@@ -69,6 +69,8 @@ MIL_AgentPionLOG_ABC::~MIL_AgentPionLOG_ABC()
 // -----------------------------------------------------------------------------
 void MIL_AgentPionLOG_ABC::UpdateLogistic()
 {
+    if( IsMarkedForDestruction() )
+        return;
     const bool bIsDead = IsDead();
     PHY_RoleInterface_Maintenance* roleMaintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
     if( roleMaintenance )

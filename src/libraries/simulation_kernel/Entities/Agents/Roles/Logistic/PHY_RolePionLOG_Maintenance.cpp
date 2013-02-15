@@ -803,3 +803,14 @@ void PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
         for( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             (*itConsign)->FinishSuccessfullyWithoutDelay();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::ClearMaintenanceConsigns
+// Created: JSR 2013-02-12
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Maintenance::ClearMaintenanceConsigns()
+{
+    for( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+        for( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+            ( *itConsign )->ClearConsign();
+}

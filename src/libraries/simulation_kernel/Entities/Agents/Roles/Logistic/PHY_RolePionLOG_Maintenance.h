@@ -76,6 +76,8 @@ public:
     virtual void NotifyComponentHasChanged();
 
     virtual void FinishAllHandlingsSuccessfullyWithoutDelay();
+
+    void ClearMaintenanceConsigns();
     //@}
 
     //! @name Tools

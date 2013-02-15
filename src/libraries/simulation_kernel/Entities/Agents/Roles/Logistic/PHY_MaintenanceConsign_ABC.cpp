@@ -237,3 +237,14 @@ PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() 
      }
      EnterStateFinished();
  }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::ClearConsign
+// Created: JSR 2013-02-12
+// -----------------------------------------------------------------------------
+void PHY_MaintenanceConsign_ABC::ClearConsign()
+{
+    if( pComposanteState_ )
+        const_cast< PHY_ComposantePion& >( pComposanteState_->GetComposante() ).DeleteMaintenanceState();
+    pComposanteState_ = 0;
+}

@@ -101,6 +101,7 @@ public:
     bool HasUsableDoctorForHealing( const Human_ABC& human, bool bBypassPriorities = false ) const;
 
     virtual void FinishAllHandlingsSuccessfullyWithoutDelay();
+    void ClearMedicalConsigns();
     //@}
 
     //! @name Tools

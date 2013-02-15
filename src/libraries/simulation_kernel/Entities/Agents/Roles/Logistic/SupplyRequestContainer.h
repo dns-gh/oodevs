@@ -15,6 +15,7 @@
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
+class MIL_Agent_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
@@ -48,7 +49,9 @@ public:
     virtual ~SupplyRequestContainer();
     //@}
 
-    void ResetConsignForConvoyPion( const MIL_AgentPion& pion );
+    void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
+    void ResetConsignsForProvider( const MIL_Agent_ABC& pion );
+    void ResetConsign();
 
     //! @name SupplyRequestContainer_ABC
     //@{

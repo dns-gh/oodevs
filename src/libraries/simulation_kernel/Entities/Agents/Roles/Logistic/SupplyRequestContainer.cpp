@@ -69,13 +69,39 @@ SupplyRequestContainer::~SupplyRequestContainer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRequestContainer::ResetConsignForConvoyPion
+// Name: SupplyRequestContainer::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-07
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::ResetConsignForConvoyPion( const MIL_AgentPion& pion )
+void SupplyRequestContainer::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
+{
+    for( auto it = consigns_.begin(); it != consigns_.end(); )
+        if( it->second->ResetConsignsForConvoyPion( pion ) )
+            it = consigns_.erase( it );
+        else
+            ++it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequestContainer::ResetConsignsForProvider
+// Created: JSR 2013-02-14
+// -----------------------------------------------------------------------------
+void SupplyRequestContainer::ResetConsignsForProvider( const MIL_Agent_ABC& pion )
+{
+    for( auto it = consigns_.begin(); it != consigns_.end(); )
+        if( it->second->ResetConsignsForProvider( pion ) )
+            it = consigns_.erase( it );
+        else
+            ++it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequestContainer::ResetConsign
+// Created: JSR 2013-02-14
+// -----------------------------------------------------------------------------
+void SupplyRequestContainer::ResetConsign()
 {
     for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
-        it->second->ResetConsignForConvoyPion( pion );
+        it->second->ResetConsign();
 }
 
 // -----------------------------------------------------------------------------

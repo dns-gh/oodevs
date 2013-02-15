@@ -1025,3 +1025,14 @@ void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
         for ( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             (*itConsign)->FinishSuccessfullyWithoutDelay();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::ClearMedicalConsigns
+// Created: JSR 2013-02-13
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Medical::ClearMedicalConsigns()
+{
+    for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+        for( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+            ( *itConsign )->ClearConsign();
+}

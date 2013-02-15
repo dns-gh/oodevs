@@ -110,6 +110,7 @@ public:
     void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep );
 
     unsigned int ApproximateTravelTime( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
+    void DeleteMaintenanceState();
     //@}
 
     //! @name Logistic - Medical

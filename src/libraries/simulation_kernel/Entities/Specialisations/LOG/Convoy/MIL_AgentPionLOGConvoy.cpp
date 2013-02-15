@@ -110,9 +110,6 @@ void MIL_AgentPionLOGConvoy::SpecializedDelete()
 {
     MIL_AutomateLOG* logBrain = GetAutomate().GetBrainLogistic();
     if( logBrain )
-    {
-        //logBrain->SupplyDestroyConvoyPion( *this );
-        logBrain->ResetConsignForConvoyPion( *this );
-    }
+        logBrain->ResetConsignsForConvoyPion( *this );
     GetAutomate().GetStockSupplyManager().ResetAutoConsignForConvoyPion( *this );
 }
