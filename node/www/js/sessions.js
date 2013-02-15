@@ -1160,8 +1160,11 @@
         data.duration = ms_to_duration(duration);
       }
       $(this.el).html(session_template(data));
-      $(this.el).find(".link").click(function() {
+      $(this.el).find(".link").click(function(evt) {
         var msg, next;
+        if (is_disabled(evt)) {
+          return;
+        }
         next = "sword://" + location.host + "/?protocol=" + window.location.protocol + "&sid=" + ($.cookie("sid")) + "&session=" + _this.model.id;
         if (convert_to_boolean($.cookie("redirect"))) {
           return load_url(next);

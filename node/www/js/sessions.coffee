@@ -398,7 +398,8 @@ class SessionItemView extends Backbone.View
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
         $(@el).html session_template data
-        $(@el).find(".link").click =>
+        $(@el).find(".link").click (evt) =>
+            return if is_disabled evt
             next = "sword://#{location.host}/?protocol=#{window.location.protocol}&sid=#{$.cookie "sid"}&session=#{@model.id}"
             if convert_to_boolean $.cookie "redirect"
                 return load_url next
