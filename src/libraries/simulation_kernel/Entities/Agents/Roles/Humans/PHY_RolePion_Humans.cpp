@@ -30,7 +30,7 @@
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
-#include <boost/serialization/set.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 #include <boost/range/algorithm.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -267,7 +267,7 @@ void PHY_RolePion_Humans::NotifyHumanAdded( Human_ABC& human )
     hasChanged_ = true;
     UpdateDataWhenHumanAdded( human );
     if( human.NeedUpdate() )
-        humansToUpdate_.insert( &human );
+        humansToUpdate_.push_back( &human );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,7 +278,7 @@ void PHY_RolePion_Humans::NotifyHumanRemoved( Human_ABC& human )
 {
     hasChanged_ = true;
     UpdateDataWhenHumanRemoved( human );
-    humansToUpdate_.erase( &human );
+    boost::remove_erase( humansToUpdate_, &human );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,9 +295,9 @@ void PHY_RolePion_Humans::NotifyHumanChanged( Human_ABC& human, const Human_ABC&
     const bool bNewHumanNeedUpdate = human              .NeedUpdate();
 
     if( bOldHumanNeedUpdate && !bNewHumanNeedUpdate )
-        humansToUpdate_.erase( &human );
+        boost::remove_erase( humansToUpdate_, &human );
     else if( !bOldHumanNeedUpdate && bNewHumanNeedUpdate )
-        humansToUpdate_.insert( &human );
+        humansToUpdate_.push_back( &human );
 }
 
 // -----------------------------------------------------------------------------
@@ -520,12 +520,8 @@ void PHY_RolePion_Humans::HealAllHumans()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
-    for( auto it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
-    {
-        Human_ABC& human = **it;
-        ++it;
-        human.Update(); // !!! Can erase the human from humansToUpdate_ = bullshit ...
-    }
+    const std::vector< Human_ABC* > humans = humansToUpdate_;
+    boost::for_each( humans, boost::mem_fn( &Human_ABC::Update ) ); // !!! Can erase the human from humansToUpdate_ = bullshit ...
     if( hasChanged_ )
     {
         owner_->Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );

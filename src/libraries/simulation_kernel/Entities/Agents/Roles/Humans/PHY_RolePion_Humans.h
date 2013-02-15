@@ -143,7 +143,7 @@ private:
     //@{
     MIL_AgentPion*     owner_;
     boost::ptr_vector< PHY_HumanState > humansStates_;
-    std::set< Human_ABC* > humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
+    std::vector< Human_ABC* > humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
     bool               hasChanged_;
     unsigned int       nNbrUsableHumans_;
     // Medical
