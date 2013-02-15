@@ -164,8 +164,8 @@ public:
         eRC_TransportedUnitCannotReceiveOrder = 453,
         eRC_LogNoSuperior = 454,
         eRC_LogNoStock = 455,
-        eRC_CloseCrowdAttitudeChanged = 456,
-        eRC_CloseCrowdUrbanDestruction = 457
+        eRC_CloseCrowdAttitudeChanged = 506,
+        eRC_CloseCrowdUrbanDestruction = 507
     };
     //@}
 
