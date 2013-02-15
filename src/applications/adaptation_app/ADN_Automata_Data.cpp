@@ -201,7 +201,7 @@ void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyCh
     for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
     {
         const ADN_Automata_Data::UnitInfos& unit = **it;
-        assert( unit.ptrUnit_.GetData() != 0 );
+        assert( unit.GetCrossedElement() != 0 );
         const ADN_Units_Data::UnitInfos& agent = *unit.GetCrossedElement();
         if( unit.min_.GetData() == 0 && pc.strName_.GetData() == agent.strName_.GetData() )
             checker.AddError( eMissingPCOnAutomat, strName_.GetData(), eAutomata );
