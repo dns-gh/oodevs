@@ -26,8 +26,6 @@ namespace
     public :
         Configuration()
         {
-            MOCK_EXPECT( composante.NotifyHumanAdded ).once();
-            MOCK_EXPECT( composante.NotifyHumanRemoved ).once();
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
         }
         MockMIL_Time_ABC time;
@@ -38,9 +36,7 @@ namespace
     public:
         Fixture()
             : human( time, composante )
-        {
-            // NOTHING
-        }
+        {}
         PHY_Human human;
     };
 }

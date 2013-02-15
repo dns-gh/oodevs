@@ -18,7 +18,8 @@
 class HumansComposante_ABC;
 class MIL_Time_ABC;
 
-namespace logistic {
+namespace logistic
+{
     class FuneralConsign_ABC;
 }
 
@@ -34,7 +35,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante );
-             PHY_Human( const PHY_Human& rhs );
              PHY_Human();
     virtual ~PHY_Human();
     //@}
@@ -90,7 +90,7 @@ public:
 
     //! @name Medical logistic
     //@{
-    bool NeedEvacuation(); // NeedMedical() && pas encore pris en charge
+    bool NeedEvacuation() const; // NeedMedical() && pas encore pris en charge
     void Evacuate( MIL_AutomateLOG& destinationTC2 );
     bool NeedMedical() const;
     void SetMedicalState( PHY_MedicalHumanState* pMedicalState );
@@ -117,6 +117,7 @@ public:
 private:
     //! @name Operators
     //@{
+    PHY_Human( const PHY_Human& rhs );
     PHY_Human& operator=( const PHY_Human& rhs );
     //@}
 

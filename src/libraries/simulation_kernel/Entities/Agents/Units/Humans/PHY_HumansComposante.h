@@ -14,6 +14,8 @@
 
 #include "HumansComposante_ABC.h"
 #include <boost/serialization/export.hpp>
+#include <boost/shared_ptr.hpp>
+#include <vector>
 
 class Human_ABC;
 class PHY_HumanRank;
@@ -92,7 +94,7 @@ public:
     //! @name Medical
     //@{
     bool HasWoundedHumansToEvacuate() const;
-    void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const;
+    void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 );
     //@}
 
     //! @name Accessors
@@ -104,9 +106,9 @@ public:
 
 private:
     PHY_ComposantePion* pComposante_;
-    std::vector< Human_ABC* > humans_;
     unsigned int nNbrUsableHumans_;
     PHY_InjuredHuman* injury_;
+    std::vector< boost::shared_ptr< Human_ABC > > humans_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )

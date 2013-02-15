@@ -38,8 +38,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Human_ABC(){};
-    virtual ~Human_ABC(){};
+             Human_ABC() {}
+    virtual ~Human_ABC() {}
     //@}
 
     //! @name Operations
@@ -85,7 +85,7 @@ public:
 
     //! @name Medical logistic
     //@{
-    virtual bool NeedEvacuation() = 0; // NeedMedical() && pas encore pris en charge
+    virtual bool NeedEvacuation() const = 0; // NeedMedical() && pas encore pris en charge
     virtual void Evacuate( MIL_AutomateLOG& destinationTC2 ) = 0;
     virtual bool NeedMedical() const = 0;
     virtual void SetMedicalState( PHY_MedicalHumanState* pMedicalState ) = 0;

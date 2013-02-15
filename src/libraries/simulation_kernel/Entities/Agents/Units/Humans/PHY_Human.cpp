@@ -35,18 +35,17 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante )
-    : Human_ABC()
-    , time_( time )
+    : time_( time )
     , pComposante_( &composante )
     , pRank_( &PHY_HumanRank::militaireDuRang_ )
     , pWound_( &PHY_HumanWound::notWounded_ )
     , bMentalDiseased_( false )
     , bContamined_( false )
     , nLocation_( eBattleField )
-    , pMedicalState_()
+    , pMedicalState_( 0 )
     , nDeathTimeStep_( std::numeric_limits< unsigned int >::max() )
 {
-    pComposante_->NotifyHumanAdded( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,8 +53,7 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human( const PHY_Human& rhs )
-    : Human_ABC()
-    , time_( rhs.time_ )
+    : time_( rhs.time_ )
     , pComposante_( 0 )
     , pRank_( rhs.pRank_ )
     , pWound_( rhs.pWound_ )
@@ -63,7 +61,7 @@ PHY_Human::PHY_Human( const PHY_Human& rhs )
     , bContamined_( rhs.bContamined_ )
     , nLocation_( rhs.nLocation_ )
     , pMedicalState_( rhs.pMedicalState_ )
-    , nDeathTimeStep_( rhs.nDeathTimeStep_  )
+    , nDeathTimeStep_( rhs.nDeathTimeStep_ )
 {
     // NOTHING
 }
@@ -73,8 +71,7 @@ PHY_Human::PHY_Human( const PHY_Human& rhs )
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human()
-    : Human_ABC()
-    , time_( MIL_Time_ABC::GetTime() )
+    : time_( MIL_Time_ABC::GetTime() )
     , pComposante_( 0 )
     , pRank_( 0 )
     , pWound_( 0 )
@@ -93,8 +90,7 @@ PHY_Human::PHY_Human()
 // -----------------------------------------------------------------------------
 PHY_Human::~PHY_Human()
 {
-    if( pComposante_ )
-        pComposante_->NotifyHumanRemoved( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +138,6 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 // Name: PHY_Human::NotifyHumanChanged
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
-inline
 void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 {
     assert( pComposante_ );
@@ -601,7 +596,7 @@ bool PHY_Human::NeedMedical() const
 // Name: PHY_Human::NeedEvacuation
 // Created: NLD 2005-08-08
 // -----------------------------------------------------------------------------
-bool PHY_Human::NeedEvacuation()
+bool PHY_Human::NeedEvacuation() const
 {
     return NeedMedical() && !pMedicalState_;
 }

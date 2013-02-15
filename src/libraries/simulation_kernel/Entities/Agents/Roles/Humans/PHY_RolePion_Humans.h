@@ -32,8 +32,7 @@ class PHY_HumanWound;
 
 namespace human
 {
-
-class PHY_HumanState;
+    class PHY_HumanState;
 
 // =============================================================================
 // @class  PHY_RolePion_Humans
@@ -91,10 +90,10 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState ( client::UnitAttributes& asn ) const;
-    virtual void SendFullState    ( client::UnitAttributes& asn ) const;
-    virtual void SendChangedState () const;
-    virtual void SendFullState    ( unsigned int context ) const;
+    virtual void SendChangedState( client::UnitAttributes& asn ) const;
+    virtual void SendFullState   ( client::UnitAttributes& asn ) const;
+    virtual void SendChangedState() const;
+    virtual void SendFullState   ( unsigned int context ) const;
     //@}
 
 private:
@@ -107,7 +106,6 @@ private:
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
     //@}
 
-public:
     //! @name Types
     //@{
     class HumanState
@@ -137,21 +135,14 @@ public:
         bool                  psyop_;
         //@}
     };
-
-    typedef std::vector< PHY_HumanState* >            T_HumanStateVector;
-    typedef T_HumanStateVector::iterator             IT_HumanStateVector;
-    typedef T_HumanStateVector::const_iterator      CIT_HumanStateVector;
-
-    typedef std::set< Human_ABC* >                    T_HumanSet;
-    typedef T_HumanSet::const_iterator              CIT_HumanSet;
     //@}
 
 private:
     //! @name Member data
     //@{
     MIL_AgentPion*     owner_;
-    T_HumanStateVector humansStates_;
-    T_HumanSet         humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
+    std::vector< PHY_HumanState* > humansStates_;
+    std::set< Human_ABC* >         humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
     bool               hasChanged_;
     unsigned int       nNbrUsableHumans_;
     // Medical
@@ -160,7 +151,7 @@ private:
     //@}
 };
 
-} //namespace human
+}
 
 BOOST_CLASS_EXPORT_KEY( human::PHY_RolePion_Humans )
 

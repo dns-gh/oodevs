@@ -87,7 +87,7 @@ public:
     //! @name Medical
     //@{
     virtual bool HasWoundedHumansToEvacuate() const = 0;
-    virtual void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const = 0;
+    virtual void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) = 0;
     //@}
 
     //! @name Accessors

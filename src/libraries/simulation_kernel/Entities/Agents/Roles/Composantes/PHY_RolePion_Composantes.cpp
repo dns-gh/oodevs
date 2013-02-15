@@ -1613,7 +1613,7 @@ const MIL_Agent_ABC& PHY_RolePion_Composantes::GetPion() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::IsImmobilized() const
 {
-    return ( rOperationalState_ < rOpStateDecisionalThreshold_ );
+    return rOperationalState_ < rOpStateDecisionalThreshold_;
 }
 
 // -----------------------------------------------------------------------------
