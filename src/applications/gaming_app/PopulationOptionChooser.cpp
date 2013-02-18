@@ -63,7 +63,6 @@ PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::C
 
     hide();
     resize( 280, 300 );
-    setProperty( "notAppropriate", QVariant( true ) );
 
     controllers_.Register( *this );
 }

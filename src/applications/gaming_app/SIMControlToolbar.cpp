@@ -99,7 +99,7 @@ namespace
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
 SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger )
-    : QToolBar( "sim control toolbar", pParent )
+    : gui::RichToolBar( controllers, pParent, "sim control toolbar" )
     , controllers_( controllers )
     , publisher_( publisher )
     , speed_( 4212 )
@@ -187,7 +187,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( SlotOnSpinBoxChange( int ) ) );
     connect( pCheckpointButton_, SIGNAL( clicked() ), SLOT( SlotCheckpoint() ) );
 
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 //-----------------------------------------------------------------------------

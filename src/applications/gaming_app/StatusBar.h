@@ -58,12 +58,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StatusBar( const StatusBar& );            //!< Copy constructor
-    StatusBar& operator=( const StatusBar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );

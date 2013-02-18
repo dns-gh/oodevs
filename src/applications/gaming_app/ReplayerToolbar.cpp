@@ -24,7 +24,7 @@ using namespace sword;
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
 ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Publisher_ABC& network )
-    : QToolBar( pParent, "replay control toolbar" )
+    : gui::RichToolBar( controllers, pParent, "replay control toolbar" )
     , controllers_( controllers )
     , network_( network )
     , maxTick_( 0 )
@@ -36,9 +36,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     QLabel* label = new QLabel( this );
     addWidget( label );
     label->setPixmap( MAKE_PIXMAP( replayer ) );
-    setProperty( "notAppropriate", QVariant( true ) );
-    controllers_.Register( *this );
-    hide();
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +54,7 @@ ReplayerToolbar::~ReplayerToolbar()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if( simulation.GetTickCount() != static_cast< unsigned int >( -1 ) )
+    if( controllers_.GetCurrentMode() == eModes_Replay )
     {
         maxTick_ = simulation.GetTickCount();
         if( ! slider_ )
@@ -93,14 +91,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         slider_->setTickInterval( slider_->maxValue() / 20 );
         if( const unsigned int currentTick = simulation.GetCurrentTick() )
             slider_->setValue( currentTick );
-        if( !isVisible() )
-        {
-            setVisible( true );
-            setProperty( "notAppropriate", QVariant() );
-        }
     }
-    else if( isVisible() )
-        setVisible( false );
 }
 
 namespace

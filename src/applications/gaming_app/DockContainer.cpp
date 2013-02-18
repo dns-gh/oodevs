@@ -74,42 +74,45 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // -----------------------------------------------------------------------------
     // ResourceNetwork panel
     {
-        QDockWidget* pResourceWnd = new ResourceLinksDialog( parent, controllers, model.actions_, staticModel, simulation );
-        pResourceWnd->hide();
+        gui::RichDockWidget* pResourceWnd = new ResourceLinksDialog( parent, controllers, model.actions_, staticModel, simulation );
+        pResourceWnd->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
     }
     // Extensions panel
     {
         ExtensionsPanel* pExtensionsPanel = new ExtensionsPanel( parent, controllers, model, staticModel, simulation );
-        pExtensionsPanel->hide();
+        pExtensionsPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
     }
     // Clock
     {
-        QDockWidget* clockWnd = new ClockDock( parent, controllers, simulation, *scheduler_ );
+        gui::RichDockWidget* clockWnd = new ClockDock( parent, controllers, simulation, *scheduler_ );
+        clockWnd->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, clockWnd );
     }
     // Properties
     {
         Properties* properties = new Properties( parent, controllers, proxy );
-        properties->hide();
+        properties->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, properties );
     }
     // Mission panel
     {
         missionPanel_ = new MissionPanel( parent, controllers, staticModel, network.GetMessageMgr(), proxy, profile, model.actions_, simulation, *interfaceBuilder_, config );
-        missionPanel_->hide();
+        missionPanel_->SetModes( eModes_Default | eModes_Replay );
+        missionPanel_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::LeftDockWidgetArea, missionPanel_ );
     }
     // Agent list panel
     {
         orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer, model.actions_, staticModel, simulation, entitySymbols );
+        orbatDockWidget_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }
     // AfterAction
     {
         afterAction_ = new AfterAction( parent, controllers, model.aar_, *plotFactory_, *interfaceBuilder_ );
-        afterAction_->hide();
+        afterAction_->SetModes( eModes_Default | eModes_Gaming );
         parent->addDockWidget( Qt::LeftDockWidgetArea, afterAction_ );
     }
 
@@ -119,55 +122,57 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Creation panel
     {
         creationPanel_ = new CreationPanels( parent, controllers, staticModel, model, simulation, paramLayer, weatherLayer, proxy, symbolIcons, colorStrategy, config );
-        creationPanel_->hide();
+        creationPanel_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, creationPanel_ );
     }
     // Profiles panel
     {
         ProfilesPanel* profilesPanel = new ProfilesPanel( parent, controllers, network, profile, model.teams_ );
-        profilesPanel->hide();
+        profilesPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, profilesPanel );
     }
     // Inhabitant panel
     {
         InhabitantPanel* inhabitantPanel = new InhabitantPanel( parent, controllers, model );
-        inhabitantPanel->hide();
+        inhabitantPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, inhabitantPanel );
     }
     // Score panel
     {
         ScorePanel* scorePanel = new ScorePanel( parent, controllers, *displayExtractor_, interpreter, *plotFactory_, indicatorExportDialog, model.scores_, config );
-        scorePanel->hide();
+        scorePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, scorePanel );
     }
     // Notes panel
     {
         NotesPanel* notePanel = new NotesPanel( parent, controllers, model.notes_, network.GetMessageMgr() );
-        notePanel->hide();
+        notePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, notePanel );
     }
     // Profiler
     {
         profilingPanel_ = new ProfilingPanel( parent, controllers, network, simulation );
-        profilingPanel_->hide();
+        profilingPanel_->SetModes( eModes_Default );
+        profilingPanel_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::RightDockWidgetArea, profilingPanel_ );
     }
     // Info panel
     {
         InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory, *displayExtractor_ );
-        pInfoPanel->hide();
+        pInfoPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, pInfoPanel );
     }
     // Mini views
     {
         miniView_ = new gui::MiniViews( parent, controllers, profile );
-        miniView_->hide();
+        miniView_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, miniView_ );
     }
     // Terrain profile
     {
         terrainProfiler_ = new gui::TerrainProfiler( parent, controllers, staticModel.detection_, profilerLayer );
-        terrainProfiler_->hide();
+        terrainProfiler_->SetModes( eModes_Default );
+        terrainProfiler_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::RightDockWidgetArea, terrainProfiler_ );
     }
 
@@ -178,13 +183,12 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         PlanificationModePanel* pPlanificationModePanel = new PlanificationModePanel( parent, controllers );
         pPlanificationModePanel->SetModes( eModes_Gaming | eModes_Default, eModes_Planning );
-        pPlanificationModePanel->hide();
         parent->addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel );
     }
     // Actions panel
     {
         TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );
-        timelinePanel->hide();
+        timelinePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
     }
 
@@ -193,19 +197,20 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // -----------------------------------------------------------------------------
     // Chat
     {
-        QDockWidget* chatDock = new ChatDock( parent, controllers, network.GetMessageMgr(), network.GetCommands() );
-        chatDock->hide();
+        gui::RichDockWidget* chatDock = new ChatDock( parent, controllers, network.GetMessageMgr(), network.GetCommands() );
+        chatDock->SetModes( eModes_Default );
         parent->addDockWidget( Qt::BottomDockWidgetArea, chatDock );
     }
     // Logger
     {
         loggerPanel_ = new gui::Logger( parent, controllers, simulation, "./Debug/Gaming.log" );
-        loggerPanel_->hide();
+        loggerPanel_->SetModes( eModes_None, eModes_None, true );
         parent->addDockWidget( Qt::BottomDockWidgetArea, loggerPanel_ );
     }
     // Info
     {
-        QDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, *displayExtractor_, staticModel, model.actions_, simulation );
+        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, *displayExtractor_, staticModel, model.actions_, simulation );
+        infoWnd->SetModes( eModes_Default );
         parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
     }
 
@@ -255,15 +260,6 @@ CreationPanels& DockContainer::GetCreationPanel() const
 MissionPanel& DockContainer::GetMissionPanel() const
 {
     return *missionPanel_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DockContainer::GetOrbatDockWidget
-// Created: ABR 2013-02-13
-// -----------------------------------------------------------------------------
-OrbatDockWidget& DockContainer::GetOrbatDockWidget() const
-{
-    return *orbatDockWidget_;
 }
 
 // -----------------------------------------------------------------------------

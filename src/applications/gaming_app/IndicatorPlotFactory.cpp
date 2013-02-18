@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "IndicatorPlotFactory.h"
 #include "IndicatorPlot.h"
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Services.h"
 #include "gaming/Simulation.h"
@@ -45,14 +46,15 @@ IndicatorPlotFactory::~IndicatorPlotFactory()
 // -----------------------------------------------------------------------------
 IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request )
 {
-    QDockWidget* dock = new QDockWidget( "indicatorplot", mainWindow_ );
+    gui::RichDockWidget* dock = new gui::RichDockWidget( controllers_, mainWindow_, "indicatorplot" );
     dock->setAttribute( Qt::WA_DeleteOnClose, true );
     mainWindow_->addDockWidget( Qt::LeftDockWidgetArea, dock );
     Q3VBox* box = new Q3VBox( dock );
     IndicatorPlot* plot = new IndicatorPlot( box, controllers_, publisher_, dock, exportDialog_, hasReplay_, request, simulation_.GetCurrentTick(), box );
     dock->setWidget( box );
     dock->setFeatures( QDockWidget::AllDockWidgetFeatures );
-    dock->setProperty( "notAppropriate", QVariant( true ) );
+    dock->SetModes( eModes_Default );
+    dock->SetMenuVisibility( false );
     dock->show();
     return plot;
 }

@@ -20,6 +20,7 @@ using namespace gui;
 RichToolBar::RichToolBar( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& label /* = "" */ )
     : QToolBar( parent )
     , controllers_( controllers )
+    , windowMenuVisibility_( true )
 {
     setObjectName( objectName );
     setLabel( label );
@@ -77,4 +78,25 @@ void RichToolBar::EnsureIsEnabled()
 bool RichToolBar::IsVisible() const
 {
     return isVisible();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichToolBar::SetMenuVisibility
+// Created: ABR 2013-02-18
+// -----------------------------------------------------------------------------
+void RichToolBar::SetMenuVisibility( bool windowMenuVisibility )
+{
+    windowMenuVisibility_ = windowMenuVisibility;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichToolBar::NotifyModeChanged
+// Created: ABR 2013-02-18
+// -----------------------------------------------------------------------------
+void RichToolBar::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    kernel::DisplayableModesObserver_ABC::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    QAction* action = toggleViewAction();
+    assert( action != 0 );
+    action->setVisible( windowMenuVisibility_ && !( newMode & GetHiddenModes() || newMode & GetVisibleModes() ) );
 }

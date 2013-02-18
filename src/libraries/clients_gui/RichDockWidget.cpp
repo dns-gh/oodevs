@@ -20,6 +20,7 @@ using namespace gui;
 RichDockWidget::RichDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle /* = "" */ )
     : QDockWidget( parent )
     , controllers_( controllers )
+    , windowMenuVisibility_( true )
 {
     setObjectName( objectName );
     setWindowTitle( windowTitle );
@@ -53,6 +54,7 @@ void RichDockWidget::ForceEnabled( bool enabled )
     setEnabled( enabled );
     setFeatures( ( enabled ) ? QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable : QDockWidget::NoDockWidgetFeatures );
     QAction* action = toggleViewAction();
+    assert( action != 0 );
     action->setEnabled( false );
     action->setCheckable( enabled );
     action->setChecked( enabled );
@@ -67,6 +69,7 @@ void RichDockWidget::EnsureIsEnabled()
     setEnabled( true );
     setFeatures( QDockWidget::AllDockWidgetFeatures );
     QAction* action = toggleViewAction();
+    assert( action != 0 );
     action->setEnabled( true );
     action->setCheckable( true );
     action->setChecked( isVisible() );
@@ -79,4 +82,25 @@ void RichDockWidget::EnsureIsEnabled()
 bool RichDockWidget::IsVisible() const
 {
     return isVisible();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichDockWidget::SetMenuVisibility
+// Created: ABR 2013-02-18
+// -----------------------------------------------------------------------------
+void RichDockWidget::SetMenuVisibility( bool windowMenuVisibility )
+{
+    windowMenuVisibility_ = windowMenuVisibility;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichDockWidget::NotifyModeChanged
+// Created: ABR 2013-02-18
+// -----------------------------------------------------------------------------
+void RichDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    kernel::DisplayableModesObserver_ABC::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    QAction* action = toggleViewAction();
+    assert( action != 0 );
+    action->setVisible( windowMenuVisibility_ && !( newMode & GetHiddenModes() || newMode & GetVisibleModes() ) );
 }

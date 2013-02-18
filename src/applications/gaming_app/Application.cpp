@@ -51,7 +51,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );
     services_.reset( new Services( controllers_->controller_, *logger_ ) );
-    simulation_.reset( new Simulation( *controllers_ ) );
+    simulation_.reset( new Simulation( controllers_->controller_ ) );
     workers_.reset( new Workers() );
     network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );

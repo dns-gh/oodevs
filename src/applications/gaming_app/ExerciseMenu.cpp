@@ -27,13 +27,13 @@ namespace bfs = boost::filesystem;
 // Name: ExerciseMenu constructor
 // Created: SBO 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter )
-    : kernel::ContextMenu( parent )
+ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, const QString& title /* = "" */ )
+    : gui::RichMenu( parent, controllers, title )
     , controllers_( controllers )
     , interpreter_( interpreter )
 {
     connect( this, SIGNAL( activated( int ) ), SLOT( OnSelect( int ) ) );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

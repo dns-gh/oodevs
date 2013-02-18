@@ -34,7 +34,6 @@ namespace gui
 class AfterActionModel;
 class AfterActionRequest;
 class IndicatorPlotFactory;
-class Services;
 class StaticModel;
 
 // =============================================================================
@@ -44,7 +43,6 @@ class StaticModel;
 // Created: AGE 2007-09-17
 // =============================================================================
 class AfterAction : public gui::RichDockWidget
-                  , public tools::ElementObserver_ABC< Services >
                   , public tools::ElementObserver_ABC< AfterActionRequest >
 {
 public:
@@ -58,7 +56,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );
     //@}
 
@@ -66,7 +63,6 @@ private:
     //! @name Member data
     //@{
     QTabWidget* functionsTab_;
-    bool firstUpdate_;
     //@}
 };
 

@@ -49,7 +49,7 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
         connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged( int ) ) );
     }
     setFloating( true );
-    setProperty( "notAppropriate", QVariant( true ) );
+    hide();
     controllers_.Update( *this );
 }
 

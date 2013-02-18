@@ -23,6 +23,8 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/RichAction.h"
+#include "clients_gui/RichToolBar.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
@@ -143,18 +145,20 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     , controllers_( controllers )
     , profileDialog_( profileDialog )
 {
-    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
-    addMenu( menu );
+    // File
+    gui::RichMenu* menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&File" ) );
+    menu->SetModes( eModes_None, eModes_All, true );
     new ConnectionMenu( menu, controllers, network, logger );
-
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
-    insertItem( tools::translate( "Menu", "&File" ), menu );
-
-    menu = new kernel::ContextMenu( this );
     addMenu( menu );
+
+    // Display
+    menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&Display" ) );
+    menu->SetModes( eModes_None, eModes_All, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
-    QToolBar* toolBar = new QToolBar( pParent, "units toolbar" );
+    gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );
+    toolBar->SetModes( eModes_Default );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
 
@@ -175,7 +179,8 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
-    toolBar = new QToolBar( pParent, "logistics toolbar" );
+    toolBar = new gui::RichToolBar( controllers, pParent, "logistics toolbar" );
+    toolBar->SetModes( eModes_Default );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Logistics toolbar" ) );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
@@ -191,7 +196,8 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
-    toolBar = new QToolBar( pParent, "terrain toolbar" );
+    toolBar = new gui::RichToolBar( controllers, pParent, "terrain toolbar" );
+    toolBar->SetModes( eModes_Default );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Terrain toolbar" ) );
     AddSubMenu3( toolBar, subMenu, tools::translate( "Menu", "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
@@ -246,28 +252,39 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
-    insertItem( tools::translate( "Menu", "&Display" ), menu );
-
-    menu = new kernel::ContextMenu( this );
     addMenu( menu );
+
+    // Profiles
+    menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "Profiles..." ) );
+    menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "Profiles..." ), &profileDialog_, SLOT( exec() ) );
     profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
     setItemVisible( profileMenu_, false );
-
-    menu = new ExerciseMenu( this, controllers, interpreter );
     addMenu( menu );
-    insertItem( tools::translate( "Menu", "&Exercise" ), menu );
 
-    QMenu* pMenu = pParent->createPopupMenu();
-    addMenu( pMenu );
-    insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
-
-    menu = new kernel::ContextMenu( this );
+    // Exercise
+    menu = new ExerciseMenu( this, controllers, interpreter, tools::translate( "Menu", "&Exercise" ) );
+    menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     addMenu( menu );
+
+    // Windows
+    if( QMenu* menu = pParent->createPopupMenu() )
+    {
+        if( QAction* action = addMenu( menu ) )
+        {
+            action->setText( tools::translate( "Menu", "&Windows" ) );
+            windowAction_ = new gui::RichAction( action, controllers_ );
+            windowAction_->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
+        }
+    }
+
+    // Help
+    menu = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&?" ) );
+    menu->SetModes( eModes_None, eModes_All, true );
     menu->insertItem( tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Gaming" ) + " " + QString( tools::AppProjectVersion() ), license ), SLOT( exec() ) );
-    insertItem( tools::translate( "Menu", "&?" ), menu );
+    addMenu( menu );
 
     controllers_.Register( *this );
 }
@@ -278,6 +295,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 // -----------------------------------------------------------------------------
 Menu::~Menu()
 {
+    delete windowAction_;
     controllers_.Unregister( *this );
 }
 

@@ -32,7 +32,6 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
     , ticks_( 0 )
 {
     setWindowTitle( tools::translate( "ProfilingPanel", "Profiling" ) );
-    setProperty( "notAppropriate", QVariant( true ) );
     tabWidget_ = new QTabWidget( this );
     tabWidget_->setMargin( 5 );
     setWidget( tabWidget_ );
@@ -94,7 +93,6 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
         longPathfinds_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Count" ) );
         tabWidget_->addTab( vBox, tools::translate( "ProfilingPanel", "Pathfinds" ) );
     }
-
     controllers_.Update( *this );
 }
 

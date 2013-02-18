@@ -45,12 +45,15 @@ public:
     virtual void ForceEnabled( bool enabled );
     virtual void EnsureIsEnabled();
     virtual bool IsVisible() const;
+    virtual void SetMenuVisibility( bool windowMenuVisibility );
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     //@}
 
 protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    bool windowMenuVisibility_;
     //@}
 };
 

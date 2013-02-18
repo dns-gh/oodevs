@@ -13,9 +13,9 @@
 #include "clients_gui/Types.h"
 #include "gaming/Simulation.h"
 #include "tools/ElementObserver_ABC.h"
+#include "clients_gui/RichToolBar.h"
 
 #pragma warning( push, 0 )
-#include <QtGui/qtoolbar.h>
 #include <QtGui/qicon.h>
 #pragma warning( pop )
 
@@ -41,8 +41,7 @@ class Publisher_ABC;
 */
 // Created: AGE 2007-04-11
 // =============================================================================
-class SIMControlToolbar : public QToolBar
-                        , public tools::Observer_ABC
+class SIMControlToolbar : public gui::RichToolBar
                         , public tools::ElementObserver_ABC< Simulation >
                         , public tools::ElementObserver_ABC< Services >
                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >

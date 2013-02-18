@@ -69,9 +69,8 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , config_                  ( config )
 {
     setWindowTitle( tr( "Mission" ) );
-    setProperty( "notAppropriate", QVariant( true ) );
     setFloating( true );
-
+    hide();
     controllers_.Update( *this );
 }
 

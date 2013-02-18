@@ -60,6 +60,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
+#include "gaming/Services.h"
 #include "gaming/VisionConesToggler.h"
 #include "gaming/ColorController.h"
 #include "gaming/TeamsModel.h"
@@ -106,6 +107,8 @@
 #include "clients_gui/TerrainProfiler.h"
 #include "geodata/ProjectionException.h"
 #include "geodata/ExtentException.h"
+#include "protocol/ReplaySenders.h"
+#include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -118,6 +121,25 @@
 
 namespace bfs = boost::filesystem;
 using namespace kernel;
+
+namespace
+{
+    void AddToolBar( QMainWindow& mainWindow, gui::RichToolBar* toolBar, int hiddenModes = eModes_None, int visibleModes = eModes_None, bool visibleByDefault = false )
+    {
+        mainWindow.addToolBar( toolBar );
+        toolBar->SetModes( hiddenModes, visibleModes, visibleByDefault );
+    }
+
+    template< typename Layer >
+    void AddLayer( gui::GlProxy& glProxy, gui::PreferencesDialog& preference, Layer& layer, const std::string& passes = "", const QString& text = "" )
+    {
+        glProxy.Register( layer );
+        if( !text.isEmpty() )
+            preference.AddLayer( text, layer );
+        if( !passes.empty() )
+            layer.SetPasses( passes );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -142,6 +164,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
+    controllers_.modes_.AddRegistryEntry( eModes_Replay, "Gaming" );
 
     // Strategy
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
@@ -208,14 +231,14 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     // Tool bars
-    addToolBar( new SIMControlToolbar( this, controllers, network, network_.GetMessageMgr(), dockContainer_->GetLoggerPanel() ) );
-    addToolBar( new gui::DisplayToolbar( this, controllers ) );
-    addToolBar( new EventToolbar( this, controllers, *pProfile_ ) );
-    addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ) );
-    addToolBar( new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
+    AddToolBar( *this, new SIMControlToolbar( this, controllers, network, network_.GetMessageMgr(), dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default, true );
+    AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
+    AddToolBar( *this, new EventToolbar( this, controllers, *pProfile_ ), eModes_Default );
+    AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
+    AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ), eModes_Default );
     addToolBarBreak();
-    addToolBar( new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ) );
-    addToolBar( new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ) );
+    AddToolBar( *this, new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_None, true );
+    AddToolBar( *this, new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ), eModes_Default );
 
     // Help
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
@@ -226,7 +249,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Menu bar & status bar
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, *factory, license, *interpreter, network_, logger ) );
-    new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, *selector_, &dockContainer_->GetProfilingPanel() );
+    StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, *selector_, &dockContainer_->GetProfilingPanel() );
+    pStatus->SetModes( eModes_Default, eModes_None, true );
 
     // Raster_app process
     process_.reset( new QProcess( this ) );
@@ -256,19 +280,6 @@ MainWindow::~MainWindow()
     glProxy_.reset();
     dockContainer_.reset();
     selector_.reset();
-}
-
-namespace
-{
-    template< typename Layer >
-    void AddLayer( gui::GlProxy& glProxy, gui::PreferencesDialog& preference, Layer& layer, const std::string& passes = "", const QString& text = "" )
-    {
-        glProxy.Register( layer );
-        if( !text.isEmpty() )
-            preference.AddLayer( text, layer );
-        if( !passes.empty() )
-            layer.SetPasses( passes );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -405,10 +416,9 @@ void MainWindow::Close()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    controllers_.ChangeMode( eModes_Default );
+    Close();
     controllers_.modes_.SaveGeometry( eModes_Gaming );
     controllers_.SaveOptions( eModes_Gaming );
-    Close();
     QMainWindow::closeEvent( pEvent );
 }
 
@@ -482,9 +492,13 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // Name: MainWindow::NotifyUpdated
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const Services& /*services*/ )
+void MainWindow::NotifyUpdated( const Services& services )
 {
     Load();
+    if( services.HasService< simulation::Service >() )
+        controllers_.ChangeMode( eModes_Gaming );
+    else if( services.HasService< replay::Service >() )
+        controllers_.ChangeMode( eModes_Replay );
 }
 
 // -----------------------------------------------------------------------------
@@ -552,30 +566,6 @@ void MainWindow::ToggleDocks()
         if( restoreState( toolbars_ ) )
             toolbars_ = 0;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::createPopupMenu
-// Created: LDC 2011-08-26
-// -----------------------------------------------------------------------------
-QMenu* MainWindow::createPopupMenu()
-{
-    QMenu* menu = new QMenu( this );
-    QList<QDockWidget *> dockwidgets = qFindChildren<QDockWidget *>( this );
-    for( QList<QDockWidget *>::iterator it = dockwidgets.begin(); it != dockwidgets.end(); ++it )
-    {
-        QDockWidget* dockWidget = *it;
-        if( !dockWidget->property( "notAppropriate" ).isValid() )
-            menu->addAction( dockWidget->toggleViewAction() );
-    }
-    menu->addSeparator();
-    QList<QToolBar *> toolbars = qFindChildren<QToolBar *>(this);
-    for( QList<QToolBar *>::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
-    {
-        QToolBar* toolbar = *it;
-        menu->addAction( toolbar->toggleViewAction() );
-    }
-    return menu;
 }
 
 // -----------------------------------------------------------------------------

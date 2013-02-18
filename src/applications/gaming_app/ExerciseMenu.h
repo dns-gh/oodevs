@@ -11,7 +11,7 @@
 #define __ExerciseMenu_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/ContextMenu.h"
+#include "clients_gui/RichMenu.h"
 
 namespace kernel
 {
@@ -42,8 +42,7 @@ namespace tools
 */
 // Created: SBO 2008-08-27
 // =============================================================================
-class ExerciseMenu : public kernel::ContextMenu
-                   , public tools::Observer_ABC
+class ExerciseMenu : public gui::RichMenu
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
@@ -52,7 +51,7 @@ class ExerciseMenu : public kernel::ContextMenu
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter );
+             ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
     virtual ~ExerciseMenu();
     //@}
 

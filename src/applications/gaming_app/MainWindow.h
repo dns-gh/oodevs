@@ -39,6 +39,7 @@ namespace gui
     class Painter_ABC;
     class ParametersLayer;
     class PreferencesDialog;
+    class RichToolBar;
     class TerrainLayer;
     class TerrainPicker;
 }
@@ -86,7 +87,6 @@ public:
     //! @name Operations
     //@{
     void Load();
-    virtual QMenu* createPopupMenu();
     //@}
 
 public slots:

@@ -175,8 +175,6 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     // Windows
     if( QMenu* menu = pParent->createPopupMenu() )
     {
-        QAction* action = menu->actions().value( 8 );
-        AddModdedAction( action, eModes_All, eModes_None, false );
         if( QAction* action = addMenu( menu ) )
         {
             action->setText( tools::translate( "Menu", "&Windows" ) );

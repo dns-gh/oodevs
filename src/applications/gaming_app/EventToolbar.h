@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
+#include "clients_gui/RichToolBar.h"
 
 #include <deque>
 
@@ -31,8 +32,7 @@ class Simulation;
 */
 // Created: SBO 2006-06-20
 // =============================================================================
-class EventToolbar : public QToolBar
-                   , public tools::Observer_ABC
+class EventToolbar : public gui::RichToolBar
                    , public tools::ElementObserver_ABC< Report >
                    , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
@@ -56,12 +56,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EventToolbar( const EventToolbar& );
-    EventToolbar& operator=( const EventToolbar& );
-    //@}
-
     //! @name Types
     //@{
     typedef std::deque< const kernel::Entity_ABC* > T_Agents;

@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "Simulation.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "Network.h"
 #include "protocol/ReplaySenders.h"
@@ -21,8 +20,8 @@ using namespace kernel;
 // Name: Simulation constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Simulation::Simulation( Controllers& controllers )
-    : controllers_ ( controllers )
+Simulation::Simulation( Controller& controller )
+    : controller_ ( controller )
     , tickDuration_( 10 )
     , timeFactor_  ( 1 )
     , currentTick_ ( 0 )
@@ -54,7 +53,7 @@ void Simulation::Connect( const std::string& host )
     profiling_.Clear();
     connected_ = true;
     simulationHost_ = host;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,8 +70,7 @@ void Simulation::Disconnect()
     profiling_.Clear();
     connected_ = false;
     initialized_ = false;
-    controllers_.controller_.Update( *this );
-    controllers_.ChangeMode( eModes_Default );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +81,7 @@ void Simulation::Pause( bool paused )
 {
     profiling_.Clear();
     paused_ = paused;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +91,7 @@ void Simulation::Pause( bool paused )
 void Simulation::ChangeSpeed( int timeFactor )
 {
     timeFactor_ = timeFactor;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,8 +108,7 @@ void Simulation::Update( const sword::ControlInformation& message )
     time_         = message.current_tick() * tickDuration_;
     initialDate_  = message.initial_date_time().data();
     date_         = message.date_time().data();
-    controllers_.controller_.Update( *this );
-    controllers_.ChangeMode( eModes_Gaming );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,8 +127,7 @@ void Simulation::Update( const sword::ControlReplayInformation& message )
     date_         = message.date_time().data();
     if( message.has_first_tick() )
         firstTick_ = message.first_tick();
-    controllers_.controller_.Update( *this );
-    controllers_.ChangeMode( eModes_Replay );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +149,8 @@ void Simulation::Update( const sword::ControlBeginTick& message )
     date_ = message.date_time().data();
     profiling_.Tick();
     time_ = currentTick_ * tickDuration_;
-    controllers_.controller_.Update( startTick_ );
-    controllers_.controller_.Update( *this );
+    controller_.Update( startTick_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,8 +160,8 @@ void Simulation::Update( const sword::ControlBeginTick& message )
 void Simulation::Update( const sword::ControlEndTick& message )
 {
     profiling_.Update( message );
-    controllers_.controller_.Update( endTick_ );
-    controllers_.controller_.Update( *this );
+    controller_.Update( endTick_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +171,7 @@ void Simulation::Update( const sword::ControlEndTick& message )
 void Simulation::Update( const sword::ControlSendCurrentStateEnd& /*message*/ )
 {
     initialized_ = true;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +180,7 @@ void Simulation::Update( const sword::ControlSendCurrentStateEnd& /*message*/ )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const sword::TimeTable& message )
 {
-    controllers_.controller_.Update( sTimeTable( message ) );
+    controller_.Update( sTimeTable( message ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,8 +190,8 @@ void Simulation::Update( const sword::TimeTable& message )
 void Simulation::BeginCheckPoint()
 {
     checkPoint_.start_ = true;
-    controllers_.controller_.Update( checkPoint_ );
-    controllers_.controller_.Update( *this );
+    controller_.Update( checkPoint_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,8 +205,8 @@ void Simulation::EndCheckPoint( const sword::ControlCheckPointSaveEnd& message )
         checkPoint_.name_ = message.name();
     else
         checkPoint_.name_ = "";
-    controllers_.controller_.Update( checkPoint_ );
-    controllers_.controller_.Update( *this );
+    controller_.Update( checkPoint_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

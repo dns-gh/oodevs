@@ -24,6 +24,7 @@ namespace gui
     class ItemFactory_ABC;
     class HelpSystem;
     class LinkInterpreter_ABC;
+    class RichAction;
 }
 
 class UserProfileDialog;
@@ -45,19 +46,13 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog
-                 , UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license
-                 , gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog,
+                   UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license,
+                   gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Menu( const Menu& );
-    Menu& operator=( const Menu& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Profile& profile );
@@ -69,6 +64,7 @@ private:
     kernel::Controllers& controllers_;
     UserProfileDialog& profileDialog_;
     int profileMenu_;
+    gui::RichAction* windowAction_;
     //@}
 };
 

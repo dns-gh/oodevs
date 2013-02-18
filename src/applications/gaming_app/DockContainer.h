@@ -90,7 +90,6 @@ public:
     //@{
     CreationPanels& GetCreationPanel() const;
     MissionPanel& GetMissionPanel() const;
-    OrbatDockWidget& GetOrbatDockWidget() const;
     gui::Logger& GetLoggerPanel() const;
     ProfilingPanel& GetProfilingPanel() const;
     gui::TerrainProfiler& GetTerrainProfiler() const;

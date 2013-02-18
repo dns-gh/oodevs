@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Controllers;
+    class Controller;
 }
 
 namespace sword
@@ -55,7 +55,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Simulation( kernel::Controllers& controllers );
+    explicit Simulation( kernel::Controller& controller );
     virtual ~Simulation();
     //@}
 
@@ -113,7 +113,7 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controller& controller_;
     unsigned int tickDuration_;
     unsigned int timeFactor_;
     unsigned int currentTick_;

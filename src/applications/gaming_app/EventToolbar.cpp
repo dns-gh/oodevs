@@ -26,7 +26,7 @@ using namespace kernel;
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
 EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, const kernel::Profile_ABC& profile )
-    : QToolBar( "event toolbar", pParent )
+    : gui::RichToolBar( controllers, pParent, "event toolbar" )
     , controllers_( controllers )
     , profile_( profile )
 {
@@ -42,7 +42,7 @@ EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, cons
 
     messageButton_->setUsesTextLabel( true );
     messageButton_->setTextPosition( QToolButton::BesideIcon );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

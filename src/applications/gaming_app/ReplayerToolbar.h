@@ -10,6 +10,7 @@
 #ifndef __ReplayerToolbar_h_
 #define __ReplayerToolbar_h_
 
+#include "clients_gui/RichToolBar.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
@@ -27,8 +28,7 @@ class Simulation;
 */
 // Created: AGE 2007-04-11
 // =============================================================================
-class ReplayerToolbar : public QToolBar
-                      , public tools::Observer_ABC
+class ReplayerToolbar : public gui::RichToolBar
                       , public tools::ElementObserver_ABC< Simulation >
                       , public tools::ElementObserver_ABC< Simulation::sTimeTable >
 {
