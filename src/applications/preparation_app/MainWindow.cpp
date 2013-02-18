@@ -534,7 +534,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
             return;
         }
         SetProgression( 90, tr( "Generate symbols" ) );
-        GeneratePixmapSymbols();
+        icons_->GenerateSymbols( model_.teams_ );
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
         if( checkConsistency )
@@ -878,39 +878,4 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
-}
-
-
-namespace
-{
-    void RecGenerateSymbols( gui::EntitySymbols& icons, kernel::ActionController& actions, const kernel::Entity_ABC& entity )
-    {
-        if( const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& child = it.NextElement();
-                RecGenerateSymbols( icons, actions, child );
-                icons.GetSymbol( child );
-                actions.Select( child );
-                icons.GetSymbol( child, QSize( 64, 64 ), true );
-            }
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::GeneratePixmapSymbols
-// Created: ABR 2013-02-01
-// -----------------------------------------------------------------------------
-void MainWindow::GeneratePixmapSymbols()
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = model_.teams_.CreateEntityIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& entity = it.NextElement();
-        RecGenerateSymbols( *icons_, controllers_.actions_, entity );
-    }
-    controllers_.actions_.DeselectAll();
 }

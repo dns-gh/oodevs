@@ -113,7 +113,6 @@ private:
     void DoClose();
     void DoLoad( QString filename, bool checkConsistency = true );
     void MigrateExercises();
-    void GeneratePixmapSymbols();
 
     void NotifyModeChanged( E_Modes newMode );
     virtual void NotifyCreated();

@@ -115,7 +115,6 @@ private:
     virtual void NotifyUpdated( const Services& connection );
     virtual void NotifyUpdated( const Profile& profile );
 
-    void GeneratePixmapSymbols();
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,

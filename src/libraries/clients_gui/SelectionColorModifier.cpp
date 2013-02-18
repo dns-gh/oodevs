@@ -82,7 +82,7 @@ void SelectionColorModifier::NotifySelected( const kernel::Entity_ABC* element )
 // Name: SelectionColorModifier::SelectedColor
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-QColor SelectionColorModifier::SelectedColor( const QColor& base ) const
+QColor SelectionColorModifier::SelectedColor( const QColor& base )
 {
     return base.light( 150 );
 }
@@ -91,7 +91,7 @@ QColor SelectionColorModifier::SelectedColor( const QColor& base ) const
 // Name: SelectionColorModifier::SuperiorSelectedColor
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
-QColor SelectionColorModifier::SuperiorSelectedColor( const QColor& base ) const
+QColor SelectionColorModifier::SuperiorSelectedColor( const QColor& base )
 {
     return base.light( 120 );
 }

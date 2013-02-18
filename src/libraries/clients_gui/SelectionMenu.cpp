@@ -217,7 +217,7 @@ bool SelectionMenu::GenerateIcons()
                     {
                         const std::string symbolName = symbol->GetSymbol();
                         const std::string levelName  = symbol->GetLevel();
-                        pixmap = entitySymbols_.GetSymbol( *entity, symbolName, levelName, QSize( 64, 64 ), true );
+                        pixmap = entitySymbols_.GetSymbol( *entity, symbolName, levelName, QSize( 64, 64 ), EntitySymbols::eColorWithModifier );
                     }
                     if( allIconsGenerated && pixmap.isNull() )
                         allIconsGenerated = false;

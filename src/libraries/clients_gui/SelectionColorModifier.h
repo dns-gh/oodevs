@@ -48,12 +48,16 @@ public:
     virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const;
     //@}
 
+    //! @name Static operations
+    //@{
+    static QColor SelectedColor( const QColor& base );
+    static QColor SuperiorSelectedColor( const QColor& base );
+    //@}
+
 private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    QColor SelectedColor( const QColor& base ) const;
-    QColor SuperiorSelectedColor( const QColor& base ) const;
     //@}
 
 private:
