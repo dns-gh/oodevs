@@ -141,18 +141,19 @@ namespace detail
             } \
             catch( const std::exception& e ) \
             { \
-                MT_LOG_ERROR_MSG( "Exception in hook " #Hook << tools::GetExceptionMsg( e ) ); \
+                MT_LOG_ERROR_MSG( "Exception in hook " #Hook << " " << tools::GetExceptionMsg( e ) ); \
             } \
             catch( ... ) \
             { \
-                MT_LOG_ERROR_MSG( "Unknown exception in " #Hook " hook" ); \
+                MT_LOG_ERROR_MSG( "Unknown exception in hook " #Hook ); \
             } \
             return boost::function_types::result_type< result parameters >::type(); \
         } \
     private: \
         virtual void Apply( core::Facade& facade, bool profiling ) \
         { \
-            facade.RegisterHook( &current_, &previous_, profiling ? &SafeProfiledImplement : &SafeImplement, #Hook, #result #parameters ); \
+            facade.RegisterHook( &current_, &previous_, \
+                profiling ? &SafeProfiledImplement : &SafeImplement, #Hook, #result #parameters ); \
         } \
         virtual void Log() \
         { \
