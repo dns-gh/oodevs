@@ -33,6 +33,7 @@ namespace kernel
 namespace gui
 {
     class ColorButton;
+    class TerrainProfiler;
     class TerrainProfilerLayer;
     class ContourLinesObserver;
     class RichDockWidget;
@@ -53,7 +54,7 @@ class GisToolbar : public RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection );
+             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, gui::TerrainProfiler& terrainProfiler );
     virtual ~GisToolbar();
     //@}
 
@@ -75,12 +76,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GisToolbar( const GisToolbar& );            //!< Copy constructor
-    GisToolbar& operator=( const GisToolbar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );

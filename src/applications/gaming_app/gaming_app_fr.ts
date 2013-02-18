@@ -495,6 +495,13 @@ Raison: %3
     </message>
 </context>
 <context>
+    <name>CreationPanels</name>
+    <message>
+        <source>Creation</source>
+        <translation>Création</translation>
+    </message>
+</context>
+<context>
     <name>CriticalIntelligenceDialog</name>
     <message>
         <source>Change critical intelligence</source>
@@ -1042,6 +1049,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Equipment availabilities</source>
         <translation>Disponibilités d&apos;équipements</translation>
+    </message>
+</context>
+<context>
+    <name>InfoPanels</name>
+    <message>
+        <source>Knowledge</source>
+        <translation>Connaissance</translation>
     </message>
 </context>
 <context>
@@ -1644,26 +1658,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Journal</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Propriétés</translation>
-    </message>
-    <message>
-        <source>Knowledge</source>
-        <translation>Connaissance</translation>
-    </message>
-    <message>
-        <source>Profiling</source>
-        <translation>Performances</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Création</translation>
     </message>
     <message>
         <source>Orbat</source>
@@ -2418,6 +2412,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
+    <message>
+        <source>Orbat</source>
+        <translation>ODB</translation>
+    </message>
 </context>
 <context>
     <name>OrbatPanel</name>
@@ -2643,6 +2641,17 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Outgoing messages: </source>
         <translation>Messages sortants: </translation>
+    </message>
+    <message>
+        <source>Profiling</source>
+        <translation>Performances</translation>
+    </message>
+</context>
+<context>
+    <name>Properties</name>
+    <message>
+        <source>Properties</source>
+        <translation>Propriétés</translation>
     </message>
 </context>
 <context>

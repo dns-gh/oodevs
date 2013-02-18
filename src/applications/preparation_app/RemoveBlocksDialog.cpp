@@ -102,7 +102,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
 
     // Help
     QShortcut* s = new QShortcut( QKeySequence( Qt::Key_F1 ), this );
-    connect( s, SIGNAL( activated() ), parent, SLOT( ShowHelp() ) );
+    connect( s, SIGNAL( activated() ), parent, SIGNAL( ShowHelp() ) );
 }
 
 // -----------------------------------------------------------------------------

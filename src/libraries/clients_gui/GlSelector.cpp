@@ -31,9 +31,8 @@ using namespace kernel;
 // Name: GlSelector constructor
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
-GlSelector::GlSelector( QStackedWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
-    : QObject( parent )
-    , parent_           ( parent )
+GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& map, EventStrategy_ABC& strategy )
+    : QStackedWidget( parent )
     , proxy_            ( proxy )
     , controllers_      ( controllers )
     , config_           ( config )
@@ -48,9 +47,9 @@ GlSelector::GlSelector( QStackedWidget* parent, GlProxy& proxy, Controllers& con
 {
     setObjectName( "GlSelector" );
     displayTimer_ = new QTimer( this );
-    glPlaceHolder_ = new GlPlaceHolder( parent );
-    parent->addWidget( glPlaceHolder_ );
-    parent->setCurrentWidget( glPlaceHolder_ );
+    glPlaceHolder_ = new GlPlaceHolder( this );
+    addWidget( glPlaceHolder_ );
+    setCurrentWidget( glPlaceHolder_ );
 
     controllers_.options_.Register( *this );
 }
@@ -76,16 +75,16 @@ void GlSelector::Load()
         widget2d_->Load( config_ );
         return;
     }
-    widget2d_ = new GlWidget( parent_, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_ );
+    widget2d_ = new GlWidget( this, controllers_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), *iconLayout_ );
     widget2d_->Load( config_ );
-    parent_->addWidget( widget2d_ );
+    addWidget( widget2d_ );
     InitializePasses();
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( strategy_ );
     widget2d_->Configure( *moveLayer_ );
     proxy_.ChangeTo( widget2d_ );
     proxy_.RegisterTo( widget2d_ );
-    parent_->setCurrentWidget( widget2d_ );
+    setCurrentWidget( widget2d_ );
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
     controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
@@ -128,7 +127,7 @@ void GlSelector::RemoveLayer( Layer& layer )
 // -----------------------------------------------------------------------------
 void GlSelector::Close()
 {
-    parent_->setCurrentWidget( glPlaceHolder_ );
+    setCurrentWidget( glPlaceHolder_ );
     glPlaceHolder_->show();
     Clean();
 }
@@ -164,31 +163,31 @@ void GlSelector::Clean()
 // -----------------------------------------------------------------------------
 void GlSelector::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "3D" && glPlaceHolder_ != parent_->currentWidget() )
+    if( name == "3D" && glPlaceHolder_ != currentWidget() )
     {
         bool new3d = value.To< bool >();
         if( new3d != b3d_ )
         {
-            disconnect( displayTimer_, SIGNAL( timeout() ), parent_->currentWidget(), SLOT( updateGL() ) );
+            disconnect( displayTimer_, SIGNAL( timeout() ), currentWidget(), SLOT( updateGL() ) );
             if( new3d )
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( parent_, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_ );
+                    widget3d_ = new Gl3dWidget( this, controllers_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_ );
                     widget3d_->Load( config_ );
-                    parent_->addWidget( widget3d_ );
+                    addWidget( widget3d_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
                     proxy_.RegisterTo( widget3d_ );
                 }
                 proxy_.ChangeTo( widget3d_ );
-                parent_->setCurrentWidget( widget3d_ );
+                setCurrentWidget( widget3d_ );
             }
             else
             {
                 proxy_.ChangeTo( widget2d_ );
-                parent_->setCurrentWidget( widget2d_ );
+                setCurrentWidget( widget2d_ );
             }
-            connect( displayTimer_, SIGNAL( timeout()), parent_->currentWidget(), SLOT( updateGL() ) );
+            connect( displayTimer_, SIGNAL( timeout()), currentWidget(), SLOT( updateGL() ) );
             b3d_ = new3d;
         }
     }

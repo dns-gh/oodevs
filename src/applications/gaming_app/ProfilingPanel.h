@@ -10,6 +10,7 @@
 #ifndef __ProfilingPanel_h_
 #define __ProfilingPanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
@@ -28,8 +29,7 @@ class StatisticsWidget;
 */
 // Created: SBO 2007-01-04
 // =============================================================================
-class ProfilingPanel : public QTabWidget
-                     , public tools::Observer_ABC
+class ProfilingPanel : public gui::RichDockWidget
                      , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
@@ -40,12 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProfilingPanel( const ProfilingPanel& );            //!< Copy constructor
-    ProfilingPanel& operator=( const ProfilingPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation::sEndTick& );
@@ -54,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    QTabWidget* tabWidget_;
     const Network& network_;
     const Simulation& simulation_;
     StatisticsWidget* networkBytesReceived_;

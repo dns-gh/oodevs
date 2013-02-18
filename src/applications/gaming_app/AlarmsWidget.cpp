@@ -18,7 +18,7 @@
 // Name: AlarmsWidget constructor
 // Created: AGE 2007-05-07
 // -----------------------------------------------------------------------------
-AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation )
+AlarmsWidget::AlarmsWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation )
     : QDialog     ( parent, "AlarmsWidget" )
     , controllers_( controllers )
     , simulation_ ( simulation )
@@ -154,7 +154,7 @@ namespace
     class AlarmEditor : public QDialog
     {
     public:
-        AlarmEditor( QWidget* parent, const Simulation& simulation )
+        AlarmEditor( QWidget* parent, const kernel::Time_ABC& simulation )
             : QDialog    ( parent )
             , simulation_( simulation )
             , item_      ( 0 )
@@ -202,7 +202,7 @@ namespace
             QDialog::accept();
         }
     private:
-        const Simulation& simulation_;
+        const kernel::Time_ABC& simulation_;
         QTreeWidgetItem* item_;
         QDateTimeEdit* time_;
         QLineEdit* text_;

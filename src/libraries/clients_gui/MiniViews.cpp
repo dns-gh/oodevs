@@ -26,20 +26,18 @@ using namespace gui;
 // Name: MiniViews constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-MiniViews::MiniViews( QMainWindow* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
+MiniViews::MiniViews( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : RichDockWidget( controllers, parent, "miniviews" )
     , profile_( profile )
     , widget_( 0 )
     , selected_( controllers )
 {
-    setObjectName( "miniviews" );
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    parent->addDockWidget( Qt::TopDockWidgetArea, this );
-    setCaption( tr( "Miniviews" ) );
+    setWindowTitle( tr( "Miniviews" ) );
     grid_ = new SmartGridWidget( this, 2, Qt::Vertical, "miniviews" );
     setWidget( grid_ );
 
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

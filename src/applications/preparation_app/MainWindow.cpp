@@ -161,10 +161,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     forward_.reset( new gui::CircularEventStrategy( *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
-    // Central Widget
-    QStackedWidget* centralWidget = new QStackedWidget();
-    setCentralWidget( centralWidget );
-    selector_.reset( new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
+    // Main widget
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     // Strategy
@@ -184,20 +182,21 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons_, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_ ) );
 
-    // ToolBars
-    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog() ) );
-
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons_, *modelBuilder_, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
-    connect( toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), &dockContainer_->GetTerrainProfiler(), SLOT( setVisible( bool ) ) );
-    connect( &dockContainer_->GetTerrainProfiler(), SIGNAL( visibilityChanged( bool ) ), toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
+
+    // ToolBars
+    toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
 
     // Layers 2
     CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *profilerLayer, PreparationProfile::GetProfile(), *picker, automats, formation );
 
+    // Help
+    gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
+    connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
+
     // Menu (must be created after DockWidgets and ToolBars for 'Windows' menu)
-    help_.reset( new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) ) );
-    menu_.reset( new Menu( this, controllers, *dialogContainer_, *factory, expiration, *help_ ) );
+    menu_.reset( new Menu( this, controllers, *dialogContainer_, *factory, expiration ) );
     toolbarContainer_->GetFileToolbar().Fill( *menu_ );
     setMenuBar( menu_.get() );
 
@@ -225,6 +224,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     connect( process_.get(), SIGNAL( finished( int, QProcess::ExitStatus ) ), this, SLOT( OnRasterProcessExited( int, QProcess::ExitStatus ) ) );
 
     // Initialize
+    setCentralWidget( selector_.get() );
     SetWindowTitle( false );
     controllers_.Register( *this );
     controllers_.ChangeMode( ePreparationMode_Default );
@@ -358,15 +358,6 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     forward_->Register( elevation3d );
     forward_->Register( selection );
     forward_->SetDefault( defaultLayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ShowHelp
-// Created: JSR 2012-03-20
-// -----------------------------------------------------------------------------
-void MainWindow::ShowHelp()
-{
-    help_->ShowHelp();
 }
 
 // -----------------------------------------------------------------------------

@@ -39,7 +39,7 @@ class StatusBar : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( kernel::Controllers& controllers, QStatusBar* bar, TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter );
+             StatusBar( kernel::Controllers& controllers, QStatusBar* bar, TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, QObject& selector );
     virtual ~StatusBar();
     //@}
 

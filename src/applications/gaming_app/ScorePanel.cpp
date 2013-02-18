@@ -98,7 +98,7 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
     scores_ = new MyList( this, reportDialog_, model_ );
     connect( scores_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnShowGraph() ) );
     setWidget( scores_ );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

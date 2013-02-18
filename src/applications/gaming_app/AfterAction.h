@@ -10,6 +10,7 @@
 #ifndef __AfterAction_h_
 #define __AfterAction_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace actions
@@ -42,29 +43,21 @@ class StaticModel;
 */
 // Created: AGE 2007-09-17
 // =============================================================================
-class AfterAction : public QObject
-                  , public tools::Observer_ABC
+class AfterAction : public gui::RichDockWidget
                   , public tools::ElementObserver_ABC< Services >
                   , public tools::ElementObserver_ABC< AfterActionRequest >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QMainWindow* window, kernel::Controllers& controllers, AfterActionModel& model,
+             AfterAction( QWidget* parent, kernel::Controllers& controllers, AfterActionModel& model,
                           IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~AfterAction();
-    //@}
-
-    //! @name Operations
-    //@{
-    void SetStartup();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, AfterActionModel& model,
-                                IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );
     //@}
@@ -72,10 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QMainWindow* window_;
-    QDockWidget* aarDock_;
     QTabWidget* functionsTab_;
-    bool aar_;
     bool firstUpdate_;
     //@}
 };

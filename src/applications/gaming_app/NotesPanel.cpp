@@ -55,7 +55,7 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controllers& controller
     setWidget( notes_ );
 
     noteDialog_ = new NoteDialog( this, publisher_ );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

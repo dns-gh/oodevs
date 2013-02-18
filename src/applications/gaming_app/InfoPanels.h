@@ -10,7 +10,7 @@
 #ifndef __InfoPanels_h_
 #define __InfoPanels_h_
 
-#include "clients_gui/Panels.h"
+#include "clients_gui/RichDockWidget.h"
 
 namespace kernel
 {
@@ -23,28 +23,19 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class Publisher_ABC;
-
 // =============================================================================
 /** @class  InfoPanels
     @brief  Info panels container
 */
 // Created: SBO 2006-08-08
 // =============================================================================
-class InfoPanels : public gui::Panels
+class InfoPanels : public gui::RichDockWidget
 {
 public:
     //! @name Constructors/Destructor
     //@{
              InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor );
     virtual ~InfoPanels();
-    //@}
-
-private:
-    //! @name Copy / Assignment
-    //@{
-    InfoPanels( const InfoPanels& );
-    InfoPanels& operator=( const InfoPanels& );
     //@}
 };
 

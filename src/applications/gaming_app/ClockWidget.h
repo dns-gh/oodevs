@@ -11,16 +11,17 @@
 #define __ClockWidget_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "gaming/Simulation.h"
 
 namespace kernel
 {
     class Controllers;
+    class Time_ABC;
 }
 
 class ActionsScheduler;
 class Publisher_ABC;
 class Profile;
+class Simulation;
 
 // =============================================================================
 /** @class  ClockWidget
@@ -35,17 +36,11 @@ class ClockWidget : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler );
+             ClockWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler );
     virtual ~ClockWidget();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ClockWidget( const ClockWidget& );            //!< Copy constructor
-    ClockWidget& operator=( const ClockWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );

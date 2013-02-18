@@ -16,6 +16,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/DrawerPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
@@ -36,17 +37,20 @@ using namespace actions;
 CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, const Model& model,
                                 const Time_ABC& simulation, ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, GlTools_ABC& tools, SymbolIcons& icons,
                                 ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config )
-    : Panels      ( parent )
-    , controllers_( controllers )
+    : gui::RichDockWidget( controllers, parent, "creation-panel" )
 {
+    setWindowTitle( tools::translate( "CreationPanels", "Creation" ) );
+    panels_ = new gui::Panels( this );
+    setWidget( panels_ );
+
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, icons, colorStrategy ) );
-    AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_ ) );
-    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools, config ) );
-    AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
-    AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
-    AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
-    controllers_.Register( *this );
+    panels_->AddPanel( units_ = new UnitsPanel( panels_, *panels_, controllers, staticModel.types_, icons, colorStrategy ) );
+    panels_->AddPanel( crowds_ = new PopulationsPanel( panels_, *panels_, controllers, staticModel.types_ ) );
+    panels_->AddPanel( objects_ = new ObjectCreationPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools, config ) );
+    panels_->AddPanel( fires_ = new FireCreationPanel( panels_, *panels_, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
+    panels_->AddPanel( weather_ = new ::WeatherPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
+    panels_->AddPanel( drawings_ = new DrawerPanel( panels_, *panels_, paramLayer, controllers, model.drawings_, config ) );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +79,7 @@ void CreationPanels::Draw( gui::Viewport_ABC& viewport ) const
 void CreationPanels::NotifyUpdated( const ModelLoaded& )
 {
     AddPanels();
-    Add( drawings_ );
+    panels_->Add( drawings_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +89,7 @@ void CreationPanels::NotifyUpdated( const ModelLoaded& )
 void CreationPanels::NotifyUpdated( const ModelUnLoaded& )
 {
     RemovePanels();
-    Remove( drawings_ );
+    panels_->Remove( drawings_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,11 +110,11 @@ void CreationPanels::NotifyUpdated( const kernel::Profile_ABC& profile )
 // -----------------------------------------------------------------------------
 void CreationPanels::AddPanels()
 {
-    Add( units_ );
-    Add( objects_ );
-    Add( crowds_ );
-    Add( weather_ );
-    Add( fires_ );
+    panels_->Add( units_ );
+    panels_->Add( objects_ );
+    panels_->Add( crowds_ );
+    panels_->Add( weather_ );
+    panels_->Add( fires_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,9 +123,9 @@ void CreationPanels::AddPanels()
 // -----------------------------------------------------------------------------
 void CreationPanels::RemovePanels()
 {
-    Remove( units_ );
-    Remove( objects_ );
-    Remove( crowds_ );
-    Remove( weather_ );
-    Remove( fires_ );
+    panels_->Remove( units_ );
+    panels_->Remove( objects_ );
+    panels_->Remove( crowds_ );
+    panels_->Remove( weather_ );
+    panels_->Remove( fires_ );
 }

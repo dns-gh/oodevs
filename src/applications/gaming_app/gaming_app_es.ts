@@ -493,6 +493,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>CreationPanels</name>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CriticalIntelligenceDialog</name>
     <message>
         <source>Change critical intelligence</source>
@@ -1040,6 +1047,13 @@ Reason: %3
     <message>
         <source>Equipment availabilities</source>
         <translation>Equipos disponibles</translation>
+    </message>
+</context>
+<context>
+    <name>InfoPanels</name>
+    <message>
+        <source>Knowledge</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1641,26 +1655,6 @@ Reason: %3
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished">Propiedades</translation>
-    </message>
-    <message>
-        <source>Knowledge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profiling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2415,6 +2409,10 @@ This data can&apos;t be projected.</source>
         <source>Units</source>
         <translation type="unfinished">Unidades</translation>
     </message>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OrbatPanel</name>
@@ -2640,6 +2638,17 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Outgoing messages: </source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiling</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Properties</name>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Propiedades</translation>
     </message>
 </context>
 <context>

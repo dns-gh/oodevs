@@ -811,6 +811,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationTreeView.cpp">
       <Filter>Source Files\TreeView</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\DockContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1154,6 +1157,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationTreeView.h">
       <Filter>Source Files\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\DockContainer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

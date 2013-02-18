@@ -70,12 +70,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    OrbatToolbar( const OrbatToolbar& );            //!< Copy constructor
-    OrbatToolbar& operator=( const OrbatToolbar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual QSize minimumSizeHint() const;

@@ -15,54 +15,39 @@
 #include "AgentsLayer.h"
 #include "AgentKnowledgesLayer.h"
 #include "AutomatsLayer.h"
-#include "ChatDock.h"
 #include "ClientCommandFacade.h"
-#include "ClockDock.h"
 #include "CommandFacade.h"
 #include "Config.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
+#include "DockContainer.h"
 #include "EventToolbar.h"
-#include "ExtensionsPanel.h"
 #include "FogLayer.h"
 #include "FormationLayer.h"
 #include "icons.h"
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
-#include "InfoDock.h"
-#include "InfoPanels.h"
 #include "LimitsLayer.h"
 #include "LinkInterpreter.h"
 #include "LoggerProxy.h"
 #include "ConnectLoginDialog.h"
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
-#include "MessagePanel.h"
 #include "MissionPanel.h"
-#include "NotesPanel.h"
 #include "ObjectKnowledgesLayer.h"
-#include "OrbatDockWidget.h"
 #include "ObjectsLayer.h"
 #include "PopulationKnowledgesLayer.h"
 #include "PopulationsLayer.h"
 #include "ProfilingPanel.h"
-#include "ProfilesPanel.h"
-#include "InhabitantPanel.h"
-#include "Properties.h"
 #include "ReplayerToolbar.h"
-#include "ResourceLinksDialog.h"
-#include "ScorePanel.h"
 #include "SIMControlToolbar.h"
 #include "SimulationLighting.h"
 #include "StatusBar.h"
 #include "TeamLayer.h"
-#include "TimelinePanel.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "OrbatPanel.h"
-#include "PlanificationModePanel.h"
 #include "clients_kernel/ActionController.h"
-#include "actions_gui/InterfaceBuilder.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -76,12 +61,10 @@
 #include "gaming/Profile.h"
 #include "gaming/ProfileFilter.h"
 #include "gaming/VisionConesToggler.h"
-#include "gaming/ActionsScheduler.h"
 #include "gaming/ColorController.h"
 #include "gaming/TeamsModel.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/DisplayToolbar.h"
-#include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
@@ -90,7 +73,6 @@
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
-#include "clients_gui/MiniViews.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/SelectionColorModifier.h"
@@ -120,6 +102,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/ElevationPainter.h"
+#include "clients_gui/MiniViews.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "geodata/ProjectionException.h"
 #include "geodata/ExtentException.h"
@@ -130,6 +113,8 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+
+#include "MessagePanel.h"
 
 namespace bfs = boost::filesystem;
 using namespace kernel;
@@ -148,23 +133,17 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , config_          ( config )
     , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_( new ColorController( controllers_ ) )
-    , glProxy_         ( 0 )
+    , glProxy_         ( new gui::GlProxy() )
     , connected_       ( false )
     , onPlanif_        ( false )
     , pProfile_        ( new ProfileFilter( controllers, p ) )
     , icons_           ( 0 )
+    , dockContainer_   ( 0 )
 {
     controllers_.modes_->SetMainWindow( this );
 
-    setAttribute( Qt::WA_DeleteOnClose, true );
-    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
-    planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
-    setCaption( planifName_ );
-
-    Publisher_ABC& publisher = network_.GetMessageMgr();
-
-    glProxy_ = new gui::GlProxy();
-    strategy_ = new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ );
+    // Strategy
+    strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, *pProfile_ ) ) );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, *pProfile_ ) ) );
 
@@ -172,12 +151,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
 
+    // Event strategy
     forward_.reset( new gui::CircularEventStrategy( *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
-    QStackedWidget* centralWidget = new QStackedWidget();
-    setCentralWidget( centralWidget );
-    selector_ = new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
+    // Main widget
+    selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
+    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     selector_->AddIcon( xpm_cadenas        , -260, 360 );
     selector_->AddIcon( xpm_radars_on      ,  200, 270 );
     selector_->AddIcon( xpm_brouillage     ,  200, 50 );
@@ -189,227 +169,77 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
-    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
-    lighting_ = new SimulationLighting( controllers, this );
+    // Misc
+    lighting_.reset( new SimulationLighting( controllers, this ) );
+    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, *pProfile_ );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
+    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_ ) );
     preferenceDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( preferenceDialog_.get(), controllers ) );
-    new VisionConesToggler( controllers, publisher, this );
+    new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
+    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, *pProfile_ );
+    new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
-    gui::DisplayExtractor* displayExtractor = new gui::DisplayExtractor( this );
-
-    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, *pProfile_ );
-    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
-    connect( displayExtractor, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
-
-    // Logger
-    QDockWidget* pLogDockWnd_ = new QDockWidget( "log", this );
-    pLogDockWnd_->setObjectName( "log" );
-    addDockWidget( Qt::BottomDockWidgetArea, pLogDockWnd_ );
-    gui::Logger* pLogPanel = new gui::Logger( pLogDockWnd_, simulation, "./Debug/Gaming.log" );
-    pLogDockWnd_->setWidget( pLogPanel );
-    pLogDockWnd_->setWindowTitle( tr( "Log" ) );
-    pLogDockWnd_->hide();
-    logger.SetLogger( *pLogPanel );
-
-    // Standard toolbars
-    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
-    gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_ );
-    EventToolbar* eToolBar = new EventToolbar( this, controllers, *pProfile_ );
-    gui::DisplayToolbar* dToolBar = new gui::DisplayToolbar( this, controllers );
-    SIMControlToolbar* sToolBar = new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel );
-
-    addToolBar( sToolBar );
-    addToolBar( dToolBar );
-    addToolBar( eToolBar );
-    addToolBar( gToolBar );
-
-    // Terrain profile
-    gui::TerrainProfiler* terrainProfiler = new gui::TerrainProfiler( this, controllers, staticModel.detection_, *profilerLayer );
-    addDockWidget( Qt::RightDockWidgetArea, terrainProfiler );
-    terrainProfiler->hide();
-    connect( gToolBar->GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), terrainProfiler, SLOT( setVisible( bool ) ) );
-    connect( terrainProfiler, SIGNAL( visibilityChanged( bool ) ), gToolBar->GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
-
-    // A few layers
-    gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
-    gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer );
-    addToolBar( LocEditToolBar );
+    // First layers
     parameters_ = new gui::ParametersLayer( *glProxy_ );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_ );
-    ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
+    gui::LocationsLayer* locationsLayer      = new gui::LocationsLayer( *glProxy_ );
+    gui::TerrainPicker* picker               = new gui::TerrainPicker( this );
+    WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
+    AutomatsLayer* automatsLayer             = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation, network_.GetMessageMgr(), model_.agents_ );
+    FormationLayer* formationLayer           = new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
+    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
 
-    addToolBarBreak();
+    // Misc
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, *pProfile_, *selector_ );
 
     //Dialogs
-    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, *pProfile_, network.GetCommands(), config, *parameters_ );
+    new Dialogs( this, controllers, model_, staticModel, network_.GetMessageMgr(), model_.actions_, simulation, *pProfile_, network.GetCommands(), config, *parameters_ );
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
-
-    // Profile
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *pProfile_, *icons_, model_.userProfileFactory_ );
-
-    // Agent list panel
-    orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "orbat", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *icons_ );
-    addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
-
-    // Mini views
-    gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_, *pProfile_ );
-    addDockWidget( Qt::RightDockWidgetArea, miniviews );
-    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), miniviews, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-    miniviews->hide();
-
-    // Properties
-    QDockWidget* pPropertiesWnd = new QDockWidget( "properties", this );
-    pPropertiesWnd->setObjectName( "properties" );
-    Properties* properties = new Properties( pPropertiesWnd, controllers, *glProxy_ );
-    pPropertiesWnd->setWidget( properties );
-    pPropertiesWnd->setWindowTitle( tr( "Properties" ) );
-    addDockWidget( Qt::LeftDockWidgetArea, pPropertiesWnd );
-    pPropertiesWnd->hide();
-
-    // Info panel
-    QDockWidget* pInfoDockWnd_ = new QDockWidget( "oldinfo", this );
-    pInfoDockWnd_->setObjectName( "oldInfo" );
-    addDockWidget( Qt::RightDockWidgetArea, pInfoDockWnd_ );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, *displayExtractor );
-    pInfoDockWnd_->setWidget( pInfoPanel_ );
-    pInfoDockWnd_->setWindowTitle( tr( "Knowledge" ) );
-    pInfoDockWnd_->hide();
-
-    // Interface Builder
-    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers_, *parameters_, staticModel_, &model_.agentKnowledgeConverter_, &model_.objectKnowledgeConverter_, &simulation ) );
-    // Mission panel
-    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *glProxy_, *pProfile_, model_.actions_, simulation, *interfaceBuilder_, config_ );
-    addDockWidget( Qt::LeftDockWidgetArea, pMissionPanel_ );
-    pMissionPanel_->setProperty( "notAppropriate", QVariant( true ) );
-    pMissionPanel_->hide();
-
-    // Chat
-    QDockWidget* chatDock = new ChatDock( this, controllers_, publisher, network.GetCommands() );
-    addDockWidget( Qt::BottomDockWidgetArea, chatDock );
-    chatDock->hide();
-
-    new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, *pProfile_ );
-    new ClientCommandFacade( this, controllers_, publisher );
-
-    // Info
-    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons_, *factory, *displayExtractor, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
-    addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
-
-    // Clock
-    ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
-    QDockWidget* clockWnd = new ClockDock( this, controllers_, simulation, *scheduler );
-    addDockWidget( Qt::LeftDockWidgetArea, clockWnd );
-
-    // Profiler
-    QDockWidget* pProfilerDockWnd_ = new QDockWidget( "profiler", this );
-    pProfilerDockWnd_->setObjectName( "profiler" );
-    addDockWidget( Qt::RightDockWidgetArea, pProfilerDockWnd_ );
-    ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_, simulation );
-    pProfilerDockWnd_->setWidget( profilingPanel_ );
-    pProfilerDockWnd_->setWindowTitle( tr( "Profiling" ) );
-    pProfilerDockWnd_->setProperty( "notAppropriate", QVariant( true ) );
-    pProfilerDockWnd_->hide();
-
-    // Layers
-    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
-    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), *picker );
-    WeatherLayer* meteoLayer = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
-
-    // object/unit creation window
-    QDockWidget* pCreationWnd = new QDockWidget( "creation", this );
-    pCreationWnd->setObjectName( "creation" );
-    addDockWidget( Qt::RightDockWidgetArea, pCreationWnd );
-    pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, model_, simulation, *parameters_, *meteoLayer, *glProxy_, *symbols, *strategy_, config_ );
-    pCreationWnd->setWidget( creationPanels );
-    pCreationWnd->setWindowTitle( tr( "Creation" ) );
-
-    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, *pProfile_, *selector_ );
-    ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
-    addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
-    IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog, simulation );
-    aar_ = new AfterAction( this, controllers_, model.aar_, *plotFactory, *interfaceBuilder_ );
 
-    // Actions panel
-    {
-        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_, *scheduler, config_, *pProfile_, *displayExtractor );
-        addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
-        timelinePanel->hide();
-    }
-    // Profiles panel
-    {
-        ProfilesPanel* profilesPanel = new ProfilesPanel( this, controllers_, network_, *pProfile_, model_.teams_ );
-        addDockWidget( Qt::RightDockWidgetArea, profilesPanel );
-        profilesPanel->hide();
-    }
-    // Inhabitant panel
-    {
-        InhabitantPanel* inhabitantPanel = new InhabitantPanel( this, controllers_, model_ );
-        addDockWidget( Qt::RightDockWidgetArea, inhabitantPanel );
-        inhabitantPanel->hide();
-    }
-    // Score panel
-    {
-        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *displayExtractor, *interpreter, *plotFactory, *indicatorExportDialog, model_.scores_, config );
-        addDockWidget( Qt::RightDockWidgetArea, scorePanel );
-        scorePanel->hide();
-    }
-    // Notes panel
-    {
-        NotesPanel* notePanel = new NotesPanel( this, controllers_, model_.notes_, publisher );
-        addDockWidget( Qt::RightDockWidgetArea, notePanel );
-        notePanel->hide();
-    }
-    // Message panel
-    {
-        QToolBar* messagePanel = new MessagePanel( this, controllers_, publisher, network.GetCommands(), *factory );
-        addToolBar( messagePanel );
-    }
-    // ResourceNetwork panel
-    {
-        QDockWidget* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation );
-        addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
-        pResourceWnd->hide();
-    }
-    // Extensions panel
-    {
-        pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation );
-        addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
-        pExtensionsPanel_->hide();
-    }
-    // Planification mode panel
-    {
-        pPlanificationModePanel_ = new PlanificationModePanel( this, controllers );
-        pPlanificationModePanel_->SetModes( eGamingMode_Exercise | eGamingMode_Default, eGamingMode_Planification );
-        addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel_ );
-        pPlanificationModePanel_->hide();
-    }
+    // Dock widgets
+    dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, *pProfile_,
+                                             *parameters_, *profilerLayer, *automatsLayer, *formationLayer, *meteoLayer,
+                                             *glProxy_, *factory, *interpreter, *strategy_, *symbols, *icons_, *indicatorExportDialog ) );
+    logger.SetLogger( dockContainer_->GetLoggerPanel() );
+    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
-    help_ = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
-    setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, *factory, license, *help_, *interpreter, network_, logger ) );
+    // Tool bars
+    addToolBar( new SIMControlToolbar( this, controllers, network, network_.GetMessageMgr(), dockContainer_->GetLoggerPanel() ) );
+    addToolBar( new gui::DisplayToolbar( this, controllers ) );
+    addToolBar( new EventToolbar( this, controllers, *pProfile_ ) );
+    addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ) );
+    addToolBar( new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
+    addToolBarBreak();
+    addToolBar( new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ) );
+    addToolBar( new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ) );
 
-    CreateLayers( *pMissionPanel_, *creationPanels, *parameters_, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *preferenceDialog_, *pProfile_, simulation, *picker );
-    ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
-    pStatus_->SetVisibleByDefault( true );
-    connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
-    controllers_.Register( *this );
+    // Help
+    gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
+    connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
-    ReadOptions();
+    // Last layers
+    CreateLayers( *locationsLayer, *meteoLayer, *profilerLayer, *automatsLayer, *formationLayer, simulation, *picker );
 
-    pMissionPanel_->hide();
-    replayerToolbar->hide();
-    aar_->SetStartup();
-
-    controllers_.ChangeMode( eGamingMode_Default );
+    // Menu bar & status bar
+    setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, *factory, license, *interpreter, network_, logger ) );
+    new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, *selector_, &dockContainer_->GetProfilingPanel() );
 
     // Raster_app process
     process_.reset( new QProcess( this ) );
     connect( process_.get(), SIGNAL( finished( int, QProcess::ExitStatus ) ), this, SLOT( OnRasterProcessExited( int, QProcess::ExitStatus ) ) );
+
+    // Initialize
+    setCentralWidget( selector_.get() );
+    setAttribute( Qt::WA_DeleteOnClose, true );
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+    planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
+    setCaption( planifName_ );
+    ReadOptions();
+    controllers_.Register( *this );
+    controllers_.ChangeMode( eGamingMode_Default );
 }
 
 // -----------------------------------------------------------------------------
@@ -420,10 +250,9 @@ MainWindow::~MainWindow()
 {
     process_->kill();
     controllers_.Unregister( *this );
-    delete aar_;
-    delete pMissionPanel_;
-    delete parameters_;
-    delete selector_;
+    glProxy_.reset();
+    dockContainer_.reset();
+    selector_.reset();
 }
 
 namespace
@@ -443,72 +272,73 @@ namespace
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer& locationsLayer,
-                               gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer& weather, gui::Layer& profilerLayer,
-                               gui::PreferencesDialog& preferences, const Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker )
+void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
+                               gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker )
 {
-    gui::TooltipsLayer_ABC& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
-    gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );
-    gui::Elevation2dLayer& elevation2d   = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
+    gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), picker );
+    gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( dockContainer_->GetMissionPanel() );
+    gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
+    gui::Layer& elevation2d          = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
-    gui::Layer& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker );
-    gui::Layer& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, *parameters_, model_.tacticalLineFactory_, *glProxy_, *pProfile_ );
+    gui::Layer& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, picker );
+    gui::Layer& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
     gui::Layer& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
-    gui::Layer& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
-    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
+    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, *pProfile_ );
     gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
     gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
-    AddLayer( *glProxy_, preferences, defaultLayer );
-    AddLayer( *glProxy_, preferences, elevation2d, "main,composition,miniviews", tr( "Elevation" ) );
-    AddLayer( *glProxy_, preferences, raster, "main,composition,miniviews", tr( "Raster" ) );
-    AddLayer( *glProxy_, preferences, terrain, "main,composition,miniviews", tr( "Terrain" ) );
-    AddLayer( *glProxy_, preferences, contour, "main,composition,miniviews", tr( "Contour Lines" ) );
-    AddLayer( *glProxy_, preferences, urbanLayer, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, watershed, "main,composition,miniviews", tr( "Watershed" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, defaultLayer );
+    AddLayer( *glProxy_, *preferenceDialog_, elevation2d, "main,composition,miniviews", tr( "Elevation" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, raster, "main,composition,miniviews", tr( "Raster" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, contour, "main,composition,miniviews", tr( "Contour Lines" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, urbanLayer, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, watershed, "main,composition,miniviews", tr( "Watershed" ) );
     glProxy_->Register( elevation3d );
-    AddLayer( *glProxy_, preferences, grid, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, weather, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, limits, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, objectKnowledges, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, populationKnowledges, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, agentKnowledges, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, formationLayer, "main,miniviews", tr( "Formations" ) );
-    AddLayer( *glProxy_, preferences, teamLayer, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, objectsLayer, "main,miniviews", tr( "Objects" ) );
-    AddLayer( *glProxy_, preferences, populations, "main,miniviews", tr( "Crowds" ) );
-    AddLayer( *glProxy_, preferences, inhabitants, "main,miniviews", tr( "Populations" ) );
-    AddLayer( *glProxy_, preferences, agents, "main,miniviews", tr( "Units" ) );
-    AddLayer( *glProxy_, preferences, automats, "main,miniviews", tr( "Automats" ) );
-    AddLayer( *glProxy_, preferences, missionsLayer, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, actionsLayer, "main" );
-    AddLayer( *glProxy_, preferences, creationsLayer, "main" );
-    AddLayer( *glProxy_, preferences, parameters, "main" );
-    AddLayer( *glProxy_, preferences, metrics, "main" );
-    AddLayer( *glProxy_, preferences, locationsLayer, "main" );
-    AddLayer( *glProxy_, preferences, profilerLayer, "main" );
-    AddLayer( *glProxy_, preferences, drawerLayer, "main,miniviews" );
-    AddLayer( *glProxy_, preferences, fogLayer, "fog" );
-    AddLayer( *glProxy_, preferences, tooltipLayer, "tooltip" );
-    AddLayer( *glProxy_, preferences, logoLayer, "main", tr( "Logo" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, grid, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, weather, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, limits, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, objectKnowledges, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, populationKnowledges, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, agentKnowledges, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, formationLayer, "main,miniviews", tr( "Formations" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, teamLayer, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, objectsLayer, "main,miniviews", tr( "Objects" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, populations, "main,miniviews", tr( "Crowds" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, inhabitants, "main,miniviews", tr( "Populations" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, agents, "main,miniviews", tr( "Units" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, automats, "main,miniviews", tr( "Automats" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, missionsLayer, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, actionsLayer, "main" );
+    AddLayer( *glProxy_, *preferenceDialog_, creationsLayer, "main" );
+    AddLayer( *glProxy_, *preferenceDialog_, *parameters_, "main" );
+    AddLayer( *glProxy_, *preferenceDialog_, metrics, "main" );
+    AddLayer( *glProxy_, *preferenceDialog_, locationsLayer, "main" );
+    AddLayer( *glProxy_, *preferenceDialog_, profilerLayer, "main" );
+    AddLayer( *glProxy_, *preferenceDialog_, drawerLayer, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, fogLayer, "fog" );
+    AddLayer( *glProxy_, *preferenceDialog_, tooltipLayer, "tooltip" );
+    AddLayer( *glProxy_, *preferenceDialog_, logoLayer, "main", tr( "Logo" ) );
 
     // ordre des evenements
-    forward_->Register( terrain );
-    forward_->Register( parameters );
+    forward_->Register( terrainLayer );
+    forward_->Register( *parameters_ );
     forward_->Register( agents );
     forward_->Register( automats );
     forward_->Register( formationLayer );
@@ -534,7 +364,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
 // -----------------------------------------------------------------------------
 void MainWindow::OnPlanifStateChange()
 {
-    pMissionPanel_->ActivatePlanification();
+    dockContainer_->GetMissionPanel().ActivatePlanification();
     onPlanif_ = !onPlanif_;
     if( onPlanif_ )
         setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
@@ -543,7 +373,6 @@ void MainWindow::OnPlanifStateChange()
 }
 
 // -----------------------------------------------------------------------------
-
 // Name: MainWindow::Load
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
@@ -552,12 +381,11 @@ void MainWindow::Load()
     try
     {
         WriteOptions();
-        orbatDockWidget_->Purge();
+        dockContainer_->Purge();
         model_.Purge();
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
-        pExtensionsPanel_->hide();
         ReadOptions();
         controllers_.ChangeMode( eGamingMode_Exercise );
     }
@@ -570,15 +398,6 @@ void MainWindow::Load()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::ShowHelp
-// Created: JSR 2012-03-27
-// -----------------------------------------------------------------------------
-void MainWindow::ShowHelp()
-{
-    help_->ShowHelp();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MainWindow::Close
 // Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
@@ -588,7 +407,7 @@ void MainWindow::Close()
     network_.Disconnect();
     parameters_->Reset();
     selector_->Close();
-    orbatDockWidget_->Purge();
+    dockContainer_->Purge();
     model_.Purge();
     staticModel_.Purge();
 }

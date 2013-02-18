@@ -9,30 +9,35 @@
 
 #include "gaming_app_pch.h"
 #include "InfoPanels.h"
-
 #include "AgentKnowledgePanel.h"
 #include "ObjectKnowledgePanel.h"
 #include "ObjectReportPanel.h"
 #include "PopulationKnowledgePanel.h"
 #include "ObjectPanel.h"
-#include "clients_gui/PopulationPanel.h"
 #include "UrbanKnowledgePanel.h"
+#include "clients_gui/Panels.h"
+#include "clients_gui/PopulationPanel.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
 InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor )
-    : Panels( parent )
+    : gui::RichDockWidget( controllers, parent, "info-panels" )
 {
-    setMinimumWidth( 200 );
-    AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );
-    AddPanel( new gui::PopulationPanel    ( this, *this, controllers, factory ) );
-    AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );
-    AddPanel( new ObjectPanel             ( this, *this, controllers, factory ) );
-    AddPanel( new ObjectReportPanel       ( this, *this, controllers, extractor ) );
-    AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
-    AddPanel( new UrbanKnowledgePanel     ( this, *this, controllers, factory ) );
+    setWindowTitle( tools::translate( "InfoPanels", "Knowledge" ) );
+    gui::Panels* panels = new gui::Panels( this );
+    setWidget( panels );
+
+    panels->setMinimumWidth( 200 );
+    panels->AddPanel( new AgentKnowledgePanel     ( panels, *panels, controllers, factory ) );
+    panels->AddPanel( new gui::PopulationPanel    ( panels, *panels, controllers, factory ) );
+    panels->AddPanel( new PopulationKnowledgePanel( panels, *panels, controllers, factory ) );
+    panels->AddPanel( new ObjectPanel             ( panels, *panels, controllers, factory ) );
+    panels->AddPanel( new ObjectReportPanel       ( panels, *panels, controllers, extractor ) );
+    panels->AddPanel( new ObjectKnowledgePanel    ( panels, *panels, controllers, factory ) );
+    panels->AddPanel( new UrbanKnowledgePanel     ( panels, *panels, controllers, factory ) );
 }
 
 // -----------------------------------------------------------------------------

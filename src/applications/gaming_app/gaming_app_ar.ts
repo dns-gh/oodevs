@@ -493,6 +493,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>CreationPanels</name>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished">إنشاء</translation>
+    </message>
+</context>
+<context>
     <name>CriticalIntelligenceDialog</name>
     <message>
         <source>Change critical intelligence</source>
@@ -1040,6 +1047,13 @@ Reason: %3
     <message>
         <source>Equipment availabilities</source>
         <translation type="unfinished">التوفر المعدات</translation>
+    </message>
+</context>
+<context>
+    <name>InfoPanels</name>
+    <message>
+        <source>Knowledge</source>
+        <translation type="unfinished">المعرفة</translation>
     </message>
 </context>
 <context>
@@ -1632,10 +1646,6 @@ Reason: %3
         <translation type="unfinished">أوربات</translation>
     </message>
     <message>
-        <source>Log</source>
-        <translation type="unfinished">سجل</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation type="unfinished">الكائنات</translation>
     </message>
@@ -1646,22 +1656,6 @@ Reason: %3
     <message>
         <source>Populations</source>
         <translation type="unfinished">السكان</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished">خصائص</translation>
-    </message>
-    <message>
-        <source>Knowledge</source>
-        <translation type="unfinished">المعرفة</translation>
-    </message>
-    <message>
-        <source>Profiling</source>
-        <translation type="unfinished">التنميط</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation type="unfinished">إنشاء</translation>
     </message>
     <message>
         <source>Elevation</source>
@@ -2412,6 +2406,10 @@ This data can&apos;t be projected.</source>
         <source>Units</source>
         <translation type="unfinished">وحدات</translation>
     </message>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished">أوربات</translation>
+    </message>
 </context>
 <context>
     <name>OrbatPanel</name>
@@ -2637,6 +2635,17 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Pathfinds</source>
         <translation type="unfinished">باثفيندس</translation>
+    </message>
+    <message>
+        <source>Profiling</source>
+        <translation type="unfinished">التنميط</translation>
+    </message>
+</context>
+<context>
+    <name>Properties</name>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">خصائص</translation>
     </message>
 </context>
 <context>

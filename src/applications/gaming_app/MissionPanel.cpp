@@ -69,11 +69,11 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , interfaceBuilder_        ( interfaceBuilder )
     , config_                  ( config )
 {
-    setObjectName( "mission" );
-    setFloating( true );
     setWindowTitle( tr( "Mission" ) );
+    setProperty( "notAppropriate", QVariant( true ) );
+    setFloating( true );
 
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

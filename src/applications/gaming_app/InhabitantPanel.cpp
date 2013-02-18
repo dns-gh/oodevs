@@ -55,7 +55,7 @@ InhabitantPanel::InhabitantPanel( QMainWindow* mainWindow, kernel::Controllers& 
     connect( table_, SIGNAL( doubleClicked( const QModelIndex & ) ), this, SLOT( OnSelectionChanged( const QModelIndex& ) ) );
     mainLayout->addWidget( table_ );
     setWidget( main );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

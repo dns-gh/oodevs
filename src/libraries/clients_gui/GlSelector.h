@@ -44,7 +44,7 @@ namespace gui
 */
 // Created: AGE 2007-03-09
 // =============================================================================
-class GlSelector : public QObject
+class GlSelector : public QStackedWidget
                  , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
 {
@@ -53,7 +53,7 @@ class GlSelector : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             GlSelector( QStackedWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
+             GlSelector( QWidget* parent, GlProxy& proxy, kernel::Controllers& controllers, const tools::ExerciseConfig& config, kernel::DetectionMap& map, EventStrategy_ABC& strategy );
     virtual ~GlSelector();
     //@}
 
@@ -93,7 +93,6 @@ private:
 private:
     //! @name Member data
     //@{
-    QStackedWidget* parent_;
     GlProxy& proxy_;
     kernel::Controllers& controllers_;
     const tools::ExerciseConfig& config_;

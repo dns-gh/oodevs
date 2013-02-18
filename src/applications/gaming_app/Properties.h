@@ -10,7 +10,7 @@
 #ifndef __Properties_h_
 #define __Properties_h_
 
-#include "clients_gui/PropertiesPanel.h"
+#include "clients_gui/RichDockWidget.h"
 
 namespace kernel
 {
@@ -23,6 +23,7 @@ namespace gui
     class GlProxy;
     class PropertyDisplayer;
 }
+
 
 // =============================================================================
 /** @class  PropertiesBase
@@ -55,7 +56,7 @@ protected:
 // Created: SBO 2006-10-19
 // =============================================================================
 class Properties : private PropertiesBase
-                 , public gui::PropertiesPanel
+                 , public gui::RichDockWidget
 {
 public:
     //! @name Constructors/Destructor

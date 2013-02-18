@@ -37,8 +37,8 @@ namespace
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QDockWidget* profilingDock )
-    : gui::StatusBar( controllers, parent, picker, detection, converter )
+StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QObject& selector, QDockWidget* profilingDock )
+    : gui::StatusBar( controllers, parent, picker, detection, converter, selector )
     , picker_( picker )
     , lastSimulationStatus_( false )
     , controllers_( controllers )
@@ -83,6 +83,8 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
     connect( checkPointTimer_, SIGNAL( timeout() ), SLOT( OnCheckPoint() ) );
     connect( &picker_, SIGNAL( WeatherPicked( const QString&, const QString&, const QString&, const QString& ) ),
                        SLOT( WeatherPicked( const QString&, const QString&, const QString&, const QString& ) ) );
+
+    SetVisibleByDefault( true );
 
     controllers_.Update( *this );
 }

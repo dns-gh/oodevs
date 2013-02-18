@@ -1161,6 +1161,10 @@ Voulez-vous le supprimer?</translation>
         <source>Simulation time</source>
         <translation>Heure simulée</translation>
     </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::LogisticPrototype_ABC</name>
@@ -1382,13 +1386,6 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Activity time:</source>
         <translation type="unfinished">duración de actividad:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::OptionsPanel</name>
-    <message>
-        <source>3D metric computation</source>
-        <translation>Calcul de distance en 3D</translation>
     </message>
 </context>
 <context>

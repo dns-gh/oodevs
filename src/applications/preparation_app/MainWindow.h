@@ -81,7 +81,6 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void ShowHelp();
     void New();
     void Open();
     bool Close();
@@ -100,6 +99,7 @@ signals:
     //! @name Signals
     //@{
     void CheckConsistency();
+    void ShowHelp();
     //@}
 
 private:
@@ -149,7 +149,6 @@ private:
     std::auto_ptr< Menu >                        menu_;
     std::auto_ptr< gui::GlSelector >             selector_;
     std::auto_ptr< QProgressDialog >             progressDialog_;
-    std::auto_ptr< gui::HelpSystem >             help_;
     std::auto_ptr< QProcess >                    process_;
     std::auto_ptr< gui::EntitySymbols >          icons_;
     //@}

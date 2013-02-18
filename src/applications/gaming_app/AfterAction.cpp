@@ -25,36 +25,13 @@ using namespace kernel;
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, AfterActionModel& model,
+AfterAction::AfterAction( QWidget* parent, Controllers& controllers, AfterActionModel& model,
                           IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
-    : window_      ( window )
+    : gui::RichDockWidget( controllers, parent, "after-action" )
     , functionsTab_( 0 )
-    , aar_         ( false )
     , firstUpdate_ ( true )
 {
-    CreateAfterActionDock( window, controllers, model, plotFactory, interfaceBuilder );
-    controllers.Register( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterAction destructor
-// Created: AGE 2007-09-17
-// -----------------------------------------------------------------------------
-AfterAction::~AfterAction()
-{
-    delete aarDock_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterAction::CreateAfterActionDock
-// Created: AGE 2007-09-25
-// -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, AfterActionModel& model, IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
-{
-    aarDock_ = new QDockWidget( "aar", window );
-    aarDock_->setObjectName( "aar" );
-    window->addDockWidget( Qt::LeftDockWidgetArea, aarDock_ );
-    Q3VBox* box = new Q3VBox( aarDock_ );
+    Q3VBox* box = new Q3VBox( this );
     box->setMinimumSize( 250, 200 );
     functionsTab_ = new QTabWidget( box );
 
@@ -64,11 +41,22 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, plotFactory );
     functionsTab_->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
 
-    aarDock_->setFeatures( QDockWidget::AllDockWidgetFeatures );
-    aarDock_->setWidget( box );
-    aarDock_->setCaption( tools::translate( "AfterAction", "After action review" ) );
-    aarDock_->hide();
+    setFeatures( QDockWidget::AllDockWidgetFeatures );
+    setWidget( box );
+    setWindowTitle( tools::translate( "AfterAction", "After action review" ) );
     setProperty( "notAppropriate", QVariant() );
+    hide();
+
+    controllers_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterAction destructor
+// Created: AGE 2007-09-17
+// -----------------------------------------------------------------------------
+AfterAction::~AfterAction()
+{
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,23 +74,12 @@ void AfterAction::NotifyCreated( const AfterActionRequest& )
 // -----------------------------------------------------------------------------
 void AfterAction::NotifyUpdated( const Services& services )
 {
-    if( !firstUpdate_ )
-        aar_ = aarDock_->isShown();
-    firstUpdate_ = false;
     const bool isAar = services.HasService< aar::Service >() && services.HasService< replay::Service >();
-    aarDock_->setVisible( aar_ && isAar );
+    setVisible( !firstUpdate_ && isShown() && isAar );
+    if( firstUpdate_ )
+        firstUpdate_ = false;
     if( isAar )
         setProperty( "notAppropriate", QVariant() );
     else
         setProperty( "notAppropriate", QVariant( true ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AfterAction::SetStartup
-// Created: FPO 2011-03-17
-// -----------------------------------------------------------------------------
-void AfterAction::SetStartup()
-{
-    aar_ = aarDock_->isShown();
-    aarDock_->hide();
 }

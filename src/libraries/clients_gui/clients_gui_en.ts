@@ -1165,6 +1165,10 @@ Do you want to remove it?</translation>
         <source>Clear list</source>
         <translation>Clear list</translation>
     </message>
+    <message>
+        <source>Log</source>
+        <translation>Log</translation>
+    </message>
 </context>
 <context>
     <name>gui::LogisticPrototype_ABC</name>
@@ -1386,13 +1390,6 @@ Do you want to remove it?</translation>
     <message>
         <source>Activity time:</source>
         <translation>Activity time:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::OptionsPanel</name>
-    <message>
-        <source>3D metric computation</source>
-        <translation>3D metric computation</translation>
     </message>
 </context>
 <context>

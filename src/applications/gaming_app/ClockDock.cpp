@@ -16,7 +16,7 @@
 // Name: ClockDock constructor
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler )
+ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler )
     : gui::RichDockWidget( controllers, parent, "clock" )
 {
     setObjectName( "clock" );

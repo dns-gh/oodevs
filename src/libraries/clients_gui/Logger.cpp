@@ -33,31 +33,35 @@ namespace
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std::string& filename )
-    : QTreeWidget( pParent )
+Logger::Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, const std::string& filename )
+    : gui::RichDockWidget( controllers, pParent, "logger-panel" )
     , simulation_( simulation )
     , log_( filename.c_str(), std::ios::out | std::ios::app )
     , popupMenu_( new kernel::ContextMenu( this ) )
     , counter_( 0 )
 {
-    setBackgroundColor( Qt::white );
-    setMinimumSize( 40, 40 );
-    header()->setSortIndicatorShown( true );
-    setRootIsDecorated( true );
-    setColumnCount( 3 );
-    setSortingEnabled( true );
-    setHeaderHidden( false );
-    setEditTriggers( 0 );
-    setUniformRowHeights( true );
+    setWindowTitle( tr( "Log" ) );
+    treeWidget_ = new QTreeWidget( this );
+    setWidget( treeWidget_ );
+
+    treeWidget_->setBackgroundColor( Qt::white );
+    treeWidget_->setMinimumSize( 40, 40 );
+    treeWidget_->header()->setSortIndicatorShown( true );
+    treeWidget_->setRootIsDecorated( true );
+    treeWidget_->setColumnCount( 3 );
+    treeWidget_->setSortingEnabled( true );
+    treeWidget_->setHeaderHidden( false );
+    treeWidget_->setEditTriggers( 0 );
+    treeWidget_->setUniformRowHeights( true );
 
     QStringList headers;
     headers << tr( "Real time" ) << tr( "Simulation time" ) << tr( "Message" ) << "";
-    setHeaderLabels( headers );
-    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
-    header()->setResizeMode( 2, QHeaderView::ResizeToContents );
+    treeWidget_->setHeaderLabels( headers );
+    treeWidget_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    treeWidget_->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    treeWidget_->header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 
-    setAllColumnsShowFocus( true );
+    treeWidget_->setAllColumnsShowFocus( true );
 
     popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( Clear() ) );
 }
@@ -119,8 +123,8 @@ void Logger::Error( const std::string& message )
 void Logger::Clear()
 {
     counter_ = 0;
-    while( topLevelItemCount() > 0 )
-        delete takeTopLevelItem( 0 );
+    while( treeWidget_->topLevelItemCount() > 0 )
+        delete treeWidget_->takeTopLevelItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +134,7 @@ void Logger::Clear()
 void Logger::WriteLog( const std::string& message, const QColor& color )
 {
     log_ << message << std::endl;
-    LoggerItem* item = new LoggerItem( this );
+    LoggerItem* item = new LoggerItem( treeWidget_ );
     item->setData( 0, Qt::UserRole, counter_++ );
     item->setText( 0, QTime::currentTime().toString() );
     item->setText( 1, simulation_.GetTimeAsString() );
@@ -138,7 +142,7 @@ void Logger::WriteLog( const std::string& message, const QColor& color )
     item->setForeground( 0, color );
     item->setForeground( 1, color );
     item->setForeground( 2, color );
-    insertTopLevelItem( 0, item );
+    treeWidget_->insertTopLevelItem( 0, item );
 }
 
 // -----------------------------------------------------------------------------

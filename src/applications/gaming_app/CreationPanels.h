@@ -11,6 +11,7 @@
 #define __CreationPanels_h_
 
 #include "clients_gui/Panels.h"
+#include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace tools
@@ -52,8 +53,7 @@ class WeatherPanel;
 */
 // Created: SBO 2006-08-28
 // =============================================================================
-class CreationPanels : public gui::Panels
-                     , public tools::Observer_ABC
+class CreationPanels : public gui::RichDockWidget
                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                      , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                      , public tools::ElementObserver_ABC< kernel::Profile_ABC >
@@ -89,7 +89,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&     controllers_;
+    gui::Panels*             panels_;
     gui::UnitsPanel*         units_;
     ObjectCreationPanel*     objects_;
     WeatherPanel*            weather_;

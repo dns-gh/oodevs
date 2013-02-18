@@ -14,14 +14,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
-namespace actions
-{
-    namespace gui
-    {
-        class InterfaceBuilder_ABC;
-    }
-}
-
 namespace kernel
 {
     class Controllers;
@@ -43,7 +35,6 @@ namespace gui
     class HelpSystem;
     class Layer;
     class LightingProxy;
-    class OptionsPanel;
     class Painter_ABC;
     class ParametersLayer;
     class PreferencesDialog;
@@ -51,7 +42,6 @@ namespace gui
     class TerrainPicker;
 }
 
-class AfterAction;
 class Config;
 class Services;
 class StatusBar;
@@ -60,13 +50,13 @@ class StaticModel;
 class Profile;
 class Network;
 class MissionPanel;
-class CreationPanels;
 class LoggerProxy;
 class Simulation;
 class ColorController;
 class OrbatDockWidget;
 class ProfileFilter;
-class PlanificationModePanel;
+class DockContainer;
+class IndicatorPlotFactory;
 
 // =============================================================================
 /** @class  MainWindow
@@ -80,7 +70,7 @@ class MainWindow : public QMainWindow
                  , public tools::ElementObserver_ABC< Services >
                  , public tools::ElementObserver_ABC< Profile >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor/Accessor
@@ -100,13 +90,18 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void ShowHelp();
     void Close();
     void OnPlanifStateChange();
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
     void OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ShowHelp();
     //@}
 
 private:
@@ -124,9 +119,8 @@ private:
     void GeneratePixmapSymbols();
     static std::string BuildRemotePath( std::string server, std::string path );
 
-    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer& locationsLayer,
-                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer& weather, gui::Layer& profilerLayer,
-                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
+    void CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
+                       gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker );
 
 private:
     //! @name Member data
@@ -137,36 +131,30 @@ private:
     Network& network_;
     QString profile_;
     Config& config_;
+    std::auto_ptr< ProfileFilter > pProfile_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;
     std::auto_ptr< ColorController > pColorController_;
-    std::auto_ptr< actions::gui::InterfaceBuilder_ABC > interfaceBuilder_;
+    std::auto_ptr< DockContainer > dockContainer_;
     std::auto_ptr< QProcess > process_;
     std::auto_ptr< gui::AddRasterDialog > addRasterDialog_;
     std::auto_ptr< gui::PreferencesDialog > preferenceDialog_;
     std::auto_ptr< gui::EntitySymbols > icons_;
-    gui::GlProxy* glProxy_;
-    gui::ColorStrategy* strategy_;
-    gui::LightingProxy* lighting_;
-    gui::GlSelector* selector_;
-    gui::OptionsPanel* pOptionsPanel_;
-    gui::ParametersLayer* parameters_;
-    gui::AgentsLayer* agents_;
-    OrbatDockWidget* orbatDockWidget_;
-    StatusBar* pStatus_;
+    std::auto_ptr< gui::GlProxy > glProxy_;
+    std::auto_ptr< gui::ColorStrategy > strategy_;
+    std::auto_ptr< gui::LightingProxy > lighting_;
+    std::auto_ptr< gui::GlSelector > selector_;
+    std::auto_ptr< StatusBar > pStatus_;
+    std::auto_ptr< IndicatorPlotFactory > plotFactory_;
+    gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an auto_ptr of this one, because every layers are destroyed into GlProxy destructor.
     QByteArray docks_;
     QByteArray toolbars_;
     bool connected_;
     bool onPlanif_;
-    MissionPanel* pMissionPanel_;
-    QDockWidget* pExtensionsPanel_;
-    PlanificationModePanel* pPlanificationModePanel_;
+
     QString planifName_;
-    std::auto_ptr< ProfileFilter > pProfile_;
     QString savedState_;
-    gui::HelpSystem* help_;
-    AfterAction* aar_;
     //@}
 };
 

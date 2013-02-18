@@ -14,6 +14,7 @@
 #include "ContourLinesObserver.h"
 #include "RichSpinBox.h"
 #include "Tools.h"
+#include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Options.h"
@@ -36,7 +37,7 @@ namespace
 // Name: GisToolbar constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection )
+GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, gui::TerrainProfiler& terrainProfiler )
     : RichToolBar( controllers, parent, "gistoolbar", tools::translate( "gui::GisToolBar", "GIS tools" ) )
     , controllers_      ( controllers )
     , detection_        ( detection )
@@ -67,6 +68,9 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         terrainProfilerButton_->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
         QToolTip::add( terrainProfilerButton_, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
         terrainProfilerButton_->setToggleButton( true );
+
+        connect( terrainProfilerButton_, SIGNAL( toggled( bool ) ), &terrainProfiler, SLOT( setVisible( bool ) ) );
+        connect( &terrainProfiler, SIGNAL( visibilityChanged( bool ) ), terrainProfilerButton_, SLOT( setOn( bool ) ) );
 
         Q3HBox* contourBox = new Q3HBox( this );
         contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );

@@ -69,7 +69,7 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     connect( bFilter, SIGNAL( clicked() ), this, SLOT( Filter() ) );
     mainLayout->addLayout( buttonLayout );
     setWidget( main );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

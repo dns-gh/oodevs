@@ -38,6 +38,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     label->setPixmap( MAKE_PIXMAP( replayer ) );
     setProperty( "notAppropriate", QVariant( true ) );
     controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------

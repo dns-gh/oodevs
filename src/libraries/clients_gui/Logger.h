@@ -10,15 +10,16 @@
 #ifndef __Logger_h_
 #define __Logger_h_
 
-#include "RichTreeView.h"
-#include "Types.h"
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/Logger_ABC.h"
+#include "Types.h"
 #include <fstream>
 
 namespace kernel
 {
     class Time_ABC;
     class ContextMenu;
+    class Controllers;
 }
 
 namespace gui
@@ -30,7 +31,7 @@ namespace gui
 */
 // Created: APE 2004-06-02
 // =============================================================================
-class Logger : public QTreeWidget
+class Logger : public gui::RichDockWidget
              , public kernel::Logger_ABC
 {
     Q_OBJECT
@@ -38,7 +39,7 @@ class Logger : public QTreeWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std::string& filename );
+             Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, const std::string& filename );
     virtual ~Logger();
     //@}
 
@@ -71,6 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QTreeWidget* treeWidget_;
     const kernel::Time_ABC& simulation_;
     kernel::ContextMenu* popupMenu_;
     std::ofstream log_;

@@ -45,7 +45,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view,
-                               gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog );
+                               gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer,
+                               UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog, gui::TerrainProfiler& terrainProfiler );
     virtual ~ToolbarContainer();
     //@}
 
@@ -53,7 +54,6 @@ public:
     //@{
     FileToolbar& GetFileToolbar() const;
     LocationEditorToolbar& GetLocationEditorToolbar() const;
-    gui::GisToolbar& GetGisToolbar() const;
     //@}
 
 private:
@@ -61,7 +61,6 @@ private:
     //@{
     FileToolbar*           fileToolbar_;
     LocationEditorToolbar* locationEditorToolbar_;
-    gui::GisToolbar*       gisToolbar_;
     //@}
 };
 

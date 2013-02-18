@@ -44,7 +44,7 @@ class MiniViews : public RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             MiniViews( QMainWindow* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
+             MiniViews( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
     virtual ~MiniViews();
     //@}
 

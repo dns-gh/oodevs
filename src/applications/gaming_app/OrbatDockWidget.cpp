@@ -25,14 +25,14 @@
 // Name: OrbatDockWidget constructor
 // Created: JSR 2012-09-26
 // -----------------------------------------------------------------------------
-OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName, const QString& windowTitle,
+OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* parent, const QString& objectName,
                                   ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                                   actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
                                   gui::EntitySymbols& icons )
     : gui::RichDockWidget( controllers, parent, objectName )
     , logisticListView_( 0 )
 {
-    setWindowTitle( windowTitle );
+    setWindowTitle( tools::translate( "OrbatDockWidget", "Orbat" ) );
 
     Q3VBox* box = new Q3VBox( this );
     setWidget( box );

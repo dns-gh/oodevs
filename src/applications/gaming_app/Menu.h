@@ -47,7 +47,7 @@ public:
     //@{
              Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog
                  , UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license
-                 , const gui::HelpSystem& help, gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger );
+                 , gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}
 

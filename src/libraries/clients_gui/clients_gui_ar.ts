@@ -1160,6 +1160,10 @@ Do you want to remove it?</source>
         <source>Clear list</source>
         <translation type="unfinished">قائمة واضحة</translation>
     </message>
+    <message>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::LogisticPrototype_ABC</name>
@@ -1381,13 +1385,6 @@ Do you want to remove it?</source>
     <message>
         <source>Activity time:</source>
         <translation type="unfinished">وقت النشاط:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::OptionsPanel</name>
-    <message>
-        <source>3D metric computation</source>
-        <translation type="unfinished">العملية الحسابية متري 3D</translation>
     </message>
 </context>
 <context>

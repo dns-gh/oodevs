@@ -23,7 +23,8 @@
 // Created: ABR 2012-05-16
 // -----------------------------------------------------------------------------
 ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::View_ABC& view,
-                                    gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer, UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog )
+                                    gui::LocationsLayer& layer, gui::ExclusiveEventStrategy& eventStrategy, gui::ParametersLayer& paramLayer,
+                                    UrbanModel& urbanModel, RemoveBlocksDialog& removeBlocksDialog, gui::TerrainProfiler& terrainProfiler )
 {
     // File
     {
@@ -51,9 +52,9 @@ ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& co
     }
     // GIS
     {
-        gisToolbar_ = new gui::GisToolbar( parent, controllers, staticModel.detection_ );
-        gisToolbar_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
-        parent->addToolBar( gisToolbar_ );
+        gui::RichToolBar* gisToolbar = new gui::GisToolbar( parent, controllers, staticModel.detection_, terrainProfiler );
+        gisToolbar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
+        parent->addToolBar( gisToolbar );
     }
 }
 
@@ -82,13 +83,4 @@ FileToolbar& ToolbarContainer::GetFileToolbar() const
 LocationEditorToolbar& ToolbarContainer::GetLocationEditorToolbar() const
 {
     return *locationEditorToolbar_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ToolbarContainer::GetGisToolbar
-// Created: ABR 2012-05-16
-// -----------------------------------------------------------------------------
-gui::GisToolbar& ToolbarContainer::GetGisToolbar() const
-{
-    return *gisToolbar_;
 }

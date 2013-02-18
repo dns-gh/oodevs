@@ -10,7 +10,9 @@
 #include "gaming_app_pch.h"
 #include "Properties.h"
 #include "clients_gui/EditorFactory.h"
+#include "clients_gui/PropertiesPanel.h"
 #include "clients_gui/PropertyDisplayer.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesBase::PropertiesBase
@@ -38,9 +40,10 @@ PropertiesBase::~PropertiesBase()
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 Properties::Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy )
-    : gui::PropertiesPanel( parent, controllers, *editorFactory_, *propertyDisplayer_, *propertyComparator_, glProxy )
+    : gui::RichDockWidget( controllers, parent, "properties-panel" )
 {
-    // NOTHING
+    setWindowTitle( tools::translate( "Properties", "Properties" ) );
+    setWidget( new gui::PropertiesPanel( this, controllers, *editorFactory_, *propertyDisplayer_, *propertyComparator_, glProxy ) );
 }
 
 // -----------------------------------------------------------------------------

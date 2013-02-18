@@ -13,6 +13,7 @@
 #include "ClockEditDialog.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "gaming/Simulation.h"
 #include "tools/GeneralConfig.h"
 #include "icons.h"
 
@@ -20,7 +21,7 @@
 // Name: ClockWidget constructor
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
-ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler )
+ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler )
     : Q3HBox( parent, "ClockWidget" )
     , controllers_( controllers )
 {

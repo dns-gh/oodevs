@@ -493,6 +493,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>CreationPanels</name>
+    <message>
+        <source>Creation</source>
+        <translation>Creation</translation>
+    </message>
+</context>
+<context>
     <name>CriticalIntelligenceDialog</name>
     <message>
         <source>Change critical intelligence</source>
@@ -1039,6 +1046,13 @@ Reason: %3
     <message>
         <source>Equipment availabilities</source>
         <translation>Equipment availabilities</translation>
+    </message>
+</context>
+<context>
+    <name>InfoPanels</name>
+    <message>
+        <source>Knowledge</source>
+        <translation>Knowledge</translation>
     </message>
 </context>
 <context>
@@ -1631,10 +1645,6 @@ Reason: %3
         <translation>Orbat</translation>
     </message>
     <message>
-        <source>Log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
         <source>Objects</source>
         <translation>Objects</translation>
     </message>
@@ -1645,22 +1655,6 @@ Reason: %3
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation>Properties</translation>
-    </message>
-    <message>
-        <source>Knowledge</source>
-        <translation>Knowledge</translation>
-    </message>
-    <message>
-        <source>Profiling</source>
-        <translation>Profiling</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Creation</translation>
     </message>
     <message>
         <source>Elevation</source>
@@ -2410,6 +2404,10 @@ This data can&apos;t be projected.</source>
         <source>Units</source>
         <translation>Units</translation>
     </message>
+    <message>
+        <source>Orbat</source>
+        <translation>Orbat</translation>
+    </message>
 </context>
 <context>
     <name>OrbatPanel</name>
@@ -2635,6 +2633,17 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Pathfinds</source>
         <translation>Pathfinds</translation>
+    </message>
+    <message>
+        <source>Profiling</source>
+        <translation>Profiling</translation>
+    </message>
+</context>
+<context>
+    <name>Properties</name>
+    <message>
+        <source>Properties</source>
+        <translation>Properties</translation>
     </message>
 </context>
 <context>

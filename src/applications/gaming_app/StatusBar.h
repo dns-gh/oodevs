@@ -45,7 +45,7 @@ class StatusBar : public gui::StatusBar
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, gui::TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers, QDockWidget* profilingDock );
+             StatusBar( QStatusBar* bar, gui::TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers, QObject& selector, QDockWidget* profilingDock );
     virtual ~StatusBar();
     //@}
 
