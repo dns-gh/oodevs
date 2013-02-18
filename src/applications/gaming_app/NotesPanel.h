@@ -10,12 +10,13 @@
 #ifndef __NotesPanel_h_
 #define __NotesPanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 #include "NoteDialog.h"
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
 }
 
 class Note;
@@ -28,8 +29,7 @@ class Publisher_ABC;
 */
 // Created: HBD 2010-01-19
 // =============================================================================
-class NotesPanel : public QDockWidget
-                 , public tools::Observer_ABC
+class NotesPanel : public gui::RichDockWidget
                  , public tools::ElementObserver_ABC< Note >
                  , public tools::ElementObserver_ABC< Simulation >
 {
@@ -38,7 +38,7 @@ class NotesPanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller, NotesModel& model, Publisher_ABC &publisher );
+             NotesPanel( QMainWindow* mainWindow, kernel::Controllers& controller, NotesModel& model, Publisher_ABC &publisher );
     virtual ~NotesPanel();
     //@}
 
@@ -69,7 +69,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     QTreeView* notes_;
     QStandardItemModel noteModel_;
     NoteDialog* noteDialog_;

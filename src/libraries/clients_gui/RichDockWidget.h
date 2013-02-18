@@ -47,7 +47,7 @@ public:
     virtual bool IsVisible() const;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;

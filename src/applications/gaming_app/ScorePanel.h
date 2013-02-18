@@ -10,6 +10,7 @@
 #ifndef __ScorePanel_h_
 #define __ScorePanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace gui
@@ -41,13 +42,12 @@ class ScoreModel;
 */
 // Created: SBO 2009-03-12
 // =============================================================================
-class ScorePanel : public QDockWidget
-                 , public tools::Observer_ABC
+class ScorePanel : public gui::RichDockWidget
                  , public tools::ElementObserver_ABC< Score >
                  , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                  , public tools::ElementObserver_ABC< IndicatorRequest >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -82,7 +82,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     kernel::DisplayExtractor_ABC& extractor_;
     IndicatorPlotFactory& plotFactory_;
     ScoreModel& model_;

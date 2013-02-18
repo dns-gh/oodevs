@@ -19,13 +19,11 @@
 // -----------------------------------------------------------------------------
 InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
                     gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
-    : QDockWidget( "info", parent )
-    , controllers_( controllers )
+    : gui::RichDockWidget( controllers, parent, "info" )
 {
     setObjectName( "info" );
     setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, staticModel, actionsModel, simulation ) );
     setCaption( tools::translate( "InfoDock", "Info" ) );
-    controllers_.Register( *this );
     hide();
 }
 
@@ -35,14 +33,5 @@ InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const ker
 // -----------------------------------------------------------------------------
 InfoDock::~InfoDock()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoDock::NotifySelected
-// Created: SBO 2007-02-05
-// -----------------------------------------------------------------------------
-void InfoDock::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
-{
-//    setVisible( entity ); // $$$$ SBO 2007-02-08: à voir
+    // NOTHING
 }

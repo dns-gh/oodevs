@@ -27,11 +27,10 @@ using namespace gui;
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
 MiniViews::MiniViews( QMainWindow* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
-    : QDockWidget( "miniviews", parent )
-    , controllers_( controllers )
+    : RichDockWidget( controllers, parent, "miniviews" )
     , profile_( profile )
     , widget_( 0 )
-    , selected_( controllers_ )
+    , selected_( controllers )
 {
     setObjectName( "miniviews" );
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );

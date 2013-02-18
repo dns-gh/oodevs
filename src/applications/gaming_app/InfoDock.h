@@ -10,6 +10,7 @@
 #ifndef __InfoDock_h_
 #define __InfoDock_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/SelectionObserver_ABC.h"
 
 namespace actions
@@ -40,9 +41,7 @@ class StaticModel;
 */
 // Created: SBO 2007-02-02
 // =============================================================================
-class InfoDock : public QDockWidget
-               , public tools::Observer_ABC
-               , public tools::SelectionObserver< kernel::Entity_ABC >
+class InfoDock : public gui::RichDockWidget
 {
 public:
     //! @name Constructors/Destructor
@@ -50,18 +49,6 @@ public:
              InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
                        gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
     virtual ~InfoDock();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controllers& controllers_;
     //@}
 };
 

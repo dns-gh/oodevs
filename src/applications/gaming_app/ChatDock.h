@@ -10,6 +10,8 @@
 #ifndef __ChatDock_h_
 #define __ChatDock_h_
 
+#include "clients_gui/RichDockWidget.h"
+
 namespace kernel
 {
     class Controllers;
@@ -24,20 +26,13 @@ class CommandHandler;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class ChatDock : public QDockWidget
+class ChatDock : public gui::RichDockWidget
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ChatDock( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler );
     virtual ~ChatDock();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ChatDock( const ChatDock& );            //!< Copy constructor
-    ChatDock& operator=( const ChatDock& ); //!< Assignment operator
     //@}
 };
 

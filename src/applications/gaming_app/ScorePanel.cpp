@@ -86,8 +86,7 @@ namespace
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
 ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config )
-    : QDockWidget( "score", mainWindow )
-    , controllers_( controllers )
+    : gui::RichDockWidget( controllers, mainWindow, "score" )
     , extractor_( extractor )
     , plotFactory_( plotFactory )
     , model_( model )

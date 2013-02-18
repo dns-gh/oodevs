@@ -10,6 +10,7 @@
 #ifndef __TimelinePanel_h_
 #define __TimelinePanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace kernel
@@ -36,7 +37,7 @@ class TimelineWidget;
 */
 // Created: SBO 2007-07-04
 // =============================================================================
-class TimelinePanel : public QDockWidget
+class TimelinePanel : public gui::RichDockWidget
 {
     Q_OBJECT
 

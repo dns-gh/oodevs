@@ -10,6 +10,8 @@
 #ifndef __ClockDock_h_
 #define __ClockDock_h_
 
+#include "clients_gui/RichDockWidget.h"
+
 namespace kernel
 {
     class Controllers;
@@ -24,7 +26,7 @@ class Simulation;
 */
 // Created: SBO 2007-04-17
 // =============================================================================
-class ClockDock : public QDockWidget
+class ClockDock : public gui::RichDockWidget
 {
 public:
     //! @name Constructors/Destructor

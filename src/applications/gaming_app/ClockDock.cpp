@@ -17,7 +17,7 @@
 // Created: SBO 2007-04-17
 // -----------------------------------------------------------------------------
 ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const Simulation& simulation, ActionsScheduler& scheduler )
-    : QDockWidget( "clock", parent )
+    : gui::RichDockWidget( controllers, parent, "clock" )
 {
     setObjectName( "clock" );
     setWidget( new ClockWidget( this, controllers, simulation, scheduler ) );

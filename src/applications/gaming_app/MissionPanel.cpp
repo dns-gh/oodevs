@@ -56,8 +56,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
                             const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                             const tools::ExerciseConfig& config )
-    : QDockWidget              ( "mission", pParent )
-    , controllers_             ( controllers )
+    : gui::RichDockWidget      ( controllers, pParent, "mission" )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
     , tools_                   ( tools )

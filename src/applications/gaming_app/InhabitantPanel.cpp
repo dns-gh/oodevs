@@ -24,8 +24,7 @@
 // Created: LGY 2011-12-29
 // -----------------------------------------------------------------------------
 InhabitantPanel::InhabitantPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Model& model )
-    : QDockWidget( "Inhabitant", mainWindow )
-    , controllers_( controllers )
+    : gui::RichDockWidget( controllers, mainWindow, "Inhabitant" )
     , model_      ( model )
     , current_    ( controllers )
 {

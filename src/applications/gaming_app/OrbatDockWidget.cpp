@@ -29,11 +29,10 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
                                   ProfileFilter& filter, gui::AutomatsLayer& automats, gui::FormationLayer& formations,
                                   actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
                                   gui::EntitySymbols& icons )
-    : QDockWidget( parent )
+    : gui::RichDockWidget( controllers, parent, objectName )
     , logisticListView_( 0 )
 {
     setWindowTitle( windowTitle );
-    setObjectName( objectName );
 
     Q3VBox* box = new Q3VBox( this );
     setWidget( box );

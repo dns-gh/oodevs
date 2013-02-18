@@ -10,6 +10,7 @@
 #ifndef __InhabitantPanel_h_
 #define __InhabitantPanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/LivingAreaVisitor_ABC.h"
@@ -30,8 +31,7 @@ class Model;
 */
 // Created: LGY 2011-12-29
 // =============================================================================
-class InhabitantPanel : public QDockWidget
-                      , public tools::Observer_ABC
+class InhabitantPanel : public gui::RichDockWidget
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::LivingArea_ABC >
                       , private kernel::LivingAreaVisitor_ABC
@@ -63,7 +63,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     Model& model_;
     kernel::SafePointer< kernel::Entity_ABC > current_;
     QStringList horizontalHeaders_;

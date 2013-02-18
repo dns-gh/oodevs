@@ -11,7 +11,7 @@
 #include "NotesPanel.h"
 #include "moc_NotesPanel.cpp"
 #include "clients_kernel/ContextMenu.h"
-#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Note.h"
 #include "gaming/Simulation.h"
@@ -25,9 +25,8 @@ Q_DECLARE_METATYPE( const Note* )
 // Name: NotesPanel constructor
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
-NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller, NotesModel& model, Publisher_ABC &publisher)
-    : QDockWidget( "Notation", mainWindow )
-    , controller_ ( controller )
+NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, NotesModel& model, Publisher_ABC &publisher)
+    : gui::RichDockWidget( controllers, mainWindow, "Notation" )
     , model_ ( model )
     , publisher_( publisher )
 {
@@ -56,7 +55,7 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
     setWidget( notes_ );
 
     noteDialog_ = new NoteDialog( this, publisher_ );
-    controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +64,7 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
 // -----------------------------------------------------------------------------
 NotesPanel::~NotesPanel()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

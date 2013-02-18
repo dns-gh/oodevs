@@ -85,7 +85,7 @@ namespace
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, Model& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor )
-    : QDockWidget( "timeline", parent )
+    : gui::RichDockWidget( controllers, parent, "timeline" )
 {
     // Init
     setObjectName( "timeline" );

@@ -27,10 +27,8 @@
 // Name: ProfilesPanel constructor
 // Created: LGY 2011-11-15
 // -----------------------------------------------------------------------------
-ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers,
-                              Network& network, ProfileFilter& filter, TeamsModel& teams )
-    : QDockWidget( "Profiles", mainWindow )
-    , controllers_ ( controllers )
+ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Network& network, ProfileFilter& filter, TeamsModel& teams )
+    : gui::RichDockWidget( controllers, mainWindow, "profiles" )
     , network_     ( network )
     , filter_      ( filter )
     , teams_       ( teams )
@@ -40,7 +38,6 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     , red_         ( "resources/images/gaming/red.png" )
     , green_       ( "resources/images/gaming/green.png" )
 {
-    setObjectName( "profiles" );
     QWidget* main = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( main );
     setCaption( tools::translate( "Profiles", "Profiles" ) );

@@ -10,11 +10,11 @@
 #ifndef __MissionPanel_h_
 #define __MissionPanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/Iterator.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/Iterator.h"
 
 namespace kernel
 {
@@ -23,19 +23,14 @@ namespace kernel
     class Population_ABC;
     class Entity_ABC;
     class Controllers;
-    class CoordinateConverter_ABC;
     class Mission;
-    class FragOrder;
     class Profile_ABC;
-    class AgentKnowledgeConverter_ABC;
-    class ObjectKnowledgeConverter_ABC;
     class Time_ABC;
 }
 
 namespace gui
 {
     class GlTools_ABC;
-    class ParametersLayer;
     class Viewport_ABC;
 }
 
@@ -56,19 +51,14 @@ namespace tools
 
 class kernel::ContextMenu;
 class Decisions_ABC;
-class Decisions;
-class PopulationDecisions;
 class StaticModel;
 class Publisher_ABC;
-class MissionInterfaceFactory;
-class MissionInterfaceBuilder;
 class CommandPublisher;
 
 // =============================================================================
 // Created: APE 2004-03-19
 // =============================================================================
-class MissionPanel : public QDockWidget
-                   , public tools::Observer_ABC
+class MissionPanel : public gui::RichDockWidget
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
@@ -132,7 +122,6 @@ private:
 private:
     //! @name Member Data
     //@{
-    kernel::Controllers& controllers_;
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     std::auto_ptr< Publisher_ABC > publisher_;

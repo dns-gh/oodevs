@@ -10,6 +10,7 @@
 #ifndef __OrbatDockWidget_h_
 #define __OrbatDockWidget_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "clients_gui/DummyModelObserver.h"
 
 namespace actions
@@ -40,7 +41,7 @@ class StaticModel;
 */
 // Created: JSR 2012-09-26
 // =============================================================================
-class OrbatDockWidget : public QDockWidget
+class OrbatDockWidget : public gui::RichDockWidget
 {
 
 public:

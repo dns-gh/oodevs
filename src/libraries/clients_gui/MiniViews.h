@@ -10,18 +10,16 @@
 #ifndef __MiniViews_h_
 #define __MiniViews_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
-    class Entity_ABC;
-    class Agent_ABC;
-    class Population_ABC;
-    class Profile_ABC;
     class Controllers;
-    class Automat_ABC;
+    class Entity_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -37,12 +35,11 @@ namespace gui
 */
 // Created: AGE 2006-06-23
 // =============================================================================
-class MiniViews : public QDockWidget
-                , public tools::Observer_ABC
+class MiniViews : public RichDockWidget
                 , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                 , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -76,7 +73,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
     GlWidget* widget_;
     SmartGridWidget* grid_;

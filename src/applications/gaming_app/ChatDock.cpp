@@ -16,7 +16,7 @@
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
 ChatDock::ChatDock( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler )
-    : QDockWidget( "chat", parent )
+    : gui::RichDockWidget( controllers, parent, "chat" )
 {
     setObjectName( "chat" );
     setWidget( new ChatWidget( this, controllers, publisher, handler ) );

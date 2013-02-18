@@ -10,6 +10,7 @@
 #ifndef __ProfilesPanel_h_
 #define __ProfilesPanel_h_
 
+#include "clients_gui/RichDockWidget.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/AvailableProfile.h"
 #include "gaming/Simulation.h"
@@ -32,8 +33,7 @@ class TeamsModel;
 */
 // Created: LGY 2011-11-15
 // =============================================================================
-class ProfilesPanel : public QDockWidget
-                    , public tools::Observer_ABC
+class ProfilesPanel : public gui::RichDockWidget
                     , public tools::ElementObserver_ABC< UserProfile >
                     , public tools::ElementObserver_ABC< Profile >
                     , public tools::ElementObserver_ABC< AvailableProfile >
@@ -44,8 +44,7 @@ class ProfilesPanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers,
-                            Network& network, ProfileFilter& filter, TeamsModel& teams );
+             ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Network& network, ProfileFilter& filter, TeamsModel& teams );
     virtual ~ProfilesPanel();
     //@}
 
@@ -87,7 +86,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     Network& network_;
     ProfileFilter& filter_;
     TeamsModel& teams_;
