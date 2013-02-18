@@ -37,7 +37,7 @@
   </report>
   <report category="operational" id="27" message="En cours de franchissement"/>
   <report category="operational" id="28" message="En attente d'ordre poursuivre"/>
-  <report category="operational" id="29" message="En attente d'ordre déboucher"/>
+  <report category="operational" id="29" message="En attente d'ordre déboucher / poursuivre"/>
   <report category="operational" id="30" message="Fixé"/>
   <report category="operational" id="31" message="En esquive"/>
   <report category="operational" id="32" message="Prise de contact"/>
@@ -671,9 +671,7 @@
     <parameter type="Agent"/>
   </report>
   <report category="operational" id="453" message="Impossible de recevoir une mission en étant transporté"/>
-  <report category="operational" id="454" message="Pas de ravitaillement en %1 faute de supérieur logistique">
-    <parameter type="ResourceType"/>
-  </report>
+  <report category="operational" id="454" message="Pas de ravitaillement faute de supérieur logistique"/>
   <report category="operational" id="455" message="Pas de ravitaillement en %1 car le supérieur logistique ne dispose pas des stocks nécessaires">
     <parameter type="ResourceType"/>
   </report>
@@ -694,4 +692,4 @@
     <parameter type="CrowdKnowledge"/>
   </report>
 </reports>
-<!-- signature="2963094750" -->
+<!-- signature="2657726300" -->

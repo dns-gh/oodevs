@@ -222,7 +222,7 @@ void SupplyRequest::ReturnStockNotAssignedToConvoy()
 // -----------------------------------------------------------------------------
 void SupplyRequest::NotifySuperiorNotAvailable( SupplyRecipient_ABC& recipient )
 {
-    recipient.NotifySuperiorNotAvailable( *dotationCategory_, requesters_ );
+    recipient.NotifySuperiorNotAvailable( requesters_ );
 }
 
 // -----------------------------------------------------------------------------

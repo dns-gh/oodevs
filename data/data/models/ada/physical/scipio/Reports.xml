@@ -671,9 +671,7 @@
     <parameter type="Agent"/>
   </report>
   <report category="operational" id="453" message="Impossible de recevoir une mission en étant transporté"/>
-  <report category="operational" id="454" message="Pas de ravitaillement en %1 faute de supérieur logistique">
-    <parameter type="ResourceType"/>
-  </report>
+  <report category="operational" id="454" message="Pas de ravitaillement faute de supérieur logistique"/>
   <report category="operational" id="455" message="Pas de ravitaillement en %1 car le supérieur logistique ne dispose pas des stocks nécessaires">
     <parameter type="ResourceType"/>
   </report>
@@ -694,4 +692,4 @@
     <parameter type="CrowdKnowledge"/>
   </report>
 </reports>
-<!-- signature="3086675708" -->
+<!-- signature="2657726300" -->
