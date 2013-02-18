@@ -30,8 +30,8 @@ DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int g
     , logEnabled_( logEnabled )
     , nDIARef_   ( 0 )
     , model_     ( 0 )
-    , logger_    ( logEnabled ? static_cast< sword::DEC_Logger_ABC* >( new sword::DEC_Logger< T >( entity ) ) :
-                                static_cast< sword::DEC_Logger_ABC* >( new sword::DEC_NullLogger() ) )
+    , logger_    ( logEnabled ? static_cast< sword::DEC_Logger_ABC* >( sword::DEC_Logger< T >::Instance() ) :
+                                static_cast< sword::DEC_Logger_ABC* >( 0 ) )
 {
     // NOTHING
 }
@@ -53,7 +53,7 @@ namespace DEC_DecisionImpl
     bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
                       boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath,
                       const std::string& brainFile, bool isMasalife, const std::string& type,
-                      bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC& logger );
+                      bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger, unsigned int id );
 }
 
 namespace directia
@@ -84,7 +84,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< sword::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir, *logger_ );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir, logger_, pEntity_->GetID() );
 
     if( newBrain )
     {

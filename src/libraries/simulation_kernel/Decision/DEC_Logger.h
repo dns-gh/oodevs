@@ -28,41 +28,22 @@ class DEC_Logger : public DEC_Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Logger( const T& entity )
-        : type_      ( typeid( T ).name() )
-        , identifier_( entity.GetID() )
+    explicit DEC_Logger()
     {}
     virtual ~DEC_Logger() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Log( const char* name )
+    virtual void Log( const char* name, unsigned int identifier )
     {
-        MT_LOG_INFO_MSG( "DEC_CALL " << type_ << " " << identifier_ << " " << name );
+        MT_LOG_INFO_MSG( "DEC_CALL " << typeid( T ).name() << " " << identifier << " " << name );
     }
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::string type_;
-    const unsigned int identifier_;
-    //@}
-};
-
-class DEC_NullLogger : public DEC_Logger_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             DEC_NullLogger() {}
-    virtual ~DEC_NullLogger() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Log( const char* ) {}
+    static DEC_Logger_ABC* Instance()
+    {
+        static DEC_Logger< T > instance;
+        return &instance;
+    }
     //@}
 };
 

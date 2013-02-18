@@ -208,7 +208,7 @@ protected:
 private:
     //!@name Data
     //@{
-    boost::scoped_ptr< sword::DEC_Logger_ABC > logger_;
+    sword::DEC_Logger_ABC* logger_;
     boost::shared_ptr< sword::Brain > pBrain_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     bool                               isMasalife_;

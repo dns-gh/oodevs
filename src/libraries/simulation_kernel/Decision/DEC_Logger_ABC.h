@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Log( const char* name ) = 0;
+    virtual void Log( const char* name, unsigned int identifier ) = 0;
     //@}
 };
 

@@ -78,7 +78,7 @@
             BOOST_PP_CAT(ScriptMemberFunction, BRAIN_NUM_ARGS)< T, R BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) >(
                     brain_->vm_, name,
                         ProfilerProxy< R( T& BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) >( logger_, name, profilers_[ name ],
-                            boost::bind( method, BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(BOOST_PP_INC(BRAIN_NUM_ARGS)), _) ) ) );
+                            boost::bind( method, BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(BOOST_PP_INC(BRAIN_NUM_ARGS)), _) ), id_ ) );
     }
 
     template< typename R, typename T BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, typename P) >
@@ -89,7 +89,7 @@
             BOOST_PP_CAT(ScriptMemberFunction, BRAIN_NUM_ARGS)< T, R BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) >(
                     brain_->vm_, name,
                         ProfilerProxy< R( T& BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, P) ) >( logger_, name, profilers_[ name ],
-                            boost::bind( method, BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(BOOST_PP_INC(BRAIN_NUM_ARGS)), _) ) ) );
+                            boost::bind( method, BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(BOOST_PP_INC(BRAIN_NUM_ARGS)), _) ), id_ ) );
     }
 
     template< typename R BRAIN_COMMA BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, typename P) >
@@ -106,15 +106,17 @@
     {
         typedef typename boost::function< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS,P) ) > function_type;
         typedef typename function_type::result_type result_type;
-        ProfilerProxy( DEC_Logger_ABC& logger, const char* const name, MT_Profiler& profiler, const function_type& f )
-            : logger_  ( &logger )
+        ProfilerProxy( DEC_Logger_ABC* logger, const char* const name, MT_Profiler& profiler, const function_type& f, unsigned int id )
+            : logger_  ( logger )
             , name_    ( name )
             , profiler_( &profiler )
             , f_       ( f )
+            , id_( id )
         {}
         R operator()( BOOST_PP_ENUM_BINARY_PARAMS(BRAIN_NUM_ARGS, P, t) ) const
         {
-            logger_->Log( name_ );
+            if( logger_ )
+                logger_->Log( name_, id_ );
             MT_ProfilerGuard guard( *profiler_ );
             return f_( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, t) );
         }
@@ -122,6 +124,7 @@
         const char* name_;
         MT_Profiler* profiler_;
         function_type f_;
+        unsigned int id_;
     };
 
 #undef BRAIN_COMMA
