@@ -154,7 +154,7 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( const wrapper::View& fire
 // -----------------------------------------------------------------------------
 double WeaponDataType_DirectFire::GetPH( const wrapper::View& firer, const wrapper::View& target, std::size_t targetVolume ) const
 {
-    if( phs_.size() <= targetVolume )
+    if( targetVolume >= phs_.size() )
         throw MASA_EXCEPTION( "Invalid target volume identifier in GetDangerosity : "
                                   + boost::lexical_cast< std::string >( targetVolume ) );
     double distance = GET_HOOK( GetDistance )( firer, target );
