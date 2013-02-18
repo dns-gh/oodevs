@@ -86,36 +86,40 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_limit_max_when_component_
 BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_zero_when_weapon_type_with_checked_ammunition_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToIndirectFire( firer, &filter, ammo_2, true ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_zero_when_weapon_type_with_unchecked_ammunition_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToIndirectFire( firer, &filter, ammo_2, false ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_zero_when_weapon_type_without_checked_ammunition_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToIndirectFire( firer, &filter, 0, true ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( min_range_to_indirect_fire_is_zero_when_weapon_type_without_unchecked_ammunition_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMinRangeToIndirectFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToIndirectFire( firer, &filter, 0, false ) );
 }
 

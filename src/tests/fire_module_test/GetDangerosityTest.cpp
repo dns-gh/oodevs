@@ -34,8 +34,9 @@ BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_weapon_type_does_not_exist, sw
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetDangerosity hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetDangerosity hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, &filter, 500, true ) );
 }
 
@@ -62,9 +63,10 @@ BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_volume_is_invalid, EnemyFixtur
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = system_1;
-    component_2[ "volume" ] = 42;
+    component_2[ "volume" ] = invalid;
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetDangerosity hook: Invalid target volume identifier in GetDangerosity : 42" );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetDangerosity hook: Invalid target volume identifier in GetDangerosity : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, &filter, 500, true ) );
 }
 

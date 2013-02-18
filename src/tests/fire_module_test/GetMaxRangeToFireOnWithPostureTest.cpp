@@ -33,9 +33,10 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_firer_ha
 BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_weapon_type_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToFireOnWithPosture hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMaxRangeToFireOnWithPosture hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOnWithPosture( firer, enemy, &filter, 0.5 ) );
 }
 
@@ -61,10 +62,11 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_volume_i
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = system_1;
-    component_2[ "volume" ] = 42;
+    component_2[ "volume" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToFireOnWithPosture hook: Invalid target volume identifier in GetMaxDistanceForPH : 42" );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMaxRangeToFireOnWithPosture hook: Invalid target volume identifier in GetMaxDistanceForPH : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOnWithPosture( firer, enemy, &filter, 0.5 ) );
 }
 

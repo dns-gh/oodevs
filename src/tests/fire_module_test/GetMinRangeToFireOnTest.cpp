@@ -31,9 +31,10 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_is_limit_max_when_component_is_fil
 BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_is_zero_when_weapon_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToFireOn hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMinRangeToFireOn hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToFireOn( firer, enemy, &filter, 0.5 ) );
 }
 
@@ -59,10 +60,11 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_is_zero_when_volume_is_invalid, En
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = system_1;
-    component_2[ "volume" ] = 42;
+    component_2[ "volume" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToFireOn hook: Invalid target volume identifier in GetMinDistanceForPH : 42" );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMinRangeToFireOn hook: Invalid target volume identifier in GetMinDistanceForPH : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToFireOn( firer, enemy, &filter, 0.5 ) );
 }
 

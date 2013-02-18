@@ -33,9 +33,10 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_is_zero_when_firer_has_no_weapon, Que
 BOOST_FIXTURE_TEST_CASE( max_range_to_fire_is_zero_when_weapon_type_does_not_exist, QueryFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
-    component_1[ "weapons" ].AddElement()[ "type" ] = non_existing_system;
+    component_1[ "weapons" ].AddElement()[ "type" ] = invalid;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( non_existing_system ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR,
+        "Exception in GetMaxRangeToFire hook: Unknown weapon type : " + boost::lexical_cast< std::string >( invalid ) );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFire( firer, &filter, 0.5 ) );
 }
 

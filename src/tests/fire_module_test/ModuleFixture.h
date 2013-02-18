@@ -77,7 +77,7 @@ namespace fire
             , ammo_2   ( 2 )
             , system_1 ( 0 )
             , system_2 ( 1 )
-            , non_existing_system( 7 )
+            , invalid  ( 7 )
         {
             model[ "tick" ] = 0;
             entity[ "components" ];
@@ -138,7 +138,8 @@ namespace fire
         int ammo_1, ammo_2;
         std::size_t posture_1, posture_2;
         std::size_t volume_1;
-        std::size_t system_1, system_2, non_existing_system;
+        std::size_t system_1, system_2;
+        std::size_t invalid;
     };
 
     struct TargetFixture : ModuleFixture
