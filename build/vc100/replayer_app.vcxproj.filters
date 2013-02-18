@@ -26,7 +26,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\src\applications\replayer_app\replayer_app.rc">
+    <ResourceCompile Include="..\..\src\applications\replayer_app\resources.rc">
       <Filter>Source Files\resource</Filter>
     </ResourceCompile>
   </ItemGroup>

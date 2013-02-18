@@ -155,7 +155,7 @@
     <ClInclude Include="..\..\src\applications\replayer_app\resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\src\applications\replayer_app\replayer_app.rc" />
+    <ResourceCompile Include="..\..\src\applications\replayer_app\resources.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\replayer_app\res\sword-ot-blink.ico" />
