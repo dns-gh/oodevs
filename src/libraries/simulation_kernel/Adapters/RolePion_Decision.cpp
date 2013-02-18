@@ -405,7 +405,7 @@ namespace
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
-        parameters[ "enemy" ] = pEnemy->GetID();
+        parameters[ "enemy" ] = pEnemy->GetAgentKnown().GetID();
         parameters[ "percentage" ] = std::max( 0., std::min< double >( 1., percentage ) );
         parameters[ "mode" ] = firingMode;
         parameters[ "type" ] = firingType;

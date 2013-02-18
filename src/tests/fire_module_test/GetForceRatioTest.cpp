@@ -9,7 +9,7 @@
 
 #include "fire_module_test_pch.h"
 
-BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_default_max_ratio_when_no_enemy, sword::fire::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_default_max_ratio_when_no_enemy, sword::fire::TargetFixture )
 {
     model[ "enemies" ][ 1242 ];
     model[ "friends" ][ 1242 ];
@@ -18,7 +18,7 @@ BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_default_max_ratio_when_no_enemy
     BOOST_CHECK_EQUAL( 5, GetForceRatio( core::Convert( &model ), firer ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_min_ratio_when_no_friend, sword::fire::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_min_ratio_when_no_friend, sword::fire::TargetFixture )
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ];
@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_min_ratio_when_no_friend, sword
     BOOST_CHECK_EQUAL( 0.2, GetForceRatio( core::Convert( &model ), firer ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_some_ratio, sword::fire::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_some_ratio, sword::fire::TargetFixture )
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ].AddElement() = 52;
@@ -40,7 +40,7 @@ BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_some_ratio, sword::fire::Module
     BOOST_CHECK_EQUAL( 3.5, GetForceRatio( core::Convert( &model ), firer ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( get_force_ratio_is_cached_on_same_tick, sword::fire::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( get_force_ratio_is_cached_on_same_tick, sword::fire::TargetFixture )
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ];

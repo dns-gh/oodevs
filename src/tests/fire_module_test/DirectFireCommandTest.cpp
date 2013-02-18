@@ -36,12 +36,19 @@ namespace
     struct FireFixture : sword::fire::ModuleFixture
     {
         FireFixture()
+            : target ( model[ "entities" ][ 43 ] )
+            , enemy  ( core::Convert( &target ) )
+            , command( 0u )
         {
+            target[ "components" ];
+            target[ "identifier" ] = 43;
+            target[ "data" ] = "data";
+            target[ "dead" ] = false;
             ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
             command = StartCommand( "direct fire",
                                     core::MakeModel( "action", 117 )
                                                    ( "identifier", 42 )
-                                                   ( "enemy", 51 )
+                                                   ( "enemy", 43 )
                                                    ( "percentage", 0.07 )
                                                    ( "mode", 0 )
                                                    ( "type", 0 )
@@ -49,7 +56,7 @@ namespace
                                                    ( "dotation", 0 ) );
             mock::verify();
         }
-        virtual ~FireFixture()
+        ~FireFixture()
         {
             ExpectCallback( sword::fire::RoleAction_DirectFiring::eFinished );
             ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )
@@ -62,6 +69,8 @@ namespace
                                                                             ( "action", 117 )
                                                                             ( "code", static_cast< int >( code ) ) );
         }
+        core::Model& target;
+        SWORD_Model* enemy;
         std::size_t command;
     };
 }
@@ -279,7 +288,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     const std::size_t command = StartCommand( "direct fire",
                                               core::MakeModel( "action", 117 )
                                                               ( "identifier", 42 )
-                                                              ( "enemy", 51 )
+                                                              ( "enemy", 43 )
                                                               ( "percentage", 0.07 )
                                                               ( "mode", 0 )
                                                               ( "type", 0 )

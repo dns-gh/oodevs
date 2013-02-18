@@ -44,7 +44,7 @@ void DirectFirePionAttackEventListener::Notify( const core::Model& event )
     try
     {
         MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
-        MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
+        MIL_AgentPion& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
         if( ! event[ "paused" ] )
             pion.NotifyAttacking( target, event[ "report" ] );
         target.NotifyAttackedBy( pion, event[ "report" ] );

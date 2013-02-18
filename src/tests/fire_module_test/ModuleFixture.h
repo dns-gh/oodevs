@@ -70,8 +70,6 @@ namespace fire
             : HookFixture( "fire_module", boost::assign::list_of( "direct fire" )( "direct fire population" ) )
             , entity   ( model[ "entities" ][ 42 ] )
             , firer    ( core::Convert( &entity ) )
-            , target   ( model[ "knowledges" ][ 1242 ][ "agents" ][ 51 ] )
-            , enemy    ( core::Convert( &target ) )
             , posture_1( 1 )
             , posture_2( 2 )
             , volume_1 ( 0 )
@@ -87,10 +85,6 @@ namespace fire
             entity[ "identifier" ] = 42;
             entity[ "data" ] = "data";
             model[ "entities" ][ 43 ][ "components" ];
-            target[ "components" ];
-            target[ "identifier" ] = 43;
-            target[ "data" ] = "data";
-            target[ "dead" ] = false;
             mock::sequence s1, s2;
             MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing launchers" ).in( s1 );
             MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing dotations" ).in( s2 );
@@ -141,12 +135,25 @@ namespace fire
         }
         core::Model& entity;
         SWORD_Model* firer;
-        core::Model& target;
-        SWORD_Model* enemy;
         int ammo_1, ammo_2;
         std::size_t posture_1, posture_2;
         std::size_t volume_1;
         std::size_t system_1, system_2, non_existing_system;
+    };
+
+    struct TargetFixture : ModuleFixture
+    {
+        TargetFixture()
+            : target( model[ "knowledges" ][ 1242 ][ "agents" ][ 51 ] )
+            , enemy ( core::Convert( &target ) )
+        {
+            target[ "components" ];
+            target[ "identifier" ] = 43;
+            target[ "data" ] = "data";
+            target[ "dead" ] = false;
+        }
+        core::Model& target;
+        SWORD_Model* enemy;
     };
 }
 }

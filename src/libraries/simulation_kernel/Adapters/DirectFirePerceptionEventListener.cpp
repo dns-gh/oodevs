@@ -121,7 +121,7 @@ void DirectFirePerceptionEventListener::Notify( const core::Model& event )
         if( event[ "running" ] )
         {
             MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
-            MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
+            MIL_AgentPion& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
             NotifyFirerPerception( pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
         }
     }

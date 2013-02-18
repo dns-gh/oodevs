@@ -14,7 +14,7 @@ namespace
 {
     MOCK_FUNCTION( callback, 2, void( const SWORD_Model*, void* ), callback )
 
-    struct Fixture : sword::fire::ModuleFixture
+    struct Fixture : sword::fire::TargetFixture
     {
         Fixture()
         {
