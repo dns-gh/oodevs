@@ -21,8 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentComposante )
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
-    : pComposante_( 0 )
-    , pType_      ( 0 )
+    : pType_      ( 0 )
     , bCanFire_   ( false )
     , bMajor_     ( false )
     , nMajorScore_( 0 )
@@ -36,8 +35,7 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_ComposantePion& composante )
-    : pComposante_( &composante )
-    , pType_      ( &composante.GetType() )
+    : pType_      ( &composante.GetType() )
     , bCanFire_   ( composante.CanFire() )
     , bMajor_     ( composante.IsMajor() )
     , nMajorScore_( composante.GetMajorScore() )
@@ -63,7 +61,7 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
 {
     sword::EquipmentType nMosID;
     int nMosIDoid;
-    file >> pComposante_ >> nMosIDoid;
+    file >> nMosIDoid;
     nMosID.set_id( nMosIDoid );
     pType_ = PHY_ComposanteTypePion::Find( nMosID );
     file >> bCanFire_
@@ -80,8 +78,7 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
 {
     sword::EquipmentType type = pType_->GetMosID();
     int equipmenttype_val = type.id();
-    file << pComposante_
-         << equipmenttype_val
+    file << equipmenttype_val
          << bCanFire_
          << bMajor_
          << nMajorScore_
@@ -130,16 +127,6 @@ double DEC_Knowledge_AgentComposante::GetMaxRangeToFireOn( const MIL_Agent_ABC& 
     if( !bCanFire_ )
         return 0.;
     return pType_->GetMaxRangeToFireOn( firer, compTarget.GetType(), rWantedPH, 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentComposante::GetComposante
-// Created: MCO 2012-12-04
-// -----------------------------------------------------------------------------
-const PHY_ComposantePion& DEC_Knowledge_AgentComposante::GetComposante() const
-{
-    assert( pComposante_ );
-    return *pComposante_;
 }
 
 // -----------------------------------------------------------------------------

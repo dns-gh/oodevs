@@ -148,9 +148,6 @@ namespace fire
             , enemy ( core::Convert( &target ) )
         {
             target[ "components" ];
-            target[ "identifier" ] = 43;
-            target[ "data" ] = "data";
-            target[ "dead" ] = false;
         }
         core::Model& target;
         SWORD_Model* enemy;
