@@ -269,7 +269,16 @@ namespace core
             CATCH
                 return false;
         }
-        MOCK_STATIC_METHOD( SWORD_Log, 2, void( SWORD_LogLevel level, const char* message ), Log )
+        static void SWORD_Log( SWORD_LogLevel level, const char* message )
+        {
+            try
+            {
+                Log( level, message );
+            }
+            catch( ... )
+            {}
+        }
+        MOCK_STATIC_METHOD( Log, 2, void( SWORD_LogLevel level, const char* message ), Log )
 
         static void Configure( core::ModuleLoader& loader, void* module, const std::string& name )
         {
