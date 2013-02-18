@@ -23,15 +23,13 @@
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
 template< class T >
-DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
+DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
     : pEntity_   ( &entity )
     , gcPause_   ( gcPause)
     , gcMult_    ( gcMult )
-    , logEnabled_( logEnabled )
     , nDIARef_   ( 0 )
     , model_     ( 0 )
-    , logger_    ( logEnabled ? static_cast< sword::DEC_Logger_ABC* >( sword::DEC_Logger< T >::Instance() ) :
-                                static_cast< sword::DEC_Logger_ABC* >( 0 ) )
+    , logger_    ( logger )
 {
     // NOTHING
 }

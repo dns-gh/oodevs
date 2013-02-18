@@ -203,6 +203,7 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
     , populations_     ( populations )
     , gcPause_         ( gcPause )
     , gcMult_          ( gcMult )
+    , decLogger_       ( logEnabled ? new DEC_Logger< MIL_AgentPion >() : 0 )
     , logEnabled_      ( logEnabled )
     , dangerousObjects_( dangerousObjects )
     , modules_         ( configuration )
@@ -224,6 +225,7 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
     , populations_     ( populations )
     , gcPause_         ( gcPause )
     , gcMult_          ( gcMult )
+    , decLogger_       ( logEnabled ? new DEC_Logger< MIL_AgentPion >() : 0 )
     , logEnabled_      ( logEnabled )
     , dangerousObjects_( dangerousObjects )
     , modules_         ( configuration )
@@ -240,7 +242,7 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
 // -----------------------------------------------------------------------------
 Sink::~Sink()
 {
-    // NOTHING
+    delete decLogger_;
 }
 
 // -----------------------------------------------------------------------------
@@ -626,7 +628,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     pion.RegisterRole( *new sword::RolePion_Location( *this, pion, entity, position ) );
     try
     {
-        pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, logEnabled_, *this ) );
+        pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, decLogger_, *this ) );
     }
     catch( const tools::Exception& e )
     {

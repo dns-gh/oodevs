@@ -20,6 +20,11 @@ namespace client
     class CrowdUpdate;
 }
 
+namespace sword
+{
+    class DEC_Logger_ABC;
+}
+
 class MIL_Mission_ABC;
 
 // =============================================================================
@@ -30,7 +35,7 @@ class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
 {
 
 public:
-             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
     virtual ~DEC_PopulationDecision();
 
     //! @name CheckPoints
@@ -109,8 +114,7 @@ void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, 
 {
     archive << role->pEntity_
             << role->gcPause_
-            << role->gcMult_
-            << role->logEnabled_;
+            << role->gcMult_;
 }
 
 template< typename Archive >
@@ -119,12 +123,10 @@ void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const 
     MIL_Population* population;
     unsigned int gcPause;
     unsigned int gcMult;
-    bool logEnabled;
     archive >> population
             >> gcPause
-            >> gcMult
-            >> logEnabled;
-    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult, logEnabled );
+            >> gcMult;
+    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult, 0 );  // $$$$ JSR 2013-02-18: todo serialize logger
 }
 
 #endif // __DEC_PopulationDecision_h_

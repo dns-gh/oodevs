@@ -39,11 +39,6 @@ public:
     {
         MT_LOG_INFO_MSG( "DEC_CALL " << typeid( T ).name() << " " << identifier << " " << name );
     }
-    static DEC_Logger_ABC* Instance()
-    {
-        static DEC_Logger< T > instance;
-        return &instance;
-    }
     //@}
 };
 

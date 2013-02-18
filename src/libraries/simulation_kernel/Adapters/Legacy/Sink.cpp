@@ -93,6 +93,7 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
     , logEnabled_( logEnabled )
+    , decLogger_ ( logEnabled ? new DEC_Logger< MIL_AgentPion >() : 0 )
 {
     // NOTHING
 }
@@ -217,7 +218,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     pion.RegisterRole( *new sword::legacy::NullRoleAdapter() );
     try
     {
-        pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_, logEnabled_ ) );
+        pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_, decLogger_ ) );
     }
     catch( const tools::Exception& e )
     {

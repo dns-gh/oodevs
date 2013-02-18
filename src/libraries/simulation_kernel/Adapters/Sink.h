@@ -29,6 +29,8 @@ namespace core
 
 namespace sword
 {
+class DEC_Logger_ABC;
+
 // =============================================================================
 /** @class  Sink
     @brief  Sink
@@ -116,7 +118,8 @@ private:
     const PopulationFactory_ABC& populations_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    const bool logEnabled_;
+    DEC_Logger_ABC* decLogger_;
+    bool logEnabled_;
     const std::vector< unsigned int > dangerousObjects_;
     xml::xistringstream modules_;
     std::auto_ptr< core::Logger_ABC > logger_;

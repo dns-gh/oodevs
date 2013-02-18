@@ -20,6 +20,8 @@ namespace propagation
 
 namespace sword
 {
+class DEC_Logger_ABC;
+
 namespace legacy
 {
 // =============================================================================
@@ -97,6 +99,7 @@ private:
     AgentFactory_ABC& factory_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
+    sword::DEC_Logger_ABC* decLogger_;
     const bool logEnabled_;
     //@}
 };

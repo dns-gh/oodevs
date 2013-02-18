@@ -11,6 +11,7 @@
 #include "PopulationFactory.h"
 #include "FormationFactory_ABC.h"
 #include "MissionController_ABC.h"
+#include "Decision/DEC_Logger.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/vector.hpp>
@@ -27,6 +28,7 @@ PopulationFactory::PopulationFactory( MissionController_ABC& missionController, 
     , gcMult_           ( gcMult )
     , missionController_( missionController )
     , config_           ( config )
+    , logger_           ( config.IsDecisionalLoggerEnabled() ? new sword::DEC_Logger< MIL_Population >() : 0)
 {
     // NOTHING
 }
@@ -49,7 +51,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
     const MIL_PopulationType* pType = MIL_PopulationType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, config_ );
+    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, config_, logger_ );
     Register( population.GetID(), population );
     population.Register( missionController_ );
     return population;
@@ -64,7 +66,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, config_.IsDecisionalLoggerEnabled(), context );
+    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, logger_, context );
     Register( population.GetID(), population );
     if( pUrbanObject )
         populationFromUrbanObjectResolver_.Register( pUrbanObject, population );

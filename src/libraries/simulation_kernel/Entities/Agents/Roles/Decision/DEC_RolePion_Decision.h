@@ -44,7 +44,7 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
-             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
     virtual ~DEC_RolePion_Decision();
 
     //! @name CheckPoints
@@ -259,11 +259,9 @@ void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, c
 {
     const unsigned int gcPause = role->gcPause_;
     const unsigned int gcMult = role->gcMult_;
-    const bool logEnabled = role->logEnabled_;
     archive << role->pEntity_
             << gcPause
-            << gcMult
-            << logEnabled;
+            << gcMult;
 }
 
 template< typename Archive >
@@ -272,12 +270,10 @@ void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const u
     MIL_AgentPion* pion;
     unsigned int gcPause;
     unsigned int gcMult;
-    bool logEnabled;
     archive >> pion
             >> gcPause
-            >> gcMult
-            >> logEnabled;
-    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult, logEnabled );
+            >> gcMult;
+    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult, 0 ); // $$$$ JSR 2013-02-18: todo serialize logger
 }
 
 #endif // __DEC_RolePion_Decision_h_

@@ -57,6 +57,7 @@ private:
     const MIL_Config& config_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
+    sword::DEC_Logger_ABC* logger_;
     //@}
 };
 

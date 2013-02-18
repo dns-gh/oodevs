@@ -12,6 +12,11 @@
 
 #include "AutomateFactory_ABC.h"
 
+namespace sword
+{
+    class DEC_Logger_ABC;
+}
+
 class MIL_IDManager;
 
 // =============================================================================
@@ -53,6 +58,7 @@ private:
     unsigned int gcPause_;
     unsigned int gcMult_;
     bool logEnabled_;
+    sword::DEC_Logger_ABC* logger_;
     MIL_IDManager& idManager_;
     //@}
 };

@@ -37,11 +37,9 @@ namespace legacy
     {
         unsigned int gcPause = role->gcPause_;
         unsigned int gcMult = role->gcMult_;
-        bool logEnabled = role->logEnabled_;
         archive << role->pEntity_
                 << gcPause
-                << gcMult
-                << logEnabled;
+                << gcMult;
     }
 
     template< typename Archive >
@@ -50,12 +48,10 @@ namespace legacy
         MIL_AgentPion* pion;
         unsigned int gcPause;
         unsigned int gcMult;
-        bool logEnabled;
         archive >> pion
                 >> gcPause
-                >> gcMult
-                >> logEnabled;
-        ::new( role )sword::legacy::RolePion_Decision( *pion, gcPause, gcMult, logEnabled );
+                >> gcMult;
+        ::new( role )sword::legacy::RolePion_Decision( *pion, gcPause, gcMult, 0 );  // $$$$ JSR 2013-02-18: todo serialize logger
     }
 }
 }
@@ -64,8 +60,8 @@ namespace legacy
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------
-RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
-    : DEC_RolePion_Decision( pion, gcPause, gcMult, logEnabled )
+RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
+    : DEC_RolePion_Decision( pion, gcPause, gcMult, logger )
 {
     RegisterFunctions();
 }

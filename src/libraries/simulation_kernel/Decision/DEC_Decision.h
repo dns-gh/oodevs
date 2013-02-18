@@ -37,7 +37,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Constructor
     //@{
-             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
     virtual ~DEC_Decision();
     //@}
 
@@ -201,7 +201,6 @@ protected:
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     unsigned int                    gcPause_;
     unsigned int                    gcMult_;
-    bool                            logEnabled_;
     unsigned int                    nDIARef_;
     const DEC_Model_ABC*            model_;
     //@}

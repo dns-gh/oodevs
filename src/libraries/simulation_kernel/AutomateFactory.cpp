@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "AutomateFactory.h"
 #include "Decision/DEC_Representations.h"
+#include "Decision/DEC_Logger.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Tools/MIL_IDManager.h"
@@ -29,6 +30,7 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
     , logEnabled_( logEnabled )
+    , logger_    ( logEnabled_ ? new sword::DEC_Logger< MIL_Automate >() : 0 )
 {
     //NOTHING
 }
@@ -58,7 +60,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
     if( !pType )
         xis.error( "Unknown automat type" );
 
-    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, gcPause_, gcMult_, logEnabled_ );
+    MIL_Automate& automate = pType->InstanciateAutomate( id, parent, xis, gcPause_, gcMult_, logger_ );
     automate.ReadOverloading( xis );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
@@ -71,7 +73,7 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
 // -----------------------------------------------------------------------------
 MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context, const MIL_DictionaryExtensions& extensions )
 {
-    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, logEnabled_, context, extensions );
+    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, logger_, context, extensions );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;

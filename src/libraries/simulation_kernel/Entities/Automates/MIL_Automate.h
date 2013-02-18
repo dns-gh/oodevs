@@ -27,6 +27,7 @@ namespace logistic
 
 namespace sword
 {
+    class DEC_Logger_ABC;
     class AutomatOrder;
     class MissionParameters;
     class FragOrder;
@@ -87,8 +88,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
-             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, bool logEnabled, unsigned int context, const MIL_DictionaryExtensions& extensions );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
+             MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, unsigned int context, const MIL_DictionaryExtensions& extensions );
     virtual ~MIL_Automate();
     //@}
 
@@ -254,7 +255,7 @@ protected:
 private:
     //! @name Tools
     //@{
-    void Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+    void Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );

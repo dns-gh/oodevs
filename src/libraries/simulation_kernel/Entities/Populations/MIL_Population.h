@@ -18,6 +18,7 @@
 
 namespace sword
 {
+    class DEC_Logger_ABC;
     class CrowdOrder;
     class FragOrder;
     class UnitMagicAction;
@@ -59,8 +60,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause,
-                             unsigned int gcMult, const MIL_Config& config );
-             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, bool logEnabled, unsigned int context = 0 );
+                             unsigned int gcMult, const MIL_Config& config, sword::DEC_Logger_ABC* logger );
+             MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, unsigned int context = 0 );
     virtual ~MIL_Population();
     //@}
 

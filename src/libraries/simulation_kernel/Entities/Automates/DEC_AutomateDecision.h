@@ -25,6 +25,11 @@ namespace client
 class MIL_Mission_ABC;
 class PHY_RoePopulation;
 
+namespace sword
+{
+    class DEC_Logger_ABC;
+}
+
 // =============================================================================
 // @class  DEC_AutomateDecision
 // Created: JVT 2004-08-03
@@ -32,7 +37,7 @@ class PHY_RoePopulation;
 class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 public:
-             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult, bool logEnabled );
+             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints
@@ -171,8 +176,7 @@ void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, co
 {
     archive << role->pEntity_
             << role->gcPause_
-            << role->gcMult_
-            << role->logEnabled_;
+            << role->gcMult_;
 }
 
 template< typename Archive >
@@ -181,12 +185,10 @@ void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const un
     MIL_Automate* automate;
     unsigned int gcPause;
     unsigned int gcMult;
-    bool logEnabled;
     archive >> automate
             >> gcPause
-            >> gcMult
-            >> logEnabled;
-    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, logEnabled );
+            >> gcMult;
+    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, 0 );  // $$$$ JSR 2013-02-18: todo serialize logger
 }
 
 #endif // __DEC_AutomateDecision_h_
