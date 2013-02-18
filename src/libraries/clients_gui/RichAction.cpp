@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "RichAction.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/ModeController.h"
 #pragma warning( push, 0 )
 #include <QtGui/qaction.h>
 #pragma warning( pop )
@@ -22,11 +22,10 @@ using namespace gui;
 // Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
 RichAction::RichAction( QAction* action, kernel::Controllers& controllers )
-    : action_     ( action )
-    , controllers_( controllers )
+    : action_( action )
+    , modeController_( controllers.modes_ )
 {
-    if( controllers_.modes_ )
-        controllers_.modes_->Register( *this );
+    modeController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +34,7 @@ RichAction::RichAction( QAction* action, kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 RichAction::~RichAction()
 {
-    if( controllers_.modes_ )
-        controllers_.modes_->Unregister( *this );
+    modeController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

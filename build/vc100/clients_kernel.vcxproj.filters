@@ -478,6 +478,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp">
       <Filter>Source Files\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ModeController.cpp">
+      <Filter>Source Files\kernel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
@@ -1014,9 +1017,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h">
       <Filter>Source Files\kernel\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController_ABC.h">
-      <Filter>Source Files\kernel</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\HumanDefs.h">
       <Filter>Source Files\Model\Entities</Filter>
     </ClInclude>
@@ -1165,9 +1165,6 @@
     </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_fr.ts">
       <Filter>Translations</Filter>
-    </None>
-    <None Include="..\..\src\libraries\clients_kernel\ModeController.inl">
-      <Filter>Source Files\kernel</Filter>
     </None>
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_ar.ts">
       <Filter>Translations</Filter>

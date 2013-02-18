@@ -816,10 +816,6 @@
         <translation>Défaut</translation>
     </message>
     <message>
-        <source>Exercise</source>
-        <translation>Exercice</translation>
-    </message>
-    <message>
         <source>Terrain</source>
         <translation>Terrain</translation>
     </message>
@@ -850,6 +846,22 @@
     <message>
         <source>Level 5</source>
         <translation>Niveau 5</translation>
+    </message>
+    <message>
+        <source>Prepare</source>
+        <translation>Exercise</translation>
+    </message>
+    <message>
+        <source>Game</source>
+        <translation>Jeu</translation>
+    </message>
+    <message>
+        <source>Planning</source>
+        <translation>Plannification</translation>
+    </message>
+    <message>
+        <source>Replay</source>
+        <translation>Rejeu</translation>
     </message>
 </context>
 </TS>

@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "StructuralStateAttribute.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>

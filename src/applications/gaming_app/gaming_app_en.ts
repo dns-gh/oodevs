@@ -203,10 +203,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation> - Planning mode on</translation>
-    </message>
-    <message>
         <source>Gaming</source>
         <translation>Gaming</translation>
     </message>
@@ -1732,6 +1728,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Error while loading Raster source.</source>
         <translation>Error while loading Raster source.</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
+    </message>
+    <message>
+        <source> - Planning mode on</source>
+        <translation type="unfinished"> - Planning mode on</translation>
     </message>
 </context>
 <context>
@@ -3352,13 +3356,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Object Destruction</source>
         <translation>Object Destruction</translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source> - Not connected</source>
-        <translation> - Not connected</translation>
     </message>
 </context>
 </TS>

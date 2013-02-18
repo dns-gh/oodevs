@@ -83,7 +83,7 @@ MessagePanel::~MessagePanel()
 // Name: MessagePanel::NotifyModeChanged
 // Created: NPT 2012-11-27
 // -----------------------------------------------------------------------------
-void MessagePanel::NotifyModeChanged( int /*newMode*/, bool /*useDefault*/, bool /*firstChangeToSavedMode*/ )
+void MessagePanel::NotifyModeChanged( E_Modes /*newMode*/, bool /*useDefault*/, bool /*firstChangeToSavedMode*/ )
 {
     setVisible( isVisible_ );
 }

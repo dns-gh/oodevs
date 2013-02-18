@@ -26,7 +26,7 @@ Controllers::Controllers()
     : options_   ( *new Options() )
     , controller_( *new Controller() )
     , actions_   ( *new ActionController() )
-    , modes_     ( 0 )
+    , modes_     ( *new ModeController() )
 {
     // NOTHING
 }
@@ -37,7 +37,7 @@ Controllers::Controllers()
 // -----------------------------------------------------------------------------
 Controllers::~Controllers()
 {
-    delete modes_;
+    delete &modes_;
     delete &actions_;
     delete &controller_;
     delete &options_;
@@ -52,8 +52,7 @@ void Controllers::Register( tools::Observer_ABC& observer )
     options_.Register( observer );
     controller_.Register( observer );
     actions_.Register( observer );
-    if( modes_ )
-        modes_->Register( observer );
+    modes_.Register( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,8 +64,7 @@ void Controllers::Unregister( tools::Observer_ABC& observer )
     options_.Unregister( observer );
     controller_.Unregister( observer );
     actions_.Unregister( observer );
-    if( modes_ )
-        modes_->Unregister( observer );
+    modes_.Unregister( observer );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,22 +78,39 @@ void Controllers::Update( tools::Observer_ABC& observer )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controllers::SetModeController
-// Created: ABR 2012-05-10
-// -----------------------------------------------------------------------------
-void Controllers::SetModeController( ModeController_ABC* modeController )
-{
-    modes_ = modeController;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Controllers::ChangeMode
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-void Controllers::ChangeMode( int newMode )
+void Controllers::ChangeMode( E_Modes newMode )
 {
-    if( modes_ )
-        modes_->ChangeMode( newMode );
+    modes_.ChangeMode( newMode );
     actions_.ChangeMode( newMode );
     actions_.DeselectAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controllers::LoadOptions
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+void Controllers::LoadOptions( E_Modes mode )
+{
+    modes_.LoadOptions( mode, options_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controllers::SaveOptions
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+void Controllers::SaveOptions( E_Modes mode )
+{
+    modes_.SaveOptions( mode, options_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controllers::GetCurrentMode
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+E_Modes Controllers::GetCurrentMode() const
+{
+    return modes_.GetCurrentMode();
 }

@@ -397,15 +397,18 @@ ENT_Tr::T_ConverterNbcState ENT_Tr::NbcStateConverter_ [] =
     T_ConverterNbcState( "", "", ( E_NbcState ) - 1 )
 };
 
-ENT_Tr::T_ConverterPreparationMode ENT_Tr::PreparationModeConverter_ [] =
+ENT_Tr::T_ConverterModes ENT_Tr::ModesConverter_ [] =
 {
-    T_ConverterPreparationMode( "none",         QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),          ePreparationMode_None ),
-    T_ConverterPreparationMode( "default",      QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),       ePreparationMode_Default ),
-    T_ConverterPreparationMode( "exercise",     QT_TRANSLATE_NOOP( "ENT_Tr", "Exercise" ),      ePreparationMode_Exercise ),
-    T_ConverterPreparationMode( "terrain",      QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),       ePreparationMode_Terrain ),
-    T_ConverterPreparationMode( "living_area",  QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ),   ePreparationMode_LivingArea ),
-    T_ConverterPreparationMode( "all",          QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),           ePreparationMode_All ),
-    T_ConverterPreparationMode( "", "", ( E_PreparationMode ) - 1 )
+    T_ConverterModes( "none",        QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),        eModes_None          ),
+    T_ConverterModes( "default",     QT_TRANSLATE_NOOP( "ENT_Tr", "Default" ),     eModes_Default       ),
+    T_ConverterModes( "prepare",     QT_TRANSLATE_NOOP( "ENT_Tr", "Prepare" ),     eModes_Prepare       ),
+    T_ConverterModes( "terrain",     QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),     eModes_Terrain       ),
+    T_ConverterModes( "living_area", QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ), eModes_LivingArea    ),
+    T_ConverterModes( "game",        QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming          ),
+    T_ConverterModes( "planning",    QT_TRANSLATE_NOOP( "ENT_Tr", "Planning" ),    eModes_Planning      ),
+    T_ConverterModes( "replay",      QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),      eModes_Replay        ),
+    T_ConverterModes( "all",         QT_TRANSLATE_NOOP( "ENT_Tr", "All" ),         eModes_All           ),
+    T_ConverterModes( "", "", ( E_Modes ) - 1 )
 };
 
 ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
@@ -459,7 +462,7 @@ void ENT_Tr::InitTranslations()
     InitTr( InjuriesSeriousnessConverter_, "ENT_Tr" );
     InitTr( GhostTypeConverter_, "ENT_Tr" );
     InitTr( NbcStateConverter_, "ENT_Tr" );
-    InitTr( PreparationModeConverter_, "ENT_Tr" );
+    InitTr( ModesConverter_, "ENT_Tr" );
     InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
 }
 
@@ -770,12 +773,12 @@ const std::string& ENT_Tr::ConvertFromNbcState( E_NbcState nValue, E_Conversion 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPreparationMode
+// Name: ENT_Tr::ConvertFromModes
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPreparationMode( E_PreparationMode nValue, E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromModes( E_Modes nValue, E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( PreparationModeConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( ModesConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -1095,12 +1098,12 @@ E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPreparationMode
+// Name: ENT_Tr::ConvertToModes
 // Created: ABR 2012-05-10
 // -----------------------------------------------------------------------------
-E_PreparationMode ENT_Tr::ConvertToPreparationMode( const std::string& strName )
+E_Modes ENT_Tr::ConvertToModes( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( PreparationModeConverter_, strName );
+    return ENT_Tr::FindInConverter( ModesConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------

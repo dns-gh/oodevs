@@ -75,15 +75,14 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs,
-            gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
+Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license )
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
     // File
     {
         fileMenu_ = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&File" ) );
-        fileMenu_->SetModes( ePreparationMode_LivingArea, ePreparationMode_All ^ ePreparationMode_LivingArea, true );
+        fileMenu_->SetModes( eModes_LivingArea, eModes_All ^ eModes_LivingArea, true );
         newAction_ = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , QKeySequence( Qt::CTRL + Qt::Key_N ) );
         newAction_->setIcon( MAKE_ICON( new ) );
         openAction_ = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), QKeySequence( Qt::CTRL + Qt::Key_O ) );
@@ -92,27 +91,27 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
         QAction* action = 0;
         action = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), QKeySequence( Qt::CTRL + Qt::Key_R ) );
         action->setIcon( MAKE_ICON( refresh ) );
-        AddModdedAction( action, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
         action = fileMenu_->InsertItem( "1", tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), QKeySequence( Qt::CTRL + Qt::Key_W ) );
-        AddModdedAction( action, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
 
         fileMenu_->GetCategoryCreateIFN( "2" ); // Export/import category
         action = fileMenu_->InsertItem( "2", tools::translate( "Menu", "&Export..." ), &dialogs.GetTerrainExportDialog(), SLOT( exec() ), QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_E ) );
-        AddModdedAction( action, ePreparationMode_All ^ ePreparationMode_Terrain, ePreparationMode_Terrain );
+        AddModdedAction( action, eModes_All ^ eModes_Terrain, eModes_Terrain );
 
         saveAction_ = fileMenu_->InsertItem( "3", tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ), QKeySequence( Qt::CTRL + Qt::Key_S ) );
         saveAction_->setIcon( MAKE_ICON( save ) );
-        AddModdedAction( saveAction_, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        AddModdedAction( saveAction_, eModes_Default, eModes_All ^ eModes_Default );
         saveAsAction_ = fileMenu_->InsertItem( "3", tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_S ) );
         saveAsAction_->setIcon( MAKE_ICON( saveas ) );
-        AddModdedAction( saveAsAction_, ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default );
+        AddModdedAction( saveAsAction_, eModes_Default, eModes_All ^ eModes_Default );
         fileMenu_->InsertItem( "4", tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), QKeySequence( Qt::CTRL + Qt::Key_Q ) );
         addMenu( fileMenu_->FillMenu() );
     }
     // Profile
     {
         gui::RichMenu* menu = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&Profiles" ) );
-        menu->SetModes( ePreparationMode_All ^ ePreparationMode_Exercise, ePreparationMode_Exercise, true );
+        menu->SetModes( eModes_All ^ eModes_Prepare, eModes_Prepare, true );
         QAction* action = menu->InsertItem( "1", tools::translate( "Menu", "View/Edit..." ), &dialogs.GetProfileDialog(), SLOT( exec() ) );
         action->setIcon( MAKE_ICON( profile ) );
         menu->InsertItem( "2", tools::translate( "Menu", "Creation wizard..." ), &dialogs.GetProfileWizardDialog(), SLOT( exec() ) );
@@ -121,7 +120,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     // Display
     {
         gui::RichMenu* menu = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&Display" ) );
-        menu->SetModes( ePreparationMode_Default, ePreparationMode_All ^ ePreparationMode_Default, true );
+        menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
         kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
         AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
         AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
@@ -165,7 +164,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     // Exercise
     {
         gui::RichMenu* menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&Exercise" ) );
-        menu->SetModes( ePreparationMode_All ^ ePreparationMode_Exercise, ePreparationMode_Exercise, true );
+        menu->SetModes( eModes_All ^ eModes_Prepare, eModes_Prepare, true );
         menu->InsertItem( "", tools::translate( "Menu", "Properties..." ), &dialogs.GetExerciseDialog(), SLOT( exec() ) );
         menu->InsertItem( "", tools::translate( "Menu", "Scores..." ), &dialogs.GetScoreDialog(), SLOT( exec() ) );
         menu->InsertItem( "", tools::translate( "Menu", "Success factors..." ), &dialogs.GetSuccessFactorDialog(), SLOT( exec() ) );
@@ -177,18 +176,18 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     if( QMenu* menu = pParent->createPopupMenu() )
     {
         QAction* action = menu->actions().value( 8 );
-        AddModdedAction( action, ePreparationMode_All, ePreparationMode_None, false );
+        AddModdedAction( action, eModes_All, eModes_None, false );
         if( QAction* action = addMenu( menu ) )
         {
             action->setText( tools::translate( "Menu", "&Windows" ) );
-            AddModdedAction( action, ePreparationMode_LivingArea | ePreparationMode_Default, ePreparationMode_Exercise | ePreparationMode_Terrain );
+            AddModdedAction( action, eModes_LivingArea | eModes_Default, eModes_Prepare | eModes_Terrain );
         }
     }
     // Help
     {
         gui::RichMenu* menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&?" ) );
-        menu->SetModes( ePreparationMode_None, ePreparationMode_All, true );
-        menu->InsertItem( "1", tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ) );
+        menu->SetModes( eModes_None, eModes_All, true );
+        menu->InsertItem( "1", tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
         gui::AboutDialog* about = new gui::AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );
         menu->InsertItem( "2", tools::translate( "Menu", "About" ), about, SLOT( open() ) );
         addMenu( menu->FillMenu() );
@@ -231,7 +230,7 @@ void Menu::InsertFileMenuEntry( const QString name, const QObject* receiver, con
 {
     fileMenu_->insertItem( name, receiver, member, accel, -1, filtersIndex_ );
     QAction* action = fileMenu_->actions().value( filtersIndex_ );
-    AddModdedAction( action, ePreparationMode_All ^ ePreparationMode_Exercise, ePreparationMode_Exercise );
+    AddModdedAction( action, eModes_All ^ eModes_Prepare, eModes_Prepare );
 }
 
 // -----------------------------------------------------------------------------

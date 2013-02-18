@@ -211,10 +211,6 @@
         <translation>Juego</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation> - Modo de planificación</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1733,6 +1729,14 @@ Reason: %3
         <source>The following raster you add is missing spatial reference information.
 This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
+    </message>
+    <message>
+        <source> - Planning mode on</source>
+        <translation type="unfinished"> - Modo de planificación</translation>
     </message>
 </context>
 <context>
@@ -3359,13 +3363,6 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     <message>
         <source>Knowledge Group Add knowledge</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source> - Not connected</source>
-        <translation type="unfinished"> - No conectado</translation>
     </message>
 </context>
 </TS>

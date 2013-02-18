@@ -83,7 +83,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ExtensionTypes.h"
-#include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/ModeController.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
@@ -137,7 +137,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , menu_             ( 0 )
     , icons_            ( 0 )
 {
-    controllers_.modes_->SetMainWindow( this );
+    controllers_.modes_.SetMainWindow( this );
+    controllers_.modes_.AddRegistryEntry( eModes_Prepare, "Preparation" );
 
     // Migration
     if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().empty() )
@@ -201,10 +202,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     setMenuBar( menu_.get() );
 
     // Status bar
-    gui::StatusBar* pStatus = new gui::StatusBar( controllers_, statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
-    pStatus->SetModes( ePreparationMode_Default, 0, true );
-    connect( selector_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( selector_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
+    gui::StatusBar* pStatus = new gui::StatusBar( controllers_, statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, *selector_ );
+    pStatus->SetModes( eModes_Default, 0, true );
 
     // Progress dialog
     progressDialog_.reset( new QProgressDialog( "", "", 0, 100, this, Qt::SplashScreen ) );
@@ -214,10 +213,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     progressDialog_->setCancelButton( 0 );
 
     // Read settings
-    ReadOptions();
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
-    restoreGeometry( settings.value( "mainWindowGeometry").toByteArray() );
+    controllers_.LoadOptions( eModes_Prepare );
+    controllers_.modes_.LoadGeometry( eModes_Prepare );
 
     // Raster_app process
     process_.reset( new QProcess( this ) );
@@ -227,7 +224,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     setCentralWidget( selector_.get() );
     SetWindowTitle( false );
     controllers_.Register( *this );
-    controllers_.ChangeMode( ePreparationMode_Default );
+    controllers_.ChangeMode( eModes_Default );
     setLocale( QLocale() );
     setMinimumSize( 800, 600 );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
@@ -262,7 +259,7 @@ namespace
             preference.AddLayer( text, layer );
         if( !passes.empty() )
             layer.SetPasses( passes );
-        layer.SetReadOnlyModes( ePreparationMode_Terrain );
+        layer.SetReadOnlyModes( eModes_Terrain );
     }
 }
 
@@ -330,15 +327,15 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
 
     // Display modes
     // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or Layer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
-    agents.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    limits.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    populations.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
-    ghosts.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
+    agents.SetModes( eModes_LivingArea, eModes_None, true );
+    limits.SetModes( eModes_LivingArea, eModes_None, true );
+    objectsLayer.SetModes( eModes_LivingArea, eModes_None, true );
+    populations.SetModes( eModes_LivingArea, eModes_None, true );
+    ghosts.SetModes( eModes_LivingArea, eModes_None, true );
     // Readonly modes
-    urbanLayer.SetReadOnlyModes( ePreparationMode_None );
+    urbanLayer.SetReadOnlyModes( eModes_None );
     // Multiple Selection
-    controllers_.actions_.AllowMultipleSelection< kernel::UrbanObject_ABC >( ePreparationMode_Terrain );
+    controllers_.actions_.AllowMultipleSelection< kernel::UrbanObject_ABC >( eModes_Terrain );
 
     // events order
     forward_->Register( terrain );
@@ -462,7 +459,7 @@ bool MainWindow::Load()
     try
     {
         SetProgression( 10, tr( "Loading configuration ..." ) );
-        WriteOptions();
+        controllers_.SaveOptions( eModes_Prepare );
         dockContainer_->Purge();
         model_.Purge();
         selector_->Close();
@@ -483,7 +480,7 @@ bool MainWindow::Load()
                                    , tr( "Error reading xml file: " ) + tools::GetExceptionMsg( e ).c_str() );
         return false;
     }
-    ReadOptions();
+    controllers_.LoadOptions( eModes_Prepare );
     return true;
 }
 
@@ -496,7 +493,7 @@ bool MainWindow::Close()
     if( model_.IsLoaded() && CheckSaving() == QMessageBox::Cancel )
         return false;
     DoClose();
-    controllers_.ChangeMode( ePreparationMode_Default );
+    controllers_.ChangeMode( eModes_Default );
     return true;
 }
 
@@ -539,7 +536,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
         SetProgression( 90, tr( "Generate symbols" ) );
         GeneratePixmapSymbols();
         loading_ = false;
-        controllers_.ChangeMode( ePreparationMode_Exercise );
+        controllers_.ChangeMode( eModes_Prepare );
         if( checkConsistency )
             emit CheckConsistency();
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
@@ -571,7 +568,6 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
 {
     if( needsSaving_ )
     {
-        assert( controllers_.modes_ );
         if( checkConsistency )
         {
             ClearLoadingErrors();
@@ -628,13 +624,9 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
         pEvent->ignore();
         return;
     }
-    assert( controllers_.modes_ );
-    controllers_.ChangeMode( ePreparationMode_Default );
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
-    settings.setValue( "mainWindowGeometry", saveGeometry() );
-
-    WriteOptions();
+    controllers_.ChangeMode( eModes_Default );
+    controllers_.modes_.SaveGeometry( eModes_Prepare );
+    controllers_.SaveOptions( eModes_Prepare );
     QMainWindow::closeEvent( pEvent );
 }
 
@@ -656,30 +648,6 @@ void MainWindow::OnForceSaveAndAddActionPlanning( const std::string& filename )
 void MainWindow::ClearLoadingErrors()
 {
     model_.ClearLoadingErrors();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::WriteOptions
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::WriteOptions()
-{
-    gui::Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() + "/Options" );
-    controllers_.options_.Save( settings );
-    settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ReadOptions
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::ReadOptions()
-{
-    gui::Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() + "/Options" );
-    controllers_.options_.Load( settings );
-    settings.endGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -713,6 +681,16 @@ void MainWindow::NotifyDeleted()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyModeChanged
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyModeChanged( E_Modes newMode )
+{
+    ModesObserver_ABC::NotifyModeChanged( newMode );
+    SetWindowTitle( needsSaving_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MainWindow::SetWindowTitle
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
@@ -722,7 +700,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
         return;
     SetNeedsSaving( needsSaving );
     QString filename = "";
-    QString mode = ENT_Tr::ConvertFromPreparationMode( static_cast< E_PreparationMode >( controllers_.modes_->GetCurrentMode() ), ENT_Tr_ABC::eToTr ).c_str();
+    QString mode = ENT_Tr::ConvertFromModes( GetCurrentMode(), ENT_Tr_ABC::eToTr ).c_str();
     if( model_.IsLoaded() )
     {
         filename = model_.exercise_.GetName().isEmpty()
@@ -756,10 +734,9 @@ QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = 
     QMessageBox::StandardButton result = QMessageBox::NoButton;
     if( needsSaving_ )
     {
-        assert( controllers_.modes_ != 0 );
-        result = QMessageBox::question( this, tools::translate( "Application", "SWORD" )
-                                                , tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() )
-                                                , QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
+        result = QMessageBox::question( this, tools::translate( "Application", "SWORD" ),
+                                        tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() ),
+                                        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
         if( result == QMessageBox::Yes )
             Save( !checkConsistency );
     }
@@ -793,7 +770,7 @@ void MainWindow::ToggleDocks()
         for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
         {
             if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
-                if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() & observer->GetVisibleModes() )
+                if( GetCurrentMode() & observer->GetVisibleModes() )
                     continue;
             (*it)->hide();
         }
@@ -801,7 +778,7 @@ void MainWindow::ToggleDocks()
         for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
         {
             if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
-                if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() & observer->GetVisibleModes() )
+                if( GetCurrentMode() & observer->GetVisibleModes() )
                     continue;
             (*it)->hide();
         }

@@ -11,6 +11,10 @@
 #define __Settings_h_
 
 #include "clients_kernel/Settings_ABC.h"
+#pragma warning( push, 0 )
+#pragma warning( disable : 4127 )
+#include <QtCore/qsettings.h>
+#pragma warning( pop )
 
 namespace kernel
 {

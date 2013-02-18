@@ -211,10 +211,6 @@
         <translation>Jeu</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation> - Mode Planification</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
@@ -1736,6 +1732,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 This data can&apos;t be projected.</source>
         <translation>L&apos;image que vous rajoutez manque d&apos;information de référence spatiale.
 Ces données ne peuvent pas être projetées.</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source> - Planning mode on</source>
+        <translation> - Mode Planification</translation>
     </message>
 </context>
 <context>
@@ -3361,13 +3365,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Knowledge Group Add knowledge</source>
         <translation>Groupe de connaissance Ajout de connaissance</translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source> - Not connected</source>
-        <translation> - Non connecté</translation>
     </message>
 </context>
 </TS>

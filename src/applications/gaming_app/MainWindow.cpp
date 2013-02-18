@@ -49,12 +49,12 @@
 #include "OrbatPanel.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/AgentsModel.h"
-#include "gaming/ModeController.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
@@ -140,7 +140,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , icons_           ( 0 )
     , dockContainer_   ( 0 )
 {
-    controllers_.modes_->SetMainWindow( this );
+    controllers_.modes_.SetMainWindow( this );
+    controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
 
     // Strategy
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
@@ -235,11 +236,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     setCentralWidget( selector_.get() );
     setAttribute( Qt::WA_DeleteOnClose, true );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
-    planifName_ = tools::translate( "Application", "SWORD" ) + tr( " - Not connected" );
+    planifName_ = tr( "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
-    ReadOptions();
+    // Read settings
+    controllers_.LoadOptions( eModes_Gaming );
+    controllers_.modes_.LoadGeometry( eModes_Gaming );
+    controllers_.ChangeMode( eModes_Default );
     controllers_.Register( *this );
-    controllers_.ChangeMode( eGamingMode_Default );
 }
 
 // -----------------------------------------------------------------------------
@@ -359,20 +362,6 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::OnPlanifStateChange
-// Created: HBD 2010-09-06
-// -----------------------------------------------------------------------------
-void MainWindow::OnPlanifStateChange()
-{
-    dockContainer_->GetMissionPanel().ActivatePlanification();
-    onPlanif_ = !onPlanif_;
-    if( onPlanif_ )
-        setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
-    else
-        setCaption( planifName_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MainWindow::Load
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
@@ -380,20 +369,18 @@ void MainWindow::Load()
 {
     try
     {
-        WriteOptions();
+        controllers_.SaveOptions( eModes_Gaming );
         dockContainer_->Purge();
         model_.Purge();
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
-        ReadOptions();
-        controllers_.ChangeMode( eGamingMode_Exercise );
+        controllers_.LoadOptions( eModes_Gaming );
     }
     catch( const xml::exception& e )
     {
         Close();
-        QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , tools::translate( "MainWindow", "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
+        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -403,7 +390,7 @@ void MainWindow::Load()
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
-    controllers_.ChangeMode( eGamingMode_Default );
+    controllers_.ChangeMode( eModes_Default );
     network_.Disconnect();
     parameters_->Reset();
     selector_->Close();
@@ -418,39 +405,11 @@ void MainWindow::Close()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/Gaming" );
-    settings.setValue("mainWindowGeometry", saveGeometry());
-    settings.setValue("mainWindowState", saveState());
-
-    WriteOptions();
-
+    controllers_.ChangeMode( eModes_Default );
+    controllers_.modes_.SaveGeometry( eModes_Gaming );
+    controllers_.SaveOptions( eModes_Gaming );
     Close();
     QMainWindow::closeEvent( pEvent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::WriteOptions
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::WriteOptions()
-{
-    gui::Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/Gaming/Options" );
-    controllers_.options_.Save( settings );
-    settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ReadOptions
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::ReadOptions()
-{
-    gui::Settings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/Gaming/Options" );
-    controllers_.options_.Load( settings );
-    settings.endGroup();
 }
 
 namespace
@@ -469,14 +428,24 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyModeChanged
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyModeChanged( E_Modes newMode )
+{
+    ModesObserver_ABC::NotifyModeChanged( newMode );
+    setCaption( ( newMode == eModes_Planning ) ? planifName_ + tr( " - Planning mode on" ) : planifName_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MainWindow::NotifyUpdated
 // Created: SBO 2007-03-20
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
     static bool firstPass = true;
-    const QString appName = tools::translate( "Application", "SWORD" );
-    const QString modePlanif =  tools::translate( "Application", " - Planning mode on" );
+    const QString appName = tr( "SWORD" );
+    const QString modePlanif =  tr( " - Planning mode on" );
     if( simulation.IsConnected() )
     {
         if( !connected_ && simulation.IsInitialized() )
@@ -490,23 +459,18 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
                             .arg( simulation.GetSimulationHost().c_str() )
                             .arg( ExtractExerciceName( config_.GetExerciseFile() ));
         if( planifName_ != planifName )
-        {
-            setCaption( onPlanif_ ? planifName + modePlanif : planifName );
             planifName_ = planifName;
-        }
     }
     else
     {
         planifName_ = appName + tr( " - Not connected" ) ;
-        if( onPlanif_ )
-            setCaption( planifName_ + modePlanif );
-        else
-            setCaption( planifName_ );
         controllers_.actions_.Select( SelectionStub() );
         connected_ = false;
         profile_ = "";
         Close();
     }
+    setCaption( GetCurrentMode() == eModes_Planning ? planifName_ + modePlanif : planifName_ );
+
     if( simulation.IsInitialized() && firstPass )
     {
         GeneratePixmapSymbols();

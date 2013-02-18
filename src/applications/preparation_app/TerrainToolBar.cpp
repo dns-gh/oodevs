@@ -15,7 +15,6 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "preparation/UrbanHierarchies.h"
@@ -122,7 +121,7 @@ TerrainToolBar::~TerrainToolBar()
 // -----------------------------------------------------------------------------
 void TerrainToolBar::OnSwitchMode()
 {
-    controllers_.ChangeMode( switchModeButton_->isChecked() ? ePreparationMode_Terrain : ePreparationMode_Exercise );
+    controllers_.ChangeMode( switchModeButton_->isChecked() ? eModes_Terrain : eModes_Prepare );
     UncheckBlockCreationButtons();
     EnableBlockCreationButtons( false );
     blockRemoveButton_->setEnabled( switchModeButton_->isChecked() );
@@ -155,7 +154,7 @@ void TerrainToolBar::EnableBlockCreationButtons( bool enabled )
 void TerrainToolBar::NotifySelected( const kernel::UrbanObject_ABC* urbanObject )
 {
     selected_ = 0;
-    if( GetCurrentMode() != ePreparationMode_Terrain )
+    if( GetCurrentMode() != eModes_Terrain )
         return;
     UncheckBlockCreationButtons();
     bool enabled = false;
@@ -175,7 +174,7 @@ void TerrainToolBar::NotifySelected( const kernel::UrbanObject_ABC* urbanObject 
 // -----------------------------------------------------------------------------
 void TerrainToolBar::NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu )
 {
-    if( GetCurrentMode() != ePreparationMode_Terrain )
+    if( GetCurrentMode() != eModes_Terrain )
         return;
     const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( object.Retrieve< kernel::Hierarchies >() );
     if( urbanHierarchies && urbanHierarchies->GetLevel() == eUrbanLevelBlock )
@@ -293,9 +292,9 @@ void TerrainToolBar::OnChangeShape()
 // Name: TerrainToolBar::NotifyModeChanged
 // Created: ABR 2012-06-05
 // -----------------------------------------------------------------------------
-void TerrainToolBar::NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+void TerrainToolBar::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
 {
     gui::RichToolBar::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
-    if( newMode != ePreparationMode_Terrain )
+    if( newMode != eModes_Terrain )
         switchModeButton_->setChecked( false );
 }

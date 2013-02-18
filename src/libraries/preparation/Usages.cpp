@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "Usages.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/foreach.hpp>

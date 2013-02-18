@@ -51,11 +51,11 @@ UrbanObject::~UrbanObject()
 // Name: UrbanObject::NotifyModeChanged
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void UrbanObject::NotifyModeChanged( int newMode )
+void UrbanObject::NotifyModeChanged( E_Modes newMode )
 {
     kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    if( newMode == ePreparationMode_Exercise )
+    if( newMode == eModes_Prepare )
         CreateDictionary( true );
-    else if( newMode == ePreparationMode_Terrain )
+    else if( newMode == eModes_Terrain )
         CreateDictionary( false );
 }

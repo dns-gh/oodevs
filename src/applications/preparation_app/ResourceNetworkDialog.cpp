@@ -164,15 +164,15 @@ unsigned int ResourceNetworkDialog::ComputeConsumption( unsigned int id, const s
 // Name: ResourceNetworkDialog::NotifyModeChanged
 // Created: ABR 2012-06-08
 // -----------------------------------------------------------------------------
-void ResourceNetworkDialog::NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+void ResourceNetworkDialog::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
 {
     ResourceLinksDialog_ABC::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
-    if( newMode == ePreparationMode_Exercise )
+    if( newMode == eModes_Prepare )
     {
         generateProduction_->setVisible( true );
         stockBox_->setVisible( true );
     }
-    else if( newMode == ePreparationMode_Terrain )
+    else if( newMode == eModes_Terrain )
     {
         generateProduction_->setVisible( false );
         stockBox_->setVisible( false );

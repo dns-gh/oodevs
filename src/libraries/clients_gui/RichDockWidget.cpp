@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "RichDockWidget.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
 
 using namespace gui;
 

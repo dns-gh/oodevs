@@ -43,44 +43,6 @@
     </message>
 </context>
 <context>
-    <name>MissionInteface_ABC</name>
-    <message>
-        <source>Doctrine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MissionInterface_ABC</name>
-    <message>
-        <source>Mandatory</source>
-        <translation type="unfinished">إلزامية</translation>
-    </message>
-    <message>
-        <source>Optional</source>
-        <translation type="unfinished">اختياري</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="unfinished">تعليمات</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Add to planning</source>
-        <translation type="unfinished">إضافة إلى التخطيط</translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -104,6 +66,41 @@
     <message>
         <source>Add item</source>
         <translation type="unfinished">إضافة عنصر</translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::MissionInterface_ABC</name>
+    <message>
+        <source>Mandatory</source>
+        <translation type="unfinished">إلزامية</translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translation type="unfinished">اختياري</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished">تعليمات</translation>
+    </message>
+    <message>
+        <source>Doctrine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+    <message>
+        <source>Add to planning</source>
+        <translation type="unfinished">إضافة إلى التخطيط</translation>
     </message>
 </context>
 <context>

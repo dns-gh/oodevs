@@ -17,10 +17,12 @@ QT_FORWARD_DECLARE_CLASS( QTextEdit )
 #pragma warning( push, 0 )
 #include <Qt3Support/q3vbox.h>
 #pragma warning( pop )
+#include "clients_kernel/ModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
 
 namespace kernel
 {
-    class ActionController;
+    class Controllers;
     class Entity_ABC;
     class OrderType;
 }
@@ -55,14 +57,15 @@ namespace actions
 // =============================================================================
 class MissionInterface_ABC : public Q3VBox
                            , public ParamInterface_ABC
-                           , public boost::noncopyable
+                           , public tools::Observer_ABC
+                           , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionSheetPath = "" );
+             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, std::string missionSheetPath = "" );
     virtual ~MissionInterface_ABC();
     //@}
 
@@ -71,7 +74,6 @@ public:
     void Draw( const ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
-    void ChangeOkValueButton( bool planningMode );
     //@}
 
     //! @name ParamInterface_ABC implementation
@@ -84,7 +86,6 @@ public slots:
     //! @name Slots
     //@{
     virtual void OnOk();
-    virtual void OnCancel();
     //@}
 
 signals:
@@ -96,9 +97,9 @@ signals:
 protected:
     //! @name Helpers
     //@{
+    virtual void NotifyModeChanged( E_Modes newMode );
     const kernel::Entity_ABC& GetEntity() const;
     void CreateTitle( const QString& title );
-    void CreateOkCancelButtons();
     void CommitTo( actions::Action_ABC& action ) const;
     //@}
 
@@ -125,7 +126,7 @@ private:
     //! @name Member data
     //@{
     QString title_;
-    kernel::ActionController& controller_;
+    kernel::Controllers& controllers_;
     kernel::Entity_ABC& entity_;
     T_Parameters parameters_;
     QTabWidget* tabs_;

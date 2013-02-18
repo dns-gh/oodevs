@@ -95,7 +95,6 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     setWidget( box );
     // Toolbar
     toolbar_ = new ActionsToolbar( this, model.actions_, config, controllers );
-    connect( toolbar_, SIGNAL( PlanificationModeChange() ), parent, SLOT( OnPlanifStateChange() ) );
     // Radio buttons
     QGroupBox* groupBox = new QGroupBox();
     {
@@ -141,4 +140,3 @@ void TimelinePanel::OnViewChanged()
     toolbar_->SetFilter( filter );
     timeline_->SetFilter( filter );
 }
-

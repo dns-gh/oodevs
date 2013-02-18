@@ -22,12 +22,12 @@
 #include "gaming/Profile.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/AgentServerMsgMgr.h"
-#include "gaming/ModeController.h"
 #include "clients_gui/VerticalHeaderTableView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Workers.h"
 #include "tools/NullFileLoaderObserver.h"
+#include "ENT/ENT_Tr.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
@@ -49,10 +49,9 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     observer_.reset( new tools::NullFileLoaderObserver() );
     config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new Controllers() );
-    controllers_->SetModeController( new ::ModeController() );
     logger_.reset( new LoggerProxy() );
     services_.reset( new Services( controllers_->controller_, *logger_ ) );
-    simulation_.reset( new Simulation( controllers_->controller_ ) );
+    simulation_.reset( new Simulation( *controllers_ ) );
     workers_.reset( new Workers() );
     network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );

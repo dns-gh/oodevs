@@ -57,7 +57,7 @@ public:
 
     //! @name ModesObserver_ABC
     //@{
-    virtual void NotifyModeChanged( int newMode );
+    virtual void NotifyModeChanged( E_Modes newMode );
     //@}
 };
 

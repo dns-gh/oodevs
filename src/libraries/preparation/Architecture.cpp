@@ -13,7 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/MaterialCompositionType.h"
-#include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/ModeController.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "ENT/ENT_Enums_Gen.h"
@@ -41,9 +41,8 @@ Architecture::Architecture( const kernel::Entity_ABC* parent, kernel::Controller
     else
         Initialize( 20, 6, 0, 0.5f, 0.5f );
 
-    assert( controllers_.modes_ );
-    controllers_.modes_->Register( *this );
-    NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
+    controllers_.modes_.Register( *this );
+    NotifyModeChanged( controllers_.modes_.GetCurrentMode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,9 +71,8 @@ Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis
             >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
         >> xml::end;
     Initialize( height, floorNumber, parkingFloors, occupation, trafficability, material, roofShape );
-    assert( controllers_.modes_ );
-    controllers_.modes_->Register( *this );
-    NotifyModeChanged( controllers_.modes_->GetCurrentMode() );
+    controllers_.modes_.Register( *this );
+    NotifyModeChanged( controllers_.modes_.GetCurrentMode() );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,8 +81,7 @@ Architecture::Architecture( kernel::Controllers& controllers, xml::xistream& xis
 // -----------------------------------------------------------------------------
 Architecture::~Architecture()
 {
-    assert( controllers_.modes_ );
-    controllers_.modes_->Unregister( *this );
+    controllers_.modes_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,12 +109,12 @@ void Architecture::SerializeAttributes( xml::xostream& xos ) const
 // Name: Architecture::NotifyModeChanged
 // Created: ABR 2012-05-30
 // -----------------------------------------------------------------------------
-void Architecture::NotifyModeChanged( int newMode )
+void Architecture::NotifyModeChanged( E_Modes newMode )
 {
     kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
-    if( newMode == ePreparationMode_Exercise )
+    if( newMode == eModes_Prepare )
         CreateDictionnary( true );
-    else if( newMode == ePreparationMode_Terrain )
+    else if( newMode == eModes_Terrain )
         CreateDictionnary( false );
 }
 

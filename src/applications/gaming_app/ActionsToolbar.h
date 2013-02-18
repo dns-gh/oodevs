@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 
 namespace kernel
 {
@@ -22,6 +23,11 @@ namespace actions
 {
     class ActionsFilter_ABC;
     class ActionsModel;
+}
+
+namespace gui
+{
+    class RichAction;
 }
 
 class Config;
@@ -38,6 +44,7 @@ class ActionsToolbar : public Q3HBox
                      , public tools::ElementObserver_ABC< Simulation >
                      , public tools::ElementObserver_ABC< Services >
                      , public tools::ElementObserver_ABC< Simulation::sCheckPoint >
+                     , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
@@ -72,6 +79,7 @@ private slots:
     void Save();
     void Purge();
     void Reload();
+    void OnModeChanged();
     //@}
 
 signals:
@@ -89,6 +97,7 @@ private:
     bool                              initialized_;
     bool                              hasReplay_;
     std::string                       filename_;
+    gui::RichAction*                  planningAction_;
     //@}
 };
 

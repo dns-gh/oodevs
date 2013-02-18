@@ -48,7 +48,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyModeChanged( int newMode );
+    virtual void NotifyModeChanged( E_Modes newMode );
     //@}
 
 private:

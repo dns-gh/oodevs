@@ -62,7 +62,7 @@ private slots:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode );
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     void Expand( bool value );
     //@}
 

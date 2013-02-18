@@ -10,6 +10,8 @@
 #ifndef __ModesObserver_ABC_h_
 #define __ModesObserver_ABC_h_
 
+#include "ENT/ENT_Enums_Gen.h"
+
 namespace kernel
 {
 
@@ -24,20 +26,20 @@ class ModesObserver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ModesObserver_ABC() : currentMode_( 0 ) {}
+             ModesObserver_ABC() : currentMode_( eModes_None ) {}
     virtual ~ModesObserver_ABC() {}
     //@}
 
     //! @name Abstract operations
     //@{
-    virtual void NotifyModeChanged( int newMode ) { currentMode_ = newMode; }
-    int GetCurrentMode() const { return currentMode_; }
+    virtual void NotifyModeChanged( E_Modes newMode ) { currentMode_ = newMode; }
+    E_Modes GetCurrentMode() const { return currentMode_; }
     //@}
 
 private:
     //! @name Member data
     //@{
-    int currentMode_;
+    E_Modes currentMode_;
     //@}
 };
 

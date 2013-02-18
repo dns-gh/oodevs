@@ -40,6 +40,6 @@ LocationEditorToolbar::~LocationEditorToolbar()
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu )
 {
-    if( GetCurrentMode() != ePreparationMode_LivingArea )
+    if( GetCurrentMode() != eModes_LivingArea )
         gui::LocationEditorToolbar::NotifyContextMenu( point, menu );
 }

@@ -15,7 +15,6 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/UrbanPositions_ABC.h"

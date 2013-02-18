@@ -10,6 +10,8 @@
 #ifndef __DisplayableModesObserver_ABC_h_
 #define __DisplayableModesObserver_ABC_h_
 
+#include "ENT/ENT_Enums_Gen.h"
+
 namespace kernel
 {
 
@@ -59,7 +61,7 @@ public:
 
     //! @name Observer operation
     //@{
-    virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
     {
         if( currentMode_ != -1 && IsOptional( currentMode_ ) )  // was optional
             visible_ = IsVisible();

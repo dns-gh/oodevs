@@ -72,7 +72,7 @@ private:
     void Clear();
     void ClearButtons();
     virtual QSize sizeHint() const;
-    virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode );
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     //@}
 
 private:

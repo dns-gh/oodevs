@@ -15,10 +15,12 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/RichAction.h"
 #include "Config.h"
 #include "gaming/Services.h"
 #include "icons.h"
 #include "protocol/ReplaySenders.h"
+#include "ENT/ENT_Enums_Gen.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -82,9 +84,14 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Co
     CreateToolButton( tr( "Save actions in active timeline to file" ), MAKE_PIXMAP( save ), SLOT( Save() ) );
 
     // Planning
-    QToolButton* planningBtn = new QToolButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), "", this, SIGNAL( PlanificationModeChange() ), this );
+    QAction* action = new QAction( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), this );
+    connect( action, SIGNAL( triggered() ), this, SLOT( OnModeChanged() ) );
+    QToolButton* planningBtn = new QToolButton( this );
+    planningBtn->setDefaultAction( action );
     planningBtn->setAutoRaise( true );
     planningBtn->setCheckable( true );
+    planningAction_ = new gui::RichAction( action, controllers_ );
+    planningAction_->SetModes( eModes_Replay, eModes_Gaming | eModes_Planning, true );
 
     // Purge
     CreateToolButton( tr( "Delete recorded actions" ), MAKE_PIXMAP( trash2 ), SLOT( Purge() ) );
@@ -109,6 +116,7 @@ ActionsToolbar::~ActionsToolbar()
 {
     controllers_.Unregister( *this );
     delete confirmation_;
+    delete planningAction_;
 }
 
 // -----------------------------------------------------------------------------
@@ -303,4 +311,13 @@ void ActionsToolbar::NotifyUpdated( const Simulation::sCheckPoint& checkPoint )
         {
             // NOTHING
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::OnModeChanged
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+void ActionsToolbar::OnModeChanged()
+{
+    controllers_.ChangeMode( GetCurrentMode() == eModes_Gaming ? eModes_Planning : eModes_Gaming );
 }

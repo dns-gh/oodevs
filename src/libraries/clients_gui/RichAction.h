@@ -19,6 +19,7 @@ class QAction;
 namespace kernel
 {
     class Controllers;
+    class ModeController;
 }
 
 namespace gui
@@ -52,8 +53,8 @@ public:
 private:
     //! @name Member data
     //@{
-    QAction*             action_;
-    kernel::Controllers& controllers_;
+    QAction* action_;
+    kernel::ModeController& modeController_;
     //@}
 };
 

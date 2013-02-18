@@ -46,7 +46,7 @@ public:
     virtual void NotifyCreated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyUpdated( const kernel::UrbanObject_ABC& object );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifyModeChanged( int newMode );
+    virtual void NotifyModeChanged( E_Modes newMode );
     //@}
 
 protected slots:

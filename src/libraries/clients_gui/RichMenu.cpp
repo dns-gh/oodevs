@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "RichMenu.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController_ABC.h"
+#include "clients_kernel/ModeController.h"
 
 using namespace gui;
 
@@ -20,12 +20,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RichMenu::RichMenu( QWidget* parent, kernel::Controllers& controllers, const QString& title /*= ""*/ )
     : kernel::ContextMenu( parent )
-    , controllers_( controllers )
+    , modeController_( controllers.modes_ )
 {
     if( !title.isEmpty() )
         setTitle( title );
-    if( controllers_.modes_ )
-        controllers_.modes_->Register( *this );
+    modeController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,8 +33,7 @@ RichMenu::RichMenu( QWidget* parent, kernel::Controllers& controllers, const QSt
 // -----------------------------------------------------------------------------
 RichMenu::~RichMenu()
 {
-    if( controllers_.modes_ )
-        controllers_.modes_->Unregister( *this );
+    modeController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------

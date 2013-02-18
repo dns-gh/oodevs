@@ -11,6 +11,7 @@
 #define __Controllers_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Enums_Gen.h"
 
 class QMainWindow;
 
@@ -23,7 +24,7 @@ namespace kernel
 {
     class ActionController;
     class Controller;
-    class ModeController_ABC;
+    class ModeController;
     class Options;
 
 // =============================================================================
@@ -46,12 +47,10 @@ public:
     void Register( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
     void Update( tools::Observer_ABC& observer );
-    void ChangeMode( int newMode );
-    //@}
-
-    //! @name Setters
-    //@{
-    void SetModeController( ModeController_ABC* modeController );
+    E_Modes GetCurrentMode() const;
+    void ChangeMode( E_Modes newMode );
+    void LoadOptions( E_Modes mode );
+    void SaveOptions( E_Modes mode );
     //@}
 
 public:
@@ -60,7 +59,7 @@ public:
     Options&            options_;
     Controller&         controller_;
     ActionController&   actions_;
-    ModeController_ABC* modes_;
+    ModeController&     modes_;
     //@}
 };
 

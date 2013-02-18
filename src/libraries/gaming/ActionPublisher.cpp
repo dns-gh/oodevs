@@ -84,8 +84,8 @@ void ActionPublisher::Send( const sword::ClientToMessenger& /*message*/ )
 // Name: ActionPublisher::NotifyModeChanged
 // Created: LGY 2012-06-22
 // -----------------------------------------------------------------------------
-void ActionPublisher::NotifyModeChanged( int newMode )
+void ActionPublisher::NotifyModeChanged( E_Modes newMode )
 {
-    design_ = newMode == eGamingMode_Planification;
+    design_ = newMode == eModes_Planning;
 }
 

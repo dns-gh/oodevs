@@ -70,7 +70,7 @@ public:
 
     //! @name DisplayableModeObserver_ABC
     //@{
-    virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode );
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     //@}
 
 private:

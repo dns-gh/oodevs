@@ -45,14 +45,14 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
                                                                  automats, formation, icons, modelBuilder, model, staticModel, treeViews_, symbols );
-        pListDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
+        pListDockWnd->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
     }
 
     // Properties panel
     {
         gui::RichDockWidget* pPropertiesDockWnd = new gui::RichDockWidget( controllers, parent, "properties", tools::translate( "DockContainer", "Properties" ) );
-        pPropertiesDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
+        pPropertiesDockWnd->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel, glProxy, config );
         pPropertiesDockWnd->setWidget( propertiesPanel );
         parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
@@ -60,7 +60,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Creation panel
     {
         gui::RichDockWidget* pCreationDockWnd = new gui::RichDockWidget( controllers, parent, "creation", tools::translate( "DockContainer", "Creation" ) );
-        pCreationDockWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
+        pCreationDockWnd->SetModes( eModes_Default | eModes_LivingArea | eModes_Terrain );
         pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, symbols, colorStrategy, paramLayer, weatherLayer, glProxy, colorController );
         pCreationDockWnd->setWidget( pCreationPanel_ );
         parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
@@ -68,38 +68,38 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Terrain profile
     {
         terrainProfiler_ = new gui::TerrainProfiler( parent, controllers, staticModel.detection_, terrainProfileLayer );
-        terrainProfiler_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
+        terrainProfiler_->SetModes( eModes_Default | eModes_LivingArea );
         terrainProfiler_->hide();
         parent->addDockWidget( Qt::RightDockWidgetArea, terrainProfiler_ );
     }
     // Extensions panel
     {
         gui::RichDockWidget* pExtensionsPanel = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_ );
-        pExtensionsPanel->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Terrain );
+        pExtensionsPanel->SetModes( eModes_Default | eModes_LivingArea | eModes_Terrain );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
     }
     // Urban informations
     {
         gui::RichDockWidget* pInformations = new UrbanInfosDockWidget( parent, controllers, model.urban_ );
-        pInformations->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
+        pInformations->SetModes( eModes_Default | eModes_LivingArea );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pInformations );
     }
     // Usages
     {
         pUsagesPanel_ = new UsagesDockWidget( parent, controllers, staticModel );
-        pUsagesPanel_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea | ePreparationMode_Exercise );
+        pUsagesPanel_->SetModes( eModes_Default | eModes_LivingArea | eModes_Prepare );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pUsagesPanel_ );
     }
     // ResourceNetwork panel
     {
         gui::RichDockWidget* pResourceWnd = new ResourceNetworkDialog( parent, controllers, staticModel, model );
-        pResourceWnd->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea );
+        pResourceWnd->SetModes( eModes_Default | eModes_LivingArea );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
     }
     // Living area panel
     {
         pLivingAreaPanel_ = new LivingAreaPanel( parent, controllers, paramLayer, glProxy );
-        pLivingAreaPanel_->SetModes( ePreparationMode_Default | ePreparationMode_Exercise | ePreparationMode_Terrain, ePreparationMode_LivingArea );
+        pLivingAreaPanel_->SetModes( eModes_Default | eModes_Prepare | eModes_Terrain, eModes_LivingArea );
         parent->addDockWidget( Qt::TopDockWidgetArea, pLivingAreaPanel_ );
     }
 }

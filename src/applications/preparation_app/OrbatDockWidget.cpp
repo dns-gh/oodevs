@@ -108,9 +108,9 @@ void OrbatDockWidget::RestoreWidth()
 // Name: OrbatDockWidget::NotifyModeChanged
 // Created: LGY 2012-06-27
 // -----------------------------------------------------------------------------
-void OrbatDockWidget::NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode )
+void OrbatDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
 {
-    expandButton_->setEnabled( newMode == ePreparationMode_Exercise );
+    expandButton_->setEnabled( newMode == eModes_Prepare );
     if( expanded_ )
         Expand( false );
     RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );

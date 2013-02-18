@@ -37,7 +37,7 @@ class Selectionner_ABC;
 class ActionController : private tools::SortedInterfaceContainer< tools::Observer_ABC >
                        , private boost::noncopyable
 {
-    friend void Controllers::ChangeMode( int newMode );
+    friend void Controllers::ChangeMode( E_Modes newMode );
 
 public:
     //! @name Constructors/Destructor

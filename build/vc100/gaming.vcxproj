@@ -343,7 +343,6 @@
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h" />
     <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h" />
-    <ClInclude Include="..\..\src\libraries\gaming\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Propagation.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PropagationAttribute.h" />

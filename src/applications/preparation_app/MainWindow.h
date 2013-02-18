@@ -110,13 +110,12 @@ private:
     void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                        const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
-    void WriteOptions();
-    void ReadOptions();
     void DoClose();
     void DoLoad( QString filename, bool checkConsistency = true );
     void MigrateExercises();
     void GeneratePixmapSymbols();
 
+    void NotifyModeChanged( E_Modes newMode );
     virtual void NotifyCreated();
     virtual void NotifyUpdated();
     virtual void NotifyDeleted();

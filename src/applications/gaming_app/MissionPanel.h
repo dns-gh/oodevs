@@ -81,12 +81,6 @@ public:
     void Draw( gui::Viewport_ABC& viewport );
     //@}
 
-public slots:
-    //! @name slots
-    //@{
-    void ActivatePlanification();
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -98,7 +92,6 @@ private slots:
     void Disengage();
     void Close();
     void closeEvent( QCloseEvent* pEvent );
-    virtual void OnCancel();
     //@}
 
 private:
@@ -133,7 +126,6 @@ private:
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const tools::ExerciseConfig& config_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
-    bool isPlanifMode_;
     //@}
 };
 

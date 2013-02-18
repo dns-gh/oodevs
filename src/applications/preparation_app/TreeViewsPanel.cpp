@@ -63,7 +63,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySym
     // Objects
     {
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< ObjectTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
-        Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Objects" ) );
     }
     // Urban
@@ -75,13 +75,13 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySym
     // Crowds
     {
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< PopulationTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
-        Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Crowds" ) );
     }
     // Populations
     {
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< InhabitantTreeView >( this, controllers, PreparationProfile::GetProfile(), modelBuilder );
-        Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         addTab( searchTreeView, tools::translate( "DockContainer","Populations" ) );
     }
 }
@@ -110,7 +110,7 @@ void TreeViewsPanel::CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWid
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< TacticalTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons, model, staticModel.types_ );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer","Tactical" ) );
     }
 
@@ -119,7 +119,7 @@ void TreeViewsPanel::CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWid
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer","Communication" ) );
     }
     // Logistic
@@ -127,7 +127,7 @@ void TreeViewsPanel::CreateUnitTabWidget( QTabWidget* parent, QTabWidget* tabWid
         gui::SearchTreeView_ABC* searchTreeView = new gui::SearchTreeView< LogisticTreeView >( tabWidget, controllers, PreparationProfile::GetProfile(), modelBuilder, icons );
         trees.push_back( static_cast< gui::HierarchyTreeView_ABC* >( searchTreeView->GetRichTreeView() ) );
         connect( trees.back(), SIGNAL( TreeViewFocusIn( gui::HierarchyTreeView_ABC* ) ), SLOT( FocusIn( gui::HierarchyTreeView_ABC* ) ) );
-        Configure( searchTreeView, treeViews, aggregateToolbar, ePreparationMode_Terrain );
+        Configure( searchTreeView, treeViews, aggregateToolbar, eModes_Terrain );
         parent->addTab( searchTreeView, tools::translate( "DockContainer", "Logistic" ) );
     }
 

@@ -15,7 +15,6 @@
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/ModeController_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -49,7 +48,7 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
-    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() == ePreparationMode_LivingArea )
+    if( controllers_.GetCurrentMode() == eModes_LivingArea )
         return false;
     return modelBuilder_.CanCreateLine();
 }

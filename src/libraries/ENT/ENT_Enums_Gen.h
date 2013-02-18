@@ -398,27 +398,21 @@ enum E_NbcState
     eNbrNbcState      = 2
 };
 
-enum E_PreparationMode
+enum E_Modes
 {
-    ePreparationMode_None       = 0x00, // Filter
+    eModes_None         = 0x0000,       // Filter
 
-    ePreparationMode_Default    = 0x01,
-    ePreparationMode_Exercise   = 0x02,
-    ePreparationMode_Terrain    = 0x04,
-    ePreparationMode_LivingArea = 0x08,
+    eModes_Default      = 0x0001,       // Not connected
 
-    ePreparationMode_All        = 0x0F  // Filter
-};
+    eModes_Prepare      = 0x0002,
+    eModes_Terrain      = 0x0004,
+    eModes_LivingArea   = 0x0008,
 
-enum E_GamingMode
-{
-    eGamingMode_None          = 0x00, // Filter
+    eModes_Gaming       = 0x0001 << 4,
+    eModes_Planning     = 0x0002 << 4,
+    eModes_Replay       = 0x0004 << 4,
 
-    eGamingMode_Default       = 0x01,
-    eGamingMode_Exercise      = 0x02,
-    eGamingMode_Planification = 0x04,
-
-    eGamingMode_All           = 0x0F  // Filter
+    eModes_All          = 0xFFFF        // Filter
 };
 
 enum E_AgentNbcSuit

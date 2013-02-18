@@ -177,7 +177,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Planification mode panel
     {
         PlanificationModePanel* pPlanificationModePanel = new PlanificationModePanel( parent, controllers );
-        pPlanificationModePanel->SetModes( eGamingMode_Exercise | eGamingMode_Default, eGamingMode_Planification );
+        pPlanificationModePanel->SetModes( eModes_Gaming | eModes_Default, eModes_Planning );
         pPlanificationModePanel->hide();
         parent->addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel );
     }

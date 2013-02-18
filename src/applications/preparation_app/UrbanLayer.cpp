@@ -12,7 +12,6 @@
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
 #include "preparation/UrbanMenuManager.h"
-#include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanLayer constructor
@@ -65,7 +64,7 @@ bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rec
 // -----------------------------------------------------------------------------
 bool UrbanLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() == ePreparationMode_LivingArea )
+    if( controllers_.GetCurrentMode() == eModes_LivingArea )
         return false;
     return gui::UrbanLayer::HandleMousePress( event, point );
 }
@@ -76,7 +75,7 @@ bool UrbanLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& 
 // -----------------------------------------------------------------------------
 bool UrbanLayer::HandleKeyPress( QKeyEvent* key )
 {
-    if( key->key() != Qt::Key_Delete || ( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_Terrain ) || actualSelection_.empty() )
+    if( key->key() != Qt::Key_Delete || ( controllers_.GetCurrentMode() != eModes_Terrain ) || actualSelection_.empty() )
         return false;
     model_.DeleteBlocks( actualSelection_ );
     return true;

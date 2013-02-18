@@ -90,7 +90,7 @@ void UrbanTreeView::NotifyCreated( const kernel::UrbanObject_ABC& object )
         dataModel_.AddRootItem( row, 1 );
     }
     if( item )
-        item->setEditable( GetCurrentMode() == ePreparationMode_Terrain );
+        item->setEditable( GetCurrentMode() == eModes_Terrain );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,10 +132,10 @@ void UrbanTreeView::NotifyCreated( const kernel::Team_ABC& /*team*/ )
 // Name: UrbanTreeView::NotifyModeChanged
 // Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-void UrbanTreeView::NotifyModeChanged( int newMode )
+void UrbanTreeView::NotifyModeChanged( E_Modes newMode )
 {
     ModesObserver_ABC::NotifyModeChanged( newMode );
-    bool isTerrainMode = newMode == ePreparationMode_Terrain;
+    bool isTerrainMode = newMode == eModes_Terrain;
     setSelectionMode( isTerrainMode ? QAbstractItemView::ExtendedSelection : QAbstractItemView::SingleSelection );
     EnableDragAndDrop( isTerrainMode );
     ModelVisitor visitor( isTerrainMode );
@@ -292,7 +292,7 @@ void UrbanTreeView::CreateFilters( gui::SearchTreeView_ABC& searchTreeView )
 // -----------------------------------------------------------------------------
 void UrbanTreeView::ContextMenuRequested( const QPoint& where )
 {
-    if( !IsReadOnly() && GetCurrentMode() == ePreparationMode_Terrain )
+    if( !IsReadOnly() && GetCurrentMode() == eModes_Terrain )
     {
         kernel::ContextMenu* menu = new kernel::ContextMenu( this );
         menu->insertItem( tr( "Create city" ), this, SLOT( OnCreateCity() ) );
@@ -449,7 +449,7 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
 // -----------------------------------------------------------------------------
 void UrbanTreeView::keyPressEvent( QKeyEvent* event )
 {
-    if( GetCurrentMode() == ePreparationMode_Terrain && event->key() == Qt::Key_Delete )
+    if( GetCurrentMode() == eModes_Terrain && event->key() == Qt::Key_Delete )
     {
         QModelIndexList list = selectionModel()->selectedIndexes();
         std::vector< const kernel::UrbanObject_ABC* > blocks;

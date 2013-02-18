@@ -64,7 +64,6 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , commandPublisher_        ( new CommandPublisher( controllers_, publisher, profile_ ) )
     , pMissionInterface_       ( 0 )
     , selectedEntity_          ( controllers )
-    , isPlanifMode_            ( false )
     , simulation_              ( simulation )
     , interfaceBuilder_        ( interfaceBuilder )
     , config_                  ( config )
@@ -311,7 +310,7 @@ void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
+    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +324,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< kernel::AutomatDecisions_ABC >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
+    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +335,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_ , config_ ) );
+    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_, interfaceBuilder_, actionsModel_ , config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,7 +354,7 @@ void MissionPanel::ActivateFragOrder( int id )
             if( decisions->IsEmbraye() )
                 entity = superior;
     }
-    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
+    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -426,15 +425,6 @@ void MissionPanel::Close()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionPanel::Close
-// Created: LDC 2011-08-29
-// -----------------------------------------------------------------------------
-void MissionPanel::OnCancel()
-{
-    Close();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MissionPanel::closeEvent
 // Created: MMC 2011-10-14
 // -----------------------------------------------------------------------------
@@ -458,7 +448,6 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
     else
     {
         pMissionInterface_ = missionInterface;
-        pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
         NotifyMission();
         connect( pMissionInterface_, SIGNAL( OkClicked() ), SLOT( Close() ) );
         if( pMissionInterface_->IsEmpty() )
@@ -469,18 +458,6 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
             show();
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::ActivatePlanification
-// Created: HBD 2010-09-06
-// -----------------------------------------------------------------------------
-void MissionPanel::ActivatePlanification()
-{
-    isPlanifMode_ = !isPlanifMode_;
-    controllers_.ChangeMode( isPlanifMode_ ? eGamingMode_Planification : eGamingMode_Exercise );
-    if( pMissionInterface_ )
-        pMissionInterface_->ChangeOkValueButton( isPlanifMode_ );
 }
 
 // -----------------------------------------------------------------------------

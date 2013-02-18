@@ -85,7 +85,7 @@ void UrbanMenuManager::NotifyContextMenu( const kernel::UrbanObject_ABC& object,
     element_ = 0;
     if( selected_.empty() || ( selected_.size() == 1 && &object == selected_.front() ) )
         element_ = const_cast< kernel::UrbanObject_ABC* >( &object );
-    if( GetCurrentMode() != ePreparationMode_Terrain)
+    if( GetCurrentMode() != eModes_Terrain)
         return;
     const UrbanHierarchies& hierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );
     if( hierarchies.GetLevel() == eUrbanLevelCity )

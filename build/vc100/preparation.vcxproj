@@ -272,7 +272,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttribute.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModelConsistencyChecker.h" />
     <ClInclude Include="..\..\src\libraries\preparation\MoveableProxy.h" />
     <ClInclude Include="..\..\src\libraries\preparation\PerformanceIndicator.h" />

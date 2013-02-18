@@ -21,9 +21,9 @@ using namespace actions;
 // Name: FragmentaryOrderInterface constructor
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller,
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, Controllers& controllers,
                                                       actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controller, config, "fragorders-mission-sheets-directory" )
+    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controllers, config, "fragorders-mission-sheets-directory" )
     , model_( model )
     , fragOrder_( fragOrder )
 {

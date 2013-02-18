@@ -22,9 +22,9 @@ using namespace actions;
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller,
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, Controllers& controllers,
                                                     actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller, config, "automata-mission-sheets-directory" )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controllers, config, "automata-mission-sheets-directory" )
     , model_ ( model )
     , mission_ ( mission )
 {

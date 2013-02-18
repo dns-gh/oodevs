@@ -15,7 +15,7 @@
 #include "clients_kernel/Controllers.h"
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
-#include "preparation/ModeController.h"
+#include "ENT/ENT_Tr.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
@@ -40,7 +40,6 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     observer_.reset( new FileLoaderObserver() );
     config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new kernel::Controllers() );
-    controllers_->SetModeController( new ::ModeController() );
     staticModel_.reset( new StaticModel( *controllers_ ) );
     model_.reset( new Model( *controllers_, *staticModel_ ) );
 

@@ -10,11 +10,10 @@
 #ifndef __kernel_ModeController_h_
 #define __kernel_ModeController_h_
 
-#include "ENT/ENT_Tr_ABC.h"
-#include "ModeController_ABC.h"
-#include "ModesObserver_ABC.h"
-#include "DisplayableModesObserver_ABC.h"
-#include "Tools.h"
+#include "ENT/ENT_Enums_Gen.h"
+#include "Controllers.h"
+#include "tools/SortedInterfaceContainer.h"
+#include "tools/Observer_ABC.h"
 
 class QMainWindow;
 
@@ -28,49 +27,59 @@ namespace kernel
 */
 // Created: ABR 2012-05-09
 // =============================================================================
-template< typename EnumType >
-class ModeController : public ModeController_ABC
+class ModeController : public tools::SortedInterfaceContainer< tools::Observer_ABC >
 {
+    friend void Controllers::ChangeMode( E_Modes newMode );
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ModeController( EnumType savedMode, const QString& registeryEntry );
+             ModeController();
     virtual ~ModeController();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
-    virtual int GetCurrentMode() const;
-    virtual const QString& GetRegisteryEntry() const;
-    virtual void SetMainWindow( QMainWindow* parent );
+    void AddRegistryEntry( E_Modes mode, const QString& registryEntry );
+    void SetMainWindow( QMainWindow* parent );
+    E_Modes GetCurrentMode() const;
     //@}
 
-private:
-    //! @name Abstract operations
+    //! @name Registry operations
     //@{
-    virtual void ChangeMode( int newMode );
+    void LoadGeometry( E_Modes mode );
+    void SaveGeometry( E_Modes mode );
+
+    void LoadOptions( E_Modes mode, Options& options );
+    void SaveOptions( E_Modes mode, Options& options );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void LoadGeometry();
-    void SaveGeometry();
+    void LoadState( E_Modes mode );
+    void SaveState( E_Modes mode );
+
+    void ChangeMode( E_Modes newMode );
+
+    void EnsureModeIsAvailableForRegistry( E_Modes mode );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< E_Modes, QString > T_RegistryModes;
     //@}
 
 private:
     //! @name Member data
     //@{
-    QMainWindow*  parent_;
-    const QString registeryEntry_;
-    EnumType      currentMode_;
-    EnumType      savedMode_;
-    bool          useDefault_;
-    bool          firstChangeToSavedMode_;
+    QMainWindow*     parent_;
+    E_Modes          currentMode_;
+    T_RegistryModes  registryModes_;
+    bool             firstChangeToSavedMode_;
+    bool             useDefault_;
     //@}
 };
- 
-#include "ModeController.inl"
 
 } //! namespace kernel
 

@@ -1011,9 +1011,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\MoveableProxy.h">
       <Filter>Source Files\Model\Agent\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\ModeController.h">
-      <Filter>Source Files\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanHierarchies.h">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>

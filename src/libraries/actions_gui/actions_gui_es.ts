@@ -43,44 +43,6 @@
     </message>
 </context>
 <context>
-    <name>MissionInteface_ABC</name>
-    <message>
-        <source>Doctrine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MissionInterface_ABC</name>
-    <message>
-        <source>Mandatory</source>
-        <translation>Obligatorio</translation>
-    </message>
-    <message>
-        <source>Optional</source>
-        <translation>Opcional</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Add to planning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
@@ -103,6 +65,41 @@
     </message>
     <message>
         <source>Add formation&apos;s agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>actions::gui::MissionInterface_ABC</name>
+    <message>
+        <source>Mandatory</source>
+        <translation type="unfinished">Obligatorio</translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translation type="unfinished">Opcional</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctrine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Add to planning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

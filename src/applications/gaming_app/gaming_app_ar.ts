@@ -203,10 +203,6 @@
         <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation type="unfinished">-وضع التخطيط في</translation>
-    </message>
-    <message>
         <source>Gaming</source>
         <translation type="unfinished">الألعاب</translation>
     </message>
@@ -1734,6 +1730,14 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Error while loading Raster source.</source>
         <translation type="unfinished">حدث خطأ أثناء تحميل النقطية المصدر.</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">السيف</translation>
+    </message>
+    <message>
+        <source> - Planning mode on</source>
+        <translation type="unfinished">-وضع التخطيط في</translation>
     </message>
 </context>
 <context>
@@ -3355,13 +3359,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Object Destruction</source>
         <translation type="unfinished">تدمير الكائن</translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source> - Not connected</source>
-        <translation type="unfinished">--غير متصل</translation>
     </message>
 </context>
 </TS>

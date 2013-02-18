@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "InhabitantLayer.h"
 #include "LivingAreaEditor_ABC.h"
-#include "clients_kernel/ModeController_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::InhabitantLayer
@@ -40,7 +39,7 @@ InhabitantLayer::~InhabitantLayer()
 // -----------------------------------------------------------------------------
 void InhabitantLayer::NotifySelectionChanged( const std::vector< const kernel::Inhabitant_ABC* >& elements )
 {
-    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_LivingArea )
+    if( controllers_.GetCurrentMode() != eModes_LivingArea )
         gui::InhabitantLayer::NotifySelectionChanged( elements );
 }
 
@@ -50,7 +49,7 @@ void InhabitantLayer::NotifySelectionChanged( const std::vector< const kernel::I
 // -----------------------------------------------------------------------------
 bool InhabitantLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( controllers_.modes_ && controllers_.modes_->GetCurrentMode() != ePreparationMode_LivingArea )
+    if( controllers_.GetCurrentMode() != eModes_LivingArea )
         return false;
     if( event && event->buttons() != Qt::NoButton )
     {

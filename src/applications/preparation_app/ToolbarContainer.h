@@ -23,6 +23,7 @@ namespace gui
     class GisToolbar;
     class LocationsLayer;
     class ParametersLayer;
+    class TerrainProfiler;
     class View_ABC;
 }
 

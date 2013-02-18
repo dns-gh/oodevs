@@ -29,31 +29,31 @@ ToolbarContainer::ToolbarContainer( QMainWindow* parent, kernel::Controllers& co
     // File
     {
         fileToolbar_ = new FileToolbar( parent, controllers );
-        fileToolbar_->SetModes( ePreparationMode_LivingArea, ePreparationMode_Default, true );
+        fileToolbar_->SetModes( eModes_LivingArea, eModes_Default, true );
         parent->addToolBar( fileToolbar_ );
     }
     // Display
     {
         gui::RichToolBar* displayToolBar = new gui::DisplayToolbar( parent, controllers );
-        displayToolBar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
+        displayToolBar->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addToolBar( displayToolBar );
     }
     // Terrain
     {
         gui::RichToolBar* terrainToolBar = new TerrainToolBar( parent, controllers, eventStrategy, paramLayer, urbanModel, removeBlocksDialog );
-        terrainToolBar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_Terrain, true );
+        terrainToolBar->SetModes( eModes_Default | eModes_LivingArea, eModes_Terrain, true );
         parent->addToolBar( terrainToolBar );
     }
     // Location editor
     {
         locationEditorToolbar_ = new LocationEditorToolbar( parent, controllers, staticModel.coordinateConverter_, view, layer );
-        locationEditorToolbar_->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
+        locationEditorToolbar_->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addToolBar( locationEditorToolbar_ );
     }
     // GIS
     {
         gui::RichToolBar* gisToolbar = new gui::GisToolbar( parent, controllers, staticModel.detection_, terrainProfiler );
-        gisToolbar->SetModes( ePreparationMode_Default | ePreparationMode_LivingArea, ePreparationMode_None, true );
+        gisToolbar->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addToolBar( gisToolbar );
     }
 }

@@ -19,6 +19,7 @@
 namespace kernel
 {
     class Controllers;
+    class ModeController;
 }
 
 namespace gui
@@ -53,7 +54,7 @@ public:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::ModeController& modeController_;
     //@}
 };
 

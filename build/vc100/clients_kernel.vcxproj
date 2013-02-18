@@ -124,6 +124,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ModeController.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroup.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp" />
@@ -273,7 +274,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ModeController_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
@@ -474,7 +474,6 @@
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
     <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />
-    <None Include="..\..\src\libraries\clients_kernel\ModeController.inl" />
     <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_fr.ts" />

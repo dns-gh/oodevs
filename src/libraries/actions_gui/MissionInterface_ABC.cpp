@@ -15,6 +15,8 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/ModeController.h"
 #include "ParamComboBox.h"
 
 #include "tools/ExerciseConfig.h"
@@ -68,18 +70,18 @@ namespace
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, const tools::ExerciseConfig& config, std::string missionSheetPath /*=""*/ )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, std::string missionSheetPath /*=""*/ )
     : Q3VBox            ( parent )
     , ParamInterface_ABC()
     , title_     ( order.GetName().c_str() )
-    , controller_( controller )
+    , controllers_( controllers )
     , entity_    ( entity )
 {
     setMinimumSize( 280, 250 );
     CreateTitle( title_ );
     tabs_ = new QTabWidget( this );
-    mainTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Mandatory" ) );
-    optionalTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Optional" ) );
+    mainTab_ = CreateTab( tabs_, tr( "Mandatory" ) );
+    optionalTab_ = CreateTab( tabs_, tr( "Optional" ) );
     {
         std::string path = config.GetPhysicalChildPath( missionSheetPath );
         std::string doctrine = order.GetDoctrineInformation();
@@ -88,7 +90,7 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
         if( bfs::is_regular_file( fileName ) || ( !doctrine.empty() && !usage.empty() ) )
         {
             QWidget* helpTab = new QWidget( tabs_ );
-            tabs_->addTab( helpTab, tools::translate( "MissionInterface_ABC", "Help" ) );
+            tabs_->addTab( helpTab, tr( "Help" ) );
             QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
 
             if( bfs::is_regular_file( fileName ) )
@@ -101,13 +103,25 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
             else 
             {
                 if( !doctrine.empty() )
-                    CreateLineField( tools::translate( "MissionInteface_ABC", "Doctrine" ), doctrine.c_str(), helpLayout );
+                    CreateLineField( tr( "Doctrine" ), doctrine.c_str(), helpLayout );
                 if( !usage.empty() )
-                    CreateLineField( tools::translate( "MissionInteface_ABC", "Usage" ), usage.c_str(), helpLayout );
+                    CreateLineField( tr( "Usage" ), usage.c_str(), helpLayout );
             }
         }
     }
-    CreateOkCancelButtons();
+    {
+        Q3HBox* box = new Q3HBox( this );
+        box->setMargin( 5 );
+        box->setSpacing( 5 );
+        box->layout()->setAlignment( Qt::AlignRight );
+        ok_ = new QPushButton( tr( "Ok" ), box );
+        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        ok_->setDefault( true );
+        ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+        connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
+        connect( cancel, SIGNAL( clicked() ), parent, SLOT( Close() ) );
+    }
+    controllers_.modes_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +134,7 @@ MissionInterface_ABC::~MissionInterface_ABC()
         (*it)->RemoveFromController();
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         delete *it;
+    controllers_.modes_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,39 +177,6 @@ void MissionInterface_ABC::CreateTitle( const QString& title )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateOkCancelButtons
-// Created: APE 2004-04-26
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateOkCancelButtons()
-{
-    Q3HBox* box = new Q3HBox( this );
-    box->setMargin( 5 );
-    box->setSpacing( 5 );
-    box->layout()->setAlignment( Qt::AlignRight );
-    ok_ = new QPushButton( tools::translate( "MissionInterface_ABC", "Ok" ), box );
-    QPushButton* cancel = new QPushButton( tools::translate( "MissionInterface_ABC", "Cancel" ), box );
-    ok_->setDefault( true );
-    ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
-    connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
-    connect( cancel, SIGNAL( clicked() ), parent(), SLOT( OnCancel() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::ChangeOkValueButton
-// Created: HBD 2010-09-06
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::ChangeOkValueButton( bool planningMode )
-{
-   if( ok_ )
-   {
-       if( planningMode )
-          ok_->setText( tools::translate( "MissionInterface_ABC", "Add to planning" ) );
-       else
-          ok_->setText( tools::translate( "MissionInterface_ABC", "Ok" ) );
-   }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::AddParameter
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
@@ -202,7 +184,7 @@ void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
     parameter.BuildInterface( parameter.IsOptional() ? optionalTab_ : mainTab_ );
-    parameter.RegisterIn( controller_ );
+    parameter.RegisterIn( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,15 +221,6 @@ void MissionInterface_ABC::OnOk()
         return;
     Publish();
     emit( OkClicked() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::OnCancel
-// Created: MMC 2011-10-14
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::OnCancel()
-{
-    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -288,4 +261,16 @@ int MissionInterface_ABC::GetIndex( Param_ABC* param ) const
         if( parameters_[ i ] == param )
             return i;
     return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::NotifyModeChanged
+// Created: ABR 2013-02-15
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::NotifyModeChanged( E_Modes newMode )
+{
+    ModesObserver_ABC::NotifyModeChanged( newMode );
+    if( !ok_ )
+        return;
+    ok_->setText( newMode == eModes_Planning ? tr( "Add to planning" ) : tr( "Ok" ) );
 }
