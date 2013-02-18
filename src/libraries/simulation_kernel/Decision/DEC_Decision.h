@@ -190,7 +190,8 @@ private://! @name Helpers
 
     virtual sword::Brain& GetBrain();
 
-    virtual void RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;
+    virtual void RegisterSelf( sword::Brain& brain ) = 0;
+    virtual void RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;
     //@}
 
 protected:

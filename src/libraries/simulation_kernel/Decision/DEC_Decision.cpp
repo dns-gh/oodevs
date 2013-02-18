@@ -1580,7 +1580,7 @@ namespace
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
                   const std::string& includePath, const std::string& brainFile, bool isMasalife,
-                  const std::string& type, bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger, unsigned int id )
+                  const std::string& type, bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger )
 {
     const std::string& idx = isMasalife ? type : brainFile;
     pArchetypeBrain = brainTable[idx];
@@ -1588,7 +1588,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
         pArchetypeBrain.reset();
     if( pArchetypeBrain )
     {
-        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger, id ) );
+        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
         return false;
     }
     if( isMasalife )
@@ -1598,14 +1598,14 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN( "knowledge" )
             + PLUGIN( "communication" )
             + PLUGIN46( "errorhandler" )
-            + "} cwd='" + includePath + "'", logger, id ) );
+            + "} cwd='" + includePath + "'", logger ) );
     else
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
             + PLUGIN46( "eventmanager" )
             + PLUGIN46( "motivation" )
             + PLUGIN46( "errorhandler" )
-            + "} cwd='" + includePath + "'", logger, id ) );
+            + "} cwd='" + includePath + "'", logger ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
     pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
@@ -1614,7 +1614,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
     if( reload )
         pBrain = pArchetypeBrain;
     else
-        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger, id ) );
+        pBrain.reset( new sword::Brain( *pArchetypeBrain, logger ) );
     return true;
 }
 

@@ -263,9 +263,17 @@ boost::shared_ptr< MIL_KnowledgeGroup > DEC_RolePion_Decision::GetKnowledgeGroup
 // Name: DEC_RolePion_Decision::RegisterSelf
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName )
+void DEC_RolePion_Decision::RegisterSelf( sword::Brain& brain )
 {
     brain.GetScriptRef( "myself" ) = (DEC_Decision_ABC*)this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::RegisterSpecific
+// Created: JSR 2013-02-18
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName )
+{
     if( isMasalife )
         brain.GetScriptRef( "InitMePlatoon" )(
             brain.GetScriptRef( "integration.ontology.types.body" ),

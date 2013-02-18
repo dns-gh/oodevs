@@ -54,8 +54,8 @@ class Brain : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    Brain( const std::string& config, DEC_Logger_ABC* logger, unsigned int id );
-    Brain( Brain& parent, DEC_Logger_ABC* logger, unsigned int id );
+    Brain( const std::string& config, DEC_Logger_ABC* logger );
+    Brain( Brain& parent, DEC_Logger_ABC* logger );
     ~Brain() {}
     //@}
 
@@ -78,7 +78,7 @@ public:
     template< typename Signature >
     void RegisterFunction( const char* const name, const boost::function< Signature >& function )
     {
-        (*brain_)[ name ] = ProfilerProxy< Signature >( logger_, name, profilers_[ name ], function, id_ );
+        (*brain_)[ name ] = ProfilerProxy< Signature >( logger_, name, profilers_[ name ], function, brain_.get() );
     }
     template< typename Function >
     void RegisterFunction( const char* const name, const Function& function )
@@ -101,7 +101,6 @@ private:
     //! @name Member data
     //@{
     DEC_Logger_ABC* logger_;
-    const unsigned int id_;
     std::auto_ptr< directia::brain::Brain > brain_;
     static T_Profilers profilers_;
     //@}

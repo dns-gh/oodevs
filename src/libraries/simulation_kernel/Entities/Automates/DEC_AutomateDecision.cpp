@@ -526,9 +526,17 @@ boost::shared_ptr< MIL_KnowledgeGroup > DEC_AutomateDecision::GetKnowledgeGroup(
 // Name: DEC_AutomateDecision::RegisterSelf
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName )
+void DEC_AutomateDecision::RegisterSelf( sword::Brain& brain )
 {
     brain.GetScriptRef( "myself" ) = (DEC_Decision_ABC*)this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::RegisterSpecific
+// Created: JSR 2013-02-18
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName )
+{
     if( isMasalife )
         brain.GetScriptRef( "InitMeAutomat" )(
             brain.GetScriptRef( "integration.ontology.types.body" ),

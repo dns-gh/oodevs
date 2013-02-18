@@ -53,7 +53,7 @@ namespace DEC_DecisionImpl
     bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
                       boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath,
                       const std::string& brainFile, bool isMasalife, const std::string& type,
-                      bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger, unsigned int id );
+                      bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger );
 }
 
 namespace directia
@@ -84,7 +84,9 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< sword::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir, logger_, pEntity_->GetID() );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir, logger_ );
+
+    RegisterSelf( *pBrain_ );
 
     if( newBrain )
     {
@@ -98,7 +100,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     pBrain_->RegisterFunction( "BreakForDebug",
         boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) );
 
-    RegisterSelf( *pBrain_, isMasalife_, groupName );
+    RegisterSpecific( *pBrain_, isMasalife_, groupName );
 
     pRefs_.reset( new ScriptRefs( *pBrain_ ) );
 

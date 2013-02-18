@@ -179,7 +179,8 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName );
+    virtual void RegisterSelf( sword::Brain& brain );
+    virtual void RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName );
     //@}
 
     //! @name Functions called from dia

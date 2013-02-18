@@ -388,9 +388,17 @@ std::string DEC_PopulationDecision::GetName() const
 // Name: DEC_PopulationDecision::RegisterSelf
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName )
+void DEC_PopulationDecision::RegisterSelf( sword::Brain& brain )
 {
     brain.GetScriptRef( "myself" ) = (DEC_Decision_ABC*)this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::RegisterSpecific
+// Created: JSR 2013-02-18
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::RegisterSpecific( sword::Brain& brain, bool isMasalife, const std::string& groupName )
+{
     if( isMasalife )
         brain.GetScriptRef( "InitMeCrowd" )(
             brain.GetScriptRef( "integration.ontology.types.body" ),

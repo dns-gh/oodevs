@@ -29,7 +29,9 @@ public:
     virtual std::string GetGroupName() { return std::string(); }
     virtual void EndCleanStateAfterCrash() {}
     virtual void RegisterUserFunctions( sword::Brain& ) {}
-    virtual void RegisterSelf( sword::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}
+    virtual void RegisterSelf( sword::Brain& /*brain*/ ) {}
+    virtual void RegisterSpecific( sword::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName */ ) {}
+
     template< typename FunctionType >
     void RegisterFunction( const char* const strFunctionName, FunctionType function )
     {

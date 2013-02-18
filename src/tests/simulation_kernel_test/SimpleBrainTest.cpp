@@ -90,10 +90,12 @@ public:
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
     virtual std::string GetGroupName() { return std::string(); };
-    virtual void RegisterSelf( sword::Brain& brain, bool /*isMasalife*/, const std::string& /*groupName*/ )
+    virtual void RegisterSelf( sword::Brain& brain )
     {
         brain.GetScriptRef( "myself" ) = this;
     }
+    virtual void RegisterSpecific( sword::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}
+
 
     void UsedByDIA() {}
     void ReleasedByDIA () {}

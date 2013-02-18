@@ -19,9 +19,8 @@ Brain::T_Profilers Brain::profilers_;
 // Name: Brain constructor
 // Created: MCO 2012-10-31
 // -----------------------------------------------------------------------------
-Brain::Brain( const std::string& config, DEC_Logger_ABC* logger, unsigned int id )
+Brain::Brain( const std::string& config, DEC_Logger_ABC* logger )
     : logger_( logger )
-    , id_( id )
     , brain_ ( new directia::brain::Brain( config ) )
 {
     // NOTHING
@@ -31,9 +30,8 @@ Brain::Brain( const std::string& config, DEC_Logger_ABC* logger, unsigned int id
 // Name: Brain constructor
 // Created: MCO 2012-10-31
 // -----------------------------------------------------------------------------
-Brain::Brain( Brain& parent, DEC_Logger_ABC* logger, unsigned int id )
+Brain::Brain( Brain& parent, DEC_Logger_ABC* logger )
     : logger_( logger )
-    , id_( id )
     , brain_ ( new directia::brain::Brain( *parent.brain_ ) )
 {
     // NOTHING
