@@ -142,13 +142,8 @@ void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const unsigne
     ar >>boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
     ar >> bIlluminatedDefinitely_;
     ar >> bHit_;
-    MIL_Entity_ABC* target = 0;
-    ar >> target;
-    target_ = target;
-    std::set< MIL_Entity_ABC* > illuminators;
-    ar >> illuminators;
-    for( std::set< MIL_Entity_ABC* >::const_iterator it = illuminators.begin(); it != illuminators.end(); ++it )
-        illuminators_.insert( *it );
+    ar >> target_;
+    ar >> illuminators_;
 }
 
 // -----------------------------------------------------------------------------
