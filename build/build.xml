@@ -1449,6 +1449,7 @@
                easier to pull programmatically.
         -->
         <migrate-reports physical="scipio"/>
+        <migrate-reports physical="france"/>
         <safe-move file="${out.dir}/decisional.zip">
             <zip destfile="@{file}" filesonly="true">
                 <fileset dir="${data.dir}">
