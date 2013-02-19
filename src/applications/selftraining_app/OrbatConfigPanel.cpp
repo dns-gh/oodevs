@@ -139,11 +139,8 @@ void OrbatConfigPanel::Select( const frontend::Exercise_ABC& exercise )
             mainLayout_->addWidget( sideBox_ );
             OnLanguageChanged();
         }
-        if( frontend::commands::HasObjectWithoutSide( config_, exercise.GetName() ) )
-        {
-            noSideObjectsLabel_->setChecked( true );
-            noSideObjectsLabel_->show();
-        }
+        noSideObjectsLabel_->setChecked( true );
+        noSideObjectsLabel_->show();
         currentExercise_ = currentExercise;
     }
 }

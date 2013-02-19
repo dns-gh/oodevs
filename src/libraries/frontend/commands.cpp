@@ -20,7 +20,6 @@
 #pragma warning( pop )
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
-#include <boost/lambda/lambda.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <QtCore/qstringlist.h>
 
@@ -150,25 +149,6 @@ namespace frontend
                             >> xml::list( "party", boost::bind( &ReadSide, _1, boost::ref( result ) ) );
             }
             return result;
-        }
-
-        bool HasObjectWithoutSide( const tools::GeneralConfig& config, const std::string& exercise )
-        {
-            const bfs::path path( GetOrbatFile( config, exercise ) );
-            if( bfs::exists( path ) )
-            {
-                xml::xifstream xis( path.string() );
-                bool hasObject = false;
-                xis >> xml::start( "orbat" )
-                        >> xml::start( "parties" )
-                            >> xml::optional
-                            >> xml::start( "no-party" )
-                                >> xml::optional
-                                >> xml::start( "objects" )
-                                    >> xml::list( "object", boost::lambda::var( hasObject ) = true );
-                return hasObject;
-            }
-            return false;
         }
 
         std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
