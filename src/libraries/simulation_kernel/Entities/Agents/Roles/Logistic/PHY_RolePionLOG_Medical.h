@@ -128,7 +128,7 @@ private:
     //@{
     typedef std::multimap< const MIL_Automate*, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
 
-    typedef std::set< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
+    typedef std::vector< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
 
     typedef std::list< PHY_MedicalConsign_ABC* > T_MedicalConsignList;
 

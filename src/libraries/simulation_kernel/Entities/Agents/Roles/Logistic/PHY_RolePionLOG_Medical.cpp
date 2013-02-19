@@ -39,6 +39,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/map.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 
@@ -869,8 +870,7 @@ void PHY_RolePionLOG_Medical::DisableSystem()
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::ReserveForSorting( const PHY_MedicalCollectionAmbulance& ambulance )
 {
-    assert( reservations_.find( &ambulance ) == reservations_.end() );
-    reservations_.insert( &ambulance );
+    reservations_.push_back( &ambulance );
 }
 
 // -----------------------------------------------------------------------------
@@ -879,8 +879,7 @@ void PHY_RolePionLOG_Medical::ReserveForSorting( const PHY_MedicalCollectionAmbu
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance )
 {
-    if( reservations_.erase( &ambulance ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    boost::remove_erase( reservations_, &ambulance );
 }
 
 // -----------------------------------------------------------------------------
