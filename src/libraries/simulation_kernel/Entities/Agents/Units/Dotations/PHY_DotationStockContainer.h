@@ -13,6 +13,7 @@
 #define __PHY_DotationStockContainer_h_
 
 #include <boost/serialization/export.hpp>
+#include "tools/Set.h"
 
 namespace client
 {
@@ -101,11 +102,10 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_DotationCategory*, PHY_DotationStock* > T_StockMap;
-    typedef T_StockMap::const_iterator                                CIT_StockMap;
-
-    typedef std::set< const PHY_DotationStock* > T_StockSet;
-    typedef T_StockSet::const_iterator         CIT_StockSet;
     //@}
+
+private:
+    typedef tools::Set< const PHY_DotationStock* > T_StockSet;
 
 private:
     //! @name Tools

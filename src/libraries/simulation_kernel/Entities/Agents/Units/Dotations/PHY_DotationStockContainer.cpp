@@ -76,13 +76,13 @@ namespace boost
         void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
             std::size_t size = map.size();
-            for ( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 if( !it->first )
                     --size;
             }
             file << size;
-            for( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 if( !it->first )
                     continue;
@@ -108,34 +108,6 @@ namespace boost
                 file >> pDotationStock;
 
                 map[ pDotationCategory ] = pDotationStock;
-            }
-        }
-
-        template< typename Archive >
-        void serialize( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
-        {
-            std::size_t size= set.size();
-            file << size;
-            for( PHY_DotationStockContainer::CIT_StockSet it = set.begin(); it != set.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                PHY_DotationStock* pStock;
-                file >> pStock;
-                set.insert( pStock );
             }
         }
     }
@@ -215,7 +187,7 @@ void PHY_DotationStockContainer::ReadStock( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 double PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory& category, double rNbr )
 {
-    CIT_StockMap it = stocks_.find( &category );
+    auto it = stocks_.find( &category );
     if( it == stocks_.end() )
         return 0;
     return it->second->AddReservation( rNbr );
@@ -227,7 +199,7 @@ double PHY_DotationStockContainer::AddReservation( const PHY_DotationCategory& c
 // -----------------------------------------------------------------------------
 double PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& category, double rNbr )
 {
-    CIT_StockMap it = stocks_.find( &category );
+    auto it = stocks_.find( &category );
     if( it == stocks_.end() )
         return 0;
     it->second->RemoveReservation( rNbr );
@@ -240,7 +212,7 @@ double PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory
 // -----------------------------------------------------------------------------
 double PHY_DotationStockContainer::GetValue( const PHY_DotationCategory& category ) const
 {
-    CIT_StockMap it = stocks_.find( &category );
+    auto it = stocks_.find( &category );
     if( it == stocks_.end() )
         return 0.;
     return it->second->GetValue();
@@ -252,7 +224,7 @@ double PHY_DotationStockContainer::GetValue( const PHY_DotationCategory& categor
 // -----------------------------------------------------------------------------
 PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCategory& category ) const
 {
-    CIT_StockMap it = stocks_.find( &category );
+    auto it = stocks_.find( &category );
     if( it == stocks_.end() )
         return 0;
     return it->second;
@@ -426,12 +398,9 @@ void PHY_DotationStockContainer::Apply( boost::function< void( PHY_DotationStock
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::SendChangedState( client::LogSupplyState& asn ) const
 {
-    if( stocksChanged_.empty() )
-        return;
-
-    for( CIT_StockSet itStock = stocksChanged_.begin(); itStock != stocksChanged_.end(); ++itStock )
+    for( auto it = stocksChanged_.begin(); it != stocksChanged_.end(); ++it )
     {
-        const PHY_DotationStock& dotation = **itStock;
+        const PHY_DotationStock& dotation = **it;
         sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_resource()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantity( (unsigned int)dotation.GetValue() );
@@ -444,12 +413,9 @@ void PHY_DotationStockContainer::SendChangedState( client::LogSupplyState& asn )
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::SendFullState( client::LogSupplyState& asn ) const
 {
-    if( stocks_.empty() )
-        return;
-
-    for( CIT_StockMap itStock = stocks_.begin(); itStock != stocks_.end(); ++itStock )
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
     {
-        const PHY_DotationStock& dotationStock = *itStock->second;
+        const PHY_DotationStock& dotationStock = *it->second;
         sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_resource()->set_id( dotationStock.GetCategory().GetMosID() );
         asnRessource.set_quantity( (unsigned int)dotationStock.GetValue() );
