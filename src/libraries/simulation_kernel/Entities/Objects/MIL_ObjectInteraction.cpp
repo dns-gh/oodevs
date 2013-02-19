@@ -118,11 +118,20 @@ void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER
 
 namespace
 {
-    std::set< MIL_Agent_ABC* > GetAgentsInside( const TER_Localisation& location )
+    struct Comparator
+    {
+        bool operator()( const MIL_Agent_ABC* lhs, const MIL_Agent_ABC* rhs ) const
+        {
+            return lhs->GetID() < rhs->GetID();
+        }
+    };
+    typedef std::set< MIL_Agent_ABC*, Comparator > T_SortedAgents;
+
+    T_SortedAgents GetAgentsInside( const TER_Localisation& location )
     {
         TER_Agent_ABC::T_AgentPtrVector agents;
         TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( location, agents );
-        std::set< MIL_Agent_ABC* > result;
+        T_SortedAgents result;
         for( auto it = agents.begin(); it != agents.end(); ++it )
             result.insert( &static_cast< PHY_RoleInterface_Location* >( *it )->GetAgent() );
         return result;
@@ -143,8 +152,8 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::UpdateAgents( MIL_Object_ABC& object, const TER_Localisation& location )
 {
-    const std::set< MIL_Agent_ABC* > agents( agentsInside_.begin(), agentsInside_.end() );
-    const std::set< MIL_Agent_ABC* > inside = GetAgentsInside( location );
+    const T_SortedAgents agents( agentsInside_.begin(), agentsInside_.end() );
+    const T_SortedAgents inside = GetAgentsInside( location );
     boost::set_difference( agents, inside, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutOutsideObject, _1, boost::ref( object ) ) ) );
     boost::set_difference( inside, agents, boost::make_function_output_iterator( boost::bind( &NotifyTerrainPutInsideObject, _1, boost::ref( object ) ) ) );
 }
