@@ -30,6 +30,7 @@
 #include "Network/NET_AsnException.h"
 #include <boost/serialization/set.hpp>
 #include <boost/range/algorithm.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StockSupplyManager )
 
@@ -144,11 +145,8 @@ void MIL_StockSupplyManager::ResetAutoConsignForConvoyPion( const MIL_AgentPion&
 {
     if( autoSupplyRequest_.get() )
         autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
-    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
-        if( (*it)->ResetConsignsForConvoyPion( pion ) )
-            it = scheduledSupplies_.erase( it );
-        else
-            ++it;
+    boost::remove_erase_if( scheduledSupplies_,
+        boost::bind( &logistic::SupplyConsign_ABC::ResetConsignsForConvoyPion, _1, boost::cref( pion ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +212,7 @@ const MIL_AgentPion* MIL_StockSupplyManager::GetPC() const
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
-    scheduledSupplies_.insert( supplyConsign );
+    scheduledSupplies_.push_back( supplyConsign );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +223,7 @@ void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< logistic::Supp
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockAnnule );
     bSupplyNeeded_ = true;
-    scheduledSupplies_.erase( supplyConsign );
+    boost::remove_erase( scheduledSupplies_, supplyConsign );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +233,7 @@ void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< logistic::Supp
 void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockEffectue );
-    scheduledSupplies_.erase( supplyConsign );
+    boost::remove_erase( scheduledSupplies_, supplyConsign );
 }
 
 // -----------------------------------------------------------------------------
