@@ -65,7 +65,6 @@ private:
     const tools::GeneralConfig& config_;
     QGroupBox* sideBox_;
     QVBoxLayout* mainLayout_;
-    QLabel* noSideLabel_;
     QCheckBox* noSideObjectsLabel_;
     T_Checkbox sideCheckBox_;
     std::string currentExercise_;

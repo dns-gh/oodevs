@@ -484,10 +484,6 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Orbat</translation>
     </message>
     <message>
-        <source>No side.</source>
-        <translation>Aucun camp.</translation>
-    </message>
-    <message>
         <source>Create objects with no sides</source>
         <translation>Créer les objets sans camp</translation>
     </message>

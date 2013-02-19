@@ -26,18 +26,13 @@ OrbatConfigPanel::OrbatConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , config_( config )
     , sideBox_( 0 )
     , mainLayout_( 0 )
-    , noSideLabel_( 0 )
     , noSideObjectsLabel_( 0 )
 {
-    //no side label
-    noSideLabel_ = new QLabel();
-
     //no side objects label
     noSideObjectsLabel_ = new QCheckBox();
 
     //general Layout
     mainLayout_ = new QVBoxLayout( this );
-    mainLayout_->addWidget( noSideLabel_, 0, Qt::AlignHCenter );
     mainLayout_->addWidget( noSideObjectsLabel_ );
     mainLayout_->setAlignment( Qt::AlignTop );
 }
@@ -108,7 +103,6 @@ void OrbatConfigPanel::OnLanguageChanged()
 {
     if( sideBox_ )
         sideBox_->setTitle( tools::translate( "OrbatConfigPanel", "Create entities for those sides only:" ) );
-    noSideLabel_->setText( tools::translate( "OrbatConfigPanel", "No side." ) );
     noSideObjectsLabel_->setText( tools::translate( "OrbatConfigPanel", "Create objects with no sides" ) );
 }
 
@@ -123,9 +117,7 @@ void OrbatConfigPanel::Select( const frontend::Exercise_ABC& exercise )
     {
         ClearSelection();
         const std::map< unsigned int, QString > map = frontend::commands::ListSides( config_, exercise.GetName() );
-        const std::size_t count = map.size();
-        noSideLabel_->setVisible( count == 0u );
-        if( count > 0 )
+        if( !map.empty() )
         {
             sideBox_ = new QGroupBox();
             QVBoxLayout* layout = new QVBoxLayout( sideBox_ );
@@ -136,7 +128,7 @@ void OrbatConfigPanel::Select( const frontend::Exercise_ABC& exercise )
                 layout->addWidget( checkbox );
                 sideCheckBox_[ it->first ] = checkbox;
             }
-            mainLayout_->addWidget( sideBox_ );
+            mainLayout_->insertWidget( 0, sideBox_ );
             OnLanguageChanged();
         }
         noSideObjectsLabel_->setChecked( true );
@@ -158,6 +150,5 @@ void OrbatConfigPanel::ClearSelection()
     }
     currentExercise_.clear();
     sideCheckBox_.clear();
-    noSideLabel_->setVisible( true );
     noSideObjectsLabel_->hide();
 }

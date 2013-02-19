@@ -476,10 +476,6 @@ Do really you want to replace it ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No side.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create objects with no sides</source>
         <translation type="unfinished"></translation>
     </message>
