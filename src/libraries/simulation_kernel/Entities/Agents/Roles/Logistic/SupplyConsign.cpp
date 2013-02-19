@@ -76,13 +76,7 @@ SupplyConsign::~SupplyConsign()
 {
     convoy_->Finish();
     SendMsgDestruction();
-    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
-        data.first->OnSupplyCanceled( shared_from_this() ); // $$$$ JSR 2013-02-14: exception bad_weak_ptr()
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::AddRequest
