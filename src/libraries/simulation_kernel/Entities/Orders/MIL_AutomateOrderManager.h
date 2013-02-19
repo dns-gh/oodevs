@@ -74,7 +74,6 @@ private:
     //! @name Types
     //@{
     typedef std::set< boost::shared_ptr< MIL_Mission_ABC > > T_MissionSet;
-    typedef T_MissionSet::const_iterator CIT_MissionSet;
     //@}
 
 private:

@@ -39,7 +39,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set<std::string> T_ObjectStateMap;
+    typedef std::set< std::string > T_ObjectStateMap;
     //@}
 
 private:

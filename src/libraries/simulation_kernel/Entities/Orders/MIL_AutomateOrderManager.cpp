@@ -42,8 +42,7 @@ MIL_AutomateOrderManager::MIL_AutomateOrderManager( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 {
-    // Destruction de toutes les missions préparées mais non données
-    preparedMissions_.clear();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -230,10 +229,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CDT_CreatePionMis
         MT_LOG_ERROR( "MRT not activated for automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "')", 4, __FUNCTION__ );
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
-
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    if( ! preparedMissions_.insert( pPionMission ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission( new MIL_PionMission( missionType, pion, pCurrentMission ) );
+    preparedMissions_.insert( pPionMission );
     return pPionMission;
 }
 
@@ -256,9 +253,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    if( ! preparedMissions_.insert( pPionMission ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission( new MIL_PionMission( missionType, pion, pCurrentMission ) );
+    preparedMissions_.insert( pPionMission );
     return pPionMission;
 }
 
@@ -276,9 +272,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
         return boost::shared_ptr< MIL_Mission_ABC >();
     }
     //GGE pCurrentMission enlevé
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion ) );
-    if( ! preparedMissions_.insert( pPionMission ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission( new MIL_PionMission( missionType, pion ) );
+    preparedMissions_.insert( pPionMission );
     return pPionMission;
 }
 
@@ -289,8 +284,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
 void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     assert( automate_.IsEngaged() );
-    if( preparedMissions_.erase( mission ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    preparedMissions_.erase( mission );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
 
@@ -300,8 +294,7 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::CDT_GivePionMissionVersPion( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    if( preparedMissions_.erase( mission ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    preparedMissions_.erase( mission );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
 
@@ -314,13 +307,11 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
     if( !automate.GetOrderManager().IsMissionAvailable( missionType ) )
         return boost::shared_ptr< MIL_Mission_ABC >();
     const boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
-    boost::shared_ptr< MIL_Mission_ABC > pAutomateMission;
-    if( pCurrentMission )
-        pAutomateMission = boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( missionType, automate, pCurrentMission ) );
-    else
-        pAutomateMission = boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( missionType, automate ) );
-    if( ! preparedMissions_.insert( pAutomateMission ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
+    boost::shared_ptr< MIL_Mission_ABC > pAutomateMission(
+        pCurrentMission
+            ? new MIL_AutomateMission( missionType, automate, pCurrentMission )
+            : new MIL_AutomateMission( missionType, automate ) );
+    preparedMissions_.insert( pAutomateMission );
     return pAutomateMission;
 }
 
@@ -330,8 +321,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    if( preparedMissions_.erase( mission ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
+    preparedMissions_.erase( mission );
     mission->GetAutomate().GetOrderManager().ReplaceMission( mission );
 }
 
