@@ -474,7 +474,7 @@ void PHY_Human::Update()
         boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
         funeralConsign_.reset( new logistic::FuneralConsign( request ) );
     }
-    else if( funeralConsign_ && !IsDead() )
+    else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
     {
         funeralConsign_->Cancel();
         funeralConsign_.reset();

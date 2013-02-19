@@ -60,6 +60,8 @@ public:
     virtual void     Finish                   ();
     virtual void     ResetConveyors( SupplyConvoyEventsObserver_ABC& observer );
     virtual bool     HasConvoy( const MIL_AgentPion& pion ) const;
+    virtual bool     IsFinished() const;
+    virtual bool     IsConvoyDestroyed() const;
     //@}
 
     //! @name Accessors
@@ -111,6 +113,7 @@ protected:
     unsigned timeRemainingForCurrentAction_;
     SupplyRecipient_ABC* currentSupplyRecipient_;
     MIL_Agent_ABC* provider_;
+    bool finished_;
 };
 } // end namespace logistic
 

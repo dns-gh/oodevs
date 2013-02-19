@@ -52,6 +52,7 @@ public:
     //@{
     virtual bool Update();
     virtual void Cancel();
+    virtual bool IsFinished() const;
     //@}
 
     //! @name Events

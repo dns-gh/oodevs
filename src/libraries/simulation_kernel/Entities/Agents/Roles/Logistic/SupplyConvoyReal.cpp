@@ -288,6 +288,16 @@ bool SupplyConvoyReal::HasConvoy( const MIL_AgentPion& pion ) const
     return &pion == convoyPion_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoyReal::IsConvoyDestroyed
+// Created: JSR 2013-02-19
+// -----------------------------------------------------------------------------
+bool SupplyConvoyReal::IsConvoyDestroyed() const
+{
+    return convoyPion_ && convoyPion_->IsMarkedForDestruction();
+}
+
+
 // =============================================================================
 // Network
 // =============================================================================

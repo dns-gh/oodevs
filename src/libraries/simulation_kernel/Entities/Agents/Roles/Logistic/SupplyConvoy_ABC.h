@@ -53,6 +53,8 @@ public:
     virtual void     Finish                    () = 0;
     virtual void     ResetConveyors( SupplyConvoyEventsObserver_ABC& observer ) = 0;
     virtual bool     HasConvoy( const MIL_AgentPion& pion ) const = 0;
+    virtual bool     IsConvoyDestroyed() const = 0;
+    virtual bool     IsFinished() const = 0;
     //@}
 
     //! @name Accessors

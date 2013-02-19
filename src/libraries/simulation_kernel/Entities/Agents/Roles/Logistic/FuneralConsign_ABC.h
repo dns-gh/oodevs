@@ -37,6 +37,7 @@ public:
     //@{
     virtual bool Update() = 0;
     virtual void Cancel() = 0;
+    virtual bool IsFinished() const = 0;
     //@}
 
     //! @name Network - A refactorer

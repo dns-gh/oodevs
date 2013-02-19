@@ -41,6 +41,7 @@ SupplyConvoy::SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, Supp
     , timeRemainingForCurrentAction_( 0 )
     , currentSupplyRecipient_       ( 0 )
     , provider_                     ( 0 )
+    , finished_                     ( false )
 {
 }
 
@@ -58,6 +59,7 @@ SupplyConvoy::SupplyConvoy()
     , timeRemainingForCurrentAction_( 0 )
     , currentSupplyRecipient_       ( 0 )
     , provider_                     ( 0 )
+    , finished_                     ( false )
 {
         // NOTHING
 }
@@ -68,6 +70,7 @@ SupplyConvoy::SupplyConvoy()
 // -----------------------------------------------------------------------------
 SupplyConvoy::~SupplyConvoy()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -243,6 +246,7 @@ void SupplyConvoy::ResetConveyors( SupplyConvoyEventsObserver_ABC& observer )
 // -----------------------------------------------------------------------------
 void SupplyConvoy::Finish()
 {
+    finished_ = true;
     conveyors_.clear();
 }
 
@@ -251,6 +255,24 @@ void SupplyConvoy::Finish()
 // Created: JSR 2013-02-07
 // -----------------------------------------------------------------------------
 bool SupplyConvoy::HasConvoy( const MIL_AgentPion& /*pion*/ ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::IsFinished
+// Created: JSR 2013-02-19
+// -----------------------------------------------------------------------------
+bool SupplyConvoy::IsFinished() const
+{
+    return finished_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::IsConvoyDestroyed
+// Created: JSR 2013-02-19
+// -----------------------------------------------------------------------------
+bool SupplyConvoy::IsConvoyDestroyed() const
 {
     return false;
 }
