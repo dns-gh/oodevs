@@ -121,7 +121,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 
 namespace
 {
-    void ExtractParties( std::string subset, std::set< unsigned int >& parties )
+    void ExtractParties( const std::string& subset, std::set< unsigned int >& parties )
     {
         std::vector< std::string > result;
         boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
