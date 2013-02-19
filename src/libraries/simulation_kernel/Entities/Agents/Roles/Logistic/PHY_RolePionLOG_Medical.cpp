@@ -398,7 +398,7 @@ PHY_RolePionLOG_Medical::T_AutomateVector PHY_RolePionLOG_Medical::GetAutomatePr
 void PHY_RolePionLOG_Medical::ChangePriorities( const T_MedicalPriorityVector& priorities )
 {
     T_MedicalConsigns oldConsigns = consigns_;
-    for ( IT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
+    for ( auto it = consigns_.begin(); it != consigns_.end(); ++it )
         it->second.clear();
     priorities_ = priorities;
     bHasChanged_ = true;
@@ -433,7 +433,7 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 {
     if( !consign.HasValidHumanState() )
         return;
-    IT_MedicalConsigns itTact = consigns_.begin();
+    auto itTact = consigns_.begin();
     for ( const MIL_Automate* pAutomate = &consign.GetHumanState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first ) // TODO AHC || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
@@ -443,13 +443,13 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-    IT_MedicalPriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
+    auto itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetHumanState().GetHuman().GetWound() );
     if( itPriorityLowerBound == priorities_.end() )
         itTact->second.push_back( &consign );
     else
     {
         ++itPriorityLowerBound;
-        T_MedicalConsignList::reverse_iterator itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriorityLowerBound, sIsPriorityEqual() );
+        auto itConsign = std::find_first_of( itTact->second.rbegin(), itTact->second.rend(), priorities_.begin(), itPriorityLowerBound, sIsPriorityEqual() );
         itTact->second.insert( itConsign.base(), &consign );
     }
 }
@@ -653,7 +653,7 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
         else
             ++it;
     }
-    for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+    for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if( (**itConsign).Update() )
             {
@@ -893,7 +893,7 @@ void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
         it->second->Cancel();
     for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
         (*it)->Cancel();
-    for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+    for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             (*itConsign)->FinishSuccessfullyWithoutDelay();
 }
@@ -904,7 +904,7 @@ void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::ClearMedicalConsigns()
 {
-    for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+    for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             ( *itConsign )->ClearConsign();
 }

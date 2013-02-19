@@ -123,7 +123,7 @@ public:
     virtual void SendFullState   ( unsigned int context = 0 ) const;
     //@}
 
-public:
+private:
     //! @name Types
     //@{
     typedef std::multimap< const MIL_Automate*, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
@@ -135,14 +135,10 @@ public:
     typedef std::list< PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesList;
 
     typedef std::vector< std::pair< const MIL_Automate*, T_MedicalConsignList > > T_MedicalConsigns;
-    typedef T_MedicalConsigns::iterator                                           IT_MedicalConsigns;
-    typedef T_MedicalConsigns::const_iterator                                     CIT_MedicalConsigns;
 
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
 
-    typedef std::vector< const PHY_HumanWound* >      T_MedicalPriorityVector;
-    typedef T_MedicalPriorityVector::iterator        IT_MedicalPriorityVector;
-    typedef T_MedicalPriorityVector::const_iterator CIT_MedicalPriorityVector;
+    typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
     //@}
 
 private:
