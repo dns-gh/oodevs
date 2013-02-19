@@ -36,6 +36,9 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/set.hpp>
+#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 
@@ -75,13 +78,12 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::Initialize()
 {
-    priorities_.reserve( 5 );
-    priorities_.push_back( & PHY_HumanWound::woundedUE_ );
-    priorities_.push_back( & PHY_HumanWound::woundedU1_ );
-    priorities_.push_back( & PHY_HumanWound::woundedU2_ );
-    priorities_.push_back( & PHY_HumanWound::woundedU3_ );
-    priorities_.push_back( & PHY_HumanWound::notWounded_ );
-    consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );
+    priorities_.push_back( &PHY_HumanWound::woundedUE_ );
+    priorities_.push_back( &PHY_HumanWound::woundedU1_ );
+    priorities_.push_back( &PHY_HumanWound::woundedU2_ );
+    priorities_.push_back( &PHY_HumanWound::woundedU3_ );
+    priorities_.push_back( &PHY_HumanWound::notWounded_ );
+    consigns_.push_back( T_MedicalConsigns::value_type() );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,14 +99,9 @@ namespace boost
 {
     namespace serialization
     {
-        typedef std::vector< const MIL_Automate* > T_AutomateVector; // $$$$ _RC_ LGY 2010-07-15: à remanier
         typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
 
-        // =============================================================================
-        // T_MedicalPriorityVector
-        // =============================================================================
         template< typename Archive >
-        inline
         void serialize( Archive& file, T_MedicalPriorityVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
@@ -115,10 +112,8 @@ namespace boost
         {
             std::size_t size = vector.size();
             for( auto it = vector.begin(); it != vector.end(); ++it )
-            {
                 if( !*it )
                     --size;
-            }
             file << size;
             for ( auto it = vector.begin(); it != vector.end(); ++it )
             {
@@ -142,111 +137,6 @@ namespace boost
                 vector.push_back( PHY_HumanWound::Find( nID ) );
             }
         }
-
-        // =============================================================================
-        // T_AutomateVector
-        // =============================================================================
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, T_AutomateVector& vector, const unsigned int nVersion )
-        {
-            split_free( file, vector, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
-        {
-            std::size_t size = vector.size();
-            file << size;
-            for ( auto it = vector.begin(); it != vector.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, T_AutomateVector& vector, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            vector.reserve( nNbr );
-            while ( nNbr-- )
-            {
-                MIL_Automate* pAutomate;
-                file >> pAutomate;
-                vector.push_back( pAutomate );
-            }
-        }
-
-        // =============================================================================
-        // T_EvacuationAmbulancesMMap
-        // =============================================================================
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int nVersion )
-        {
-            split_free( file, mmap, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
-        {
-            std::size_t size = mmap.size();
-            file << size;
-            for ( PHY_RolePionLOG_Medical::CIT_EvacuationAmbulancesMMap it = mmap.begin(); it != mmap.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                MIL_Automate*                   pAutomate;
-                PHY_MedicalEvacuationAmbulance* pAmbulance;
-
-                file >> pAutomate;
-                file >> pAmbulance;
-
-                mmap.insert( std::make_pair( pAutomate, pAmbulance ) );
-            }
-        }
-
-        // =============================================================================
-        // T_CollectionAmbulancesSet
-        // =============================================================================
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int nVersion )
-        {
-            split_free( file, set, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
-        {
-            std::size_t size = set.size();
-            file << size;
-            for ( PHY_RolePionLOG_Medical::CIT_CollectionAmbulancesSet it = set.begin(); it != set.end(); ++it )
-                file << *it;
-        }
-
-        template< typename Archive >
-        void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                PHY_MedicalCollectionAmbulance* pAmbulance;
-
-                file >> pAmbulance;
-                set.insert( pAmbulance );
-            }
-        }
     }
 }
 
@@ -256,29 +146,17 @@ namespace boost
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    T_MedicalPriorityVector priorities;
     file >> boost::serialization::base_object< PHY_RoleInterface_Medical >( *this );
     file >> owner_;
     file >> bSystemEnabled_;
     file >> bSortingFunctionEnabled_;
     file >> bHealingFunctionEnabled_;
-    file >> priorities;
+    file >> priorities_;
     file >> tacticalPriorities_;
     file >> evacuationAmbulances_;
     file >> collectionAmbulances_;
     file >> reservations_;
-    priorities_ = priorities;
-
-    std::size_t nNbr;
-    file >> nNbr;
-    consigns_.reserve( nNbr );
-    while ( nNbr-- )
-    {
-        MIL_Automate* pAutomate;
-        file >> pAutomate;
-        consigns_.push_back( std::make_pair( pAutomate, T_MedicalConsignList() ) );
-        file >> consigns_.back().second;
-    }
+    file >> consigns_;
 }
 
 // -----------------------------------------------------------------------------
@@ -297,10 +175,7 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
     file << evacuationAmbulances_;
     file << collectionAmbulances_;
     file << reservations_;
-    std::size_t size = consigns_.size();
-    file << size;
-    for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
-        file << it->first << it->second;
+    file << consigns_;
 }
 
 // -----------------------------------------------------------------------------
@@ -320,8 +195,8 @@ bool PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo( const PHY_MedicalCollect
 {
     if( ambulance.IsAnEmergency() )
         return true;
-    for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
-        for ( CIT_MedicalConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+    for ( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        for ( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             if( (*it2)->CouldNeedCollectionAmbulance() )
                 return false;
     return true;
@@ -336,10 +211,10 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     if( !consign.HasValidHumanState() )
         return 0;
     const MIL_Automate& humanAutomate = consign.GetHumanState().GetAutomate();
-    T_EvacuationAmbulancesMMapRange range = evacuationAmbulances_.equal_range( &humanAutomate );
-    for( IT_EvacuationAmbulancesMMap itAmbulance = range.first; itAmbulance != range.second; ++itAmbulance )
+    auto range = evacuationAmbulances_.equal_range( &humanAutomate );
+    for( auto it = range.first; it != range.second; ++it )
     {
-        PHY_MedicalEvacuationAmbulance& ambulance = *itAmbulance->second;
+        PHY_MedicalEvacuationAmbulance& ambulance = *it->second;
         if( ambulance.RegisterHuman( consign ) )
             return &ambulance;
     }
@@ -363,9 +238,9 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign )
 {
-    for( CIT_CollectionAmbulancesList itAmbulance = collectionAmbulances_.begin(); itAmbulance != collectionAmbulances_.end(); ++itAmbulance )
+    for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
     {
-        PHY_MedicalCollectionAmbulance& ambulance = **itAmbulance;
+        PHY_MedicalCollectionAmbulance& ambulance = **it;
         if( ambulance.RegisterHuman( consign ) )
             return &ambulance;
     }
@@ -486,8 +361,8 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human,
 inline
 void PHY_RolePionLOG_Medical::InsertConsigns( const T_MedicalConsigns& oldConsigns )
 {
-    for ( CIT_MedicalConsigns it = oldConsigns.begin(); it != oldConsigns.end(); ++it )
-        for ( CIT_MedicalConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+    for ( auto it = oldConsigns.begin(); it != oldConsigns.end(); ++it )
+        for ( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             InsertConsign( **it2 );
 }
 
@@ -706,8 +581,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting() const
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     int nScore = nNbrDoctorsAvailable;
-    for( CIT_CollectionAmbulancesSet itReservation = reservations_.begin(); itReservation != reservations_.end(); ++itReservation )
-        nScore -= (**itReservation).GetNbrHumans();
+    for( auto it = reservations_.begin(); it != reservations_.end(); ++it )
+        nScore -= (**it).GetNbrHumans();
     return nScore;
 }
 
@@ -756,30 +631,30 @@ void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
 {
-    for( IT_EvacuationAmbulancesMMap itEvacuationAmbulance = evacuationAmbulances_.begin(); itEvacuationAmbulance != evacuationAmbulances_.end(); )
+    for( auto it = evacuationAmbulances_.begin(); it != evacuationAmbulances_.end(); )
     {
-        PHY_MedicalEvacuationAmbulance& ambulance = *itEvacuationAmbulance->second;
+        PHY_MedicalEvacuationAmbulance& ambulance = *it->second;
         if( ambulance.Update() )
         {
             delete &ambulance;
-            itEvacuationAmbulance = evacuationAmbulances_.erase( itEvacuationAmbulance );
+            it = evacuationAmbulances_.erase( it );
         }
         else
-            ++itEvacuationAmbulance;
+            ++it;
     }
-    for( IT_CollectionAmbulancesList itCollectionAmbulance = collectionAmbulances_.begin(); itCollectionAmbulance != collectionAmbulances_.end(); )
+    for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); )
     {
-        PHY_MedicalCollectionAmbulance& ambulance = **itCollectionAmbulance;
+        PHY_MedicalCollectionAmbulance& ambulance = **it;
         if( ambulance.Update() )
         {
             delete &ambulance;
-            itCollectionAmbulance = collectionAmbulances_.erase( itCollectionAmbulance );
+            it = collectionAmbulances_.erase( it );
         }
         else
-            ++itCollectionAmbulance;
+            ++it;
     }
     for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for ( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
+        for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if( (**itConsign).Update() )
             {
                 delete *itConsign;
@@ -880,7 +755,7 @@ void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
     asn().mutable_unit()->set_id( owner_->GetID() );
     asn().set_chain( bSystemEnabled_ );
     if( !priorities_.empty() )
-        for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
+        for( auto itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             asn().mutable_priorities()->add_elem( (**itPriority).GetAsnID() );
     if( !tacticalPriorities_.empty() )
         for( auto itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
@@ -1014,12 +889,12 @@ void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalColl
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
 {
-    for( IT_EvacuationAmbulancesMMap itEvacuationAmbulance = evacuationAmbulances_.begin(); itEvacuationAmbulance != evacuationAmbulances_.end(); ++itEvacuationAmbulance )
-        itEvacuationAmbulance->second->Cancel();
-    for( IT_CollectionAmbulancesList itCollectionAmbulance = collectionAmbulances_.begin(); itCollectionAmbulance != collectionAmbulances_.end(); ++itCollectionAmbulance )
-        (*itCollectionAmbulance)->Cancel();
+    for( auto it = evacuationAmbulances_.begin(); it != evacuationAmbulances_.end(); ++it )
+        it->second->Cancel();
+    for( auto it = collectionAmbulances_.begin(); it != collectionAmbulances_.end(); ++it )
+        (*it)->Cancel();
     for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for ( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+        for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             (*itConsign)->FinishSuccessfullyWithoutDelay();
 }
 
@@ -1030,6 +905,6 @@ void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
 void PHY_RolePionLOG_Medical::ClearMedicalConsigns()
 {
     for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+        for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             ( *itConsign )->ClearConsign();
 }

@@ -127,25 +127,12 @@ public:
     //! @name Types
     //@{
     typedef std::multimap< const MIL_Automate*, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
-    typedef T_EvacuationAmbulancesMMap::iterator                                 IT_EvacuationAmbulancesMMap;
-    typedef T_EvacuationAmbulancesMMap::const_iterator                          CIT_EvacuationAmbulancesMMap;
-    typedef T_EvacuationAmbulancesMMap::_Pairii                                   T_EvacuationAmbulancesMMapRange;
 
     typedef std::set< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
-    typedef T_CollectionAmbulancesSet::iterator              IT_CollectionAmbulancesSet;
-    typedef T_CollectionAmbulancesSet::const_iterator       CIT_CollectionAmbulancesSet;
-    //@}
 
-private:
-    //! @name Types
-    //@{
-    typedef std::list< PHY_MedicalConsign_ABC* >   T_MedicalConsignList;
-    typedef T_MedicalConsignList::iterator        IT_MedicalConsignList;
-    typedef T_MedicalConsignList::const_iterator CIT_MedicalConsignList;
+    typedef std::list< PHY_MedicalConsign_ABC* > T_MedicalConsignList;
 
     typedef std::list< PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesList;
-    typedef T_CollectionAmbulancesList::iterator        IT_CollectionAmbulancesList;
-    typedef T_CollectionAmbulancesList::const_iterator CIT_CollectionAmbulancesList;
 
     typedef std::vector< std::pair< const MIL_Automate*, T_MedicalConsignList > > T_MedicalConsigns;
     typedef T_MedicalConsigns::iterator                                           IT_MedicalConsigns;
