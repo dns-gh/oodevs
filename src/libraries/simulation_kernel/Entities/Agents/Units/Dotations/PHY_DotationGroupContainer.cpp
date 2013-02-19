@@ -19,6 +19,7 @@
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/set.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer constructor
@@ -50,7 +51,6 @@ PHY_DotationGroupContainer::~PHY_DotationGroupContainer()
 {
     for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         delete it->second;
-    dotationGroups_.clear();
 }
 
 namespace boost
@@ -69,7 +69,7 @@ namespace serialization
     {
         std::size_t size = map.size();
         file << size;
-        for( PHY_DotationGroupContainer::CIT_DotationGroupMap it = map.begin(); it != map.end(); ++it )
+        for( auto it = map.begin(); it != map.end(); ++it )
         {
             unsigned id = it->first->GetID();
             file << id
@@ -89,35 +89,6 @@ namespace serialization
             file >> map[ PHY_DotationType::FindDotationType( id ) ];
         }
     }
-
-    template< typename Archive >
-    inline
-    void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int nVersion )
-    {
-        split_free( file, set, nVersion );
-    }
-
-    template< typename Archive >
-    void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
-    {
-        std::size_t size = set.size();
-        file << size;
-        for( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
-            file << *it;
-    }
-
-    template< typename Archive >
-    void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
-    {
-        std::size_t n;
-        file >> n;
-        while( n-- )
-        {
-            PHY_Dotation* pDotation;
-            file >> pDotation;
-            set.insert( pDotation );
-        }
-    }
 }
 }
 
@@ -127,9 +98,7 @@ namespace serialization
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::serialize( MIL_CheckPointOutArchive& ar, unsigned int )
 {
-    ar << pRoleDotation_
-         << dotationGroups_
-         << dotationsChanged_;
+    ar << pRoleDotation_ << dotationGroups_ << dotationsChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,9 +107,7 @@ void PHY_DotationGroupContainer::serialize( MIL_CheckPointOutArchive& ar, unsign
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigned int )
 {
-    ar >> pRoleDotation_
-         >> dotationGroups_
-         >> dotationsChanged_;
+    ar >> pRoleDotation_ >> dotationGroups_ >> dotationsChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +120,7 @@ void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis, const PHY_Un
     {
         T_DotationSet overloadedDotations;
         xis >> xml::start( "resources" )
-            >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, unitType, boost::ref( overloadedDotations ) )
+                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, unitType, boost::ref( overloadedDotations ) )
             >> xml::end;
         Apply( boost::bind( &PHY_DotationGroupContainer::PurgeDotationNotOverloaded, this, _1, boost::ref( overloadedDotations ) ) );
     }
@@ -450,7 +417,7 @@ void PHY_DotationGroupContainer::Apply( boost::function< void( PHY_Dotation& ) >
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const
 {
-    CIT_DotationGroupMap it = dotationGroups_.find( &dotationType );
+    auto it = dotationGroups_.find( &dotationType );
     if( it == dotationGroups_.end() )
         return;
     it->second->ChangeDotationsValueUsingTC2( pAmmoDotationClass, rCapacityFactor, tc2 );
@@ -482,11 +449,9 @@ void PHY_DotationGroupContainer::NotifyReleased()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn ) const
 {
-    if( dotationsChanged_.empty() )
-        return;
-    for( CIT_DotationSet itDotation = dotationsChanged_.begin(); itDotation != dotationsChanged_.end(); ++itDotation )
+    for( auto it = dotationsChanged_.begin(); it != dotationsChanged_.end(); ++it )
     {
-        const PHY_Dotation& dotation = **itDotation;
+        const PHY_Dotation& dotation = **it;
         sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
         asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() + .5 ) );
@@ -501,19 +466,19 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
 void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) const
 {
     std::size_t nNbrDotations = 0;
-    for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
+    for( auto itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
         nNbrDotations += dotations.size();
     }
     if( nNbrDotations == 0 )
         return;
-    for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
+    for( auto itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
-        for( PHY_DotationGroup::CIT_DotationMap itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+        for( PHY_DotationGroup::CIT_DotationMap it = dotations.begin(); it != dotations.end(); ++it )
         {
-            const PHY_Dotation& dotation = *itDotation->second;
+            const PHY_Dotation& dotation = *it->second;
             sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();
             asnRessource.mutable_type()->set_id( dotation.GetCategory().GetMosID() );
             asnRessource.set_quantity( static_cast< unsigned int >( dotation.GetValue() + .5 ) );
@@ -528,7 +493,7 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
 // -----------------------------------------------------------------------------
 PHY_DotationGroup* PHY_DotationGroupContainer::GetDotationGroup( const PHY_DotationType& dotationType ) const
 {
-    CIT_DotationGroupMap it = dotationGroups_.find( &dotationType );
+    auto it = dotationGroups_.find( &dotationType );
     if( it == dotationGroups_.end() )
         return 0;
     return it->second;
