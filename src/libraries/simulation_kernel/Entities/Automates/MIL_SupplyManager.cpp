@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_SupplyManager.h"
 #include "MIL_Time_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
 
@@ -38,9 +39,21 @@ MIL_SupplyManager::~MIL_SupplyManager()
 // Name: MIL_SupplyManager::NotifySuperiorNotAvailable
 // Created: MCO 2012-12-11
 // -----------------------------------------------------------------------------
-void MIL_SupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
+void MIL_SupplyManager::NotifySuperiorNotAvailable( const T_Requesters& requesters )
 {
-    PostEvent( report::eRC_LogNoSuperior, dotationCategory, requesters );
+    for( auto it = requesters.begin(); it != requesters.end(); ++it )
+    {
+        if( std::find( previousReportNotifications_.begin(), previousReportNotifications_.end(), *it ) == previousReportNotifications_.end() )
+        {
+            if( std::find( currentReportNotifications_.begin(), currentReportNotifications_.end(), *it ) == currentReportNotifications_.end() )
+            {
+                MIL_Report::PostEvent( **it, report::eRC_LogNoSuperior );
+                currentReportNotifications_.push_back( *it );
+            }
+        }
+        else if( std::find( currentReportNotifications_.begin(), currentReportNotifications_.end(), *it ) == currentReportNotifications_.end() )
+            currentReportNotifications_.push_back( *it );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,21 +62,12 @@ void MIL_SupplyManager::NotifySuperiorNotAvailable( const PHY_DotationCategory& 
 // -----------------------------------------------------------------------------
 void MIL_SupplyManager::NotifyStockNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
 {
-    PostEvent( report::eRC_LogNoStock, dotationCategory, requesters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_SupplyManager::PostEvent
-// Created: MCO 2012-12-19
-// -----------------------------------------------------------------------------
-void MIL_SupplyManager::PostEvent( const MIL_DecisionalReport& report, const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters )
-{
-    const T_Requesters& previous = previousNotifications_[ std::make_pair( report, &dotationCategory ) ];
-    BOOST_FOREACH( T_Requesters::value_type pion, requesters )
+    const T_Requesters& previous = previousDotationNotifications_[ &dotationCategory ];
+    for( auto it = requesters.begin(); it != requesters.end(); ++it )
     {
-        if( boost::find( previous, pion ) == previous.end() )
-            MIL_Report::PostEvent( *pion, report, dotationCategory );
-        currentNotifications_[ std::make_pair( report, &dotationCategory ) ].push_back( pion );
+        if( std::find( previous.begin(), previous.end(), *it ) == previous.end() )
+            MIL_Report::PostEvent( **it, report::eRC_LogNoStock, dotationCategory );
+        currentDotationNotifications_[ &dotationCategory ].push_back( *it );
     }
 }
 
@@ -73,8 +77,10 @@ void MIL_SupplyManager::PostEvent( const MIL_DecisionalReport& report, const PHY
 // -----------------------------------------------------------------------------
 void MIL_SupplyManager::Clean()
 {
-    previousNotifications_ = currentNotifications_;
-    currentNotifications_.clear();
+    previousDotationNotifications_ = currentDotationNotifications_;
+    previousReportNotifications_ = currentReportNotifications_;
+    currentDotationNotifications_.clear();
+    currentReportNotifications_.clear();
 }
 
 // -----------------------------------------------------------------------------

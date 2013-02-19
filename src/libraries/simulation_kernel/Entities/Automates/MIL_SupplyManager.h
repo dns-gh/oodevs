@@ -45,26 +45,23 @@ protected:
 private:
     //! @name Operations
     //@{
-    virtual void NotifySuperiorNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
+    virtual void NotifySuperiorNotAvailable( const T_Requesters& requesters );
     virtual void NotifyStockNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
-    //@}
-
-    //! @name Helpers
-    //@{
-    void PostEvent( const MIL_DecisionalReport& report, const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::pair< std::string, const PHY_DotationCategory* >, T_Requesters > T_Notifications;
+    typedef std::map< const PHY_DotationCategory*, T_Requesters > T_Notifications;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Notifications currentNotifications_;
-    T_Notifications previousNotifications_;
+    T_Notifications currentDotationNotifications_;
+    T_Notifications previousDotationNotifications_;
+    T_Requesters currentReportNotifications_;
+    T_Requesters previousReportNotifications_;
     unsigned int nTickRcSupplyQuerySent_;
     //@}
 };
