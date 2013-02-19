@@ -10,7 +10,7 @@
 #ifndef __gui_SelectionLayer_h_
 #define __gui_SelectionLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: JSR 2012-05-23
 // =============================================================================
-class SelectionLayer : public Layer2d_ABC
+class SelectionLayer : public Layer2D
 {
 public:
     //! @name Constructors/Destructor

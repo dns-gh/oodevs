@@ -70,7 +70,10 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Tools.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/ModeController.h"
@@ -84,6 +87,7 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/Tools.h"
 #include "gaming/ColorController.h"
+#include "gaming/TeamsModel.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/DisplayToolbar.h"
@@ -159,13 +163,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , model_           ( model )
     , network_         ( network )
     , config_          ( config )
-    , forward_         ( new gui::CircularEventStrategy() )
-    , eventStrategy_   ( new gui::ExclusiveEventStrategy( *forward_ ) )
     , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , pColorController_( new ColorController( controllers_ ) )
     , glProxy_         ( 0 )
     , connected_       ( false )
     , onPlanif_        ( false )
+    , icons_           ( 0 )
 {
     controllers_.modes_->SetMainWindow( this );
     QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
@@ -186,6 +189,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers ) ) );
 
+    // Symbols
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
+    icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
+
+    forward_.reset( new gui::CircularEventStrategy( *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
+    eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
+
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
     selector_ = new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
@@ -200,6 +210,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
+    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     lighting_ = new SimulationLighting( controllers, this );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
@@ -255,10 +266,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addRasterDialog_.reset( new gui::AddRasterDialog( this ) );
 
     // Profile
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
-    connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-    gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
-    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
+
+    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons_, model_.userProfileFactory_ );
 
     // Agent list panel
     QDockWidget* pListDockWnd_ = new QDockWidget( this );
@@ -271,17 +280,17 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     gui::SearchListView_ABC* searchListView = 0;
     {
-        searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons );
+        searchListView = new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons_ );
         searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchListView, tr( "Tactical" ) );
     }
     {
-        searchListView = new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons );
+        searchListView = new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons_ );
         searchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchListView, tr( "Communication" ) );
     }
     {
-        gui::SearchListView< ::LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, *factory, profile, *icons, model_.actions_, staticModel, simulation );
+        gui::SearchListView< ::LogisticListView >* logisticSearchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, *factory, profile, *icons_, model_.actions_, staticModel, simulation );
         logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichListView(), SLOT( LockDragAndDrop( bool ) ) );
         logisticListView_ = logisticSearchListView->GetListView();
         pListsTabWidget->addTab( logisticSearchListView, tr( "Logistic" ) );
@@ -347,7 +356,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new ClientCommandFacade( this, controllers_, publisher );
 
     // Info
-    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
+    QDockWidget* infoWnd = new InfoDock( this, controllers_, p, *icons_, *factory, staticModel_, model_.actions_, simulation ); // $$$$ ABR 2011-08-09: p or profile ???
     addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
 
     // Clock
@@ -485,34 +494,34 @@ namespace
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
-                               gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer& locationsLayer,
+                               gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer& weather, gui::Layer& profilerLayer,
                                gui::PreferencesDialog& preferences, const Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker )
 {
     gui::TooltipsLayer_ABC& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer_ABC& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
-    gui::Layer_ABC& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );
+    gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
+    gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );
     gui::Elevation2dLayer& elevation2d   = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    gui::Layer_ABC& raster               = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer_ABC& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
-    gui::Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker );
-    gui::Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& defaultLayer         = *new gui::DefaultLayer( controllers_ );
-    gui::Layer_ABC& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
-    gui::Layer_ABC& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
-    gui::Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    gui::Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
+    gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
+    gui::Layer& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
+    gui::Layer& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker );
+    gui::Layer& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
+    gui::Layer& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
+    gui::Layer& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
+    gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    gui::Layer& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
+    gui::Layer& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
     AddLayer( *glProxy_, preferences, defaultLayer );
@@ -700,6 +709,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
+    static bool firstPass = true;
     const QString appName = tools::translate( "Application", "SWORD" );
     const QString modePlanif =  tools::translate( "Application", " - Planning mode on" );
     if( simulation.IsConnected() )
@@ -734,6 +744,11 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         connected_ = false;
         profile_ = "";
         Close();
+    }
+    if( simulation.IsInitialized() && firstPass )
+    {
+        icons_->GenerateSymbols( model_.teams_ );
+        firstPass = false;
     }
 }
 

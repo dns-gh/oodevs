@@ -12,12 +12,12 @@
 #include "moc_SymbolEditor.cpp"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "clients_gui/EntitySymbols.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_gui/StandardIconProxyStyle.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Karma.h"
@@ -122,27 +122,6 @@ bool SymbolEditor::IsValid( const T_Symbols& symbols ) const
     return true;
 }
 
-namespace
-{
-    class MenuStyle : public QProxyStyle
-    {
-    public:
-        MenuStyle()
-        {
-            // NOTHING
-        }
-        ~MenuStyle()
-        {
-            // NOTHING
-        }
-        virtual int pixelMetric( PixelMetric metric, const QStyleOption* option = 0, const QWidget * widget = 0 ) const
-        {
-            if( metric == PM_SmallIconSize)
-                return 50;
-            return QProxyStyle::pixelMetric( metric, option, widget );
-        }
-    };
-}
 // -----------------------------------------------------------------------------
 // Name: SymbolEditor::Update
 // Created: LGY 2011-07-21
@@ -150,7 +129,7 @@ namespace
 void SymbolEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     menu_ = menu.SubMenu( "Helpers", tr( "Symbol" ), false, 9 );
-    menu_->setStyle( new MenuStyle() );
+    menu_->setStyle( new gui::StandardIconProxyStyle() );
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     Update();
 }

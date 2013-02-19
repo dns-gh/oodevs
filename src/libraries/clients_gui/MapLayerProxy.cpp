@@ -16,7 +16,7 @@ using namespace gui;
 // Name: MapLayerProxy constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-MapLayerProxy::MapLayerProxy( Layer_ABC& layer )
+MapLayerProxy::MapLayerProxy( Layer& layer )
     : layer_( layer )
 {
     // NOTHING

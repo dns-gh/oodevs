@@ -309,3 +309,12 @@ bool ObjectPositions::IsAggregated() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::GetSymbol
+// Created: ABR 2013-01-30
+// -----------------------------------------------------------------------------
+std::string ObjectPositions::GetSymbol() const
+{
+    return symbol_;
+}

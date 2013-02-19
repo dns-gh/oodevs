@@ -181,7 +181,7 @@ void PreferencesDialog::OnCancel()
 // Name: PreferencesDialog::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void PreferencesDialog::AddLayer( const QString& name, gui::Layer_ABC& layer, bool dynamic /* = false */ )
+void PreferencesDialog::AddLayer( const QString& name, gui::Layer& layer, bool dynamic /* = false */ )
 {
     layersPanel_->AddLayer( name, layer, dynamic );
 }

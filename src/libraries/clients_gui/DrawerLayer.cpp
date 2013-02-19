@@ -24,7 +24,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, tr( "Drawings" ) )
     , parameters_( parameters )
     , tools_     ( tools )
     , selected_  ( 0 )
@@ -90,7 +90,7 @@ void DrawerLayer::OnDeleteDrawing()
 void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     viewport_ = viewport;
-    Layer_ABC::Paint( viewport );
+    Layer::Paint( viewport );
 }
 
 // -----------------------------------------------------------------------------

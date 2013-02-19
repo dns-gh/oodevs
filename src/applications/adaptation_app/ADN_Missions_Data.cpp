@@ -428,7 +428,7 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t 
     usageDescription_ = usageDesc;
     const std::string code = symbol.empty() ? " - " : symbol;
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetCategoryDrawings( ADN_Drawings_Data::eTasks ) );
+    symbol_.SetVector( drawingsData.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawingsData.GetDrawing( code ), false );
 }
 

@@ -13,6 +13,7 @@
 #include "TerrainPicker.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Pickable_ABC.h"
+#include "clients_kernel/Tools.h"
 #include <boost/noncopyable.hpp>
 
 using namespace kernel;
@@ -23,7 +24,7 @@ using namespace gui;
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, TerrainPicker& picker )
-    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile, tools::translate( "ObjectsLayer", "Objects" ) )
 {
     picker.RegisterLayer( *this );
 }
@@ -41,11 +42,12 @@ ObjectsLayer::~ObjectsLayer()
 // Name: ObjectsLayer::ContextMenu
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void ObjectsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+void ObjectsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
+    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Object_ABC& object = static_cast< const Object_ABC& >( entity );
     if( object.GetType().IsUrban() )
-        controllers_.actions_.ContextMenu( object, point, kernel::Nothing(), where );
+        controllers_.actions_.ContextMenu( object, point, Nothing(), where );
     else
         controllers_.actions_.ContextMenu( object, entity, point, where );
 }
@@ -112,3 +114,13 @@ QStringList ObjectsLayer::TerrainPick( const geometry::Point2f& terrainCoordinat
     Apply( functor );
     return functor.infos_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsLayer::IsInSelection
+// Created: ABR 2013-01-29
+// -----------------------------------------------------------------------------
+//bool ObjectsLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
+//{
+//    return EntityLayer< kernel::Object_ABC >::IsInSelection( entity, point );
+//    //const kernel::Object_ABC& object = static_cast< const kernel::Object_ABC& >( entity );
+//}

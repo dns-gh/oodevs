@@ -1101,9 +1101,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h">
       <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Selectable_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -1154,6 +1151,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\GraphicalEntity_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

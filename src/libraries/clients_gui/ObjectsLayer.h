@@ -38,10 +38,16 @@ public:
     virtual QStringList TerrainPick( const geometry::Point2f& terrainCoordinates );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    //virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void Paint( kernel::Viewport_ABC& viewport );
     //@}
 };

@@ -284,3 +284,12 @@ const kernel::Location_ABC& DrawerShape::GetLocation() const
 {
     return location_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::GetDrawingTemplate
+// Created: ABR 2013-01-30
+// -----------------------------------------------------------------------------
+const DrawingTemplate& DrawerShape::GetDrawingTemplate() const
+{
+    return style_;
+}

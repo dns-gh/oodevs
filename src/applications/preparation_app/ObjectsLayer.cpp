@@ -163,17 +163,14 @@ void ObjectsLayer::NotifySelectionChanged( const std::vector< const kernel::Obje
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    bool result = gui::ObjectsLayer::HandleMousePress( event, point );
-    if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
-    {
+    if( event->button() == Qt::LeftButton && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
         if( const ObjectPositions* pos = static_cast< const ObjectPositions* >( selected_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
             Q3DragObject* drag = new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( dummy_.get() ) );
             drag->dragMove();
         }
-    }
-    return result;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

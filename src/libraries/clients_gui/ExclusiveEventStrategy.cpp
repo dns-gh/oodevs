@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ExclusiveEventStrategy.h"
-#include <graphics/MapLayer_ABC.h>
+#include "Layer_ABC.h"
 
 using namespace gui;
 
@@ -38,7 +38,7 @@ ExclusiveEventStrategy::~ExclusiveEventStrategy()
 // Name: ExclusiveEventStrategy::AddTerrainLayer
 // Created: ABR 2012-04-20
 // -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::AddTerrainLayer( MapLayer_ABC& layer )
+void ExclusiveEventStrategy::AddTerrainLayer( Layer_ABC& layer )
 {
     layerTerrain_ = &layer;
 }
@@ -47,7 +47,7 @@ void ExclusiveEventStrategy::AddTerrainLayer( MapLayer_ABC& layer )
 // Name: ExclusiveEventStrategy::TakeExclusiveFocus
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::TakeExclusiveFocus( MapLayer_ABC& layer )
+void ExclusiveEventStrategy::TakeExclusiveFocus( Layer_ABC& layer )
 {
     layer_ = &layer;
 }
@@ -186,7 +186,7 @@ void ExclusiveEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
 // Name: ExclusiveEventStrategy::Register
 // Created: AGE 2007-01-15
 // -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::Register( MapLayer_ABC& )
+void ExclusiveEventStrategy::Register( Layer_ABC& )
 {
     // NOTHING
 }
@@ -195,7 +195,7 @@ void ExclusiveEventStrategy::Register( MapLayer_ABC& )
 // Name: ExclusiveEventStrategy::Remove
 // Created: AGE 2007-01-15
 // -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::Remove( MapLayer_ABC& )
+void ExclusiveEventStrategy::Remove( Layer_ABC& )
 {
     // NOTHING
 }

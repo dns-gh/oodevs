@@ -88,6 +88,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
@@ -128,8 +129,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , needsSaving_      ( false )
     , terrainHasChanged_( false )
     , modelBuilder_     ( new ModelBuilder( controllers, model ) )
-    , forward_          ( new gui::CircularEventStrategy() )
-    , eventStrategy_    ( new gui::ExclusiveEventStrategy( *forward_ ) )
     , pPainter_         ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , colorController_  ( new ColorController( controllers_ ) )
     , glProxy_          ( new gui::GlProxy() )
@@ -140,6 +139,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , toolbarContainer_ ( 0 )
     , progressDialog_   ( 0 )
     , menu_             ( 0 )
+    , icons_            ( 0 )
 {
     controllers_.modes_->SetMainWindow( this );
 
@@ -156,10 +156,25 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
         return;
     }
 
+    // Symbols
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
+    icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
+    gui::RichItemFactory* factory = new gui::RichItemFactory( this );
+
+    // Event strategy
+    forward_.reset( new gui::CircularEventStrategy( *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
+    eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
+
     // Central Widget
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
     selector_.reset( new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
+    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
+
+    // Strategy
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
 
     // Layer 1
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
@@ -170,25 +185,14 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
 
-    // Strategy
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers ) ) );
-    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
-
-    // Symbols
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
-    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-    gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
-    gui::RichItemFactory* factory = new gui::RichItemFactory( this );
-
     // Dialogs
-    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_, *selector_ ) );
+    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons_, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_, *selector_ ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog() ) );
 
     // Dock widgets
-    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
+    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons_, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
     connect( toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SIGNAL( toggled( bool ) ), &dockContainer_->GetTerrainProfiler(), SLOT( setVisible( bool ) ) );
     connect( &dockContainer_->GetTerrainProfiler(), SIGNAL( visibilityChanged( bool ) ), toolbarContainer_->GetGisToolbar().GetTerrainProfilerButton(), SLOT( setOn( bool ) ) );
 
@@ -270,33 +274,33 @@ namespace
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                                const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
     gui::PreferencesDialog& preferences     = dialogContainer_->GetPrefDialog();
-    gui::Layer_ABC& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
+    gui::Layer& terrain                 = *new gui::TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences(), picker );
     ::AgentsLayer& agents                   = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), this );
     gui::TooltipsLayer_ABC& tooltipLayer    = *new gui::TooltipsLayer( *glProxy_ );
-    gui::Layer_ABC& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
-    gui::Layer_ABC& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
-    gui::Layer_ABC& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
+    gui::Layer& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
+    gui::Layer& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
+    gui::Layer& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
     gui::Elevation2dLayer& elevation2d      = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    gui::Layer_ABC& raster                  = *new gui::RasterLayer( controllers_.controller_ );
-    gui::Layer_ABC& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    gui::Layer_ABC& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
-    gui::Layer_ABC& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
-    gui::Layer_ABC& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
-    gui::Layer_ABC& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
-    gui::Layer_ABC& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    gui::Layer_ABC& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    gui::Layer_ABC& defaultLayer            = *new gui::DefaultLayer( controllers_ );
-    gui::Layer_ABC& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    gui::Layer_ABC& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
-    gui::Layer_ABC& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
-    gui::Layer_ABC& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
+    gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
+    gui::Layer& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
+    gui::Layer& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
+    gui::Layer& limits                  = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
+    gui::Layer& objectsLayer            = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
+    gui::Layer& populations             = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    gui::Layer& ghosts                  = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    gui::Layer& defaultLayer            = *new gui::DefaultLayer( controllers_ );
+    gui::Layer& drawerLayer             = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    gui::Layer& inhabitantLayer         = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, dockContainer_->GetLivingAreaPanel() );
+    gui::Layer& contour                 = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer& selection               = *new gui::SelectionLayer( controllers_, *glProxy_ );
 
 
     // Drawing order
@@ -330,7 +334,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     AddLayer( *glProxy_, preferences, tooltipLayer,             "tooltip" );
 
     // Display modes
-    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer_ABC or MapLayer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer_ABC.
+    // $$$$ ABR 2012-05-14: Modes only work on EntityLayer for now. Layer or Layer_ABC should implement a function 'ShouldDisplay', which call IsEnabled, and use that ShouldDisplay in all classes that inherit from Layer.
     agents.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     limits.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
     objectsLayer.SetModes( ePreparationMode_LivingArea, ePreparationMode_None, true );
@@ -541,6 +545,8 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
             }
             return;
         }
+        SetProgression( 90, tr( "Generate symbols" ) );
+        icons_->GenerateSymbols( model_.teams_ );
         loading_ = false;
         controllers_.ChangeMode( ePreparationMode_Exercise );
         if( checkConsistency )

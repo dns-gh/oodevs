@@ -133,3 +133,12 @@ const Team_ABC& Object::GetTeam() const
 {
     return side_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetSymbol
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Object::GetSymbol() const
+{
+    return type_.GetSymbol();
+}

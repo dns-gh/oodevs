@@ -190,7 +190,7 @@ void HierarchyListView_ABC::ClearSelection()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::OnSelectionChange()
 {
-    ActionController::T_Selectables list;
+    GraphicalEntity_ABC::T_GraphicalEntities list;
     Q3ListViewItemIterator it( this );
     while( ValuedListItem* item = dynamic_cast< ValuedListItem* >( *it ) )
     {

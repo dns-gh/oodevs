@@ -28,15 +28,16 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const QString& name )
     : controllers_( controllers )
     , profile_    ( profile )
     , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
-    , tooltiped_  ( std::numeric_limits< unsigned >::max() )
     , tooltip_    ( 0 )
-    , selected_   ( 0 )
+    , tooltiped_  ( controllers )
+    , selected_   ( controllers )
+    , name_       ( name )
 {
     // NOTHING
 }
@@ -66,16 +67,13 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
-    for( unsigned i = 0; i < entities_.size(); ++i )
-    {
-        if( i != selected_ )
-            Draw( *entities_[ i ], viewport );
-    }
-    if( selected_ < entities_.size() )
-        Draw( *entities_[ selected_ ], viewport );
-    if( tooltiped_ < entities_.size() )
-    {
-        if( const Positions* positions = entities_[ tooltiped_ ]->Retrieve< Positions >() )
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( *it != &*selected_ )
+            Draw( **it, viewport );
+    if( selected_ )
+        Draw( *selected_, viewport );
+    if( tooltiped_ )
+        if( const Positions* positions = tooltiped_->Retrieve< Positions >() )
         {
             const geometry::Point2f position = positions->GetPosition();
             if( !tooltip_.get() )
@@ -85,7 +83,6 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
             }
             tooltip_->Draw( position );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +91,7 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, kernel::Viewport_ABC& viewport )
 {
-    if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
+    if( ShouldDisplay( entity ) )
     {
         SelectColor( entity );
         const Positions& positions = entity.Get< Positions >();
@@ -114,42 +111,6 @@ bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayerBase::HandleMousePress
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
-{
-    if( entities_.empty() || !event || event->buttons() == Qt::NoButton )
-        return false;
-    const int button = event->button();
-    if( button != Qt::LeftButton && button != Qt::RightButton )
-        return false;
-
-    //std::size_t oldSelected = selected_;
-    if( selected_ >= entities_.size()
-     || ! IsInSelection( *entities_[ selected_ ], point )
-     || ! ShouldDisplay( *entities_[ selected_ ] )
-     || ( button == Qt::LeftButton && ++selected_ > entities_.size() ) )
-        selected_ = 0;
-
-    for( ; selected_ < entities_.size(); ++selected_ )
-    {
-        assert( selected_ >= 0 && selected_ < entities_.size() );
-        const Entity_ABC& entity = *entities_[ selected_ ];
-        tooltiped_ = selected_;
-        if( ShouldDisplay( entity ) && IsInSelection( entity, point ) )
-        {
-            if( button == Qt::LeftButton )
-                Select( entity, ( event->modifiers() & Qt::ControlModifier ) != 0, ( event->modifiers() & Qt::ShiftModifier ) != 0 );
-            else if( button == Qt::RightButton && !IsReadOnly() )
-                ContextMenu( entity, point, event->globalPos() );
-            return true;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::HandleMouseDoubleClick
 // Created: JSR 2012-06-01
 // -----------------------------------------------------------------------------
@@ -162,18 +123,19 @@ bool EntityLayerBase::HandleMouseDoubleClick( QMouseEvent* event, const geometry
 // Name: EntityLayerBase::Select
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Select( const Entity_ABC& entity, bool control, bool /*shift*/ )
+void EntityLayerBase::Select( const kernel::GraphicalEntity_ABC& selectable, bool control, bool /*shift*/ )
 {
-    controllers_.actions_.SetSelected( entity, control );
+    selected_ = &static_cast< const kernel::Entity_ABC& >( selectable );
+    controllers_.actions_.SetSelected( selectable, control );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ContextMenu
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const geometry::Point2f&, const QPoint& where )
+void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f&, const QPoint& where )
 {
-    entity.ContextMenu( controllers_.actions_, where );
+    selectable.ContextMenu( controllers_.actions_, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,17 +144,16 @@ void EntityLayerBase::ContextMenu( const Entity_ABC& entity, const geometry::Poi
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
 {
-    if( ! ShouldDisplayTooltip( tooltiped_, point ) )
+    if( !tooltiped_ || !ShouldDisplayTooltip( *tooltiped_, point ) )
     {
-        tooltiped_ = std::numeric_limits< unsigned >::max();
+        tooltiped_ = 0;
         if( tooltip_.get() )
             tooltip_->Hide();
-        if( ! DisplayTooltip( selected_, point ) )
-        {
-            bool found = false;
-            for( unsigned i = 0; i < entities_.size() && !found ; ++i )
-                found = i != selected_ && DisplayTooltip( i, point );
-        }
+
+        bool found = false;
+        for( auto it = entities_.begin(); it != entities_.end() && !found; ++it )
+            found = DisplayTooltip( **it, point );
+        return found;
     }
     return false;
 }
@@ -201,27 +162,25 @@ bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& p
 // Name: EntityLayerBase::ShouldDisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::ShouldDisplayTooltip( std::size_t i, const geometry::Point2f& point )
+bool EntityLayerBase::ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
 {
-    return i < entities_.size()
-        && ShouldDisplay( *entities_[ i ] )
-        && IsInSelection( *entities_[ i ], point );
+    return ShouldDisplay( entity ) && IsInSelection( entity, point );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( std::size_t i, const geometry::Point2f& point )
+bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
 {
     if( !tooltip_.get() )
     {
         std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
         tooltip_ = tooltip;
     }
-    if( ShouldDisplayTooltip( i, point ) && DisplayTooltip( *entities_[ i ], *tooltip_ ) )
+    if( ShouldDisplayTooltip( entity, point ) && DisplayTooltip( entity, *tooltip_ ) )
     {
-        tooltiped_ = i;
+        tooltiped_ = &entity;
         return true;
     }
     return false;
@@ -271,15 +230,14 @@ void EntityLayerBase::AddEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
 {
-    IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
+    auto it = std::find( entities_.begin(), entities_.end(), &entity );
     if( it != entities_.end() )
     {
-        std::swap( *it, entities_.back() );
-        entities_.pop_back();
-        if( selected_  >= entities_.size() )
+        entities_.erase( it );
+        if( &entity == selected_ )
             selected_ = 0;
-        if( tooltiped_ >= entities_.size() )
-            tooltiped_ = std::numeric_limits< unsigned >::max();
+        if( &entity == tooltiped_ )
+            tooltiped_ = 0;
         return true;
     }
     return false;
@@ -300,9 +258,8 @@ void EntityLayerBase::ActivateEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::SelectEntity( const Entity_ABC& entity )
 {
-    IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
-    if( it != entities_.end() )
-        selected_ = it - entities_.begin();
+    if( std::find( entities_.begin(), entities_.end(), &entity ) != entities_.end() )
+        selected_ = &entity;
 }
 
 // -----------------------------------------------------------------------------
@@ -327,17 +284,36 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     geometry::Rectangle2f rectangle( topLeft, bottomRight );
     selected_ = 0;
     tooltiped_ = 0;
-    kernel::ActionController::T_Selectables selectables;
-    for( int i = 0; i < entities_.size(); ++i )
+    kernel::GraphicalEntity_ABC::T_GraphicalEntities selectables;
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
-        const Entity_ABC& entity = *entities_[ i ];
-        if( ShouldDisplay( entity ) && ( IsInside( entity, rectangle ) || IsInSelection( entity, topLeft ) ) )
+        if( ShouldDisplay( **it ) && ( IsInside( **it, rectangle ) || IsInSelection( **it, topLeft ) ) )
         {
-            selected_ = i;
-            tooltiped_ = i;
-            selectables.push_back( &entity );
+            selected_ = *it;
+            tooltiped_ = *it;
+            selectables.push_back( *it );
         }
     }
     if( !selectables.empty() )
         controllers_.actions_.AddToSelection( selectables );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::ExtractElements
+// Created: ABR 2013-01-25
+// -----------------------------------------------------------------------------
+void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point )
+{
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        if( ShouldDisplay( **it ) && IsInSelection( **it, point ) )
+            extractedElement[ this ].push_back( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::GetName
+// Created: ABR 2013-01-25
+// -----------------------------------------------------------------------------
+QString EntityLayerBase::GetName() const
+{
+    return name_;
 }

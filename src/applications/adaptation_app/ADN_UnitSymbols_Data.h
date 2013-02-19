@@ -72,7 +72,8 @@ public:
         //@{
         virtual std::string GetNodeName();
         std::string GetItemName();
-        const QPixmap& GetPixmap() const;
+        const QPixmap& GetSamplePixmap() const;
+
         const std::string GetCode() const;
         const std::string GetGeometry() const;
         //@}

@@ -24,7 +24,7 @@ using namespace gui;
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
 FormationLayer::FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile, tr( "Formations" ) )
     , strategy_( strategy )
     , selected_( controllers )
 {
@@ -108,11 +108,12 @@ void FormationLayer::NotifyActivated( const kernel::Formation_ABC& formation )
 // Name: FormationLayer::ContextMenu
 // Created: LGY 2011-03-07
 // -----------------------------------------------------------------------------
-void FormationLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+void FormationLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
-    const Formation_ABC* formation = static_cast< const Formation_ABC* >( &entity );
-    if( !IsAggregated( *formation ) && HasSubordinate( *formation, boost::bind( &FormationLayer::IsAggregated, this, _1 ) ) )
-        controllers_.actions_.ContextMenu( *formation, entity, point, where );
+    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
+    const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
+    if( !IsAggregated( formation ) && HasSubordinate( formation, boost::bind( &FormationLayer::IsAggregated, this, _1 ) ) )
+        controllers_.actions_.ContextMenu( formation, entity, point, where );
 }
 
 // ----------------------------------------------------------------------------

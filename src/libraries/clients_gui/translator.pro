@@ -3,6 +3,7 @@ HEADERS =
 SOURCES = AboutDialog.cpp \
 ActivityTimePrototype_ABC.cpp \
 AddRasterDialog.cpp \
+AgentsLayer.cpp \
 AggregateToolbar.cpp \
 AltitudeModifierPrototype_ABC.cpp \
 AutomatsLayer.cpp \
@@ -40,11 +41,13 @@ GraphicPreferences.cpp \
 HelpSystem.cpp \
 HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
+InhabitantLayer.cpp \
 InhabitantListView.cpp \
 InhabitantPanel.cpp \
 InputPropagationPrototype_ABC.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
+LimitsLayer.cpp \
 LocationCreator.cpp \
 LocationEditorBox.cpp \
 LocationEditorToolbar.cpp \
@@ -62,11 +65,13 @@ NumericLimitsEditor.cpp \
 ObjectListView.cpp \
 ObjectPanel.cpp \
 ObjectPrototype_ABC.cpp \
+ObjectsLayer.cpp \
 ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
 PopulationListView.cpp \
 PopulationPanel.cpp \
 PopulationTypesListView.cpp \
+PopulationsLayer.cpp \
 PopulationsPanel.cpp \
 PreferencesDialog.cpp \
 PreferencesList.cpp \
@@ -94,6 +99,7 @@ UnitStateTableCrew.cpp \
 UnitStateTableEquipment.cpp \
 UnitStateTableResource.cpp \
 UnitStateTable_ABC.cpp \
+UrbanLayer.cpp \
 VisualisationScalesPanel.cpp \
 WeatherListView.cpp \
 WeatherPanel.cpp \

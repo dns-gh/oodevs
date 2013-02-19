@@ -35,7 +35,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     //@}
 };
 

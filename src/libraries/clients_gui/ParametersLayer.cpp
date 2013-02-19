@@ -62,7 +62,7 @@ void ParametersLayer::Initialize( const geometry::Rectangle2f& extent )
 void ParametersLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     viewport_ = viewport;
-    Layer_ABC::Paint( viewport );
+    Layer::Paint( viewport );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void ParametersLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
 {
-    if( ! current_ )
+    if( !current_ )
         return false;
     switch( key->key() )
     {
@@ -123,15 +123,14 @@ bool ParametersLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& po
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! current_ )
+    if( !current_ )
         return false;
 
     if( world_.IsInside( point ) )
     {
-        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::LeftButton )
+        if( mouse->button() == Qt::LeftButton && mouse->buttons() != Qt::NoButton )
             AddPoint( point );
-
-        if( mouse->button() == Qt::RightButton && mouse->state() == Qt::RightButton )
+        if( mouse->button() == Qt::RightButton && mouse->buttons() != Qt::NoButton )
             current_->PopPoint();
     }
     return true;
@@ -166,9 +165,9 @@ bool ParametersLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry
     if( ! current_ )
         return false;
 
-    if( mouse->button() == Qt::RightButton && mouse->state() == Qt::NoButton )
+    if( mouse->button() == Qt::RightButton )
         current_->PopPoint();
-    if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton )
+    if( mouse->button() == Qt::LeftButton )
         NotifyDone();
 
     return true;
@@ -250,8 +249,12 @@ void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& loca
 // -----------------------------------------------------------------------------
 void ParametersLayer::Reset()
 {
-    if( !current_ || current_ && current_->IsValid() )
+    if( handler_ )
+        handler_->Reset();
+    if( !current_ || current_->IsValid() )
+    {
         handler_ = 0;
+    }
     delete current_;
     current_ = 0;
     cursors_->SelectTool( QCursor(), false );

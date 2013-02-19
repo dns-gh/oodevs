@@ -70,7 +70,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 // -----------------------------------------------------------------------------
 bool WeatherLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( mouse->state() == Qt::LeftButton && isEditing_ )
+    if( mouse->button() == Qt::LeftButton && isEditing_ )
     {
         if( topLeft_ != geometry::Point2f( 0, 0 ) )
         {
@@ -90,7 +90,7 @@ bool WeatherLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool WeatherLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( mouse->state() == Qt::LeftButton && isEditing_ )
+    if( mouse->button() == Qt::LeftButton && isEditing_ )
     {
         if( !firstPointSet_ )
         {

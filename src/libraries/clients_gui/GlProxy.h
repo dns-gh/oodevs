@@ -15,14 +15,14 @@
 
 namespace kernel
 {
-    class Selectable_ABC;
+    class GraphicalEntity_ABC;
 }
 
 namespace gui
 {
     class GlWidget;
     class Gl3dWidget;
-    class Layer_ABC;
+    class Layer;
     class TooltipsLayer_ABC;
 
 // =============================================================================
@@ -51,9 +51,9 @@ public:
     void Reset2d();
     void Reset3d();
 
-    void Register( Layer_ABC& layer );
+    void Register( Layer& layer );
     void Register( TooltipsLayer_ABC& layer );
-    void Unregister( Layer_ABC& layer );
+    void Unregister( Layer& layer );
 
     virtual void    CenterOn( const geometry::Point2f& point );
     virtual void    Zoom( float width );
@@ -64,7 +64,7 @@ public:
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
-    virtual bool ShouldEdit( const kernel::Selectable_ABC& selectable ) const;
+    virtual bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const;
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
@@ -107,7 +107,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >  T_Layers;
+    typedef std::vector< Layer* >  T_Layers;
     typedef T_Layers::iterator        IT_Layers;
     typedef T_Layers::const_iterator CIT_Layers;
     //@}

@@ -13,6 +13,8 @@
 
 using namespace kernel;
 
+const std::string Drawing_ABC::typeName_ = "drawing";
+
 // -----------------------------------------------------------------------------
 // Name: Drawing_ABC constructor
 // Created: JSR 2012-06-06
@@ -45,7 +47,7 @@ void Drawing_ABC::Select( kernel::ActionController& controller ) const
 // Name: Drawing_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void Drawing_ABC::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void Drawing_ABC::MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const Drawing_ABC* > first;
     std::vector< const Entity_ABC* > second;
@@ -73,4 +75,13 @@ void Drawing_ABC::ContextMenu( kernel::ActionController& controller, const QPoin
 void Drawing_ABC::Activate( kernel::ActionController& controller ) const
 {
     controller.Activate( *this, *(const kernel::Entity_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing_ABC::GetTypeName
+// Created: ABR 2013-02-04
+// -----------------------------------------------------------------------------
+const std::string& Drawing_ABC::GetTypeName() const
+{
+    return typeName_;
 }

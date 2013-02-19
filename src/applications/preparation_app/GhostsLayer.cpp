@@ -20,6 +20,7 @@
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/ValuedDragObject.h"
 
 using namespace kernel;
@@ -30,7 +31,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 GhostsLayer::GhostsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, tools::translate( "GhostsLayer", "Ghosts" ) )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )
@@ -208,9 +209,7 @@ bool GhostsLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    bool result = EntityLayer< kernel::Ghost_ABC >::HandleMousePress( event, point );
-    if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
-    {
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
         if( const GhostPositions* pos = static_cast< const GhostPositions* >( selectedGhost_->Retrieve< Positions >() ) )
         {
             draggingPoint_ = point;
@@ -218,8 +217,7 @@ bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
             Q3DragObject* drag = new gui::ValuedDragObject( pos, dummy_ );
             drag->dragMove();
         }
-    }
-    return result;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -284,5 +282,5 @@ bool GhostsLayer::IsEligibleForDrag( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void GhostsLayer::SetAlpha( float alpha )
 {
-    Layer_ABC::SetAlpha( alpha / 3.f );
+    Layer::SetAlpha( alpha / 3.f );
 }

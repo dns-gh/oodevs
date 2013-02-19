@@ -13,6 +13,7 @@
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -22,7 +23,7 @@ using namespace gui;
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
-    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view, profile, tools::translate( "AgentsLayer", "Units" ) )
 {
     // NOTHING
 }
@@ -40,8 +41,9 @@ AgentsLayer::~AgentsLayer()
 // Name: AgentsLayer::Select
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
-void AgentsLayer::Select( const Entity_ABC& entity, bool control, bool shift )
+void AgentsLayer::Select( const GraphicalEntity_ABC& selectable, bool control, bool shift )
 {
+    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
     const Entity_ABC* superior = entity.Get< TacticalHierarchies >().GetSuperior();
     if( shift && superior )
     {
@@ -49,7 +51,7 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool control, bool shift )
         superior->Activate( controllers_.actions_ );
     }
     else
-        controllers_.actions_.SetSelected( entity, control );
+        controllers_.actions_.SetSelected( selectable, control );
 }
 
 // -----------------------------------------------------------------------------

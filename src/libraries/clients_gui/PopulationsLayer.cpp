@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationsLayer.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -17,8 +18,8 @@ using namespace gui;
 // Name: PopulationsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-PopulationsLayer::PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< Population_ABC >( controllers, tools, strategy, view, profile )
+PopulationsLayer::PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
+    : EntityLayer< Population_ABC >( controllers, tools, strategy, view, profile, tools::translate( "PopulationsLayer", "Crowds" ) )
 {
     // NOTHING
 }
@@ -36,8 +37,9 @@ PopulationsLayer::~PopulationsLayer()
 // Name: PopulationsLayer::ContextMenu
 // Created: SBO 2006-11-28
 // -----------------------------------------------------------------------------
-void PopulationsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+void PopulationsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )
 {
-    const kernel::Population_ABC& popu = static_cast< const kernel::Population_ABC& >( entity );
+    const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
+    const Population_ABC& popu = static_cast< const Population_ABC& >( entity );
     controllers_.actions_.ContextMenu( popu, entity, point, where );
 }

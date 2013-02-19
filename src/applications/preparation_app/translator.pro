@@ -26,6 +26,7 @@ FilterManager.cpp \
 FilterPartiesListView.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
+GhostsLayer.cpp \
 GhostsPanel.cpp \
 InhabitantCreationPanel.cpp \
 InhabitantListView.cpp \
@@ -33,6 +34,7 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
+LimitsLayer.cpp \
 LivingAreaPanel.cpp \
 ListViewsPanel.cpp \
 LogisticLinksEditor.cpp \

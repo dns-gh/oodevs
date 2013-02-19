@@ -58,6 +58,7 @@ public:
     //! @name Accessors
     //@{
     const kernel::ObjectType& GetType() const;
+    virtual std::string GetSymbol() const;
     //@}
 
 private:

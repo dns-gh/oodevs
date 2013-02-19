@@ -21,7 +21,6 @@ using namespace gui;
 IconsRenderPass::IconsRenderPass( kernel::GlTools_ABC& tools )
     : tools_    ( tools )
     , viewport_ ( 0, 0, 600, 600 * RENDER_FACTOR )
-    , firstPass_( true )
 {
     // NOTHING
 }
@@ -59,12 +58,6 @@ std::string IconsRenderPass::GetName() const
 // -----------------------------------------------------------------------------
 void IconsRenderPass::Render( MapWidget_ABC& )
 {
-    // $$$$ JSR 2011-08-02: Hack : on dessine les icones au deuxième coup, sinon les icones de l'orbat sont mal dessinées en prépa (pour une raison inconnue...)
-    if( firstPass_ )
-    {
-        firstPass_ = false;
-        return;
-    }
     if( !tasks_.empty() )
     {
         glEnable( GL_LINE_SMOOTH );

@@ -10,7 +10,7 @@
 #ifndef __TooltipsLayer_ABC_h_
 #define __TooltipsLayer_ABC_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace gui
 {
@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2008-04-11
 // =============================================================================
-class TooltipsLayer_ABC : public Layer_ABC
+class TooltipsLayer_ABC : public Layer
 {
 public:
     //! @name Constructors/Destructor

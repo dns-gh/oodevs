@@ -58,6 +58,7 @@ public:
     //@{
     virtual const kernel::ObjectType& GetType() const;
     virtual const QColor* GetOverridenColor() const;
+    virtual std::string GetSymbol() const;
     //@}
 
     //! @name Operations

@@ -24,7 +24,7 @@ namespace gui
 {
     class CheckBox;
     class GlSelector;
-    class Layer_ABC;
+    class Layer;
     class ValuedListItem;
 
 // =============================================================================
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddLayer( const QString& name, Layer_ABC& layer, bool dynamic = false );
+    void AddLayer( const QString& name, Layer& layer, bool dynamic = false );
     void Update();
     virtual void Commit();
     virtual void Reset();
@@ -78,9 +78,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >     T_Layers;
-    typedef std::vector< float >          T_Alphas;
-    typedef std::vector< QString >        T_Names;
+    typedef std::vector< Layer* >   T_Layers;
+    typedef std::vector< float >    T_Alphas;
+    typedef std::vector< QString >  T_Names;
     //@}
 
 private:

@@ -680,6 +680,13 @@
     </message>
 </context>
 <context>
+    <name>GhostsLayer</name>
+    <message>
+        <source>Ghosts</source>
+        <translation>Fantômes</translation>
+    </message>
+</context>
+<context>
     <name>GhostsPanel</name>
     <message>
         <source>Name:</source>
@@ -770,6 +777,13 @@
     <message>
         <source>Create side</source>
         <translation>Créer un camp</translation>
+    </message>
+</context>
+<context>
+    <name>LimitsLayer</name>
+    <message>
+        <source>Edit...</source>
+        <translation>Editer...</translation>
     </message>
 </context>
 <context>
@@ -1049,6 +1063,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Ghost</source>
         <translation>Fantôme</translation>
+    </message>
+    <message>
+        <source>Generate symbols</source>
+        <translation>Génération des symbols</translation>
     </message>
 </context>
 <context>

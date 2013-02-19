@@ -59,6 +59,7 @@ public:
     virtual float Alpha() const;
     virtual void SetColor( int red, int green, int blue, int alpha );
     virtual void SetColor( const UrbanBlockColor& color );
+    virtual UrbanBlockColor GetColor() const;
     virtual void Restore();
     //@}
 

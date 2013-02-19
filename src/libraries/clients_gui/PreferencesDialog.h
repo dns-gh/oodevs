@@ -25,7 +25,7 @@ namespace gui
     class GlSelector;
     class GraphicPreferences;
     class GraphicsPanel;
-    class Layer_ABC;
+    class Layer;
     class LayersPanel;
     class LightingProxy;
     class PreferencesList;
@@ -59,7 +59,7 @@ public:
     GraphicPreferences& GetPreferences() const;
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
-    void AddLayer( const QString& name, gui::Layer_ABC& layer, bool dynamic = false );
+    void AddLayer( const QString& name, gui::Layer& layer, bool dynamic = false );
     void AddLayer( const QString& name, gui::Elevation2dLayer& layer ); // $$$$ AGE 2007-01-17:
     //@}
 

@@ -15,6 +15,7 @@
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <graphics/extensions.h>
@@ -28,7 +29,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, tools::translate( "UrbanLayer", "Urban blocks" ) )
     , view_          ( view )
     , controllers_   ( controllers )
 {
@@ -168,9 +169,10 @@ void UrbanLayer::NotifyDeleted( const kernel::UrbanObject_ABC& object )
 // Name: UrbanLayer::ContextMenu
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+void UrbanLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f& geoPoint, const QPoint& point )
 {
-    controllers_.actions_.ContextMenu( static_cast< const kernel::UrbanObject_ABC& >( entity ), kernel::Nothing(), geoPoint, point );
+    const kernel::UrbanObject_ABC& urbanObject = static_cast< const kernel::UrbanObject_ABC& >( selectable );
+    controllers_.actions_.ContextMenu( urbanObject, kernel::Nothing(), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,21 +236,21 @@ void UrbanLayer::ActivateEntity( const kernel::Entity_ABC& entity )
 
 namespace
 {
-    void Append( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
+    void Append( kernel::GraphicalEntity_ABC::T_GraphicalEntities& vector, const kernel::GraphicalEntity_ABC* element )
     {
-        kernel::ActionController::CIT_Selectables it = std::find( vector.begin(), vector.end(), element );
+        auto it = std::find( vector.begin(), vector.end(), element );
         if( it == vector.end() )
             vector.push_back( element );
     }
 
-    void Remove( kernel::ActionController::T_Selectables& vector, const kernel::Selectable_ABC* element )
+    void Remove( kernel::GraphicalEntity_ABC::T_GraphicalEntities& vector, const kernel::GraphicalEntity_ABC* element )
     {
-        kernel::ActionController::IT_Selectables it = std::find( vector.begin(), vector.end(), element );
+        auto it = std::find( vector.begin(), vector.end(), element );
         if( it != vector.end() )
             vector.erase( it );
     }
 
-    void AppendDistrict( kernel::ActionController::T_Selectables& vector, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
+    void AppendDistrict( kernel::GraphicalEntity_ABC::T_GraphicalEntities& vector, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
     {
         Remove( vector, district );
         tools::Iterator< const kernel::Entity_ABC& > districtIt = district->Get< kernel::Hierarchies >().CreateSubordinateIterator();
@@ -262,7 +264,7 @@ namespace
         }
     }
 
-    void AppendCity( kernel::ActionController::T_Selectables& vector, const kernel::Entity_ABC* city, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
+    void AppendCity( kernel::GraphicalEntity_ABC::T_GraphicalEntities& vector, const kernel::Entity_ABC* city, const kernel::Entity_ABC* district, const kernel::Entity_ABC* entity )
     {
         Remove( vector, city );
         const kernel::Hierarchies& cityHierarchies = city->Get< kernel::Hierarchies >();
@@ -282,12 +284,13 @@ namespace
 // Name: UrbanLayer::Select
 // Created: JSR 2012-05-29
 // -----------------------------------------------------------------------------
-void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool shift )
+void UrbanLayer::Select( const kernel::GraphicalEntity_ABC& selectable, bool control, bool shift )
 {
+    const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( selectable );
     const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >();
     const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::Hierarchies >();
     if( !control || !hierarchies || controllers_.actions_.IsSingleSelection( &entity ) || ( positions && !positions->IsSelected() ) )
-        EntityLayerBase::Select( entity, control, shift );
+        EntityLayerBase::Select( selectable, control, shift );
     else
     {
         const kernel::Entity_ABC* district = hierarchies->GetSuperior();
@@ -296,7 +299,7 @@ void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool sh
         bool districtSelected = citySelected ? false : ( district && std::find( actualSelection_.begin(), actualSelection_.end(), district ) != actualSelection_.end() );
         if( citySelected || districtSelected )
         {
-            kernel::ActionController::T_Selectables newSelection;
+            kernel::GraphicalEntity_ABC::T_GraphicalEntities newSelection;
             for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = actualSelection_.begin(); it != actualSelection_.end(); ++it )
                 newSelection.push_back( *it );
             if( citySelected )
@@ -306,6 +309,6 @@ void UrbanLayer::Select( const kernel::Entity_ABC& entity, bool control, bool sh
             controllers_.actions_.SetMultipleSelection( newSelection );
         }
         else
-            EntityLayerBase::Select( entity, control, shift );
+            EntityLayerBase::Select( selectable, control, shift );
     }
 }

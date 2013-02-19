@@ -57,7 +57,7 @@ Gl3dWidget::~Gl3dWidget()
 // Name: Gl3dWidget::Register
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Register( Layer_ABC& layer )
+void Gl3dWidget::Register( Layer& layer )
 {
     layers_.push_back( & layer );
 }
@@ -66,7 +66,7 @@ void Gl3dWidget::Register( Layer_ABC& layer )
 // Name: Gl3dWidget::Unregister
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void Gl3dWidget::Unregister( Layer_ABC& layer )
+void Gl3dWidget::Unregister( Layer& layer )
 {
     IT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
@@ -639,7 +639,7 @@ void Gl3dWidget::keyPressEvent( QKeyEvent* event  )
 {
     if( event )
     {
-        const float speedFactor = ( event->state() == Qt::ShiftModifier ) ? 10.f : 1.f;
+        const float speedFactor = ( event->modifiers() == Qt::ShiftModifier ) ? 10.f : 1.f;
 
         if( event->key() == Qt::Key_Plus )
             zRatio_ *= 1.1f;

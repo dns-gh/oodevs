@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AgentsLayer</name>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AggregateToolbar</name>
     <message>
         <source>Aggregate all automats</source>
@@ -40,6 +47,13 @@
     </message>
 </context>
 <context>
+    <name>InhabitantLayer</name>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NumericLimitsEditor</name>
     <message>
         <source>Min</source>
@@ -51,11 +65,32 @@
     </message>
 </context>
 <context>
+    <name>ObjectsLayer</name>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objets</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationsLayer</name>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
 3D: %L2m
 %L3°</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TacticalLinesLayer</name>
+    <message>
+        <source>Tactical lines</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -79,6 +114,13 @@
     <message>
         <source>Yes</source>
         <translation type="unfinished">Oui</translation>
+    </message>
+</context>
+<context>
+    <name>UrbanLayer</name>
+    <message>
+        <source>Urban blocks</source>
+        <translation type="unfinished">Blocs urbains</translation>
     </message>
 </context>
 <context>
@@ -201,6 +243,10 @@
     <message>
         <source>Disaggregate</source>
         <translation>Désagréger</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -461,6 +507,10 @@
         <source>Erase drawing</source>
         <translation>Effacer le dessin</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished">Dessins</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawerPanel</name>
@@ -628,6 +678,10 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Disaggregate</source>
         <translation type="unfinished">Désagréger</translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

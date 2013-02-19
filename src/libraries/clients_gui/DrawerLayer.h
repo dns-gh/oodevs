@@ -31,8 +31,7 @@ namespace gui
 */
 // Created: AGE 2006-08-31
 // =============================================================================
-class DrawerLayer : public QObject
-                  , public EntityLayer< kernel::Drawing_ABC >
+class DrawerLayer : public EntityLayer< kernel::Drawing_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
 {
     Q_OBJECT

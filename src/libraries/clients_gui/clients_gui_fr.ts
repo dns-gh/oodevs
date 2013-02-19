@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>AgentsLayer</name>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+</context>
+<context>
     <name>AggregateToolbar</name>
     <message>
         <source>Aggregate all automats</source>
@@ -40,6 +47,13 @@
     </message>
 </context>
 <context>
+    <name>InhabitantLayer</name>
+    <message>
+        <source>Inhabitants</source>
+        <translation>Populations</translation>
+    </message>
+</context>
+<context>
     <name>NumericLimitsEditor</name>
     <message>
         <source>Min</source>
@@ -51,6 +65,20 @@
     </message>
 </context>
 <context>
+    <name>ObjectsLayer</name>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationsLayer</name>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+</context>
+<context>
     <name>Règle GL</name>
     <message>
         <source>2D: %L1m
@@ -59,6 +87,13 @@
         <translation>&gt;2D: %L1m
 3D: %L2m
 %L3°</translation>
+    </message>
+</context>
+<context>
+    <name>TacticalLinesLayer</name>
+    <message>
+        <source>Tactical lines</source>
+        <translation>Lignes tactiques</translation>
     </message>
 </context>
 <context>
@@ -81,6 +116,13 @@
     <message>
         <source>Yes</source>
         <translation>Oui</translation>
+    </message>
+</context>
+<context>
+    <name>UrbanLayer</name>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
     </message>
 </context>
 <context>
@@ -203,6 +245,10 @@
     <message>
         <source>Disaggregate</source>
         <translation>Désagréger</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation>Automates</translation>
     </message>
 </context>
 <context>
@@ -462,6 +508,10 @@
         <source>Erase drawing</source>
         <translation>Effacer le dessin</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
 </context>
 <context>
     <name>gui::DrawerPanel</name>
@@ -629,6 +679,10 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Disaggregate</source>
         <translation>Désagréger</translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation>Formations</translation>
     </message>
 </context>
 <context>

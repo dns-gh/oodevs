@@ -28,8 +28,7 @@ class Model;
 */
 // Created: ABR 2011-10-19
 // =============================================================================
-class GhostsLayer : public QObject
-                  , public gui::EntityLayer< kernel::Ghost_ABC >
+class GhostsLayer : public gui::EntityLayer< kernel::Ghost_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Automat_ABC >
                   , public kernel::MultipleSelectionObserver_Base< kernel::Formation_ABC >
 {

@@ -22,8 +22,7 @@ namespace gui
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class AgentsLayer : public QObject
-                  , public EntityLayer< kernel::Agent_ABC >
+class AgentsLayer : public EntityLayer< kernel::Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -41,7 +40,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    virtual void Select( const kernel::Entity_ABC&, bool, bool );
+    virtual void Select( const kernel::GraphicalEntity_ABC&, bool, bool );
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     //@}
 };

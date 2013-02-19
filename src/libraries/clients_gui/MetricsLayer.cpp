@@ -122,7 +122,7 @@ float MetricsLayer::ComputeAngle() const
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::ShiftModifier )
+    if( ( event->button() & Qt::LeftButton ) && event->modifiers() == Qt::ShiftModifier )
     {
         metricPoints_.push_back( point );
         return false;
@@ -136,7 +136,7 @@ bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->state() == Qt::ShiftModifier  )
+    if( event->modifiers() == Qt::ShiftModifier  )
     {
         multiRulingMode_ = true;
         end_ = point;

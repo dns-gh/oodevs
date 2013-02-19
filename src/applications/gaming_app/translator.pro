@@ -1,4 +1,5 @@
 HEADERS = LogisticConsignsWidget_ABC.h \
+KnowledgeLayer.h \
 
 
 SOURCES = ActionProperties.cpp \
@@ -39,6 +40,7 @@ EventToolbar.cpp \
 ExtensionsPanel.cpp \
 FireCreationPanel.cpp \
 FireResultListView.cpp \
+FogLayer.cpp \
 HumansListView.cpp \
 IndicatorExportDialog.cpp \
 IndicatorPlot.cpp \
@@ -113,6 +115,7 @@ SupplyConsignsWidget.cpp \
 SupplyStocksListView.cpp \
 SupplyTransportersListView.cpp \
 TacticalListView.cpp \
+TeamLayer.cpp \
 TimelineActionItem.cpp \
 TimelineListView.cpp \
 TimelinePanel.cpp \

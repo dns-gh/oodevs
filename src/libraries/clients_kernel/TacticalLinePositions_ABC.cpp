@@ -27,6 +27,7 @@ using namespace kernel;
 TacticalLinePositions_ABC::TacticalLinePositions_ABC( const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
     : converter_( converter )
     , owner_    ( owner )
+    , location_( new kernel::Lines() )
 {
     // NOTHING
 }
@@ -39,6 +40,7 @@ TacticalLinePositions_ABC::TacticalLinePositions_ABC( const T_PointVector& point
     : converter_( converter )
     , owner_    ( owner )
     , pointList_( pointList )
+    , location_( new kernel::Lines() )
 {
     ComputeBoundingBox();
 }
@@ -131,32 +133,44 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const kernel::Vi
 
     std::string symbol = owner_.Get< kernel::TacticalHierarchies >().GetSymbol();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    if( symbol.empty() )
-    {
-        glLineWidth( 5.f );
-        tools.DrawLines( pointList_ );
-        glLineWidth( 3.f );
-        if( owner_.IsLimit() )
-            glColor3f( 0.1f, 0.1f, 0.1f );
-        else
-            glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
-        tools.DrawLines( pointList_ );
-    }
     if( tools.ShouldDisplay() )
         for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
-            tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
+            tools.DrawDisc( *it, 5.f, GlTools_ABC::pixels );
     glPopAttrib();
 
-    if( !symbol.empty() )
-    {
-        kernel::Lines location;
-        for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
-        {
-            const geometry::Point2f& point = *it;
-            location.AddPoint( point );
-        }
-        tools.DrawTacticalGraphics( symbol, location, false );
-    }
+    tools.DrawTacticalGraphics( symbol, *location_, false );
+
+    //if( pointList_.empty() || !viewport.IsVisible( boundingBox_ ) )
+    //    return;
+
+    //std::string symbol = owner_.Get< kernel::TacticalHierarchies >().GetSymbol();
+    //glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    //if( symbol.empty() )
+    //{
+    //    glLineWidth( 5.f );
+    //    tools.DrawLines( pointList_ );
+    //    glLineWidth( 3.f );
+    //    if( owner_.IsLimit() )
+    //        glColor3f( 0.1f, 0.1f, 0.1f );
+    //    else
+    //        glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
+    //    tools.DrawLines( pointList_ );
+    //}
+    //if( tools.ShouldDisplay() )
+    //    for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
+    //        tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
+    //glPopAttrib();
+
+    //if( !symbol.empty() )
+    //{
+    //    kernel::Lines location;
+    //    for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
+    //    {
+    //        const geometry::Point2f& point = *it;
+    //        location.AddPoint( point );
+    //    }
+    //    tools.DrawTacticalGraphics( symbol, location, false );
+    //}
 }
 
 // -----------------------------------------------------------------------------
@@ -165,6 +179,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const kernel::Vi
 // -----------------------------------------------------------------------------
 void TacticalLinePositions_ABC::ComputeBoundingBox()
 {
+    VisitLines( pointList_ );
     boundingBox_ = geometry::Rectangle2f();
     for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
         boundingBox_.Incorporate( *it );
@@ -186,4 +201,37 @@ bool TacticalLinePositions_ABC::CanAggregate() const
 bool TacticalLinePositions_ABC::IsAggregated() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::VisitLines
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+void TacticalLinePositions_ABC::VisitLines( const T_PointVector& points )
+{
+    pointList_ = points;
+
+    location_.reset( new kernel::Lines() );
+    for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
+    {
+        const geometry::Point2f& point = *it;
+        location_->AddPoint( point );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::VisitPoint
+// Created: ABR 2013-02-01
+// -----------------------------------------------------------------------------
+void TacticalLinePositions_ABC::VisitPoint( const geometry::Point2f& point )
+{
+    pointList_.clear();
+    pointList_.push_back( point );
+
+    location_.reset( new kernel::Lines() );
+    for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
+    {
+        const geometry::Point2f& point = *it;
+        location_->AddPoint( point );
+    }
 }

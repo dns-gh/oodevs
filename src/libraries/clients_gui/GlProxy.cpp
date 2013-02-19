@@ -12,7 +12,7 @@
 #include "GlProxy.h"
 #include "GlTooltip.h"
 #include "GlWidget.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "TooltipsLayer_ABC.h"
 
 using namespace kernel;
@@ -44,7 +44,7 @@ GlProxy::~GlProxy()
 // Name: GlProxy::Register
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::Register( Layer_ABC& layer )
+void GlProxy::Register( Layer& layer )
 {
     layers_.push_back( & layer );
 }
@@ -63,7 +63,7 @@ void GlProxy::Register( TooltipsLayer_ABC& layer )
 // Name: GlProxy::Unregister
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void GlProxy::Unregister( Layer_ABC& layer )
+void GlProxy::Unregister( Layer& layer )
 {
     IT_Layers it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
@@ -470,7 +470,7 @@ std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
 // Name: GlProxy::ShouldEdit
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-bool GlProxy::ShouldEdit( const kernel::Selectable_ABC& selectable ) const
+bool GlProxy::ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
         if( (*it)->IsIn( selectable ) )

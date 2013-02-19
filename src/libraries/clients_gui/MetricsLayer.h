@@ -10,7 +10,7 @@
 #ifndef __MetricsLayer_h_
 #define __MetricsLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -28,7 +28,7 @@ namespace gui
 */
 // Created: AGE 2006-03-17
 // =============================================================================
-class MetricsLayer : public Layer_ABC
+class MetricsLayer : public Layer
 {
 public:
     //! @name Constructors/Destructor

@@ -71,7 +71,7 @@ void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 void TerrainLayer::SetAlpha( float alpha )
 {
     setup_.SetAlpha( alpha );
-    Layer2d_ABC::SetAlpha( alpha );
+    Layer2D::SetAlpha( alpha );
 }
 
 // -----------------------------------------------------------------------------

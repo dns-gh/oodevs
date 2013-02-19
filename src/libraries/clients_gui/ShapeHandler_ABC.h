@@ -21,7 +21,7 @@ namespace gui
 
 // =============================================================================
 /** @class  ShapeHandler_ABC
-    @brief  ShapeHandler_ABC // $$$$ AGE 2006-03-24: renommer
+    @brief  ShapeHandler_ABC
 */
 // Created: AGE 2006-03-24
 // =============================================================================
@@ -38,6 +38,7 @@ public:
     //@{
     virtual void Handle( kernel::Location_ABC& location ) = 0;
     virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Reset();
     //@}
 };
 

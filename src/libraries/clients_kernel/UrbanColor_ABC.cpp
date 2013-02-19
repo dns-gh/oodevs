@@ -94,3 +94,12 @@ void UrbanColor_ABC::SetColor( const UrbanBlockColor& color )
 {
     current_ = color;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanColor_ABC::GetColor
+// Created: ABR 2013-02-19
+// -----------------------------------------------------------------------------
+UrbanBlockColor UrbanColor_ABC::GetColor() const
+{
+    return current_;
+}

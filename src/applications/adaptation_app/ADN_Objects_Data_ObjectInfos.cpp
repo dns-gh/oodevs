@@ -41,7 +41,7 @@ ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
     symbol_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetGeometryDrawings( ENT_Tr::ConvertFromLocationType( geometries_.GetData() ), ADN_Drawings_Data::eObjects ) );
+    symbol_.SetVector( drawingsData.GetGeometryDrawings( ENT_Tr::ConvertFromLocationType( geometries_.GetData() ), "graphics" ) );
     InitializeCapacities();
 }
 
@@ -156,7 +156,7 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::list( *this, &ADN_Objects_Data_ObjectInfos::ReadCapacityArchive );
 
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetGeometryDrawings( ENT_Tr::ConvertFromLocationType( geometries_.GetData() ), ADN_Drawings_Data::eObjects ) );
+    symbol_.SetVector( drawingsData.GetGeometryDrawings( ENT_Tr::ConvertFromLocationType( geometries_.GetData() ), "graphics" ) );
     symbol_.SetData( drawingsData.GetDrawing( code ), false );
 }
 

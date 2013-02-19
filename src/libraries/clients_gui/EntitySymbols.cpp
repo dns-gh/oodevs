@@ -11,6 +11,7 @@
 #include "EntitySymbols.h"
 #include "SymbolIcons.h"
 #include "ColorStrategy_ABC.h"
+#include "SelectionColorModifier.h"
 #include "IconsRenderPass.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
@@ -18,6 +19,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace gui;
 
@@ -45,7 +47,7 @@ EntitySymbols::~EntitySymbols()
 // Name: EntitySymbols::GetSymbol
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
+const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/, ColorMode colorMode /* = eColorBase */ ) const
 {
     const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !symbol )
@@ -54,7 +56,7 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     const std::string levelName  = symbol->GetLevel();
     if( symbolName.empty() && levelName.empty() )
         return icons_.GetDefaultSymbol();
-    return GetSymbol( entity, symbolName, levelName, size );
+    return GetSymbol( entity, symbolName, levelName, size, colorMode );
 }
 
 namespace
@@ -77,10 +79,28 @@ namespace
 // Created: LGY 2011-07-22
 // -----------------------------------------------------------------------------
 const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
-                                         const QSize& size /*= QSize( 32, 32 )*/ ) const
+                                         const QSize& size /*= QSize( 32, 32 )*/, ColorMode colorMode /* = eColorBase */ ) const
 {
     SymbolIcon icon( symbolName, levelName );
-    icon.SetColor( strategy_.FindColor( entity ) );
+    QColor color;
+    switch( colorMode )
+    {
+    case eColorBase:
+        color = strategy_.FindColor( entity );
+        break;
+    case eColorWithModifier:
+        color = strategy_.FindColorWithModifiers( entity );
+        break;
+    case eColorSelected:
+        color = SelectionColorModifier::SelectedColor( strategy_.FindColor( entity ) );
+        break;
+    case eColorSuperiorSelected:
+        color = SelectionColorModifier::SuperiorSelectedColor( strategy_.FindColor( entity ) );
+        break;
+    default:
+        break;
+    }
+    icon.SetColor( color );
     icon.SetSize( size );
     if( const kernel::TacticalHierarchies* pHierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const kernel::Diplomacies_ABC* pDiplomacy = pHierarchy->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
@@ -143,3 +163,46 @@ bool EntitySymbols::IsCommandPost( const kernel::Entity_ABC& entity ) const
         return pAttributes->IsCommandPost();
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbols::RecGenerateSymbols
+// Created: ABR 2013-02-18
+// -----------------------------------------------------------------------------
+void EntitySymbols::RecGenerateSymbols( const kernel::Entity_ABC& entity ) const
+{
+    if( const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& child = it.NextElement();
+            RecGenerateSymbols( child );
+
+            const kernel::Symbol_ABC* symbol = child.Retrieve< kernel::TacticalHierarchies >();
+            if( !symbol )
+                continue;
+            const std::string symbolName = symbol->GetSymbol();
+            const std::string levelName  = symbol->GetLevel();
+            if( symbolName.empty() && levelName.empty() )
+                continue;
+
+            GetSymbol( child, symbolName, levelName, QSize( 32, 32 ), gui::EntitySymbols::eColorBase );
+            GetSymbol( child, symbolName, levelName, QSize( 32, 32 ), gui::EntitySymbols::eColorSelected );
+            GetSymbol( child, symbolName, levelName, QSize( 32, 32 ), gui::EntitySymbols::eColorSuperiorSelected );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbols::GenerateSymbols
+// Created: ABR 2013-02-18
+// -----------------------------------------------------------------------------
+void EntitySymbols::GenerateSymbols( const tools::Resolver< kernel::Team_ABC >& teamResolver ) const
+{
+    tools::Iterator< const kernel::Team_ABC& > it = teamResolver.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        RecGenerateSymbols( it.NextElement() );
+    }
+}
+

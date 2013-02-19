@@ -86,6 +86,16 @@ const QColor* Object::GetOverridenColor() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Object::GetSymbol
+// Created: ABR 2013-01-30
+// -----------------------------------------------------------------------------
+std::string Object::GetSymbol() const
+{
+    const ObjectPositions& pos = static_cast< const ObjectPositions& >( Get< Positions >() );
+    return pos.GetSymbol();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------

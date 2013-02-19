@@ -10,13 +10,15 @@
 #ifndef __kernel_TacticalLinePositions_ABC_h_
 #define __kernel_TacticalLinePositions_ABC_h_
 
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Positions.h"
 
 namespace kernel
 {
-    class TacticalLine_ABC;
     class CoordinateConverter_ABC;
+    class Location_ABC;
+    class TacticalLine_ABC;
 
 // =============================================================================
 /** @class  TacticalLinePositions
@@ -25,6 +27,7 @@ namespace kernel
 // Created: MMC 2012-05-11
 // =============================================================================
 class TacticalLinePositions_ABC : public kernel::Positions
+                                , public kernel::LocationVisitor_ABC
                                 , public kernel::Drawable_ABC
 {
 protected:
@@ -49,11 +52,15 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+protected:
+    //! @name LocationVisitor_ABC
     //@{
-    TacticalLinePositions_ABC( const TacticalLinePositions_ABC& );            //!< Copy constructor
-    TacticalLinePositions_ABC& operator=( const TacticalLinePositions_ABC& ); //!< Assignment operator
+    virtual void VisitLines( const T_PointVector& points );
+    virtual void VisitPoint( const geometry::Point2f& point );
+    virtual void VisitRectangle( const T_PointVector& ) {}
+    virtual void VisitPolygon( const T_PointVector& ) {}
+    virtual void VisitCircle( const geometry::Point2f&, float ) {}
+    virtual void VisitPath( const geometry::Point2f&, const T_PointVector& ) {}
     //@}
 
 protected:
@@ -66,12 +73,8 @@ protected:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector pointList_;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const TacticalLine_ABC& owner_;
+    std::auto_ptr< kernel::Location_ABC > location_;
+    const kernel::TacticalLine_ABC& owner_;
     geometry::Rectangle2f boundingBox_;
     //@}
 };

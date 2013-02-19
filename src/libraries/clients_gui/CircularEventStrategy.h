@@ -11,9 +11,19 @@
 #define __CircularEventStrategy_h_
 
 #include <graphics/EventStrategy_ABC.h>
+#include "Layer_ABC.h"
+
+namespace kernel
+{
+    class GlTools_ABC;
+}
 
 namespace gui
 {
+    class ColorStrategy;
+    class DrawingTypes;
+    class SelectionMenu;
+    class EntitySymbols;
 
 // =============================================================================
 /** @class  CircularEventStrategy
@@ -23,24 +33,24 @@ namespace gui
 // =============================================================================
 class CircularEventStrategy : public EventStrategy_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy();
+             CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, kernel::GlTools_ABC& tools );
     virtual ~CircularEventStrategy();
     //@}
 
     //! @name Settings
     //@{
-    void SetReverse( bool );
     void SetExclusive( bool );
     //@}
 
     //! @name Operations
     //@{
-    void SetDefault( MapLayer_ABC& layer );
-    void Register  ( MapLayer_ABC& layer );
-    void Remove    ( MapLayer_ABC& layer );
+    void SetDefault( Layer_ABC& layer );
+    void Register  ( Layer_ABC& layer );
+    void Remove    ( Layer_ABC& layer );
 
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
@@ -55,12 +65,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CircularEventStrategy( const CircularEventStrategy& );            //!< Copy constructor
-    CircularEventStrategy& operator=( const CircularEventStrategy& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename It, typename Functor >
@@ -73,12 +77,12 @@ private:
 private:
     //! @name Member data
     //@{
-    T_MapLayers layers_;
-    MapLayer_ABC* default_;
+    Layer_ABC::T_Layers layers_;
+    Layer_ABC* default_;
     bool reverse_;
     bool exclusive_;
-    CIT_MapLayers last_;
-    CRIT_MapLayers rlast_;
+    Layer_ABC::T_Layers::const_reverse_iterator rlast_;
+    std::auto_ptr< SelectionMenu > menu_;
     //@}
 };
 

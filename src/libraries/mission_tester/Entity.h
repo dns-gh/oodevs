@@ -56,7 +56,7 @@ public:
     virtual unsigned long GetId() const;
 
     virtual void Select( kernel::ActionController& controller ) const;
-    virtual void MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const;
+    virtual void MultipleSelect( kernel::ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 

@@ -73,27 +73,19 @@ bool SelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point
 {
     if( !controllers_.actions_.HasMultipleSelection() )
         return false;
-    if( event->button() == Qt::LeftButton && event->buttons() == Qt::NoButton && displaying_ )
+    if( event->button() == Qt::LeftButton )
     {
-        firstPointSet_ = false;
-        displaying_ = false;
-        controllers_.actions_.NotifyRectangleSelection( topLeft_, bottomRight_, event->modifiers() == Qt::ControlModifier );
-       // UpdateMultipleSelection( mouse->modifiers() == Qt::ControlModifier );
-    }
-    if( event->button() == Qt::LeftButton && event->buttons() == Qt::LeftButton )
-    {
-        topLeft_ = point;
-        bottomRight_ = point;
-        /*const urban::TerrainObject_ABC* object = model_.FindBlock( point );
-        if( mouse->modifiers() != Qt::ControlModifier )
+        if( event->buttons() == Qt::NoButton && displaying_ )
         {
-            controller_.DeselectAll();
-            if( object )
-                controller_.SetSelected( *object, true );
+            firstPointSet_ = false;
+            displaying_ = false;
+            controllers_.actions_.NotifyRectangleSelection( topLeft_, bottomRight_, event->modifiers() == Qt::ControlModifier );
         }
-        else
-            if( object )
-                ApplyControlSelection( *object );*/
+        else if( event->buttons() == Qt::LeftButton )
+        {
+            topLeft_ = point;
+            bottomRight_ = point;
+        }
     }
     return false;
 }
@@ -108,7 +100,6 @@ bool SelectionLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2
         return false;
     if( event->buttons() == Qt::LeftButton )
     {
-        //cursorController_.SetCurrentCursor( QCursor( Qt::PointingHandCursor ) );
         if( !firstPointSet_ )
         {
             topLeft_ = point;

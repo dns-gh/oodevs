@@ -70,7 +70,7 @@ void WatershedLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 // -----------------------------------------------------------------------------
 void WatershedLayer::SetAlpha( float alpha )
 {
-    Layer2d_ABC::SetAlpha( alpha );
+    Layer2D::SetAlpha( alpha );
     updateGradient_ = true;
 }
 

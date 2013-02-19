@@ -25,6 +25,11 @@ class GlTools_ABC;
 // =============================================================================
 class Drawing_ABC : public Entity_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const std::string typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -36,10 +41,11 @@ public:
     //! @name Operations
     //@{
     virtual void Select( kernel::ActionController& controller ) const;
-    virtual void MultipleSelect( ActionController& controller, const std::vector< const Selectable_ABC* >& elements ) const;
+    virtual void MultipleSelect( ActionController& controller, const std::vector< const GraphicalEntity_ABC* >& elements ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
 
+    virtual const std::string& GetTypeName() const;
     virtual QColor GetColor() const = 0;
     virtual void Serialize( xml::xostream& xos ) const = 0;
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const = 0;

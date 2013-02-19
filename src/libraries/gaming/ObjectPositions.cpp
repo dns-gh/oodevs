@@ -65,3 +65,12 @@ void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vi
             tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay() );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::GetSymbol
+// Created: ABR 2013-01-30
+// -----------------------------------------------------------------------------
+std::string ObjectPositions::GetSymbol() const
+{
+    return symbol_;
+}

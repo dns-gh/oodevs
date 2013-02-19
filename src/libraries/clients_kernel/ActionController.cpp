@@ -109,7 +109,7 @@ void ActionController::Unregister( tools::Observer_ABC& observer )
 // -----------------------------------------------------------------------------
 bool ActionController::HasMultipleSelection() const
 {
-    CIT_MultipleMode it = multipleModes_.find( currentMode_ );
+    auto it = multipleModes_.find( currentMode_ );
     return it != multipleModes_.end() && it->second.size() > 0;
 }
 
@@ -117,7 +117,7 @@ bool ActionController::HasMultipleSelection() const
 // Name: ActionController::GetSelectionner
 // Created: JSR 2012-06-01
 // -----------------------------------------------------------------------------
-const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC* selectable ) const
+const Selectionner_ABC* ActionController::GetSelectionner( const GraphicalEntity_ABC* selectable ) const
 {
     if( selectable )
         for( auto it = selectionners_.begin(); it != selectionners_.end(); ++it )
@@ -130,7 +130,7 @@ const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC*
 // Name: ActionController::SetSelected
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-void ActionController::SetSelected( const Selectable_ABC& selectable, bool append )
+void ActionController::SetSelected( const GraphicalEntity_ABC& selectable, bool append )
 {
     const Selectionner_ABC* selectionner = GetSelectionner( &selectable );
     assert( selectionner );
@@ -144,7 +144,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
         selectedMap_[ selectionner ].push_back( &selectable );
         selectable.Select( *this );
 
-        ActionController::T_Selectables list;
+        GraphicalEntity_ABC::T_GraphicalEntities list;
         list.push_back( &selectable );
         selectable.MultipleSelect( *this, list );
     }
@@ -153,15 +153,15 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
         // Déselection d'un éventuel élément simple
         ClearSingleSelection();
         // Sélection multiple
-        IT_SelectedMap it = selectedMap_.find( selectionner );
+        auto it = selectedMap_.find( selectionner );
         if( it != selectedMap_.end() )
         {
-            IT_Selectables itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
+            auto itSelectable = std::find( it->second.begin(), it->second.end(), &selectable );
             if( itSelectable != it->second.end() )
             {
                 if( it->second.size() == 1 )
                 {
-                    static const T_Selectables emptyList;
+                    static const GraphicalEntity_ABC::T_GraphicalEntities emptyList;
                     ( * itSelectable )->MultipleSelect( *this, emptyList );
                     selectedMap_.erase( it );
                     return;
@@ -183,7 +183,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
 // Name: ActionController::AddToSelection
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void ActionController::AddToSelection( const T_Selectables& selectables )
+void ActionController::AddToSelection( const GraphicalEntity_ABC::T_GraphicalEntities& selectables )
 {
     for( auto it = selectables.begin(); it != selectables.end(); ++it )
     {
@@ -191,7 +191,7 @@ void ActionController::AddToSelection( const T_Selectables& selectables )
         assert( selectionner );
         if( !selectionner )
             continue;
-        T_Selectables& vect = selectedMap_[ selectionner ];
+        GraphicalEntity_ABC::T_GraphicalEntities& vect = selectedMap_[ selectionner ];
         if( std::find( vect.begin(), vect.end(), *it ) == vect.end() )
             vect.push_back( *it );
     }
@@ -228,7 +228,7 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
 // Name: ActionController::SetMultipleSelection
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------
-void ActionController::SetMultipleSelection( const T_Selectables& selectables )
+void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_GraphicalEntities& selectables )
 {
     ClearSingleSelection();
     ClearMultipleSelection();
@@ -251,12 +251,29 @@ void ActionController::SetMultipleSelection( const T_Selectables& selectables )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionController::IsSelected
+// Created: NPT 2012-11-30
+// -----------------------------------------------------------------------------
+bool ActionController::IsSelected( GraphicalEntity_ABC* selectable ) const
+{
+    const Selectionner_ABC* selectionner = GetSelectionner( selectable );
+    for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+    {
+        if( it->first == selectionner )
+            for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+                if( *it2 == selectable )
+                    return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionController::IsSingleSelection
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------
-bool ActionController::IsSingleSelection( const Selectable_ABC* selectable ) const
+bool ActionController::IsSingleSelection( const GraphicalEntity_ABC* selectable ) const
 {
-    CIT_MultipleMode it = multipleModes_.find( currentMode_ );
+    auto it = multipleModes_.find( currentMode_ );
     const Selectionner_ABC* selectionner = GetSelectionner( selectable );
     return !selectionner || it == multipleModes_.end() || std::find( it->second.begin(), it->second.end(), selectionner ) == it->second.end();
 }
@@ -278,8 +295,8 @@ void ActionController::ClearSingleSelection()
 {
     if( !selectedMap_.empty() )
     {
-        IT_SelectedMap it = selectedMap_.begin();
-        CIT_MultipleMode mode = multipleModes_.find( currentMode_ );
+        auto it = selectedMap_.begin();
+        auto mode = multipleModes_.find( currentMode_ );
         while( it!= selectedMap_.end() )
         {
             if( it->second.empty() || mode == multipleModes_.end() || std::find( mode->second.begin(), mode->second.end(), it->first ) == mode->second.end() )
@@ -311,7 +328,7 @@ void ActionController::CleanSelectedMap()
 {
     if( selectedMap_.empty() )
         return;
-    IT_SelectedMap it = selectedMap_.begin();
+    auto it = selectedMap_.begin();
     while( it != selectedMap_.end() )
     {
         if( it->second.empty() )

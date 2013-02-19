@@ -75,7 +75,7 @@ inline void ADN_ComboBox_Drawings< T >::insertItem( ADN_ComboBoxItem* item, int 
             if( item->text().compare( this->text( nRealIndex ) ) < 0 )
                 break;
     T* symbol = static_cast< T* >( item->GetData() );
-    QComboBox::insertItem( symbol->GetPixmap(), item->text(), nRealIndex );
+    QComboBox::insertItem( symbol->GetSamplePixmap(), item->text(), nRealIndex );
     vItems_.insert(vItems_.begin() + nRealIndex, item );
 }
 
@@ -154,7 +154,7 @@ inline void ADN_ComboBoxDrawingItem< T >::setText(const QString& txt)
     if( ndx != -1 )
     {
         T* symbol = static_cast< T* > ( pData_ );
-        combo_.changeItem( symbol->GetPixmap(), txt, ndx );
+        combo_.changeItem( symbol->GetSamplePixmap(), txt, ndx );
     }
     else
         szTmpTxt_ = txt;

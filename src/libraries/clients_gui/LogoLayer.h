@@ -10,7 +10,7 @@
 #ifndef __LogoLayer_h_
 #define __LogoLayer_h_
 
-#include "Layer_ABC.h"
+#include "Layer.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2007-02-12
 // =============================================================================
-class LogoLayer : public Layer2d_ABC
+class LogoLayer : public Layer2D
 {
 public:
     //! @name Constructors/Destructor

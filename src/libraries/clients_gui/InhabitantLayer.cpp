@@ -8,6 +8,7 @@
 // *****************************************************************************
 #include "clients_gui_pch.h"
 #include "InhabitantLayer.h"
+#include "clients_kernel/Tools.h"
 
 using namespace gui;
 
@@ -17,7 +18,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
                                   ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile )
+    : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile, tools::translate( "InhabitantLayer", "Inhabitants" ) )
 {
     // NOTHING
 }

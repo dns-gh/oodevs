@@ -31,7 +31,7 @@ namespace tools
 
 namespace gui
 {
-    class Layer_ABC;
+    class Layer;
 
 // =============================================================================
 /** @class  Gl3dWidget
@@ -54,8 +54,8 @@ public:
 
     //! @name Operations
     //@{
-    void Register( Layer_ABC& layer );
-    void Unregister( Layer_ABC& layer );
+    void Register( Layer& layer );
+    void Unregister( Layer& layer );
 
     virtual unsigned short  StipplePattern( int factor = 1 ) const;
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
@@ -116,7 +116,7 @@ protected:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer_ABC* >  T_Layers;
+    typedef std::vector< Layer* >  T_Layers;
     typedef T_Layers::iterator        IT_Layers;
     typedef T_Layers::const_iterator CIT_Layers;
     //@}

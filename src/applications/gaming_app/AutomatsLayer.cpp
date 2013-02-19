@@ -100,7 +100,7 @@ bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 {
     bool ret = gui::AutomatsLayer::HandleMousePress( event, point );
     if( !ret && selected_
-        && event && event->button() == Qt::LeftButton && ( event->state() & Qt::ShiftButton ) )
+        && event && event->button() == Qt::LeftButton && ( event->modifiers() & Qt::ShiftModifier ) )
         return true;
     return ret;
 }

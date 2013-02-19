@@ -29,12 +29,13 @@ namespace gui
     class ExclusiveEventStrategy;
     class LightingProxy;
     class GlSelector;
-    class Layer_ABC;
+    class Layer;
     class Painter_ABC;
     class TerrainPicker;
     class AutomatsLayer;
     class FormationLayer;
     class HelpSystem;
+    class EntitySymbols;
 }
 
 class ColorController;
@@ -109,7 +110,7 @@ private:
     //@{
     bool Load();
     void LoadExercise( bool checkConsistency = true );
-    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                        const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();
@@ -154,6 +155,7 @@ private:
     std::auto_ptr< QProgressDialog >             progressDialog_;
     std::auto_ptr< gui::HelpSystem >             help_;
     std::auto_ptr< QProcess >                    process_;
+    std::auto_ptr< gui::EntitySymbols >          icons_;
     //@}
 };
 

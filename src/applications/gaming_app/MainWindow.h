@@ -38,16 +38,18 @@ namespace gui
     class AutomatsLayer;
     class FormationLayer;
     class ColorStrategy;
-    class GlProxy;
     class ExclusiveEventStrategy;
+    class EntitySymbols;
+    class FormationLayer;
     class CircularEventStrategy;
     class PreferencesDialog;
     class LightingProxy;
+    class GlProxy;
     class GlSelector;
     template< typename T >
     class LogisticList;
     class TerrainLayer;
-    class Layer_ABC;
+    class Layer;
     class Picker;
     class TerrainPicker;
     class Painter_ABC;
@@ -128,9 +130,9 @@ private:
 
     static std::string BuildRemotePath( std::string server, std::string path );
 
-   void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
-                      gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
-                      gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
+    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer& locationsLayer,
+                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer& weather, gui::Layer& profilerLayer,
+                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
 
 private:
     //! @name Member data
@@ -149,6 +151,7 @@ private:
     std::auto_ptr< QProcess > process_;
     std::auto_ptr< gui::AddRasterDialog > addRasterDialog_;
     std::auto_ptr< gui::PreferencesDialog > preferenceDialog_;
+    std::auto_ptr< gui::EntitySymbols > icons_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

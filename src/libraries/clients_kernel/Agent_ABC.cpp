@@ -55,7 +55,7 @@ void Agent_ABC::Select( ActionController& controller ) const
 // Name: Agent_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void Agent_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void Agent_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const Agent_ABC* > first;
     std::vector< const Entity_ABC* > second;

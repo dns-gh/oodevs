@@ -12,6 +12,7 @@
 
 #include "clients_kernel/TacticalLinePositions_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_gui/ShapeHandler_ABC.h"
 
 namespace kernel
 {
@@ -22,6 +23,12 @@ namespace xml
 {
     class xistream;
 }
+namespace gui
+{
+    class GlTools_ABC;
+    class ParametersLayer;
+    class Viewport_ABC;
+}
 
 // =============================================================================
 /** @class  TacticalLinePositions
@@ -31,6 +38,7 @@ namespace xml
 // =============================================================================
 class TacticalLinePositions : public kernel::TacticalLinePositions_ABC
                             , public kernel::Serializable_ABC
+                            , public gui::ShapeHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -42,16 +50,34 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SerializeAttributes( xml::xostream& ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Edit( gui::ParametersLayer& parameters );
     void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     void InsertPoint( const geometry::Point2f& point, float precision );
     void RemovePoint( const geometry::Point2f& point, float precision );
+    //@}
+
+    //! @name Serializable_ABC
+    //@{
+    virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+    //! @name ShapeHandler_ABC
+    //@{
+    virtual void Handle( kernel::Location_ABC& location );
+    virtual void Reset();
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool isEditing_;
     //@}
 };
 

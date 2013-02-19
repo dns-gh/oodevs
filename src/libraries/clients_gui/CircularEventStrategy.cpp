@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
-#include <graphics/MapLayer_ABC.h>
+#include "SelectionMenu.h"
 
 using namespace gui;
 
@@ -17,9 +17,9 @@ using namespace gui;
 // Name: CircularEventStrategy constructor
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-CircularEventStrategy::CircularEventStrategy()
-    : default_  ( 0 )
-    , reverse_  ( true )
+CircularEventStrategy::CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, kernel::GlTools_ABC& tools )
+    : menu_( new SelectionMenu( entitySymbols, colorStrategy, drawingTypes, tools ) )
+    , default_( 0 )
     , exclusive_( true )
 {
     // NOTHING
@@ -35,15 +35,6 @@ CircularEventStrategy::~CircularEventStrategy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::SetReverse
-// Created: AGE 2006-08-21
-// -----------------------------------------------------------------------------
-void CircularEventStrategy::SetReverse( bool b )
-{
-    reverse_ = b;
-}
-
-// -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::SetExclusive
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
@@ -56,7 +47,7 @@ void CircularEventStrategy::SetExclusive( bool b )
 // Name: CircularEventStrategy::SetDefault
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::SetDefault( MapLayer_ABC& layer )
+void CircularEventStrategy::SetDefault( Layer_ABC& layer )
 {
     default_ = &layer;
 }
@@ -65,10 +56,9 @@ void CircularEventStrategy::SetDefault( MapLayer_ABC& layer )
 // Name: CircularEventStrategy::Register
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::Register( MapLayer_ABC& layer )
+void CircularEventStrategy::Register( Layer_ABC& layer )
 {
     layers_.push_back( &layer );
-    last_ = layers_.begin();
     rlast_ = layers_.rbegin();
 }
 
@@ -76,12 +66,11 @@ void CircularEventStrategy::Register( MapLayer_ABC& layer )
 // Name: CircularEventStrategy::Remove
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::Remove( MapLayer_ABC& layer )
+void CircularEventStrategy::Remove( Layer_ABC& layer )
 {
-    IT_MapLayers it = std::find( layers_.begin(), layers_.end(), &layer );
+    auto it = std::find( layers_.begin(), layers_.end(), &layer );
     if( it != layers_.end() )
         layers_.erase( it );
-    last_ = layers_.begin();
     rlast_ = layers_.rbegin();
 }
 
@@ -97,7 +86,7 @@ namespace
     {
         KeyPressFunctor( QKeyEvent* key )
             : key_( key ){};
-        bool operator()( MapLayer_ABC& layer )
+        bool operator()( Layer_ABC& layer )
         {
             if( layer.IsReadOnly() )
                 return false;
@@ -109,13 +98,13 @@ namespace
     template< typename Event >
     struct EventFunctor : public ExclusiveFunctor
     {
-        EventFunctor( Event* button, const geometry::Point2f& point, bool (MapLayer_ABC::*func)( Event* button, const geometry::Point2f& point ), bool testReadOnly = true )
+        EventFunctor( Event* button, const geometry::Point2f& point, bool (Layer_ABC::*func)( Event* button, const geometry::Point2f& point ), bool testReadOnly = true )
             : button_( button )
             , point_( point )
             , func_( func )
             , testReadOnly_( testReadOnly )
         {};
-        bool operator()( MapLayer_ABC& layer )
+        bool operator()( Layer_ABC& layer )
         {
             if( testReadOnly_ && layer.IsReadOnly() )
                 return false;
@@ -123,25 +112,25 @@ namespace
         }
         Event* button_;
         geometry::Point2f point_;
-        bool (MapLayer_ABC::*func_)( Event* button, const geometry::Point2f& point );
+        bool (Layer_ABC::*func_)( Event* button, const geometry::Point2f& point );
         bool testReadOnly_;
     };
 
     struct DragLeaveFunctor : public ExclusiveFunctor
     {
-        DragLeaveFunctor( QDragLeaveEvent* button, bool (MapLayer_ABC::*func)( QDragLeaveEvent* button ), bool testReadOnly = true )
+        DragLeaveFunctor( QDragLeaveEvent* button, bool (Layer_ABC::*func)( QDragLeaveEvent* button ), bool testReadOnly = true )
             : button_( button )
             , func_( func )
             , testReadOnly_( testReadOnly )
         {};
-        bool operator()( MapLayer_ABC& layer )
+        bool operator()( Layer_ABC& layer )
         {
             if( testReadOnly_ && layer.IsReadOnly() )
                 return false;
             return (layer.*func_)( button_ ) && exclusive_;
         }
         QDragLeaveEvent* button_;
-        bool (MapLayer_ABC::*func_)( QDragLeaveEvent* button );
+        bool (Layer_ABC::*func_)( QDragLeaveEvent* button );
         bool testReadOnly_;
     };
 
@@ -181,18 +170,9 @@ bool CircularEventStrategy::Loop( It& use, It first, It begin, It end, Functor f
 template< typename Functor >
 bool CircularEventStrategy::Apply( Functor functor )
 {
-    const T_MapLayers& layers = layers_;
+    const Layer_ABC::T_Layers& layers = layers_;
     functor.SetExclusive( exclusive_ );
-    if( reverse_ )
-    {
-        CRIT_MapLayers first = rlast_;
-        return Loop( rlast_, first, layers.rbegin(), layers.rend(), functor );
-    }
-    else
-    {
-        CIT_MapLayers first = last_;
-        return Loop( last_, first, layers.begin(), layers.end(), functor );
-    }
+    return Loop( rlast_, rlast_, layers.rbegin(), layers.rend(), functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,8 +199,28 @@ void CircularEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMousePress, false ) ) && default_ )
+    if( !mouse ||
+        Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
+        ( mouse->buttons() & mouse->button() ) == 0 ||                                                      // mouse release
+        ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
+        ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) )                       // no good button 
+        return;
+
+    Layer_ABC::T_LayerElements extractedElements;
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )                                             // Extract elements
+    {
+        if( !( mouse->button() == Qt::LeftButton || ( mouse->button() == Qt::RightButton && !( *it )->IsReadOnly() ) ) )
+            continue;
+        ( *it )->ExtractElements( extractedElements, point );
+    }
+
+    if( default_ && extractedElements.size() == 0 )                                                         // No element extracted
+    {
         default_->HandleMousePress( mouse, point );
+        return;
+    }
+
+    menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseDoubleClick, false ) ) && default_ )
+    if( ! Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMouseDoubleClick, false ) ) && default_ )
         default_->HandleMousePress( mouse, point );
 }
 
@@ -239,7 +239,7 @@ void CircularEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const ge
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseMove, false ) ) && default_ )
+    if( ! Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMouseMove, false ) ) && default_ )
         default_->HandleMouseMove( mouse, point );
 }
 
@@ -249,7 +249,7 @@ void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry:
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseWheel( QWheelEvent* mouse, const geometry::Point2f& point )
 {
-    if( ! Apply( WheelFunctor( mouse, point, &MapLayer_ABC::HandleMouseWheel ) ) && default_ )
+    if( ! Apply( WheelFunctor( mouse, point, &Layer_ABC::HandleMouseWheel ) ) && default_ )
         default_->HandleMouseWheel( mouse, point );
 }
 
@@ -259,7 +259,7 @@ void CircularEventStrategy::HandleMouseWheel( QWheelEvent* mouse, const geometry
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( ! Apply( DropFunctor( event, point, &MapLayer_ABC::HandleDropEvent ) ) && default_ )
+    if( ! Apply( DropFunctor( event, point, &Layer_ABC::HandleDropEvent ) ) && default_ )
         default_->HandleDropEvent( event, point );
 }
 
@@ -270,7 +270,7 @@ void CircularEventStrategy::HandleDropEvent( QDropEvent* event, const geometry::
 void CircularEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
 {
     bool accept = false;
-    accept = Apply( DragFunctor( event, point, &MapLayer_ABC::HandleEnterDragEvent ) );
+    accept = Apply( DragFunctor( event, point, &Layer_ABC::HandleEnterDragEvent ) );
     if( ! accept && default_ )
         accept = default_->HandleEnterDragEvent( event, point );
     event->accept( accept );
@@ -284,7 +284,7 @@ void CircularEventStrategy::HandleMoveDragEvent( QDragMoveEvent*  event, const g
 {
     bool accept = false;
     rlast_ = layers_.rbegin();
-    accept = Apply( DragMoveFunctor( event, point, &MapLayer_ABC::HandleMoveDragEvent ) );
+    accept = Apply( DragMoveFunctor( event, point, &Layer_ABC::HandleMoveDragEvent ) );
     if( !accept && default_ )
         accept = default_->HandleMoveDragEvent( event, point );
     event->accept( accept );
@@ -298,7 +298,7 @@ void CircularEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
 {
     bool accept = false;
     rlast_ = layers_.rbegin();
-    accept = Apply( DragLeaveFunctor( event, &MapLayer_ABC::HandleLeaveDragEvent ) );
+    accept = Apply( DragLeaveFunctor( event, &Layer_ABC::HandleLeaveDragEvent ) );
     if( !accept && default_ )
         accept = default_->HandleLeaveDragEvent( event );
     if( accept )

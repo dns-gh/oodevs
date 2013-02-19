@@ -12,10 +12,11 @@
 
 #include "tools/Extendable.h"
 #include "tools/SortedInterfaceContainer.h"
-#include "Selectable_ABC.h"
+#include "GraphicalEntity_ABC.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
-#include <geometry/types.h>
+#include "geometry/Types.h"
+#include <boost/noncopyable.hpp>
 
 class QPoint;
 class QString;
@@ -63,7 +64,7 @@ public:
 };
 
 class Entity_ABC : public EntityBase_ABC
-                 , public Selectable_ABC
+                 , public GraphicalEntity_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -74,17 +75,16 @@ public:
 
     //! @name Accessors
     //@{
-    virtual QString GetName() const = 0;
     virtual QString GetShortName() const;
     virtual unsigned long GetId() const = 0;
     virtual const std::string& GetTypeName() const;
     //@}
 
-    //! @name Operations
+    //! @name GraphicalEntity_ABC implementation
     //@{
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
-    virtual void Activate( ActionController& controller ) const = 0;
-    virtual void OverFly( ActionController& controller ) const; // $$$$ ABR 2011-10-28: Not abstract cause not yet needed for all entities
+    virtual QString GetTooltip() const;
+    virtual void OverFly( ActionController& controller ) const;
+    //@}
 
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
@@ -98,11 +98,6 @@ protected:
     //@}
 
 public:
-    //! @name Copy/Assignment
-    //@{
-    Entity_ABC( const Entity_ABC& );            //!< Copy constructor
-    Entity_ABC& operator=( const Entity_ABC& ); //!< Assignment operator
-    //@}
 
     //! @name Helpers
     //@{

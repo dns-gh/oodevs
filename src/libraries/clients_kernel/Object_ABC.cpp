@@ -65,7 +65,7 @@ void Object_ABC::Select( ActionController& controller ) const
 // Name: Object_ABC::MultipleSelect
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-void Object_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const
+void Object_ABC::MultipleSelect( ActionController& controller, const std::vector< const kernel::GraphicalEntity_ABC* >& elements ) const
 {
     std::vector< const Object_ABC* > first;
     std::vector< const Entity_ABC* > second;

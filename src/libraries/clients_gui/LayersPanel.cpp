@@ -14,7 +14,7 @@
 #include "moc_LayersPanel.cpp"
 #include "CheckBox.h"
 #include "GlSelector.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -111,7 +111,7 @@ LayersPanel::~LayersPanel()
 // Name: LayersPanel::AddLayer
 // Created: AGE 2007-01-04
 // -----------------------------------------------------------------------------
-void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer, bool dynamic /* = false */ )
+void LayersPanel::AddLayer( const QString& name, Layer& layer, bool dynamic /* = false */ )
 {
     ValuedListItem* item = new ValuedListItem( layersList_ );
     item->SetValue( &layer );
@@ -142,7 +142,7 @@ void LayersPanel::OnRemoveDynamicLayer()
 namespace
 {
     template< typename T >
-    void RemoveFromVector( Layer_ABC* layer, std::vector< Layer_ABC* >& layerVector, std::vector< T >& otherVector )
+    void RemoveFromVector( Layer* layer, std::vector< Layer* >& layerVector, std::vector< T >& otherVector )
     {
         for( unsigned i = 0; i < layerVector.size(); ++i )
             if( layerVector[ i ] == layer )
@@ -160,7 +160,7 @@ namespace
 // -----------------------------------------------------------------------------
 void LayersPanel::RemoveDynamicLayer( ValuedListItem& item )
 {
-    Layer_ABC* layer = item.GetValue< Layer_ABC >();
+    Layer* layer = item.GetValue< Layer >();
     if( !layer )
         return;
 
@@ -276,7 +276,7 @@ void LayersPanel::OnSelectionChanged( Q3ListViewItem* i )
 {
     currentLayer_ = -1;
     ValuedListItem* item = static_cast< ValuedListItem* >( i );
-    T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->GetValue< Layer_ABC >() );
+    T_Layers::const_iterator it = std::find( layers_.begin(), layers_.end(), item->GetValue< Layer >() );
 
     QString transparencyLabelText( tr( "Transparency " ) );
     if( it != layers_.end() )
@@ -302,13 +302,13 @@ void LayersPanel::OnUp()
 {
     if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
     {
-        Layer_ABC* layer = layers_[ currentLayer_ ];
+        Layer* layer = layers_[ currentLayer_ ];
         if( ValuedListItem* item = FindItem( layer, layersList_->firstChild() ) )
         {
             ValuedListItem* previous = static_cast< ValuedListItem* >( item->itemAbove() );
             if( previous )
             {
-                layer->MoveAbove( *previous->GetValue< Layer_ABC >() );
+                layer->MoveAbove( *previous->GetValue< Layer >() );
                 previous->moveItem( item );
                 T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
                 if( it < newLayers_.end() - 1 )
@@ -327,14 +327,14 @@ void LayersPanel::OnDown()
 {
     if( currentLayer_ != -1 && currentLayer_ < int( layers_.size() ) )
     {
-        Layer_ABC* layer = layers_[ currentLayer_ ];
+        Layer* layer = layers_[ currentLayer_ ];
         ValuedListItem* item = FindItem( layer, layersList_->firstChild() );
         if( item )
         {
             ValuedListItem* next = static_cast< ValuedListItem* >( item->nextSibling() );
             if( next )
             {
-                layer->MoveBelow( *next->GetValue< Layer_ABC >() );
+                layer->MoveBelow( *next->GetValue< Layer >() );
                 item->moveItem( next );
                 T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
                 if( it != newLayers_.begin() && it != newLayers_.end() )
@@ -415,7 +415,7 @@ void LayersPanel::Update()
 {
     for( Q3ListViewItem* item = layersList_->firstChild(); item; item = item->nextSibling() )
         if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item ) )
-            if( Layer_ABC* layer = valuedItem->GetValue< Layer_ABC >() )
+            if( Layer* layer = valuedItem->GetValue< Layer >() )
             {
                 item->setEnabled( layer->IsEnabled() );
                 item->setVisible( layer->IsEnabled() );

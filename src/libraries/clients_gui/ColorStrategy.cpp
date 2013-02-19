@@ -166,6 +166,15 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
     return colorController_.Apply( entity, FindBaseColor( entity ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::FindColorWithModifiers
+// Created: ABR 2013-01-29
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::FindColorWithModifiers( const kernel::Entity_ABC& entity )
+{
+    return ApplyModifiers( entity, FindColor( entity ) );
+}
+
 namespace
 {
     QColor GetKarmaColor( const Karma& karma )

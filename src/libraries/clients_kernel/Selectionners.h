@@ -12,7 +12,7 @@
 
 namespace kernel
 {
-class Selectable_ABC;
+class GraphicalEntity_ABC;
 
 // =============================================================================
 /** @class  Selectionner_ABC
@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsOfSameType( const Selectable_ABC* selectable ) const = 0;
+    virtual bool IsOfSameType( const GraphicalEntity_ABC* selectable ) const = 0;
     //@}
 };
 
@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsOfSameType( const Selectable_ABC* selectable ) const
+    virtual bool IsOfSameType( const GraphicalEntity_ABC* selectable ) const
     {
         return dynamic_cast< const T* >( selectable ) != 0;
     }

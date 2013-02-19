@@ -86,11 +86,4 @@ public:
 TYPEDEF_FULL_DECLARATION( std::vector<QWidget*>, PtrWidgetVector )
 TYPEDEF_FULL_DECLARATION( std::list<std::string>, StringList )
 
-// Symbols
-#define SYMBOL_PIXMAP_SIZE           64
-#define SYMBOL_ICON_SIZE             128
-#define SYMBOL_ICON_MARGIN           24
-#define SYMBOL_BG_MARGIN             2
-#define SYMBOL_SCALE_RATIO_FOR_METER 0.1f
-
 #endif // __ADN_Types_h_

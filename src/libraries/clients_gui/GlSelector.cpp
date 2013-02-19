@@ -15,7 +15,7 @@
 #include "Gl3dWidget.h"
 #include "GlProxy.h"
 #include "IconLayout.h"
-#include "Layer_ABC.h"
+#include "Layer.h"
 #include "LayersRenderPass.h"
 #include "TextureRenderPass.h"
 #include "CompositionPass.h"
@@ -96,7 +96,7 @@ void GlSelector::Load()
 // Name: GlSelector::AddLayer
 // Created: ABR 2012-06-11
 // -----------------------------------------------------------------------------
-void GlSelector::AddLayer( Layer_ABC& layer )
+void GlSelector::AddLayer( Layer& layer )
 {
     proxy_.Register( layer );
     if( widget2d_ )
@@ -109,7 +109,7 @@ void GlSelector::AddLayer( Layer_ABC& layer )
 // Name: GlSelector::RemoveLayer
 // Created: ABR 2012-06-11
 // -----------------------------------------------------------------------------
-void GlSelector::RemoveLayer( Layer_ABC& layer )
+void GlSelector::RemoveLayer( Layer& layer )
 {
     proxy_.Unregister( layer );
     if( widget2d_ )
