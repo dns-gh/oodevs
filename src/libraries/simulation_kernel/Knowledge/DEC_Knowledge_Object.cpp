@@ -366,12 +366,8 @@ void DEC_Knowledge_Object::UpdatePerceptionSources( const DEC_Knowledge_ObjectPe
     const MIL_Agent_ABC& pionSource = perception.GetAgentPerceiving();
     MIL_Automate* pAutomateSource = const_cast< MIL_Automate* >( &perception.GetAgentPerceiving().GetAutomate() );
     // On ne garde que les sources provenant d'autres GTIAs
-    IT_PerceptionSourceSet it = perceptionPerAutomateSet_.find( pAutomateSource );
-    if( it == perceptionPerAutomateSet_.end() )
-        perceptionPerAutomateSet_.insert( pAutomateSource );
-    IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
-    if( it2 == perceptionLevelPerAgentMap_.end() )
-        perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
+    perceptionPerAutomateSet_.insert( pAutomateSource );
+    perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1030,7 +1026,7 @@ E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
 {
-    CIT_PerceptionAgentSourceMap itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
+    auto itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
     if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
         return *( itPerceptionLevel->second );
     return PHY_PerceptionLevel::notSeen_;

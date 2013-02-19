@@ -18,6 +18,7 @@
 #include "DEC_Knowledge_IObjectAttributeProxy.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
+#include "tools/Set.h"
 #include "Tools/MIL_IDManager.h"
 
 namespace sword
@@ -182,16 +183,11 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Automate* >               T_PerceptionSourceSet;
-    typedef T_PerceptionSourceSet::iterator        IT_PerceptionSourceSet;
-    typedef T_PerceptionSourceSet::const_iterator CIT_PerceptionSourceSet;
+    typedef tools::Set< MIL_Automate* > T_PerceptionSourceSet;
 
     typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::iterator                        IT_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::const_iterator                 CIT_PerceptionAgentSourceMap;
 
     typedef std::set< const MIL_AgentType_ABC* > T_AgentTypeSet;
-    typedef T_AgentTypeSet::const_iterator     CIT_AgentTypeSet;
     //@}
 
 private:

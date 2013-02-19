@@ -89,13 +89,6 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
-public:
-    //! @name Types
-    //@{
-    typedef std::set< MIL_PopulationFlow* > T_FlowSet;
-    typedef T_FlowSet::const_iterator     CIT_FlowSet;
-    //@}
-
 private:
     //! @name Tools
     //@{
@@ -115,7 +108,7 @@ private:
     MT_Vector2D position_;
     TER_Localisation location_;
     MIL_PopulationFlow* pPullingFlow_;
-    T_FlowSet pushingFlows_;
+    std::set< MIL_PopulationFlow* > pushingFlows_;
     const MIL_Object_ABC* pSplittingObject_;
     double rPullingFlowsDensity_;
     static MIL_IDManager idManager_;

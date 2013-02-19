@@ -119,6 +119,15 @@ public:
         archive & v_;
     }
 
+    bool operator==( const Set& rhs ) const
+    {
+        return v_ == rhs.v_;
+    }
+    bool operator!=( const Set& rhs ) const
+    {
+        return v_ != rhs.v_;
+    }
+
 private:
     Container v_;
 };
