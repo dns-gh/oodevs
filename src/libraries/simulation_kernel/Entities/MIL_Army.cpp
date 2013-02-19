@@ -73,8 +73,9 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
-                  , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter )
+MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory,
+                    PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory,
+                    const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter, bool canCreateChildren )
     : nID_                 ( xis.attribute< unsigned int >( "id" ) )
     , strName_             ( xis.attribute< std::string >( "name") )
     , nType_               ( eUnknown )
@@ -84,25 +85,28 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     , pColor_              ( new MIL_Color( xis ) )
 {
     nType_ = diplomacyConverter_.Convert( xis.attribute< std::string >( "type" ) );
-    xis >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
-        >> xml::end
-        >> xml::start( "tactical" )
-            >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
-        >> xml::end
-        >> xml::start( "objects" )
-            >> xml::list( "object", *this, &MIL_Army::ReadObject, objectFactory )
-        >> xml::end
-        >> xml::start( "logistics" )
-            >> xml::list( "logistic-base", *this, &MIL_Army::ReadLogisticLink, automateFactory, formationFactory )
-        >> xml::end
-        >> xml::start( "populations" )
-            >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
-        >> xml::end
-        >> xml::optional >> xml::start( "inhabitants" )
-            >> xml::list( "inhabitant", *this, &MIL_Army::ReadInhabitant, inhabitantFactory )
-        >> xml::end;
-    pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
+    if( canCreateChildren )
+    {
+        xis >> xml::start( "communication" )
+                >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
+            >> xml::end
+            >> xml::start( "tactical" )
+                >> xml::list( "formation", *this, &MIL_Army::ReadFormation, formationFactory )
+            >> xml::end
+            >> xml::start( "objects" )
+                >> xml::list( "object", *this, &MIL_Army::ReadObject, objectFactory )
+            >> xml::end
+            >> xml::start( "logistics" )
+                >> xml::list( "logistic-base", *this, &MIL_Army::ReadLogisticLink, automateFactory, formationFactory )
+            >> xml::end
+            >> xml::start( "populations" )
+                >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
+            >> xml::end
+            >> xml::optional >> xml::start( "inhabitants" )
+                >> xml::list( "inhabitant", *this, &MIL_Army::ReadInhabitant, inhabitantFactory )
+            >> xml::end;
+        pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -463,14 +467,13 @@ void MIL_Army::ReadDiplomacy( xml::xistream& xis )
     if( nDiplomacy == eUnknown )
         xis.error( "Unknown diplomacy relation between armies" );
     MIL_Army_ABC* pArmy = armyFactory_.Find( xis.attribute< unsigned int >( "party" ) );
-    if( pArmy )
-    {
-        if( diplomacies_.find( pArmy ) != diplomacies_.end() )
-            xis.error( "Diplomacy between armies already exist" );
-        if( pArmy == this )
-            xis.error( "Self diplomacy not allowed" );
-        diplomacies_[ pArmy ] = nDiplomacy;
-    }
+    if( !pArmy )
+        xis.error( "Unknown army" );
+    if( diplomacies_.find( pArmy ) != diplomacies_.end() )
+        xis.error( "Diplomacy between armies already exist" );
+    if( pArmy->GetID() == GetID() )
+        xis.error( "Self diplomacy not allowed" );
+    diplomacies_[ pArmy ] = nDiplomacy;
 }
 
 // -----------------------------------------------------------------------------

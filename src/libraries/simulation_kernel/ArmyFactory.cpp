@@ -101,18 +101,18 @@ MIL_Army_ABC* ArmyFactory::Create( const std::string& tag, xml::xistream& xis, c
     MIL_Army_ABC* army = 0;
     if( tag == "party" )
     {
-        if( config.CanCreateParty( xis.attribute< unsigned int >( "id" ) ) )
-        {
-            MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_, populationFactory_, inhabitantFactory_, knowledgeGroupFactory_, *diplomacyConverter_ );
-            Register( army->GetID(), *army );
-        }
+        MIL_Army_ABC* army = new MIL_Army( xis, *this, formationFactory_, automateFactory_, objectFactory_,
+                                           populationFactory_, inhabitantFactory_, knowledgeGroupFactory_, *diplomacyConverter_,
+                                           config.CanCreateParty( xis.attribute< unsigned int >( "id" ) ) );
+        Register( army->GetID(), *army );
     }
     else if( tag == "no-party" )
     {
         if( config.CanCreateNoPartyObjects() )
         {
-            xis >> xml::optional >> xml::start( "objects" )
-                >> xml::list( "object", *this, &ArmyFactory::ReadNoSideObject )
+            xis >> xml::optional
+                >> xml::start( "objects" )
+                    >> xml::list( "object", *this, &ArmyFactory::ReadNoSideObject )
                 >> xml::end;
         }
     }
