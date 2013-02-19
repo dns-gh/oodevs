@@ -65,14 +65,15 @@ public:
 
     //! @name Events
     //@{
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyArriving( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
     //@}
 
     //! @name Network
     //@{
-    virtual void Serialize( sword::ParentEntity& message ) const = 0;    
-    template < typename Archive > void serialize( Archive&, const unsigned int ) {}
+    virtual void Serialize( sword::ParentEntity& message ) const = 0;
+    template < typename Archive > void serialize( Archive&, const unsigned int )
+    {}
     //@}
 };
 

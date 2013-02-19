@@ -70,11 +70,11 @@ public:
     virtual const MT_Vector2D&   GetPosition() const;
     virtual const MIL_AgentPion* GetPC      () const;
     virtual bool                 BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
-    virtual void OnSupplyScheduled     ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyCanceled      ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyDone          ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyScheduled     ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyCanceled      ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyDone          ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign );
     virtual void Serialize( sword::AutomatId& msg ) const;
     //@}
 
@@ -95,7 +95,7 @@ private:
     //! @name Types
     //@{
     typedef std::list< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
-    typedef std::set< boost::shared_ptr< const logistic::SupplyConsign_ABC > > T_Supplies;
+    typedef std::set< boost::shared_ptr< logistic::SupplyConsign_ABC > > T_Supplies;
     //@}
 
 private:

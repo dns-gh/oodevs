@@ -56,11 +56,11 @@ public:
 
     //! @name Events
     //@{
-    virtual void OnSupplyCanceled      ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyDone          ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyScheduled     ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
-    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyCanceled      ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyDone          ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyScheduled     ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyArriving( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< SupplyConsign_ABC > supplyConsign ) = 0;
 
     virtual void NotifySuperiorNotAvailable( const T_Requesters& requesters ) = 0;
     virtual void NotifyStockNotAvailable( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) = 0;

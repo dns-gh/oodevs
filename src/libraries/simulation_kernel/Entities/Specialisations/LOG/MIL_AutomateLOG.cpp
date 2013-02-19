@@ -537,7 +537,7 @@ void MIL_AutomateLOG::ResetConsignsForProvider( const MIL_AgentPion& pion )
 // Name: MIL_AutomateLOG::OnSupplyConvoyArriving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     auto tmp = supplyConvoysObserver_;
     std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyArriving, _1, supplyConsign ) );
@@ -547,7 +547,7 @@ void MIL_AutomateLOG::OnSupplyConvoyArriving( boost::shared_ptr< const logistic:
 // Name: MIL_AutomateLOG::OnSupplyConvoyLeaving
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     auto tmp = supplyConvoysObserver_;
     std::for_each( tmp.begin(), tmp.end(), boost::bind( &logistic::FuneralConsign_ABC::OnSupplyConvoyLeaving, _1, supplyConsign ) );

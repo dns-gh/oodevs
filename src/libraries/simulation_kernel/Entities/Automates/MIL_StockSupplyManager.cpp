@@ -145,7 +145,7 @@ void MIL_StockSupplyManager::ResetAutoConsignForConvoyPion( const MIL_AgentPion&
     if( autoSupplyRequest_.get() )
         autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
-        if( const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsignsForConvoyPion( pion ) )
+        if( (*it)->ResetConsignsForConvoyPion( pion ) )
             it = scheduledSupplies_.erase( it );
         else
             ++it;
@@ -160,7 +160,7 @@ void MIL_StockSupplyManager::ResetAutoConsignForProvider( const MIL_Agent_ABC& p
     if( autoSupplyRequest_.get() )
         autoSupplyRequest_->ResetConsignsForProvider( pion );
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
-        if( const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsignsForProvider( pion ) )
+        if( (*it)->ResetConsignsForProvider( pion ) )
             it = scheduledSupplies_.erase( it );
         else
             ++it;
@@ -175,7 +175,7 @@ void MIL_StockSupplyManager::ResetAllConsigns()
     if( autoSupplyRequest_.get() )
         autoSupplyRequest_->ResetConsign();
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
-        const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsign();
+        (*it)->ResetConsign();
     scheduledSupplies_.clear();
 }
 
@@ -212,7 +212,7 @@ const MIL_AgentPion* MIL_StockSupplyManager::GetPC() const
 // Name: MIL_StockSupplyManager::OnSupplyScheduled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     scheduledSupplies_.insert( supplyConsign );
 }
@@ -221,7 +221,7 @@ void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logisti
 // Name: MIL_StockSupplyManager::OnSupplyCanceled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockAnnule );
     bSupplyNeeded_ = true;
@@ -232,7 +232,7 @@ void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic
 // Name: MIL_StockSupplyManager::OnSupplyDone
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, report::eRC_RavitaillementStockEffectue );
     scheduledSupplies_.erase( supplyConsign );
@@ -242,7 +242,7 @@ void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::Su
 // Name: MIL_StockSupplyManager::OnSupplyConvoyArriving
 // Created: NLD 2011-09-13
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )
@@ -253,7 +253,7 @@ void MIL_StockSupplyManager::OnSupplyConvoyArriving( boost::shared_ptr< const lo
 // Name: MIL_StockSupplyManager::OnSupplyConvoyLeaving
 // Created: NLD 2011-09-13
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+void MIL_StockSupplyManager::OnSupplyConvoyLeaving( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_AutomateLOG* logisticBase = pAutomate_->FindLogisticManager();
     if( logisticBase )

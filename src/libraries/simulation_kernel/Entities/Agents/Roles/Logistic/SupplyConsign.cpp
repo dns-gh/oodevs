@@ -175,7 +175,7 @@ void SupplyConsign::SupplyCurrentRecipient()
 // Name: SupplyConsign::IsSupplying
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient ) const
+bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient )
 {
     BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
     {
