@@ -154,6 +154,7 @@ public:
     void UnregisterPion( MIL_AgentPion& pion );
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
+    void DestroyPion( MIL_AgentPion& pion );
             void UpdateDecision  ( float duration );
             void UpdateKnowledges( int currentTimeStep );
             void CleanKnowledges ();
@@ -216,13 +217,6 @@ public:
     double GetAlivePionsMaxSpeed  () const;
     //@}
 
-    //! @name Dynamic pions
-    //@{
-    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx = 0 );
-    void           ForceRemovePion( MIL_AgentPion& pion );
-    void           DestroyPion( MIL_AgentPion& pion );
-    //@}
-
     //! @name Logistic : supply
     //@{
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
@@ -278,7 +272,7 @@ private:
     MIL_AutomateOrderManager*                                  pOrderManager_;
     MIL_AgentPion*                                             pPionPC_;
     T_PionVector                                               pions_; // Including pion PC
-    T_PionVector                                               recycledPions_; // Dynamic pions
+    T_PionVector                                               pionsToDelete_;
     T_AutomateVector                                           automates_;
     bool                                                       bEngaged_;
     bool                                                       bAutomateModeChanged_;

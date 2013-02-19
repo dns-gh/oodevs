@@ -11,6 +11,7 @@
 #define __LogFuneralConsign_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Types.h"
 #include "tools/Resolver_ABC.h"
 #include <boost/function.hpp>
@@ -88,8 +89,8 @@ private:
     const unsigned int nID_;
     E_HumanRank rank_;
     kernel::Agent_ABC& consumer_;
-    kernel::Entity_ABC* handler_;
-    kernel::Agent_ABC* convoy_;
+    kernel::SafePointer< kernel::Entity_ABC > handler_;
+    kernel::SafePointer< kernel::Agent_ABC > convoy_;
     const kernel::DotationType* packagingResource_;
     unsigned int currentStateEndTick_;
     E_LogFuneralHandlingStatus nState_;

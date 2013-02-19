@@ -441,13 +441,14 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
         return 0;
 
     const MT_Vector2D& location = pConvoyAutomate->GetPosition();
-    MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location );
-    PHY_RoleInterface_Supply* itf = convoyPion->RetrieveRole< PHY_RoleInterface_Supply >();
+
+    MIL_AgentPion& convoyPion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *pConvoyAutomate, location, 0 );
+    PHY_RoleInterface_Supply* itf = convoyPion.RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )
         itf->AssignConvoy( convoy );
     else
-        MT_LOG_ERROR_MSG( "No role interface supply in convoy " << convoyPion->GetName() );
-    return convoyPion;
+        MT_LOG_ERROR_MSG( "No role interface supply in convoy " << convoyPion.GetName() );
+    return &convoyPion;
 }
 
 // -----------------------------------------------------------------------------

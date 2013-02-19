@@ -255,7 +255,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> pKnowledgeGroup_;
     file >> pPionPC_;
     file >> pions_;
-    file >> recycledPions_;
     file >> automates_;
     file >> bAutomateModeChanged_;
     file >> pKnowledgeBlackBoard_;
@@ -295,7 +294,6 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << pKnowledgeGroup_;
     file << pPionPC_;
     file << pions_;
-    file << recycledPions_;
     file << automates_;
     file << bAutomateModeChanged_;
     file << pKnowledgeBlackBoard_;
@@ -372,46 +370,13 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::CreatePion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx )
-{
-    for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
-    {
-        MIL_AgentPion& pion = **it;
-        const MIL_AgentType_ABC& pionType = pion.GetType();
-        if( &type == &pionType )
-        {
-            recycledPions_.erase( it.base() - 1 );
-            pion.ChangeSuperior( *this );
-            pion.GetRole< PHY_RoleInterface_Location >().MagicMove( vPosition );
-            return pion;
-        }
-    }
-    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition, nCtx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::ForceRemovePion
-// Created: JSR 2013-02-06
-// -----------------------------------------------------------------------------
-void MIL_Automate::ForceRemovePion( MIL_AgentPion& pion )
-{
-    auto it = std::find( recycledPions_.begin(), recycledPions_.end(), &pion );
-    if( it != recycledPions_.end() )
-        recycledPions_.erase( it );
-    UnregisterPion( pion );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::DestroyPion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 void MIL_Automate::DestroyPion( MIL_AgentPion& pion )
 {
     assert( pion.IsDead() );
-    recycledPions_.push_back( &pion );
+    pionsToDelete_.push_back( &pion );
 }
 
 // -----------------------------------------------------------------------------
@@ -578,6 +543,9 @@ void MIL_Automate::UpdateState()
     {
         pDotationSupplyManager_->Update();
         pStockSupplyManager_   ->Update();
+        for( auto it = pionsToDelete_.begin(); it != pionsToDelete_.end(); ++it )
+            ( *it )->DeleteUnit();
+        pionsToDelete_.clear();
     }
     catch( const std::exception& e )
     {
@@ -1445,7 +1413,6 @@ void MIL_Automate::SetCommandPost( MIL_AgentPion* pion )
 void MIL_Automate::UnregisterPion( MIL_AgentPion& pion )
 {
     pions_.erase( std::remove( pions_.begin(), pions_.end(), &pion ), pions_.end() );
-    recycledPions_.erase( std::remove( recycledPions_.begin(), recycledPions_.end(), &pion ), recycledPions_.end() );
     if( pPionPC_ == &pion )
         SetCommandPost( 0 );
 }

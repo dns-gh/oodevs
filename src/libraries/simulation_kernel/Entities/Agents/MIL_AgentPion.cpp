@@ -821,11 +821,13 @@ void MIL_AgentPion::SpecializedDelete()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveDeleteUnit
-// Created: JSR 2013-01-29
+// Name: MIL_AgentPion::DeleteUnit
+// Created: JSR 2013-02-19
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveDeleteUnit()
+void MIL_AgentPion::DeleteUnit()
 {
+    if( markedForDestruction_ )
+        return;
     CancelCurrentMission();
     pOrderManager_->StopAllMissions();
 
@@ -837,13 +839,22 @@ void MIL_AgentPion::OnReceiveDeleteUnit()
     GetRole< transport::PHY_RoleAction_Transport >().Cancel();
 
     if( pAutomate_ )
-        pAutomate_->ForceRemovePion( *this );
+        pAutomate_->UnregisterPion( *this );
 
     markedForDestruction_ = true;
 
     client::UnitDestruction msg;
     msg().mutable_unit()->set_id( GetID() );
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveDeleteUnit
+// Created: JSR 2013-01-29
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveDeleteUnit()
+{
+    DeleteUnit();
 }
 
 // -----------------------------------------------------------------------------

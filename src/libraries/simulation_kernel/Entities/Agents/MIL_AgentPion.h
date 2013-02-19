@@ -132,6 +132,7 @@ public:
     void UpdateNetwork();
     void Clean();
     void Register( MissionController_ABC& pController );
+    void DeleteUnit();
     //@}
 
     //! @name Knowledge

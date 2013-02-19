@@ -46,8 +46,8 @@ LogFuneralConsign::LogFuneralConsign( Controller& controller, const sword::LogFu
     , nID_                ( message.request().id() )
     , rank_               ( (E_HumanRank)message.rank() )
     , consumer_           ( agentResolver_.Get( message.unit().id() ) )
-    , handler_            ( 0 )
-    , convoy_             ( 0 )
+    , handler_            ( controller )
+    , convoy_             ( controller )
     , packagingResource_  ( 0 )
     , currentStateEndTick_( std::numeric_limits< unsigned int >::max() )
     , nState_             ( eLogFuneralHandlingStatus_Finished )
@@ -64,11 +64,11 @@ LogFuneralConsign::~LogFuneralConsign()
     consumer_.Get< LogFuneralConsigns >().RemoveConsign( *this );
     if( handler_ )
     {
-        if( LogFuneralConsigns* consign = handler_->Retrieve< LogFuneralConsigns >() )
+        if( LogFuneralConsigns* consign = handler_.ConstCast()->Retrieve< LogFuneralConsigns >() )
             consign->TerminateConsign( *this );
     }
     if( convoy_ )
-        convoy_->Get< LogFuneralConsigns >().TerminateConsign( *this );
+        convoy_.ConstCast()->Get< LogFuneralConsigns >().TerminateConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,18 +82,18 @@ void LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message )
     if( message.has_handling_unit() )
     {
         if( handler_ )
-            handler_->Get< LogFuneralConsigns >().TerminateConsign( *this );
+            handler_.ConstCast()->Get< LogFuneralConsigns >().TerminateConsign( *this );
         handler_ = FindLogEntity( message.handling_unit() );
         if( handler_ )
-            handler_->Get< LogFuneralConsigns >().HandleConsign( *this );
+            handler_.ConstCast()->Get< LogFuneralConsigns >().HandleConsign( *this );
     }
     if( message.has_convoying_unit() )
     {
         if( convoy_ )
-            convoy_->Get< LogFuneralConsigns >().TerminateConsign( *this );
+            convoy_.ConstCast()->Get< LogFuneralConsigns >().TerminateConsign( *this );
         convoy_ = agentResolver_.Find( message.convoying_unit().id() );
         if( convoy_ )
-            convoy_->Get< LogFuneralConsigns >().HandleConsign( *this );
+            convoy_.ConstCast()->Get< LogFuneralConsigns >().HandleConsign( *this );
     }
     if( message.has_current_state_end_tick() )
         currentStateEndTick_ = message.current_state_end_tick();
