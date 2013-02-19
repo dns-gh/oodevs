@@ -41,7 +41,7 @@ namespace
             , enemy    ( core::Convert( &target ) )
             , command ( 0u )
         {
-            knowledge[ "dead" ] = false;
+            knowledge[ "is-dead" ] = false;
             knowledge[ "identifier" ] = 43;
             target[ "data" ] = "data";
             target[ "components" ];
@@ -97,7 +97,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_is_dead, ValidFireFixture )
 {
-    knowledge[ "dead" ] = true;
+    knowledge[ "is-dead" ] = true;
     ExpectCallback( sword::fire::RoleAction_DirectFiring::eEnemyDestroyed );
     ExecuteCommands();
 }

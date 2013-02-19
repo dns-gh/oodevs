@@ -330,7 +330,7 @@ namespace
     {
         knowledge[ "data" ].SetUserData( agent );
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
-        knowledge[ "dead" ] = agent->IsDead();
+        knowledge[ "is-dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
         const core::Model& components2 = entity[ "components" ];
         const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();

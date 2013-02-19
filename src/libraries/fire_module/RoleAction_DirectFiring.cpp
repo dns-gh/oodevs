@@ -91,7 +91,7 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
 {
     if( ! GET_HOOK( IsAgentKnowledgeValid )( target ) )
         return eImpossible;
-    if( target[ "dead" ] )
+    if( target[ "is-dead" ] )
         return eEnemyDestroyed;
     // Firers
     DirectFireData data( module_, entity, parameters );
