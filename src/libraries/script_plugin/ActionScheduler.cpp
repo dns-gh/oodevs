@@ -21,8 +21,8 @@
 #include <boost/bind.hpp>
 #include <boost/algorithm/string/erase.hpp>
 #include <boost/date_time.hpp>
-#include <boost/interprocess/detail/atomic.hpp>
 #include <xeumeuleu/xml.hpp>
+#include <algorithm>
 
 using namespace plugins::script;
 
@@ -31,22 +31,17 @@ typedef ActionScheduler::T_Actions T_Actions;
 
 struct ActionScheduler::T_Action
 {
-    uint32_t                 idx;
     boost::posix_time::ptime time;
     sword::ClientToSim       msg;
 
     bool operator<( const T_Action& other ) const
     {
-        if( time != other.time )
-            return time < other.time;
-        return idx < other.idx;
+        return time < other.time;
     }
 };
 
 namespace
 {
-    uint32_t counter = 0;
-
     boost::posix_time::ptime MakeTime( std::string value )
     {
         boost::algorithm::erase_all( value, "-" );
@@ -61,11 +56,10 @@ namespace
             std::string time;
             xis >> xml::attribute( "time", time );
             T_Action action;
-            action.idx = boost::interprocess::ipcdetail::atomic_inc32( &counter );
             action.time = MakeTime( time );
             action.msg.set_context( 0 );
             protocol::Read( adapter, *action.msg.mutable_message(), xis );
-            dst.insert( action );
+            dst.push_back( action );
         }
         catch( const std::exception& err )
         {
@@ -78,6 +72,10 @@ namespace
         T_Actions rpy;
         xis >> xml::start( "actions" )
             >> xml::list( "action", boost::bind( &ReadAction, boost::ref( rpy ), boost::cref( adapter ), _1 ) );
+        // Assume the input file defines a valid order in case of equality.
+        // This is a bit silly as either it should define a total order and
+        // ensure timestamps are consistent, or provide another valid order.
+        std::stable_sort( rpy.begin(), rpy.end() );
         return rpy;
     }
 }

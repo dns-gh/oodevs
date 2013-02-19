@@ -12,7 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <set>
+#include <vector>
 
 namespace dispatcher
 {
@@ -80,7 +80,7 @@ public:
     //! @name Typedef helpers
     //@{
     struct T_Action;
-    typedef std::set< T_Action > T_Actions;
+    typedef std::vector< T_Action > T_Actions;
     //@}
 
     //! @name Helpers
