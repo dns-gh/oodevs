@@ -161,7 +161,11 @@ void PathAdapter::Remove( std::size_t identifier )
 // Created: MCO 2012-01-26
 // -----------------------------------------------------------------------------
 PathAdapter::PathAdapter()
-    : data_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
+    : entity_           ( std::numeric_limits< std::size_t >::max() )
+    , data_             ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
+    , weight_           ( 0 )
+    , squareSlope_      ( 0 )
+    , outsideObjectCost_( 0 )
 {
     // NOTHING
 }
@@ -245,8 +249,7 @@ DEC_Path_ABC::E_State PathAdapter::GetState() const
 // -----------------------------------------------------------------------------
 double PathAdapter::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
-    // default cost : outside all objects
-    double rObjectCost = rCostOutsideOfAllObjects_;
+    double cost = outsideObjectCost_;
     for( auto itType = pathKnowledgeObjects_.begin(); itType != pathKnowledgeObjects_.end(); ++itType )
     {
         bool bInsideObjectType = false;
@@ -258,16 +261,16 @@ double PathAdapter::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& 
             {
                 if( !bInsideObjectType )
                 {
-                    rObjectCost -= (*itKnowledge)->GetCostOut();
+                    cost -= (*itKnowledge)->GetCostOut();
                     bInsideObjectType = true;
                 }
                 if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
                     return rCurrentObjectCost;
-                rObjectCost += rCurrentObjectCost;
+                cost += rCurrentObjectCost;
             }
         }
     }
-    return rObjectCost;
+    return cost;
 }
 
 namespace
@@ -338,7 +341,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
                         pathKnowledges.push_back( boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >( new DEC_Path_KnowledgeObject( knowledge, cost, GET_HOOK( GetThreshold )( GetID() ) ) ) );
                 }
                 if( empty && pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
-                    rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
+                    outsideObjectCost_ += pathKnowledges.front()->GetCostOut();
             }
         }
     }

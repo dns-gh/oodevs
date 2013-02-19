@@ -113,7 +113,7 @@ private:
     T_PathKnowledgePopulationVector pathKnowledgePopulations_;
     double weight_, squareSlope_;
     E_CrossingHeight height_;
-    double rCostOutsideOfAllObjects_;
+    double outsideObjectCost_;
     //@}
 };
 
