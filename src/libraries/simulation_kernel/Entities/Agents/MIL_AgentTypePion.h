@@ -34,7 +34,7 @@ class PHY_UnitType;
 class MIL_HumanRepartition;
 class MIL_Config;
 
-struct RoleExtender_ABC;
+class RoleExtender_ABC;
 
 // =============================================================================
 // @class  MIL_AgentTypePion

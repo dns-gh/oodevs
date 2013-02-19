@@ -27,6 +27,8 @@ namespace core
     class Facade;
 }
 
+class SinkRoleExtender;
+
 namespace sword
 {
 class DEC_Logger_ABC;
@@ -109,6 +111,7 @@ private:
     void Initialize();
 
     MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& position );
+    void CreateRoles( SinkRoleExtender& ext, const MT_Vector2D& position );
     //@}
 
 private:

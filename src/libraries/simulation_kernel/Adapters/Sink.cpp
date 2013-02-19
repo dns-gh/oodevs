@@ -79,6 +79,7 @@
 #include <core/UserData.h>
 #include <core/EventListener_ABC.h>
 #include <boost/foreach.hpp>
+#include <boost/functional/factory.hpp>
 
 using namespace sword;
 
@@ -622,28 +623,6 @@ void Sink::StopCommand( std::size_t command )
 // -----------------------------------------------------------------------------
 MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position )
 {
-    core::Model& entity = (*model_)[ "entities" ][ pion.GetID() ];
-    entity[ "movement/position/x" ] = position.rX_;
-    entity[ "movement/position/y" ] = position.rY_;
-    pion.RegisterRole( *new sword::RolePion_Location( *this, pion, entity, position ) );
-    try
-    {
-        pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, decLogger_, *this ) );
-    }
-    catch( const tools::Exception& e )
-    {
-        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Can't configure sink ( '" << tools::GetExceptionMsg( e ) << "' )" );
-    }
-
-    pion.RegisterRole( *new sword::RoleAction_Moving( pion, entity ) );
-    pion.RegisterRole( *new sword::RolePion_Perceiver( *this, *model_, pion, entity ) );
-    pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );
-    pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
-    pion.RegisterRole( *new sword::RoleAdapter( *this, pion, entity ) );
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
     pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
     {
@@ -657,11 +636,44 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
 
 namespace
 {
+    core::Model& GetEntity( MIL_AgentPion& pion, core::Model& m )
+    {
+        return m[ "entities" ][ pion.GetID() ];
+    }
+    sword::RolePion_Location* RoleLocationFactory( MIL_AgentPion& pion, Sink* sink, const MT_Vector2D& position, core::Model& m )
+    {
+        core::Model& entity = m[ "entities" ][ pion.GetID() ];
+        entity[ "movement/position/x" ] = position.rX_;
+        entity[ "movement/position/y" ] = position.rY_;
+        return new sword::RolePion_Location( *sink, pion, entity, position );
+    }
+}
+
+void Sink::CreateRoles( SinkRoleExtender& ext, const MT_Vector2D& position )
+{
+    ext.AddFactory( boost::function< sword::RolePion_Location*( MIL_AgentPion& ) >( boost::bind( &RoleLocationFactory, _1, this, position, boost::ref( *model_ ) ) ) );
+    ext.AddFactory( boost::function< sword::RolePion_Decision*( MIL_AgentPion& ) >(
+            boost::bind( boost::factory< sword::RolePion_Decision* >(), _1, boost::ref( *model_.get() ), gcPause_, gcMult_, decLogger_, boost::ref( *this ) ) ) );
+    ext.AddFactory( boost::function< sword::RoleAction_Moving*( MIL_AgentPion& ) >(
+            boost::bind( boost::factory< RoleAction_Moving* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) ) );
+    ext.AddFactory( boost::function< sword::RolePion_Perceiver*( MIL_AgentPion& ) >(
+            boost::bind( boost::factory< sword::RolePion_Perceiver* >(), boost::ref( *this ), boost::ref( *model_ ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) ) );
+    ext.AddFactory( boost::function< sword::RolePion_Composantes*( MIL_AgentPion& ) >(
+            boost::bind( boost::factory< sword::RolePion_Composantes* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_) ) ) ) );
+    ext.AddFactory( boost::function< transport::PHY_RoleAction_Loading*( MIL_AgentPion& ) >(
+            boost::bind( boost::factory< transport::PHY_RoleAction_Loading* >(), _1 ) ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
+    ext.AddFactory( boost::function< sword::RoleAdapter*( MIL_AgentPion& ) >(
+            boost::bind( boost::factory< sword::RoleAdapter* >(), boost::ref( *this ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) ) );
+
+}
+
+namespace
+{
     MIL_AgentPion& Finalize( MIL_AgentPion& pion )
     {
-        pion.GetRole< sword::RolePion_Location >().Finalize();
-        pion.GetRole< sword::RolePion_Perceiver >().Finalize();
-        pion.GetRole< sword::RoleAdapter >().Finalize();
+        pion.CallRole( &sword::RolePion_Location::Finalize );
+        pion.CallRole( &sword::RolePion_Perceiver::Finalize );
+        pion.CallRole( &sword::RoleAdapter::Finalize );
         return pion;
     }
 }
@@ -686,7 +698,7 @@ void Sink::Clean()
         MIL_AgentPion* pion = it->second;
         assert( pion );
         pion->Clean();
-        if( pion->IsMarkedForDestruction() && !pion->GetRole< DEC_RolePion_Decision >().IsUsedByDIA() )
+        if( pion->IsMarkedForDestruction() && !pion->CallRole( &DEC_RolePion_Decision::IsUsedByDIA, false ) )
         {
             it = elements_.erase( it );
             delete pion;
@@ -707,8 +719,9 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), vPosTmp );
 
-    SinkRoleExtender chainExt( ext, boost::bind(&Sink::Configure, boost::ref( *this ), _1, vPosTmp ) );
-    MIL_AgentPion& pion = *agents_.Create( type, automate, xis, &chainExt );
+    SinkRoleExtender chainExt( ext );
+    CreateRoles( chainExt, vPosTmp );
+    MIL_AgentPion& pion = Configure( *agents_.Create( type, automate, xis, &chainExt ), vPosTmp );
     pion.ReadOverloading( xis );
     pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
     return &pion;
@@ -718,10 +731,11 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext )
+ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext )
 {
-    SinkRoleExtender chainExt( ext, boost::bind(&Sink::Configure, boost::ref( *this ), _1, vPosition ) );
-    return &::Finalize( *agents_.Create( type, automate, vPosition, &chainExt ) );
+    SinkRoleExtender chainExt( ext );
+    CreateRoles( chainExt, vPosition );
+    return &::Finalize( Configure( *agents_.Create( type, automate, vPosition, &chainExt ), vPosition ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -730,8 +744,9 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext )
 {
-    SinkRoleExtender chainExt( ext, boost::bind(&Sink::Configure, boost::ref( *this ), _1, vPosition ) );
-    return &::Finalize( *agents_.Create( type, automate, vPosition, name, &chainExt ) );
+    SinkRoleExtender chainExt( ext );
+    CreateRoles( chainExt, vPosition );
+    return &::Finalize( Configure( *agents_.Create( type, automate, vPosition, name, &chainExt ), vPosition ) );
 }
 
 // -----------------------------------------------------------------------------

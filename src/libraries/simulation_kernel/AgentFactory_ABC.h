@@ -17,7 +17,7 @@ class MIL_AgentTypePion;
 class MIL_Automate;
 class MT_Vector2D;
 
-struct RoleExtender_ABC;
+class RoleExtender_ABC;
 
 namespace xml
 {

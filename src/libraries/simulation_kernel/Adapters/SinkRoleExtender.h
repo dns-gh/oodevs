@@ -11,6 +11,9 @@
 #define SWORD_SINKROLEEXTENDER_H
 
 #include "Entities/Agents/RoleExtender_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+
+#include <map>
 
 /// =============================================================================
 /// @class SinkRoleExtender
@@ -23,16 +26,44 @@ class SinkRoleExtender : public RoleExtender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    SinkRoleExtender( RoleExtender_ABC* chain, boost::function< MIL_AgentPion&(MIL_AgentPion&) > configure );
+    SinkRoleExtender( RoleExtender_ABC* chain );
     //@}
 
+    template< typename Role >
+    void AddFactory( boost::function< Role*( MIL_AgentPion& ) > func )
+    {
+        std::size_t idx = RoleExtender_ABC::Identificators::GetTypeId< typename Role::RoleInterface >();
+        RoleExtender_ABC::T_RoleFactories::iterator it( roleFactories_.find( idx ) );
+        if( it != roleFactories_.end() )
+            throw MASA_EXCEPTION( std::string( "Extension " ) + typeid( typename Role::RoleInterface ).name() + " already attached to " + typeid( *this ).name() );
+        boost::shared_ptr< RoleFactory_ABC > fact( new RoleFactory< typename Role >( func ) );
+        roleFactories_.insert( std::make_pair( idx, fact) );
+        indexes_.push_back( idx );
+    }
     virtual void RegisterRoles( MIL_AgentPion& pion );
 
+protected:
+
 private:
+    //! @name Types
+    //@{
+    template< typename Role >
+    struct RoleFactory : RoleExtender_ABC::RoleFactory_ABC
+    {
+        RoleFactory( boost::function< Role*( MIL_AgentPion& ) > func ) : func_( func ) {}
+        virtual void RegisterRole( MIL_AgentPion& pion )
+        {
+            pion.RegisterRole< Role >( *(func_( pion ) ) );
+        }
+    private:
+        boost::function< Role*( MIL_AgentPion& ) > func_;
+    };
+    //@}
+
     //! @name Member data
     //@{
     RoleExtender_ABC* chain_;
-    boost::function< MIL_AgentPion&(MIL_AgentPion&) > configure_;
+    std::vector< std::size_t > indexes_;
     //@}
 };
 

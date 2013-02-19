@@ -23,6 +23,7 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "Tools/MIL_Tools.h"
+#include <boost/functional/factory.hpp>
 
 using namespace sword::legacy;
 
@@ -215,27 +216,21 @@ void Sink::LogProfiling()
 // -----------------------------------------------------------------------------
 MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
 {
-    pion.RegisterRole( *new sword::legacy::NullRoleAdapter() );
-    try
-    {
-        pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_, decLogger_ ) );
-    }
-    catch( const tools::Exception& e )
-    {
-        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Can't configure legacy sink ( '" << tools::GetExceptionMsg( e ) << "' )" );
-    }
-
-    pion.RegisterRole( *new moving::PHY_RoleAction_Moving( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Location( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Perceiver( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Composantes( pion ) );
-    pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
     return pion;
+}
+
+void Sink::CreateRoles( SinkRoleExtender& ext )
+{
+    ext.AddFactory( boost::function< sword::legacy::NullRoleAdapter*(MIL_AgentPion &) >( boost::bind( boost::factory< sword::legacy::NullRoleAdapter* >() ) ) );
+    ext.AddFactory( boost::function< sword::legacy::RolePion_Decision*(MIL_AgentPion &) >( 
+        boost::bind( boost::factory< sword::legacy::RolePion_Decision* >() ,_1, gcPause_, gcMult_, decLogger_ ) ) );
+
+    ext.AddFactory( boost::function< moving::PHY_RoleAction_Moving*(MIL_AgentPion &) >( boost::bind( boost::factory< moving::PHY_RoleAction_Moving* >() ,_1 ) ) );
+    ext.AddFactory( boost::function< PHY_RolePion_Location*(MIL_AgentPion &) >( boost::bind( boost::factory< PHY_RolePion_Location* >() ,_1 ) ) );
+    ext.AddFactory( boost::function< PHY_RolePion_Perceiver*(MIL_AgentPion &) >( boost::bind( boost::factory< PHY_RolePion_Perceiver* >() ,_1 ) ) );
+    ext.AddFactory( boost::function< PHY_RolePion_Composantes*(MIL_AgentPion &) >( boost::bind( boost::factory< PHY_RolePion_Composantes* >() ,_1 ) ) );
+    ext.AddFactory( boost::function< transport::PHY_RoleAction_Loading*(MIL_AgentPion &) >( boost::bind( boost::factory< transport::PHY_RoleAction_Loading* >() ,_1 ) ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
 }
 
 // -----------------------------------------------------------------------------
@@ -246,8 +241,9 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 {
     if( MIL_AgentPion* pPion = Find( xis.attribute< unsigned long >( "id" ) ) )
         throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
-    SinkRoleExtender chainExt( ext, boost::bind( &Sink::Configure, boost::ref( *this ), _1 ) );
-    MIL_AgentPion& pion = *factory_.Create( type, automate, xis, &chainExt );
+    SinkRoleExtender chainExt( ext );
+    CreateRoles( chainExt );
+    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis, &chainExt ) );
     { 
         std::string strPosition;
         xis >> xml::attribute( "position", strPosition );
@@ -266,8 +262,9 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext )
 {
-    SinkRoleExtender chainExt( ext, boost::bind( &Sink::Configure, boost::ref( *this ), _1 ) );
-    MIL_AgentPion& pion = *factory_.Create( type, automate, vPosition, &chainExt );
+    SinkRoleExtender chainExt( ext );
+    CreateRoles( chainExt );
+    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, vPosition, &chainExt ) );
     Initialize( pion, vPosition );
     return &pion;
 }
@@ -278,8 +275,9 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext )
 {
-    SinkRoleExtender chainExt( ext, boost::bind( &Sink::Configure, boost::ref( *this ), _1 ) );
-    MIL_AgentPion& pion =* factory_.Create( type, automate, vPosition, name, &chainExt );
+    SinkRoleExtender chainExt( ext );
+    CreateRoles( chainExt );
+    MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, vPosition, name, &chainExt ) );
     Initialize( pion, vPosition );
     return &pion;
 }
