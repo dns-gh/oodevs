@@ -94,7 +94,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::list< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
+    typedef std::vector< boost::shared_ptr< logistic::SupplyRequestContainer > > T_SupplyRequests;
     typedef std::vector< boost::shared_ptr< logistic::SupplyConsign_ABC > > T_Supplies;
     //@}
 

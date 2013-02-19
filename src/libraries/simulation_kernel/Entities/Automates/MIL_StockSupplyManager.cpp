@@ -101,8 +101,7 @@ void MIL_StockSupplyManager::save( MIL_CheckPointOutArchive& file, const unsigne
 void MIL_StockSupplyManager::Update()
 {
     autoSupplyRequest_->Update();
-    for( auto it = manualSupplyRequests_.begin(); it != manualSupplyRequests_.end(); )
-        (*it)->Update() ? it = manualSupplyRequests_.erase( it ) : ++it;
+    boost::remove_erase_if( manualSupplyRequests_, boost::mem_fn( &logistic::SupplyRequestContainer::Update ) );
     if( !bSupplyNeeded_ )
         return;
     MIL_AutomateLOG* logisticManager = pAutomate_->FindLogisticManager();
