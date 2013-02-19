@@ -51,19 +51,12 @@ private:
     ProtectionCapacity( const ProtectionCapacity& from );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::set< const MIL_Agent_ABC* >   T_AgentContainer;
-    typedef T_AgentContainer::iterator        IT_AgentContainer;
-    typedef T_AgentContainer::const_iterator CIT_AgentContainer;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    int size_max_;
-    T_AgentContainer container_;
+    std::size_t maxSize_;
     bool bGeniePrepared_;
+    std::vector< const MIL_Agent_ABC* > container_;
     //@}
 };
 

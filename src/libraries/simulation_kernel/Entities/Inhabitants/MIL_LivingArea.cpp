@@ -55,7 +55,7 @@ MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, MI
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::Finalize()
 {
-    for( std::set< unsigned long >::const_iterator it = urbanIds_.begin(); it != urbanIds_.end(); ++it )
+    for( auto it = urbanIds_.begin(); it != urbanIds_.end(); ++it )
     {
         const unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( *it );
         if( simId != 0)

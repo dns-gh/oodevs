@@ -12,6 +12,7 @@
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include <boost/range/algorithm_ext/erase.hpp>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
@@ -21,7 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ProtectionCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity( xml::xistream& xis )
-    : size_max_ ( xis.attribute< int >( "max-size" ) )
+    : maxSize_        ( xis.attribute< std::size_t >( "max-size" ) )
     , bGeniePrepared_ ( xis.attribute< bool >( "geniePrepared" ) )
 {
     // NOTHING
@@ -32,7 +33,7 @@ ProtectionCapacity::ProtectionCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity()
-    : size_max_ ( 0 )
+    : maxSize_      ( 0 )
     , bGeniePrepared_( false )
 {
     // NOTHING
@@ -43,7 +44,7 @@ ProtectionCapacity::ProtectionCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ProtectionCapacity::ProtectionCapacity( const ProtectionCapacity& from )
-    : size_max_ ( from.size_max_ )
+    : maxSize_      ( from.maxSize_ )
     , bGeniePrepared_( from.bGeniePrepared_ )
 {
     // NOTHING
@@ -66,7 +67,7 @@ template< typename Archive >
 void ProtectionCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & size_max_
+         & maxSize_
          & bGeniePrepared_;
 }
 
@@ -97,16 +98,12 @@ void ProtectionCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    IT_AgentContainer it = container_.find( &agent );
-    if( it != container_.end() )
-    {
-        if( bGeniePrepared_ )
-            agent.GetRole< PHY_RoleInterface_Posture >().UnsetPosturePostePrepareGenie();
-        else
-            agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 1. );
-
-        container_.erase( it );
-    }
+    assert( boost::find( container_, &agent ) != container_.end() );
+    if( bGeniePrepared_ )
+        agent.GetRole< PHY_RoleInterface_Posture >().UnsetPosturePostePrepareGenie();
+    else
+        agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 1. );
+    boost::remove_erase( container_, &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,14 +112,11 @@ void ProtectionCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 // -----------------------------------------------------------------------------
 void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    CIT_AgentContainer it = container_.find( &agent );
-    if( it != container_.end() )
-    {
-        if( bGeniePrepared_ )
-            agent.GetRole< PHY_RoleInterface_Posture >().SetPosturePostePrepareGenie();
-        else
-            agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
-    }
+    assert( boost::find( container_, &agent ) != container_.end() );
+    if( bGeniePrepared_ )
+        agent.GetRole< PHY_RoleInterface_Posture >().SetPosturePostePrepareGenie();
+    else
+        agent.GetRole< PHY_RoleInterface_Posture >().SetTimingFactor( 2. );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +125,7 @@ void ProtectionCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Age
 // -----------------------------------------------------------------------------
 void ProtectionCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    CIT_AgentContainer it = container_.find( &agent );
-    if( it == container_.end() && static_cast< int >( container_.size() ) < size_max_ )
-        container_.insert( &agent );
+    assert( boost::find( container_, &agent ) == container_.end() );
+    if( container_.size() < maxSize_ )
+        container_.push_back( &agent );
 }

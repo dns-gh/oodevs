@@ -128,8 +128,8 @@ double CrowdCapacity::ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const
         if( role )
         {
             role->GetVisibleVolumes( volumes_ );
-            for( std::set< const PHY_Volume* >::const_iterator itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
-                rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), densityFactor_ * type_->GetDefaultFlowDensity(), **itVolume ) );
+            for( auto it = volumes_.begin(); it != volumes_.end(); ++it )
+                rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), densityFactor_ * type_->GetDefaultFlowDensity(), **it ) );
         }
     }
     return rMaxSpeed;
