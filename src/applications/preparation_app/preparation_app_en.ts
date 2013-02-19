@@ -1038,11 +1038,11 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Ghost</source>
-        <translation type="unfinished">Ghost</translation>
+        <translation>Ghost</translation>
     </message>
     <message>
         <source>Generate symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Generate symbols</translation>
     </message>
 </context>
 <context>

@@ -1326,6 +1326,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>KnowledgeLayer</name>
+    <message>
+        <source>Knowledges</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LendingsListView</name>
     <message>
         <source>Borrower</source>

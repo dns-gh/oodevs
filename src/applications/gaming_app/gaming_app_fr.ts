@@ -1328,6 +1328,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>KnowledgeLayer</name>
+    <message>
+        <source>Knowledges</source>
+        <translation>Connaissances</translation>
+    </message>
+</context>
+<context>
     <name>LendingsListView</name>
     <message>
         <source>Borrower</source>
