@@ -108,7 +108,7 @@ bool PHY_PerceptionRadar::HasRadarToHandle() const
 bool PHY_PerceptionRadar::IsUsingActiveRadar() const
 {
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
-    for( PHY_RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
+    for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
     {
         if( !itRadarClass->second->IsActive() )
             continue;
@@ -157,7 +157,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MIL_Agent_ABC& /*
 void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
-    for( PHY_RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
+    for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
     {
         const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ itRadarClass->second->GetID() ];
         const bool bRadarEnabledOnPerceiverPos          = radarOnUnitPosition_[ itRadarClass->second->GetID() ];
@@ -166,14 +166,12 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
             continue;
 
         const PHY_RoleInterface_Perceiver::T_RadarSet& radars = perceiver_.GetRadars( *itRadarClass->second );
-        for( PHY_RoleInterface_Perceiver::CIT_RadarSet itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
+        for( auto itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
             const PHY_RadarType& radarType = **itRadar;
-
             IT_RadarDataMap itRadarData = radarData_.find( &radarType );
             if( itRadarData == radarData_.end() )
                 itRadarData  = radarData_.insert( std::make_pair( &radarType, PHY_PerceptionRadarData( radarType ) ) ).first;
-
             itRadarData->second.Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos, detectionComputerFactory );
         }
     }

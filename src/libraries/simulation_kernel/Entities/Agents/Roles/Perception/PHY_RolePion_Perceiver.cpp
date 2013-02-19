@@ -927,8 +927,6 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 {
     if( CanPerceive() )
     {
-        CIT_PerceptionVector itPerception;
-
         double maxPerceptionDistance = GetMaxAgentPerceptionDistance();
 
         std::vector< const MIL_UrbanObject_ABC* > perceivableUrbanBlock;
@@ -954,23 +952,23 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         GetKnowledgeGroup()->AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
 
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableAgents );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableAgents, *owner_->GetAlgorithms().detectionComputerFactory_ );
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).Execute( perceivableAgents, *owner_->GetAlgorithms().detectionComputerFactory_ );
 
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableObjects );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableObjects );
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).Execute( perceivableObjects );
 
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableConcentrations );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableConcentrations );
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).Execute( perceivableConcentrations );
 
         TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableFlows );
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).Execute( perceivableFlows );
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).Execute( perceivableFlows );
 
-        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
-            (**itPerception).FinalizePerception();
+        for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+            (**it).FinalizePerception();
     }
     NotifyPerception( *owner_, PHY_PerceptionLevel::identified_, false );
     const MIL_Agent_ABC* transporter = owner_->GetRole< transport::PHY_RoleInterface_Transported >().GetTransporter();
@@ -1005,7 +1003,7 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const DEC_
     if( knowledge.GetLocalisation().IsInside( owner_->GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
         return PHY_PerceptionLevel::identified_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
     {
         pBestPerceptionLevel_ = &(**itPerception).Compute( knowledge );
         if( pBestPerceptionLevel_->IsBestLevel() )
@@ -1023,7 +1021,7 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const MT_V
     if( !CanPerceive() )
         return PHY_PerceptionLevel::notSeen_;
     const PHY_PerceptionLevel* pBestPerceptionLevel_ = &PHY_PerceptionLevel::notSeen_;
-    for( CIT_PerceptionVector itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+    for( auto itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
     {
         pBestPerceptionLevel_ = &(**itPerception).Compute( vPoint );
         if( pBestPerceptionLevel_->IsBestLevel() )

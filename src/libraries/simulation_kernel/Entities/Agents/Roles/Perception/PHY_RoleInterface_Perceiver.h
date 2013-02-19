@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceObject.h"
+#include "tools/Set.h"
 
 namespace client
 {
@@ -56,15 +57,9 @@ public:
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
     typedef T_SurfaceObjectMap::const_iterator                            CIT_SurfaceObjectMap;
 
-    typedef std::set< const PHY_RadarType* > T_RadarSet;
-    typedef T_RadarSet::const_iterator     CIT_RadarSet;
-
     typedef std::vector< const PHY_SensorTypeDisaster* > T_DisasterDetectors;
-    typedef T_DisasterDetectors::const_iterator        CIT_DisasterDetectors;
 
-    typedef std::map< const PHY_RadarClass*, T_RadarSet > T_RadarsPerClassMap;
-    typedef T_RadarsPerClassMap::const_iterator         CIT_RadarsPerClassMap;
-    //@}
+    typedef tools::Set< const PHY_RadarType* > T_RadarSet;
     //@}
 
 public:

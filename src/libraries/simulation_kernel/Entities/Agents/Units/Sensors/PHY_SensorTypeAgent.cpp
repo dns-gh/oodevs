@@ -415,7 +415,7 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
     const PHY_RoleInterface_Perceiver& targetPerceiver = target.GetRole< PHY_RoleInterface_Perceiver >();
 
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = targetPerceiver.GetSurfacesAgent();
-    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
         const std::string& sensorName = surface.GetSensorTypeName();
@@ -426,19 +426,17 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
     }
 
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
-    for( PHY_RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
+    for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
     {
         if( targetPerceiver.IsUsingActiveRadar( *itRadarClass->second ) == false )
             continue;
-
         const PHY_RoleInterface_Perceiver::T_RadarSet& radars = const_cast< PHY_RoleInterface_Perceiver& >( targetPerceiver ).GetRadars( *itRadarClass->second );
-        for( PHY_RoleInterface_Perceiver::CIT_RadarSet itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
+        for( auto itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
             const std::string& radarName = (*itRadar)->GetName();
-
-            for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
-            if( *it == radarName )
-                return false;
+            for( auto it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
+                if( *it == radarName )
+                    return false;
         }
     }
 

@@ -204,8 +204,12 @@ private:
     };
 
     typedef std::vector< PHY_Perception_ABC* > T_PerceptionVector;
-    typedef T_PerceptionVector::iterator IT_PerceptionVector;
-    typedef T_PerceptionVector::const_iterator CIT_PerceptionVector;
+    //@}
+
+public:
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_RadarClass*, T_RadarSet > T_RadarsPerClassMap;
     //@}
 
 private:
