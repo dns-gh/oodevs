@@ -84,7 +84,6 @@ namespace fire
             entity[ "knowledges" ] = 1242;
             entity[ "identifier" ] = 42;
             entity[ "data" ] = "data";
-            model[ "entities" ][ 43 ][ "components" ];
             mock::sequence s1, s2;
             MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing launchers" ).in( s1 );
             MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing dotations" ).in( s2 );
@@ -140,18 +139,6 @@ namespace fire
         std::size_t volume_1;
         std::size_t system_1, system_2;
         std::size_t invalid;
-    };
-
-    struct TargetFixture : ModuleFixture
-    {
-        TargetFixture()
-            : target( model[ "knowledges" ][ 1242 ][ "agents" ][ 51 ] )
-            , enemy ( core::Convert( &target ) )
-        {
-            target[ "components" ];
-        }
-        core::Model& target;
-        SWORD_Model* enemy;
     };
 }
 }

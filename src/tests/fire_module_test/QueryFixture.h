@@ -16,7 +16,19 @@ namespace
 {
     MOCK_FUNCTION( filter, 1, bool( const SWORD_Model* component ), filter )
 
-    struct QueryFixture : sword::fire::TargetFixture
+    struct TargetFixture : sword::fire::ModuleFixture
+    {
+        TargetFixture()
+            : target( model[ "knowledges" ][ 1242 ][ "agents" ][ 51 ] )
+            , enemy ( core::Convert( &target ) )
+        {
+            target[ "components" ];
+        }
+        core::Model& target;
+        SWORD_Model* enemy;
+    };
+
+    struct QueryFixture : TargetFixture
     {
         ~QueryFixture()
         {

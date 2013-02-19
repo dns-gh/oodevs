@@ -10,19 +10,19 @@
 #include "fire_module_test_pch.h"
 #include "QueryFixture.h"
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_firer_has_no_component, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_firer_has_no_component, TargetFixture )
 {
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, &filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_component_is_filtered_out, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_component_is_filtered_out, TargetFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( false );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, &filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_component_has_no_weapons, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_component_has_no_weapons, TargetFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
@@ -30,7 +30,7 @@ BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_component_has_no_weapons, swor
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, &filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_weapon_type_does_not_exist, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_weapon_type_does_not_exist, TargetFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
@@ -40,7 +40,7 @@ BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_weapon_type_does_not_exist, sw
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, &filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_enemy_has_no_component, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_enemy_has_no_component, TargetFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );

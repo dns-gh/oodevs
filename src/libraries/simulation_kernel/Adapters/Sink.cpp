@@ -329,6 +329,8 @@ namespace
     void UpdateAgentKnowledge( core::Model& entity, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
     {
         knowledge[ "data" ].SetUserData( agent );
+        knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
+        knowledge[ "dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
         const core::Model& components2 = entity[ "components" ];
         const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();

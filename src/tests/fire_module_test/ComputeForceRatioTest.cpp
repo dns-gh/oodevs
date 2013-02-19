@@ -8,20 +8,21 @@
 // *****************************************************************************
 
 #include "fire_module_test_pch.h"
+#include "QueryFixture.h"
 
 namespace
 {
     MOCK_FUNCTION( callback, 2, bool( const SWORD_Model*, void* ), callback )
 }
 
-BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_one_when_no_enemy, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_one_when_no_enemy, TargetFixture )
 {
     model[ "enemies" ][ 1242 ];
     model[ "friends" ][ 1242 ];
     BOOST_CHECK_EQUAL( 1, ComputeForceRatio( core::Convert( &model ), firer, callback, 0 ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_one_when_enemy_filtered_out, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_one_when_enemy_filtered_out, TargetFixture )
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ];
@@ -31,7 +32,7 @@ BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_one_when_enemy_filtered_out
     BOOST_CHECK_EQUAL( 1, ComputeForceRatio( core::Convert( &model ), firer, callback, &userData ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_zero_when_no_friend, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_zero_when_no_friend, TargetFixture )
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ];
@@ -42,7 +43,7 @@ BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_zero_when_no_friend, sword:
     BOOST_CHECK_EQUAL( 0, ComputeForceRatio( core::Convert( &model ), firer, callback, &userData ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_some_ratio, sword::fire::TargetFixture )
+BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_some_ratio, TargetFixture )
 {
     model[ "enemies" ][ 1242 ].AddElement() = 51;
     model[ "friends" ][ 1242 ].AddElement() = 52;

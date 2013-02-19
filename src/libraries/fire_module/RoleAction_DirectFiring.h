@@ -44,7 +44,7 @@ public:
     void FirePopulationSuspended( const wrapper::View& entity, const wrapper::View& target ) const;
 
     int  FirePion( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, const wrapper::View& parameters, bool mustReport ) const;
-    void FirePionSuspended( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
+    void FirePionSuspended( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const;
     //int  IlluminatePion         ( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
     //void IlluminatePionSuspended( boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
 

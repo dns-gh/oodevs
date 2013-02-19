@@ -8,13 +8,14 @@
 // *****************************************************************************
 
 #include "fire_module_test_pch.h"
+#include "QueryFixture.h"
 #include <boost/bind/apply.hpp>
 
 namespace
 {
     MOCK_FUNCTION( callback, 2, void( const SWORD_Model*, void* ), callback )
 
-    struct Fixture : sword::fire::TargetFixture
+    struct Fixture : TargetFixture
     {
         Fixture()
         {

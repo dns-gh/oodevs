@@ -159,9 +159,7 @@ namespace
     }
     DEFINE_HOOK( GetDistance, 2, double, ( const SWORD_Model* firer, const SWORD_Model* target ) )
     {
-        const MIL_AgentPion& pion = GET_PION( firer );
-        const MIL_Agent_ABC& knowledge = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
-        return pion.Distance( knowledge );
+        return GET_PION( firer ).Distance( GET_PION( target ) );
     }
     DEFINE_HOOK( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, int dotation, double rPh ) )
     {
@@ -171,8 +169,7 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyPh hook implementation : " << dotation );
             return false;
         }
-        const MIL_Agent_ABC& enemy = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
-        const double protection = enemy.GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( *category );
+        const double protection = GET_PION( target ).GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( *category );
         return GET_ROLE( firer, PHY_RoleInterface_HumanFactors ).ModifyPH( rPh * protection );
     }
     DEFINE_HOOK( GetPhModificator, 3, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) )
@@ -183,9 +180,8 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown launcher type in GetPhModificator hook implementation : " << launcher );
             return 0;
         }
-        const MIL_Agent_ABC& enemy = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
         const PHY_RoleInterface_Posture& firerPosture  = GET_ROLE( firer, PHY_RoleInterface_Posture );
-        const PHY_RoleInterface_Posture& targetPosture = enemy.GetRole< PHY_RoleInterface_Posture >();
+        const PHY_RoleInterface_Posture& targetPosture = GET_PION( target ).GetRole< PHY_RoleInterface_Posture >();
         return type->GetPHModificator( firerPosture, targetPosture ) * firerPosture.GetElongationFactor();
     }
     DEFINE_HOOK( GetPhModificator2, 1, double, ( const char* launcher ) )

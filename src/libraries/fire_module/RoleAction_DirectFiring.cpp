@@ -117,13 +117,14 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
             return eTemporarilyBlocked;
         return eNoCapacity;
     }
-    const wrapper::View& targets = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ][ "components" ];
+    const wrapper::View& enemy = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ];
+    const wrapper::View& targets = enemy[ "components" ];
     T_Components compTargets = GetComposantesAbleToBeFired( targets, parameters, nNbrWeaponsUsable );
     if( compTargets.empty() )
         return eEnemyDestroyed;
-    NotifyAttacking( entity, target, mustReport, false );
+    NotifyAttacking( entity, enemy, mustReport, false );
     assert( compTargets.size() == nNbrWeaponsUsable );
-    data.Fire( target, compTargets );
+    data.Fire( enemy, compTargets );
     return eRunning;
 }
 
@@ -131,10 +132,13 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
 // Name: RoleAction_DirectFiring::FirePionSuspended
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void RoleAction_DirectFiring::FirePionSuspended( const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const
+void RoleAction_DirectFiring::FirePionSuspended( const wrapper::View& model, const wrapper::View& entity, const wrapper::View& target, bool mustReport ) const
 {
     if( GET_HOOK( IsAgentKnowledgeValid )( target ) )
-        NotifyAttacking( entity, target, mustReport, true );
+    {
+        const wrapper::View& enemy = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ];
+        NotifyAttacking( entity, enemy, mustReport, true );
+    }
 }
 
 //// -----------------------------------------------------------------------------

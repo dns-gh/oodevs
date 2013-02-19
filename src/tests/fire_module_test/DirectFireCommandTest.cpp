@@ -36,19 +36,20 @@ namespace
     struct FireFixture : sword::fire::ModuleFixture
     {
         FireFixture()
-            : target ( model[ "entities" ][ 43 ] )
-            , enemy  ( core::Convert( &target ) )
-            , command( 0u )
+            : knowledge( model[ "knowledges" ][ 1242 ][ "agents" ][ 51 ] )
+            , target   ( model[ "entities" ][ 43 ] )
+            , enemy    ( core::Convert( &target ) )
+            , command ( 0u )
         {
-            target[ "components" ];
-            target[ "identifier" ] = 43;
+            knowledge[ "dead" ] = false;
+            knowledge[ "identifier" ] = 43;
             target[ "data" ] = "data";
-            target[ "dead" ] = false;
+            target[ "components" ];
             ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
             command = StartCommand( "direct fire",
                                     core::MakeModel( "action", 117 )
                                                    ( "identifier", 42 )
-                                                   ( "enemy", 43 )
+                                                   ( "enemy", 51 )
                                                    ( "percentage", 0.07 )
                                                    ( "mode", 0 )
                                                    ( "type", 0 )
@@ -69,6 +70,7 @@ namespace
                                                                             ( "action", 117 )
                                                                             ( "code", static_cast< int >( code ) ) );
         }
+        core::Model& knowledge;
         core::Model& target;
         SWORD_Model* enemy;
         std::size_t command;
@@ -77,7 +79,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_impossible_if_target_knowledge_is_invalid, FireFixture )
 {
-    MOCK_EXPECT( IsAgentKnowledgeValid ).once().with( enemy ).returns( false );
+    MOCK_EXPECT( IsAgentKnowledgeValid ).once().with( core::Convert( &knowledge ) ).returns( false );
     ExpectCallback( sword::fire::RoleAction_DirectFiring::eImpossible );
     ExecuteCommands();
 }
@@ -95,7 +97,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_is_dead, ValidFireFixture )
 {
-    target[ "dead" ] = true;
+    knowledge[ "dead" ] = true;
     ExpectCallback( sword::fire::RoleAction_DirectFiring::eEnemyDestroyed );
     ExecuteCommands();
 }
@@ -288,7 +290,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     const std::size_t command = StartCommand( "direct fire",
                                               core::MakeModel( "action", 117 )
                                                               ( "identifier", 42 )
-                                                              ( "enemy", 43 )
+                                                              ( "enemy", 51 )
                                                               ( "percentage", 0.07 )
                                                               ( "mode", 0 )
                                                               ( "type", 0 )
