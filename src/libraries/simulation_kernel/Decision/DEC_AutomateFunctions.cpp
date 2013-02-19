@@ -75,7 +75,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomates( const MIL_
     std::vector< DEC_Decision_ABC* > result;
     const MIL_Automate::T_AutomateVector& automates = callerAutomate.GetAutomates();
     result.reserve( automates.size() );
-    for( MIL_Automate::CIT_AutomateVector it = automates.begin(); it != automates.end(); ++it )
+    for( auto it = automates.begin(); it != automates.end(); ++it )
     {
         if( !(*it ) )
             throw MASA_EXCEPTION( "Invalid automat in GetAutomates" );
@@ -104,7 +104,7 @@ namespace
         validPions.reserve( pions.size() );
         MIL_AgentPion* pionPC = callerAutomate.GetPionPC();
         bool checkPC = !withPC && pionPC;
-        for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+        for( auto it = pions.begin(); it != pions.end(); ++it )
         {
             MIL_AgentPion* pCurPion = *it;
             if( !pCurPion )
@@ -119,7 +119,7 @@ namespace
         std::vector< MIL_AgentPion* > pions;
         GetValidPions( callerAutomate, pions, false );
         result.reserve( pions.size() );
-        for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+        for( auto it = pions.begin(); it != pions.end(); ++it )
         {
             MIL_AgentPion* pCurPion = *it;
             if( communicationFilter && !pCurPion->GetRole< PHY_RolePion_Communications >().CanReceive() )
@@ -256,7 +256,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL
 {
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
     std::vector< DEC_Decision_ABC* > result;
-    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+    for( auto it = pions.begin(); it != pions.end(); ++it )
     {
         if( ! (*it) )
             throw MASA_EXCEPTION( "Invalid pion in GetPionsMelee" );
@@ -274,7 +274,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsGenie( const MIL
 {
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
     std::vector< DEC_Decision_ABC* > result;
-    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+    for( auto it = pions.begin(); it != pions.end(); ++it )
     {
         if( ! (*it) )
             throw MASA_EXCEPTION( "Invalid pion in GetPionsMelee" );

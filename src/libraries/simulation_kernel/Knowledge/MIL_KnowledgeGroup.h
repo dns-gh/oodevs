@@ -48,8 +48,6 @@ class KnowledgesVisitor_ABC;
 namespace sword
 {
     class MissionParameters;
-    class KnowledgeGroupCreation;
-    class KnowledgeGroupUpdate;
     class KnowledgeGroupCreationRequest;
     class KnowledgeMagicAction;
 }
@@ -58,19 +56,14 @@ namespace sword
 // @class  MIL_KnowledgeGroup
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_KnowledgeGroup : private boost::noncopyable
-    , public boost::enable_shared_from_this< MIL_KnowledgeGroup >
+class MIL_KnowledgeGroup : public boost::enable_shared_from_this< MIL_KnowledgeGroup >
+                         , private boost::noncopyable
 {
 public:
     //! @name Types
     //@{
-    typedef std::vector< MIL_Automate* >       T_AutomateVector;
-    typedef T_AutomateVector::iterator        IT_AutomateVector;
-    typedef T_AutomateVector::const_iterator CIT_AutomateVector;
-
+    typedef std::vector< MIL_Automate* > T_AutomateVector;
     typedef std::vector< boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupVector;
-    typedef T_KnowledgeGroupVector::iterator         IT_KnowledgeGroupVector;
-    typedef T_KnowledgeGroupVector::const_iterator  CIT_KnowledgeGroupVector;
     //@}
 
 public:
@@ -111,7 +104,7 @@ public:
     void UpdateKnowledges(int currentTimeStep);
     void UpdateObjectKnowledges(int currentTimeStep);
     void CleanKnowledges ();
-    bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
+    bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const;
     bool IsPerceptionDistanceHacked( const MIL_Object_ABC& objectKnown ) const;
     bool IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const;
@@ -122,32 +115,32 @@ public:
     bool operator==( const MIL_KnowledgeGroup& rhs ) const;
     bool operator!=( const MIL_KnowledgeGroup& rhs ) const;
 
-    void OnReceiveKnowledgeGroupCreation   ( const sword::KnowledgeGroupCreationRequest& message );
-    void OnReceiveKnowledgeGroupUpdate     ( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveKnowledgeGroupCreation( const sword::KnowledgeGroupCreationRequest& message );
+    void OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
     void Merge( const MIL_KnowledgeGroup& subGroup );
     //@}
 
     //! @name Accessors
     //@{
-          unsigned int                            GetId       () const;
-    const MIL_KnowledgeGroupType&                 GetType     () const;
-          MIL_Army_ABC&                           GetArmy     () const;
-    const T_AutomateVector&                       GetAutomates() const;
+    unsigned int GetId () const;
+    const MIL_KnowledgeGroupType& GetType() const;
+    MIL_Army_ABC& GetArmy() const;
+    const T_AutomateVector& GetAutomates() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
     DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObjectByObjectID( unsigned int ) const;
     // LTO begin
-    const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
-          boost::shared_ptr< MIL_KnowledgeGroup > GetParent() const;
-          double                                GetTimeToDiffuseToKnowledgeGroup() const;
-          bool                                    IsEnabled() const;
-          void                                    SetParent( const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
+    const T_KnowledgeGroupVector& GetKnowledgeGroups() const;
+    boost::shared_ptr< MIL_KnowledgeGroup > GetParent() const;
+    double GetTimeToDiffuseToKnowledgeGroup() const;
+    bool IsEnabled() const;
+    void SetParent( const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     // LTO end
-          bool IsJammed() const;
-          void Accept( KnowledgesVisitor_ABC& visitor ) const;
+    bool IsJammed() const;
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Network
@@ -182,10 +175,10 @@ public:
 private:
     //! @name Helpers
     //@{
-    bool OnReceiveKnowledgeGroupEnable        ( const sword::MissionParameters& message );
+    bool OnReceiveKnowledgeGroupEnable( const sword::MissionParameters& message );
     bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
-    bool OnReceiveKnowledgeGroupSetType       ( const sword::MissionParameters& message );
-    bool OnReceiveKnowledgeGroupAddKnowledge  ( const sword::MissionParameters& message );
+    bool OnReceiveKnowledgeGroupSetType( const sword::MissionParameters& message );
+    bool OnReceiveKnowledgeGroupAddKnowledge( const sword::MissionParameters& message );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );
@@ -208,20 +201,20 @@ private:
     //! @name Member data
     //@{
     const MIL_KnowledgeGroupType* type_;
-    unsigned int                  id_;
-    std::string                   name_;
-    MIL_Army_ABC*           army_;
+    unsigned int id_;
+    std::string name_;
+    MIL_Army_ABC* army_;
     boost::shared_ptr< MIL_KnowledgeGroup > parent_;
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
-    T_AutomateVector        automates_;
+    T_AutomateVector automates_;
     std::set< unsigned int > additionalPerceptions_;
-    T_KnowledgeGroupVector  knowledgeGroups_; // LTO
-    double                  timeToDiffuse_; // LTO
-    bool                    isActivated_; // LTO
-    bool                    hasBeenUpdated_;
-    bool                    isJammed_;
-    bool                    createdByJamming_;
-    const MIL_Agent_ABC*    jammedPion_;
+    T_KnowledgeGroupVector knowledgeGroups_; // LTO
+    double timeToDiffuse_; // LTO
+    bool isActivated_; // LTO
+    bool hasBeenUpdated_;
+    bool isJammed_;
+    bool createdByJamming_;
+    const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
     //@}
 };

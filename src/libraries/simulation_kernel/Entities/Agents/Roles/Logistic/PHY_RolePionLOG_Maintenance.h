@@ -106,20 +106,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::list< PHY_MaintenanceConsign_ABC* >   T_MaintenanceConsignList;
-    typedef T_MaintenanceConsignList::iterator        IT_MaintenanceConsignList;
-    typedef T_MaintenanceConsignList::const_iterator CIT_MaintenanceConsignList;
-
+    typedef std::list< PHY_MaintenanceConsign_ABC* > T_MaintenanceConsignList;
     typedef std::vector< std::pair< const MIL_Automate*, T_MaintenanceConsignList > > T_MaintenanceConsigns;
-    typedef T_MaintenanceConsigns::iterator                                          IT_MaintenanceConsigns;
-    typedef T_MaintenanceConsigns::const_iterator                                   CIT_MaintenanceConsigns;
-
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
-    typedef T_AutomateVector::const_iterator CIT_AutomateVector;
-
-    typedef std::vector< const PHY_ComposanteTypePion* >  T_MaintenancePriorityVector;
-    typedef T_MaintenancePriorityVector::iterator        IT_MaintenancePriorityVector;
-    typedef T_MaintenancePriorityVector::const_iterator CIT_MaintenancePriorityVector;
+    typedef std::vector< const PHY_ComposanteTypePion* > T_MaintenancePriorityVector;
     //@}
 
 private:

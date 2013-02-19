@@ -84,10 +84,8 @@ namespace boost
     namespace serialization
     {
         typedef std::vector< const MIL_Automate* > T_AutomateVector; // $$$$ _RC_ LGY 2010-07-15: à remanier
-        typedef T_AutomateVector::const_iterator CIT_AutomateVector;
 
         typedef std::vector< const PHY_ComposanteTypePion* >  T_MaintenancePriorityVector;
-        typedef T_MaintenancePriorityVector::const_iterator CIT_MaintenancePriorityVector;
 
         // =============================================================================
         // T_MaintenancePriorityVector
@@ -104,7 +102,7 @@ namespace boost
         {
             std::size_t size = vector.size();
             file << size;
-            for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
+            for ( auto it = vector.begin(); it != vector.end(); ++it )
             {
                 sword::EquipmentType id = (*it)->GetMosID();
                 int equipment = id.id();
@@ -143,7 +141,7 @@ namespace boost
         {
             std::size_t size = vector.size();
             file << size;
-            for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
+            for ( auto it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
         }
 
@@ -204,7 +202,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
          << nWorkRateWarningRCTick_;
     std::size_t size = consigns_.size();
     file << size;
-    for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
+    for ( auto it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;
 }
 
@@ -439,8 +437,8 @@ void PHY_RolePionLOG_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate&
 inline
 void PHY_RolePionLOG_Maintenance::InsertConsigns( const T_MaintenanceConsigns& oldConsigns )
 {
-    for ( CIT_MaintenanceConsigns it = oldConsigns.begin(); it != oldConsigns.end(); ++it )
-        for ( CIT_MaintenanceConsignList it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+    for ( auto it = oldConsigns.begin(); it != oldConsigns.end(); ++it )
+        for ( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             InsertConsign( **it2 );
 }
 
@@ -465,7 +463,7 @@ void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_AutomateVector& prio
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
     consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
-    for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
+    for ( auto it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MaintenanceConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MaintenanceConsignList() ) );
     tacticalPriorities_ = priorities;
@@ -489,7 +487,7 @@ PHY_RolePionLOG_Maintenance::T_MaintenancePriorityVector PHY_RolePionLOG_Mainten
 void PHY_RolePionLOG_Maintenance::ChangePriorities( const T_MaintenancePriorityVector& priorities )
 {
     T_MaintenanceConsigns oldConsigns = consigns_;
-    for ( IT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
+    for ( auto it = consigns_.begin(); it != consigns_.end(); ++it )
         it->second.clear();
     priorities_ = priorities;
     bHasChanged_ = true;
@@ -515,7 +513,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
 {
     if( !consign.HasValidComposanteState() )
         return;
-    IT_MaintenanceConsigns itTact = consigns_.begin();
+    auto itTact = consigns_.begin();
     for( const MIL_Automate* pAutomate = &consign.GetComposanteState().GetAutomate(); itTact != consigns_.end(); ++itTact )
         if( pAutomate == itTact->first ) // TODO || ( pAutomate->GetTC2() && pAutomate->GetTC2() == itTact->first ) )
             break;
@@ -525,7 +523,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsign( PHY_MaintenanceConsign_ABC& con
         itTact = consigns_.end() - 1;
         assert( itTact->first == 0 );
     }
-    IT_MaintenancePriorityVector itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetComposanteType() );
+    auto itPriorityLowerBound = std::find( priorities_.begin(), priorities_.end(), &consign.GetComposanteType() );
     if( itPriorityLowerBound == priorities_.end() )
         itTact->second.push_back( &consign );
     else
@@ -652,8 +650,8 @@ void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool /*bIsDead*/ )
 {
-    for ( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for ( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
+    for ( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+        for ( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if( (*itConsign)->Update() )
             {
                 delete *itConsign;
@@ -713,10 +711,10 @@ void PHY_RolePionLOG_Maintenance::SendFullState( unsigned int context ) const
     asn().set_chain( bSystemEnabled_ );
     asn().set_work_rate( pWorkRate_->GetAsnID() );
     asn().mutable_priorities();
-    for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
+    for( auto itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
         asn().mutable_priorities()->add_elem()->set_id( (**itPriority).GetMosID().id() );
     asn().mutable_tactical_priorities();
-    for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
+    for( auto itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
         asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
@@ -799,8 +797,8 @@ void PHY_RolePionLOG_Maintenance::NotifyComponentHasChanged()
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
 {
-    for( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+    for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+        for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             (*itConsign)->FinishSuccessfullyWithoutDelay();
 }
 
@@ -810,7 +808,7 @@ void PHY_RolePionLOG_Maintenance::FinishAllHandlingsSuccessfullyWithoutDelay()
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::ClearMaintenanceConsigns()
 {
-    for( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
-        for( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+    for( auto itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+        for( auto itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
             ( *itConsign )->ClearConsign();
 }

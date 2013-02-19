@@ -98,10 +98,7 @@ namespace boost
     namespace serialization
     {
         typedef std::vector< const MIL_Automate* > T_AutomateVector; // $$$$ _RC_ LGY 2010-07-15: à remanier
-        typedef T_AutomateVector::const_iterator CIT_AutomateVector;
-
-        typedef std::vector< const PHY_HumanWound* >      T_MedicalPriorityVector;
-        typedef T_MedicalPriorityVector::const_iterator CIT_MedicalPriorityVector;
+        typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
 
         // =============================================================================
         // T_MedicalPriorityVector
@@ -123,7 +120,7 @@ namespace boost
                     --size;
             }
             file << size;
-            for ( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
+            for ( auto it = vector.begin(); it != vector.end(); ++it )
             {
                 if( !*it )
                     continue;
@@ -161,7 +158,7 @@ namespace boost
         {
             std::size_t size = vector.size();
             file << size;
-            for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
+            for ( auto it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
         }
 
@@ -502,7 +499,7 @@ void PHY_RolePionLOG_Medical::ChangePriorities( const T_AutomateVector& prioriti
 {
     T_MedicalConsigns oldConsigns = consigns_;
     consigns_.clear(); consigns_.reserve( priorities.size() + 1 );
-    for ( CIT_AutomateVector it = priorities.begin(); it != priorities.end(); ++it )
+    for( auto it = priorities.begin(); it != priorities.end(); ++it )
         consigns_.push_back( std::make_pair( *it, T_MedicalConsignList() ) );
     consigns_.push_back( std::make_pair( (const MIL_Automate*)0, T_MedicalConsignList() ) );
     tacticalPriorities_ = priorities;
@@ -886,7 +883,7 @@ void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             asn().mutable_priorities()->add_elem( (**itPriority).GetAsnID() );
     if( !tacticalPriorities_.empty() )
-        for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
+        for( auto itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );

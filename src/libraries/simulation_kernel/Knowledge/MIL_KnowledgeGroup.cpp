@@ -763,12 +763,12 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_KnowledgeGroup::FindKnowledgeGroup( 
 {
     boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup;
 
-    for( CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+    for( auto itKG = GetKnowledgeGroups().begin(); itKG != GetKnowledgeGroups().end(); ++itKG )
         if( (*itKG)->GetId() == id )
             knowledgeGroup = *itKG;
     if( knowledgeGroup == 0 )
     {
-        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        for( auto itKG = GetKnowledgeGroups().begin(); itKG != GetKnowledgeGroups().end(); ++itKG )
          {
             knowledgeGroup = (*itKG)->FindKnowledgeGroup( id );
             if( knowledgeGroup )
@@ -973,7 +973,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupAddKnowledge( const sword::Missi
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception )
 {
     additionalPerceptions_.insert( agent.GetID() );
-    for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
+    for( auto itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *itKG;
         if ( pKnowledgeGroup.get() )
@@ -997,7 +997,7 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
     if( knowledgeObject )
         knowledgeObject->HackPerceptionLevel( &PHY_PerceptionLevel::FindPerceptionLevel( perception ) );
     else
-        for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
+        for( auto itKG = knowledgeGroups_.begin(); itKG != knowledgeGroups_.end(); ++itKG )
         {
             boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *itKG;
             if ( pKnowledgeGroup.get() )
@@ -1017,7 +1017,7 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception )
 {
     additionalPerceptions_.insert( population.GetID() );
-    for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
+    for( auto itKG = knowledgeGroups_.begin(); itKG != knowledgeGroups_.end(); ++itKG )
     {
         boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup = *itKG;
         if ( pKnowledgeGroup.get() )
@@ -1066,10 +1066,10 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
     if( ! IsJammed() )
     {
         const MIL_KnowledgeGroup::T_AutomateVector& automates = GetAutomates();
-        for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
+        for( auto itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
         {
             const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
-            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            for( auto itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
                 if( pion.GetRole< PHY_RolePion_Communications >().CanReceive() )
@@ -1106,10 +1106,10 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
     {
         // Synthèse de la perception des subordonnés
         // Ajout automatique de la connaissance de chaque subordonné
-        for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = GetAutomates().begin(); itAutomate != GetAutomates().end(); ++itAutomate )
+        for( auto itAutomate = GetAutomates().begin(); itAutomate != GetAutomates().end(); ++itAutomate )
         {
             const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
-            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            for( auto itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
                  // Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
@@ -1122,7 +1122,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO begin
         // acquisition des connaissances des groupes fils
-        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        for( auto itKG = GetKnowledgeGroups().begin(); itKG != GetKnowledgeGroups().end(); ++itKG )
         {
             const MIL_KnowledgeGroup& innerKg = **itKG;
             if( innerKg.IsEnabled() && IsEnabled() && !innerKg.IsJammed() )

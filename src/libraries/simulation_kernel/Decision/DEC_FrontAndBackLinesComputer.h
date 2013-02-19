@@ -35,16 +35,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< MIL_AgentPion* >  T_PionVector;
-    typedef T_PionVector::const_iterator CIT_PionVector;
-
-    typedef std::vector< MIL_Automate* >       T_AutomateVector;
-    typedef T_AutomateVector::const_iterator CIT_AutomateVector;
-    //@}
-
-private:
     //! @name Operations
     //@{
     void Compute();
@@ -54,8 +44,8 @@ private:
     //! @name Member data
     //@{
     const MIL_Automate& refAutomate_; // reference
-    T_PionVector pions_; //$$$ Factoriser
-    T_AutomateVector  automates_;
+    std::vector< MIL_AgentPion* > pions_; //$$$ Factoriser
+    std::vector< MIL_Automate* > automates_;
     unsigned int nLastTimeComputed_;
     MT_Droite backLineDroite_;
     MT_Droite frontLineDroite_;

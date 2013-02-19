@@ -237,7 +237,7 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
     T_CounterMap currentComposition;
     const MIL_Automate::T_PionVector& pions = automate.GetPions();
 
-    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+    for( auto it = pions.begin(); it != pions.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
 

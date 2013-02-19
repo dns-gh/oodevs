@@ -105,10 +105,10 @@ void MIL_AutomateOrderManager::StopAllMissions()
     MIL_OrderManager_ABC::StopAllMissions();
     if( automate_.IsEngaged() )
     {
-        for( MIL_Automate::CIT_AutomateVector it = automate_.GetAutomates().begin(); it != automate_.GetAutomates().end(); ++it )
+        for( auto it = automate_.GetAutomates().begin(); it != automate_.GetAutomates().end(); ++it )
             (**it).GetOrderManager().CancelMission();
 
-        for( MIL_Automate::CIT_PionVector it = automate_.GetPions().begin(); it != automate_.GetPions().end(); ++it )
+        for( auto it = automate_.GetPions().begin(); it != automate_.GetPions().end(); ++it )
             (**it).GetOrderManager().CancelMission();
     }
     // Destruction de toutes les missions préparées mais non données par l'automate à ses pions pendant la conduite

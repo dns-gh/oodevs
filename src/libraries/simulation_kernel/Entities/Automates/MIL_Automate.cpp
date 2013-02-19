@@ -1,11 +1,9 @@
 // *****************************************************************************
 //
-// $Created: JVT 2004-08-03 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Automates/MIL_Automate.cpp $
-// $Author: Nld $
-// $Modtime: 12/05/05 17:39 $
-// $Revision: 32 $
-// $Workfile: MIL_Automate.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 MASA Group
 //
 // *****************************************************************************
 
@@ -13,21 +11,22 @@
 #include "MIL_Automate.h"
 #include "MIL_AutomateType.h"
 #include "DEC_AutomateDecision.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/MIL_Formation.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
+#include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
@@ -36,9 +35,6 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-#include "Entities/Automates/MIL_DotationSupplyManager.h"
-#include "Entities/Automates/MIL_StockSupplyManager.h"
-#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
@@ -46,7 +42,6 @@
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_Color.h"
-#include "CheckPoints/SerializationTools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -498,7 +493,7 @@ void MIL_Automate::CleanKnowledges()
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Clean();
     // Pions (+ PC)
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         ( **itPion ).CleanKnowledges();
 }
 
@@ -542,7 +537,7 @@ void MIL_Automate::UpdateState()
     try
     {
         pDotationSupplyManager_->Update();
-        pStockSupplyManager_   ->Update();
+        pStockSupplyManager_->Update();
         for( auto it = pionsToDelete_.begin(); it != pionsToDelete_.end(); ++it )
             ( *it )->DeleteUnit();
         pionsToDelete_.clear();
@@ -772,7 +767,7 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 {
     barycenter.Reset();
     unsigned int nTmp = 0;
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
     {
         if( !( **itPion ).IsDead() )
         {
@@ -975,14 +970,14 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             else
             {
                 Surrender( *pSurrenderedToArmy );
-                for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+                for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
                     ( **itPion ).OnReceiveMagicSurrender();
             }
         }
         break;
     case sword::UnitMagicAction::cancel_surrender:
         CancelSurrender();
-        for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             ( **itPion ).OnReceiveMagicCancelSurrender();
         break;
     case sword::UnitMagicAction::change_extension:
@@ -1022,7 +1017,7 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
     if( !pPionPC_ )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+    for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         ( **itPion ).OnReceiveMagicActionMoveTo( ( **itPion ).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
     DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
     if( roleDec )
@@ -1433,7 +1428,7 @@ void MIL_Automate::RegisterAutomate( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
 {
-    IT_AutomateVector it = std::find( automates_.begin(), automates_.end(), &automate );
+    auto it = std::find( automates_.begin(), automates_.end(), &automate );
     assert( it != automates_.end() );
     automates_.erase( it );
 }
