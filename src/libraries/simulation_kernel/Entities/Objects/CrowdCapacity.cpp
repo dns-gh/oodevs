@@ -123,12 +123,11 @@ double CrowdCapacity::ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const
     double rMaxSpeed = std::numeric_limits< double >::max();
     if( type_ )
     {
-        std::set< const PHY_Volume* > volumes_;
         const PHY_RolePion_Composantes* role = entity.RetrieveRole< PHY_RolePion_Composantes >();
         if( role )
         {
-            role->GetVisibleVolumes( volumes_ );
-            for( auto it = volumes_.begin(); it != volumes_.end(); ++it )
+            auto volumes = role->GetVisibleVolumes();
+            for( auto it = volumes.begin(); it != volumes.end(); ++it )
                 rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), densityFactor_ * type_->GetDefaultFlowDensity(), **it ) );
         }
     }

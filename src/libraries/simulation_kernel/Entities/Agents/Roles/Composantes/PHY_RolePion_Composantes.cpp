@@ -172,7 +172,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
+            for(  auto it = map.begin(); it != map.end(); ++it )
             {
                 sword::EquipmentType id = it->first->GetMosID();
                 int equipment = id.id();
@@ -596,7 +596,7 @@ void PHY_RolePion_Composantes::Clean()
 {
     if( nNbrComposanteChanged_ > 0 )
     {
-        for( IT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+        for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
             it->second.bHasChanged_ = false;
         nNbrComposanteChanged_ = 0;
     }
@@ -743,17 +743,13 @@ const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_Sens
 // Name: PHY_RolePion_Composantes::GetVisibleVolumes
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetVisibleVolumes( T_ComposanteVolumeSet& volumes ) const
+PHY_RolePion_Composantes::T_ComposanteVolumes PHY_RolePion_Composantes::GetVisibleVolumes() const
 {
-    volumes.clear();
+    tools::Set< const PHY_Volume* > volumes;
     for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
-    {
-        const PHY_Volume& compTypeVolume = it->first->GetVolume();
-        const T_ComposanteTypeProperties& compProp = it->second;
-        if( !compProp.HasUsableComposantes() )
-            continue;
-        volumes.insert( &compTypeVolume );
-    }
+        if( it->second.HasUsableComposantes() )
+            volumes.insert( &it->first->GetVolume() );
+    return T_ComposanteVolumes( volumes.begin(), volumes.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -779,12 +775,12 @@ void PHY_RolePion_Composantes::DamageTransported( double rWeightToDamage, const 
     for( auto it = composantes.begin(); it != composantes.end() && rWeightToDamage > 0; ++it )
     {
         PHY_ComposantePion& composante = **it;
-        if( !bTransportOnlyLoadable || composante.CanBeLoaded() )
-            if( newState < composante.GetState() )
-            {
-                composante.ReinitializeState( newState );
-                rWeightToDamage -= composante.GetWeight();
-            }
+        if( ( !bTransportOnlyLoadable || composante.CanBeLoaded() )
+            && newState < composante.GetState() )
+        {
+            composante.ReinitializeState( newState );
+            rWeightToDamage -= composante.GetWeight();
+        }
     }
 }
 
@@ -1160,8 +1156,8 @@ void PHY_RolePion_Composantes::AddEquipmentDotation( client::UnitAttributes& msg
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) const
 {
-    for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
-        AddEquipmentDotation( msg, *itComposanteType->first, itComposanteType->second );
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+        AddEquipmentDotation( msg, *it->first, it->second );
     msg().set_raw_operational_state( static_cast< unsigned int >( rOperationalState_ * 100. ) );
     SendLoans( msg );
 }
@@ -1173,9 +1169,9 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
 void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( nNbrComposanteChanged_ > 0 )
-        for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
-            if( itComposanteType->second.bHasChanged_ )
-                AddEquipmentDotation( msg, *itComposanteType->first, itComposanteType->second );
+        for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+            if( it->second.bHasChanged_ )
+                AddEquipmentDotation( msg, *it->first, it->second );
     if( bOperationalStateChanged_ )
         msg().set_raw_operational_state( static_cast< unsigned int >( rOperationalState_ * 100. ) );
     if( bLoansChanged_ )

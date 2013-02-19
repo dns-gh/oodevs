@@ -68,12 +68,12 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& logLevel )
-    : pAssociatedAutomate_        ( 0 )
-    , pAssociatedFormation_       ( &formation )
-    , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
-    , pLogLevel_                  ( &logLevel )
-    , supplyConsigns_             ()
+    : pAssociatedAutomate_ ( 0 )
+    , pAssociatedFormation_( &formation )
+    , pLogisticHierarchy_  ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
+    , pLogLevel_           ( &logLevel )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -81,25 +81,27 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLe
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLevel& logLevel )
-    : pAssociatedAutomate_        ( &automate )
-    , pAssociatedFormation_       ( 0 )
-    , pLogLevel_                  ( &logLevel )
-    , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
-    , supplyConsigns_             ()
+    : pAssociatedAutomate_ ( &automate )
+    , pAssociatedFormation_( 0 )
+    , pLogLevel_           ( &logLevel )
+    , pLogisticHierarchy_  ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
 {
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG constructor
 // Created: AHC 2010-09-28
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
-    : pAssociatedAutomate_        ( 0 )
-    , pAssociatedFormation_       ( 0 )
-    , pLogLevel_                  ( &level )
-    , pLogisticHierarchy_         ( 0 )
-    , supplyConsigns_             ()
+    : pAssociatedAutomate_ ( 0 )
+    , pAssociatedFormation_( 0 )
+    , pLogLevel_           ( &level )
+    , pLogisticHierarchy_  ( 0 )
 {
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG destructor
 // Created: NLD 2004-12-21
@@ -108,10 +110,6 @@ MIL_AutomateLOG::~MIL_AutomateLOG()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHEKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BrainLogistic::Visit

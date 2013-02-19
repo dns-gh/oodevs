@@ -106,15 +106,15 @@ void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Populat
 double DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
 {
     assert( pAgentColliding_ );
-    T_ComposanteVolumeSet volumes;
-    pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes );
     double rMaxSpeed = std::numeric_limits< double >::max();
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
-        for( auto itVolume = volumes.begin(); itVolume != volumes.end(); ++itVolume )
+    auto volumes = pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes();
+    for( auto itVolume = volumes.begin(); itVolume != volumes.end(); ++itVolume )
+    {
+        for( auto it = flows_.begin(); it != flows_.end(); ++it )
             rMaxSpeed = std::min( rMaxSpeed, (*it)->GetPionMaxSpeed( **itVolume ) );
-    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        for( auto itVolume = volumes.begin(); itVolume != volumes.end(); ++itVolume )
+        for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
             rMaxSpeed = std::min( rMaxSpeed, (*it)->GetPionMaxSpeed( **itVolume ) );
+    }
     return rMaxSpeed;
 }
 

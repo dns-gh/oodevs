@@ -761,16 +761,15 @@ void DEC_Knowledge_Agent::KillOfficers()
 const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
-    double rSignificantVolumeFactor     = 0.;
-    const T_ComposanteVolumeSet& visionVolumes = dataDetection_.GetVisionVolumes();
-    for( auto it = visionVolumes.begin(); it != visionVolumes.end(); ++it )
+    double rSignificantVolumeFactor = 0;
+    const auto& volumes = dataDetection_.GetVisibleVolumes();
+    for( auto it = volumes.begin(); it != volumes.end(); ++it )
     {
-        const PHY_Volume& volume = **it;
-        double rVolumeFactor = sensorType.GetFactor( volume );
+        double rVolumeFactor = sensorType.GetFactor( **it );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
-            pSignificantVolume = &volume;
-            rSignificantVolumeFactor =  rVolumeFactor;
+            pSignificantVolume = &**it;
+            rSignificantVolumeFactor = rVolumeFactor;
         }
     }
     return pSignificantVolume;

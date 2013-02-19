@@ -52,6 +52,8 @@ public:
     typedef PHY_RoleInterface_Composantes RoleInterface;
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
     typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
+
+    typedef std::vector< const PHY_Volume* > T_ComposanteVolumes;
     //@}
 
 public:
@@ -100,7 +102,7 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_Volume*         GetSignificantVolume     ( const PHY_SensorTypeAgent_ABC& sensorType ) const = 0;
-    virtual       void                GetVisibleVolumes        ( T_ComposanteVolumeSet& volumes         ) const = 0;
+    virtual       T_ComposanteVolumes GetVisibleVolumes      () const = 0;
     virtual       void                BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const = 0;
     virtual const PHY_Composante_ABC* GetMajorComposante       () const = 0;
     virtual       double              GetOperationalState      () const = 0;

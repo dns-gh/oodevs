@@ -209,7 +209,7 @@ public:
     //! @name Perception / Knowledge
     //@{
     virtual const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent_ABC& sensorType ) const;
-    virtual void GetVisibleVolumes( T_ComposanteVolumeSet& volumes ) const;
+    virtual T_ComposanteVolumes GetVisibleVolumes() const;
     virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion* GetMajorComposante() const;
     virtual double GetMajorComponentWeight( bool ) const;
@@ -292,8 +292,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::iterator                                        IT_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                                 CIT_ComposanteTypeMap;
     //@}
 
 protected:

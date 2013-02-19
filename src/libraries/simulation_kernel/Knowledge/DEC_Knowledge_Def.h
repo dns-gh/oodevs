@@ -17,7 +17,6 @@ class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
 class DEC_ResourceNetwork;
 class MIL_UrbanObject_ABC;
-class PHY_Volume;
 class DEC_Knowledge_AgentComposante;
 
 //! @name Types
@@ -30,7 +29,6 @@ typedef std::vector< const MIL_UrbanObject_ABC* >                T_UrbanObjectVe
 typedef std::vector< boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectDiaIDVector;
 typedef std::vector< DEC_Knowledge_PopulationCollision* >        T_KnowledgePopulationCollisionVector;
 typedef std::vector< unsigned int >                              T_KnowledgePopulationDiaIDVector;
-typedef std::set< const PHY_Volume* >                            T_ComposanteVolumeSet;
 typedef std::vector< DEC_Knowledge_AgentComposante >             T_KnowledgeComposanteVector;
 typedef std::vector< DEC_Knowledge_Population* >                 T_KnowledgePopulationVector;
 typedef std::vector< boost::shared_ptr< DEC_ResourceNetwork > >  T_ResourceNetworkVector;

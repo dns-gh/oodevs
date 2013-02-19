@@ -38,7 +38,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( NotifyComposanteWaitingForMaintenance, 1 );
     MOCK_METHOD( NotifyComposanteBackFromMaintenance, 1 );
     MOCK_METHOD( GetSignificantVolume, 1 );
-    MOCK_METHOD( GetVisibleVolumes, 1 );
+    MOCK_METHOD( GetVisibleVolumes, 0 );
     MOCK_METHOD( BuildKnowledgeComposantes, 1 );
     MOCK_METHOD( GetMajorComposante, 0 );
     MOCK_METHOD( GetOperationalState, 0 );

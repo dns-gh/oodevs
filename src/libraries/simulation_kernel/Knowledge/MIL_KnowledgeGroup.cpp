@@ -703,7 +703,7 @@ void MIL_KnowledgeGroup::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_Kn
 {
     assert( std::find( knowledgeGroups_.begin(), knowledgeGroups_.end(), knowledgeGroup ) == knowledgeGroups_.end() );
     knowledgeGroups_.push_back( knowledgeGroup );
-    for( std::set< unsigned int >::const_iterator it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
+    for( auto it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
         knowledgeGroup->additionalPerceptions_.insert( *it ); 
 }
 
@@ -1325,7 +1325,7 @@ namespace
 void MIL_KnowledgeGroup::AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, TER_Object_ABC::T_ObjectVector& perceivableObjects, TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& perceivablePopulationDensity, TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivablePopulationFlow ) const
 {
     PopulationElementPerceptionVisitor populationElementVisitor( perceivablePopulationDensity, perceivablePopulationFlow ); // $$$$ RC LDC Population concentration and flow should be merged - need refactor TER_Populationconcentration_ABC etc.
-    for( std::set< unsigned int >::const_iterator it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
+    for( auto it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
     {
         unsigned int identifier = *it;
         MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( identifier );

@@ -90,7 +90,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
         file >> nID;
         const PHY_Volume* volume = PHY_Volume::FindVolume( nID );
         if( volume )
-            visionVolumes_.insert( volume );
+            visionVolumes_.push_back( volume );
     }
     file >> nID;
     pLastPosture_ = PHY_Posture::FindPosture( nID );
@@ -264,7 +264,7 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
     pLastPosture_ = &data.GetLastPosture();
     pCurrentPosture_ = &data.GetCurrentPosture();
     rPostureCompletionPercentage_ = data.GetPostureCompletionPercentage();
-    visionVolumes_ = data.GetVisionVolumes();
+    visionVolumes_ = data.GetVisibleVolumes();
     nTimeLastUpdate_ =  data.GetTimeLastUpdate();
 }
 
@@ -458,10 +458,10 @@ double DEC_Knowledge_AgentDataDetection::GetPostureCompletionPercentage() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataDetection::GetVisionVolumes
+// Name: DEC_Knowledge_AgentDataDetection::GetVisibleVolumes
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-const T_ComposanteVolumeSet& DEC_Knowledge_AgentDataDetection::GetVisionVolumes() const
+const DEC_Knowledge_AgentDataDetection::T_ComposanteVolumes& DEC_Knowledge_AgentDataDetection::GetVisibleVolumes() const
 {
     return visionVolumes_;
 }

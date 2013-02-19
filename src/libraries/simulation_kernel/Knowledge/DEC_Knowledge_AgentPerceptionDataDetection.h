@@ -20,12 +20,19 @@ class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 class PHY_Posture;
 class MIL_Army_ABC;
+class PHY_Volume;
 
 // =============================================================================
 // Created: NLD 2004-03-11
 // =============================================================================
 class DEC_Knowledge_AgentPerceptionDataDetection : private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::vector< const PHY_Volume* > T_ComposanteVolumes;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,7 +61,7 @@ public:
     const MT_Vector2D& GetDirection() const;
     double GetSpeed() const;
     double GetAltitude() const;
-    const T_ComposanteVolumeSet& GetVisionVolumes() const;
+    const T_ComposanteVolumes& GetVisibleVolumes() const;
     const PHY_Posture& GetLastPosture() const;
     const PHY_Posture& GetCurrentPosture() const;
     double GetPostureCompletionPercentage() const;
@@ -77,7 +84,7 @@ private:
     double rPopulationDensity_;
     const MIL_Army_ABC* pArmySurrenderedTo_;
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
-    T_ComposanteVolumeSet visionVolumes_;
+    T_ComposanteVolumes visionVolumes_;
     const PHY_Posture* pLastPosture_;
     const PHY_Posture* pCurrentPosture_;
     double rPostureCompletionPercentage_;

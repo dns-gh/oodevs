@@ -84,7 +84,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
         file >> nID;
         const PHY_Volume* volume = PHY_Volume::FindVolume( nID );
         if( volume )
-            visionVolumes_.insert( volume );
+            visionVolumes_.push_back( volume );
     }
     // Déserialisation des postures ( données statiques )
     file >> nID;
@@ -140,7 +140,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Prepare( const MIL_Agent_ABC& a
     const PHY_RoleInterface_Location& roleLocation = agentPerceived.GetRole< PHY_RoleInterface_Location >();
     vPosition_ = roleLocation.GetPosition();
     rAltitude_ = roleLocation.GetAltitude();
-    agentPerceived.GetRole< PHY_RoleInterface_Composantes >().GetVisibleVolumes( visionVolumes_ );
+    visionVolumes_ = agentPerceived.GetRole< PHY_RoleInterface_Composantes >().GetVisibleVolumes();
     const PHY_RoleInterface_Posture& rolePosture = agentPerceived.GetRole< PHY_RoleInterface_Posture >();
     pLastPosture_ = &rolePosture.GetLastPosture   ();
     pCurrentPosture_ = &rolePosture.GetCurrentPosture();
@@ -256,10 +256,10 @@ double DEC_Knowledge_AgentPerceptionDataDetection::GetPostureCompletionPercentag
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetVisionVolumes
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetVisibleVolumes
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-const T_ComposanteVolumeSet& DEC_Knowledge_AgentPerceptionDataDetection::GetVisionVolumes() const
+const DEC_Knowledge_AgentPerceptionDataDetection::T_ComposanteVolumes& DEC_Knowledge_AgentPerceptionDataDetection::GetVisibleVolumes() const
 {
     return visionVolumes_;
 }
