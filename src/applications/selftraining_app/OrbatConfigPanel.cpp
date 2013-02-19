@@ -156,6 +156,7 @@ void OrbatConfigPanel::ClearSelection()
         delete sideBox_;
         sideBox_ = 0;
     }
+    currentExercise_.clear();
     sideCheckBox_.clear();
     noSideLabel_->setVisible( true );
     noSideObjectsLabel_->hide();
