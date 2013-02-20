@@ -468,6 +468,7 @@ namespace
     {
         entity[ "is-deployed" ] = ! pion.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
         entity[ "is-prisoner" ] = pion.GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner();
+        entity[ "is-surrendered" ] = pion.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered();
         entity[ "is-transported" ] = pion.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
         entity[ "is-dead" ] = pion.IsDead();
         entity[ "is-underground" ] = pion.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground();

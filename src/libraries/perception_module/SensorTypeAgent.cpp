@@ -367,7 +367,9 @@ double SensorTypeAgent::GetTargetFactor( const wrapper::View& target ) const
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );
 
-    double rModifier = postureTargetFactors_[ nOldPostureIdx ] + GET_HOOK( GetPostureCompletionPercentage )( target ) * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+    double rModifier = 1.;
+    if( !target[ "is-surrendered" ] )
+        rModifier = postureTargetFactors_[ nOldPostureIdx ] + GET_HOOK( GetPostureCompletionPercentage )( target ) * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
     return rModifier * GetPopulationFactor( GET_HOOK( GetCollidingPopulationDensity )( target ) );
 }
 

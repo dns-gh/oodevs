@@ -20,6 +20,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
                                                    ( "movement/position/x", 5 )
                                                    ( "movement/position/y", 5 )
                                                    ( "is-dead", false )
+                                                   ( "is-surrendered", false )
                                                    ( "identifier", 1337u )
                                                    ( "is-civilian", false );
     const SWORD_Model* perceiver = core::Convert( &entity );
