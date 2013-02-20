@@ -230,11 +230,14 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
     {
         const kernel::Usages_ABC& usage = physicalAttribute.GetUsages();
         unsigned int proportion = usage.Find( "Logement" );
-        if( proportion > 0 ) pFeature->SetField( "HOUSING", static_cast< float >( proportion ) / 100.f );
+        if( proportion > 0 )
+            pFeature->SetField( "HOUSING", static_cast< float >( proportion ) / 100.f );
         proportion = usage.Find( "Loisir" );
-        if( proportion > 0 ) pFeature->SetField( "LEISURE", static_cast< float >( proportion ) / 100.f );
+        if( proportion > 0 )
+            pFeature->SetField( "LEISURE", static_cast< float >( proportion ) / 100.f );
         proportion = usage.Find( "Travail" );
-        if( proportion > 0 ) pFeature->SetField( "WORK", static_cast< float >( proportion ) / 100.f );
+        if( proportion > 0 )
+            pFeature->SetField( "WORK", static_cast< float >( proportion ) / 100.f );
     }
     // Resource network
     {
