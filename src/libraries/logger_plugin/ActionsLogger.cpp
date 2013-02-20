@@ -71,7 +71,13 @@ ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatch
 // -----------------------------------------------------------------------------
 ActionsLogger::~ActionsLogger()
 {
-    // NOTHING
+    try
+    {
+        Commit();
+    }
+    catch( ... )
+    {
+    }
 }
 
 // -----------------------------------------------------------------------------
