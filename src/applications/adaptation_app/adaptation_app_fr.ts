@@ -2659,20 +2659,20 @@ PNG (*.png)</translation>
         <translation>Prévisualisation</translation>
     </message>
     <message>
-        <source>Help</source>
-        <translation>Aide</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
-        <translation>&lt;b&gt;Aide à l&apos;édition des fiches mission&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : ajouter une image dans le texte&lt;br/&gt;&quot;&quot;texte&quot;&quot; : mets le text en gras&lt;br/&gt;&apos;&apos;texte&apos;&apos; : mets le texte en italique&lt;br/&gt;__text__ : souligne le texte&lt;br/&gt; espace*espace : ajouter un element de list au  texte( le niveau de profondeur dans la liste est indiqué par le nombre d&apos;espaces avant l&apos;étoile )</translation>
-    </message>
-    <message>
         <source>Visible behavior</source>
         <translation>Comportement visible</translation>
     </message>
     <message>
         <source>Specific cases</source>
         <translation>Cas spécifiques</translation>
+    </message>
+    <message>
+        <source>Show / Hide Help</source>
+        <translation>Montrer / Cacher l&apos;aide</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; :      set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; :      set text in italic&lt;br/&gt;__text__ :   set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
+        <translation>&gt;&lt;b&gt;Aide à l&apos;édition des fiches mission&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : ajouter une image dans le texte&lt;br/&gt;&quot;&quot;texte&quot;&quot; : mets le text en gras&lt;br/&gt;&apos;&apos;texte&apos;&apos; : mets le texte en italique&lt;br/&gt;__text__ : souligne le texte&lt;br/&gt; espace*espace : ajouter un element de list au  texte( le niveau de profondeur dans la liste est indiqué par le nombre d&apos;espaces avant l&apos;étoile )</translation>
     </message>
 </context>
 <context>

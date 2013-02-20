@@ -36,6 +36,7 @@ namespace bfs = boost::filesystem;
 // -----------------------------------------------------------------------------
 ADN_Missions_ABC::ADN_Missions_ABC()
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
+    ,needSheetSaving_( false )
 {
     // NOTHING
 }
@@ -46,6 +47,7 @@ ADN_Missions_ABC::ADN_Missions_ABC()
 // -----------------------------------------------------------------------------
 ADN_Missions_ABC::ADN_Missions_ABC( unsigned int id )
     : id_( id )
+    , needSheetSaving_ ( false )
 {
     ADN_Missions_Data::idManager_.Lock( id );
 }
@@ -230,14 +232,14 @@ void ADN_Missions_ABC::ReadMissionSheet( const std::string& missionDir )
 // Name: ADN_Missions_ABC::RemoveMissionSheet
 // Created: NPT 2012-07-31
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::RemoveDifferentNamedMissionSheet( const std::string& missionDir )
+void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const std::string& missionDir )
 {
     const std::string newPath = std::string( missionDir + "/" + strName_.GetData() );
     const std::string oldPath = std::string( missionDir + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).completeBaseName().toStdString() );
     if( !missionSheetPath_.GetData().empty() && newPath != oldPath )
     {
-        bfs::remove( oldPath + ".xml" );
-        bfs::remove( oldPath + ".html" );
+        bfs::rename( oldPath + ".xml", newPath + ".xml" );
+        bfs::rename( oldPath + ".html", newPath + ".html" );
     }
 }
 
@@ -245,15 +247,15 @@ void ADN_Missions_ABC::RemoveDifferentNamedMissionSheet( const std::string& miss
 // Name: ADN_Missions_ABC::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir )
+bool ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir, std::string fileName )
 {
-    std::string fileName = std::string( missionDir + "/" + strName_.GetData() );
+    std::string filePath = std::string( missionDir + "/" + fileName );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
         bfs::create_directories( missionDir + "/obsolete" );
     if( !IsEmptyMissionSheet() )
     {
         //mission sheet xml creation
-        xml::xofstream xos( fileName + ".xml" );
+        xml::xofstream xos( filePath + ".xml" );
         xos << xml::start( "mission-sheet" )
             << xml::attribute( "name", strName_.GetData() )
             << xml::start( "context" );
@@ -280,15 +282,26 @@ void ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir )
             << xml::end;
 
         //mission sheet html creation
-        xml::xifstream xisXML( fileName + ".xml" );
+        xml::xifstream xisXML( filePath + ".xml" );
         xsl::xstringtransform xst( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
         xst << xisXML;
-        std::fstream fileStream( tools::FromUtf8ToLocalCharset( fileName + ".html" ), std::ios::out | std::ios::trunc );
+        std::fstream fileStream( tools::FromUtf8ToLocalCharset( filePath + ".html" ), std::ios::out | std::ios::trunc );
         fileStream << xst.str();
         fileStream.close();
         if( missionSheetPath_.GetData().empty() )
-            missionSheetPath_ = fileName + ".html";
+            missionSheetPath_ = filePath + ".html";
+        if( fileName == strName_.GetData() )
+        {
+            needSheetSaving_ = false;
+            if( bfs::exists( missionDir + "/tempMissionSheet" + ".xml" ) || bfs::exists( missionDir + "/tempMissionSheet" + ".html" ) )
+            {
+                bfs::remove( missionDir + "/tempMissionSheet" + ".html" );
+                bfs::remove( missionDir + "/tempMissionSheet" + ".xml" );
+            }
+        }
+        return true;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

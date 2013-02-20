@@ -19,6 +19,9 @@
 #include "tools/Loader_ABC.h"
 #include <xeuseuleu/xsl.hpp>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
+
+namespace bfs = boost::filesystem;
 
 tools::IdManager ADN_Missions_Data::idManager_;
 
@@ -137,45 +140,17 @@ void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_Mission
 // -----------------------------------------------------------------------------
 QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
 {
-     assert( index >= 0 && index < 4 );
-     const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-                                  + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
-     switch( index )
-     {
-     case eMissionType_Pawn:
-         for( auto it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
-             if( ( *it )->strName_.GetData() == text.toStdString() )
-             {
-                 ( *it )->WriteMissionSheet( missionDir );
-                 break;
-             }
-         break;
-     case eMissionType_Automat:
-         for( auto it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
-             if( ( *it )->strName_.GetData() == text.toStdString() )
-             {
-                ( *it )->WriteMissionSheet( missionDir );
-                break;
-             }
-         break;
-     case eMissionType_Population:
-         for( auto it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
-             if( ( *it )->strName_.GetData() == text.toStdString() )
-             {
-                 ( *it )->WriteMissionSheet( missionDir );
-                 break;
-             }
-         break;
-     default: //fragorders
-         for( auto it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
-             if( ( *it )->strName_.GetData() == text.toStdString() )
-             {
-                 ( *it )->WriteMissionSheet( missionDir );
-                 break;
-             }
-         break;
-     }
-     return QString( missionDir.c_str() ) + "/" + text + ".html";
+    assert( index >= 0 && index < 4 );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+                                 + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
+    std::string tempFileName = "tempMissionSheet";
+    ADN_Missions_ABC* mission = FindMission( index, text.toStdString() );
+    if( mission )
+    {
+        mission->WriteMissionSheet( missionDir, tempFileName );
+        mission->needSheetSaving_ = true;
+    }
+    return QString( missionDir.c_str() ) + "/" + QString( tempFileName.c_str() ) + ".html";
 }
 
 // -----------------------------------------------------------------------------
@@ -234,9 +209,9 @@ namespace
     {
         const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->RemoveDifferentNamedMissionSheet( missionDir );
+            missions[i]->RenameDifferentNamedMissionSheet( missionDir );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteMissionSheet( missionDir );
+            missions[i]->WriteMissionSheet( missionDir, missions[i]->strName_.GetData() );
     }
 
     void WriteMissions( xml::xostream& output, const std::string& name, E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
@@ -293,10 +268,13 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::MoveMissionSheetsToObsolete( std::string fileName )
 {
-    std::string newFileName = fileName;
-    size_t pos = newFileName.find_last_of("//");
-    newFileName.insert(pos,"/obsolete");
-    std::rename( fileName.c_str(), newFileName.c_str() );
+    if( bfs::exists( fileName ) )
+    {
+        std::string newFileName = fileName;
+        size_t pos = newFileName.find_last_of("//");
+        newFileName.insert(pos,"/obsolete");
+        bfs::rename( fileName.c_str(), newFileName.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -357,6 +335,19 @@ ADN_Missions_ABC* ADN_Missions_Data::FindMission( const ADN_Missions_Data::T_Mis
     if( it == missions.end() )
         return 0;
     return *it;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::FindMission
+// Created: NPT 2013-02-19
+// -----------------------------------------------------------------------------
+ADN_Missions_ABC* ADN_Missions_Data::FindMission( int missionType, const std::string& strName )
+{
+    const T_Mission_Vector& vector = ( missionType == eMissionType_Pawn )? unitMissions_ :
+                              ( missionType == eMissionType_Automat )? automatMissions_ :
+                              ( missionType == eMissionType_Population )? populationMissions_ :
+                              fragOrders_;
+    return FindMission( vector, strName );
 }
 
 namespace

@@ -89,8 +89,11 @@ private:
     QTabWidget* missionTabs_[ 4 ];
     ADN_Missions_Data& data_;
     ADN_HtmlViewer* missionViewers_[ 4 ];
-    QSignalMapper* generateMapper_;
     QCheckBox* availableState_;
+    QLabel* helpPanel_[ 4 ];
+    QSignalMapper* generateMapper_;
+    QSignalMapper* helpMapper_;
+    QSignalMapper* missionChangedMapper_;
     //@}
 
 private slots:
@@ -98,6 +101,8 @@ private slots:
     //@{
     void OnNotifyElementDeleted( std::string elementName, E_MissionType missionType );
     void OnGenerate( int );
+    void OnHelpNeeded( int );
+    void OnChangeMission( int );
     //@}
 };
 

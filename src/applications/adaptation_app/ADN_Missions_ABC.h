@@ -71,8 +71,8 @@ public:
     void WriteMissionSheetAttachments( xml::xostream& xos );
     bool IsFileInAttachmentList( const std::string& fileName );
     void ReadMissionSheet( const std::string& missionDir );
-    void RemoveDifferentNamedMissionSheet( const std::string& missionDir );
-    void WriteMissionSheet( const std::string& missionDir );
+    void RenameDifferentNamedMissionSheet( const std::string& missionDir );
+    bool WriteMissionSheet( const std::string& missionDir, std::string fileName );
     bool IsEmptyMissionSheet();
     bool IsEmptyParameterList();
 
@@ -94,7 +94,8 @@ public:
     ADN_Type_String descriptionSpecific_;
     ADN_Type_String descriptionComment_;
     ADN_Type_String descriptionMissionEnd_;
-    T_MissionAttachment_Vector attachments_; 
+    T_MissionAttachment_Vector attachments_;
+    bool needSheetSaving_;
     //@}
 };
 

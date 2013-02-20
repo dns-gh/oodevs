@@ -49,6 +49,7 @@ public slots:
 signals:
     //! @name Signals
     //@{
+    void SelectionChanged();
     void NotifyElementDeleted( std::string name, E_MissionType type );
     //@}
 

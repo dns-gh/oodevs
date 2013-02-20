@@ -70,7 +70,11 @@ ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     , data_      ( data )
 {
     generateMapper_ = new QSignalMapper( this );
+    helpMapper_ = new QSignalMapper( this );
+    missionChangedMapper_ = new QSignalMapper( this );
     connect( generateMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnGenerate( int ) ) );
+    connect( helpMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnHelpNeeded( int ) ) );
+    connect( missionChangedMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnChangeMission( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,19 +209,24 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
     {
         builder.PushSubName( "description-tab" );
 
-        QPushButton* helpButton = new QPushButton( tr( "Help" ) );
+        QPushButton* helpButton = new QPushButton( tr( "Show / Hide Help" ) );
+        helpPanel_[ eMissionType ] = new QLabel( tr( "<b>Mission sheets edition Help</b><br/>"
+            "$$image.jpg$$ : add image in text<br/>"
+            "\"\"text\"\" :      set text in bold<br/>"
+            "\'\'text\'\' :      set text in italic<br/>"
+            "__text__ :   set text underlined<br/>"
+            " space*space : add list element to text"
+            "( the level in the list is indicated by the number"
+            " of space before the star )") );
+        helpButton->setFixedSize( helpButton->sizeHint() );
+        helpPanel_[ eMissionType ]->setVisible( false );
+        helpPanel_[ eMissionType ]->setStyleSheet( "QLabel { background-color : white }" );
+        connect( helpButton, SIGNAL( clicked() ), helpMapper_, SLOT( map() ) );
+        helpMapper_->setMapping( helpButton, eMissionType );
 
-        QTextEdit* helpPanel = new QTextEdit( tr( "<b>Mission sheets edition Help</b><br/>"
-                                                    "$$image.jpg$$ : add image in text<br/>"
-                                                    "\"\"text\"\" : set text in bold<br/>"
-                                                    "\'\'text\'\' : set text in italic<br/>"
-                                                    "__text__ : set text underlined<br/>"
-                                                    " space*space : add list element to text"
-                                                    "( the level in the list is indicated by the number"
-                                                    " of space before the star )") );
-        helpPanel->setReadOnly( true );
-        helpPanel->setVisible( false );
-        connect( helpButton, SIGNAL( clicked( bool ) ), helpPanel, SLOT( setVisible( bool ) ) );
+        QVBoxLayout* helpLayout = new QVBoxLayout();
+        helpLayout->addWidget( helpButton );
+        helpLayout->addWidget( helpPanel_[ eMissionType ] );
 
         QVBoxLayout* descriptionLayout = new QVBoxLayout( descriptionTab );
 
@@ -245,7 +254,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         generateMapper_->setMapping( generateButton, eMissionType );
 
         descriptionLayout->addWidget( helpButton );
-        descriptionLayout->addWidget( helpPanel );
+        descriptionLayout->addWidget( helpPanel_[ eMissionType ] );
         AddTextEditField( descriptionLayout, builder.GetChildName( "context" ), tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
         descriptionLayout->addWidget( parameterGroupBox );
         AddTextEditField( descriptionLayout, builder.GetChildName( "visible-behavior" ), tr( "Visible behavior" ), vInfosConnectors[ eDescriptionBehavior ] );
@@ -314,8 +323,12 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
     {
         pSearchListView = builder.AddSearchListView< ADN_ListView_MissionTypes >( this, eMissionType, missions, missions, vInfosConnectors, eMissionType );
         connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), paramList, SLOT( OnMissionSelectionChanged() ) );
+        generateMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
     }
     // Main page
+    connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), missionChangedMapper_, SLOT( map() ) );
+    missionChangedMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
+
     connect( pSearchListView->GetListView(), SIGNAL( NotifyElementDeleted( std::string, E_MissionType ) ), this, SLOT( OnNotifyElementDeleted( std::string, E_MissionType ) ) );
     return CreateScrollArea( builder.GetName(), *missionTabs_[ eMissionType ], pSearchListView );
 }
@@ -348,5 +361,28 @@ void ADN_Missions_GUI::OnGenerate( int index )
     assert( index >= 0 && index < 4 );
     QString missionPath = data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
     missionTabs_[ index ]->setCurrentIndex( 2 );
-    missionViewers_[ index ]->load( missionPath );
+
+    std::string path = missionPath.toStdString();
+    std::replace( path.begin(), path.end(), '\\', '/' );
+    missionViewers_[ index ]->setText( path.c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnHelpNeeded
+// Created: NPT 2013-02-18
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnHelpNeeded( int type )
+{
+    helpPanel_[ type ]->setVisible( !helpPanel_[ type ]->isVisible() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::OnChangeMission
+// Created: NPT 2013-02-19
+// -----------------------------------------------------------------------------
+void ADN_Missions_GUI::OnChangeMission( int type )
+{
+    if( ADN_Missions_ABC* mission = data_.FindMission( type, nameFields_[ type ]->text().toStdString() ) )
+        if ( mission->needSheetSaving_ )
+            OnGenerate( type );
 }

@@ -48,12 +48,11 @@ QString ADN_HtmlViewer::text() const
 // -----------------------------------------------------------------------------
 void ADN_HtmlViewer::setText( const QString& text )
 {
+    setHtml( "<html/>" );
     std::string val = text.toStdString();
     std::replace( val.begin(), val.end(), '\\', '/' );
     if( boost::filesystem::exists( val ) )
         load( QUrl( val.c_str() ) );
-    else
-        setHtml( "<html/>" );
 }
 
 // -----------------------------------------------------------------------------

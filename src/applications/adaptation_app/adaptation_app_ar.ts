@@ -2639,19 +2639,19 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help</source>
-        <translation type="unfinished">تعليمات</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; : set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; : set text in italic&lt;br/&gt;__text__ : set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Visible behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specific cases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show / Hide Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; :      set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; :      set text in italic&lt;br/&gt;__text__ :   set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
