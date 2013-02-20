@@ -1277,6 +1277,7 @@
       <parameter dia-name="loadingPoint" name="Position d'embarquement" optional="false" type="Point"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="withEquipment" name="Avec materiel" optional="false" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Reparer" dia-type="france.military.platoon.combat.support.engineer.tasks.Reparer" id="2143" name="PION GENIE Reparer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2874,6 +2875,7 @@
       <parameter dia-name="loadingPoint" name="Position d'embarquement" optional="false" type="Point"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="withEquipment" name="Avec materiel" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.EscorterRefugiesVersPosition" dia-type="france.military.company.tasks.EscorterRefugiesVersPosition" id="1051" mrt-dia-behavior="france.military.company.tasks.EscorterRefugiesVersPosition" name="AUTOMATE COMMUNES Escorter Refugies Vers Position" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3655,4 +3657,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="2521699214" -->
+<!-- signature="3246523972" -->

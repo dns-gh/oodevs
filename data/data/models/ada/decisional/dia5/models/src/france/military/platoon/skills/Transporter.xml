@@ -21,7 +21,7 @@
                 <class name="sword.military.knowledge.decisional.Loading"/>
             </type>
         </parameter>
-        <parameter name="onlyLoadable" nullable="true">
+        <parameter name="withEquipment" nullable="true">
             <type>
                 <simple name="boolean"/>
             </type>

@@ -35,4 +35,8 @@ return
     getNbrFront = function( self )
         return #myself.taskParams.units
     end,
+
+    getEquipmentTransportation = function( self, params )
+        return params.withEquipment
+    end,
 }

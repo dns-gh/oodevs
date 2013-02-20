@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.TransportEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
-  <methods>
-    <method name="getUnitsToTransport">
-      <return>
-        <type>
-          <list>
-            <class name="sword.military.knowledge.decisional.Loadable"/>
-          </list>
-        </type>
-      </return>
-    </method>
-    <method name="getLoadingPoint">
-      <return>
-        <type>
-          <class name="sword.military.knowledge.decisional.Loading"/>
-        </type>
-      </return>
-    </method>
-    <method name="getDestination">
-      <return>
-        <type>
-          <class name="sword.military.knowledge.decisional.Loading"/>
-        </type>
-      </return>
-    </method>
-    <method name="getMeetingPoint" abstract="false">
-      <argument name="entity">
-        <type>
-          <class name="sword.military.knowledge.decisional.Commanding"/>
-        </type>
-      </argument>
-      <return>
-        <type>
-          <list>
-            <class name="directia.core.Object"/>
-          </list>
-        </type>
-      </return>
-    </method>
-    <method name="getNbrFront" abstract="false">
-      <return>
-        <type>
-          <simple name="numeric"/>
-        </type>
-      </return>
-    </method>
-  </methods>
+    <methods>
+        <method name="getUnitsToTransport">
+            <return>
+                <type>
+                    <list>
+                        <class name="sword.military.knowledge.decisional.Loadable"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getLoadingPoint">
+            <return>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Loading"/>
+                </type>
+            </return>
+        </method>
+        <method name="getDestination">
+            <return>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Loading"/>
+                </type>
+            </return>
+        </method>
+        <method name="getMeetingPoint" abstract="false">
+            <argument name="entity">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Commanding"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getNbrFront" abstract="false">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getEquipmentTransportation">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
 </class>

@@ -49,8 +49,9 @@ rootnode
         meKnowledge.isStoppingTransport = false
         -- filtrer les unites transportables
         self.loadableUnits = {}
+        self.onlyLoadable = not self.params.withEquipment
         for _, unit in pairs( self.params.units ) do
-            if unit:canTransportIt( self.params.onlyLoadable ) then
+            if unit:canTransportIt( self.onlyLoadable ) then
                 self.loadableUnits[ unit ] = true
             end
         end
@@ -73,7 +74,7 @@ rootnode
         if self.arrivedLoadPoint then
             for unit, _ in pairs( self.loadableUnits ) do
                 if unit:readyForBeingTransported() then
-                    Activate( skill.nodes.QueueForLoad, 1, { unit = unit } )
+                    Activate( skill.nodes.QueueForLoad, 1, { unit = unit, onlyLoadable = self.onlyLoadable } )
                 end
             end
         end

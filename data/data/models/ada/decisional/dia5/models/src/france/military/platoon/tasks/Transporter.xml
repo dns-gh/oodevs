@@ -27,12 +27,25 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
+        <parameter name="withEquipment" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Transport des unités">
             <description>Transporte les uites au fur et a mesure qu'elle sont pretes a etre transportees</description>
             <skills>
                 <skill name="france.military.platoon.skills.Transporter" main="true">
+                    <parameter name="withEquipment">
+                        <value>
+                            <parameter>withEquipment</parameter>
+                        </value>
+                    </parameter>
                     <parameter name="units">
                         <value>
                             <parameter>units</parameter>
