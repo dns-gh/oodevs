@@ -56,7 +56,13 @@ ActionsLogger::ActionsLogger( const tools::SessionConfig& config,
 // -----------------------------------------------------------------------------
 ActionsLogger::~ActionsLogger()
 {
-    // NOTHING
+    try
+    {
+        Commit();
+    }
+    catch( ... )
+    {
+    }
 }
 
 namespace
