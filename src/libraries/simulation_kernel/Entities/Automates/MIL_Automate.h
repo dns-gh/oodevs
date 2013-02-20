@@ -122,6 +122,7 @@ public:
 
 
     MIL_StockSupplyManager& GetStockSupplyManager() const;
+    MIL_DotationSupplyManager& GetDotationSupplyManager() const;
 
     // logistics
     MIL_AutomateLOG* GetBrainLogistic () const;

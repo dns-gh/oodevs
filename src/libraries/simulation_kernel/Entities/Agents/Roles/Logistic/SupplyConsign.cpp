@@ -223,12 +223,7 @@ bool SupplyConsign::ResetConsignsForProvider( const MIL_Agent_ABC& pion )
 {
     if( provider_ == &pion )
     {
-        if( convoy_ )
-        {
-            convoy_->ResetConveyors( *this );
-            convoy_->Finish();
-        }
-        SetState( eFinished );
+        ResetConsign();
         return true;
     }
     return false;

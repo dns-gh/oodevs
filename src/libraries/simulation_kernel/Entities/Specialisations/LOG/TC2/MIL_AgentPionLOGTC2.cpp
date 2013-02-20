@@ -11,12 +11,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGTC2.h"
+#include "AlgorithmsFactories.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOG_Supply.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
-#include "AlgorithmsFactories.h"
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGTC2 )
 
@@ -117,6 +118,7 @@ void MIL_AgentPionLOGTC2::SpecializedDelete()
         logBrain->ResetConsignsForProvider( *this );// inutile ??
     //GetAutomate().GetStockSupplyManager().ResetAutoConsignForProvider( *this );
     GetAutomate().GetStockSupplyManager().ResetAllConsigns();
+    GetAutomate().GetDotationSupplyManager().ResetAllConsigns();
     GetRole< PHY_RolePionLOG_Maintenance >().ClearMaintenanceConsigns();
     GetRole< PHY_RolePionLOG_Medical >().ClearMedicalConsigns();
 }

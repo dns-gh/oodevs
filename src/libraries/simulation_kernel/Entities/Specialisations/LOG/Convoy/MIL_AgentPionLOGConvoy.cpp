@@ -11,11 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentPionLOGConvoy.h"
+#include "AlgorithmsFactories.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RolePionLOGConvoy_Supply.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-
+#include "Entities/Automates/MIL_DotationSupplyManager.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPionLOGConvoy )
@@ -111,5 +111,6 @@ void MIL_AgentPionLOGConvoy::SpecializedDelete()
     MIL_AutomateLOG* logBrain = GetAutomate().GetBrainLogistic();
     if( logBrain )
         logBrain->ResetConsignsForConvoyPion( *this );
-    GetAutomate().GetStockSupplyManager().ResetAutoConsignForConvoyPion( *this );
+    GetAutomate().GetStockSupplyManager().ResetConsignsForConvoyPion( *this );
+    GetAutomate().GetDotationSupplyManager().ResetConsignsForConvoyPion( *this );
 }

@@ -46,15 +46,15 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
     , formationResolver_                 ( formationResolver )
     , dotationResolver_                  ( dotationResolver )
     , nID_                               ( message.request().id() )
-    , pLogHandlingEntity_                ( FindLogEntity( message.supplier() ) )
-    , pPionLogConvoying_                 ( 0 )
-    , pLogProvidingConvoyResourcesEntity_( FindLogEntity( message.transporters_provider() ) )
+    , pLogHandlingEntity_                ( controller_, FindLogEntity( message.supplier() ) )
+    , pPionLogConvoying_                 ( controller_ )
+    , pLogProvidingConvoyResourcesEntity_( controller_, FindLogEntity( message.transporters_provider() ) )
     , nState_                            ( eLogSupplyHandlingStatus_Termine )
     , currentStateEndTick_               ( std::numeric_limits< unsigned int >::max() )
     , simulation_                        ( simulation )
 {
     if( pLogHandlingEntity_ )
-        pLogHandlingEntity_->Get< LogSupplyConsigns >().HandleConsign( *this );
+        pLogHandlingEntity_.ConstCast()->Get< LogSupplyConsigns >().HandleConsign( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,9 +66,9 @@ LogSupplyConsign::~LogSupplyConsign()
     for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
         it.NextElement().recipient_.Get< LogSupplyConsigns >().RemoveConsign( *this );
     if( pLogHandlingEntity_ )
-        pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+        pLogHandlingEntity_.ConstCast()->Get< LogSupplyConsigns >().TerminateConsign( *this );
     if( pPionLogConvoying_ )
-        pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+        pPionLogConvoying_.ConstCast()->Get< LogSupplyConsigns >().TerminateConsign( *this );
     DeleteAll();
 }
 
@@ -81,10 +81,10 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
     if( message.has_convoyer() && ( !pPionLogConvoying_ || message.convoyer().id() != int( pPionLogConvoying_->GetId() ) ) )
     {
         if( pPionLogConvoying_ )
-            pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+            pPionLogConvoying_.ConstCast()->Get< LogSupplyConsigns >().TerminateConsign( *this );
         pPionLogConvoying_ = agentResolver_.Find( message.convoyer().id() );
         if( pPionLogConvoying_ )
-            pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
+            pPionLogConvoying_.ConstCast()->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
     if( message.has_state()  )
         nState_ = E_LogSupplyHandlingStatus( message.state() );

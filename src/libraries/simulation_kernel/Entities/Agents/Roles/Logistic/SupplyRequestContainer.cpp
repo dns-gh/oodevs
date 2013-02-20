@@ -23,15 +23,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "protocol/Protocol.h" // $$$$ LDC FIXME For serialization only...
-#include "SupplyConvoyRealFactory.h"
-#include "SupplyRecipient_ABC.h"
-#include "SupplySupplier_ABC.h"
-#include "Checkpoints/MIL_CheckPointInArchive.h"
-#include "Checkpoints/MIL_CheckPointOutArchive.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "protocol/Protocol.h" // $$$$ LDC FIXME For serialization only...
 #include <boost/foreach.hpp>
 
 using namespace logistic;

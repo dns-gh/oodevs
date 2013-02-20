@@ -137,10 +137,10 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::ResetAutoConsignForConvoyPion
+// Name: MIL_StockSupplyManager::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-08
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::ResetAutoConsignForConvoyPion( const MIL_AgentPion& pion )
+void MIL_StockSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
 {
     if( autoSupplyRequest_.get() )
         autoSupplyRequest_->ResetConsignsForConvoyPion( pion );
@@ -174,6 +174,9 @@ void MIL_StockSupplyManager::ResetAllConsigns()
     for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
         (*it)->ResetConsign();
     scheduledSupplies_.clear();
+    for( auto it = manualSupplyRequests_.begin(); it != manualSupplyRequests_.end(); ++it )
+        it->get()->ResetConsign();
+    manualSupplyRequests_.clear();
 }
 
 // -----------------------------------------------------------------------------

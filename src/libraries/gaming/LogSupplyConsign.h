@@ -11,6 +11,7 @@
 #define __LogSupplyConsign_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Types.h"
 #include "tools/Resolver.h"
 #include <boost/function.hpp>
@@ -87,9 +88,9 @@ private:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const Simulation& simulation_;
     unsigned int nID_;
-    kernel::Entity_ABC*   pLogHandlingEntity_;
-    kernel::Agent_ABC*    pPionLogConvoying_;
-    kernel::Entity_ABC*   pLogProvidingConvoyResourcesEntity_;
+    kernel::SafePointer< kernel::Entity_ABC > pLogHandlingEntity_;
+    kernel::SafePointer< kernel::Agent_ABC > pPionLogConvoying_;
+    kernel::SafePointer< kernel::Entity_ABC > pLogProvidingConvoyResourcesEntity_;
     E_LogSupplyHandlingStatus nState_;
     unsigned int currentStateEndTick_;
     //@}

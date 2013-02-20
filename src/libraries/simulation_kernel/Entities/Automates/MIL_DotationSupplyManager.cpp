@@ -128,6 +128,32 @@ void MIL_DotationSupplyManager::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::ResetAllConsigns
+// Created: JSR 2013-02-20
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::ResetAllConsigns()
+{
+    supplyRequests_->ResetConsign();
+    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
+        const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsign();
+    scheduledSupplies_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::ResetConsignsForConvoyPion
+// Created: JSR 2013-02-20
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
+{
+    supplyRequests_->ResetConsignsForConvoyPion( pion );
+    for( auto it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); )
+        if( const_cast< logistic::SupplyConsign_ABC* >( it->get() )->ResetConsignsForConvoyPion( pion ) )
+            it = scheduledSupplies_.erase( it );
+        else
+            ++it;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::NotifyDotationSupplyNeeded
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------

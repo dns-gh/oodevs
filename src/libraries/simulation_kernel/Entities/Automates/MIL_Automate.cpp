@@ -1226,6 +1226,15 @@ MIL_StockSupplyManager& MIL_Automate::GetStockSupplyManager() const
     return *pStockSupplyManager_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetDotationSupplyManager
+// Created: JSR 2013-02-20
+// -----------------------------------------------------------------------------
+MIL_DotationSupplyManager& MIL_Automate::GetDotationSupplyManager() const
+{
+    return *pDotationSupplyManager_;
+}
+
 namespace
 {
     const MT_Vector2D emptyPosition; // $$$$ LGY 2012-03-30: for empty automat
