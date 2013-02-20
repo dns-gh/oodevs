@@ -412,7 +412,7 @@ void InformationToolTip::paintEvent( QPaintEvent * /*event*/ )
 // -----------------------------------------------------------------------------
 void InformationToolTip::Show()
 {
-    if( !isVisible() && !image_.isNull() )
+    if( !isVisible() && !image_.isNull() && QApplication::activeWindow() )
     {
         setVisible( true );
         QTimer::singleShot( 5000, this, SLOT( Hide() ) );
