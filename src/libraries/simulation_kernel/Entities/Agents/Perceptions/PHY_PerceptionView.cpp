@@ -14,6 +14,7 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/ObstacleAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -204,6 +205,9 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+            const ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
+            if( obstacle && !obstacle->IsActivated() )
+                continue;
 
             if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
                 perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
