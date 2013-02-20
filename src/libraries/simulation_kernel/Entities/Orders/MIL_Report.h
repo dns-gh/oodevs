@@ -164,6 +164,8 @@ public:
         eRC_TransportedUnitCannotReceiveOrder = 453,
         eRC_LogNoSuperior = 454,
         eRC_LogNoStock = 455,
+        eRC_AttenteOrdrePoursuivreConvoi = 503,
+        eRC_TirIndirectLessInterventionType = 504,
         eRC_CloseCrowdAttitudeChanged = 506,
         eRC_CloseCrowdUrbanDestruction = 507
     };
