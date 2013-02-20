@@ -24,6 +24,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -389,14 +390,18 @@ double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
     if( IsLimitedToSensors( target ) )
         return 0;
 
-    const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
+    double rModifier = 1.;
+    if( !target.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
+    {
+        const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
-    const unsigned int nOldPostureIdx = targetPosture.GetLastPosture   ().GetID();
-    const unsigned int nCurPostureIdx = targetPosture.GetCurrentPosture().GetID();
+        const unsigned int nOldPostureIdx = targetPosture.GetLastPosture   ().GetID();
+        const unsigned int nCurPostureIdx = targetPosture.GetCurrentPosture().GetID();
 
-    assert( postureTargetFactors_.size() > nOldPostureIdx );
-    assert( postureTargetFactors_.size() > nCurPostureIdx );
-    double rModifier = postureTargetFactors_[ nOldPostureIdx ] + targetPosture.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+        assert( postureTargetFactors_.size() > nOldPostureIdx );
+        assert( postureTargetFactors_.size() > nCurPostureIdx );
+        rModifier = postureTargetFactors_[ nOldPostureIdx ] + targetPosture.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+    }
 
     // Population
     const double rPopulationDensity = target.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
