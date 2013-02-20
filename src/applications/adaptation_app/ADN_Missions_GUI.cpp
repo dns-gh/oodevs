@@ -92,9 +92,9 @@ void ADN_Missions_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget( pMainWidget_ );
-    pTabWidget_->addTab( BuildMissions( data_.unitMissions_, eEntityType_Pawn ), tr( "Unit missions" ) );
-    pTabWidget_->addTab( BuildMissions( data_.automatMissions_, eEntityType_Automat ), tr( "Automat missions" ) );
-    pTabWidget_->addTab( BuildMissions( data_.populationMissions_, eEntityType_Population ), tr( "Crowd missions" ) );
+    pTabWidget_->addTab( BuildMissions( data_.unitMissions_, eMissionType_Pawn ), tr( "Unit missions" ) );
+    pTabWidget_->addTab( BuildMissions( data_.automatMissions_, eMissionType_Automat ), tr( "Automat missions" ) );
+    pTabWidget_->addTab( BuildMissions( data_.populationMissions_, eMissionType_Population ), tr( "Crowd missions" ) );
     pTabWidget_->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
 
     // Main widget
@@ -123,41 +123,48 @@ namespace
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType )
+QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_MissionType eMissionType )
 {
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( std::string( ADN_Tr::ConvertFromEntityType( eEntityType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
+    builder.PushSubName( std::string( ADN_Tr::ConvertFromMissionType( eMissionType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
     builder.PushSubName( "definition-tab" );
 
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    nameFields_[ eEntityType ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameFields_[ eEntityType ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
-    nameFields_[ eEntityType ]->ConnectWithRefValidity( missions );
+    nameFields_[ eMissionType ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
+    nameFields_[ eMissionType ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
+    nameFields_[ eMissionType ]->ConnectWithRefValidity( missions );
 
     builder.SetValidator( new MissionNameValidator() );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eDiaType ] );
-    if( eEntityType == eEntityType_Automat )
+    if( eMissionType != eMissionType_FragOrder )
     {
-        builder.AddField< ADN_EditLine_String >( pInfoHolder, "mrt-behavior", tr( "MRT Behavior" ), vInfosConnectors[ eMRTBehavior ] );
-        builder.AddField< ADN_EditLine_String >( pInfoHolder, "cdt-behavior", tr( "CDT Behavior" ), vInfosConnectors[ eCDTBehavior ] );
+        if( eMissionType == eMissionType_Automat )
+        {
+            builder.AddField< ADN_EditLine_String >( pInfoHolder, "mrt-behavior", tr( "MRT Behavior" ), vInfosConnectors[ eMRTBehavior ] );
+            builder.AddField< ADN_EditLine_String >( pInfoHolder, "cdt-behavior", tr( "CDT Behavior" ), vInfosConnectors[ eCDTBehavior ] );
+        }
+        else
+            builder.AddField< ADN_EditLine_String >( pInfoHolder, "behavior", tr( "Behavior" ), vInfosConnectors[ eBehavior ] );
+
+        QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, "symbol", tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
+        combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
     }
     else
-        builder.AddField< ADN_EditLine_String >( pInfoHolder, "behavior", tr( "Behavior" ), vInfosConnectors[ eBehavior ] );
-
-    QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, "symbol", tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
-    combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+    {
+        availableState_ = builder.AddField< ADN_CheckBox >( pInfoHolder, "available-without-mission", tr( "Available without mission" ) , vInfosConnectors[ eFragOrderAvailableWithoutMission ] );
+    }
 
     // Parameters
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
 
     builder.PushSubName( "parameters" );
-    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( builder.GetChildName( "table" ), vInfosConnectors[ eParameters ], eEntityType );
+    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( builder.GetChildName( "table" ), vInfosConnectors[ eParameters ], eMissionType );
 
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     new ADN_MissionParameterValues_Table( builder.GetChildName( "values-table" ), vInfosConnectors[ eParameterValues ], pEnum );
@@ -223,7 +230,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         parameterLayout->setStretch( 0, 1 );
         parameterLayout->setStretch( 1, 4 );
 
-        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eEntityType );
+        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
 
         QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
@@ -232,7 +239,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
 
         QPushButton* generateButton = builder.AddWidget< QPushButton >( "preview", tr( "Preview" ) );
         connect( generateButton, SIGNAL( clicked() ), generateMapper_, SLOT( map() ) );
-        generateMapper_->setMapping( generateButton, eEntityType );
+        generateMapper_->setMapping( generateButton, eMissionType );
 
         descriptionLayout->addWidget( helpLabel );
         AddTextEditField( descriptionLayout, builder.GetChildName( "context" ), tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
@@ -248,9 +255,9 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         builder.PushSubName( "viewer-tab" );
 
         //Mission Sheet Viewer
-        missionViewers_[ eEntityType ] = builder.AddWidget< ADN_HtmlViewer >( "viewer" );
-        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ eEntityType ]->GetConnector();
-        connect( generateButton, SIGNAL( clicked() ), missionViewers_[ eEntityType ], SLOT( reload() ) );
+        missionViewers_[ eMissionType ] = builder.AddWidget< ADN_HtmlViewer >( "viewer" );
+        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ eMissionType ]->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), missionViewers_[ eMissionType ], SLOT( reload() ) );
 
         builder.PopSubName(); //! viewer-tab
     }
@@ -282,23 +289,31 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
     pDefinitionLayout->addWidget( pParametersGroup );
 
     //content layout
-    missionTabs_[ eEntityType ] = new QTabWidget();
-    missionTabs_[ eEntityType ]->setStyleSheet("QTabWidget: {border: 3px solid red;}");
-    missionTabs_[ eEntityType ]->addTab( CreateScrollArea( builder.GetChildName( "definition-tab" ), *pDefinition, 0 ), tr( "Definition" ) );
-    missionTabs_[ eEntityType ]->addTab( CreateScrollArea( builder.GetChildName( "description-tab" ), *descriptionTab, 0 ), tr( "Description" ) );
-    missionTabs_[ eEntityType ]->addTab( CreateScrollArea( builder.GetChildName( "preview-tab" ), *missionViewers_[ eEntityType ], 0 ), tr( "Mission sheet preview" ) );
+    missionTabs_[ eMissionType ] = new QTabWidget();
+    missionTabs_[ eMissionType ]->setStyleSheet("QTabWidget: {border: 3px solid red;}");
+    missionTabs_[ eMissionType ]->addTab( CreateScrollArea( builder.GetChildName( "definition-tab" ), *pDefinition, 0 ), tr( "Definition" ) );
+    missionTabs_[ eMissionType ]->addTab( CreateScrollArea( builder.GetChildName( "description-tab" ), *descriptionTab, 0 ), tr( "Description" ) );
+    missionTabs_[ eMissionType ]->addTab( CreateScrollArea( builder.GetChildName( "preview-tab" ), *missionViewers_[ eMissionType ], 0 ), tr( "Mission sheet preview" ) );
 
-    QVBoxLayout* pContentLayout = new QVBoxLayout( missionTabs_[ eEntityType ] );
+    QVBoxLayout* pContentLayout = new QVBoxLayout( missionTabs_[ eMissionType ] );
     pContentLayout->setAlignment( Qt::AlignTop );
-    connect( missionTabs_[ eEntityType ], SIGNAL( currentChanged( int ) ), missionViewers_[ eEntityType ], SLOT( reload() ) );
+    connect( missionTabs_[ eMissionType ], SIGNAL( currentChanged( int ) ), missionViewers_[ eMissionType ], SLOT( reload() ) );
 
     // List view
-    ADN_SearchListView* pSearchListView = builder.AddSearchListView< ADN_ListView_MissionTypes >( this, eEntityType, missions, missions, vInfosConnectors, eEntityType );
-    connect( pSearchListView->GetListView(), SIGNAL( NotifyMissionDeleted( std::string, E_EntityType ) ), this, SLOT( OnNotifyElementDeleted( std::string, E_EntityType ) ) );
-    connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), paramList, SLOT( OnMissionSelectionChanged() ) );
-
+    ADN_SearchListView* pSearchListView;
+    if( eMissionType == eMissionType_FragOrder )
+    {
+        pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, eMissionType_FragOrder );
+        connect( availableState_, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
+    }
+    else
+    {
+        pSearchListView = builder.AddSearchListView< ADN_ListView_MissionTypes >( this, eMissionType, missions, missions, vInfosConnectors, eMissionType );
+        connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), paramList, SLOT( OnMissionSelectionChanged() ) );
+    }
     // Main page
-    return CreateScrollArea( builder.GetName(), *missionTabs_[ eEntityType ], pSearchListView );
+    connect( pSearchListView->GetListView(), SIGNAL( NotifyMissionDeleted( std::string, E_MissionType ) ), this, SLOT( OnNotifyElementDeleted( std::string, E_MissionType ) ) );
+    return CreateScrollArea( builder.GetName(), *missionTabs_[ eMissionType ], pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,9 +329,9 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 
     // Content
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
-    nameFields_[ eEntityType_FragOrder ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
-    nameFields_[ eEntityType_FragOrder ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
-    nameFields_[ eEntityType_FragOrder ]->ConnectWithRefValidity( data_.GetFragOrders() );
+    nameFields_[ eMissionType_FragOrder ] = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
+    nameFields_[ eMissionType_FragOrder ]->setToolTip( tr( "Mission name cannot contain the following characters: / < > * \\ : \" |" ) );
+    nameFields_[ eMissionType_FragOrder ]->ConnectWithRefValidity( data_.GetFragOrders() );
 
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[ eDiaType ] );
     QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, "available-without-mission", tr( "Available without mission" ) , vInfosConnectors[ eFragOrderAvailableWithoutMission ] );
@@ -388,8 +403,10 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
         parametersListView->SetItemConnectors( vInfosConnectors );
         parameterLayout->addWidget( parametersListView );
         parameterLayout->addWidget( parametersField );
+        parameterLayout->setStretch( 0, 1 );
+        parameterLayout->setStretch( 1, 4 );
 
-        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eNbrEntityTypes );
+        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType_FragOrder );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
 
         QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );
@@ -398,7 +415,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 
         QPushButton* generateButton = builder.AddWidget< QPushButton >( "preview", tr( "Preview" ) );
         connect( generateButton, SIGNAL( clicked() ), generateMapper_, SLOT( map() ) );
-        generateMapper_->setMapping( generateButton, eEntityType_FragOrder );
+        generateMapper_->setMapping( generateButton, eMissionType_FragOrder );
 
         descriptionLayout->addWidget( helpLabel );
         AddTextEditField( descriptionLayout, builder.GetChildName( "context" ), tr( "Context" ), vInfosConnectors[ eDescriptionContext ] );
@@ -414,9 +431,9 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
         builder.PushSubName( "viewer-tab" );
 
         //Mission Sheet Viewer
-        missionViewers_[ eEntityType_FragOrder ] = builder.AddWidget< ADN_HtmlViewer >( "viewer" );
-        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ eEntityType_FragOrder ]->GetConnector();
-        connect( generateButton, SIGNAL( clicked() ), missionViewers_[ eEntityType_FragOrder ], SLOT( reload() ) );
+        missionViewers_[ eMissionType_FragOrder ] = builder.AddWidget< ADN_HtmlViewer >( "viewer" );
+        vInfosConnectors[ eDescriptionSheetPath ] = &missionViewers_[ eMissionType_FragOrder ]->GetConnector();
+        connect( generateButton, SIGNAL( clicked() ), missionViewers_[ eMissionType_FragOrder ], SLOT( reload() ) );
 
         builder.PopSubName(); //! viewer-tab
     }
@@ -447,23 +464,23 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     pDefinitionLayout->addWidget( pParametersGroup );
 
     // Content layout
-    missionTabs_[ eEntityType_FragOrder ] = new QTabWidget();
-    missionTabs_[ eEntityType_FragOrder ]->addTab( CreateScrollArea( builder.GetChildName( "definition-tab" ), *pDefinition, 0 ), tr( "Definition" ) );
-    missionTabs_[ eEntityType_FragOrder ]->addTab( CreateScrollArea( builder.GetChildName( "description-tab" ), *descriptionTab, 0 ), tr( "Description" ) );
-    missionTabs_[ eEntityType_FragOrder ]->addTab( CreateScrollArea( builder.GetChildName( "viewer-tab" ), *missionViewers_[ eEntityType_FragOrder ], 0 ), tr( "Mission sheets preview" ) );
-    QVBoxLayout* pFragOrderWidgetLayout = new QVBoxLayout( missionTabs_[ eEntityType_FragOrder ] );
+    missionTabs_[ eMissionType_FragOrder ] = new QTabWidget();
+    missionTabs_[ eMissionType_FragOrder ]->addTab( CreateScrollArea( builder.GetChildName( "definition-tab" ), *pDefinition, 0 ), tr( "Definition" ) );
+    missionTabs_[ eMissionType_FragOrder ]->addTab( CreateScrollArea( builder.GetChildName( "description-tab" ), *descriptionTab, 0 ), tr( "Description" ) );
+    missionTabs_[ eMissionType_FragOrder ]->addTab( CreateScrollArea( builder.GetChildName( "viewer-tab" ), *missionViewers_[ eMissionType_FragOrder ], 0 ), tr( "Mission sheets preview" ) );
+    QVBoxLayout* pFragOrderWidgetLayout = new QVBoxLayout( missionTabs_[ eMissionType_FragOrder ] );
     pFragOrderWidgetLayout->setMargin( 10 );
     pFragOrderWidgetLayout->setSpacing( 10 );
     pFragOrderWidgetLayout->setAlignment( Qt::AlignTop );
-    connect( missionTabs_[ eEntityType_FragOrder ], SIGNAL( currentChanged( int ) ), missionViewers_[ eEntityType_FragOrder ], SLOT( reload() ) );
+    connect( missionTabs_[ eMissionType_FragOrder ], SIGNAL( currentChanged( int ) ), missionViewers_[ eMissionType_FragOrder ], SLOT( reload() ) );
 
     // List view
-    ADN_SearchListView* pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, eEntityType_FragOrder );
+    ADN_SearchListView* pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, eMissionType_FragOrder );
     connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     connect( pSearchListView->GetListView(), SIGNAL( NotifyFragOrderDeleted( std::string, E_EntityType ) ), this, SLOT( OnNotifyElementDeleted( std::string, E_EntityType ) ) );
 
     // Main page
-    return CreateScrollArea( builder.GetName(), *missionTabs_[ eEntityType_FragOrder ], pSearchListView );
+    return CreateScrollArea( builder.GetName(), *missionTabs_[ eMissionType_FragOrder ], pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -480,9 +497,9 @@ void ADN_Missions_GUI::Enable( bool enable )
 // Name: ADN_Missions_GUI::NotifyElementDeleted
 // Created: NPT 2012-07-31
 // -----------------------------------------------------------------------------
-void ADN_Missions_GUI::OnNotifyElementDeleted( std::string elementName, E_EntityType elementType )
+void ADN_Missions_GUI::OnNotifyElementDeleted( std::string elementName, E_MissionType missionType )
 {
-    data_.NotifyElementDeleted( elementName, elementType );
+    data_.NotifyElementDeleted( elementName, missionType );
 }
 
 // -----------------------------------------------------------------------------

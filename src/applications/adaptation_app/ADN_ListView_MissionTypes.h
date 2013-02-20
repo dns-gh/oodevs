@@ -30,7 +30,7 @@ class ADN_ListView_MissionTypes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_MissionTypes( QWidget* pParent, E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions );
+             ADN_ListView_MissionTypes( QWidget* pParent, E_MissionType eMissionType, ADN_Missions_Data::T_Mission_Vector& missions );
     virtual ~ADN_ListView_MissionTypes();
     //@}
 
@@ -47,14 +47,14 @@ signals:
     //! @name Signals
     //@{
     void SelectionChanged();
-    void NotifyMissionDeleted( std::string name, E_EntityType type );
+    void NotifyMissionDeleted( std::string name, E_MissionType type );
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Missions_Data::T_Mission_Vector& missions_;
-    E_EntityType eEntityType_;
+    E_MissionType eMissionType_;
     //@}
 };
 

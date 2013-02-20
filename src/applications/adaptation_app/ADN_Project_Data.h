@@ -169,7 +169,7 @@ public:
     DataInfos&           GetDataInfos();
     const DataInfos&     GetDataInfos() const;
     FileInfos&           GetFileInfos();
-    std::string          GetMissionDir( E_EntityType elementType );
+    std::string          GetMissionDir( E_MissionType missionType );
     static WorkDirInfos& GetWorkDirInfos();
 
 private:

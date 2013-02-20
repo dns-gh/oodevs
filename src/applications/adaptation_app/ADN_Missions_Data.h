@@ -22,7 +22,7 @@
 #include "ADN_Missions_FragOrder.h"
 #include "tools/IdManager.h"
 
-enum E_EntityType;
+enum E_MissionType;
 
 namespace xml { class xistream; }
 
@@ -89,14 +89,14 @@ public:
     QStringList         GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
 
-    void NotifyElementDeleted( std::string elementName, E_EntityType elementType );
+    void NotifyElementDeleted( std::string elementName, E_MissionType missionType );
     QString GenerateMissionSheet( int index, const QString& text );
     //@}
 
 private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, E_EntityType modelType );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, E_MissionType modelType );
     void WriteArchive( xml::xostream& output );
     void MoveMissionSheetsToObsolete( std::string file );
 

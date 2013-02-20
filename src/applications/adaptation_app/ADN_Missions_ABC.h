@@ -63,8 +63,8 @@ public:
     virtual void WriteArchive( xml::xostream& /*output*/, const std::string& /*name*/ ){};
 
     void ReadParameter( xml::xistream& input );
-    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_EntityType type );
-    void CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_EntityType type );
+    void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type );
+    void CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_MissionType type );
     void ReadMissionSheetParametersDescriptions( xml::xistream& xis );
     void ReadMissionSheetAttachments( xml::xistream& xis );
     void WriteMissionSheetParametersDescriptions( xml::xostream& xos );

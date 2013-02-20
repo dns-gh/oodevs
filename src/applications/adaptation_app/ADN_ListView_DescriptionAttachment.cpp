@@ -21,9 +21,9 @@
 // Name: ADN_ListView_DescriptionAttachment constructor
 // Created: NPT 2013-01-16
 // -----------------------------------------------------------------------------
-ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_EntityType entityType )
+ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_MissionType missionType )
     : ADN_ListView( 0, "ADN_ListView_DescriptionAttachment", tr( "Attachments" ) )
-    , entityType_( entityType )
+    , missionType_( missionType )
 {
     pConnector_ = new ADN_Connector_ListView< ADN_Missions_ABC::ADN_Missions_Attachment >( *this );
     setHeaderHidden( true );
@@ -56,7 +56,7 @@ void ADN_ListView_DescriptionAttachment::AddFile()
     if( fileName.isEmpty() )
         return;
     std::string imageDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                         + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( entityType_ ) + "/Images";
+                         + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType_ ) + "/Images";
     if( !boost::filesystem::is_directory( imageDir ) )
         boost::filesystem::create_directory( imageDir );
     std::string newFileName = imageDir + "/" + QFileInfo( fileName ).fileName().toStdString(); 

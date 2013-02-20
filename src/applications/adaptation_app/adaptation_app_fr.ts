@@ -5285,6 +5285,22 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Remote</source>
         <translation>Distant</translation>
     </message>
+    <message>
+        <source>Unit missions</source>
+        <translation>Missions pions</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation>Missions automates</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
+    </message>
+    <message>
+        <source>Fragmentary Orders</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

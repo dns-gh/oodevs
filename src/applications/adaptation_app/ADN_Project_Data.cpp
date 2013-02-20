@@ -396,18 +396,20 @@ void ADN_Project_Data::Reset()
 // Name: ADN_Project_Data::GetMissionDir
 // Created: NPT 13-07-25
 //-----------------------------------------------------------------------------
-std::string ADN_Project_Data::GetMissionDir( E_EntityType elementType )
+std::string ADN_Project_Data::GetMissionDir( E_MissionType missionType )
 {
-    switch( elementType )
+    switch( missionType )
     {
-    case eEntityType_Pawn:
+    case eMissionType_Pawn:
         return dataInfos_.szUnitsMissionPath_.GetData();
-    case eEntityType_Automat:
+    case eMissionType_Automat:
         return dataInfos_.szAutomataMissionPath_.GetData();
-    case eEntityType_Population:
+    case eMissionType_Population:
         return dataInfos_.szCrowdsMissionPath_.GetData();
-    default:
+    case eMissionType_FragOrder:
         return dataInfos_.szFragOrdersMissionPath_.GetData();
+    default:
+        return "";
     }
 }
 

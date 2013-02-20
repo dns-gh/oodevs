@@ -26,7 +26,7 @@ class ADN_ListView_DescriptionAttachment : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_DescriptionAttachment( E_EntityType entityType );
+             ADN_ListView_DescriptionAttachment( E_MissionType missionType );
     virtual ~ADN_ListView_DescriptionAttachment();
     //@}
 
@@ -46,7 +46,7 @@ public slots:
 private:
     //! @name members
     //@{
-    E_EntityType entityType_;
+    E_MissionType missionType_;
     //@}
 };
 

@@ -344,6 +344,16 @@ ADN_Tr::T_ConverterEntityType ADN_Tr::entityTypeConverter_[] =
     T_ConverterEntityType( "", "", (E_EntityType)-1 )
 };
 
+ADN_Tr::T_ConverterMissionType ADN_Tr::missionTypeConverter_[] =
+{
+    T_ConverterMissionType( "unit",       QT_TRANSLATE_NOOP( "ADN_Tr", "Unit missions" ),      eMissionType_Pawn ),
+    T_ConverterMissionType( "automat",    QT_TRANSLATE_NOOP( "ADN_Tr", "Automat missions" ),   eMissionType_Automat ),
+    T_ConverterMissionType( "crowd",      QT_TRANSLATE_NOOP( "ADN_Tr", "Crowd missions" ),     eMissionType_Population ),
+    T_ConverterMissionType( "fragOrder", QT_TRANSLATE_NOOP( "ADN_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
+
+    T_ConverterMissionType( "", "", (E_MissionType)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromConsumptionType
 // Created: APE 2005-02-18
@@ -561,6 +571,15 @@ const std::string& ADN_Tr::ConvertFromEntityType( E_EntityType nValue, E_Convers
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromMissionType
+// Created: NPT 2013-02-15
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromMissionType( E_MissionType nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( missionTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToConsumptionType
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -774,6 +793,15 @@ E_ContextParameters ADN_Tr::ConvertToContextParameters( const std::string& strNa
 E_EntityType ADN_Tr::ConvertToEntityType( const std::string& strName )
 {
     return ADN_Tr::FindInConverter( entityTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToMissionType
+// Created: NPT 2013-02-15
+// -----------------------------------------------------------------------------
+E_MissionType ADN_Tr::ConvertToMissionType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( missionTypeConverter_, strName );
 }
 
 // -----------------------------------------------------------------------------

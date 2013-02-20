@@ -20,14 +20,32 @@
 
 typedef ADN_Missions_Mission Mission;
 
+namespace
+{
+    E_EntityType ConvertMissionToEntityType( E_MissionType type )
+    {
+        switch( type )
+        {
+            case eMissionType_Pawn:
+                return eEntityType_Pawn;
+            case eMissionType_Automat:
+                return eEntityType_Automat;
+            case eMissionType_Population:
+                return eEntityType_Population;
+            default:
+                return eNbrEntityTypes;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_MissionTypes constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( QWidget* parent, E_EntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions )
+ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( QWidget* parent, E_MissionType eMissionType, ADN_Missions_Data::T_Mission_Vector& missions )
     : ADN_ListView( parent, "ADN_ListView_MissionTypes", ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() )
     , missions_   ( missions )
-    , eEntityType_( eEntityType )
+    , eMissionType_( eMissionType )
 {
     pConnector_ = new ADN_Connector_ListView< Mission >( *this );
     SetDeletionEnabled( true );
@@ -83,14 +101,14 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     ADN_Missions_Data::T_Mission_Vector* pMissionList;
-    if( eEntityType_ == eEntityType_Automat )
+    if( eMissionType_ == eMissionType_Automat )
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
-    else if( eEntityType_ == eEntityType_Pawn )
+    else if( eMissionType_ == eMissionType_Pawn )
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     else
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
 
-    ADN_Missions_Wizard wizard( eEntityType_, ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
+    ADN_Missions_Wizard wizard( ConvertMissionToEntityType( eMissionType_ ), ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
         FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
@@ -99,7 +117,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
         assert( pCastData != 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                       ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(),
-                                      ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ), eModels, static_cast< int >( eEntityType_ ) );
+                                      ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ConvertMissionToEntityType( eMissionType_ ), *pCastData ), eModels, static_cast< int >( eMissionType_ ) );
     }
     popupMenu.exec( pt );
 }
@@ -115,7 +133,7 @@ bool ADN_ListView_MissionTypes::ContextMenuDelete()
     std::string name = static_cast< Mission* >( pCurData_ )->strName_.GetData();
     if( ADN_ListView::ContextMenuDelete() )
     {
-        emit NotifyMissionDeleted( name, eEntityType_ );
+        emit NotifyMissionDeleted( name, eMissionType_ );
         return true;
     }
     return false;
@@ -133,5 +151,5 @@ std::string ADN_ListView_MissionTypes::GetToolTipFor( const QModelIndex& index )
     Mission* pCastData = static_cast< Mission* >( pData );
     assert( pCastData != 0 );
     return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eModels ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ) );
+                            ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( ConvertMissionToEntityType( eMissionType_ ), *pCastData ) );
 }

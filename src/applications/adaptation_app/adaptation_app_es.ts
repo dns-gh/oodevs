@@ -5277,6 +5277,22 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Remote</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit missions</source>
+        <translation type="unfinished">Misiones de unidad</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation type="unfinished">Misiones de autómata</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fragmentary Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

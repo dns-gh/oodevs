@@ -79,7 +79,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_EntityType eEntityType );
+    QWidget* BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_MissionType eMissionType );
     QWidget* BuildFragOrders();
     //@}
 
@@ -91,12 +91,13 @@ private:
     ADN_Missions_Data& data_;
     ADN_HtmlViewer* missionViewers_[ 4 ];
     QSignalMapper* generateMapper_;
+    QCheckBox* availableState_;
     //@}
 
 private slots:
     //! @name slots
     //@{
-    void OnNotifyElementDeleted( std::string elementName, E_EntityType elementType );
+    void OnNotifyElementDeleted( std::string elementName, E_MissionType missionType );
     void OnGenerate( int );
     //@}
 };

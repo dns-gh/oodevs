@@ -132,6 +132,6 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
 // -----------------------------------------------------------------------------
 void ADN_Models_GUI::Enable( bool enable )
 {
-    for( int i = 0; i < eEntityType_FragOrder; ++i )
+    for( int i = 0; i < eNbrEntityTypes; ++i )
         pWidgets_[ i ]->setEnabled( enable );
 }

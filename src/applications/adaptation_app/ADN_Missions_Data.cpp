@@ -121,10 +121,10 @@ void ADN_Missions_Data::Initialize()
 // Name: ADN_Missions_Data::NotifyElementDeleted
 // Created: NPT 2012-07-31
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_EntityType elementType )
+void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_MissionType missionType )
 {
     const std::string missionDirectoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                                           + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( elementType );
+                                           + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType );
     std::string xmlFileName = missionDirectoryPath + std::string( "/" + elementName + ".xml");
     std::string htmlFileName = missionDirectoryPath + std::string( "/" + elementName + ".html");
     toDeleteMissionSheets_.push_back( xmlFileName );
@@ -139,10 +139,10 @@ QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text 
 {
      assert( index >= 0 && index < 4 );
      const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-                                  + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_EntityType >( index)  );
+                                  + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
      switch( index )
      {
-     case eEntityType_Pawn:
+     case eMissionType_Pawn:
          for( auto it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
@@ -150,7 +150,7 @@ QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text 
                  break;
              }
          break;
-     case eEntityType_Automat:
+     case eMissionType_Automat:
          for( auto it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
@@ -158,7 +158,7 @@ QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text 
                 break;
              }
          break;
-     case eEntityType_Population:
+     case eMissionType_Population:
          for( auto it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
              if( ( *it )->strName_.GetData() == text.toStdString() )
              {
@@ -186,13 +186,13 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), eEntityType_Pawn ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), eMissionType_Pawn ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), eEntityType_Automat ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), eMissionType_Automat ) )
             >> xml::end
             >> xml::start( "populations" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), eEntityType_Population ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), eMissionType_Population ) )
             >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
@@ -211,7 +211,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 {
     std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-    spNew->ReadArchive( xis, ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes )  );
+    spNew->ReadArchive( xis, ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eMissionType_FragOrder )  );
     fragOrders_.AddItem( spNew.release() );
 }
 
@@ -219,7 +219,7 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, E_EntityType modelType )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, E_MissionType modelType )
 {
     std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
     const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
@@ -230,7 +230,7 @@ void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missi
 
 namespace
 {
-    void WriteMissionSheets( E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
+    void WriteMissionSheets( E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
         for( unsigned int i = 0; i < missions.size(); ++i )
@@ -239,7 +239,7 @@ namespace
             missions[i]->WriteMissionSheet( missionDir );
     }
 
-    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type, const ADN_Missions_Data::T_Mission_Vector& missions )
+    void WriteMissions( xml::xostream& output, const std::string& name, E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         //xml datas saving
         output << xml::start( name );
@@ -275,9 +275,9 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 
     output << xml::start( "missions" );
     ADN_Tools::AddSchema( output, "Missions" );
-    WriteMissions( output, "units", eEntityType_Pawn, unitMissions_ );
-    WriteMissions( output, "automats", eEntityType_Automat, automatMissions_ );
-    WriteMissions( output, "populations", eEntityType_Population, populationMissions_ );
+    WriteMissions( output, "units", eMissionType_Pawn, unitMissions_ );
+    WriteMissions( output, "automats", eMissionType_Automat, automatMissions_ );
+    WriteMissions( output, "populations", eMissionType_Population, populationMissions_ );
 
     //frag orders datas saving
     output << xml::start( "fragorders" );
@@ -285,7 +285,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
         fragOrders_[i]->WriteArchive( output );
 
     const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eNbrEntityTypes );
+    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eMissionType_FragOrder );
     //frag orders mission sheets saving
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->RemoveDifferentNamedMissionSheet( missionDir );
@@ -490,23 +490,23 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
     {
         CheckMissionTypeUniqueness( checker, it, unitMissions_, 0 );
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
-        ( *it )->CheckMissionDataConsistency( checker, eEntityType_Pawn );
+        ( *it )->CheckMissionDataConsistency( checker, eMissionType_Pawn );
     }
     for( ADN_Missions_Data::CIT_Mission_Vector it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
     {
         CheckMissionTypeUniqueness( checker, it, automatMissions_, 1 );
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 1 );
-        ( *it )->CheckMissionDataConsistency( checker, eEntityType_Automat );
+        ( *it )->CheckMissionDataConsistency( checker, eMissionType_Automat );
     }
     for( ADN_Missions_Data::CIT_Mission_Vector it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
     {
         CheckMissionTypeUniqueness( checker, it, populationMissions_, 2 );
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 2 );
-        ( *it )->CheckMissionDataConsistency( checker, eEntityType_Population );
+        ( *it )->CheckMissionDataConsistency( checker, eMissionType_Population );
     }
     for( ADN_Missions_Data::CIT_FragOrder_Vector it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
     {
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 3 );
-        ( *it )->CheckMissionDataConsistency( checker, eEntityType_FragOrder );
+        ( *it )->CheckMissionDataConsistency( checker, eMissionType_FragOrder );
     }
 }

@@ -83,7 +83,7 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 // Name: ADN_Missions_ABC::CheckDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_EntityType type )
+void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type )
 {
     CheckFieldDataConsistency( descriptionContext_.GetData(), checker, type );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
@@ -98,7 +98,7 @@ void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& chec
 // Name: ADN_Missions_ABC::CheckFieldDataConsistency
 // Created: NPT 2013-01-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_EntityType type )
+void ADN_Missions_ABC::CheckFieldDataConsistency( std::string fieldData, ADN_ConsistencyChecker& checker, E_MissionType type )
 {
     boost::smatch match;
     while( boost::regex_search( fieldData, match, boost::regex( "\\$\\$(.*?)\\$\\$(.*)" ) ) )
