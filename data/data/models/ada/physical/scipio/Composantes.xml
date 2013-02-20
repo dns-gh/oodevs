@@ -33182,6 +33182,7 @@
     </composition>
     <sensors>
       <sensor height="2" type="I.L Fantassin"/>
+      <sensor height="2" type="Lunette Thermique ACCP"/>
     </sensors>
     <radars/>
     <transports/>
@@ -35747,4 +35748,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1673854621" -->
+<!-- signature="0141823039" -->
