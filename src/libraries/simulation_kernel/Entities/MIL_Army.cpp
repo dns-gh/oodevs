@@ -316,7 +316,8 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
 
     pColor_->WriteODB( xos );
-    pExtensions_->WriteODB( xos );
+    if( pExtensions_.get() )
+        pExtensions_->WriteODB( xos );
 
     xos << xml::start( "objects" );
     tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref( xos ) ) );
@@ -681,7 +682,8 @@ void MIL_Army::SendCreation() const
     asn().set_name( strName_.c_str() );
     asn().set_type( sword::EnumDiplomacy( nType_ ) );
     pColor_->SendFullState( asn );
-    pExtensions_->SendFullState( asn );
+    if( pExtensions_.get() )
+        pExtensions_->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
