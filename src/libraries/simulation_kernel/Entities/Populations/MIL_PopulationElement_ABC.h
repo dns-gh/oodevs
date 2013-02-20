@@ -77,6 +77,7 @@ public:
     void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
+    void NotifyUrbanDestructionStart();
     //@}
 
     //! @name Accessors

@@ -144,6 +144,8 @@ namespace report
     const MIL_DecisionalReport eRC_TransportedUnitCannotReceiveOrder( "eRC_TransportedUnitCannotReceiveOrder" );
     const MIL_DecisionalReport eRC_LogNoSuperior( "eRC_LogNoSuperior" );
     const MIL_DecisionalReport eRC_LogNoStock( "eRC_LogNoStock" );
+    const MIL_DecisionalReport eRC_CloseCrowdAttitudeChanged( "eRC_CloseCrowdAttitudeChanged" );
+    const MIL_DecisionalReport eRC_CloseCrowdUrbanDestruction( "eRC_CloseCrowdUrbanDestruction" );
 }
 
 #endif // MIL_DecisionalReport

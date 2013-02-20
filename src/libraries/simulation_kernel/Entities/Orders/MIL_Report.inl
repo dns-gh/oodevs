@@ -205,6 +205,21 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::PostEvent
+// Created: NPT 2013-02-13
+// -----------------------------------------------------------------------------
+template< typename T > inline
+    void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
+    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreatePopulationKnowledge( populationKnowledge ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter2( MIL_MissionParameterFactory::Create( nParam2 ) );
+    parameters.push_back( pParameter );
+    parameters.push_back( pParameter2 );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEvent
 // Created: LGY 2012-06-28
 // -----------------------------------------------------------------------------
 template< typename T >

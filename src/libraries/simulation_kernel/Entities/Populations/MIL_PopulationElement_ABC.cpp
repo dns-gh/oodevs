@@ -453,6 +453,13 @@ void MIL_PopulationElement_ABC::SetAttitude( const MIL_PopulationAttitude& attit
     {
         bAttitudeUpdated_ = true;
         pAttitude_ = &attitude;
+        for( auto it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
+        {
+            boost::shared_ptr< DEC_Knowledge_Population > pKnPopulation = ( *it )->GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
+            if( !pKnPopulation )
+                return;
+            MIL_Report::PostEvent( **it, report::eRC_CloseCrowdAttitudeChanged, pKnPopulation, GetAttitude().GetID() );
+        }
     }
 }
 
@@ -588,6 +595,21 @@ void MIL_PopulationElement_ABC::ApplyDecontamination( double rRatioWorkers )
 {
     if( pDecontaminationEffect_->Apply( rRatioWorkers, MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) )
         bHumansUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::NotifyUrbanDestructionStart
+// Created: NPT 2013-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::NotifyUrbanDestructionStart()
+{
+    for( auto it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnPopulation = ( *it )->GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
+        if( !pKnPopulation )
+            return;
+        MIL_Report::PostEvent( **it, report::eRC_CloseCrowdUrbanDestruction, pKnPopulation );
+    }
 }
 
 // -----------------------------------------------------------------------------

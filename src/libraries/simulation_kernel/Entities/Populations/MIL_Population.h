@@ -128,6 +128,7 @@ public:
     void Secure( const MIL_AgentPion& securer  );
     void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
     void NotifyChanneled( const TER_Localisation& localisation );
+    void NotifyUrbanDestructionStart();
     //@}
 
     //! @name Operations
