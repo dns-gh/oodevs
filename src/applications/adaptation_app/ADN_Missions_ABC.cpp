@@ -238,8 +238,11 @@ void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const std::string& miss
     const std::string oldPath = std::string( missionDir + "/" + QFileInfo( missionSheetPath_.GetData().c_str() ).completeBaseName().toStdString() );
     if( !missionSheetPath_.GetData().empty() && newPath != oldPath )
     {
-        bfs::rename( oldPath + ".xml", newPath + ".xml" );
-        bfs::rename( oldPath + ".html", newPath + ".html" );
+        if( bfs::exists( oldPath + ".xml" ) && bfs::exists( oldPath + ".html" ) )
+        {
+            bfs::rename( oldPath + ".xml", newPath + ".xml" );
+            bfs::rename( oldPath + ".html", newPath + ".html" );
+        }
     }
 }
 
