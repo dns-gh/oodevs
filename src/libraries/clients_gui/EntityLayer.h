@@ -22,7 +22,6 @@
 namespace kernel
 {
     class Controllers;
-    class GlTooltip_ABC;
     class Entity_ABC;
     class Team_ABC;
     class Displayer_ABC;
@@ -35,6 +34,7 @@ namespace gui
     class GlTools_ABC;
     class LayerFilter_ABC;
     class View_ABC;
+    class InformationToolTip;
 }
 
 namespace gui
@@ -89,7 +89,7 @@ protected:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
     virtual bool ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
-    virtual bool DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
+    virtual bool DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& terrainPoint );
     virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
 
     virtual void SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
@@ -121,11 +121,11 @@ protected:
 private:
     //! @name Private Member data
     //@{
-    QString                                 name_;
-    kernel::Controllers&                    controllers_; // TODO protected?? utilisé dans EntityLayer
-    ColorStrategy_ABC&                      strategy_;
-    View_ABC&                               view_;
-    std::auto_ptr< kernel::GlTooltip_ABC >  tooltip_;
+    QString                                   name_;
+    kernel::Controllers&                      controllers_; // TODO protected?? utilisé dans EntityLayer
+    ColorStrategy_ABC&                        strategy_;
+    View_ABC&                                 view_;
+    std::auto_ptr< InformationToolTip >       infoTooltip_;
     kernel::SafePointer< kernel::Entity_ABC > tooltiped_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}

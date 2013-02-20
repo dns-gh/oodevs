@@ -11,7 +11,7 @@
 #include "EntityLayer.h"
 
 #include "DrawVisitor.h"
-#include "GlTooltip.h"
+#include "InformationToolTip.h"
 #include "View_ABC.h"
 #include "Viewport_ABC.h"
 
@@ -37,7 +37,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
-    , tooltip_    ( 0 )
+    , infoTooltip_( 0 )
     , tooltiped_  ( controllers )
     , selected_   ( controllers )
     , name_       ( name )
@@ -76,16 +76,11 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
     if( selected_ )
         Draw( *selected_, viewport );
     if( tooltiped_ )
-        if( const Positions* positions = tooltiped_->Retrieve< Positions >() )
-        {
-            const geometry::Point2f position = positions->GetPosition();
-            if( !tooltip_.get() )
-            {
-                std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
-                tooltip_ = tooltip;
-            }
-            tooltip_->Draw( position );
-        }
+    {
+        if( !infoTooltip_.get() )
+            infoTooltip_ = std::auto_ptr< InformationToolTip >( new InformationToolTip() );
+        infoTooltip_->Draw();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -147,14 +142,13 @@ void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable
 // Name: EntityLayerBase::HandleMouseMove
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
+bool EntityLayerBase::HandleMouseMove( QMouseEvent* /*mouseEvent*/, const geometry::Point2f& point )
 {
     if( !tooltiped_ || !ShouldDisplayTooltip( *tooltiped_, point ) )
     {
         tooltiped_ = 0;
-        if( tooltip_.get() )
-            tooltip_->Hide();
-
+        if( infoTooltip_.get() )
+            infoTooltip_->Hide();
         bool found = false;
         for( auto it = entities_.begin(); it != entities_.end() && !found; ++it )
             found = DisplayTooltip( **it, point );
@@ -176,14 +170,12 @@ bool EntityLayerBase::ShouldDisplayTooltip( const kernel::Entity_ABC& entity, co
 // Name: EntityLayerBase::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
+bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& onTerrainPoint )
 {
-    if( !tooltip_.get() )
-    {
-        std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
-        tooltip_ = tooltip;
-    }
-    if( ShouldDisplayTooltip( entity, point ) && DisplayTooltip( entity, *tooltip_ ) )
+    if( !infoTooltip_.get() )
+        infoTooltip_ = std::auto_ptr< InformationToolTip >( new InformationToolTip() );
+
+    if( ShouldDisplayTooltip( entity, onTerrainPoint ) && DisplayTooltip( entity, *infoTooltip_ ) )
     {
         tooltiped_ = &entity;
         return true;
@@ -197,7 +189,7 @@ bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const ge
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
 {
-    entity.GetInterfaces().Apply( & Displayable_ABC::DisplayInTooltip, displayer );
+    entity.GetInterfaces().Apply( &Displayable_ABC::DisplayInTooltip, displayer );
     return true;
 }
 

@@ -922,6 +922,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SymbolSizeOptionChooser.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\InformationToolTip.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1883,6 +1886,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\SelectionMenu.h">
       <Filter>Source Files\Tools</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\InformationToolTip.h">
+      <Filter>Source Files\gl</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>
