@@ -192,6 +192,9 @@ bool MIL_Object::CanInteractWith( const MIL_Entity_ABC& entity ) const
 {
     if( !MIL_Object_ABC::CanInteractWith( entity ) )
         return false;
+    const ObstacleAttribute* obstacle = RetrieveAttribute< ObstacleAttribute >();
+    if( obstacle && !obstacle->IsActivated() )
+        return false;
     bool canInteract = true;
     const MIL_Agent_ABC* agent = dynamic_cast< const MIL_Agent_ABC* >( &entity );
     if( agent )
