@@ -508,3 +508,18 @@ void DEC_MiscFunctions::ReportString( DEC_Decision_ABC& caller, int type, const 
         pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::ReportStage
+// Created: ABR 2012-12-18
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportStage( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::CreateStage( message ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}

@@ -38,6 +38,7 @@
 #include "MIL_RealParameter.h"
 #include "MIL_ResourceNetworkNodeParameter.h"
 #include "MIL_ResourceNetworkTypeParameter.h"
+#include "MIL_StageParameter.h"
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
@@ -290,6 +291,16 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const std::string& message )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_StringParameter >( message );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateStage
+// Created: ABR 2012-12-18
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateStage( const std::string& message )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_StageParameter >( message );
     return result;
 }
 

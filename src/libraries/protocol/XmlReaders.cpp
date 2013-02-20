@@ -624,6 +624,12 @@ namespace
             dst.add_value()->set_acharstr( *opt );
     }
 
+    void ReadStage( MissionParameter& dst, xml::xistream& xis )
+    {
+        if( const auto opt = ReadValue< std::string >( dst, xis ) )
+            dst.add_value()->set_stage( *opt );
+    }
+
     void ReadObjectId( MissionParameter& dst, xml::xistream& xis )
     {
         ReadId( dst, xis, &Value::mutable_object );
@@ -927,6 +933,7 @@ namespace
         { &ReadResourceNetworkType,   "resourcenetworktype" },
         { &ReadResourceType,          "dotationtype" },
         { &ReadResourceType,          "resourcetype" },
+        { &ReadStage,                 "stage" },
         { &ReadString,                "string" },
         { &ReadUnitId,                "agent" },
         { &ReadUnitKnowledgeId,       "agentknowledge" },

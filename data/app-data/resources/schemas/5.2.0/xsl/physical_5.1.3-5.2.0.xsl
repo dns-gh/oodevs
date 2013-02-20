@@ -20,6 +20,11 @@
                   <xsl:attribute name="file">missionSheets.xslt</xsl:attribute>
               </xsl:element>
           </xsl:if>
+          <xsl:if test="count( ./stages ) = 0">
+              <xsl:element name="stages">
+                  <xsl:attribute name="file">Stages.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
       </xsl:copy>
   </xsl:template>
 

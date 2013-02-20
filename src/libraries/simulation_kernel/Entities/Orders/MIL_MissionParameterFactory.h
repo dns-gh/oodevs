@@ -76,6 +76,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateResourceNetworkType( const PHY_ResourceNetworkType* resourceNetworkType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePion( const DEC_Decision_ABC* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateAgent( const MIL_AgentPion& pion );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateStage( const std::string& message );
 
 //    static void Copy( const MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 

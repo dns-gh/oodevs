@@ -184,3 +184,7 @@ end
 integration.RC_Float = function( myself, typeMessage, id, list )
     DEC_RC_Float( myself, typeMessage, id, list )
 end
+
+integration.RC_Stage = function( myself, typeMessage, id, list )
+    DEC_RC_Stage( myself, typeMessage, id, list )
+end

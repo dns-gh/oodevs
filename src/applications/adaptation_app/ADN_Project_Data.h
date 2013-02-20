@@ -78,6 +78,7 @@ public:
         ADN_Type_String szFuneral_;
         ADN_Type_String szUrbanTemplates_;
         ADN_Type_String szDisasters_;
+        ADN_Type_String szStages_;
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szPathfinder_;
         ADN_Type_String szObjectNames_;

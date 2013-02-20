@@ -58,7 +58,8 @@ public:
         eLocationComposite          = 24,
         ePhaseLine                  = 25,
         eResourceNetworkNode        = 26,
-        eResourceNetworkType        = 27
+        eResourceNetworkType        = 27,
+        eStage                      = 28
     };
 
     //! @name Factory

@@ -9,6 +9,7 @@
 
 #include "ReportFactory.h"
 #include "ReportTemplate.h"
+#include "Stages.h"
 #include "Trace.h"
 #include "RcEntityResolver_ABC.h"
 #include "Tools.h"
@@ -40,6 +41,7 @@ ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver
     , dotationResolver_ ( dotationResolver )
     , equipmentResolver_( equipmentResolver )
     , time_             ( time )
+    , stages_           ( new Stages() )
 {
     // NOTHING
 }
@@ -59,6 +61,7 @@ ReportFactory::~ReportFactory()
 // -----------------------------------------------------------------------------
 void ReportFactory::Load( const tools::ExerciseConfig& config  )
 {
+    stages_->Load( config );
     xml::xifstream scipio( config.GetPhysicalFile() );
     std::string reports;
     scipio >> xml::start( "physical" )
@@ -76,6 +79,7 @@ void ReportFactory::Load( const tools::ExerciseConfig& config  )
 // -----------------------------------------------------------------------------
 void ReportFactory::Purge()
 {
+    stages_->Purge();
     DeleteAll();
 }
 
@@ -173,5 +177,7 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return QString::number( value.indirectfire().id() );
     if( value.has_acharstr() )
         return QString( value.acharstr().c_str() );
+    if( value.has_stage() )
+        return QString( stages_->FindTranslation( value.stage().c_str() ).c_str() );
     throw MASA_EXCEPTION( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
 }

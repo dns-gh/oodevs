@@ -559,6 +559,8 @@ void RegisterReportFunctions( sword::Brain& brain )
         boost::function< void ( DEC_Decision_ABC&, int, const std::string&, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_RC_String",
         boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString, _1, _2, _3, _4 ) ) );
+    brain.RegisterFunction( "DEC_RC_Stage",
+        boost::function< void ( DEC_Decision_ABC&, int, const std::string&, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportStage, _1, _2, _3, _4 ) ) );
 }
 
 // -----------------------------------------------------------------------------

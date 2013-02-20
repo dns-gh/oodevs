@@ -41,6 +41,7 @@ namespace sword
     class MissionParameter;
 }
 
+class Stages;
 class Report;
 class RcEntityResolver_ABC;
 class ReportTemplate;
@@ -95,6 +96,7 @@ private:
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
     const kernel::Time_ABC* time_;
+    std::auto_ptr< Stages > stages_;
     //@}
 };
 

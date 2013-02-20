@@ -49,7 +49,7 @@ public:
     void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@
 
-private:
+protected:
     //! @name Member data
     //@{
     std::string value_;

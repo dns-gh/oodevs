@@ -66,6 +66,7 @@ public:
     static void ReportPopulationKnowledge( DEC_Decision_ABC& caller, int type, const std::string& reportId, int populationKnowledge );
     static void ReportTirPion            ( DEC_Decision_ABC& caller, int type, const std::string& reportId, int id );
     static void ReportString             ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
+    static void ReportStage              ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
 
     template< typename T > static void Trace          ( const T& caller, const std::string& message );
     template< typename T > static void Debug          ( const T& caller, const std::string& callerType, const std::string& message );

@@ -1164,12 +1164,14 @@ message MissionParameter {
         repeated Value                    list                     = 47;
         //! An external identifier
         optional int32                    external_identifier      = 48;
+        //! A stage
+        optional string                   stage                    = 49;
 
         // Magic action only
         //! Parameter specific to push flow operation
-        optional PushFlowParameters     push_flow_parameters = 49;
+        optional PushFlowParameters       push_flow_parameters     = 50;
         //! Parameter specific to pull flow operation
-        optional PullFlowParameters     pull_flow_parameters = 50;
+        optional PullFlowParameters       pull_flow_parameters     = 51;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;

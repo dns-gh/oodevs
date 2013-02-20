@@ -103,6 +103,7 @@
     <ClInclude Include="..\..\src\libraries\reports\Report.h" />
     <ClInclude Include="..\..\src\libraries\reports\ReportFactory.h" />
     <ClInclude Include="..\..\src\libraries\reports\ReportTemplate.h" />
+    <ClInclude Include="..\..\src\libraries\reports\Stages.h" />
     <ClInclude Include="..\..\src\libraries\reports\Tools.h" />
     <ClInclude Include="..\..\src\libraries\reports\Trace.h" />
   </ItemGroup>
@@ -110,6 +111,7 @@
     <ClCompile Include="..\..\src\libraries\reports\Report.cpp" />
     <ClCompile Include="..\..\src\libraries\reports\ReportFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\reports\ReportTemplate.cpp" />
+    <ClCompile Include="..\..\src\libraries\reports\Stages.cpp" />
     <ClCompile Include="..\..\src\libraries\reports\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\reports\Trace.cpp" />
   </ItemGroup>

@@ -170,6 +170,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadOptionalPath( input, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
     ReadPath( input, "symbols-directory", szSymbolsPath_ );
     ReadFile( input, "mission-sheets-xsl", szMissionSheetXslPath_ );
+    ReadFile( input, "stages", szStages_ );
 
     input >> xml::end;
 }
@@ -232,6 +233,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WritePath( output, "fragorders-mission-sheets-directory", szFragOrdersMissionPath_ );
     WritePath( output, "symbols-directory", szSymbolsPath_ );
     WriteFile( output, "mission-sheets-xsl", szMissionSheetXslPath_ );
+    WriteFile( output, "stages", szStages_ );
     output << xml::end;
 }
 
@@ -428,6 +430,7 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szStages_.GetData() );
 
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
@@ -551,4 +554,5 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData(), "Extensions" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szStages_.GetData(), "Stages" );
 }

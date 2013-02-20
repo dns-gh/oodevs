@@ -79,6 +79,7 @@
     <added-file filename="Funeral.xml" assign-file="schemas/4.3.4/added-files/Funeral.xml"/>
     <added-file filename="Disasters.xml" assign-file="schemas/5.2.0/added-files/Disasters.xml"/>
     <added-file filename="missionSheets.xslt" assign-file="schemas/5.2.0/added-files/missionSheets.xslt"/>
+    <added-file filename="Stages.xml" assign-file="schemas/5.2.0/added-files/Stages.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">

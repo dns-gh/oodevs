@@ -548,6 +548,15 @@ BOOST_FIXTURE_TEST_CASE( read_acharstr, Fixture )
     CheckCycle( msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( read_stage, Fixture )
+{
+    AddParameterValue( xos, "stage", "zomg" );
+    const auto msg = Read< MissionParameters >();
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).stage(), "zomg" );
+    CheckCycle( msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( read_object_id, Fixture )
 {
     AddParameterValue( xos, "object", 1337 );

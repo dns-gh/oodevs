@@ -370,6 +370,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="String"/>
+			<xs:enumeration value="Stage"/>
 			<xs:enumeration value="IndirectFire"/>
 			<xs:enumeration value="EquipmentType"/>
 		</xs:restriction>

@@ -333,6 +333,11 @@ namespace
         WritePair( xos, "string", src.acharstr() );
     }
 
+    void WriteStage( xml::xostream& xos, const Value& src )
+    {
+        WritePair( xos, "stage", src.stage() );
+    }
+
     void WriteLocation( xml::xostream& xos, const Writer_ABC& writer, const Value& src )
     {
         xos << xml::attribute( "type", "location" );
@@ -553,6 +558,7 @@ namespace
         { &Value::has_resourcenetworknode,      &WriteResourceNetworkNode },
         { &Value::has_resourcenetworktype,      &WriteResourceNetworkType  },
         { &Value::has_resourcetype,             &WriteResourceType },
+        { &Value::has_stage,                    &WriteStage },
         { &Value::has_urbanknowledge,           &WriteUrbanKnowledge },
     };
 

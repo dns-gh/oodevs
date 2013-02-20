@@ -63,6 +63,7 @@
         <xs:element name="fragorders-mission-sheets-directory" type="PathReference"/>
         <xs:element name="symbols-directory" type="PathReference"/>
         <xs:element name="mission-sheets-xsl" type="FileReference"/>
+        <xs:element name="stages" type="FileReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
       <xs:attribute name="read-only" type="xs:boolean" use="optional"/>
