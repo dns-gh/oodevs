@@ -37,7 +37,6 @@ class MIL_Schedule_ABC;
 class MIL_Agent_ABC;
 class MIL_InhabitantSatisfactions;
 class TER_Localisation;
-class MIL_Config;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -48,7 +47,7 @@ class MIL_Inhabitant : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army, const MIL_Config& config );
+             MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army );
     virtual ~MIL_Inhabitant();
     //@}
 

@@ -23,12 +23,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 // Name: PopulationFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, const MIL_Config& config )
+PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, bool logEnabled )
     : gcPause_          ( gcPause )
     , gcMult_           ( gcMult )
     , missionController_( missionController )
-    , config_           ( config )
-    , logger_           ( config.IsDecisionalLoggerEnabled() ? new sword::DEC_Logger< MIL_Population >() : 0)
+    , logEnabled_       ( logEnabled )
+    , logger_           ( logEnabled_ ? new sword::DEC_Logger< MIL_Population >() : 0)
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
     const MIL_PopulationType* pType = MIL_PopulationType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, config_, logger_ );
+    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, logger_ );
     Register( population.GetID(), population );
     population.Register( missionController_ );
     return population;

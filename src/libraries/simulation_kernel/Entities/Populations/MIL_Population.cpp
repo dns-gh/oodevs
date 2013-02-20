@@ -36,6 +36,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 #include "Tools/MIL_Geometry.h"
+
 #include "Urban/MIL_UrbanObject_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
@@ -73,7 +74,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause,
-                                unsigned int gcMult, const MIL_Config& config, sword::DEC_Logger_ABC* logger )
+                                unsigned int gcMult, sword::DEC_Logger_ABC* logger )
     : MIL_Entity_ABC( xis )
     , pType_                      ( &type )
     , nID_                        ( xis.attribute< unsigned int >( "id" ) )
@@ -92,7 +93,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
-    , pAffinities_                ( new MIL_AffinitiesMap( xis, config ) )
+    , pAffinities_                ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_                ( new MIL_DictionaryExtensions( xis ) )
 {
     idManager_.Lock( nID_ );

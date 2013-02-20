@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AffinitiesMap();
-    explicit MIL_AffinitiesMap( xml::xistream& xis, const MIL_Config& config );
+    explicit MIL_AffinitiesMap( xml::xistream& xis );
     virtual ~MIL_AffinitiesMap();
     //@}
 
@@ -79,7 +79,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAffinity( xml::xistream& xis, const MIL_Config& config );
+    void ReadAffinity( xml::xistream& xis );
     //@}
 
 private:

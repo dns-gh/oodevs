@@ -11,13 +11,11 @@
 #define __AgentFactory_h_
 
 #include "AgentFactory_ABC.h"
-#include "MIL_AgentServer.h"
 #include "MIL.h"
 
 class MIL_IDManager;
 class AlgorithmsFactories;
 class MissionController_ABC;
-class MIL_Config;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -30,7 +28,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, const MIL_Config& config );
+             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController );
     virtual ~AgentFactory();
     //@}
 
@@ -61,7 +59,6 @@ private:
     //! @name Member data
     //@{
     MIL_IDManager& idManager_;
-    const MIL_Config& config_;
     MissionController_ABC& missionController_;
     std::auto_ptr< AlgorithmsFactories > algorithmsFactories_;
     //@}
@@ -85,7 +82,7 @@ void load_construct_data( Archive& archive, AgentFactory* factory, const unsigne
     MissionController_ABC* missionController;
     archive >> idManager
             >> missionController;
-    ::new( factory )AgentFactory( *idManager, *missionController, MIL_AgentServer::GetWorkspace().GetConfig() );
+    ::new( factory )AgentFactory( *idManager, *missionController );
 }
 
 #endif // __AgentFactory_h_

@@ -45,9 +45,8 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGTC2* pion, const uns
 // Name: MIL_AgentPionLOGTC2 constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis,
-                                          const MIL_Config& config )
-    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis, config )
+MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
+    : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis )
 {
 }
 

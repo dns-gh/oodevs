@@ -26,10 +26,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Name: AgentFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, const MIL_Config& config )
+AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController )
     : idManager_          ( idManager )
     , missionController_  ( missionController )
-    , config_             ( config )
     , algorithmsFactories_( new AlgorithmsFactories() )
 {
     // NOTHING
@@ -50,7 +49,7 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext )
 {
-    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis, config_ );
+    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
     type.RegisterRoles( *pPion, ext );
     pPion->Register( missionController_ );
     return pPion;

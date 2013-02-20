@@ -20,8 +20,6 @@ namespace xml
     class xistream;
 }
 
-class MIL_Config;
-
 // =============================================================================
 // @class  MIL_AgentPionType
 // Created: JVT 2004-08-03
@@ -29,7 +27,7 @@ class MIL_Config;
 class MIL_AgentPionLOGMaintenance : public MIL_AgentPionLOG_ABC
 {
 public:
-    MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis, const MIL_Config& config );
+             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
              MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPionLOGMaintenance();

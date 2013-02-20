@@ -19,8 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InhabitantFactory )
 // Name: InhabitantFactory constructor
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-InhabitantFactory::InhabitantFactory( const MIL_Config& config )
-    : config_( config )
+InhabitantFactory::InhabitantFactory()
 {
     // NOTHING
 }
@@ -43,7 +42,7 @@ MIL_Inhabitant& InhabitantFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
     const MIL_InhabitantType* pType = MIL_InhabitantType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Inhabitant& inhabitant = *new MIL_Inhabitant( xis, *pType, army, config_ );
+    MIL_Inhabitant& inhabitant = *new MIL_Inhabitant( xis, *pType, army );
     Register( inhabitant.GetID(), inhabitant );
     return inhabitant;
 }

@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AffinitiesMap.h"
-#include "Tools/MIL_Config.h"
 #include "protocol/ClientSenders.h"
 #include "Network/NET_AsnException.h"
 
@@ -34,12 +33,12 @@ MIL_AffinitiesMap::MIL_AffinitiesMap()
 // Name: MIL_AffinitiesMap constructor
 // Created: ABR 2011-02-03
 // -----------------------------------------------------------------------------
-MIL_AffinitiesMap::MIL_AffinitiesMap( xml::xistream& xis, const MIL_Config& config )
+MIL_AffinitiesMap::MIL_AffinitiesMap( xml::xistream& xis )
     : hasChanged_( false )
 {
     xis >> xml::optional
         >> xml::start( "adhesions" )
-            >> xml::list( "adhesion", *this, &MIL_AffinitiesMap::ReadAffinity, boost::cref( config ) )
+            >> xml::list( "adhesion", *this, &MIL_AffinitiesMap::ReadAffinity )
         >> xml::end;
 }
 
@@ -56,11 +55,9 @@ MIL_AffinitiesMap::~MIL_AffinitiesMap()
 // Name: MIL_AffinitiesMap::ReadAffinity
 // Created: ABR 2011-02-03
 // -----------------------------------------------------------------------------
-void MIL_AffinitiesMap::ReadAffinity( xml::xistream& xis, const MIL_Config& config )
+void MIL_AffinitiesMap::ReadAffinity( xml::xistream& xis )
 {
-    unsigned int id = xis.attribute< unsigned long >( "party" );
-    if( config.CanCreateParty( id ) )
-        affinities_[ id ] = xis.attribute< float >( "value" );
+    affinities_[ xis.attribute< unsigned long >( "party" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------

@@ -24,7 +24,6 @@ class MIL_Inhabitant;
 class MIL_PopulationType;
 class MIL_Schedule_ABC;
 class PHY_ResourceNetworkType;
-class MIL_Config;
 
 // =============================================================================
 // @class  MIL_InhabitantType

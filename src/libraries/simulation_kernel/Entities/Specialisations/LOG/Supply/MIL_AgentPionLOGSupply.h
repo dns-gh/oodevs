@@ -15,8 +15,6 @@
 #include "MIL.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 
-class MIL_Config;
-
 // =============================================================================
 // @class  MIL_AgentPionType
 // Created: JVT 2004-08-03
@@ -24,7 +22,7 @@ class MIL_Config;
 class MIL_AgentPionLOGSupply : public MIL_AgentPionLOG_ABC
 {
 public:
-    MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis, const MIL_Config& config );
+             MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
              MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
              MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPionLOGSupply();
