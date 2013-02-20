@@ -12,9 +12,9 @@
 #include "ModesObserver_ABC.h"
 #include "DisplayableModesObserver_ABC.h"
 #include "Options.h"
+#include "Settings.h"
 #include "Tools.h"
 #include "ENT/ENT_Tr_Gen.h"
-#include "clients_gui/Settings.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4127 )
 #include <QtCore/qsettings.h>
@@ -155,7 +155,7 @@ void ModeController::SaveGeometry( E_Modes mode )
 void ModeController::LoadOptions( E_Modes mode, Options& options )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    gui::Settings settings( "MASA Group", "SWORD" );
+    Settings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + registryModes_[ mode ] + "/Options" );
     options.Load( settings );
     settings.endGroup();
@@ -168,7 +168,7 @@ void ModeController::LoadOptions( E_Modes mode, Options& options )
 void ModeController::SaveOptions( E_Modes mode, Options& options )
 {
     EnsureModeIsAvailableForRegistry( mode );
-    gui::Settings settings( "MASA Group", "SWORD" );
+    Settings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + registryModes_[ mode ] + "/Options" );
     options.Save( settings );
     settings.endGroup();

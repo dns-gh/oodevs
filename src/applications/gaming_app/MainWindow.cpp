@@ -70,7 +70,6 @@
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/ParametersLayer.h"
-#include "clients_gui/Settings.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"

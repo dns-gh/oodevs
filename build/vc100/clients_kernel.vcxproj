@@ -128,6 +128,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroup.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Settings.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Selectionners.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Settings.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\App6Symbol.h" />

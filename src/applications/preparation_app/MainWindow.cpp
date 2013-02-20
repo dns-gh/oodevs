@@ -63,7 +63,6 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionLayer.h"
-#include "clients_gui/Settings.h"
 #include "clients_gui/StatusBar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"

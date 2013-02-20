@@ -349,7 +349,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PreferencesDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PreferencesList.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PresetDialog.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\Settings.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SizeButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPreference.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CoordinateSystemsPanel.cpp" />
@@ -2113,7 +2112,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Settings.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\SizeButton.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

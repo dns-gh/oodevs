@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "clients_kernel_pch.h"
 #include "Settings.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
+#include <qtgui/qdesktopwidget.h>
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Settings constructor

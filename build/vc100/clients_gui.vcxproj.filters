@@ -628,9 +628,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PresetDialog.cpp">
       <Filter>Source Files\Preferences</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\Settings.cpp">
-      <Filter>Source Files\Preferences</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SizeButton.cpp">
       <Filter>Source Files\Preferences</Filter>
     </ClCompile>
@@ -1292,9 +1289,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\XyParser.h">
       <Filter>Source Files\Locations\Parsers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Settings.h">
-      <Filter>Source Files\Preferences</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\TerrainPreference.h">
       <Filter>Source Files\Preferences</Filter>

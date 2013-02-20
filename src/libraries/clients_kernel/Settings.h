@@ -10,7 +10,7 @@
 #ifndef __Settings_h_
 #define __Settings_h_
 
-#include "clients_kernel/Settings_ABC.h"
+#include "Settings_ABC.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4127 )
 #include <QtCore/qsettings.h>
@@ -20,14 +20,12 @@ namespace kernel
 {
     class TristateOption;
     class FourStateOption;
-}
 
-namespace gui
-{
 // =============================================================================
 // Created: APE 2004-06-01
 // =============================================================================
-class Settings : public QSettings, public kernel::Settings_ABC
+class Settings : public QSettings
+               , public kernel::Settings_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -70,15 +68,8 @@ public:
     void RemoveMainWindowEntries( const QString& field );
     void ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible );
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Settings( const Settings& );
-    Settings& operator=( const Settings& );
-    //@}
 };
 
-}
+} //! namespace kernel
 
 #endif // __Settings_h_
