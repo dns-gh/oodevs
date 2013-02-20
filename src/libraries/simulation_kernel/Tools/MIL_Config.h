@@ -54,8 +54,6 @@ public:
     bool               IsCommandProfilingEnabled   () const;
     bool               IsSaveCheckpointTestMode    () const;
     bool               IsDispatcherEmbedded        () const;
-    bool               CanCreateNoPartyObjects     () const;
-    bool               CanCreateParty( unsigned int id ) const;
     unsigned short     GetNetworkPort              () const;
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
@@ -163,9 +161,6 @@ private:
     std::string    integrationDir_;
     std::string    pathfindDir_;
     std::string    pathfindFilter_;
-    bool createNoPartyObjects_;
-    bool subset_;
-    std::set< unsigned int > subsetParties_;
     //@}
 };
 

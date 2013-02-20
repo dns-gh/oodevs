@@ -14,7 +14,6 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
-#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
@@ -35,7 +34,6 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , timeStep_                ( 0 )
     , reportsClearFrequency_   ( 100 )
     , useShieldUtf8Encoding_   ( true )
-    , subset_                  ( false )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -51,17 +49,6 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
 Config::~Config()
 {
     // NOTHING
-}
-
-namespace
-{
-    void ExtractParties( const std::string& subset, std::set< unsigned int >& parties )
-    {
-        std::vector< std::string > result;
-        boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
-        for( auto it = result.begin(); it != result.end(); ++it )
-            parties.insert( boost::lexical_cast< unsigned int >( *it ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +117,7 @@ void Config::Parse( int argc, char** argv )
                         >> xml::attribute( "frequency", reportsClearFrequency_ )
                     >> xml::end;
     if( subset_ )
-        ExtractParties( subsetParties, subsetParties_ );
+        ExtractParties( subsetParties );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
@@ -222,15 +209,4 @@ unsigned int Config::GetTickDuration() const
 unsigned int Config::GetReportsClearFrequency() const
 {
     return reportsClearFrequency_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::CanCreateParty
-// Created: LGY 2013-02-12
-// -----------------------------------------------------------------------------
-bool Config::CanCreateParty( unsigned int id ) const
-{
-    if( !subset_ )
-        return true;
-    return subsetParties_.find( id ) != subsetParties_.end();
 }

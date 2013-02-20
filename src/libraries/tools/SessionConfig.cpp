@@ -13,6 +13,7 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
@@ -26,6 +27,8 @@ SessionConfig::SessionConfig( RealFileLoaderObserver_ABC& observer )
     : ExerciseConfig    ( observer )
     , sessionConfigFile_( "session.xml" )
     , hasCheckPoint_    ( false )
+    , createNoPartyObjects_( true )
+    , subset_( false )
 {
     po::options_description desc( "Session options" );
     desc.add_options()
@@ -134,4 +137,36 @@ std::string SessionConfig::GetCheckpointDirectory() const
 std::string SessionConfig::BuildOnLocalCheckpointChildFile( const std::string& checkpoint, const std::string& file ) const
 {
    return BuildDirectoryFile( BuildDirectoryFile ( BuildSessionChildFile( "checkpoints" ), checkpoint ), file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::ExtractParties
+// Created: LGY 2013-02-19
+// -----------------------------------------------------------------------------
+void SessionConfig::ExtractParties( const std::string& subset )
+{
+    std::vector< std::string > result;
+    boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
+    for( auto it = result.begin(); it != result.end(); ++it )
+        subsetParties_.insert( boost::lexical_cast< unsigned int >( *it ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::CanCreateNoPartyObjects
+// Created: LGY 2013-02-19
+// -----------------------------------------------------------------------------
+bool SessionConfig::CanCreateNoPartyObjects() const
+{
+    return createNoPartyObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfig::CanCreateParty
+// Created: LGY 2013-02-19
+// -----------------------------------------------------------------------------
+bool SessionConfig::CanCreateParty( unsigned int id ) const
+{
+    if( !subset_ )
+        return true;
+    return subsetParties_.find( id ) != subsetParties_.end();
 }

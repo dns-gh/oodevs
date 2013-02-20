@@ -47,7 +47,6 @@ public:
     unsigned short     GetNetworkShieldParameters() const;
     unsigned long      GetNetworkTimeout() const;
     bool               UseShieldUtf8Encoding() const;
-    bool               CanCreateParty( unsigned int id ) const;
     unsigned int       GetKeyFramesFrequency() const;
     unsigned int       GetReplayFragmentsFrequency() const;
     unsigned int       GetTickDuration() const;
@@ -67,8 +66,6 @@ private:
     unsigned int timeStep_;
     unsigned int reportsClearFrequency_;
     bool useShieldUtf8Encoding_;
-    bool subset_;
-    std::set< unsigned int > subsetParties_;
     //@}
 };
 

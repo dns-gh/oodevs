@@ -11,6 +11,7 @@
 #define __SessionConfig_h_
 
 #include "ExerciseConfig.h"
+#include <set>
 
 namespace tools
 {
@@ -41,9 +42,24 @@ public:
     virtual std::string BuildOnLocalCheckpointChildFile( const std::string& checkpoint, const std::string& file ) const;
 
     virtual bool HasCheckpoint() const;
+    virtual bool CanCreateNoPartyObjects() const;
+    virtual bool CanCreateParty( unsigned int id ) const;
     virtual std::string GetCheckpointDirectory() const;
 
     virtual void Parse( int argc, char** argv );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    void ExtractParties( const std::string& subset );
+    //@}
+
+    //! @name Member data
+    //@{
+    bool subset_;
+    std::set< unsigned int > subsetParties_;
+    bool createNoPartyObjects_;
     //@}
 
 private:

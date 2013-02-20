@@ -19,7 +19,6 @@
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
-#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
@@ -60,8 +59,6 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , setpause_( 0 )
     , setstepmul_( 0 )
     , integrationDir_( "resources" )
-    , createNoPartyObjects_( true )
-    , subset_( false )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
@@ -117,17 +114,6 @@ void MIL_Config::ReadSessionFile( const std::string& file )
     setpause_ = 100;
     setstepmul_ = 200;
     GetLoader().LoadFile( file, boost::bind( &MIL_Config::ReadSessionXml, this, _1 ) );
-}
-
-namespace
-{
-    void ExtractParties( const std::string& subset, std::set< unsigned int >& parties )
-    {
-        std::vector< std::string > result;
-        boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
-        for( auto it = result.begin(); it != result.end(); ++it )
-            parties.insert( boost::lexical_cast< unsigned int >( *it ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +179,7 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
     if( ! networkPort_ )
         networkPort_ = port;
     if( subset_ )
-        ExtractParties( subsetParties, subsetParties_ );
+        ExtractParties( subsetParties );
     ConfigureRandom( xis );
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );
@@ -346,24 +332,4 @@ const std::string& MIL_Config::GetPathfindDir() const
 const std::string& MIL_Config::GetPathfindFilter() const
 {
     return pathfindFilter_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::CanCreateNoPartyObjects
-// Created: LGY 2013-02-11
-// -----------------------------------------------------------------------------
-bool MIL_Config::CanCreateNoPartyObjects() const
-{
-    return createNoPartyObjects_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::CanCreateParty
-// Created: LGY 2013-02-11
-// -----------------------------------------------------------------------------
-bool MIL_Config::CanCreateParty( unsigned int id ) const
-{
-    if( !subset_ )
-        return true;
-    return subsetParties_.find( id ) != subsetParties_.end();
 }
