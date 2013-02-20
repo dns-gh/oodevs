@@ -55,7 +55,7 @@ public:
 
     typedef ADN_Type_Vector_ABC<ADN_Missions_FragOrder>       T_FragOrder_Vector;
     typedef T_FragOrder_Vector::iterator                     IT_FragOrder_Vector;
-    typedef T_FragOrder_Vector::const_iterator                    CIT_FragOrder_Vector;
+    typedef T_FragOrder_Vector::const_iterator              CIT_FragOrder_Vector;
 
 // =============================================================================
 // Main data

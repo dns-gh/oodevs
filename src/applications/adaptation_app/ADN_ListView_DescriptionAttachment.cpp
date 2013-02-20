@@ -15,7 +15,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "boost/filesystem.hpp"
 #include "ADN_Project_Data.h"
-#include "ADN_Missions_Mission.h"
+#include "ADN_Missions_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_DescriptionAttachment constructor
@@ -25,7 +25,7 @@ ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_Entity
     : ADN_ListView( 0, "ADN_ListView_DescriptionAttachment", tr( "Attachments" ) )
     , entityType_( entityType )
 {
-    pConnector_ = new ADN_Connector_ListView< ADN_Missions_Mission::ADN_Missions_Attachment >( *this );
+    pConnector_ = new ADN_Connector_ListView< ADN_Missions_ABC::ADN_Missions_Attachment >( *this );
     setHeaderHidden( true );
 }
 
@@ -64,7 +64,7 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         boost::filesystem::copy_file( fileName.toStdString(), newFileName, boost::filesystem::copy_option::overwrite_if_exists );
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     if( connector )
-        connector->AddItem( new ADN_Missions_Mission::ADN_Missions_Attachment( QFileInfo( fileName ).fileName().toStdString() ) );
+        connector->AddItem( new ADN_Missions_ABC::ADN_Missions_Attachment( QFileInfo( fileName ).fileName().toStdString() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -419,7 +419,8 @@ enum E_EntityType
     eEntityType_Pawn                = 0,
     eEntityType_Automat             = 1,
     eEntityType_Population          = 2,
-    eNbrEntityTypes                 = 3
+    eEntityType_FragOrder           = 3,
+    eNbrEntityTypes                 = 4
 };
 
 enum E_Days

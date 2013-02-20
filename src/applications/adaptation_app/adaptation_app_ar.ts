@@ -2623,10 +2623,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specific</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Comments</source>
         <translation type="unfinished">تعليقات</translation>
     </message>
@@ -2636,10 +2632,6 @@ PNG (*.png)
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mission sheets preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2660,6 +2652,14 @@ PNG (*.png)
     </message>
     <message>
         <source>Specific cases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specific</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission sheets preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1198,6 +1198,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1799,6 +1802,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_VectorEditionDialog.h">
       <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.h">
+      <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

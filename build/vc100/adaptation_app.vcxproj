@@ -237,6 +237,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_FragOrder.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Mission.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Parameter.cpp" />
@@ -1595,6 +1596,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_WizardPage.h" />

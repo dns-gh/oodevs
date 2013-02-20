@@ -507,6 +507,6 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
     for( ADN_Missions_Data::CIT_FragOrder_Vector it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
     {
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 3 );
-        ( *it )->CheckMissionDataConsistency( checker );
+        ( *it )->CheckMissionDataConsistency( checker, eEntityType_FragOrder );
     }
 }

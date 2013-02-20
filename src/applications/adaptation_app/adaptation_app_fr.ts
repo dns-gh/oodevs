@@ -2643,10 +2643,6 @@ PNG (*.png)</translation>
         <translation>Contexte</translation>
     </message>
     <message>
-        <source>Specific</source>
-        <translation>Cas spécifiques</translation>
-    </message>
-    <message>
         <source>Comments</source>
         <translation>Commentaires</translation>
     </message>
@@ -2657,10 +2653,6 @@ PNG (*.png)</translation>
     <message>
         <source>Attachments</source>
         <translation>Pieces jointes</translation>
-    </message>
-    <message>
-        <source>Mission sheets preview</source>
-        <translation>Prévisualisation de la fiche</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -2681,6 +2673,14 @@ PNG (*.png)</translation>
     <message>
         <source>Specific cases</source>
         <translation>Cas spécifiques</translation>
+    </message>
+    <message>
+        <source>Specific</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission sheets preview</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
