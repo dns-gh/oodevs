@@ -117,6 +117,12 @@ Section "!${PRODUCT_NAME}"
     File /r /x "q*d4.dll" "${RUNDIR}\imageformats\q*.dll"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
+    ; GDAL projection data
+    SetOutPath "$INSTDIR\applications\projection_data"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r "${RUNDIR}\projection_data\*"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
     ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
