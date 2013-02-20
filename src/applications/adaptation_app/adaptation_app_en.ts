@@ -2667,14 +2667,6 @@ PNG (*.png)
         <source>Specific cases</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Specific</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mission sheets preview</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>

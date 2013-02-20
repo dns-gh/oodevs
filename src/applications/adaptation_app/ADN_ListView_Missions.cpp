@@ -85,7 +85,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     else
         vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
 
-    ADN_Tools::GenerateStandardEditionDialog< ADN_Missions_Mission, ADN_Models_Data::MissionInfos >(
+    ADN_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_Data::MissionInfos >(
         *this, pt, std::string( ADN_Tr::ConvertFromEntityType( eEntityType_, ADN_Tr::eToSim ) + "-list" ).c_str(), tools::translate( "ADN_ListView_Missions", "Missions" ),
         ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), *vector );
 }

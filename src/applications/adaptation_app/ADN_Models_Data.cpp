@@ -46,7 +46,7 @@ ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, cons
 void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
-    ADN_Missions_FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
+    ADN_Missions_ABC* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
     if( !fragOrder )
         throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     fragOrder_ = fragOrder;
@@ -83,8 +83,8 @@ ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 // Name: MissionInfos::~MissionInfos
 // Created: AGN 2003-12-03
 // -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission /* = 0 */ )
-    : ADN_CrossedRef< ADN_Missions_Mission >( missions, mission, true )
+ADN_Models_Data::MissionInfos::MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_ABC* mission /* = 0 */ )
+    : ADN_CrossedRef< ADN_Missions_ABC >( missions, mission, true )
 {
     // NOTHING
 }
@@ -135,7 +135,7 @@ void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
 void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
-    ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( GetVector(), strName_.GetData() );
+    ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( GetVector(), strName_.GetData() );
     if( !mission )
         throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     SetCrossedElement( mission );

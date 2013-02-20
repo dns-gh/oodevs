@@ -20,14 +20,14 @@
 */
 // Created: APE 2005-01-19
 // =============================================================================
-class ADN_Missions_Wizard : public ADN_Wizard< ADN_Missions_Mission, ADN_Missions_WizardPage >
+class ADN_Missions_Wizard : public ADN_Wizard< ADN_Missions_ABC, ADN_Missions_WizardPage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
     explicit ADN_Missions_Wizard( E_EntityType entityType, const QString& elementName, ADN_Missions_Data::T_Mission_Vector& vector, QWidget* pParent = 0 )
-        : ADN_Wizard< ADN_Missions_Mission, ADN_Missions_WizardPage >( elementName, vector, pParent )
+        : ADN_Wizard< ADN_Missions_ABC, ADN_Missions_WizardPage >( elementName, vector, pParent )
         , entityType_( entityType )
     {
         // NOTHING

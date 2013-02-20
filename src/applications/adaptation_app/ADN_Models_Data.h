@@ -43,18 +43,18 @@ public:
         OrderInfos* CreateCopy();
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_FragOrder >       fragOrder_;
+        ADN_TypePtr_InVector_ABC< ADN_Missions_ABC >       fragOrder_;
     };
 
     typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
     typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
 
 //*****************************************************************************
-    class MissionInfos : public ADN_CrossedRef< ADN_Missions_Mission >
+    class MissionInfos : public ADN_CrossedRef< ADN_Missions_ABC >
     {
 
     public:
-        explicit MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_Mission* mission = 0 );
+        explicit MissionInfos( const ADN_Missions_Data::T_Mission_Vector& missions, ADN_Missions_ABC* mission = 0 );
         virtual ~MissionInfos();
 
         MissionInfos* CreateCopy();

@@ -11,7 +11,7 @@
 #define __ADN_Missions_WizardPage_h_
 
 #include "ADN_WizardPage.h"
-#include "ADN_Missions_Mission.h"
+#include "ADN_Missions_ABC.h"
 
 // =============================================================================
 /** @class  ADN_Missions_WizardPage
@@ -19,14 +19,14 @@
 */
 // Created: ABR 2012-07-31
 // =============================================================================
-class ADN_Missions_WizardPage : public ADN_WizardPage< ADN_Missions_Mission >
+class ADN_Missions_WizardPage : public ADN_WizardPage< ADN_Missions_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              ADN_Missions_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0, E_EntityType entityType = eNbrEntityTypes )
-                 : ADN_WizardPage< ADN_Missions_Mission >( existingItems, pageTitle, pParent )
+                 : ADN_WizardPage< ADN_Missions_ABC >( existingItems, pageTitle, pParent )
                  , entityType_( entityType )
              {
                  // NOTHING
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ADN_Missions_Mission* NewT()
+    virtual ADN_Missions_ABC* NewT()
     {
         ADN_Missions_Mission* mission = new ADN_Missions_Mission();
         mission->FillContextParameters( entityType_ );

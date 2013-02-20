@@ -47,7 +47,7 @@ signals:
     //! @name Signals
     //@{
     void SelectionChanged();
-    void NotifyMissionDeleted( std::string name, E_MissionType type );
+    void NotifyElementDeleted( std::string name, E_MissionType type );
     //@}
 
 private:

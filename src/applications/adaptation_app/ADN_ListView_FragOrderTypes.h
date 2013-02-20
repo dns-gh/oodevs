@@ -27,7 +27,7 @@ class ADN_ListView_FragOrderTypes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_FragOrderTypes( QWidget* pParent, ADN_Missions_Data::T_FragOrder_Vector& orders );
+             ADN_ListView_FragOrderTypes( QWidget* pParent, ADN_Missions_Data::T_Mission_Vector& orders );
     virtual ~ADN_ListView_FragOrderTypes();
     //@}
 
@@ -49,13 +49,13 @@ public slots:
 signals:
     //! @name Signals
     //@{
-    void NotifyFragOrderDeleted( std::string name, E_EntityType type );
+    void NotifyElementDeleted( std::string name, E_MissionType type );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_Missions_Data::T_FragOrder_Vector& orders_;
+    ADN_Missions_Data::T_Mission_Vector& orders_;
     //@}
 };
 

@@ -25,7 +25,7 @@ typedef ADN_Missions_FragOrder FragOrder;
 // Name: ADN_ListView_FragOrderTypes constructor
 // Created: SBO 2006-12-06
 // -----------------------------------------------------------------------------
-ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( QWidget* parent, ADN_Missions_Data::T_FragOrder_Vector& orders )
+ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( QWidget* parent, ADN_Missions_Data::T_Mission_Vector& orders )
     : ADN_ListView( parent, "ADN_ListView_FragOrderTypes", tr( "Fragmentary orders" ) )
     , orders_( orders )
 {
@@ -68,11 +68,11 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
 
 namespace
 {
-    class ADN_FragOrder_WizardPage : public ADN_WizardPage< FragOrder >
+    class ADN_FragOrder_WizardPage : public ADN_WizardPage< ADN_Missions_ABC >
     {
     public:
         ADN_FragOrder_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0 )
-            : ADN_WizardPage< FragOrder >( existingItems, pageTitle, pParent )
+            : ADN_WizardPage< ADN_Missions_ABC >( existingItems, pageTitle, pParent )
             , addForAllUnits_( 0 )
             , addForAllAutomata_( 0 )
             , addForAllPops_( 0 )
@@ -103,22 +103,28 @@ namespace
             {
                 ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
                 for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
-                    (*it1)->AddFragOrder( element_, name );
+                    (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
             if( addForAllAutomata_->isChecked() )
             {
                 ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
                 for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
-                    (*it1)->AddFragOrder( element_, name );
+                    (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
             if( addForAllPops_->isChecked() )
             {
                 ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
                 for( ADN_Models_Data::IT_ModelInfos_Vector it1 = pops.begin(); it1 != pops.end(); ++it1 )
-                    (*it1)->AddFragOrder( element_, name );
+                    (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
-             element_->isAvailableWithoutMission_ = true;
+             static_cast< FragOrder* >( element_ )->isAvailableWithoutMission_ = true;
         }
+public:
+        virtual ADN_Missions_ABC* NewT()
+        {
+            return new ADN_Missions_FragOrder();
+        }
+
 
     private:
         QCheckBox* addForAllUnits_;
@@ -136,7 +142,7 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
         Q3PopupMenu popupMenu( this );
-        ADN_Wizard< FragOrder, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
+        ADN_Wizard< ADN_Missions_ABC, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
         FillContextMenuWithDefault( popupMenu, wizard );
         if( pCurData_ != 0 )
         {
@@ -186,7 +192,7 @@ bool ADN_ListView_FragOrderTypes::ContextMenuDelete()
     std::string name = static_cast< FragOrder* >( pCurData_ )->strName_.GetData();
     if( ADN_ListView::ContextMenuDelete() )
     {
-        emit NotifyFragOrderDeleted( name, eNbrEntityTypes );
+        emit NotifyElementDeleted( name, eMissionType_FragOrder );
         return true;
     }
     return false;

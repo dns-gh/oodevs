@@ -68,7 +68,7 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
-        ADN_TypePtr_InVector_ABC<ADN_Missions_Mission> ptrSupplyMission_;
+        ADN_TypePtr_InVector_ABC< ADN_Missions_ABC > ptrSupplyMission_;
 
         T_ConvoyTimeInfoVector   vConvoySetupInfos_;
         T_ConvoyTimeInfoVector   vConvoyLoadingInfos_;

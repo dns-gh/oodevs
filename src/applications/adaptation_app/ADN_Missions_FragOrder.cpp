@@ -62,9 +62,8 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
 
 void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const std::string& missionDir )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "dia-type", diaType_ )
-          >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
+    ADN_Missions_ABC::ReadArchive( input, missionDir );
+    input >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
           >> xml::list( "parameter", *this, &ADN_Missions_FragOrder::ReadParameter );
     ReadMissionSheet( missionDir );
 }
@@ -83,16 +82,14 @@ namespace
     }
 }
 
-void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output )
+void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output, const std::string& name )
 {
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toStdString();
 
-    output << xml::start( "fragorder" )
-            << xml::attribute( "name", strName_ )
-            << xml::attribute( "dia-type", diaType_ )
-            << xml::attribute( "id", id_ )
-            << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
+    output << xml::start( "fragorder" );
+    ADN_Missions_ABC::WriteArchive( output, name );
+    output << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
 
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );

@@ -278,26 +278,13 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     WriteMissions( output, "units", eMissionType_Pawn, unitMissions_ );
     WriteMissions( output, "automats", eMissionType_Automat, automatMissions_ );
     WriteMissions( output, "populations", eMissionType_Population, populationMissions_ );
-
-    //frag orders datas saving
-    output << xml::start( "fragorders" );
-    for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-        fragOrders_[i]->WriteArchive( output );
-
-    const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eMissionType_FragOrder );
-    //frag orders mission sheets saving
-    for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-        fragOrders_[i]->RemoveDifferentNamedMissionSheet( missionDir );
-    for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-         fragOrders_[i]->WriteMissionSheet( missionDir );
+    WriteMissions( output, "fragorders", eMissionType_FragOrder, fragOrders_ );
 
     //move mission sheets to obsolete directory when mission is deleted
     for( IT_StringList it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
        MoveMissionSheetsToObsolete( *it );
 
-    output << xml::end
-        << xml::end;
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +303,7 @@ void ADN_Missions_Data::MoveMissionSheetsToObsolete( std::string fileName )
 // Name: ADN_Missions_Data::GetFragOrders
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::T_FragOrder_Vector& ADN_Missions_Data::GetFragOrders()
+ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetFragOrders()
 {
     return fragOrders_;
 }
@@ -352,9 +339,9 @@ ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetPopulationMissions()
 // Name: ADN_Missions_Data::FindFragOrder
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_FragOrder* ADN_Missions_Data::FindFragOrder( const std::string& strName )
+ADN_Missions_ABC* ADN_Missions_Data::FindFragOrder( const std::string& strName )
 {
-    IT_FragOrder_Vector it = std::find_if( fragOrders_.begin(), fragOrders_.end(), ADN_Tools::NameCmp< ADN_Missions_FragOrder >( strName ) );
+    auto it = std::find_if( fragOrders_.begin(), fragOrders_.end(), ADN_Tools::NameCmp< ADN_Missions_FragOrder >( strName ) );
     if( it == fragOrders_.end() )
         return 0;
     return *it;
@@ -364,9 +351,9 @@ ADN_Missions_FragOrder* ADN_Missions_Data::FindFragOrder( const std::string& str
 // Name: ADN_Missions_Data::FindMission
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Mission* ADN_Missions_Data::FindMission( const ADN_Missions_Data::T_Mission_Vector& missions, const std::string& strName )
+ADN_Missions_ABC* ADN_Missions_Data::FindMission( const ADN_Missions_Data::T_Mission_Vector& missions, const std::string& strName )
 {
-    CIT_Mission_Vector it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< ADN_Missions_Mission >( strName ) );
+    auto it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< ADN_Missions_Mission >( strName ) );
     if( it == missions.end() )
         return 0;
     return *it;
@@ -486,25 +473,25 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( ADN_Missions_Data::CIT_Mission_Vector it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
+    for( auto it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
     {
         CheckMissionTypeUniqueness( checker, it, unitMissions_, 0 );
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
         ( *it )->CheckMissionDataConsistency( checker, eMissionType_Pawn );
     }
-    for( ADN_Missions_Data::CIT_Mission_Vector it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+    for( auto it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
     {
         CheckMissionTypeUniqueness( checker, it, automatMissions_, 1 );
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 1 );
         ( *it )->CheckMissionDataConsistency( checker, eMissionType_Automat );
     }
-    for( ADN_Missions_Data::CIT_Mission_Vector it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
+    for( auto it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
     {
         CheckMissionTypeUniqueness( checker, it, populationMissions_, 2 );
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 2 );
         ( *it )->CheckMissionDataConsistency( checker, eMissionType_Population );
     }
-    for( ADN_Missions_Data::CIT_FragOrder_Vector it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
+    for( auto it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
     {
         CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 3 );
         ( *it )->CheckMissionDataConsistency( checker, eMissionType_FragOrder );

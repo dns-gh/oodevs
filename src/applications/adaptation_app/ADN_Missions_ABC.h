@@ -55,12 +55,12 @@ public:
     //! @name Operations
     //@{
     std::string GetItemName();
-    virtual ADN_Missions_ABC* CreateCopy() = 0;
+    virtual ADN_Missions_ABC* CreateCopy() { return 0; }
 
     void FillContextParameters( E_EntityType entityType );
 
     virtual void ReadArchive( xml::xistream& input, const std::string& missionDir );
-    virtual void WriteArchive( xml::xostream& /*output*/, const std::string& /*name*/ ){};
+    virtual void WriteArchive( xml::xostream& output, const std::string& name );
 
     void ReadParameter( xml::xistream& input );
     void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type );

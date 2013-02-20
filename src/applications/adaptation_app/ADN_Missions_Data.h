@@ -38,24 +38,20 @@ class ADN_Missions_Data : public ADN_Data_ABC
 // Mission parameters
 // =============================================================================
 public:
-    typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
-    typedef T_MissionParameterValue_Vector::iterator         IT_MissionParameterValue_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_ParameterValue > T_MissionParameterValue_Vector;
+    typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
 
-    typedef ADN_Type_Vector_ABC<ADN_Missions_Type>            T_Choice_Vector;
-    typedef T_Choice_Vector::iterator                        IT_Choice_Vector;
-    typedef T_Choice_Vector::const_iterator                 CIT_Choice_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_Type>            T_Choice_Vector;
+    typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
+    typedef T_Choice_Vector::const_iterator                  CIT_Choice_Vector;
 
-    typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::iterator              IT_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::const_iterator       CIT_MissionParameter_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_Parameter >      T_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::iterator               IT_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::const_iterator        CIT_MissionParameter_Vector;
 
-    typedef ADN_Type_Vector_ABC<ADN_Missions_Mission>         T_Mission_Vector;
-    typedef T_Mission_Vector::iterator                       IT_Mission_Vector;
-    typedef T_Mission_Vector::const_iterator                CIT_Mission_Vector;
-
-    typedef ADN_Type_Vector_ABC<ADN_Missions_FragOrder>       T_FragOrder_Vector;
-    typedef T_FragOrder_Vector::iterator                     IT_FragOrder_Vector;
-    typedef T_FragOrder_Vector::const_iterator              CIT_FragOrder_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_ABC >            T_Mission_Vector;
+    typedef T_Mission_Vector::iterator                        IT_Mission_Vector;
+    typedef T_Mission_Vector::const_iterator                 CIT_Mission_Vector;
 
 // =============================================================================
 // Main data
@@ -73,12 +69,12 @@ public:
     virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
-    T_FragOrder_Vector&     GetFragOrders();
+    T_Mission_Vector&     GetFragOrders();
     T_Mission_Vector&       GetUnitMissions();
     T_Mission_Vector&       GetAutomatMissions();
     T_Mission_Vector&       GetPopulationMissions();
-    ADN_Missions_FragOrder* FindFragOrder( const std::string& strName );
-    ADN_Missions_Mission* FindMission( const T_Mission_Vector& missions, const std::string& strName );
+    ADN_Missions_ABC* FindFragOrder( const std::string& strName );
+    ADN_Missions_ABC* FindMission( const T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
 
@@ -104,7 +100,7 @@ public:
     T_Mission_Vector    unitMissions_;
     T_Mission_Vector    automatMissions_;
     T_Mission_Vector    populationMissions_;
-    T_FragOrder_Vector  fragOrders_;
+    T_Mission_Vector    fragOrders_;
     T_StringList        toDeleteMissionSheets_;
 
 public:

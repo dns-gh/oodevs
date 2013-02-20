@@ -133,7 +133,7 @@ bool ADN_ListView_MissionTypes::ContextMenuDelete()
     std::string name = static_cast< Mission* >( pCurData_ )->strName_.GetData();
     if( ADN_ListView::ContextMenuDelete() )
     {
-        emit NotifyMissionDeleted( name, eMissionType_ );
+        emit NotifyElementDeleted( name, eMissionType_ );
         return true;
     }
     return false;

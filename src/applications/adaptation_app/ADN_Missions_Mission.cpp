@@ -89,19 +89,18 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const std::string& missionDir )
 {
     std::string missionSheetDesc, symbol;
-    input >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "dia-type", diaType_ )
-        >> xml::optional >> xml::attribute( "symbol", symbol )
-        >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
-        >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
-        >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
-        >> xml::optional >> xml::attribute( "package", strPackage_ )
-        >> xml::optional >> xml::attribute( "package", strPackage_ )
-        >> xml::optional >> xml::start( "description" )
+    ADN_Missions_ABC::ReadArchive( input, missionDir );
+    input >> xml::optional >> xml::attribute( "symbol", symbol )
+          >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
+          >> xml::optional >> xml::attribute( "cdt-dia-behavior", cdtDiaBehavior_ )
+          >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrtDiaBehavior_ )
+          >> xml::optional >> xml::attribute( "package", strPackage_ )
+          >> xml::optional >> xml::attribute( "package", strPackage_ )
+          >> xml::optional >> xml::start( "description" )
             >> xml::optional >> xml::attribute( "doctrine", doctrine_ )
             >> xml::optional >> xml::attribute( "usage", usage_ )
-        >> xml ::end
-        >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
+          >> xml ::end
+          >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1 ) );
     const std::string code = symbol.empty() ? " - " : symbol;
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
     symbol_.SetData( drawings.GetDrawing( code ) );
@@ -133,10 +132,7 @@ void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::strin
     if( diaType_.GetData().empty() )
         diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).toStdString();
 
-    output << xml::attribute( "name", strName_ )
-           << xml::attribute( "dia-type", diaType_ )
-           << xml::attribute( "id", id_ );
-
+    ADN_Missions_ABC::WriteArchive( output, type );
     const std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
     if( code != "" && code != " - " )
         output << xml::attribute( "symbol", code );
