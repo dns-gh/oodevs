@@ -1598,6 +1598,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN( "knowledge" )
             + PLUGIN( "communication" )
             + PLUGIN46( "errorhandler" )
+            + PLUGIN46( "devtools" )
             + "} cwd='" + includePath + "'", logger ) );
     else
         pArchetypeBrain.reset( new sword::Brain(
@@ -1605,6 +1606,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "eventmanager" )
             + PLUGIN46( "motivation" )
             + PLUGIN46( "errorhandler" )
+            + PLUGIN46( "devtools" )
             + "} cwd='" + includePath + "'", logger ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
