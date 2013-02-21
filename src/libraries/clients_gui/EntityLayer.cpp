@@ -117,11 +117,8 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bo
         {
             Viewport2d globalViewport( tools_.GlobalViewport() );
             globalViewport.SetHotpoint( position );
-            if( globalViewport.IsVisible( position ) )
-            {
-                tools_.RegisterObjectPicking( std::make_pair( entity.GetId(), type_ ) );
-                drawer.Pick( position, globalViewport, tools_ );
-            }
+            tools_.RegisterObjectPicking( std::make_pair( entity.GetId(), type_ ) );
+            drawer.Pick( position, globalViewport, tools_ );
         }
         else
         {
