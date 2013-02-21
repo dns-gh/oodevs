@@ -21,6 +21,7 @@
 ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, int entityType /*= -1*/, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
     , entityType_( entityType )
+    , addingRow_( false )
 {
     dataModel_.setColumnCount( 6 );
     QStringList horizontalHeaders;
@@ -182,8 +183,35 @@ void ADN_MissionParameters_Table::ResetCurrent()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    if( !addingRow_ && topLeft == bottomRight && topLeft.column() == 2 )
-        Reconnect( topLeft );
+    if( !addingRow_ && topLeft == bottomRight )
+    {
+        if( topLeft.column() == 2 ) // type
+            Reconnect( topLeft );
+        else if( topLeft.column() == 3 ) // optional
+        {
+            ADN_Missions_Parameter* firstParam = static_cast< ADN_Missions_Parameter* >( GetDataFromIndex( topLeft ) );
+            if( !firstParam )
+                return;
+            Qt::CheckState checkState = firstParam->isOptional_.GetData() ? Qt::Checked : Qt::Unchecked;
+            if( firstParam->isContext_ && firstParam->type_.GetData() == eMissionParameterTypeLimit )
+            {
+                for( int i = 0; i < numRows(); ++i )
+                {
+                    ADN_Missions_Parameter* secondParam = static_cast< ADN_Missions_Parameter* >( GetData( i, 0 ) );
+                    if( secondParam && firstParam != secondParam && secondParam->isContext_ && secondParam->type_.GetData() == eMissionParameterTypeLimit )
+                    {
+                        QStandardItem* item = GetItem( i, 3 );
+                        if( item && item->checkState() != checkState )
+                        {
+                            item->setCheckState( checkState );
+                            doItemsLayout();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
