@@ -352,7 +352,7 @@ const T_ResourceNetworkVector& ResourceNetworkCapacity::GetDECResourceNetworks( 
     if( resources.size() != DECResourceNetworks_.size() )
     {
         DECResourceNetworks_.clear();
-        for( std::vector< std::string >::const_iterator it = resources.begin(); it != resources.end(); ++it )
+        for( auto it = resources.begin(); it != resources.end(); ++it )
             DECResourceNetworks_.push_back( boost::shared_ptr< DEC_ResourceNetwork >( new DEC_ResourceNetwork( objectId, *it ) ) );
     }
     return DECResourceNetworks_;

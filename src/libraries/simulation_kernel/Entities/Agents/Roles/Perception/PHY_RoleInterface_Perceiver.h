@@ -17,6 +17,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceObject.h"
 #include "tools/Set.h"
+#include "tools/Map.h"
 
 namespace client
 {
@@ -49,10 +50,10 @@ public:
     typedef PHY_RoleInterface_Perceiver RoleInterface;
 
     typedef std::pair< const PHY_SensorTypeAgent*, double /*height*/ >  T_SurfaceAgentKeyPair;
-    typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
+    typedef tools::Map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
 
     typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >  T_SurfaceObjectKeyPair;
-    typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
+    typedef tools::Map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
 
     typedef std::vector< const PHY_SensorTypeDisaster* > T_DisasterDetectors;
 

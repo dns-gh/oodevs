@@ -40,6 +40,7 @@
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/range/algorithm.hpp>
 
 namespace
 {
@@ -416,19 +417,11 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
 {
     if( !isLimitedToSensors_ )
         return false;
-
     const PHY_RoleInterface_Perceiver& targetPerceiver = target.GetRole< PHY_RoleInterface_Perceiver >();
-
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = targetPerceiver.GetSurfacesAgent();
-    for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-    {
-        const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
-        const std::string& sensorName = surface.GetSensorTypeName();
-
-        for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
-            if( *it == sensorName )
-                return false;
-    }
+    for( auto it = surfaces.begin(); it != surfaces.end(); ++it )
+        if( boost::find( limitedToSensorsList_, it->second.GetSensorTypeName() ) != limitedToSensorsList_.end() )
+            return false;
 
     PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
     for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
@@ -436,13 +429,9 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
         if( targetPerceiver.IsUsingActiveRadar( *itRadarClass->second ) == false )
             continue;
         const PHY_RoleInterface_Perceiver::T_RadarSet& radars = const_cast< PHY_RoleInterface_Perceiver& >( targetPerceiver ).GetRadars( *itRadarClass->second );
-        for( auto itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
-        {
-            const std::string& radarName = (*itRadar)->GetName();
-            for( auto it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
-                if( *it == radarName )
-                    return false;
-        }
+        for( auto it = radars.begin(); it != radars.end(); ++it )
+            if( boost::find( limitedToSensorsList_, (*it)->GetName() ) != limitedToSensorsList_.end() )
+                return false;
     }
 
     return true;

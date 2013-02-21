@@ -33,7 +33,7 @@ MIL_ObjectFilter::MIL_ObjectFilter()
 // -----------------------------------------------------------------------------
 MIL_ObjectFilter::MIL_ObjectFilter( const std::vector< std::string >& params )
 {
-    for( std::vector< std::string >::const_iterator it = params.begin(); it != params.end(); ++it )
+    for( auto it = params.begin(); it != params.end(); ++it )
         Set( *it );
 }
 

@@ -402,8 +402,8 @@ void PHY_PerceptionView::FinalizePerception()
     if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-            const_cast< PHY_PerceptionSurfaceAgent& >( itSurface->second ).FinalizePerception();
+        for( auto it = surfaces.begin(); it != surfaces.end(); ++it )
+            const_cast< PHY_PerceptionSurfaceAgent& >( it->second ).FinalizePerception();
     }
     else
     {
