@@ -255,7 +255,7 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 
 namespace
 {
-    void WriteEquipment( xml::xostream& xos, const PHY_ComposantePion& composante, bool first, unsigned int id = 0 )
+    void WriteEquipment( xml::xosubstream xos, const PHY_ComposantePion& composante, bool first, unsigned int id = 0 )
     {
         if( first )
             xos << xml::start( "equipements" );
@@ -270,15 +270,12 @@ namespace
         }
         if( id )
             xos.attribute( "borrower", id );
-        xos.end(); // equipment
     }
-    template< typename T_LoanMap >
-    bool IsLoanedEquipment( const PHY_ComposantePion& composante, const T_LoanMap& loanMap )
+    bool IsLoanedEquipment( const PHY_ComposantePion& composante, const PHY_RolePion_Composantes::T_LoanMap& loanMap )
     {
         for( auto it = loanMap.begin(); it != loanMap.end(); ++it )
-            for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
-                if( *itComposante == &composante )
-                    return true;
+            if( boost::find( it->second, &composante ) != it->second.end() )
+                return true;
         return false;
     }
 }
@@ -287,10 +284,9 @@ namespace
 // Name: PHY_RolePion_Composantes::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteODB( xml::xostream& output ) const
+void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 {
-    int written = 0;
-    xml::xosubstream xos( output );
+    bool first = true;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante = **it;
@@ -298,8 +294,8 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& output ) const
             continue;
         if( &composante.GetState() != &PHY_ComposanteState::undamaged_ )
         {
-            WriteEquipment( xos, composante, written <= 0 );
-            ++written;
+            WriteEquipment( xos, composante, first );
+            first = false;
         }
     }
     for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
@@ -307,8 +303,8 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& output ) const
         unsigned int id = it->first->GetID();
         for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
         {
-            WriteEquipment( xos, **itComposante, written <= 0, id );
-            ++written;
+            WriteEquipment( xos, **itComposante, first, id );
+            first = false;
         }
     }
 }
@@ -343,9 +339,9 @@ void PHY_RolePion_Composantes::Finalize()
 void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
 {
     xis >> xml::optional
-        >> xml::start( "equipments" )
-            >> xml::list( "equipment", *this, &PHY_RolePion_Composantes::ReadEquipment )
-        >> xml::end;
+            >> xml::start( "equipments" )
+                >> xml::list( "equipment", *this, &PHY_RolePion_Composantes::ReadEquipment )
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1079,9 +1075,7 @@ void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) const
 {
-    typedef std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* > T_Key;
-    typedef std::map < T_Key, unsigned int >                                 T_LoanCountMap;
-    typedef T_LoanCountMap::const_iterator                                 CIT_LoanCountMap;
+    typedef std::map< std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* >, unsigned int > T_LoanCountMap;
 
     // Lent composantes
     {
@@ -1089,9 +1083,8 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
         for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         {
             const MIL_Agent_ABC& pion = *it->first;
-            const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
-            for( auto itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-                ++loanData[ T_Key( &pion, &( **itComp ).GetType() ) ];
+            for( auto itComp = it->second.begin(); itComp != it->second.end(); ++itComp )
+                ++loanData[ std::make_pair( &pion, &(*itComp)->GetType() ) ];
         }
         sword::LentEquipments& lentEquipements = *message().mutable_lent_equipments();
         for( auto it = loanData.begin(); it != loanData.end(); ++it )
@@ -1111,7 +1104,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             const MIL_Agent_ABC& pion = *it->first;
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( auto itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-                ++loanData[ T_Key( &pion, &( **itComp ).GetType() ) ];
+                ++loanData[ std::make_pair( &pion, &(*itComp)->GetType() ) ];
         }
         sword::BorrowedEquipments& borrowedEquipements = *message().mutable_borrowed_equipments();
         for( auto it = loanData.begin(); it != loanData.end(); ++it )
@@ -1401,13 +1394,13 @@ void PHY_RolePion_Composantes::LendComposante( MIL_Agent_ABC& borrower, PHY_Comp
 void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante )
 {
     PHY_ComposantePion::T_ComposantePionVector& lentComps = lentComposantes_[ &borrower ];
-    auto itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
-    if( itComp == lentComps.end() )
+    auto it = std::find( lentComps.begin(), lentComps.end(), &composante );
+    if( it == lentComps.end() )
         return;
     composante.TransferComposante( *this );
-    lentComps.erase( itComp );
+    lentComps.erase( it );
     if( lentComps.empty() )
-        lentComposantes_.erase( lentComposantes_.find( &borrower ) );
+        lentComposantes_.erase( &borrower );
     bLoansChanged_ = true;
     borrower.GetRole< PHY_RoleInterface_Composantes >().NotifyLentComposanteReturned( *owner_, composante );
 }
