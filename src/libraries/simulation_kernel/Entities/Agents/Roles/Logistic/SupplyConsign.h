@@ -15,6 +15,7 @@
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Tools/MIL_IDManager.h"
+#include "tools/Map.h"
 #include <deque>
 
 class PHY_DotationCategory;
@@ -83,9 +84,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, double >                                 T_Resources;
-    typedef std::map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
-    typedef std::deque< std::pair< SupplyRecipient_ABC*, T_Requests > >                     T_RecipientRequests;
+    typedef tools::Map< const PHY_DotationCategory*, double >                                 T_Resources;
+    typedef tools::Map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
+    typedef std::deque< std::pair< SupplyRecipient_ABC*, T_Requests > >                       T_RecipientRequests;
 
     enum E_State
     {

@@ -85,11 +85,9 @@ SupplyConsign::~SupplyConsign()
 void SupplyConsign::AddRequest( SupplyRecipient_ABC& recipient, boost::shared_ptr< SupplyRequest_ABC > request )
 {
     T_Requests* requests = 0;
-    BOOST_FOREACH( T_RecipientRequests::value_type& data, requestsQueued_ )
-    {
+    BOOST_FOREACH( auto& data, requestsQueued_ )
         if( data.first == &recipient )
             requests = &data.second;
-    }
     if( !requests )
     {
         requestsQueued_.push_back( std::make_pair( &recipient, T_Requests() ) );
@@ -106,16 +104,16 @@ void SupplyConsign::AddRequest( SupplyRecipient_ABC& recipient, boost::shared_pt
 void SupplyConsign::Activate()
 {
     resources_.clear();
-    BOOST_FOREACH( T_RecipientRequests::value_type& recipientRequest, requestsQueued_ )
-        BOOST_FOREACH( T_Requests::value_type& requestData, recipientRequest.second )
+    BOOST_FOREACH( const auto& recipient, requestsQueued_ )
+        BOOST_FOREACH( const auto& data, recipient.second )
         {
-            boost::shared_ptr< SupplyRequest_ABC > request = requestData.second;
+            const boost::shared_ptr< SupplyRequest_ABC >& request = data.second;
             request->ReserveStock();
             resources_[ &request->GetDotationCategory() ] += request->GetGrantedQuantity();
             if( !provider_ )
                 provider_ = const_cast< MIL_Agent_ABC* >( request->GetProvider() );
         }
-    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+    BOOST_FOREACH( const auto& data, requestsQueued_ )
         data.first->OnSupplyScheduled( shared_from_this() );
     supplier_->SupplyHandleRequest( shared_from_this() );
     requestsNeedNetworkUpdate_ = true;
@@ -130,7 +128,6 @@ void SupplyConsign::UpdateTimer( unsigned timeRemaining )
     unsigned tmp = std::numeric_limits< unsigned >::max();
     if( timeRemaining != std::numeric_limits< unsigned >::max() )
         tmp = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + timeRemaining;
-
     if( tmp != currentStateEndTimeStep_ )
     {
         currentStateEndTimeStep_ = tmp;
@@ -157,7 +154,7 @@ void SupplyConsign::SupplyCurrentRecipient()
     assert( currentRecipient_ == requestsQueued_.front().first );
 
     currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALL BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
-    BOOST_FOREACH( T_Requests::value_type& data, requestsQueued_.front().second )
+    BOOST_FOREACH( const auto& data, requestsQueued_.front().second )
     {
         boost::shared_ptr< SupplyRequest_ABC > request = data.second;
         double quantitySupplied = request->Supply();
@@ -173,13 +170,10 @@ void SupplyConsign::SupplyCurrentRecipient()
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient )
 {
-    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+    BOOST_FOREACH( const auto& data, requestsQueued_ )
     {
         if( data.first == &recipient )
-        {
-            const T_Requests& requests = data.second;
-            return requests.find( &dotationCategory ) != requests.end();
-        }
+            return data.second.find( &dotationCategory ) != data.second.end();
         data.first->OnSupplyScheduled( shared_from_this() );
     }
     return false;
@@ -237,7 +231,7 @@ void SupplyConsign::ResetConsign()
         convoy_->ResetConveyors( *this );
         convoy_->Finish();
     }
-    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+    BOOST_FOREACH( const auto& data, requestsQueued_ )
         data.first->OnSupplyCanceled( shared_from_this() );
     requestsQueued_.clear();
     SetState( eFinished );
@@ -411,18 +405,14 @@ void SupplyConsign::Clean()
     requestsNeedNetworkUpdate_ = false;
 }
 
-// =============================================================================
-// SupplyConvoyEventsObserver_ABC
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::OnAllResourcesAssignedToConvoy
 // Created: NLD 2008-08-01
 // -----------------------------------------------------------------------------
 void SupplyConsign::OnAllResourcesAssignedToConvoy()
 {
-    BOOST_FOREACH( T_RecipientRequests::value_type& it1, requestsQueued_ )
-        BOOST_FOREACH( T_Requests::value_type& it2, it1.second )
+    BOOST_FOREACH( const auto& it1, requestsQueued_ )
+        BOOST_FOREACH( const auto& it2, it1.second )
             it2.second->ReturnStockNotAssignedToConvoy();
     requestsNeedNetworkUpdate_ = true;
 }
@@ -501,12 +491,12 @@ void SupplyConsign::SendFullState() const
     convoy_->Serialize( *msg().mutable_convoyer() );
     msg().set_state( (sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus)state_ );
     msg().set_current_state_end_tick( currentStateEndTimeStep_ );
-    BOOST_FOREACH( const T_RecipientRequests::value_type& recipientRequest, requestsQueued_ )
+    BOOST_FOREACH( const auto& recipient, requestsQueued_ )
     {
         sword::SupplyRecipientResourcesRequest* req = msg().mutable_requests()->add_requests();
-        recipientRequest.first->Serialize( *req->mutable_recipient() );
-        BOOST_FOREACH( const T_Requests::value_type& requestData, recipientRequest.second )
-            requestData.second->Serialize( *req->add_resources() );
+        recipient.first->Serialize( *req->mutable_recipient() );
+        BOOST_FOREACH( const auto& data, recipient.second )
+            data.second->Serialize( *req->add_resources() );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -528,12 +518,12 @@ void SupplyConsign::SendChangedState() const
     if( requestsNeedNetworkUpdate_ )
     {
         msg().mutable_requests();
-        BOOST_FOREACH( const T_RecipientRequests::value_type& recipientRequest, requestsQueued_ )
+        BOOST_FOREACH( const auto& recipient, requestsQueued_ )
         {
             sword::SupplyRecipientResourcesRequest* req = msg().mutable_requests()->add_requests();
-            recipientRequest.first->Serialize( *req->mutable_recipient() );
-            BOOST_FOREACH( const T_Requests::value_type& requestData, recipientRequest.second )
-                requestData.second->Serialize( *req->add_resources() );
+            recipient.first->Serialize( *req->mutable_recipient() );
+            BOOST_FOREACH( const auto& data, recipient.second )
+                data.second->Serialize( *req->add_resources() );
         }
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
@@ -582,7 +572,7 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
         return true;
 
     if( check & eCheckRecipients )
-        BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+        BOOST_FOREACH( const auto& data, requestsQueued_ )
             if( data.first->BelongsToLogisticBase( destination ) )
                 return true;
     return false;

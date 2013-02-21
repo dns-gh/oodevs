@@ -10,6 +10,8 @@
 #ifndef __SupplyConvoy_ABC_h_
 #define __SupplyConvoy_ABC_h_
 
+#include "tools/Map.h"
+
 class PHY_DotationCategory;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
@@ -36,7 +38,7 @@ class SupplyConvoy_ABC : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, double > T_Resources;
+    typedef tools::Map< const PHY_DotationCategory*, double > T_Resources;
     //@}
 
 public:

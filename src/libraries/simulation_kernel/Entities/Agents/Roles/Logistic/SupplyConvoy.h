@@ -21,7 +21,8 @@ class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class MT_InterpolatedFunction;
 
-namespace logistic {
+namespace logistic
+{
     class SupplyConveyor_ABC;
     class SupplyConvoyEventsObserver_ABC;
     class SupplySupplier_ABC;
