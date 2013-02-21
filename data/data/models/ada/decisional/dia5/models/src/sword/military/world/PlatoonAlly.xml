@@ -1469,13 +1469,21 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
             <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
         </method>
         <method name="canBeFollowed" abstract="false">
-            <description>Retourne "vrai" si cet élément peut être suivi par l'agent, "faux" sinon. Cette implémentation retourne "vrai" si cet élément est opérationnel, ie: un élément</description>
+            <description>Retourne &quot;vrai&quot; si cet élément peut être suivi par l'agent, &quot;faux&quot; sinon. Cette implémentation retourne &quot;vrai&quot; si cet élément est opérationnel, ie: un élément</description>
         </method>
         <method name="getName" abstract="false">
             <description>Returns the name of the motile element.</description>
             <return>
                 <type>
                     <simple name="string"/>
+                </type>
+            </return>
+        </method>
+        <method name="isStealthy">
+            <description>Returns 'true' if this element is stealthy, 'false' otherwide.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
                 </type>
             </return>
         </method>

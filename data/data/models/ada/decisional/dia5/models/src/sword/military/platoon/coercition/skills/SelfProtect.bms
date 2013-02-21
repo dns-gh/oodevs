@@ -39,7 +39,10 @@ rootnode
     activate = function( self )
         local Activate = Activate
         
-        if meKnowledge:isSurrendered() then  -- I surrendered so nothing
+        if meKnowledge:isSurrendered() then  -- I surrendered so become visible, else nothing 
+            if meKnowledge:isStealthy() then
+                meKnowledge:becomeStealthy( false )
+            end
             return
         end
 

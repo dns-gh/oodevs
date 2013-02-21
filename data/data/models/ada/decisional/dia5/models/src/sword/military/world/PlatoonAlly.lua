@@ -567,6 +567,9 @@ return
     becomeStealthy = function( self, beStealth )
         integration.setStealth( beStealth ) -- $$$ MIA magic effect, independant from physical datas
     end,
+    isStealthy = function( self )
+        integration.isStealth( self )
+    end,
     switchRadioOff = masalife.brain.integration.startStopAction(
     {
         start = integration.switchOffRadio
