@@ -15,6 +15,7 @@
 #include "PHY_FireDamages_Agent.h"
 #include "PHY_FireDamages_Population.h"
 #include "Tools/MIL_IDManager.h"
+#include "tools/Map.h"
 
 namespace sword
 {
@@ -52,11 +53,8 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Agent_ABC*, PHY_FireDamages_Agent > T_AgentDamagesMap;
-    typedef T_AgentDamagesMap::const_iterator                       CIT_AgentDamagesMap;
-
-    typedef std::map< const MIL_Population*, PHY_FireDamages_Population > T_PopulationDamagesMap;
-    typedef T_PopulationDamagesMap::const_iterator                        CIT_PopulationDamagesMap;
+    typedef tools::Map< const MIL_Agent_ABC*, PHY_FireDamages_Agent > T_AgentDamagesMap;
+    typedef tools::Map< const MIL_Population*, PHY_FireDamages_Population > T_PopulationDamagesMap;
     //@}
 
 protected:
