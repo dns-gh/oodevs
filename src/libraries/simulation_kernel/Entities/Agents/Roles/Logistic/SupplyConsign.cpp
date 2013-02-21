@@ -121,10 +121,6 @@ void SupplyConsign::Activate()
     requestsNeedNetworkUpdate_ = true;
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::UpdateTimer
 // Created: NLD 2011-07-25
@@ -554,18 +550,13 @@ void SupplyConsign::SendMsgDestruction() const
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
-
-// =============================================================================
-// TEST
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConsign::WillGoTo
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
 {
-    enum 
+    enum
     {
         eCheckSupplier = 0x01,
         eCheckRecipients = 0x02,
@@ -591,13 +582,9 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
         return true;
 
     if( check & eCheckRecipients )
-    {
         BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
-        {
             if( data.first->BelongsToLogisticBase( destination ) )
                 return true;
-        }
-    }
     return false;
 }
 
@@ -609,12 +596,12 @@ bool SupplyConsign::IsAt( const MIL_AutomateLOG& destination ) const
 {
     if( state_ == eConvoyLoading )
         return supplier_->BelongsToLogisticBase( destination );
-    else if( state_ == eConvoyUnloading )
+    if( state_ == eConvoyUnloading )
     {
         assert( currentRecipient_ );
         return currentRecipient_->BelongsToLogisticBase( destination );
     }
-    else if( state_ == eFinished )
+    if( state_ == eFinished )
         return convoy_->GetTransportersProvider().BelongsToLogisticBase( destination );
     return false;
 }
@@ -629,11 +616,12 @@ boost::shared_ptr< SupplyConvoy_ABC > SupplyConsign::GetConvoy() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< class Archive > void SupplyConsign::load
+// Name: SupplyConsign::load
 // Created: LDC 2013-01-15
 // -----------------------------------------------------------------------------
 template< class Archive > void SupplyConsign::load( Archive& archive, const unsigned int )
 {
+    size_t resourcesSize;
     archive >> boost::serialization::base_object< SupplyConvoyEventsObserver_ABC >( *this );
     archive >> boost::serialization::base_object< SupplyConsign_ABC >( *this );
     archive >> id_;
@@ -643,33 +631,32 @@ template< class Archive > void SupplyConsign::load( Archive& archive, const unsi
     archive >> state_;
     archive >> currentStateEndTimeStep_;
     archive >> convoy_;
-    size_t resourcesSize;
     archive >> resourcesSize;
     for( size_t i = 0; i < resourcesSize; ++i )
     {
         int dotationId;
-        archive >> dotationId;
         double quantity;
+        archive >> dotationId;
         archive >> quantity;
         resources_[ PHY_DotationType::FindDotationCategory( dotationId ) ] = quantity;
     }
     archive >> resourcesSize;
-    for( size_t i = 0; i < resourcesSize; ++i ) //std::deque< std::pair< SupplyRecipient_ABC*, T_Requests > > 
+    for( size_t i = 0; i < resourcesSize; ++i )
     {
         SupplyRecipient_ABC* recipient;
-        archive >> recipient;
         size_t requestsSize;
-        archive >> requestsSize;
         T_Requests requestMap;
-        for( size_t j = 0; j < requestsSize; ++j ) //std::map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > >
-        { 
+        archive >> recipient;
+        archive >> requestsSize;
+        for( size_t j = 0; j < requestsSize; ++j )
+        {
             int dotationId;
-            archive >> dotationId;
             boost::shared_ptr< SupplyRequest_ABC > request;
+            archive >> dotationId;
             archive >> request;
             requestMap[ PHY_DotationType::FindDotationCategory( dotationId ) ] = request;
         }
-        requestsQueued_.push_back( std::pair< SupplyRecipient_ABC*, T_Requests >( recipient, requestMap ) );
+        requestsQueued_.push_back( std::make_pair( recipient, requestMap ) );
     }
     archive >> currentRecipient_;
     archive >> needNetworkUpdate_;
@@ -677,7 +664,7 @@ template< class Archive > void SupplyConsign::load( Archive& archive, const unsi
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< class Archive > void SupplyConsign::save
+// Name: SupplyConsign::save
 // Created: LDC 2013-01-15
 // -----------------------------------------------------------------------------
 template< class Archive > void SupplyConsign::save( Archive& archive, const unsigned int ) const
@@ -703,8 +690,8 @@ template< class Archive > void SupplyConsign::save( Archive& archive, const unsi
     archive << size;
     for( auto it = requestsQueued_.begin(); it != requestsQueued_.end(); ++it )
     {
+        const size_t requestsSize = it->second.size();
         archive << it->first;
-        size_t requestsSize = it->second.size();
         archive << requestsSize;
         for( auto requestsIt = it->second.begin(); requestsIt != it->second.end(); ++requestsIt )
         {
