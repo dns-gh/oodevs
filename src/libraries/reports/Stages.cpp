@@ -13,6 +13,7 @@
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <iostream>
 
 // -----------------------------------------------------------------------------
 // Name: Stages constructor
