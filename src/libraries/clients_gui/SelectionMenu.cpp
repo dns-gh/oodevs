@@ -28,13 +28,22 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/UrbanColor_ABC.h"
-
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "tools/GeneralConfig.h"
 
 using namespace gui;
 using namespace kernel;
+
+namespace
+{
+    QPixmap MakePixmap( const std::string& name )
+    {
+        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: SelectionMenu constructor
@@ -210,6 +219,10 @@ bool SelectionMenu::GenerateIcons()
                     QColor color( urbanColor.red_, urbanColor.green_, urbanColor.blue_, 255 );
                     pixmap = QPixmap( 32, 32 );
                     pixmap.fill( color );
+                }
+                else if( entity->GetTypeName() == kernel::Inhabitant_ABC::typeName_ )
+                {
+                    pixmap = MakePixmap( "inhabitants" );
                 }
                 else if( const TacticalHierarchies* hierarchies = entity->Retrieve< TacticalHierarchies >() )   // Entity & Knowledge ?
                 {
