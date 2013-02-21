@@ -50,8 +50,6 @@ public:
     };
 
     typedef PHY_RoleInterface_Composantes RoleInterface;
-    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
 
     typedef std::vector< const PHY_Volume* > T_ComposanteVolumes;
     //@}
@@ -90,7 +88,7 @@ public:
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
 
-    virtual void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const = 0;
+    virtual std::size_t GetConvoyTransportersTotal() const = 0;
 
     //! @name Logistic - maintenance
     //@{

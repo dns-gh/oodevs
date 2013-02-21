@@ -159,7 +159,8 @@ public:
     //@}
 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
-    void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const;
+    virtual std::size_t GetConvoyTransportersTotal() const;
+
     //! @name Logistic - maintenance
     //@{
     virtual void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
@@ -292,6 +293,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
+    typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
     //@}
 
 protected:

@@ -272,7 +272,8 @@ namespace
             xos.attribute( "borrower", id );
         xos.end(); // equipment
     }
-    bool IsLoanedEquipment( const PHY_ComposantePion& composante, const PHY_RoleInterface_Composantes::T_LoanMap& loanMap )
+    template< typename T_LoanMap >
+    bool IsLoanedEquipment( const PHY_ComposantePion& composante, const T_LoanMap& loanMap )
     {
         for( auto it = loanMap.begin(); it != loanMap.end(); ++it )
             for( auto itComposante = it->second.begin(); itComposante != it->second.end(); ++itComposante )
@@ -577,7 +578,7 @@ void PHY_RolePion_Composantes::UpdateMajorComposante()
 void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( **it ).Update();
+        (*it)->Update();
     if( HasChanged() )
     {
         owner_->Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyComponentHasChanged );
@@ -977,7 +978,7 @@ void PHY_RolePion_Composantes::Neutralize()
 {
     const unsigned int nCurrentTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + ( **it ).GetNeutralizationTime() );
+        nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + (*it)->GetNeutralizationTime() );
     bNeutralized_ = true;
 }
 
@@ -1069,7 +1070,7 @@ void PHY_RolePion_Composantes::SendChangedState() const
 void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 {
     for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        ( **it ).SendFullState( context );
+        (*it)->SendFullState( context );
 }
 
 // -----------------------------------------------------------------------------
@@ -1202,7 +1203,7 @@ double PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agent&
     double rRange = 0;
     if( pTargetComposante )
         for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, ( **it ).GetMaxRangeToFireOn( *pTargetComposante, rWantedPH, dotation ) );
+            rRange = std::max( rRange, (*it)->GetMaxRangeToFireOn( *pTargetComposante, rWantedPH, dotation ) );
     return rRange;
 }
 
@@ -1217,7 +1218,7 @@ double PHY_RolePion_Composantes::GetOnlyLoadableMaxRangeToFireOn( const DEC_Know
     double rRange = 0;
     if( pTargetComposante )
         for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, ( **it ).GetOnlyLoadableMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
+            rRange = std::max( rRange, (*it)->GetOnlyLoadableMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
     return rRange;
 }
 
@@ -1232,7 +1233,7 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agent&
     double rRange = std::numeric_limits< double >::max();
     if( pTargetComposante )
         for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::min( rRange, ( **it ).GetMinRangeToFireOn( *pTargetComposante, rWantedPH ) );
+            rRange = std::min( rRange, (*it)->GetMinRangeToFireOn( *pTargetComposante, rWantedPH ) );
     return rRange;
 }
 
@@ -1247,7 +1248,7 @@ double PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_Kno
     double rRange = 0;
     if( pTargetComposante )
         for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, ( **it ).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
+            rRange = std::max( rRange, (*it)->GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
 
@@ -1262,7 +1263,7 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Kno
     double rRange = std::numeric_limits< double >::max();
     if( pTargetComposante )
         for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::min( rRange, ( **it ).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
+            rRange = std::min( rRange, (*it)->GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
 
@@ -1310,7 +1311,7 @@ double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, 
 {
     double rRange = 0.;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::max( rRange, ( **it ).GetMaxRangeToFire( pion, rWantedPH ) );
+        rRange = std::max( rRange, (*it)->GetMaxRangeToFire( pion, rWantedPH ) );
     return rRange;
 }
 
@@ -1321,7 +1322,7 @@ double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, 
 void PHY_RolePion_Composantes::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( **it ).PreprocessRandomBreakdowns( nEndDayTimeStep );
+        (*it)->PreprocessRandomBreakdowns( nEndDayTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -1579,7 +1580,7 @@ bool PHY_RolePion_Composantes::IsImmobilized() const
 void PHY_RolePion_Composantes::RepairAllComposantes()
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( **it ).Repair();
+        (*it)->Repair();
 }
 
 // -----------------------------------------------------------------------------
@@ -1608,7 +1609,7 @@ void PHY_RolePion_Composantes::DestroyRandomComposante()
 void PHY_RolePion_Composantes::DestroyAllComposantes()
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( **it ).ReinitializeState( PHY_ComposanteState::dead_ );
+        (*it)->ReinitializeState( PHY_ComposanteState::dead_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1618,7 +1619,7 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 void PHY_RolePion_Composantes::KillAllHumans()
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( **it ).KillAllHumans();
+        (*it)->KillAllHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -1629,7 +1630,7 @@ unsigned int PHY_RolePion_Composantes::GetNbrUsableHumans() const
 {
     unsigned int count = 0;
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-       count += ( **it ).GetNbrUsableHumans();
+       count += (*it)->GetNbrUsableHumans();
     return count;
 }
 
@@ -1640,7 +1641,7 @@ unsigned int PHY_RolePion_Composantes::GetNbrUsableHumans() const
 void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        ( **it ).Execute( algorithm );
+        (*it)->Execute( algorithm );
 }
 
 // -----------------------------------------------------------------------------
@@ -1833,32 +1834,13 @@ double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( const PHY_Materi
 // Name: PHY_RolePion_Composantes::GetConvoyTransportersUse
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const
+std::size_t PHY_RolePion_Composantes::GetConvoyTransportersTotal() const
 {
-    composanteUse.clear();
-    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        if( ( **it ).CouldBePartOfConvoy() )
-        {
-            T_ComposanteUse& data = composanteUse[ &( **it ).GetType() ];
-            ++data.nNbrTotal_;
-            if( ( **it ).GetState().IsUsable() )
-            {
-                ++ data.nNbrAvailable_;
-                if( !( **it ).CanBePartOfConvoy() )
-                    ++data.nNbrUsed_;
-            }
-        }
-    for( auto itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
-    {
-        const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
-        for( auto it = composantes.begin(); it != composantes.end(); ++it )
-            if( ( **it ).CouldBePartOfConvoy() )
-            {
-                T_ComposanteUse& data = composanteUse[ &( **it ).GetType() ];
-                ++data.nNbrTotal_;
-                ++data.nNbrLent_;
-            }
-    }
+    auto convoyable = boost::mem_fn( &PHY_ComposantePion::CouldBePartOfConvoy );
+    std::size_t total = boost::count_if( composantes_, convoyable );
+    for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
+        total += boost::count_if( it->second, convoyable );
+    return total;
 }
 
 // -----------------------------------------------------------------------------

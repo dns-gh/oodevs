@@ -174,7 +174,7 @@ PHY_MaintenanceComposanteState* MIL_AutomateLOG::MaintenanceHandleComposanteForT
 {
     MaintenanceTransportVisitor visitor( composante );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForTransport( pion, composante ) : 0;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( pion, composante ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForTransport( PHY_MaintenanceCo
 {
     MaintenanceTransportVisitor visitor( composanteState.GetComposante() );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForTransport( composanteState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForTransport( composanteState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ bool MIL_AutomateLOG::MaintenanceHandleComposanteForRepair( PHY_MaintenanceCompo
 {
     MaintenanceRepairVisitor visitor( composanteState );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->HandleComposanteForRepair( composanteState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleComposanteForRepair( composanteState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -207,7 +207,7 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeRepair
 {
     MaintenanceRepairVisitor visitor( composanteState );
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,12 +218,8 @@ PHY_RoleInterface_Maintenance* MIL_AutomateLOG::MaintenanceFindAlternativeTransp
 {
     MaintenanceTransportVisitor visitor( composanteState.GetComposante() );
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
-
-// =============================================================================
-// MEDICAL
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::MedicalHandleHumanEvacuatedByThirdParty
@@ -244,7 +240,7 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_Age
 {
     MedicalEvacuationVisitor visitor( human );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->HandleHumanForEvacuation( pion, human ) : 0;
+    return visitor.selected_ ? visitor.selected_->HandleHumanForEvacuation( pion, human ) : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +251,7 @@ bool MIL_AutomateLOG::MedicalHandleHumanForCollection( PHY_MedicalHumanState& hu
 {
     MedicalCollectionVisitor visitor( humanState );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->HandleHumanForCollection( humanState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleHumanForCollection( humanState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -267,11 +263,11 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalReserveForSorting( PHY_Medica
     MedicalSortingVisitor visitor;
     Visit( visitor );
 
-    if( !visitor.pSelected_ )
+    if( !visitor.selected_ )
         return 0;
 
-    visitor.pSelected_->ReserveForSorting( ambulance );
-    return visitor.pSelected_;
+    visitor.selected_->ReserveForSorting( ambulance );
+    return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -282,7 +278,7 @@ bool MIL_AutomateLOG::MedicalHandleHumanForHealing( PHY_MedicalHumanState& human
 {
     MedicalHealingVisitor visitor( humanState );
     Visit( visitor );
-    return visitor.pSelected_ ? visitor.pSelected_->HandleHumanForHealing( humanState ) : false;
+    return visitor.selected_ ? visitor.selected_->HandleHumanForHealing( humanState ) : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +303,7 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeEvacuationHand
 {
     MedicalEvacuationVisitor visitor( humanState.GetHuman() );
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -318,7 +314,7 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeCollectionHand
 {
     MedicalCollectionVisitor visitor( humanState );
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -329,7 +325,7 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeSortingHandler
 {
     MedicalSortingVisitor visitor;
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +336,7 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler
 {
     MedicalHealingVisitor visitor( humanState );
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
 
 // =============================================================================
@@ -392,7 +388,7 @@ bool MIL_AutomateLOG::SupplyHasStock( const PHY_DotationCategory& dotationCatego
 {
     SupplyStockContainerVisitor visitor( dotationCategory );
     Visit( visitor );
-    return visitor.pSelected_ != 0;
+    return visitor.selected_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -432,8 +428,8 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
     {
         SupplyConvoyCapacityVisitor visitor;
         Visit( visitor );
-        if( visitor.pSelected_ )
-            pConvoyAutomate = &visitor.pSelected_->GetAutomate();
+        if( visitor.selected_ )
+            pConvoyAutomate = &visitor.selected_->GetAutomate();
     }
     if( !pConvoyAutomate )
         return 0;
@@ -473,7 +469,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
     Visit( visitor );
 
     pConvoyTransporter     = visitor.pConvoySelected_;
-    pConvoyTransporterPion = visitor.pSelected_;
+    pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
 }
 
@@ -487,7 +483,7 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
     Visit( visitor );
 
     pConvoyTransporter     = visitor.pConvoySelected_;
-    pConvoyTransporterPion = visitor.pSelected_;
+    pConvoyTransporterPion = visitor.selected_;
     return pConvoyTransporter != 0;
 }
 
@@ -601,9 +597,9 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
     Visit( visitor );
     if( visitor.nextPackagingResource_ )
     {
-        assert( visitor.pSelected_ );
+        assert( visitor.selected_ );
         double quantity = 1;
-        visitor.pSelected_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, visitor.nextPackagingResource_->GetDotationCategory(), quantity );
+        visitor.selected_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, visitor.nextPackagingResource_->GetDotationCategory(), quantity );
         return visitor.nextPackagingResource_;
     }
     else
@@ -700,7 +696,7 @@ const MIL_AgentPion* MIL_AutomateLOG::GetPC() const
 {
     PCVisitor visitor;
     Visit( visitor );
-    return visitor.pSelected_;
+    return visitor.selected_;
 }
 
 // -----------------------------------------------------------------------------
