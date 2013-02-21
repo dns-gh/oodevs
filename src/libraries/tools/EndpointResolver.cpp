@@ -9,7 +9,6 @@
 
 #include "tools_pch.h"
 #include "EndpointResolver.h"
-#include <boost/bind.hpp>
 
 using namespace tools;
 
@@ -36,30 +35,22 @@ namespace
 {
     std::pair< std::string, std::string > BuildAddress( const std::string& address )
     {
-        return std::make_pair( address.substr( 0, address.find_first_of( ':' ) ),
-                               address.substr( address.find_first_of( ':' ) + 1 ) );
+        const std::size_t separator = address.find_last_of( ':' );
+        const std::string host = separator == std::string::npos ?
+                                 "127.0.0.1" :
+                                 address.substr( 0, separator );
+        const std::string port =  address.substr( separator + 1 );
+        return std::make_pair( host, port );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: EndpointResolver::AsyncResolve
+// Name: EndpointResolver::Resolve
 // Created: SLI 2013-02-20
 // -----------------------------------------------------------------------------
-void EndpointResolver::AsyncResolve( const std::string& endpoint, T_Callback callback )
+boost::asio::ip::tcp::resolver::iterator EndpointResolver::Resolve( const std::string& endpoint, boost::system::error_code& error )
 {
     std::pair< std::string, std::string > address = BuildAddress( endpoint );
     const boost::asio::ip::tcp::resolver::query query( boost::asio::ip::tcp::v4(), address.first, address.second );
-    resolver_.async_resolve( query, boost::bind( callback,
-                                                 endpoint,
-                                                 boost::asio::placeholders::error,
-                                                 boost::asio::placeholders::iterator ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EndpointResolver::Cancel
-// Created: SLI 2013-02-20
-// -----------------------------------------------------------------------------
-void EndpointResolver::Cancel()
-{
-    resolver_.cancel();
+    return resolver_.resolve( query, error );
 }

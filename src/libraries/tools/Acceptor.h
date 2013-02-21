@@ -11,6 +11,7 @@
 #define __Acceptor_h_
 
 #include "asio.h"
+#include "EndpointResolver.h"
 
 namespace tools
 {
@@ -27,7 +28,7 @@ class Acceptor
 public:
     //! @name Constructors/Destructor
     //@{
-             Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned short port );
+             Acceptor( SocketManager& manager, boost::asio::io_service& service, const std::string& endpoint );
     virtual ~Acceptor();
     //@}
 
@@ -56,7 +57,8 @@ private:
     SocketManager& manager_;
     boost::asio::io_service& service_;
     boost::asio::ip::tcp::acceptor acceptor_;
-    unsigned short port_;
+    EndpointResolver resolver_;
+    const std::string endpoint_;
     volatile bool accept_;
     //@}
 };

@@ -59,7 +59,7 @@ Launcher::Launcher( const Config& config )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , server_            ( new LauncherService( config.GetLauncherPort() ) )
     , processes_         ( new ProcessService( config, *fileLoader_, *server_ ) )
-    , proxy_             ( new shield::Server( config.GetLauncherPort() + 1, *server_, model, *server_, logger, true ) ) // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
+    , proxy_             ( new shield::Server( boost::lexical_cast< std::string >( config.GetLauncherPort() + 1 ), *server_, model, *server_, logger, true ) ) // $$$$ MCO should we hard-code 30001 instead of port + 1 ?
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
 }

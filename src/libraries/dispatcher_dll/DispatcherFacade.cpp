@@ -111,12 +111,13 @@ void DestroyDispatcherFacade( void* dispatchFacade )
 // Name: UpdateDispatcherFacade
 // Created: SLI 2012-07-18
 // -----------------------------------------------------------------------------
-void UpdateDispatcherFacade( void* dispatchFacade )
+bool UpdateDispatcherFacade( void* dispatchFacade )
 {
     try
     {
         if( dispatchFacade )
             static_cast< DispatcherFacade* >( dispatchFacade )->Update();
+        return true;
     }
     catch( const std::exception& e )
     {
@@ -126,6 +127,7 @@ void UpdateDispatcherFacade( void* dispatchFacade )
     {
         MT_LOG_ERROR_MSG( "Updating: Unknown error" );
     }
+    return false;
 }
 
 #include "dispatcher/DispatcherLoader.h"

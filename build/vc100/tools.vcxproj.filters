@@ -344,5 +344,8 @@
     <ClInclude Include="..\..\src\libraries\tools\EndpointResolver.h">
       <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\ConnectionError.h">
+      <Filter>Source Files\Network\internal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

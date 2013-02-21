@@ -51,7 +51,7 @@ namespace
     {
     public:
         explicit MockServer( unsigned short port )
-            : tools::ServerNetworker( port )
+            : tools::ServerNetworker( boost::lexical_cast< std::string >( port ) )
         {
             RegisterMessage( *this, &MockServer::ReceiveClientToAuthentication );
             RegisterMessage( *this, &MockServer::ReceiveClientToSim );

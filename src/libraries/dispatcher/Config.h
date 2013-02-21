@@ -43,8 +43,8 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetNetworkSimulationParameters() const;
-    unsigned short     GetNetworkClientsParameters() const;
-    unsigned short     GetNetworkShieldParameters() const;
+    const std::string& GetNetworkClientsParameters() const;
+    const std::string& GetNetworkShieldParameters() const;
     unsigned long      GetNetworkTimeout() const;
     bool               UseShieldUtf8Encoding() const;
     unsigned int       GetKeyFramesFrequency() const;
@@ -57,9 +57,8 @@ private:
     //! @name Member data
     //@{
     std::string networkSimulationParameters_;
-    unsigned short networkSimulationPort_;
-    unsigned short networkClientsParameters_;
-    unsigned short networkShieldParameters_;
+    std::string networkClientsParameters_;
+    std::string networkShieldParameters_;
     unsigned long networkTimeout_;
     unsigned int keyFramesFrequency_;
     unsigned int replayFragmentsFrequency_;

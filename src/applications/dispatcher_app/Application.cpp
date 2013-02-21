@@ -45,9 +45,8 @@ int Application::Execute( bool test )
     try
     {
         tools::ipc::Watch watch( *quit_ );
-        do
-            dispatcher_->Update();
-        while( !test && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
+        do{}
+        while( dispatcher_->Update() && !test && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
     }
     catch( const std::exception& e )
     {

@@ -50,7 +50,7 @@ class ServerNetworker : public MessageDispatcher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ServerNetworker( unsigned short port, unsigned long timeOut = 10000 );
+             ServerNetworker( const std::string& endpoint, unsigned long timeOut = 10000 );
     virtual ~ServerNetworker();
     //@}
 

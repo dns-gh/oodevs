@@ -42,7 +42,7 @@ public:
     //@{
     typedef void* ( *T_FacadeCreator )( int argc, char** argv, int maxConnections );
     typedef void ( *T_FacadeDestructor )( void* facade );
-    typedef void ( *T_FacadeUpdator )( void* facade );
+    typedef bool ( *T_FacadeUpdator )( void* facade );
     //@}
 
 public:
@@ -67,9 +67,9 @@ public:
 
     //! @name Operations
     //@{
-    void Update()
+    bool Update()
     {
-        facadeUpdator_( dispatcher_ );
+        return facadeUpdator_( dispatcher_ );
     }
     //@}
 

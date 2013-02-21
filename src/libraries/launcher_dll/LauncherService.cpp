@@ -18,7 +18,7 @@ using namespace launcher;
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
 LauncherService::LauncherService( unsigned short port )
-    : tools::ServerNetworker( port )
+    : tools::ServerNetworker( boost::lexical_cast< std::string >( port ) )
 {
     AllowConnections();
 }

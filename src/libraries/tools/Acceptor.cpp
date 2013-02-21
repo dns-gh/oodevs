@@ -10,6 +10,7 @@
 #include "tools_pch.h"
 #include "Acceptor.h"
 #include "SocketManager.h"
+#include "ConnectionError.h"
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
@@ -20,11 +21,12 @@ using namespace tools;
 // Name: Acceptor constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-Acceptor::Acceptor( SocketManager& manager, boost::asio::io_service& service, unsigned short port )
+Acceptor::Acceptor( SocketManager& manager, boost::asio::io_service& service, const std::string& endpoint )
     : manager_ ( manager )
     , service_ ( service )
     , acceptor_( service )
-    , port_    ( port )
+    , resolver_( service )
+    , endpoint_( endpoint )
     , accept_  ( false )
 {
     // NOTHING
@@ -57,12 +59,15 @@ void Acceptor::DenyConnections()
 void Acceptor::AllowConnections()
 {
     accept_ = true;
-    boost::asio::ip::tcp::endpoint endpoint( boost::asio::ip::tcp::v4(), port_ );
-    acceptor_.open( endpoint.protocol() );
     boost::system::error_code error;
+    const boost::asio::ip::tcp::resolver::iterator iterator = resolver_.Resolve( endpoint_, error );
+    if( error )
+        throw ConnectionError( tools::FromLocalCharsetToUtf8( error.message() ) + " ( " + endpoint_ + " )" );
+    const boost::asio::ip::tcp::endpoint endpoint = *iterator;
+    acceptor_.open( endpoint.protocol() );
     acceptor_.bind( endpoint, error );
     if( error )
-        throw MASA_EXCEPTION( tools::FromLocalCharsetToUtf8( error.message() ) + " (port : " + boost::lexical_cast< std::string >( port_ ) + ")" );
+        throw ConnectionError( tools::FromLocalCharsetToUtf8( error.message() ) + " ( " + endpoint_ + " )" );
     acceptor_.listen( 0 );
     Listen();
 }

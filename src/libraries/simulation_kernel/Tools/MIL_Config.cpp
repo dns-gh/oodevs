@@ -38,7 +38,6 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , tickLatency_( 1 )
     , pathFinderThreads_( 0 )
     , networkLoggerPort_( 0 )
-    , networkPort_( 0 )
     , networkTimeOut_( 10000 )
     , bCheckPointOrbat_( false )
     , bUseCheckPointCRC_( false )
@@ -71,7 +70,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
         ( "integration-dir", po::value( &integrationDir_ )                , "set integration directory"                 )
         ( "dump-pathfinds",  po::value( &pathfindDir_ )                   , "set pathfind dump directory" )
         ( "filter-pathfinds",po::value( &pathfindFilter_ )                , "set pathfind id filter, separate multiple values with commas" )
-        ( "simulation-port", po::value( &networkPort_ )                   , "specify the simulation server port number" );
+        ( "simulation-address", po::value( &networkAddress_ )             , "specify the simulation server address (ip:port)" );
     AddOptions( desc );
 }
 
@@ -122,7 +121,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadSessionXml( xml::xistream& xis )
 {
-    unsigned short port;
+    std::string address;
     std::string subsetParties;
     xis >> xml::start( "session" )
             >> xml::start( "config" )
@@ -148,7 +147,7 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                         >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
                     >> xml::end
                     >> xml::start( "network" )
-                        >> xml::attribute( "port", port )
+                        >> xml::attribute( "port", address )
                         >> xml::optional >> xml::attribute( "timeout", networkTimeOut_ )
                     >> xml::end
                     >> xml::start( "time" )
@@ -176,8 +175,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::start( "random" )
                         >> xml::attribute( "seed", randomSeed_ )
                     >> xml::end;
-    if( ! networkPort_ )
-        networkPort_ = port;
+    if( networkAddress_.empty() )
+        networkAddress_ = address;
     if( subset_ )
         ExtractParties( subsetParties );
     ConfigureRandom( xis );

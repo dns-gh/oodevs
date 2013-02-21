@@ -86,7 +86,7 @@ namespace launcher_test
     MOCK_BASE_CLASS( MockDispatcher, tools::ServerNetworker )
     {
         MockDispatcher( unsigned short port )
-            : tools::ServerNetworker( port )
+            : tools::ServerNetworker( boost::lexical_cast< std::string >( port ) )
             , authenticated_( false )
         {
             AllowConnections();

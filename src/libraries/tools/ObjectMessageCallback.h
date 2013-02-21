@@ -13,6 +13,7 @@
 #include "ObjectMessageCallback_ABC.h"
 #include "MessageCallback_ABC.h"
 #include "Message.h"
+#include "ConnectionError.h"
 #include <tools/Exception.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
@@ -57,6 +58,10 @@ public:
         {
             for( auto it = callbacks_.begin(); it != callbacks_.end(); ++it )
                 (*it)( link, message );
+        }
+        catch( const ConnectionError& )
+        {
+            throw;
         }
         catch( const std::exception& e )
         {

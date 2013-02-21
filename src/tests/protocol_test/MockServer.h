@@ -22,7 +22,7 @@ MOCK_BASE_CLASS( MockServer, tools::ServerNetworker )
 {
 public:
     explicit MockServer( unsigned short port )
-        : tools::ServerNetworker( port )
+        : tools::ServerNetworker( boost::lexical_cast< std::string >( port ) )
     {
         RegisterMessage( *this, &MockServer::OnReceivePion );
         AllowConnections();

@@ -222,13 +222,13 @@ bool MIL_Config::GetPausedAtStartup() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetNetworkPort
+// Name: MIL_Config::GetNetworkAddress
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-unsigned short MIL_Config::GetNetworkPort() const
+const std::string& MIL_Config::GetNetworkAddress() const
 {
-    return networkPort_;
+    return networkAddress_;
 }
 
 // -----------------------------------------------------------------------------

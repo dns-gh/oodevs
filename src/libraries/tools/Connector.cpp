@@ -47,7 +47,14 @@ Connector::~Connector()
 // -----------------------------------------------------------------------------
 void Connector::Connect( const std::string& endpoint )
 {
-    resolver_.AsyncResolve( endpoint, boost::bind( &Connector::OnResolve, this, _1, _2, _3 ) );
+    boost::system::error_code error;
+    const boost::asio::ip::tcp::resolver::iterator iterator = resolver_.Resolve( endpoint, error );
+    if( closed_ )
+        return;
+    if( ! error )
+        DoConnect( *iterator );
+    else
+        callback_.ConnectionFailed( endpoint, tools::FromLocalCharsetToUtf8( error.message() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,21 +64,6 @@ void Connector::Connect( const std::string& endpoint )
 void Connector::Close()
 {
     closed_ = true;
-    resolver_.Cancel();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Connector::OnResolve
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-void Connector::OnResolve( const std::string& endpoint, const boost::system::error_code& error, boost::asio::ip::tcp::resolver::iterator it )
-{
-    if( closed_ )
-        return;
-    if( ! error )
-        DoConnect( *it );
-    else
-        callback_.ConnectionFailed( endpoint, tools::FromLocalCharsetToUtf8( error.message() ) );
 }
 
 // -----------------------------------------------------------------------------

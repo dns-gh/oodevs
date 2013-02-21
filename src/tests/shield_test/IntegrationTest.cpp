@@ -84,14 +84,14 @@ namespace
     {
         ListenerFixture()
         {
-            MOCK_EXPECT( listener.Info ).once().with( mock::contain( "Starting shield server on port" ) );
+            MOCK_EXPECT( listener.Info ).once().with( mock::contain( "Starting shield server on address" ) );
         }
         MockListener listener;
     };
     struct Fixture : ListenerFixture
     {
         Fixture()
-            : shield( PORT, dispatcher, model, handler, listener, true )
+            : shield( boost::lexical_cast< std::string >( PORT ), dispatcher, model, handler, listener, true )
         {
             int notified = 4;
             MOCK_EXPECT( listener.Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );

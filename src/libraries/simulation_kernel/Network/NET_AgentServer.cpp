@@ -23,13 +23,13 @@ using namespace tools;
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& time, NET_Simulation_ABC& simulation )
-    : ServerNetworker                ( config.GetNetworkPort(), config.GetNetworkTimeout() )
+    : ServerNetworker                ( config.GetNetworkAddress(), config.GetNetworkTimeout() )
     , time_                          ( time )
     , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr( *this, simulation ) )
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )
 {
-    MT_LOG_INFO_MSG( "Starting simulation server on port " << config.GetNetworkPort() );
+    MT_LOG_INFO_MSG( "Starting simulation server on address " << config.GetNetworkAddress() );
     AllowConnections();
 }
 

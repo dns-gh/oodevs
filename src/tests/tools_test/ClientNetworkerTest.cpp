@@ -33,7 +33,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( client_networker_destroyed_during_connection_does_not_deadlock )
 {
-    tools::ServerNetworker server( PORT );
+    tools::ServerNetworker server( boost::lexical_cast< std::string >( PORT ) );
     server.AllowConnections();
     ClientNetworker client( "localhost:" + boost::lexical_cast< std::string >( PORT ) );
 }

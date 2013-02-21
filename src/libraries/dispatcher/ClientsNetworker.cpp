@@ -29,7 +29,7 @@ ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, co
     , services_( services )
     , model_   ( model )
 {
-    MT_LOG_INFO_MSG( "Starting dispatcher server on port " << config.GetNetworkClientsParameters() );
+    MT_LOG_INFO_MSG( "Starting dispatcher server on address " << config.GetNetworkClientsParameters() );
 }
 
 // -----------------------------------------------------------------------------

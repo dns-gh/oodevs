@@ -25,9 +25,6 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     : SessionConfig( observer )
-    , networkSimulationPort_   ( 0 )
-    , networkClientsParameters_( 0 )
-    , networkShieldParameters_ ( 0 )
     , networkTimeout_          ( 10000 )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
@@ -37,8 +34,8 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
-        ( "simulation-port", po::value( &networkSimulationPort_ )   , "specify the simulation server port number" )
-        ( "dispatcher-port", po::value( &networkClientsParameters_ ), "specify the dispatcher server port number" );
+        ( "simulation-address", po::value( &networkSimulationParameters_ ), "specify the simulation server address (ip:port)" )
+        ( "dispatcher-address", po::value( &networkClientsParameters_ )   , "specify the dispatcher server address (ip:port)" );
     AddOptions( desc );
 }
 
@@ -59,7 +56,8 @@ void Config::Parse( int argc, char** argv )
 {
     LogSettingsData logShield, logDispatcherProtobuf, logDispatcher, logLoggerPlugin;
     tools::SessionConfig::Parse( argc, argv );
-    unsigned short port;
+    std::string simulationAddress;
+    std::string dispatcherAddress;
     std::string subsetParties;
     xml::xifstream xis( GetSessionFile() );
     xis >> xml::start( "session" )
@@ -79,8 +77,8 @@ void Config::Parse( int argc, char** argv )
                 >> xml::end
                 >> xml::start( "dispatcher" )
                     >> xml::start( "network" )
-                        >> xml::attribute( "client", networkSimulationParameters_ )
-                        >> xml::attribute( "server", port )
+                        >> xml::attribute( "client", simulationAddress )
+                        >> xml::attribute( "server", dispatcherAddress )
                         >> xml::optional >> xml::attribute( "timeout", networkTimeout_ )
                     >> xml::end
                     >> xml::optional >> xml::start( "log" )
@@ -118,12 +116,10 @@ void Config::Parse( int argc, char** argv )
                     >> xml::end;
     if( subset_ )
         ExtractParties( subsetParties );
-    if( networkSimulationPort_ != 0 )
-        networkSimulationParameters_ =
-            networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
-            + ':' + boost::lexical_cast< std::string >( networkSimulationPort_ );
-    if( ! networkClientsParameters_ )
-        networkClientsParameters_ = port;
+    if( networkSimulationParameters_.empty() )
+        networkSimulationParameters_ = simulationAddress;
+    if( networkClientsParameters_.empty() )
+        networkClientsParameters_ = dispatcherAddress;
     SetDispatcherProtobufLogSettings( logDispatcherProtobuf );
     SetDispatcherLogSettings( logDispatcher );
     SetLoggerPluginLogSettings( logLoggerPlugin );
@@ -143,7 +139,7 @@ const std::string& Config::GetNetworkSimulationParameters() const
 // Name: Config::GetNetworkClientsParameters
 // Created: NLD 2007-05-09
 // -----------------------------------------------------------------------------
-unsigned short Config::GetNetworkClientsParameters() const
+const std::string& Config::GetNetworkClientsParameters() const
 {
     return networkClientsParameters_;
 }
@@ -152,7 +148,7 @@ unsigned short Config::GetNetworkClientsParameters() const
 // Name: Config::GetNetworkShieldParameters
 // Created: MCO 2011-11-29
 // -----------------------------------------------------------------------------
-unsigned short Config::GetNetworkShieldParameters() const
+const std::string& Config::GetNetworkShieldParameters() const
 {
     return networkShieldParameters_;
 }

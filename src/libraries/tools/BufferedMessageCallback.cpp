@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "BufferedMessageCallback.h"
+#include "ConnectionError.h"
 
 using namespace tools;
 
@@ -114,6 +115,11 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::
     try
     {
         callback.OnMessage( endpoint, message );
+    }
+    catch( const ConnectionError& e )
+    {
+        callback.OnError( endpoint, tools::GetExceptionMsg( e ) );
+        throw;
     }
     catch( const std::exception& e )
     {

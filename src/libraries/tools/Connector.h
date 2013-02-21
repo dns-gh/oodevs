@@ -48,7 +48,6 @@ private:
 
     //! @name Helpers
     //@{
-    void OnResolve( const std::string& endpoint, const boost::system::error_code& error, boost::asio::ip::tcp::resolver::iterator it );
     void DoConnect( const boost::asio::ip::tcp::endpoint& endpoint );
     void OnConnect( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket, const boost::asio::ip::tcp::endpoint& endpoint, const boost::system::error_code& error );
     //@}

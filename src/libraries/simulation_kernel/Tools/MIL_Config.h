@@ -39,7 +39,7 @@ class MIL_Config : public virtual tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Config( tools::RealFileLoaderObserver_ABC& observer );
+    explicit MIL_Config( tools::RealFileLoaderObserver_ABC& observer );
     virtual ~MIL_Config();
     //@}
 
@@ -54,7 +54,7 @@ public:
     bool               IsCommandProfilingEnabled   () const;
     bool               IsSaveCheckpointTestMode    () const;
     bool               IsDispatcherEmbedded        () const;
-    unsigned short     GetNetworkPort              () const;
+    const std::string& GetNetworkAddress           () const;
     unsigned long      GetNetworkTimeout           () const;
     bool               IsThreadedNetwork           () const;
     bool               IsLegacy                    () const;
@@ -118,7 +118,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< const std::string, boost::crc_32_type::value_type > T_CRCMap;
-    typedef T_CRCMap::const_iterator                                      CIT_CRCMap;
     //@}
 
 private:
@@ -133,7 +132,7 @@ private:
     unsigned int   pathFinderThreads_;
     boost::optional< unsigned int > pathFinderMaxComputationTime_;
     unsigned short networkLoggerPort_;
-    unsigned short networkPort_;
+    std::string    networkAddress_;
     unsigned long  networkTimeOut_;
     bool           bCheckPointOrbat_;
     bool           bUseCheckPointCRC_;

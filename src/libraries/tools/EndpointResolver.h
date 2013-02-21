@@ -11,7 +11,6 @@
 #define tools_EndpointResolver_h
 
 #include "asio.h"
-#include <boost/function.hpp>
 
 namespace tools
 {
@@ -24,12 +23,6 @@ namespace tools
 class EndpointResolver
 {
 public:
-    //! @name Types
-    //@{
-    typedef boost::function< void( const std::string&, const boost::system::error_code&, boost::asio::ip::tcp::resolver::iterator ) > T_Callback;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
     explicit EndpointResolver( boost::asio::io_service& service );
@@ -38,8 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    void AsyncResolve( const std::string& endpoint, T_Callback callback );
-    void Cancel();
+    boost::asio::ip::tcp::resolver::iterator Resolve( const std::string& endpoint, boost::system::error_code& error );
     //@}
 
 private:

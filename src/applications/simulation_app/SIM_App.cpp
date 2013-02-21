@@ -165,7 +165,8 @@ void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
             const_cast< char** >( winArguments->Argv() ), maxConnections );
         while( !quit->IsSignaled() )
         {
-            loader.Update();
+            if( !loader.Update() )
+                break;
             quit->Wait( boost::posix_time::milliseconds( 25 ) );
         }
     }

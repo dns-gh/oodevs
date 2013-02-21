@@ -23,13 +23,13 @@ using namespace tools;
 // Name: ServerNetworker constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=10000*/ )
+ServerNetworker::ServerNetworker( const std::string& endpoint, unsigned long timeOut /*=10000*/ )
     : service_         ( new boost::asio::io_service() )
     , connectionBuffer_( new BufferedConnectionCallback() )
     , messageBuffer_   ( new BufferedMessageCallback() )
     , sockets_         ( new SocketManager( messageBuffer_, connectionBuffer_, timeOut ) )
     , messageService_  ( new ObjectMessageService() )
-    , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
+    , acceptor_        ( new Acceptor( *sockets_, *service_, endpoint ) )
     , quit_            ( new WaitEvent() )
 {
     messageService_->RegisterErrorCallback( boost::bind( &ServerNetworker::ConnectionError, this, _1, _2 ) );
@@ -160,7 +160,7 @@ void ServerNetworker::ConnectionFailed( const std::string& , const std::string& 
 // -----------------------------------------------------------------------------
 void ServerNetworker::ConnectionError( const std::string& endpoint, const std::string& )
 {
-    sockets_->Disconnect( endpoint );
+    Disconnect( endpoint );
 }
 
 // -----------------------------------------------------------------------------
