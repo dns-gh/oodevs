@@ -36,12 +36,6 @@ namespace logistic {
 class SupplyConvoy : public SupplyConvoy_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< const PHY_DotationCategory*, double > T_Resources;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters );

@@ -645,7 +645,7 @@ void PHY_RolePion_Composantes::UpdateDataWhenComposanteRemoved( const PHY_Compos
 // Name: PHY_RolePion_Composantes::NotifyComposanteAdded
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations )
+void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, T_Dotations* dotations )
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) == composantes_.end() );
     composantes_.push_back( &composante );
@@ -658,15 +658,15 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
 // Name: PHY_RolePion_Composantes::NotifyComposanteRemoved
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-std::map< const PHY_DotationCategory*, double > PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
+PHY_RolePion_Composantes::T_Dotations PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     UpdateDataWhenComposanteRemoved( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
     auto it = std::find( composantes_.begin(), composantes_.end(), &composante );
     assert( it != composantes_.end() );
     composantes_.erase( it );
-    std::map< const PHY_DotationCategory*, double > removedDotations;
-    std::map< const PHY_DotationCategory*, double >* pRemovedDotations = &removedDotations;
+    T_Dotations removedDotations;
+    T_Dotations* pRemovedDotations = &removedDotations;
     if( composante.GetState().IsUsable() )
         owner_->Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities(), pRemovedDotations );
     owner_->Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
@@ -685,7 +685,7 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     T_ComposanteTypeProperties& properties = composanteTypes_[ &composante.GetType() ];
     UpdateDataWhenComposanteRemoved( oldState, properties );
     UpdateDataWhenComposanteAdded( newState, properties );
-    std::map< const PHY_DotationCategory*, double >* removedDotations = 0;
+    T_Dotations* removedDotations = 0;
     if( !newState.IsUsable() && oldState.IsUsable() )
         owner_->Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities(), removedDotations );
     else if( newState.IsUsable() && !oldState.IsUsable() )

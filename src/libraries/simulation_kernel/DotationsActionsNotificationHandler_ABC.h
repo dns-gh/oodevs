@@ -12,23 +12,26 @@
 
 class PHY_DotationCapacities;
 
-namespace dotation {
-
+namespace dotation
+{
 // =============================================================================
 /** @class  DotationsActionsNotificationHandler_ABC
     @brief  DotationsActionsNotificationHandler_ABC
 */
 // Created: MGD 2009-10-01
 // =============================================================================
-class DotationsActionsNotificationHandler_ABC {
+class DotationsActionsNotificationHandler_ABC
+{
 public:
              DotationsActionsNotificationHandler_ABC() {}
     virtual ~DotationsActionsNotificationHandler_ABC() {}
 
-    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations ) = 0;
-    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations ) = 0;
+    typedef std::map< const PHY_DotationCategory*, double > T_Dotations;
+
+    virtual void RegisterDotationsCapacities( const PHY_DotationCapacities& capacities, T_Dotations*& dotations ) = 0;
+    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, T_Dotations*& dotations ) = 0;
 };
 
-} // namespace dotation
+}
 
 #endif /* __DotationsActionsNotificationHandler_ABC_H__ */

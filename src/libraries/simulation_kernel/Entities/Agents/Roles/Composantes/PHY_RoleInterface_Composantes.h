@@ -137,9 +137,11 @@ public:
 
     //! @name Notifications (internal)
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations ) = 0;
-    virtual std::map< const PHY_DotationCategory*, double > NotifyComposanteRemoved ( PHY_ComposantePion& composante ) = 0;
-    virtual void NotifyComposanteChanged ( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState ) = 0;
+    typedef std::map< const PHY_DotationCategory*, double > T_Dotations;
+
+    virtual void NotifyComposanteAdded( PHY_ComposantePion& composante, T_Dotations* dotations ) = 0;
+    virtual T_Dotations NotifyComposanteRemoved( PHY_ComposantePion& composante ) = 0;
+    virtual void NotifyComposanteChanged( PHY_ComposantePion& composante, const PHY_ComposanteState& oldState ) = 0;
     virtual void NotifyComposanteRepaired() = 0;
     //@}
 

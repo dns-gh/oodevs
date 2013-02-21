@@ -208,7 +208,7 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
         bRepairEvacuationNoMeansChecked_ = false;
     }
     pHumans_->NotifyComposanteTransfered( *pRole_, newRole );
-    std::map< const PHY_DotationCategory*, double > dotationsRemoved = pRole_->NotifyComposanteRemoved( *this );
+    auto dotationsRemoved = pRole_->NotifyComposanteRemoved( *this );
     pRole_ = &newRole;
     pRole_->NotifyComposanteAdded( *this, &dotationsRemoved );
 }

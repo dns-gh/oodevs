@@ -44,46 +44,7 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( dotation::PHY_RolePion_Dotations )
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-            void serialize( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for ( dotation::PHY_RolePion_Dotations::CIT_DotationReservedMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                PHY_Dotation* pDotation;
-                file >> pDotation;
-                file >> map[ pDotation ];
-            }
-        }
-    }
-}
-
-namespace dotation
-{
+using namespace dotation;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations constructor
@@ -96,6 +57,7 @@ PHY_RolePion_Dotations::PHY_RolePion_Dotations()
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -189,7 +151,7 @@ void PHY_RolePion_Dotations::ReadOverloading( xml::xistream& xis )
 // Name: PHY_RolePion_Dotations::RegisterDotationsCapacities
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::RegisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations )
+void PHY_RolePion_Dotations::RegisterDotationsCapacities( const PHY_DotationCapacities& capacities, T_Dotations*& dotations )
 {
     assert( pDotations_ );
     capacities.RegisterCapacities( *pDotations_, dotations );
@@ -199,10 +161,10 @@ void PHY_RolePion_Dotations::RegisterDotationsCapacities( const PHY_DotationCapa
 // Name: PHY_RolePion_Dotations::UnregisterDotationsCapacities
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations )
+void PHY_RolePion_Dotations::UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, T_Dotations*& dotations )
 {
     assert( pDotations_ );
-    std::map< const PHY_DotationCategory*, double > dotationsRemoved = capacities.UnregisterCapacities( *pDotations_ );
+    T_Dotations dotationsRemoved = capacities.UnregisterCapacities( *pDotations_ );
     if( dotations )
         *dotations = dotationsRemoved;
 }
@@ -336,14 +298,11 @@ class sConsumptionTimeExpectancy : public ::OnComponentFunctor_ABC
 public:
     sConsumptionTimeExpectancy( const PHY_ConsumptionType& consumptionMode )
         : consumptionMode_ ( consumptionMode )
-        , consumptions_    ()
-    {
-    }
+    {}
 
     void operator() ( PHY_ComposantePion& composante )
     {
         const PHY_DotationConsumptions* pConsumptions = composante.GetDotationConsumptions( consumptionMode_ );
-
         if( pConsumptions )
             pConsumptions->AddConsumptionValues( consumptions_ );
     }
@@ -677,7 +636,5 @@ void PHY_RolePion_Dotations::AllowAllDotations()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Dotations::HasDotationForFiring( const PHY_DotationCategory& category, int iterations )
 {
-    return( GetDotationNumber( category ) >= category.ConvertToNbrAmmo( static_cast< double >( iterations ) ) );
+    return GetDotationNumber( category ) >= category.ConvertToNbrAmmo( static_cast< double >( iterations ) );
 }
-
-} // namespace dotation

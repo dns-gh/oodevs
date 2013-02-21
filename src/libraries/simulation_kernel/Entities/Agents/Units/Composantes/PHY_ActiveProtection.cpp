@@ -98,7 +98,7 @@ void PHY_ActiveProtection::Terminate()
 // -----------------------------------------------------------------------------
 PHY_ActiveProtection* PHY_ActiveProtection::Find( const std::string& strName )
 {
-    CIT_ProtectionList it = protections_.find( strName );
+    auto it = protections_.find( strName );
     if( it == protections_.end() )
         return 0;
     return it->second.get();
@@ -110,11 +110,8 @@ PHY_ActiveProtection* PHY_ActiveProtection::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 void PHY_ActiveProtection::UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    if( pDotation_ )
-    {
-        if( GetCoefficient( category ) != 1. )
-            pion.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *pDotation_, usage_ );
-    }
+    if( pDotation_ && GetCoefficient( category ) != 1. )
+        pion.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *pDotation_, usage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +153,7 @@ bool PHY_ActiveProtection::DestroyIndirectFire( const PHY_DotationCategory& cate
 // -----------------------------------------------------------------------------
 double PHY_ActiveProtection::GetCoefficient( const PHY_DotationCategory& category ) const
 {
-    CIT_CoefficientMap it = weapons_.find( &category );
+    auto it = weapons_.find( &category );
     if( it == weapons_.end() )
         return coefficient_;
     return it->second;

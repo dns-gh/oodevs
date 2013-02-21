@@ -65,10 +65,8 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< PHY_ActiveProtection > > T_ProtectionList;
-    typedef T_ProtectionList::const_iterator                                 CIT_ProtectionList;
 
     typedef std::map< const PHY_DotationCategory*, double > T_CoefficientMap;
-    typedef T_CoefficientMap::const_iterator              CIT_CoefficientMap;
     //@}
 
 private:

@@ -108,6 +108,6 @@ private:
     //@}
 };
 
-} // namespace dotation
+}
 
 #endif // __PHY_RoleInterface_Dotations_h_

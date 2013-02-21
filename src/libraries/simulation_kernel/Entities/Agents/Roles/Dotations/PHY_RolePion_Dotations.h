@@ -70,8 +70,8 @@ public:
     virtual void NotifySurrendered();
     virtual void NotifySurrenderCanceled();
     virtual void NotifyConsumeDotation( const PHY_DotationCategory& category, double& rNbr );
-    virtual void RegisterDotationsCapacities  ( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations );
-    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, std::map< const PHY_DotationCategory*, double >*& dotations );
+    virtual void RegisterDotationsCapacities( const PHY_DotationCapacities& capacities, T_Dotations*& dotations );
+    virtual void UnregisterDotationsCapacities( const PHY_DotationCapacities& capacities, T_Dotations*& dotations );
     //@}
 
     //! @name Operations
@@ -108,7 +108,7 @@ public:
     virtual float GetIlluminatingRange( ) const;
     virtual void SetForbiddenDotation( const PHY_DotationCategory& category );
     virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category );
-    virtual void AllowAllDotations();    
+    virtual void AllowAllDotations();
     virtual bool HasDotationForFiring( const PHY_DotationCategory& category, int iterations );
     //@}
 
@@ -125,13 +125,6 @@ public:
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const;
     //@}
 
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const PHY_Dotation*, double /*rValueReserved*/ >   T_DotationReservedMap;
-    typedef T_DotationReservedMap::const_iterator                      CIT_DotationReservedMap;
-    //@}
-
 private:
     //! @name Tools
     //@{
@@ -141,16 +134,16 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPion*                              owner_;
-    PHY_DotationGroupContainer*                 pDotations_;
-    const PHY_ConsumptionType*                  pCurrentConsumptionMode_;
-    const PHY_ConsumptionType*                  pPreviousConsumptionMode_;
-    T_DotationReservedMap                       reservedConsumptions_;
-    std::vector< const PHY_DotationCategory* >  forbiddenDotations_;
+    MIL_AgentPion*                             owner_;
+    PHY_DotationGroupContainer*                pDotations_;
+    const PHY_ConsumptionType*                 pCurrentConsumptionMode_;
+    const PHY_ConsumptionType*                 pPreviousConsumptionMode_;
+    std::map< const PHY_Dotation*, double >    reservedConsumptions_;
+    std::vector< const PHY_DotationCategory* > forbiddenDotations_;
     //@}
 };
 
-} // namespace dotation
+}
 
 BOOST_CLASS_EXPORT_KEY( dotation::PHY_RolePion_Dotations )
 

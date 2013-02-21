@@ -72,14 +72,13 @@ PHY_DotationCapacities::~PHY_DotationCapacities()
 {
     for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
         delete it->second;
-    dotationCapacities_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacities::RegisterCapacities
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const
+void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& container, T_Dotations* dotations ) const
 {
     for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
     {
@@ -98,9 +97,9 @@ void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& con
 // Name: PHY_DotationCapacities::UnregisterCapacities
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
-std::map< const PHY_DotationCategory*, double > PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& container ) const
+PHY_DotationCapacities::T_Dotations PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& container ) const
 {
-    std::map< const PHY_DotationCategory*, double > result;
+    T_Dotations result;
     for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
         result[ & it->second->GetCategory() ] = container.RemoveCapacity( *it->second );
     return result;

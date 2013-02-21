@@ -28,14 +28,17 @@ class PHY_DotationGroupContainer;
 // =============================================================================
 class PHY_DotationCapacities : private boost::noncopyable
 {
+private:
+    typedef std::map< const PHY_DotationCategory*, double > T_Dotations;
+
 public:
              PHY_DotationCapacities( const std::string& strParentTagName, xml::xistream& xis );
     virtual ~PHY_DotationCapacities();
 
     //! @name Operations
     //@{
-    void RegisterCapacities ( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const;
-    std::map< const PHY_DotationCategory*, double > UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
+    void RegisterCapacities( PHY_DotationGroupContainer& container, T_Dotations* dotations ) const;
+    T_Dotations UnregisterCapacities( PHY_DotationGroupContainer& container ) const;
     double GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const;
     //@}
 

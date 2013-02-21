@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations );
-    virtual std::map< const PHY_DotationCategory*, double > NotifyComposanteRemoved ( PHY_ComposantePion& composante );
+    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante, T_Dotations* dotations );
+    virtual T_Dotations NotifyComposanteRemoved ( PHY_ComposantePion& composante );
 
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}

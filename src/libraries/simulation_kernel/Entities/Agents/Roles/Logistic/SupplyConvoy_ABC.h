@@ -19,7 +19,8 @@ namespace sword
     class UnitId;
 }
 
-namespace logistic {
+namespace logistic
+{
     class SupplyRecipient_ABC;
     class SupplySupplier_ABC;
     class SupplyConvoyEventsObserver_ABC;
@@ -33,6 +34,12 @@ namespace logistic {
 class SupplyConvoy_ABC : private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_DotationCategory*, double > T_Resources;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              SupplyConvoy_ABC() {}
@@ -41,7 +48,7 @@ public:
 
     //! @name Operations - return the estimated time remaining for the action
     //@{
-    virtual unsigned ReserveTransporters       ( const std::map< const PHY_DotationCategory*, double >& resources ) = 0;
+    virtual unsigned ReserveTransporters       ( const T_Resources& resources ) = 0;
     virtual unsigned Setup                     () = 0;
     virtual unsigned MoveToSupplier            () = 0;
     virtual unsigned MoveToSupplyRecipient     () = 0;

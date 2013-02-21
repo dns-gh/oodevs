@@ -96,7 +96,7 @@ SWORD_USER_DATA_EXPORT( PHY_ComposantePion* )
 // Name: RolePion_Composantes::NotifyComposanteAdded
 // Created: SLI 2012-03-22
 // -----------------------------------------------------------------------------
-void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations )
+void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, T_Dotations* dotations )
 {
     core::Model& component = entity_->AddElement();
     component[ "data" ].SetUserData( &composante );
@@ -114,7 +114,7 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
 // Name: RolePion_Composantes::NotifyComposanteRemoved
 // Created: MCO 2012-03-23
 // -----------------------------------------------------------------------------
-std::map< const PHY_DotationCategory*, double > RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
+RolePion_Composantes::T_Dotations RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
     auto it = components_.find( &composante );
     it->second->Remove();
