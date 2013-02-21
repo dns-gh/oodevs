@@ -10,10 +10,10 @@
 #include "Stages.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
-#include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
+#include <QtCore/qstring.h>
 
 // -----------------------------------------------------------------------------
 // Name: Stages constructor
@@ -86,5 +86,11 @@ std::string Stages::FindTranslation( const std::string& key ) const
 {
     if( stages_.find( key ) != stages_.end() )
         return stages_.at( key );
+    else
+    {
+        const std::string convertedKey = QString::fromLatin1( key.c_str() ).toStdString(); // $$$$ ABR 2013-02-21: key is coming from the decisional, so Latin1 encoding.
+        if( stages_.find( convertedKey ) != stages_.end() )
+            return stages_.at( convertedKey );
+    }
     return key;
 }
