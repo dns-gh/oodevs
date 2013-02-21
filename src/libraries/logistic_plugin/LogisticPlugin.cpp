@@ -26,12 +26,15 @@
 #include "QtCore/qLocale.h"
 #include <QtGui/qapplication.h>
 #pragma warning( pop )
-#include <xeumeuleu/xml.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <xeumeuleu/xml.hpp>
 
 namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
-
+namespace bfs = boost::filesystem;
 
 namespace plugins 
 {
@@ -68,11 +71,11 @@ namespace
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const std::string& maintenanceFile,
-                                const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile,
+LogisticPlugin::LogisticPlugin( const  tools::SessionConfig& config, const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
                                 int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients )
     : nameResolver_( nameResolver )
     , clients_( clients )
+    , config_( config )
 {
     QString lang = ReadLang();
     InitTranslator( "ENT", lang );
@@ -80,15 +83,18 @@ LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>&
     ENT_Tr::InitTranslations();
 
     resolvers_.resize( eNbrLogisticType );
-    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( maintenanceFile, *nameResolver, maxHistoricFiles, maxFileLines );
-    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( supplyFile, *nameResolver, maxHistoricFiles, maxFileLines );
-    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( funeralFile, *nameResolver, maxHistoricFiles, maxFileLines );
-    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( medicalFile, *nameResolver, maxHistoricFiles, maxFileLines );
+    resolvers_[ eLogisticType_Maintenance ] = new MaintenanceResolver( config.BuildSessionChildFile( "LogMaintenance" ), *nameResolver, maxHistoricFiles, maxFileLines );
+    resolvers_[ eLogisticType_Supply ]      = new SupplyResolver( config.BuildSessionChildFile( "LogRavitaillement" ), *nameResolver, maxHistoricFiles, maxFileLines );
+    resolvers_[ eLogisticType_Funeral ]     = new FuneralResolver( config.BuildSessionChildFile( "LogFuneraire" ), *nameResolver, maxHistoricFiles, maxFileLines );
+    resolvers_[ eLogisticType_Medical ]     = new MedicalResolver( config.BuildSessionChildFile( "LogMedical" ), *nameResolver, maxHistoricFiles, maxFileLines );
     for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
         (*r)->InitHeader();
     
     clients.RegisterMessage( *this, &LogisticPlugin::OnReceive );
     clients.RegisterMessage( *this, &LogisticPlugin::OnReceiveClientToMessenger );
+
+    if( config.HasCheckpoint() )
+        ClearFilesWhenLoadingCheckpoint( config.GetCheckpointDirectory() );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,11 +115,13 @@ void LogisticPlugin::Receive( const sword::SimToClient& message )
 {
     if( message.message().has_control_begin_tick() )
     {
-        int currentTick = message.message().control_begin_tick().current_tick();
+        currentTick_ = message.message().control_begin_tick().current_tick();
         std::string simTime = message.message().control_begin_tick().date_time().data();        
         for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick, simTime );
+            (*r)->SetTime( currentTick_, simTime );
     }
+    else if( message.message().has_control_checkpoint_save_end() )
+        SaveCheckpoint( config_.GetCheckpointDirectory( message.message().control_checkpoint_save_end().name() ) );
     else
     {
         for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
@@ -198,16 +206,40 @@ void LogisticPlugin::SetMaxLinesInFile( int maxLines )
         (*r)->SetMaxLinesInFile( maxLines );
 }
 
-
-LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients )
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::ClearFilesWhenLoadingCheckpoint
+// Created: LDC 2013-02-21
+// -----------------------------------------------------------------------------
+void LogisticPlugin::ClearFilesWhenLoadingCheckpoint( const std::string& checkpointDirectory )
 {
-    return new LogisticPlugin(
-        nameResolver,
-        config.BuildSessionChildFile( "LogMaintenance" ),
-        config.BuildSessionChildFile( "LogRavitaillement" ),
-        config.BuildSessionChildFile( "LogFuneraire" ),
-        config.BuildSessionChildFile( "LogMedical" ),
-        maxHistoricFiles, maxFileLines, clients ); 
+    const std::string filename = config_.BuildDirectoryFile( checkpointDirectory, "logisticPlugin" );
+    std::ifstream is( filename );
+    is >> currentTick_;
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        (*r)->ClearFilesAfterTick( currentTick_ );
+    // Check all files to see if they are > or < to that tick.
+    // Use date not to be too stupid checking every file?
+    // Each file whose start tick is > to current tick must be deleted
+    // The last of the remaining file must be checked and the last lines must be deleted if they are > to currentTick_.
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPlugin::SaveCheckpoint
+// Created: LDC 2013-02-21
+// -----------------------------------------------------------------------------
+void LogisticPlugin::SaveCheckpoint( const std::string& checkpointDirectory )
+{
+    const bfs::path path( checkpointDirectory, bfs::native );
+    if ( !bfs::exists( path ) )
+        bfs::create_directories( path );
+    const std::string filename = config_.BuildDirectoryFile( checkpointDirectory, "logisticPlugin" );
+    std::ofstream os( filename );
+    os << currentTick_;
+}
+
+LogisticPlugin* CreateLogisticPlugin( const tools::SessionConfig& config, const boost::shared_ptr<const NameResolver_ABC>& nameResolver, int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients )
+{
+    return new LogisticPlugin( config, nameResolver, maxHistoricFiles, maxFileLines, clients ); 
 }
 
 }  // namespace logistic

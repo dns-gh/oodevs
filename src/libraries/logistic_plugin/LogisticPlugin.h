@@ -51,9 +51,8 @@ class LogisticPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-                 const std::string& maintenanceFile, const std::string& supplyFile,
-                 const std::string& funeralFile, const std::string& medicalFile,
+             LogisticPlugin( const tools::SessionConfig& config,
+                 const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
                  int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients );
     virtual ~LogisticPlugin();
     //@}
@@ -89,6 +88,8 @@ private:
     //@{
     void OnReceive( const sword::ClientToSim& message );
     void OnReceiveClientToMessenger( const sword::ClientToMessenger& message );
+    void ClearFilesWhenLoadingCheckpoint( const std::string& checkpointDirectory );
+    void SaveCheckpoint( const std::string& checkpointDirectory );
     //@}
 
     //! @name Member data
@@ -96,10 +97,12 @@ private:
     std::vector< ConsignResolver_ABC* > resolvers_;
     boost::shared_ptr<const NameResolver_ABC> nameResolver_;
     dispatcher::ClientsNetworker& clients_;
+    int currentTick_;
+    const tools::SessionConfig& config_;
     //@}
 };
 
-LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients );
+LogisticPlugin* CreateLogisticPlugin( const tools::SessionConfig& config, const boost::shared_ptr<const NameResolver_ABC>& nameResolver, int maxHistoricFiles, int maxFileLines, dispatcher::ClientsNetworker& clients );
 
 }
 }

@@ -11,17 +11,15 @@
 #include "clients_kernel/Tools.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 
 namespace bfs = boost::filesystem;
 namespace bg = boost::gregorian;
 namespace bpt = boost::posix_time;
 
-namespace plugins
+namespace
 {
-namespace logistic
-{
-
     std::string EscapeRegex( const std::string& s )
     {
         std::string escaped;
@@ -35,6 +33,103 @@ namespace logistic
         return escaped;
     }
 
+    void RemoveFiles( std::vector< bfs::path >& filesToRemove )
+    {
+        for( auto it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
+        {
+            try
+            {
+                bfs::remove( *it );
+            }
+            catch( ... )
+            {
+                // NOTHING
+            }
+        }
+    }
+
+    int ReadTickFromLine( const std::string& line )
+    {
+        size_t first = line.find_first_of( ';' );
+        size_t second = line.find_first_of( ';', first + 1 );
+        // consign ; tick ; ... : Grab the number between '; ' and ' ;':
+        std::string number = line.substr( first + 2, second - first -3 );
+        return boost::lexical_cast< int, std::string >( number.c_str() );
+    }
+
+    int ReadFirstTick( std::ifstream& is )
+    {
+        try
+        {
+            std::string line;
+            std::getline( is, line );
+            //Skip first line
+            std::getline( is, line );
+            return ReadTickFromLine( line );
+        }
+        catch( ... )
+        {
+            return 0;
+        }
+    }
+
+    int ReadLastTick( std::ifstream& is )
+    {
+        try
+        {
+            bool found = false;
+            is.seekg( 0, std::ios_base::end );
+            int size = (int)is.tellg();
+            for( int i = size - 3; is.good() && !found; --i ) // -3 in order to get past the last \n.
+            {
+                is.seekg( i, std::ios_base::beg );
+                bool good = is.good();
+                char ch = is.get();
+                bool good2 = is.good();
+                if( ( int ) is.tellg() <= 1 )
+                    return 0; // No usable line since first line is text, not numbers.
+                else if( ch == '\n' )
+                    found = true;
+            }
+            if( !is.good() )
+                return 0;
+            std::string lastLine;            
+            std::getline( is, lastLine );
+            return ReadTickFromLine( lastLine );
+        }
+        catch( ... )
+        {
+            return 0;
+        }
+    }
+
+    void Trim( const bfs::path& fileToTrim, int tick )
+    {
+        std::ifstream is;
+        is.open( fileToTrim.string().c_str() );
+        std::string line;
+        std::getline( is, line );
+        std::stringstream os;
+        int currentTick = 0;
+        while( tick >= currentTick )
+        {
+            os << line;
+            os << std::endl;
+            std::getline( is, line );
+            currentTick = ReadTickFromLine( line );
+        }
+        is.close();
+        std::ofstream outfile;
+        outfile.open( fileToTrim.string().c_str(), std::ios_base::out );
+        outfile << os.str();
+        outfile.close();
+    }
+}
+
+namespace plugins
+{
+namespace logistic
+{
     // -----------------------------------------------------------------------------
     // Name: ConsignResolver_ABC constructor
     // Created: MMC 2012-08-06
@@ -221,17 +316,7 @@ namespace logistic
                     filesToRemove.push_back( dir_it->path() );
             }
         }
-        for( auto it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
-        {
-            try
-            {
-                bfs::remove( *it );
-            }
-            catch( ... )
-            {
-                // NOTHING
-            }
-        }
+        RemoveFiles( filesToRemove );
     }
 
     // -----------------------------------------------------------------------------
@@ -329,6 +414,49 @@ namespace logistic
     int ConsignResolver_ABC::GetConsignCount() const
     {
         return static_cast< int >( consignsData_.size() );
+    }
+    
+    // -----------------------------------------------------------------------------
+    // Name: ConsignResolver_ABC::ClearFilesAfterTick
+    // Created: LDC 2013-02-21
+    // -----------------------------------------------------------------------------
+    void ConsignResolver_ABC::ClearFilesAfterTick( int tick )
+    {
+        const bfs::path curPath( name_ );
+        std::vector< bfs::path > filesToRemove;
+        bfs::directory_iterator end;
+        bfs::path fileToTrim;
+        int lastReadTick = 0;
+        std::string regexp = EscapeRegex( curPath.filename() ) + ".*.csv$";
+        boost::regex fileRegex( regexp );
+        boost::smatch match;
+        for( bfs::directory_iterator dir_it( curPath.parent_path() ) ; dir_it != end ; ++dir_it )
+        {
+            if( bfs::is_regular_file( dir_it->status() ) )
+            {
+                const std::string fileName = dir_it->path().filename();
+                if( !boost::regex_match( fileName, match, fileRegex ) )
+                    continue;
+                std::ifstream is;
+                is.open( ( curPath.parent_path() / fileName ).string().c_str() );
+                int firstTick = ReadFirstTick( is );
+                if( firstTick > tick )
+                    filesToRemove.push_back( dir_it->path() );
+                else
+                {
+                    if( firstTick > lastReadTick )
+                    {
+                        lastReadTick = ReadLastTick( is );
+                        if( lastReadTick > tick )
+                            fileToTrim = dir_it->path();
+                    }
+                }
+                is.close();
+            }
+        }
+        RemoveFiles( filesToRemove );
+        if( bfs::exists( fileToTrim ) )
+            Trim( fileToTrim, tick );
     }
 
 }  // namespace logistic

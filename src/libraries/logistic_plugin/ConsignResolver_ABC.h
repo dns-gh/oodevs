@@ -28,10 +28,6 @@ namespace logistic
 
 class NameResolver_ABC;
 
-// Return a version of string s escaped so that its characters are interpreted
-// as-is when used to build a regular expression.
-std::string EscapeRegex( const std::string& s );
-
 // =============================================================================
 /** @class  ConsignResolver_ABC
     @brief  ConsignResolver_ABC
@@ -60,6 +56,7 @@ public:
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     int GetConsignCount() const;
+    void ClearFilesAfterTick( int tick );
     //@}
 
 protected:
