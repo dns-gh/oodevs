@@ -47,7 +47,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( IsNeutralized, 0 );
     MOCK_METHOD_EXT( GetComposantesAbleToBeFired, 3, void( PHY_Composante_ABC::T_ComposanteVector&, unsigned int, bool ), GetComposantesAbleToBeFired3 );
     MOCK_METHOD_EXT( GetComposantesAbleToBeFired, 2, void( PHY_Composante_ABC::T_ComposanteVector&, bool ), GetComposantesAbleToBeFired2 );
-    MOCK_METHOD( GetConvoyTransportersUse, 1);
+    MOCK_METHOD( GetConvoyTransportersTotal, 0 );
     MOCK_METHOD( Neutralize, 0 );
     MOCK_METHOD( ApplyPopulationFire, 5 );
     MOCK_METHOD( ApplyDirectFire, 3 );
