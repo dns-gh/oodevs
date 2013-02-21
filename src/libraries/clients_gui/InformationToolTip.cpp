@@ -221,7 +221,6 @@ void InformationToolTip::DirtyImage()
 // -----------------------------------------------------------------------------
 void InformationToolTip::Draw()
 {
-
     if( !isVisible() && !image_.isNull() )
         QTimer::singleShot( 500, this, SLOT( Show() ) );
 
@@ -402,7 +401,6 @@ void InformationToolTip::paintEvent( QPaintEvent * /*event*/ )
         move( pos + QPoint( 0, 20 ) ); //mouse shape default size
         p.drawImage( 0, 0, image_ );
         setFixedSize( image_.width(), image_.height() );
-
     }
 }
 
@@ -412,7 +410,7 @@ void InformationToolTip::paintEvent( QPaintEvent * /*event*/ )
 // -----------------------------------------------------------------------------
 void InformationToolTip::Show()
 {
-    if( !isVisible() && !image_.isNull() && QApplication::activeWindow() )
+    if( !isVisible() && !image_.isNull() && QApplication::activeWindow() && !QApplication::activePopupWidget() )
     {
         setVisible( true );
         QTimer::singleShot( 5000, this, SLOT( Hide() ) );
