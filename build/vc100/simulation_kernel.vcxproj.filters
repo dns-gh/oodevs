@@ -163,9 +163,6 @@
     <Filter Include="Source Files\Entities\Agents\Roles\Surrender">
       <UniqueIdentifier>{b34c6953-75da-40b4-83f4-4faa059552ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Roles\Surrender\Reinforcement">
-      <UniqueIdentifier>{85eab082-1ef0-480e-a451-218a48c223f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities\Agents\Roles\Logistic">
       <UniqueIdentifier>{06bd1fd6-8491-4164-bbde-b830dc90f446}</UniqueIdentifier>
     </Filter>
@@ -540,6 +537,9 @@
     </Filter>
     <Filter Include="Source Files\Entities\Specialisations\Remote">
       <UniqueIdentifier>{04029669-91cd-4336-af33-5e4ef282f242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Reinforcement">
+      <UniqueIdentifier>{85eab082-1ef0-480e-a451-218a48c223f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1063,7 +1063,7 @@
       <Filter>Source Files\Entities\Agents\Roles\Surrender</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RolePion_Reinforcement.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Surrender\Reinforcement</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Reinforcement</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Supply.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
@@ -3354,10 +3354,10 @@
       <Filter>Source Files\Entities\Agents\Roles\Surrender</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RoleInterface_Reinforcement.h">
-      <Filter>Source Files\Entities\Agents\Roles\Surrender\Reinforcement</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Reinforcement</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\reinforcement\PHY_RolePion_Reinforcement.h">
-      <Filter>Source Files\Entities\Agents\Roles\Surrender\Reinforcement</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Reinforcement</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\PHY_RoleInterface_Supply.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply</Filter>
