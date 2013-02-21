@@ -51,6 +51,9 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , currentPass_ ()
     , bMulti_      ( false )
     , SymbolSize_  ( 3.f )
+    , globalPixel_ ( -1.f )
+    , globalZoom_  ( -1.f )
+    , pickingMode_( false )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -118,6 +121,25 @@ void GlWidget::paintGL()
         for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
             RenderPass( **it );
         Scale().Draw( 20, 20, *this );
+        setAutoUpdate( true );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::paintGL
+// Created: LGY 2013-02-18
+// -----------------------------------------------------------------------------
+void GlWidget::paintGL( const geometry::Point2f& point )
+{
+    if( bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+    {
+        setAutoUpdate( false );
+        // width and height of the picking region
+        const int delta = 50;
+        const geometry::Rectangle2f viewport = geometry::Rectangle2f( geometry::Point2f( point.X() - delta , point.Y() - delta ),
+                                                                      geometry::Point2f( point.X() + delta, point.Y() + delta ) );
+        for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
+            RenderPass( **it, viewport );
         setAutoUpdate( true );
     }
 }
@@ -213,6 +235,28 @@ void GlWidget::RenderPass( GlRenderPass_ABC& pass )
     windowHeight_ = windowHeight;
     windowWidth_  = windowWidth;
     MapWidget::resizeGL( windowWidth_, windowHeight_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::RenderPass
+// Created: LGY 2013-02-18
+// -----------------------------------------------------------------------------
+void GlWidget::RenderPass( GlRenderPass_ABC& pass, const geometry::Rectangle2f& viewport )
+{
+    currentPass_ = pass.GetName();
+    globalViewport_ = GetViewport();
+    globalPixel_ = Pixels();
+    globalZoom_ = Zoom();
+    viewport_ = viewport;
+
+    SetViewport( viewport_ );
+    pass.Render( *this );
+
+    SetViewport( globalViewport_ );
+    viewport_ = globalViewport_;
+    globalPixel_ = -1.f;
+    globalZoom_ = -1.f;
+    globalViewport_ = geometry::Rectangle2f();
 }
 
 // -----------------------------------------------------------------------------
@@ -329,6 +373,8 @@ float GlWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 // -----------------------------------------------------------------------------
 float GlWidget::Pixels( const geometry::Point2f& ) const
 {
+    if( globalPixel_ != -1.f )
+        return globalPixel_;
     if( windowWidth_ > 0 )
         return viewport_.Width() / windowWidth_;
     return 0.f;
@@ -340,6 +386,8 @@ float GlWidget::Pixels( const geometry::Point2f& ) const
 // -----------------------------------------------------------------------------
 float GlWidget::Zoom() const
 {
+    if( globalZoom_ != -1 )
+        return globalZoom_;
     return rZoom_;
 }
 
@@ -1019,4 +1067,92 @@ void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVaria
         SymbolSize_ = value.To< float >();
     else
         GlToolsBase::OptionChanged( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::FillSelection
+// Created: LGY 2013-02-15
+// -----------------------------------------------------------------------------
+void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
+{
+    pickingMode_ = true;
+
+    GLuint buff[ 128 ] = { 0 };
+    GLint hits, view[ 4 ];
+    // This choose the buffer where store the values for the selection data
+    glSelectBuffer( sizeof( buff ) / sizeof( *buff ), buff );
+
+    // This retrieves info about the viewport
+    glGetIntegerv( GL_VIEWPORT, view );
+
+    // Switching in selection mode
+    glRenderMode( GL_SELECT );
+
+    // Clearing the names' stack
+    // This stack contains all the info about the objects
+    glInitNames();
+
+    // Now fill the stack with one element (or glLoadName will generate an error)
+    glPushName( 0 );
+
+    // Now modify the viewing volume, restricting selection area around the cursor
+    glMatrixMode( GL_PROJECTION );
+    glPushMatrix();
+        glLoadIdentity();
+
+        // Draw the objects onto the screen
+        glMatrixMode( GL_MODELVIEW );
+
+        // Draw the objects onto the screen
+        paintGL( point );
+
+        glMatrixMode( GL_PROJECTION );
+    glPopMatrix();
+
+    // get number of objects drawed in that area and return to render mode
+    hits = glRenderMode( GL_RENDER );
+
+    // -1 means one hit record and your buffer had an overflow.
+    if( hits != -1 && hits != 0 )
+    {
+        // Avoid first element
+        for( std::size_t i = 1; i < hits; i++ )
+        {
+            unsigned int index = buff[ i * 4 + 3 ];
+            if( index < picking_.size() )
+                selection.push_back( picking_.at( buff[ i * 4 + 3 ] ) );
+        }
+    }
+    glMatrixMode( GL_MODELVIEW );
+
+    pickingMode_ = false;
+    picking_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::IsPickingMode
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+bool GlWidget::IsPickingMode() const
+{
+    return pickingMode_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::RegisterObjectPicking
+// Created: LGY 2013-02-19
+// -----------------------------------------------------------------------------
+void GlWidget::RegisterObjectPicking( const T_ObjectPicking& object )
+{
+    glLoadName( (GLuint) picking_.size() );
+    picking_.push_back( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::GlobalViewport
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f GlWidget::GlobalViewport() const
+{
+    return globalViewport_;
 }

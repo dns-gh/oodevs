@@ -135,6 +135,15 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalLinePositions_ABC::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void TacticalLinePositions_ABC::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalLinePositions_ABC::ComputeBoundingBox
 // Created: SBO 2007-03-08
 // -----------------------------------------------------------------------------

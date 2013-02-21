@@ -486,3 +486,39 @@ bool GlProxy::ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const
             return !(*it)->IsReadOnly();
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::FillSelection
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
+{
+    tools_->FillSelection( point, selection );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::RegisterObjectPicking
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void GlProxy::RegisterObjectPicking( const T_ObjectPicking& object )
+{
+    tools_->RegisterObjectPicking( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::IsPickingMode
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+bool GlProxy::IsPickingMode() const
+{
+    return tools_->IsPickingMode();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GlobalViewport
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f GlProxy::GlobalViewport() const
+{
+    return tools_->GlobalViewport();
+}

@@ -12,12 +12,14 @@
 
 #include "clients_kernel/GLToolColors.h"
 #include "clients_kernel/Types.h"
+#include "Layer_ABC.h"
 
 #pragma warning( push, 0 )
 #include <QtGui/qfont.h>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <boost/tuple/tuple.hpp>
+#include <vector>
 
 class QImage;
 class QCursor;
@@ -48,6 +50,9 @@ public:
         pixels,
         meters
     };
+
+    typedef std::pair< unsigned int, Layer_ABC::E_LayerTypes > T_ObjectPicking;
+    typedef std::vector< T_ObjectPicking >                     T_ObjectsPicking;
     //@}
 
 public:
@@ -65,6 +70,14 @@ public:
     virtual void Select( bool, bool, bool ) const = 0;  //!< Returns the previous selection state
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const = 0;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;
+    //@}
+
+    //! @name Picking
+    //@{
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection ) = 0;
+    virtual void RegisterObjectPicking( const T_ObjectPicking& object ) = 0;
+    virtual geometry::Rectangle2f GlobalViewport() const = 0;
+    virtual bool IsPickingMode() const = 0;
     //@}
 
     //! @name Accessors

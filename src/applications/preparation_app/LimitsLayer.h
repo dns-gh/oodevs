@@ -34,7 +34,7 @@ class LimitsLayer : public gui::TacticalLinesLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             LimitsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
                           const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();

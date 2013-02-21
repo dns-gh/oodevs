@@ -23,7 +23,7 @@ using namespace gui;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+LimitsLayer::LimitsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile )
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
     , modelBuilder_( modelBuilder )

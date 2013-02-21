@@ -27,9 +27,9 @@ using namespace gui;
 // Name: UrbanLayer::UrbanLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, tr( "Urban blocks" ) )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, tr( "Urban blocks" ), Layer_ABC::eUrbanObjects )
     , view_          ( view )
     , controllers_   ( controllers )
 {
@@ -204,26 +204,6 @@ bool UrbanLayer::IsInside( const kernel::Entity_ABC& entity, const geometry::Rec
     if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
         return positions->IsInside( rectangle );
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanLayer::Draw
-// Created: LGY 2011-04-18
-// -----------------------------------------------------------------------------
-void UrbanLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport )
-{
-    if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
-    {
-        if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
-        {
-            SelectColor( entity );
-            const geometry::Point2f position = positions->Barycenter();
-            viewport.SetHotpoint( position );
-            DrawVisitor drawer;
-            entity.Apply( drawer );
-            drawer.Draw( position, viewport, tools_ );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

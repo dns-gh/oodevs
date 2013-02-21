@@ -28,7 +28,8 @@ class AgentsLayer : public EntityLayer< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             AgentsLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                          View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~AgentsLayer();
     //@}
 

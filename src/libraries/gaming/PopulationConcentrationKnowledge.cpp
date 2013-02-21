@@ -148,6 +148,16 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge::GetNId
 // Created: NPT 2012-10-11
 // -----------------------------------------------------------------------------

@@ -21,7 +21,7 @@
 // Name: PopulationsLayer constructor
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-PopulationsLayer::PopulationsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+PopulationsLayer::PopulationsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                                     gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
     : gui::PopulationsLayer( controllers, tools, strategy, view, profile )
     , model_             ( model )

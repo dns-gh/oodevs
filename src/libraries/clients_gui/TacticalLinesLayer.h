@@ -48,7 +48,7 @@ class TacticalLinesLayer : public EntityLayer< kernel::TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinesLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             TacticalLinesLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                  ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~TacticalLinesLayer();
     //@}

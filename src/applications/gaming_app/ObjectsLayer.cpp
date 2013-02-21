@@ -26,7 +26,7 @@ using namespace actions;
 // Name: ObjectsLayer constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                             gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker )
     : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker )

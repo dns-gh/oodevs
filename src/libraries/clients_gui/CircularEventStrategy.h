@@ -33,7 +33,8 @@ class CircularEventStrategy : public EventStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, GlTools_ABC& tools );
+             CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+                                    DrawingTypes& drawingTypes, GlTools_ABC& tools );
     virtual ~CircularEventStrategy();
     //@}
 
@@ -78,6 +79,7 @@ private:
     bool exclusive_;
     Layer_ABC::T_Layers::const_reverse_iterator rlast_;
     std::auto_ptr< SelectionMenu > menu_;
+    GlTools_ABC& tools_;
     //@}
 };
 

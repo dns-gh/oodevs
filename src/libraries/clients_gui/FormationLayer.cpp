@@ -24,8 +24,9 @@ using namespace gui;
 // Name: FormationLayer constructor
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-FormationLayer::FormationLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile, tr( "Formations" ) )
+FormationLayer::FormationLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                                View_ABC& view, const kernel::Profile_ABC& profile )
+    : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile, tr( "Formations" ), Layer_ABC::eFormations )
     , strategy_( strategy )
     , selected_( controllers )
 {

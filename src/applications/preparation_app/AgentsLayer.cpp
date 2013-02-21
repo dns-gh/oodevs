@@ -31,7 +31,7 @@
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile )
+AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder, const kernel::Profile_ABC& profile )
     : gui::AgentsLayer( controllers, tools, strategy, view, profile )
     , model_            ( model )
     , modelBuilder_     ( modelBuilder )

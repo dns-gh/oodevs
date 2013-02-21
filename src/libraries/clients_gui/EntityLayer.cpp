@@ -14,6 +14,7 @@
 #include "InformationToolTip.h"
 #include "View_ABC.h"
 #include "Viewport_ABC.h"
+#include "Viewport2d.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayable_ABC.h"
@@ -23,6 +24,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,7 +33,8 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const QString& name )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
+                                 const Profile_ABC& profile, const QString& name, E_LayerTypes type )
     : controllers_( controllers )
     , profile_    ( profile )
     , tools_      ( tools )
@@ -41,6 +44,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , tooltiped_  ( controllers )
     , selected_   ( controllers )
     , name_       ( name )
+    , type_       ( type )
 {
     // NOTHING
 }
@@ -70,12 +74,14 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
+    bool pickingMode = tools_.IsPickingMode();
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
         if( *it != &*selected_ )
-            Draw( **it, viewport );
+            Draw( **it, viewport, pickingMode );
     if( selected_ )
-        Draw( *selected_, viewport );
-    if( tooltiped_ )
+        Draw( *selected_, viewport, pickingMode );
+
+    if( tooltiped_ && !pickingMode )
     {
         if( !infoTooltip_.get() )
             infoTooltip_ = std::auto_ptr< InformationToolTip >( new InformationToolTip() );
@@ -83,21 +89,45 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
     }
 }
 
+namespace
+{
+    geometry::Point2f GetPosition( const Entity_ABC& entity )
+    {
+        if( const kernel::UrbanPositions_ABC* urbanPositions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+            return urbanPositions->Barycenter();
+        const kernel::Positions& positions = entity.Get< kernel::Positions >();
+        return positions.GetPosition();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport )
+void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode )
 {
     if( ShouldDisplay( entity ) )
     {
         SelectColor( entity );
-        const Positions& positions = entity.Get< Positions >();
-        const geometry::Point2f position = positions.GetPosition();
-        viewport.SetHotpoint( position );
+        const geometry::Point2f position = GetPosition( entity );
         DrawVisitor drawer;
         entity.Apply( drawer );
-        drawer.Draw( position, viewport, tools_ );
+
+        if( pickingMode )
+        {
+            Viewport2d globalViewport( tools_.GlobalViewport() );
+            globalViewport.SetHotpoint( position );
+            if( globalViewport.IsVisible( position ) )
+            {
+                tools_.RegisterObjectPicking( std::make_pair( entity.GetId(), type_ ) );
+                drawer.Pick( position, globalViewport, tools_ );
+            }
+        }
+        else
+        {
+            viewport.SetHotpoint( position );
+            drawer.Draw( position, viewport, tools_ );
+        }
     }
 }
 
@@ -295,15 +325,29 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
         controllers_.actions_.AddToSelection( selectables );
 }
 
+namespace
+{
+    bool IsInLayerSelection(  const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectsPicking& selection, Layer_ABC::E_LayerTypes type )
+    {
+        for( auto it = selection.begin(); it != selection.end(); ++it )
+            if( entity.GetId() == it->first && type == it->second )
+                return true;
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::ExtractElements
 // Created: ABR 2013-01-25
 // -----------------------------------------------------------------------------
-void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point )
+void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection )
 {
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
-        if( ShouldDisplay( **it ) && IsInSelection( **it, point ) )
-            extractedElement[ this ].push_back( *it );
+    {
+        const kernel::Entity_ABC& entity = **it;
+        if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, type_ ) )
+            extractedElement[ this ].push_back( &entity );
+    }
 }
 
 // -----------------------------------------------------------------------------

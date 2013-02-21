@@ -53,3 +53,12 @@ void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const g
     if( const kernel::Location_ABC* location = GetLocation() )
         tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location ) != nullptr );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePositions::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}

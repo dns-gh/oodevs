@@ -17,7 +17,7 @@
 // Name: UrbanLayer constructor
 // Created: LGY 2012-01-06
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                         gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile )
     : gui::UrbanLayer( controllers, tools, strategy, view, profile )
     , model_( model )

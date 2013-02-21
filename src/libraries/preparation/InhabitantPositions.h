@@ -80,6 +80,7 @@ public:
     virtual bool IsAggregated() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
+    virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void Add( const kernel::Location_ABC& location );
     virtual void Remove( const kernel::Location_ABC& location );
 

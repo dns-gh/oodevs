@@ -37,7 +37,7 @@ class UrbanLayer : public EntityLayer< kernel::UrbanObject_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             UrbanLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                          View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~UrbanLayer();
     //@}
@@ -55,7 +55,6 @@ protected:
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );

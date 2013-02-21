@@ -761,3 +761,39 @@ void Gl3dWidget::SetCurrentCursor( const QCursor& cursor )
 {
     setCursor( cursor );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::FillSelection
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void Gl3dWidget::FillSelection( const geometry::Point2f& /*point*/, T_ObjectsPicking& /*selection*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::RegisterObjectPicking
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void Gl3dWidget::RegisterObjectPicking( const T_ObjectPicking& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::IsPickingMode
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+bool Gl3dWidget::IsPickingMode() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::GlobalViewport
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f Gl3dWidget::GlobalViewport() const
+{
+    return geometry::Rectangle2f();
+}

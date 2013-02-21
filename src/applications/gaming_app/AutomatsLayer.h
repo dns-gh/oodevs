@@ -39,7 +39,7 @@ class AutomatsLayer : public gui::AutomatsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                             gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
     virtual ~AutomatsLayer();
@@ -55,7 +55,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements );
     void RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type );
     void RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type );

@@ -253,6 +253,15 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void AgentKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::ElementsToKeep
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------

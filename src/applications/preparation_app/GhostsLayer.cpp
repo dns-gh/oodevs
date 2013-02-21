@@ -28,9 +28,9 @@
 // Name: GhostsLayer constructor
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-GhostsLayer::GhostsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+GhostsLayer::GhostsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, tr( "Ghosts" ) )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, tr( "Ghosts" ), Layer_ABC::eGhosts )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )

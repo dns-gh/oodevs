@@ -58,6 +58,7 @@ public:
     void Translate( const geometry::Point2f& position, const geometry::Vector2f& translation, float precision);
 
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
+    virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
 

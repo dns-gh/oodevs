@@ -174,6 +174,15 @@ void PopulationPositions::Draw( const geometry::Point2f& where, const gui::Viewp
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationPositions::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void PopulationPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationPositions::SerializeAttributes
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------

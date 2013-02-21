@@ -45,6 +45,7 @@ public:
     //@{
     void Register( const kernel::Extension_ABC& extension );
     void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
+    void Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:

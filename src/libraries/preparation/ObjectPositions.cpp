@@ -289,9 +289,18 @@ void ObjectPositions::VisitPath( const geometry::Point2f& first, const T_PointVe
 // -----------------------------------------------------------------------------
 void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
-    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() ) // $$$$ SBO 2009-05-29: location_->IsValid()
+    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
     tools.DrawTacticalGraphics( symbol_, *location_, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void ObjectPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

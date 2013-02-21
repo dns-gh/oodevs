@@ -328,7 +328,7 @@ void Layer::ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Poi
 // Name: Layer::ExtractElements
 // Created: ABR 2013-01-25
 // -----------------------------------------------------------------------------
-void Layer::ExtractElements( T_LayerElements&, const geometry::Point2f& )
+void Layer::ExtractElements( T_LayerElements&, const GlTools_ABC::T_ObjectsPicking& )
 {
     // NOTHING
 }

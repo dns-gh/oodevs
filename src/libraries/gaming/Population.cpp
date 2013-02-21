@@ -250,7 +250,6 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 // -----------------------------------------------------------------------------
 void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
 {
-
     if( viewport.IsVisible( boundingBox_ ) )
     {
         gui::DrawVisitor drawer;
@@ -262,6 +261,15 @@ void Population::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
             flows.NextElement().Apply( drawer );
         drawer.Draw( where, viewport, tools );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void Population::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
 }
 
 namespace

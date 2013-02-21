@@ -81,6 +81,15 @@ void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewp
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPositions::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void ObjectPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPositions::GetSymbol
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------

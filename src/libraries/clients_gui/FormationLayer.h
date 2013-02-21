@@ -40,7 +40,8 @@ class FormationLayer : public EntityLayer< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             FormationLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                             View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~FormationLayer();
     //@}
 

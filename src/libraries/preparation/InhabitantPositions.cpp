@@ -250,6 +250,15 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::V
 }
 
 // -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: InhabitantPositions::UpdateDictionary
 // Created: SLG 2011-02-15
 // -----------------------------------------------------------------------------

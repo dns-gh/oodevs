@@ -42,7 +42,7 @@ class DrawerLayer : public EntityLayer< kernel::Drawing_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~DrawerLayer();
     //@}
@@ -59,7 +59,7 @@ private:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
     virtual void NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements );
     virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
     virtual bool HandleKeyPress( QKeyEvent* key );
@@ -69,7 +69,7 @@ private:
     //! @name Member data
     //@{
     ParametersLayer& parameters_;
-    const GlTools_ABC& tools_;
+    GlTools_ABC& tools_;
     geometry::Rectangle2f viewport_;
     const kernel::Drawing_ABC* selected_;
     //@}

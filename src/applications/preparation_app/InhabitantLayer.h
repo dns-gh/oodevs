@@ -40,7 +40,7 @@ class InhabitantLayer : public gui::InhabitantLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools,
+             InhabitantLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools,
                               gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
                               LivingAreaEditor_ABC& editor );
     virtual ~InhabitantLayer();

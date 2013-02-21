@@ -23,8 +23,9 @@ using namespace gui;
 // Name: ObjectsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, TerrainPicker& picker )
-    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile, tr( "Objects" ) )
+ObjectsLayer::ObjectsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
+                            const Profile_ABC& profile, TerrainPicker& picker )
+    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile, tr( "Objects" ), Layer_ABC::eObjects )
 {
     picker.RegisterLayer( *this );
 }
@@ -114,13 +115,3 @@ QStringList ObjectsLayer::TerrainPick( const geometry::Point2f& terrainCoordinat
     Apply( functor );
     return functor.infos_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsLayer::IsInSelection
-// Created: ABR 2013-01-29
-// -----------------------------------------------------------------------------
-//bool ObjectsLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
-//{
-//    return EntityLayer< kernel::Object_ABC >::IsInSelection( entity, point );
-//    //const kernel::Object_ABC& object = static_cast< const kernel::Object_ABC& >( entity );
-//}

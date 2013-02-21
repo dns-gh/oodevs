@@ -97,6 +97,11 @@ public:
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const;
     virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
     virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const;
+
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
+    virtual void RegisterObjectPicking( const T_ObjectPicking& object );
+    virtual bool IsPickingMode() const;
+    virtual geometry::Rectangle2f GlobalViewport() const;
     //@}
 
 private:

@@ -78,6 +78,15 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::GetType
 // Created: SBO 2006-08-03
 // -----------------------------------------------------------------------------

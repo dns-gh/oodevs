@@ -50,7 +50,8 @@ class EntityLayerBase : public Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayerBase( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const QString& name );
+             EntityLayerBase( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                              View_ABC& view, const kernel::Profile_ABC& profile, const QString& name, E_LayerTypes type );
     virtual ~EntityLayerBase();
     //@}
 
@@ -71,7 +72,7 @@ protected:
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
-    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
 
     template< typename Functor >
     void Apply( Functor& functor ) const
@@ -100,7 +101,7 @@ protected:
     virtual QString GetName() const;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
+    virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     //@}
 
 protected:
@@ -113,9 +114,10 @@ protected:
     //! @name Protected member data
     //@{
     const kernel::Profile_ABC& profile_;
-    const GlTools_ABC&         tools_;
+    GlTools_ABC&               tools_;
     T_Entities                 entities_;
     geometry::Rectangle2f      world_;
+    E_LayerTypes               type_;
     //@}
 
 private:
@@ -147,7 +149,8 @@ class EntityLayer : public EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const QString& name );
+             EntityLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                          View_ABC& view, const kernel::Profile_ABC& profile, const QString& name, E_LayerTypes type );
     virtual ~EntityLayer();
     //@}
 

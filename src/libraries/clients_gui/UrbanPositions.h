@@ -61,6 +61,7 @@ public:
     //! @name Drawable_ABC
     //@{
     virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
+    virtual void Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
     //@}
 
 private:

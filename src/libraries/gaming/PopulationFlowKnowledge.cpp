@@ -170,6 +170,15 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewpor
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationFlowKnowledge::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void PopulationFlowKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationFlowKnowledge::GetNId
 // Created: NPT 2012-10-11
 // -----------------------------------------------------------------------------

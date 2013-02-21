@@ -220,6 +220,15 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanPositions::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void UrbanPositions::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanPositions::ComputeCachedValues
 // Created: JSR 2012-05-15
 // -----------------------------------------------------------------------------

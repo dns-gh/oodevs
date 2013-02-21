@@ -25,8 +25,9 @@ using namespace gui;
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
-    : EntityLayer< Automat_ABC >( controllers, tools, strategy, view, profile, tr( "Automata" ) )
+AutomatsLayer::AutomatsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                              View_ABC& view, const Profile_ABC& profile )
+    : EntityLayer< Automat_ABC >( controllers, tools, strategy, view, profile, tr( "Automata" ), Layer_ABC::eAutomats )
     , selected_( controllers )
 {
     // NOTHING

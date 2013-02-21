@@ -123,6 +123,15 @@ void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
 }
 
 // -----------------------------------------------------------------------------
+// Name: Formation::Pick
+// Created: LGY 2013-02-20
+// -----------------------------------------------------------------------------
+void Formation::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Formation::Rename
 // Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------

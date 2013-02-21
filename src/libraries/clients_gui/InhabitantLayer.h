@@ -40,7 +40,7 @@ class InhabitantLayer : public EntityLayer< kernel::Inhabitant_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantLayer( kernel::Controllers& controllers, const GlTools_ABC& tools,
+             InhabitantLayer( kernel::Controllers& controllers, GlTools_ABC& tools,
                               ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~InhabitantLayer();
     //@}

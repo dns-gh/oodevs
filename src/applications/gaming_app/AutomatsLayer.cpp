@@ -24,7 +24,7 @@
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
+AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
                              const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                              const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
                              tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel )
@@ -54,9 +54,9 @@ AutomatsLayer::~AutomatsLayer()
 // Name: AutomatsLayer::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport )
+void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode )
 {
-    gui::AutomatsLayer::Draw( entity, viewport );
+    gui::AutomatsLayer::Draw( entity, viewport, pickingMode );
     if( !ShouldDisplay( entity ) && selected_ == &entity )
     {
         SelectColor( entity );

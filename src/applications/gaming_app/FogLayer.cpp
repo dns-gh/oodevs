@@ -18,9 +18,9 @@
 // Name: FogLayer constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-FogLayer::FogLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+FogLayer::FogLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                     gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, tr( "Fog" ) )
+    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, tr( "Fog" ), Layer_ABC::eFog )
     , controllers_( controllers )
     , texture_( 0 )
 {
@@ -89,7 +89,7 @@ void FogLayer::Paint( const geometry::Rectangle2f& rect )
 // Name: FogLayer::Draw
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void FogLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport )
+void FogLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool /*pickingMode*/ )
 {
     if( ShouldDisplay( entity ) )
         if( const VisionCones* extension = entity.Retrieve< VisionCones >() )

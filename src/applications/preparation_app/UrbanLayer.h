@@ -39,7 +39,7 @@ class UrbanLayer : public gui::UrbanLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             UrbanLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                          gui::View_ABC& view, UrbanModel& model, const kernel::Profile_ABC& profile );
     virtual ~UrbanLayer();
     //@}

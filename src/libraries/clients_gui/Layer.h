@@ -100,7 +100,7 @@ public:
     virtual QString GetName() const;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
+    virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     //@}
 
 private:

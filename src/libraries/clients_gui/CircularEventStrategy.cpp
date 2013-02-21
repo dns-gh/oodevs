@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
+#include "GlTools_ABC.h"
 #include "SelectionMenu.h"
 
 using namespace gui;
@@ -17,10 +18,12 @@ using namespace gui;
 // Name: CircularEventStrategy constructor
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-CircularEventStrategy::CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, GlTools_ABC& tools )
+CircularEventStrategy::CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+                                              DrawingTypes& drawingTypes, GlTools_ABC& tools )
     : menu_( new SelectionMenu( entitySymbols, colorStrategy, drawingTypes, tools ) )
     , default_( 0 )
     , exclusive_( true )
+    , tools_( tools )
 {
     // NOTHING
 }
@@ -206,12 +209,16 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
         ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) )                       // no good button 
         return;
 
+
+    GlTools_ABC::T_ObjectsPicking selection;
+    tools_.FillSelection( point, selection );
+
     Layer_ABC::T_LayerElements extractedElements;
     for( auto it = layers_.begin(); it != layers_.end(); ++it )                                             // Extract elements
     {
         if( !( mouse->button() == Qt::LeftButton || ( mouse->button() == Qt::RightButton && !( *it )->IsReadOnly() ) ) )
             continue;
-        ( *it )->ExtractElements( extractedElements, point );
+        ( *it )->ExtractElements( extractedElements, selection );
     }
 
     if( default_ && extractedElements.size() == 0 )                                                         // No element extracted

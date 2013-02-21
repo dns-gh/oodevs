@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: PopulationsLayer constructor
 // Created: SBO 2006-08-21
 // -----------------------------------------------------------------------------
-PopulationsLayer::PopulationsLayer( Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+PopulationsLayer::PopulationsLayer( Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                                     gui::View_ABC& view, const Profile_ABC& profile )
     : gui::PopulationsLayer( controllers, tools, strategy, view, profile )
 {

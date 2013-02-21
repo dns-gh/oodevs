@@ -12,6 +12,7 @@
 #include "moc_DrawerLayer.cpp"
 #include "Drawing.h"
 #include "Tools.h"
+#include "Viewport2d.h"
 #include "clients_kernel/Controller.h"
 
 using namespace gui;
@@ -20,9 +21,9 @@ using namespace gui;
 // Name: DrawerLayer constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+DrawerLayer::DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, tr( "Drawings" ) )
+    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, tr( "Drawings" ), Layer_ABC::eDrawers )
     , parameters_( parameters )
     , tools_     ( tools )
     , selected_  ( 0 )
@@ -117,11 +118,15 @@ void DrawerLayer::NotifySelectionChanged( const std::vector< const kernel::Drawi
 // Name: DrawerLayer::Draw
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------
-void DrawerLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& )
+void DrawerLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC&, bool pickingMode )
 {
     assert( dynamic_cast< const Drawing* >( &entity ) );
     if( ShouldDisplay( entity ) )
-        static_cast< const Drawing& >( entity ).Draw( viewport_, tools_, &entity == selected_ );
+    {
+        if( pickingMode )
+            tools_.RegisterObjectPicking( std::make_pair( entity.GetId(), type_ ) );
+        static_cast< const Drawing& >( entity ).Draw( pickingMode ? tools_.GlobalViewport() : viewport_, tools_, &entity == selected_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -24,7 +24,7 @@ class FogLayer : public gui::EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             FogLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+             FogLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                        gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~FogLayer();
     //@}
@@ -33,7 +33,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( const ViewFrustum& frustum );
-    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode );
     virtual void Reset2d();
     //@}
 

@@ -93,6 +93,11 @@ public:
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f ) const;
     virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
 
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
+    virtual void RegisterObjectPicking( const T_ObjectPicking& object );
+    virtual bool IsPickingMode() const;
+    virtual geometry::Rectangle2f GlobalViewport() const;
+
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
     virtual void SetCurrentCursor( const QCursor& cursor );
@@ -144,6 +149,7 @@ private:
     //! @name Helpers
     //@{
     virtual void paintGL();
+    virtual void paintGL( const geometry::Point2f& point );
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
     virtual void updateGL();
@@ -152,6 +158,7 @@ private:
     void DrawTextLabel( const std::string& message, const geometry::Point2f& where, int baseSize = 12);
 
     void RenderPass( GlRenderPass_ABC& pass );
+    void RenderPass( GlRenderPass_ABC& pass, const geometry::Rectangle2f& viewport );
     //@}
 
 private:
@@ -171,6 +178,12 @@ private:
     QFont currentFont_;
     bool bMulti_;
     float SymbolSize_;
+    // picking
+    geometry::Rectangle2f globalViewport_;
+    bool pickingMode_;
+    float globalPixel_;
+    float globalZoom_;
+    T_ObjectsPicking picking_;
     //@}
 };
 

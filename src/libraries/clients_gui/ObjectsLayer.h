@@ -31,7 +31,7 @@ class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+             ObjectsLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                            View_ABC& view, const kernel::Profile_ABC& profile, TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
@@ -39,12 +39,6 @@ public:
     //! @name Operations
     //@{
     virtual QStringList TerrainPick( const geometry::Point2f& terrainCoordinates );
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    //virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     //@}
 
 private:

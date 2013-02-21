@@ -54,7 +54,8 @@ namespace
 // Name: ObjectsLayer constructor
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker )
+ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+                            gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker )
     : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker )
     , selected_( controllers )
     , tools_   ( tools )
