@@ -75,6 +75,7 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/ColorStrategy.h"
+#include "clients_gui/SelectionMenu.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
