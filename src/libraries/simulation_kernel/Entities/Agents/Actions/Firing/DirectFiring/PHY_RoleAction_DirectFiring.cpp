@@ -94,7 +94,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
 {
     // Pour chaque cible, choix de la meilleure arme
     unsigned int nNbrWeaponsUsed = 0;
-    for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+    for( auto itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget       = **itCompTarget;
         const PHY_ComposantePion* pBestFirer       = 0;
@@ -115,7 +115,7 @@ void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MI
     {
         PHY_Composante_ABC* pBestCompTarget = 0;
         double rBestScore = 0.;
-        for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+        for( auto itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
         {
             PHY_Composante_ABC& compTarget = **itCompTarget;
             const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( *owner_, target, compTarget.GetType(), true, true ); // 'true' is for 'use ph' and true for 'use ammo'

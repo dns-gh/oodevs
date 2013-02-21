@@ -196,7 +196,7 @@ void ControlZoneCapacity::ControlTarget( MIL_Agent_ABC* agent, const MIL_Army_AB
         return;
     PHY_Composante_ABC::T_ComposanteVector compTargets;
     agent->GetRole< PHY_RoleInterface_Composantes >().GetComposantesAbleToBeFired( compTargets );
-    for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
+    for( auto itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget = **itCompTarget;
         if( MIL_Random::rand_oi( 0., 1. ) <= phCoef * GetUnitDensityFirePercentage( compTarget.GetType().GetVolume() ) )

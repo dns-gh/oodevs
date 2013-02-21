@@ -71,8 +71,7 @@ private:
         eTemporarilyBlocked // -> Le tir ne peut pas etre effectue tout de suite pour cause d'encombrement en zone urbaine
     };
 
-    typedef std::vector< wrapper::View >         T_Components;
-    typedef T_Components::const_iterator CIT_ComposanteVector;
+    typedef std::vector< wrapper::View > T_Components;
     //@}
 
 private:

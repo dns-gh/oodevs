@@ -26,9 +26,7 @@ class PHY_Composante_ABC : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::vector< PHY_Composante_ABC* >   T_ComposanteVector;
-    typedef T_ComposanteVector::iterator        IT_ComposanteVector;
-    typedef T_ComposanteVector::const_iterator CIT_ComposanteVector;
+    typedef std::vector< PHY_Composante_ABC* > T_ComposanteVector;
 
     struct T_ComposanteUse
     {

@@ -613,7 +613,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
     unsigned int nNbrAllowedToWork = 0;
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
-        nNbrAllowedToWork += ( it->second.nNbrAvailable_  - it->second.nNbrUsed_ );
+        nNbrAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     return nNbrAllowedToWork;
 }
 
@@ -763,7 +763,7 @@ void PHY_RolePionLOG_Medical::SendFullState( unsigned int context ) const
             asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
-        ExecuteOnComponentsAndLendedComponents( predicate1, composanteUse );
+    ExecuteOnComponentsAndLendedComponents( predicate1, composanteUse );
     SendComposanteUse( composanteUse, *asn().mutable_evacuation_ambulances() );
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
