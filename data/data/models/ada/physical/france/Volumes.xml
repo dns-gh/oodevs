@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<volumes model-version="5.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.3/physical/Volumes.xsd">
-  <volume name="Drone"/>
-  <volume name="Gros"/>
-  <volume name="Moyen"/>
-  <volume name="Petit"/>
-  <volume name="Personnel"/>
-</volumes>
-<!-- signature="1144862559" -->

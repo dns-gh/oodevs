@@ -1398,7 +1398,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.algerie.exercises,package.otpack.defense.scipioForSword,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
+    <target name="package.otpacks" depends="package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1449,7 +1449,6 @@
                easier to pull programmatically.
         -->
         <migrate-reports physical="scipio"/>
-        <migrate-reports physical="france"/>
         <safe-move file="${out.dir}/decisional.zip">
             <zip destfile="@{file}" filesonly="true">
                 <fileset dir="${data.dir}">
@@ -1458,39 +1457,10 @@
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
                     <include name="data/models/ada/physical/scipio/**"/>
-                    <include name="data/models/ada/physical/france/**"/>
                     <exclude name="data/models/ada/physical/scipio/Reports.xml"/>
-                    <exclude name="data/models/ada/physical/france/Reports.xml"/>
                 </fileset>
                 <zipfileset dir="${out.dir}/reports/scipio" includes="Reports.xml" fullpath="data/models/ada/physical/scipio/Reports.xml"/>
-                <zipfileset dir="${out.dir}/reports/france" includes="Reports.xml" fullpath="data/models/ada/physical/france/Reports.xml"/>
             </zip>
-        </safe-move>
-    </target>
-
-    <target name="package.otpack.defense.scipioForSword" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
-        <!-- This otpack must be compatible with sword 5.1 and later -->
-        <safe-move file="${out.dir}/decisionalFrance.otpak">
-            <echoxml file="${out.dir}/content.xml">
-                <content>
-                    <name>"Package France"</name>
-                    <description>"Decisionnel et base physique France"</description>
-                </content>
-            </echoxml>
-            <zip destfile="@{file}" filesonly="true">
-                <zipfileset dir="${data.dir}">
-                    <include name="data/models/ada/decisional/bms/**"/>
-                    <include name="data/models/ada/decisional/dia5/**"/>
-                    <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
-                    <exclude name="data/models/ada/decisional/dia5/integration/**"/>
-                    <include name="data/models/ada/decisional/decisional.xml"/>
-					<include name="data/models/ada/physical/france/**"/>
-					<exclude name="data/models/ada/decisional/Sources/Humus/**"/>
-					<exclude name="data/models/ada/decisional/Sources/glaise/**"/>
-                </zipfileset>
-                <fileset dir="${out.dir}" includes="content.xml"/>
-             </zip>
-            <delete file="${out.dir}/content.xml"/>
         </safe-move>
     </target>
 
@@ -1517,13 +1487,6 @@
         </pack>
     </target>
 	
-	 <target name="package.otpack.defense.algerie.exercises" description="Exercices pour la base France">
-        <pack name="Algerie-Exercices" description="Exercices pour la base France">
-            <include name="exercises/algerie/**"/>
-            <include name="data/terrains/algerie6/**"/>
-        </pack>
-    </target>
-
     <target name="package.otpack.lossc" description="package du LOSSC otpack">
         <pack name="LOSSC" description="LOSSC exercises package">
             <include name="exercises/worldwide/LOSSC Scenario 1/**"/>
