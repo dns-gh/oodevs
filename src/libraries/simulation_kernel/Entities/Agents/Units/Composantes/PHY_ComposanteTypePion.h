@@ -16,6 +16,7 @@
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
+#include "tools/Map.h"
 
 namespace sword
 {
@@ -220,8 +221,8 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, PHY_ComposanteTypePion* >   T_ComposanteTypeMap;
-    typedef std::map< const PHY_WeaponType*, bool >            T_WeaponTypeMap;
-    typedef std::map< const PHY_SensorType*, double >          T_SensorTypeMap;
+    typedef tools::Map< const PHY_WeaponType*, bool >          T_WeaponTypeMap;
+    typedef tools::Map< const PHY_SensorType*, double >        T_SensorTypeMap;
     typedef std::vector< const PHY_RadarType* >                T_RadarTypeSet;
     typedef std::vector< const PHY_ComposanteTypeObjectData* > T_ObjectDataVector;
     typedef std::vector< PHY_DotationConsumptions* >           T_ConsumptionVector;

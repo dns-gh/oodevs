@@ -373,16 +373,16 @@ void PHY_ComposanteTypePion::InitializeSensors( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::ReadSensor( xml::xistream& xis )
 {
-        std::string strSensor;
-        xis >> xml::attribute( "type", strSensor );
-        const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
-        if( !pSensorType )
-            xis.error( "Unknown sensor type '" + strSensor + "'" );
-        if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
-            xis.error( "Sensor type '" + strSensor + "' already defined" );
-        xis >> xml::attribute( "height", sensorTypes_[ pSensorType ] );
-        if( pSensorType->GetTypeAgent() )
-            rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
+    std::string strSensor;
+    xis >> xml::attribute( "type", strSensor );
+    const PHY_SensorType* pSensorType = PHY_SensorType::FindSensorType( strSensor );
+    if( !pSensorType )
+        xis.error( "Unknown sensor type '" + strSensor + "'" );
+    if( sensorTypes_.find( pSensorType ) != sensorTypes_.end() )
+        xis.error( "Sensor type '" + strSensor + "' already defined" );
+    xis >> xml::attribute( "height", sensorTypes_[ pSensorType ] );
+    if( pSensorType->GetTypeAgent() )
+        rSensorRotationAngle_ = std::min( rSensorRotationAngle_, pSensorType->GetTypeAgent()->GetAngle() );
 }
 
 // -----------------------------------------------------------------------------
