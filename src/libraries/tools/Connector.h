@@ -11,6 +11,7 @@
 #define __Connector_h_
 
 #include "asio.h"
+#include "EndpointResolver.h"
 
 namespace tools
 {
@@ -58,7 +59,7 @@ private:
     boost::asio::io_service& service_;
     SocketManager& manager_;
     ConnectionCallback_ABC& callback_;
-    boost::asio::ip::tcp::resolver resolver_;
+    EndpointResolver resolver_;
     bool closed_;
     //@}
 };

@@ -41,27 +41,13 @@ Connector::~Connector()
     Close();
 }
 
-namespace
-{
-    std::pair< std::string, std::string > BuildAddress( const std::string& address )
-    {
-        return std::make_pair( address.substr( 0, address.find_first_of( ':' ) ),
-                               address.substr( address.find_first_of( ':' ) + 1 ) );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Connector::Connect
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
 void Connector::Connect( const std::string& endpoint )
 {
-    std::pair< std::string, std::string > address = BuildAddress( endpoint );
-    const boost::asio::ip::tcp::resolver::query query( boost::asio::ip::tcp::v4(), address.first, address.second );
-    resolver_.async_resolve( query, boost::bind( &Connector::OnResolve, this,
-                                                 endpoint,
-                                                 boost::asio::placeholders::error,
-                                                 boost::asio::placeholders::iterator ) );
+    resolver_.AsyncResolve( endpoint, boost::bind( &Connector::OnResolve, this, _1, _2, _3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +57,7 @@ void Connector::Connect( const std::string& endpoint )
 void Connector::Close()
 {
     closed_ = true;
-    resolver_.cancel();
+    resolver_.Cancel();
 }
 
 // -----------------------------------------------------------------------------
