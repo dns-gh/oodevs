@@ -17,6 +17,7 @@
 #include "DrawingTemplate.h"
 #include "DrawingTypes.h"
 #include "EntitySymbols.h"
+#include "GlWidget.h"
 #include "StandardIconProxyStyle.h"
 
 #include "clients_kernel/App6Symbol.h"
@@ -45,6 +46,7 @@ SelectionMenu::SelectionMenu( EntitySymbols& entitySymbols, ColorStrategy& color
     , colorStrategy_( colorStrategy )
     , drawingTypes_( drawingTypes )
     , tools_( tools )
+    , parent_( 0 )
 {
     // NOTHING
 }
@@ -56,6 +58,15 @@ SelectionMenu::SelectionMenu( EntitySymbols& entitySymbols, ColorStrategy& color
 SelectionMenu::~SelectionMenu()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::OnWidget2dChanged
+// Created: ABR 2013-02-21
+// -----------------------------------------------------------------------------
+void SelectionMenu::OnWidget2dChanged( gui::GlWidget* parent )
+{
+    parent_ = parent;
 }
 
 namespace
@@ -233,7 +244,7 @@ namespace
     class RichMenu : public QMenu
     {
     public:
-                 RichMenu() : QMenu(), button_( Qt::NoButton ) {}
+        explicit RichMenu( gui::GlWidget* parent ) : QMenu( parent ), button_( Qt::NoButton ), parent_( parent ) {}
         virtual ~RichMenu() {}
 
         Qt::MouseButton GetButton() const { return button_; }
@@ -244,8 +255,13 @@ namespace
             button_ = ( newButton == Qt::LeftButton || newButton == Qt::RightButton ) ? newButton : Qt::NoButton;
             QMenu::mousePressEvent( event );
         }
+        virtual void wheelEvent( QWheelEvent* event )
+        {
+            parent_->wheelEvent( event );
+        }
 
     private:
+        gui::GlWidget* parent_;
         Qt::MouseButton button_;
     };
 }
@@ -262,7 +278,7 @@ void SelectionMenu::GenerateMenu()
         return;
     }
 
-    RichMenu menu;
+    RichMenu menu( parent_ );
     menu.setStyle( new StandardIconProxyStyle() );
     QAction* dummyEntry = menu.addAction( "" ); // Can't have a separator without an item before
     dummyEntry->setEnabled( false );

@@ -53,6 +53,15 @@ void CircularEventStrategy::SetDefault( Layer_ABC& layer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::GetSelectionMenu
+// Created: ABR 2013-02-21
+// -----------------------------------------------------------------------------
+const SelectionMenu* CircularEventStrategy::GetSelectionMenu() const
+{
+    return menu_.get();
+}
+
+// -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::Register
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------

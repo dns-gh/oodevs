@@ -44,6 +44,7 @@ public:
     //! @name Settings
     //@{
     void SetExclusive( bool );
+    const SelectionMenu* GetSelectionMenu() const;
     //@}
 
     //! @name Operations

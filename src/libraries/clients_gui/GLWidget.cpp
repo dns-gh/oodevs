@@ -978,3 +978,13 @@ void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVaria
     else
         GlToolsBase::OptionChanged( name, value );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::wheelEvent
+// Created: ABR 2013-02-21
+// -----------------------------------------------------------------------------
+void GlWidget::wheelEvent( QWheelEvent* event )
+{
+    MapWidget::wheelEvent( event );
+}
+

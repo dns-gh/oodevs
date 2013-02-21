@@ -23,6 +23,7 @@ namespace gui
 {
     class ColorStrategy;
     class DrawingTypes;
+    class GlWidget;
     class EntitySymbols;
 
 // =============================================================================
@@ -31,7 +32,7 @@ namespace gui
 */
 // Created: ABR 2013-01-30
 // =============================================================================
-class SelectionMenu : QObject
+class SelectionMenu : public QObject
                     , private boost::noncopyable
 {
     Q_OBJECT
@@ -53,6 +54,7 @@ private slots:
     //! @name Slots
     //@{
     void GenerateMenu();
+    void OnWidget2dChanged( gui::GlWidget* );
     //@}
 
 private:
@@ -75,6 +77,7 @@ private:
     std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
     std::auto_ptr< QMouseEvent > mouseEvent_;
     geometry::Point2f point_;
+    gui::GlWidget* parent_;
     //@}
 };
 

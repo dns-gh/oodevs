@@ -109,6 +109,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/ColorStrategy.h"
+#include "clients_gui/SelectionMenu.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
@@ -199,6 +200,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
     selector_ = new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
+    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     selector_->AddIcon( xpm_cadenas        , -260, 360 );
     selector_->AddIcon( xpm_radars_on      ,  200, 270 );
     selector_->AddIcon( xpm_brouillage     ,  200, 50 );
