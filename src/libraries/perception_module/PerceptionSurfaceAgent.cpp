@@ -188,7 +188,7 @@ bool PerceptionSurfaceAgent::IsInitialized()
 void PerceptionSurfaceAgent::TransferPerception( const std::map< std::size_t, std::pair< unsigned int, double > >& urbanPerceptionMap ) const
 {
     perceptionsBuffer_.clear();
-    for( std::map< std::size_t, std::pair< unsigned int, double > >::const_iterator it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )
+    for( auto it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )
         perceptionsBuffer_[ it->first ] = it->second.first;
 }
 

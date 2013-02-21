@@ -104,7 +104,7 @@ const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& model,
         }
         else
             roll = static_cast< double >( GET_HOOK( GetPerceptionRandom )() );
-        perceptionsBuffer_[ target[ "identifier" ] ] = std::pair< unsigned int, double >( tick + 1, roll );
+        perceptionsBuffer_[ target[ "identifier" ] ] = std::make_pair( tick + 1, roll );
         const ZURBPerceptionComputer computer( roll, tick );
         const PerceptionLevel& urbanResult = computer.ComputePerception( model, perceiver, target );
         return result < urbanResult ? result : urbanResult;
@@ -359,11 +359,9 @@ void PerceptionView::TransferPerception( const wrapper::View& perceiver, const S
             }
             virtual void Notify( std::size_t targetIdentifier, unsigned int delay )
             {
-                T_PerceptionTickMap::iterator it = perceptionsBuffer_.find( targetIdentifier );
-                if( it != perceptionsBuffer_.end() )
-                    perceptionsBuffer_[ targetIdentifier ] = std::pair< unsigned int, double >( std::max( it->second.first, delay ), GET_HOOK( GetPerceptionRandom )() );
-                else
-                    perceptionsBuffer_[ targetIdentifier ] = std::pair< unsigned int, double >( delay, GET_HOOK( GetPerceptionRandom )() );
+                unsigned int& tick = perceptionsBuffer_[ targetIdentifier ].first;
+                tick = std::max( tick, delay );
+                perceptionsBuffer_[ targetIdentifier ].second = GET_HOOK( GetPerceptionRandom )();
             }
             T_PerceptionTickMap& perceptionsBuffer_;
         } visitor( perceptionsBuffer_ );
