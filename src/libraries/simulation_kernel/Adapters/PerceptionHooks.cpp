@@ -327,7 +327,7 @@ namespace
                                                                                       ( "Vide"  , PHY_RawVisionData::eVisionEmpty )
                                                                                       ( "Foret" , PHY_RawVisionData::eVisionForest )
                                                                                       ( "Urbain", PHY_RawVisionData::eVisionUrban );
-        T_Association::const_iterator it = environmentAssociation.find( environment );
+        auto it = environmentAssociation.find( environment );
         if( it == environmentAssociation.end() )
             return PHY_RawVisionData::eNbrVisionObjects;
         return it->second;

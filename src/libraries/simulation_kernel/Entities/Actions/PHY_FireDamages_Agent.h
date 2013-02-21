@@ -12,6 +12,7 @@
 #ifndef __PHY_FireDamages_Agent_h_
 #define __PHY_FireDamages_Agent_h_
 
+#include "tools/Map.h"
 #include <boost/tuple/tuple.hpp>
 
 namespace sword
@@ -57,14 +58,11 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< int >                                            T_ComposanteStates;
-    typedef std::map< const PHY_ComposanteType_ABC*, T_ComposanteStates > T_ComposanteResults;
-    typedef T_ComposanteResults::const_iterator                           CIT_ComposanteResults;
+    typedef std::vector< int > T_ComposanteStates;
+    typedef tools::Map< const PHY_ComposanteType_ABC*, T_ComposanteStates > T_ComposanteResults;
 
-    typedef std::vector< int >                     T_HumansPerWoundVector;
+    typedef std::vector< int > T_HumansPerWoundVector;
     typedef std::vector< T_HumansPerWoundVector >  T_HumansPerRankVector;
-    typedef T_HumansPerRankVector::iterator        IT_HumansPerRankVector;
-    typedef T_HumansPerRankVector::const_iterator  CIT_HumansPerRankVector;
     //@}
 
 private:
@@ -75,7 +73,7 @@ private:
     //@}
 
 private:
-    T_ComposanteResults   composanteResults_;
+    T_ComposanteResults composanteResults_;
     T_HumansPerRankVector humanResults_;
 };
 

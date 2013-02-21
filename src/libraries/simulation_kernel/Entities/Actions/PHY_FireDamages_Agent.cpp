@@ -25,11 +25,11 @@
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Agent::PHY_FireDamages_Agent()
-    : humanResults_( PHY_HumanRank::GetHumanRanks().size() )
+    : humanResults_(
+        PHY_HumanRank::GetHumanRanks().size(),
+        T_HumansPerWoundVector( PHY_HumanWound::GetHumanWounds().size() ) )
 {
-    const std::size_t nNbrWounds = PHY_HumanWound::GetHumanWounds().size();
-    for( IT_HumansPerRankVector it = humanResults_.begin(); it != humanResults_.end(); ++it )
-        it->resize( nNbrWounds, 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,10 +41,6 @@ PHY_FireDamages_Agent::~PHY_FireDamages_Agent()
     // NOTHING
 }
 
-// =============================================================================
-// NOTIFICATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Agent::NotifyComposanteStateChanged
 // Created: NLD 2004-10-06
@@ -53,9 +49,8 @@ void PHY_FireDamages_Agent::NotifyComposanteStateChanged( const PHY_Composante_A
 {
     T_ComposanteStates& composanteStates = composanteResults_[ &composante.GetType() ];
     composanteStates.resize( PHY_ComposanteState::GetNbrStates(), 0 );
-
-    -- composanteStates[ oldState.GetID() ];
-    ++ composanteStates[ newState.GetID() ];
+    --composanteStates[ oldState.GetID() ];
+    ++composanteStates[ newState.GetID() ];
 }
 
 // -----------------------------------------------------------------------------
@@ -106,21 +101,19 @@ void PHY_FireDamages_Agent::DoSerializeDamages( T& msg ) const
 {
     msg.mutable_equipments();
     // Composantes
-    for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult )
+    for( auto it = composanteResults_.begin(); it != composanteResults_.end(); ++it )
     {
-        const PHY_ComposanteType_ABC& type = *itResult->first;
-        const T_ComposanteStates& states = itResult->second;
-
+        const PHY_ComposanteType_ABC& type = *it->first;
+        const T_ComposanteStates& states = it->second;
         sword::UnitEquipmentFireDamage& asnEquipement = *msg.mutable_equipments()->add_elem();
         asnEquipement.mutable_equipement()->set_id( type.GetMosID().id() );
         asnEquipement.set_available( states[ PHY_ComposanteState::undamaged_.GetID() ] );
         asnEquipement.set_repairable( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
         asnEquipement.set_unavailable( states[ PHY_ComposanteState::dead_.GetID() ] );
     }
-
     msg.mutable_humans();
     // Humans
-    for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
+    for( auto it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
     {
         const PHY_HumanRank& rank = *it->second;
         sword::UnitHumanFireDamage& personnel = *msg.mutable_humans()->add_elem();
@@ -141,10 +134,10 @@ void PHY_FireDamages_Agent::DoSerializeDamages( T& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_FireDamages_Agent::Serialize( std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > >& content ) const
 {
-    for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult )
+    for( auto it = composanteResults_.begin(); it != composanteResults_.end(); ++it )
     {
-        const PHY_ComposanteType_ABC& type = *itResult->first;
-        const T_ComposanteStates& states = itResult->second;
+        const PHY_ComposanteType_ABC& type = *it->first;
+        const T_ComposanteStates& states = it->second;
         content.push_back( boost::make_tuple( type.GetName(), states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ],
                                                               states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ],
                                                               states[ PHY_ComposanteState::dead_.GetID() ] ) );

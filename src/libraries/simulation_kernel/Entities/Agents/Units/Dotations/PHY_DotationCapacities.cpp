@@ -86,7 +86,7 @@ void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& con
         double quantity = std::numeric_limits< double >::max();
         if( dotations )
         {
-            std::map< const PHY_DotationCategory*, double >::const_iterator itDotation = dotations->find( it->first );
+            auto itDotation = dotations->find( it->first );
             if( itDotation != dotations->end() )
                 quantity = itDotation->second;
         }
@@ -102,7 +102,7 @@ std::map< const PHY_DotationCategory*, double > PHY_DotationCapacities::Unregist
 {
     std::map< const PHY_DotationCategory*, double > result;
     for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
-        result[ &( it->second->GetCategory() ) ] = container.RemoveCapacity( *it->second );
+        result[ & it->second->GetCategory() ] = container.RemoveCapacity( *it->second );
     return result;
 }
 

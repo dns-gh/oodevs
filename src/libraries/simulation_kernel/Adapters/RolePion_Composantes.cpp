@@ -116,7 +116,7 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
 // -----------------------------------------------------------------------------
 std::map< const PHY_DotationCategory*, double > RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
-    T_Components::iterator it = components_.find( &composante );
+    auto it = components_.find( &composante );
     it->second->Remove();
     components_.erase( it );
     return PHY_RolePion_Composantes::NotifyComposanteRemoved( composante );

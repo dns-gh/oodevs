@@ -44,7 +44,7 @@ DirectFirePionEventListener::DirectFirePionEventListener( core::Facade& facade )
 //-----------------------------------------------------------------------------
 DirectFirePionEventListener::~DirectFirePionEventListener()
 {
-    for( IT_Results it = results_.begin(); it != results_.end(); ++it )
+    for( auto it = results_.begin(); it != results_.end(); ++it )
         it->second->DecRef();
 }
 
@@ -154,7 +154,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
 // -----------------------------------------------------------------------------
 void DirectFirePionEventListener::Remove( const core::Model& event )
 {
-    IT_Results it = results_.find( event[ "entity/identifier" ] );
+    auto it = results_.find( event[ "entity/identifier" ] );
     if( it != results_.end() )
     {
         it->second->DecRef();

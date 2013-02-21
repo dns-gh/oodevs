@@ -38,13 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, PHY_FireResults_Pion* > T_Results;
-    typedef T_Results::iterator                            IT_Results;
-    //@}
-
-private:
     //! @name Helpers
     //@{
     void Update( const core::Model& event );
@@ -54,7 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Results results_;
+    std::map< unsigned int, PHY_FireResults_Pion* > results_;
     //@}
 };
 

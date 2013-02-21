@@ -44,16 +44,10 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< PHY_ComposantePion*, core::Model* > T_Components;
-    //@}
-
-private:
     //! @name Member data
     //@{
     core::Model* entity_;
-    T_Components components_;
+    std::map< PHY_ComposantePion*, core::Model* > components_;
     //@}
 };
 

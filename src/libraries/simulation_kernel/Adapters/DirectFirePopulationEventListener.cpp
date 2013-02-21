@@ -36,7 +36,7 @@ DirectFirePopulationEventListener::DirectFirePopulationEventListener( core::Faca
 //-----------------------------------------------------------------------------
 DirectFirePopulationEventListener::~DirectFirePopulationEventListener()
 {
-    for( IT_Results it = results_.begin(); it != results_.end(); ++it )
+    for( auto it = results_.begin(); it != results_.end(); ++it )
         it->second->DecRef();
 }
 
@@ -94,7 +94,7 @@ void DirectFirePopulationEventListener::Update( const core::Model& event )
 // -----------------------------------------------------------------------------
 void DirectFirePopulationEventListener::Remove( const core::Model& event )
 {
-    IT_Results it = results_.find( event[ "entity/identifier" ] );
+    auto it = results_.find( event[ "entity/identifier" ] );
     if( it != results_.end() )
     {
         it->second->DecRef();
