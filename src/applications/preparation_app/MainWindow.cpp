@@ -63,6 +63,7 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionLayer.h"
+#include "clients_gui/SelectionMenu.h"
 #include "clients_gui/StatusBar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
@@ -164,6 +165,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Main widget
     selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
+    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     // Strategy
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, PreparationProfile::GetProfile() ) ) );

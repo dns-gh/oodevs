@@ -1156,3 +1156,13 @@ geometry::Rectangle2f GlWidget::GlobalViewport() const
 {
     return globalViewport_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::wheelEvent
+// Created: ABR 2013-02-21
+// -----------------------------------------------------------------------------
+void GlWidget::wheelEvent( QWheelEvent* event )
+{
+    MapWidget::wheelEvent( event );
+}
+

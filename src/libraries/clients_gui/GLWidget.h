@@ -57,6 +57,7 @@ public:
     virtual void PaintLayers();
     virtual unsigned int Width() const;
     virtual unsigned int Height() const;
+    virtual void wheelEvent( QWheelEvent* event );
     virtual geometry::Rectangle2f Viewport() const;
     //@}
 
