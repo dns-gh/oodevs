@@ -45,17 +45,19 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void FinalizeSurfaceAgents();
-    void TransfertPerception();
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::pair< unsigned int, double > T_PerceptionParameterPair;
     typedef std::map< const void*, T_PerceptionParameterPair > T_PerceptionTickMap;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void FinalizeSurfaceAgents();
+    void TransfertPerception();
+
+    T_PerceptionParameterPair GetParameter( const MIL_Agent_ABC& target );
     //@}
 
 private:

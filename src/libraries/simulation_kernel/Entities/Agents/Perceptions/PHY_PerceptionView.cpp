@@ -70,6 +70,23 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoin
     return *pBestLevel;
 }
 
+PHY_PerceptionView::T_PerceptionParameterPair PHY_PerceptionView::GetParameter( const MIL_Agent_ABC& target )
+{
+    unsigned int tick = 0;
+    double roll = 0;
+    auto it = perceptionsUnderway_.find( &target );
+    if( it != perceptionsUnderway_.end() )
+    {
+        tick = it->second.first;
+        if( it->second.second == -1 )
+            it->second.second = MIL_Random::rand_ii( MIL_Random::ePerception );
+        roll = it->second.second;
+    }
+    else
+        roll = MIL_Random::rand_ii( MIL_Random::ePerception );
+    return T_PerceptionParameterPair( tick, roll );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView::Compute
 // Created: NLD 2004-08-20
@@ -89,18 +106,9 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
         return result;
     else
     {
-        unsigned int tick = 0;
-        double roll = 0;
-        auto it = perceptionsUnderway_.find( &target );
-        if( it != perceptionsUnderway_.end() )
-        {
-            tick = it->second.first;
-            roll = it->second.second;
-        }
-        else
-            roll = MIL_Random::rand_ii( MIL_Random::ePerception );
-        perceptionsBuffer_[ &target ] = std::make_pair( tick + 1, roll );
-        PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), roll, tick );
+        const T_PerceptionParameterPair p = GetParameter( target );
+        perceptionsBuffer_[ &target ] = std::make_pair( p.first + 1, p.second );
+        PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), p.second, p.first );
         const PHY_PerceptionLevel& urbanResult = computer.ComputePerception( target );
         return std::min( result, urbanResult );
     }
@@ -305,7 +313,7 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_ConstPopulatio
 
             bool mustReport = false;
             if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( flow.GetPopulation() ) )
-                mustReport = perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( flow.GetPopulation()), shape );
+                mustReport = perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( flow.GetPopulation() ), shape );
             else
                 mustReport = perceiver_.NotifyPerception( flow, level, shape );
             civiliansEncountered |= mustReport;
@@ -421,12 +429,9 @@ void PHY_PerceptionView::TransfertPerception()
             PHY_PerceptionSurfaceAgent::T_PerceptionTickMap perceptions = itSurface->second.GetTargetsPerception();
             for( auto it = perceptions.begin(); it != perceptions.end(); ++it )
             {
-                const double random = MIL_Random::rand_ii( MIL_Random::ePerception );
-                auto it2 = perceptionsBuffer_.find( it->first );
-                if( it2 != perceptionsBuffer_.end() )
-                    it2->second = std::make_pair( std::max( it2->second.first, it->second ), random );
-                else
-                    perceptionsBuffer_[ it->first ] = std::make_pair( it->second, random );
+                unsigned int& tick = perceptionsBuffer_[ it->first ].first;
+                tick = std::max( tick, it->second );
+                perceptionsBuffer_[ it->first ].second = -1;
             }
         }
         wasInCity_ = true;
