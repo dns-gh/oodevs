@@ -109,7 +109,7 @@ bool PHY_IndirectFireData::GetUnusedFirerWeapon( const PHY_ComposantePion*& pUnu
     pUnusedFirer       = 0;
     if( composantesWeapons_.empty() )
         return false;
-    CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
+    auto it = composantesWeapons_.begin();
     pUnusedFirerWeapon = it->second.GetUnusedWeapon();
     if( !pUnusedFirerWeapon )
         return false;

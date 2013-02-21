@@ -76,7 +76,6 @@ private:
     };
 
     typedef std::map< const PHY_ComposantePion*, sComposanteWeapons > T_ComposanteWeaponsMap;
-    typedef T_ComposanteWeaponsMap::const_iterator                    CIT_ComposanteWeaponsMap;
     //@}
 
 private:
