@@ -260,7 +260,16 @@ std::string ADN_Objects_Data_ObjectInfos::GetAllGeometries() const
 ADN_Objects_Data_ObjectInfos* ADN_Objects_Data_ObjectInfos::CreateCopy()
 {
     xml::xostringstream xos;
-    WriteArchive( xos );
+    try
+    {
+        WriteArchive( xos );
+    }
+    catch( std::exception& e )
+    {
+        const QString errorMessage = tools::translate( "ADN_Objects_Data_ObjectInfos", "The object you attempt to copy is invalid: %1." ).arg( tools::GetExceptionMsg( e ).c_str() );
+        QMessageBox::critical( qApp ? qApp->activeWindow() : 0, tools::translate( "ADN_Objects_Data_ObjectInfos", "Error" ), errorMessage );
+        return 0;
+    }
     ADN_Objects_Data_ObjectInfos* pCopy = new ADN_Objects_Data_ObjectInfos;
     xml::xistringstream xis( xos.str() );
     xis >> xml::start( "object" );

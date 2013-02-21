@@ -63,13 +63,6 @@ public:
                 }
         }
 
-        //QList< QStandardItem* > items = model_->findItems( strNewName.c_str(), Qt::MatchExactly );
-        //if( !items.isEmpty() )
-        //{
-        //    QMessageBox::warning( this, errorTitle_, errorMsg_, QMessageBox::Ok, Qt::NoButton );
-        //    return 0;
-        //}
-
         // Create a new item or create a copy of an existing one.
         if( static_cast< QRadioButton* >( buttonGroup_->button( eCopy ) )->isOn() )
         {
@@ -90,7 +83,8 @@ public:
         }
 
         // Set name and options
-        element_->strName_ = strNewName;
+        if( element_ )
+            element_->strName_ = strNewName;
         ApplyOptions();
         return element_;
     }

@@ -152,7 +152,8 @@ T* ADN_WizardPage< T >::CreateObject()
     }
 
     // Set name and options
-    element_->strName_ = strNewName;
+    if( element_ )
+        element_->strName_ = strNewName;
     ApplyOptions();
     return element_;
 }

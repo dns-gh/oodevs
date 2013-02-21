@@ -2952,6 +2952,17 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     </message>
 </context>
 <context>
+    <name>ADN_Objects_Data_ObjectInfos</name>
+    <message>
+        <source>The object you attempt to copy is invalid: %1.</source>
+        <translation>L'objet que vous essayez de copier est invalide: %1.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Objects_GUI</name>
     <message>
         <source>Object</source>

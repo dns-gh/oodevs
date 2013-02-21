@@ -2932,6 +2932,17 @@ The spawn capacity will be disabled.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Objects_Data_ObjectInfos</name>
+    <message>
+        <source>The object you attempt to copy is invalid: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Objects_GUI</name>
     <message>
         <source>Name</source>
