@@ -453,6 +453,15 @@ void MIL_AgentPion::CleanKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::CleanDeletedAgentKnowledges()
+{
+    pKnowledgeBlackBoard_->CleanDeletedAgentKnowledges();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::SetPionAsCommandPost
 // Created: HBD 2011-02-21
 // -----------------------------------------------------------------------------
@@ -833,6 +842,8 @@ void MIL_AgentPion::DeleteUnit()
         pAutomate_->UnregisterPion( *this );
 
     markedForDestruction_ = true;
+
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CleanDeletedAgentKnowledges();
 
     client::UnitDestruction msg;
     msg().mutable_unit()->set_id( GetID() );

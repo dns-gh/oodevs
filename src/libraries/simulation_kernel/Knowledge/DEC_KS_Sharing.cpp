@@ -103,6 +103,15 @@ void DEC_KS_Sharing::Clean()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Sharing::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_Sharing::CleanDeletedAgentKnowledges()
+{
+    // NOTHING
+}
+
 namespace
 {
     class sKnowledgeSharer : boost::noncopyable
@@ -143,8 +152,8 @@ void DEC_KS_Sharing::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
 
-    IT_ShareSourceMMap itShareSourceEnd = shareSources_.upper_bound( currentTimeStep );
-    for( IT_ShareSourceMMap itShareSource = shareSources_.begin(); itShareSource != itShareSourceEnd; ++itShareSource )
+    auto itShareSourceEnd = shareSources_.upper_bound( currentTimeStep );
+    for( auto itShareSource = shareSources_.begin(); itShareSource != itShareSourceEnd; ++itShareSource )
     {
         sKnowledgeSharer func( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
         itShareSource->second.pShareSource_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func, currentTimeStep );

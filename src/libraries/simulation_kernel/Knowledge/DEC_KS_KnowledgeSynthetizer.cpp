@@ -99,7 +99,19 @@ void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent( DEC_Knowledge_Agent& know
 {
     assert( pBlackBoard_ );
 
-    if( knowledge.Clean() || knowledge.GetAgentKnown().IsMarkedForDestruction() )
+    if( knowledge.Clean() )
+        pBlackBoard_->GetKnowledgeAgentContainer().DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeSynthetizer::CleanKnowledgeDeletedAgent
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_KnowledgeSynthetizer::CleanKnowledgeDeletedAgent( DEC_Knowledge_Agent& knowledge )
+{
+    assert( pBlackBoard_ );
+
+    if( knowledge.GetAgentKnown().IsMarkedForDestruction() )
         pBlackBoard_->GetKnowledgeAgentContainer().DestroyKnowledgeAgent( knowledge ); // The knowledge will be deleted
 }
 
@@ -138,13 +150,23 @@ void DEC_KS_KnowledgeSynthetizer::Clean()
 {
     assert( pBlackBoard_ );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent, *this );
+    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeAgent, *this );
     pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( methodAgent );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation, *this );
+    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Population > methodPopulation( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgePopulation, *this );
     pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( methodPopulation );
 
-    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, const boost::shared_ptr< DEC_Knowledge_Object > > methodObject( & DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
+    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, const boost::shared_ptr< DEC_Knowledge_Object > > methodObject( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeObject, *this );
     if( pBlackBoard_->GetKnowledgeObjectContainer() )
         pBlackBoard_->GetKnowledgeObjectContainer()->ApplyOnKnowledgesObject( methodObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_KnowledgeSynthetizer::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_KnowledgeSynthetizer::CleanDeletedAgentKnowledges()
+{
+    class_mem_fun_void_t< DEC_KS_KnowledgeSynthetizer, DEC_Knowledge_Agent > methodAgent( &DEC_KS_KnowledgeSynthetizer::CleanKnowledgeDeletedAgent, *this );
+    pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( methodAgent );
 }

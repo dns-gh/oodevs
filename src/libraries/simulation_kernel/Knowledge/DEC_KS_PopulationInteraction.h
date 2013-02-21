@@ -41,13 +41,14 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   (int currentTimeStep );
-    virtual void Clean  ();
+    virtual void Talk(int currentTimeStep );
+    virtual void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     //@}
 
     //! @name Events
     //@{
-    void NotifyPopulationCollision( MIL_PopulationFlow&          flow          );
+    void NotifyPopulationCollision( MIL_PopulationFlow& flow );
     void NotifyPopulationCollision( MIL_PopulationConcentration& concentration );
     //@}
 
@@ -59,11 +60,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MIL_PopulationFlow* >     T_PopulationFlowVector;
-    typedef T_PopulationFlowVector::const_iterator CIT_PopulationFlowVector;
-
-    typedef std::vector< MIL_PopulationConcentration* >     T_PopulationConcentrationVector;
-    typedef T_PopulationConcentrationVector::const_iterator CIT_PopulationConcentrationVector;
+    typedef std::vector< MIL_PopulationFlow* > T_PopulationFlowVector;
+    typedef std::vector< MIL_PopulationConcentration* > T_PopulationConcentrationVector;
     //@}
 
 private:

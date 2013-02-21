@@ -42,6 +42,7 @@ public:
     virtual void Prepare();
     virtual void Talk( int currentTimeStep );
     virtual void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     //@}
 
     //! @name Events
@@ -60,11 +61,9 @@ private:
     //! @name Types
     //@{
     typedef std::vector< MIL_Object_ABC* >   T_ObjectVector;
-    typedef T_ObjectVector::const_iterator CIT_ObjectVector;
 
     typedef std::pair< MIL_Object_ABC*, MT_Vector2D > T_ObjectCollisionPair;
     typedef std::vector< T_ObjectCollisionPair >      T_ObjectCollisionVector;
-    typedef T_ObjectCollisionVector::const_iterator CIT_ObjectCollisionVector;
     //@}
 
 private:

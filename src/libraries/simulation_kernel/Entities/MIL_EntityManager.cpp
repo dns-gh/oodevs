@@ -979,6 +979,15 @@ void MIL_EntityManager::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::CleanDeletedAgentKnowledges()
+{
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanDeletedAgentKnowledges, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------

@@ -36,6 +36,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
 
     MOCK_METHOD( UpdateKnowledges, 1 )
     MOCK_METHOD( CleanKnowledges, 0 )
+    MOCK_METHOD( CleanDeletedAgentKnowledges, 0 )
 
     MOCK_METHOD( SendCreation, 0 )
     MOCK_METHOD( SendFullState, 0 )

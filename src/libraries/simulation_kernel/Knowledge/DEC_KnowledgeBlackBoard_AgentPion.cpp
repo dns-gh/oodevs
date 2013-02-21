@@ -156,6 +156,16 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendChangedState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_AgentPion::CleanDeletedAgentKnowledges()
+{
+    pKnowledgeAgentPerceptionContainer_->CleanDeletedAgentKnowledges();
+    DEC_KnowledgeBlackBoard_ABC::CleanDeletedAgentKnowledges();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::IsIdentified
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------

@@ -103,7 +103,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
     class_mem_fun_void_const_t< DEC_KS_UrbanKnowledgeSynthetizer, DEC_Knowledge_UrbanPerception> methodUpdateKnowledgesFromUrbanPerception( & DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception, *this );
 
     const MIL_Army::T_KnowledgeGroupMap& knowledgeGroups = pBlackBoard_->GetArmy().GetKnowledgeGroups();
-    for( MIL_Army::CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
+    for( auto itKnowledgeGroup = knowledgeGroups.begin(); itKnowledgeGroup != knowledgeGroups.end(); ++itKnowledgeGroup )
     {
         const MIL_KnowledgeGroup::T_AutomateVector& automates = itKnowledgeGroup->second->GetAutomates();
         for( auto itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
@@ -166,4 +166,13 @@ void DEC_KS_UrbanKnowledgeSynthetizer::Clean()
 
     class_mem_fun_void_t< DEC_KS_UrbanKnowledgeSynthetizer, boost::shared_ptr< DEC_Knowledge_Urban > > methodUrban( & DEC_KS_UrbanKnowledgeSynthetizer::CleanKnowledgeUrban, *this );
     pBlackBoard_->GetKnowledgeUrbanContainer().ApplyOnKnowledgesUrban( methodUrban );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_UrbanKnowledgeSynthetizer::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_UrbanKnowledgeSynthetizer::CleanDeletedAgentKnowledges()
+{
+    // NOTHING
 }

@@ -56,7 +56,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for( DEC_BlackBoard_CanContainKnowledgeAgentPerception::CIT_KnowledgeAgentPerceptionMap it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
@@ -125,12 +125,27 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPer
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgentPerception::CleanDeletedAgentKnowledges()
+{
+    for( auto it = unitKnowledgePerceptionMap_.begin(); it != unitKnowledgePerceptionMap_.end(); )
+    {
+        if( it->first->IsMarkedForDestruction() )
+            it = unitKnowledgePerceptionMap_.erase( it );
+        else
+            ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgesAgentPerception
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception* DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const
 {
-    CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.find( &associatedAgent );
+    auto itKnowledge = unitKnowledgePerceptionMap_.find( &associatedAgent );
     if( itKnowledge != unitKnowledgePerceptionMap_.end() )
         return itKnowledge->second;
     else

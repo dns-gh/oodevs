@@ -125,6 +125,7 @@ public:
     void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
     void UpdateKnowledges( int currentTimeStep );
     void CleanKnowledges();
+    void CleanDeletedAgentKnowledges();
     void UpdateDecision( float duration );
     void UpdateState();
     void UpdateNetwork();

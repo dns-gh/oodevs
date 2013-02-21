@@ -30,8 +30,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_AgentPerception* > T_KnowledgeAgentPerceptionMap;
-    typedef T_KnowledgeAgentPerceptionMap::iterator                          IT_KnowledgeAgentPerceptionMap;
-    typedef T_KnowledgeAgentPerceptionMap::const_iterator                    CIT_KnowledgeAgentPerceptionMap;
     //@}
 
 public:
@@ -52,7 +50,8 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_AgentPerception& CreateKnowledgeAgentPerception ( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived );
-    void                           DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge );
+    void DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge );
+    void CleanDeletedAgentKnowledges();
     //@}
 
     //! @name Queries
@@ -62,7 +61,7 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgentPerception( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
+        for( auto itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
         {
             DEC_Knowledge_AgentPerception& knowledge = *itKnowledge->second;
             ++itKnowledge;
@@ -73,7 +72,7 @@ public:
     template < class BinaryFunction, class Parameter >
     void ApplyOnKnowledgesAgentPerception( BinaryFunction& fct, Parameter param ) const
     {
-        for( CIT_KnowledgeAgentPerceptionMap itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
+        for( auto itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
         {
             DEC_Knowledge_AgentPerception& knowledge = *itKnowledge->second;
             ++itKnowledge;

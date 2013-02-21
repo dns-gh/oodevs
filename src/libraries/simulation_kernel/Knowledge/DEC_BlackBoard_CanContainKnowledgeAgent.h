@@ -50,8 +50,8 @@ public:
     //! @name Operations
     //@{
     DEC_Knowledge_Agent& CreateKnowledgeAgent ( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, const MIL_Agent_ABC& agentKnown );
-    void                 DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
-    void                 SaveAllCurrentKnowledgeAgent();
+    void DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
+    void SaveAllCurrentKnowledgeAgent();
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     void Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& subGroup );
     //@}
@@ -59,8 +59,8 @@ public:
     //! @name Queries
     //@{
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( unsigned int nID ) const;
-    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
-    bool                 HasKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const;
+    bool HasKnowledgeAgent( const MIL_Agent_ABC& agentKnown ) const;
     const T_KnowledgeAgentMap& GetKnowledgeAgents() const;
 
     template < class UnaryFunction >
@@ -116,17 +116,15 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentIDMap;
-    typedef T_KnowledgeAgentIDMap::iterator                            IT_KnowledgeAgentIDMap;
-    typedef T_KnowledgeAgentIDMap::const_iterator                      CIT_KnowledgeAgentIDMap;
     //@}
 
 private:
     //! @name Member data
     //@{
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
-          T_KnowledgeAgentMap   realAgentMap_;
-          T_KnowledgeAgentMap   previousAgentMap_;
-          T_KnowledgeAgentIDMap unitKnowledgeFromIDMap_;
+    T_KnowledgeAgentMap realAgentMap_;
+    T_KnowledgeAgentMap previousAgentMap_;
+    T_KnowledgeAgentIDMap unitKnowledgeFromIDMap_;
     //@}
 
     //! @name Queries caches

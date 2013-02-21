@@ -191,6 +191,21 @@ void DEC_KS_Perception::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_Perception::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_Perception::CleanDeletedAgentKnowledges()
+{
+    for( auto it = externalPerceptions_.begin(); it != externalPerceptions_.end(); )
+    {
+        if( it->first->IsMarkedForDestruction() )
+            it = externalPerceptions_.erase( it );
+        else
+            ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::NotifyExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
@@ -207,7 +222,7 @@ void DEC_KS_Perception::NotifyExternalPerception( MIL_Agent_ABC& agentPerceived,
 // -----------------------------------------------------------------------------
 bool DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled )
 {
-    if( level == PHY_PerceptionLevel::notSeen_ )
+    if( level == PHY_PerceptionLevel::notSeen_ || agentPerceived.IsMarkedForDestruction() )
         return false;
 
     assert( pBlackBoard_ );

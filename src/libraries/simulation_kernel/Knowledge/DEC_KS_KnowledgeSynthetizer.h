@@ -31,8 +31,9 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ( int currentTimeStep );
-    virtual void Clean  ();
+    virtual void Talk( int currentTimeStep );
+    virtual void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     //@}
 
     //! @name CheckPoints
@@ -43,9 +44,10 @@ public:
 private:
     //! @name Tools
     //@{
-    void CleanKnowledgeAgent     ( DEC_Knowledge_Agent& knowledge );
+    void CleanKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
+    void CleanKnowledgeDeletedAgent( DEC_Knowledge_Agent& knowledge );
     void CleanKnowledgePopulation( DEC_Knowledge_Population& knowledge );
-    void CleanKnowledgeObject    ( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
+    void CleanKnowledgeObject( const boost::shared_ptr< DEC_Knowledge_Object >& knowledge );
 
     //@}
 

@@ -30,7 +30,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Fire )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_KS_Fire::DEC_KS_Fire( DEC_KnowledgeBlackBoard_AgentPion& blackBoard )
-    : DEC_KnowledgeSource_ABC ( blackBoard, 1 )
+    : DEC_KnowledgeSource_ABC( blackBoard, 1 )
     , pBlackBoard_( &blackBoard )
 {
     // NOTHING
@@ -61,7 +61,7 @@ DEC_KS_Fire::~DEC_KS_Fire()
 // -----------------------------------------------------------------------------
 void DEC_KS_Fire::Prepare()
 {
-    // Nothing
+    // NOTHING
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Fire::Clean
@@ -69,7 +69,22 @@ void DEC_KS_Fire::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_KS_Fire::Clean()
 {
-    // Nothing
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_Fire::CleanDeletedAgentKnowledges()
+{
+    for( auto it = pionsAttacking_.begin(); it != pionsAttacking_.end(); )
+    {
+        if( ( *it )->IsMarkedForDestruction() )
+            it = pionsAttacking_.erase( it );
+        else
+            ++it;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +102,7 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
         MIL_AgentPion& attacker = **it;
 
         // Si le pion qui attaque est furtif
-        if( attacker.GetRole< PHY_RolePion_Posture>().IsStealth() )
+        if( attacker.GetRole< PHY_RolePion_Posture>().IsStealth() || attacker.IsMarkedForDestruction() )
             continue;
 
         // On ne gére la connaissance que lorsque le tireur est à distance inférieure de la distance max de détection

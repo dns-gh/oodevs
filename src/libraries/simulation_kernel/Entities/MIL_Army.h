@@ -64,11 +64,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::iterator                IT_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::const_iterator         CIT_KnowledgeGroupMap;
-
     typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
-    typedef T_DiplomacyMap::const_iterator             CIT_DiplomacyMap;
     //@}
 
 public:
@@ -101,6 +97,7 @@ public:
     //@{
     virtual void UpdateKnowledges( int currentTimeStep );
     virtual void CleanKnowledges();
+    virtual void CleanDeletedAgentKnowledges();
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& );
     virtual void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}

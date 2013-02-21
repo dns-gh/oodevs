@@ -158,6 +158,7 @@ public:
     void SendStateToNewClient() const;
     void Update();
     void Clean();
+    void CleanDeletedAgentKnowledges();
     void Finalize();
     void Synchronize();
     void LogInfo();

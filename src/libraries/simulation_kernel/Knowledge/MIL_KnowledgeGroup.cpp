@@ -391,6 +391,21 @@ void MIL_KnowledgeGroup::CleanKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::CleanDeletedAgentKnowledges()
+{
+    knowledgeBlackBoard_->CleanDeletedAgentKnowledges();
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
+        ( *it )->CleanDeletedAgentKnowledges();
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        ( *it )->CleanDeletedAgentKnowledges();
+    if( jammedPion_ )
+        jammedPion_->GetKnowledge().CleanDeletedAgentKnowledges();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::IsPerceived
 // Created: NLD 2004-03-22
 // -----------------------------------------------------------------------------

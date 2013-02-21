@@ -150,6 +150,7 @@ public:
     void UpdateDecision( float duration );
     void UpdateKnowledges( int currentTimeStep );
     void CleanKnowledges();
+    void CleanDeletedAgentKnowledges();
     virtual void UpdateNetwork() const;
     virtual void UpdateState();
     virtual void Clean();

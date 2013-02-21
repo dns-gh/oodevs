@@ -142,6 +142,15 @@ void DEC_KS_PopulationInteraction::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_PopulationInteraction::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_PopulationInteraction::CleanDeletedAgentKnowledges()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationInteraction::NotifyPopulationCollision
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

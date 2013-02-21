@@ -37,7 +37,8 @@ public:
     //@{
     virtual void Prepare();
     virtual void Clean();
-    virtual void Talk   ( int currentTimeStep );
+    virtual void CleanDeletedAgentKnowledges();
+    virtual void Talk( int currentTimeStep );
 
     void ShareFromSource( const boost::shared_ptr< MIL_KnowledgeGroup >& source, unsigned int nShareTimeStep );
     void ShareFromSource( const boost::shared_ptr< MIL_KnowledgeGroup >& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
@@ -58,17 +59,16 @@ public:
         sShareSource( const boost::shared_ptr< MIL_KnowledgeGroup >& shareSource, const MT_Vector2D& vSharedCircleCenter, double rSharedCircleRadius );
 
         boost::shared_ptr< MIL_KnowledgeGroup > pShareSource_;
-              MT_Vector2D         vSharedCircleCenter_;
-              double            rSharedCircleRadius_;
+        MT_Vector2D vSharedCircleCenter_;
+        double rSharedCircleRadius_;
     };
 
     typedef std::multimap< unsigned int /*nShareTimeStep*/, sShareSource > T_ShareSourceMMap;
-    typedef T_ShareSourceMMap::iterator                            IT_ShareSourceMMap;
     //@}
 
 private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pBlackBoard_;
-    T_ShareSourceMMap                       shareSources_;
+    T_ShareSourceMMap shareSources_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_KS_Sharing )

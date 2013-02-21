@@ -36,10 +36,10 @@ DEC_KnowledgeBlackBoard_ABC::~DEC_KnowledgeBlackBoard_ABC()
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_ABC::Update( int currentTimeStep )
 {
-    for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
-        (**itKS).Prepare();
-    for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
-        (**itKS).Talk( currentTimeStep );
+    for( auto itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+        ( *itKS )->Prepare();
+    for( auto itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+        ( *itKS )->Talk( currentTimeStep );
     SendChangedState();
 }
 
@@ -49,8 +49,18 @@ void DEC_KnowledgeBlackBoard_ABC::Update( int currentTimeStep )
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_ABC::Clean()
 {
-    for( IT_KnowledgeSourceList itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
-        (**itKS).Clean();
+    for( auto itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+        ( *itKS )->Clean();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_ABC::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_ABC::CleanDeletedAgentKnowledges()
+{
+    for( auto itKS = talkingKnowledgeSources_.begin(); itKS != talkingKnowledgeSources_.end(); ++itKS )
+        ( *itKS )->CleanDeletedAgentKnowledges();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,9 +69,9 @@ void DEC_KnowledgeBlackBoard_ABC::Clean()
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_ABC::AddToScheduler( DEC_KnowledgeSource_ABC& newKs )
 {
-    for( IT_KnowledgeSourceList it = talkingKnowledgeSources_.begin(); it != talkingKnowledgeSources_.end(); ++it )
+    for( auto it = talkingKnowledgeSources_.begin(); it != talkingKnowledgeSources_.end(); ++it )
     {
-        const DEC_KnowledgeSource_ABC& curKs = (**it);
+        const DEC_KnowledgeSource_ABC& curKs = ( **it );
         if( curKs.GetPriority() > newKs.GetPriority() )
         {
             talkingKnowledgeSources_.insert( it, &newKs );

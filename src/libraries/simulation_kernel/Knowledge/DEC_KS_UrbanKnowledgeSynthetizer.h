@@ -41,8 +41,9 @@ public:
     //! @name Operations
     //@{
     virtual void Prepare();
-    virtual void Talk   ( int currentTimeStep );
-    virtual void Clean  ();
+    virtual void Talk( int currentTimeStep );
+    virtual void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     //@}
 
 private:
@@ -64,7 +65,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >  T_UrbanKnowledgeVector;
-    typedef T_UrbanKnowledgeVector::const_iterator                 CIT_UrbanKnowledgeVector;
     //@}
 
 private:

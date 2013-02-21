@@ -498,6 +498,17 @@ void MIL_Automate::CleanKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void MIL_Automate::CleanDeletedAgentKnowledges()
+{
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
+        ( *it )->CleanDeletedAgentKnowledges();
+    pKnowledgeBlackBoard_->CleanDeletedAgentKnowledges();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::UpdateNetwork
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------

@@ -119,7 +119,7 @@ void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
     pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecuteCollisions();
 
     // Interaction with objects
-    for( CIT_ObjectVector itInteraction = objectInteractions_.begin(); itInteraction != objectInteractions_.end(); ++itInteraction )
+    for( auto itInteraction = objectInteractions_.begin(); itInteraction != objectInteractions_.end(); ++itInteraction )
     {
         MIL_Object_ABC& object = **itInteraction;
         if( object.IsMarkedForDestruction() )
@@ -130,7 +130,7 @@ void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
     objectInteractions_.clear();
 
     // Collision with objects
-    for( CIT_ObjectCollisionVector itCollision = objectCollisions_.begin(); itCollision != objectCollisions_.end(); ++itCollision )
+    for( auto itCollision = objectCollisions_.begin(); itCollision != objectCollisions_.end(); ++itCollision )
     {
         MIL_Object_ABC& object = *itCollision->first;
         if( object.IsMarkedForDestruction() )
@@ -164,6 +164,15 @@ void DEC_KS_ObjectInteraction::Clean()
     assert( pBlackBoard_ );
     class_mem_fun_void_t< DEC_KS_ObjectInteraction, DEC_Knowledge_ObjectCollision> method( & DEC_KS_ObjectInteraction::CleanKnowledgeObjectCollision, *this );
     pBlackBoard_->GetKnowledgeObjectCollisionContainer().ApplyOnKnowledgesObjectCollision( method );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::CleanDeletedAgentKnowledges
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::CleanDeletedAgentKnowledges()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

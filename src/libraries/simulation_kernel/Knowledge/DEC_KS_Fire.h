@@ -44,6 +44,7 @@ public:
     //@{
     virtual void Prepare();
     virtual void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     virtual void Talk( int currentTimeStep );
     bool IsAttacked() const;
     //@}

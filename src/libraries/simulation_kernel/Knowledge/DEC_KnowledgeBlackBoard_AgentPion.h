@@ -82,6 +82,11 @@ public:
     virtual void SendChangedState() const;
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void CleanDeletedAgentKnowledges();
+    //@}
+
     //! @name tools::Resolver
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const sword::UnitKnowledgeId&  asn ) const;
@@ -94,7 +99,6 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( const MIL_Population& population ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Population > ResolveKnowledgePopulation( unsigned int nID ) const;
-
     //@}
 
     //! @name Queries

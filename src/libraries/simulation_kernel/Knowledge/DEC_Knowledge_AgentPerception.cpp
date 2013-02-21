@@ -190,6 +190,8 @@ void DEC_Knowledge_AgentPerception::UpdateOnNetwork() const
 {
     if( *pCurrentPerceptionLevel_ == *pPreviousPerceptionLevel_ && bPreviousRecordModeEnabled_ == bRecordModeEnabled_ )
         return;
+    if( pAgentPerceived_->IsMarkedForDestruction() || pAgentPerceiving_->IsMarkedForDestruction() )
+        return;
     SendStateToNewClient();
 }
 

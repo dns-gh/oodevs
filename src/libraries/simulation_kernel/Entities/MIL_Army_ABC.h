@@ -88,6 +88,7 @@ public:
 
     virtual void UpdateKnowledges(int currentTimeStep) = 0;
     virtual void CleanKnowledges () = 0;
+    virtual void CleanDeletedAgentKnowledges() = 0;
 
     //! @name Network
     //@{

@@ -73,6 +73,7 @@ public:
     virtual void Prepare();
     virtual void Talk( int currentTimeStep );
     virtual void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     void MakePerceptionsAvailable();
     void MakePerceptionsAvailableTimed();
     //@}

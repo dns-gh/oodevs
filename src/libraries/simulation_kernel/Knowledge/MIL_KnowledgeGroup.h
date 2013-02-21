@@ -103,7 +103,8 @@ public:
 
     void UpdateKnowledges(int currentTimeStep);
     void UpdateObjectKnowledges(int currentTimeStep);
-    void CleanKnowledges ();
+    void CleanKnowledges();
+    void CleanDeletedAgentKnowledges();
     bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const;
     bool IsPerceptionDistanceHacked( const MIL_Object_ABC& objectKnown ) const;

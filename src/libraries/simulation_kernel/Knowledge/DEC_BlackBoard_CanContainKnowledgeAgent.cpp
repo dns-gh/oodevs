@@ -242,7 +242,7 @@ bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( unsigned int nID ) const
 {
-    CIT_KnowledgeAgentIDMap itKnowledge = unitKnowledgeFromIDMap_.find( nID );
+    auto itKnowledge = unitKnowledgeFromIDMap_.find( nID );
     return itKnowledge == unitKnowledgeFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Agent >() : itKnowledge->second;
 }
 

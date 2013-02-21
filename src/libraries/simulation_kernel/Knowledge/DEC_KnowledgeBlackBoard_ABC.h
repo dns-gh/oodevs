@@ -42,7 +42,8 @@ public:
     //! @name Main operations
     //@{
     virtual void Update( int currentTimeStep );
-    void Clean ();
+    void Clean();
+    virtual void CleanDeletedAgentKnowledges();
     //@}
 
     //! @name Knowledge sources management
@@ -60,9 +61,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::list< DEC_KnowledgeSource_ABC* >   T_KnowledgeSourceList;
-    typedef T_KnowledgeSourceList::iterator        IT_KnowledgeSourceList;
-    typedef T_KnowledgeSourceList::const_iterator CIT_KnowledgeSourceList;
+    typedef std::list< DEC_KnowledgeSource_ABC* > T_KnowledgeSourceList;
     //@}
 
 private:
