@@ -114,12 +114,14 @@ void SessionConfigPanel::Commit( const std::string& exercise, const std::string&
         action.SetOption( "session/meta/comment", sessionComment_->toPlainText() );
     }
     {
-        action.SetOption( "session/config/simulation/network/@port", frontend::SimulationPort( exerciseNumber_->value() ) );
+        action.SetOption( "session/config/simulation/network/@port", "localhost:" +  // $$$$ AGE 2007-10-09:
+                            boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber_->value() ) ) );
     }
     {
         action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
                             boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber_->value() ) ) );
-        action.SetOption( "session/config/dispatcher/network/@server", frontend::DispatcherPort( exerciseNumber_->value() ) );
+        action.SetOption( "session/config/dispatcher/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
+                            boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber_->value() ) ) );
     }
     {
         action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
