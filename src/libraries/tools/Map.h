@@ -43,11 +43,11 @@ public:
 
         value_type()
         {}
-        explicit value_type( first_type f )
+        explicit value_type( const first_type& f )
             : first( f )
         {}
-        value_type( std::pair< first_type, second_type > p )
-            : first( p.first )
+        value_type( const std::pair< first_type, second_type >& p )
+            : first ( p.first )
             , second( p.second )
         {}
         operator std::pair< first_type, second_type >() const
@@ -109,7 +109,13 @@ public:
     std::pair< iterator, bool > insert( const value_type& v )
     {
         auto result = v_.get< 1 >().insert( v );
-        return std::make_pair( v_.project< 0 >( result.first ), result.second );
+        return std::make_pair(
+            v_.project< 0 >( result.first ), result.second );
+    }
+    std::pair< iterator, bool > insert(
+        const std::pair< key_type, mapped_type >& v )
+    {
+        return insert( value_type( v ) );
     }
 
     iterator begin()

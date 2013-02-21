@@ -127,3 +127,21 @@ BOOST_AUTO_TEST_CASE( map_is_serializable )
         BOOST_CHECK_EQUAL( 2, map[ 1 ] );
     }
 }
+
+namespace
+{
+    struct convertible
+    {
+        operator int() const
+        {
+            return 0;
+        }
+    };
+}
+
+BOOST_AUTO_TEST_CASE( map_supports_type_conversion_when_inserting )
+{
+    convertible c;
+    tools::Map< int, int > map;
+    map.insert( std::make_pair( c, c ) );
+}
