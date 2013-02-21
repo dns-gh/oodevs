@@ -252,20 +252,10 @@ private:
         const PHY_BreakdownType* pBreakdownType_;
               double             rProbabilityBound_;
     };
-    typedef std::vector< sBreakdownTypeProbability >            T_BreakdownTypeProbabilityVector;
-    typedef T_BreakdownTypeProbabilityVector::const_iterator  CIT_BreakdownTypeProbabilityVector;
-
-    typedef std::list< const PHY_HumanProtection * >            T_ListOfHumanProtection;
-    typedef T_ListOfHumanProtection::iterator                  IT_ListOfHumanProtection;
-    typedef T_ListOfHumanProtection::const_iterator           CIT_ListOfHumanProtection;
-
-    typedef std::vector< const PHY_ActiveProtection* >          T_ActiveProtectionVector;
-    typedef T_ActiveProtectionVector::const_iterator          CIT_ActiveProtectionVector;
+    typedef std::vector< sBreakdownTypeProbability >   T_BreakdownTypeProbabilityVector;
+    typedef std::vector< const PHY_HumanProtection* >  T_ListOfHumanProtection;
+    typedef std::vector< const PHY_ActiveProtection* > T_ActiveProtectionVector;
     //@}
-
-public:
-    //Human Protection
-    T_ListOfHumanProtection GetListOfProtection() const;
 
 private:
     //! @name Init

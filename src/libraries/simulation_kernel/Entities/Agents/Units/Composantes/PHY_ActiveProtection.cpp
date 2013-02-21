@@ -15,7 +15,10 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Orders/MIL_Report.h"
 
-PHY_ActiveProtection::T_ProtectionList PHY_ActiveProtection::protections_;
+namespace
+{
+    static std::map< std::string, boost::shared_ptr< PHY_ActiveProtection > > protections;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActiveProtection constructor
@@ -55,11 +58,11 @@ PHY_ActiveProtection::~PHY_ActiveProtection()
 // -----------------------------------------------------------------------------
 void PHY_ActiveProtection::ReadWeapon( xml::xistream& xis )
 {
-    std::string strName;
-    double value = 0.;
-    xis >> xml::attribute( "name", strName )
+    std::string name;
+    double value = 0;
+    xis >> xml::attribute( "name", name )
         >> xml::attribute( "coefficient", value );
-    weapons_[ PHY_DotationType::FindDotationCategory( strName ) ] = value;
+    weapons_[ PHY_DotationType::FindDotationCategory( name ) ] = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +83,7 @@ void PHY_ActiveProtection::Initialize( xml::xistream& xis )
 void PHY_ActiveProtection::Create( xml::xistream& xis )
 {
     boost::shared_ptr< PHY_ActiveProtection > pProtection( new PHY_ActiveProtection( xis ) );
-    protections_[ pProtection->name_ ] = pProtection;
+    protections[ pProtection->name_ ] = pProtection;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,17 +92,17 @@ void PHY_ActiveProtection::Create( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_ActiveProtection::Terminate()
 {
-    protections_.clear();
+    protections.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActiveProtection::Find
 // Created: LDC 2010-01-07
 // -----------------------------------------------------------------------------
-PHY_ActiveProtection* PHY_ActiveProtection::Find( const std::string& strName )
+PHY_ActiveProtection* PHY_ActiveProtection::Find( const std::string& name )
 {
-    auto it = protections_.find( strName );
-    if( it == protections_.end() )
+    auto it = protections.find( name );
+    if( it == protections.end() )
         return 0;
     return it->second.get();
 }

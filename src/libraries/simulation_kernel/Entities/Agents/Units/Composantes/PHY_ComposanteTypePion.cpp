@@ -803,10 +803,6 @@ void PHY_ComposanteTypePion::ReadLogistic( xml::xistream& xis )
     InitializeLogisticSupply     ( xis );
 }
 
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InstanciateComposante
 // Created: NLD 2004-08-12
@@ -823,11 +819,7 @@ PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_
 void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator< std::vector< PHY_Weapon* > > inserter ) const
 {
     for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
-    {
-        const PHY_WeaponType& weaponType = *it->first;
-        const bool             bMajor     =  it->second;
-        inserter = &weaponType.InstanciateWeapon( bMajor );
-    }
+        inserter = &it->first->InstanciateWeapon( it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -837,20 +829,13 @@ void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator< std:
 void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator< std::vector< PHY_Sensor* > > inserter ) const
 {
     for( auto it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
-    {
-        const PHY_SensorType&  sensorType = *it->first;
-        const double         rHeight    =  it->second;
-        inserter = &sensorType.InstanciateSensor( rHeight );
-    }
+        inserter = &it->first->InstanciateSensor( it->second );
 }
 
 void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator< std::vector< PHY_HumanProtection* > > inserter ) const
 {
     for( auto it = humanProtections_.begin(); it != humanProtections_.end(); ++it )
-    {
-        const PHY_HumanProtection&  humanProtection = *(*it);
-        inserter = &humanProtection.InstanciateHumanProtection();
-    }
+        inserter = &(*it)->InstanciateHumanProtection();
 }
 
 // -----------------------------------------------------------------------------
@@ -1089,12 +1074,9 @@ const PHY_ConsumptionType& PHY_ComposanteTypePion::GetConsumptionMode( const MIL
 const PHY_BreakdownType* PHY_ComposanteTypePion::GetBreakdownType( const T_BreakdownTypeProbabilityVector& probasVector ) const
 {
     const double rRandomValue = 1. - MIL_Random::rand_ii( 0., 1., MIL_Random::eBreakdowns );
-
-    for ( CIT_BreakdownTypeProbabilityVector it = probasVector.begin(); it != probasVector.end(); ++it )
-    {
+    for( auto it = probasVector.begin(); it != probasVector.end(); ++it )
         if( rRandomValue <= it->rProbabilityBound_ )
             return it->pBreakdownType_;
-    }
     assert( false );
     return 0;
 }

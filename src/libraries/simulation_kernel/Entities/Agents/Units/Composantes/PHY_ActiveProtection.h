@@ -62,10 +62,9 @@ private:
     bool HasAmmo( MIL_Agent_ABC& pion ) const;
     //@}
 
+private:
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< PHY_ActiveProtection > > T_ProtectionList;
-
     typedef std::map< const PHY_DotationCategory*, double > T_CoefficientMap;
     //@}
 
@@ -78,7 +77,6 @@ private:
     bool hardKill_;
     const PHY_DotationCategory* pDotation_;
     T_CoefficientMap weapons_;
-    static T_ProtectionList protections_;
     //@}
 };
 
