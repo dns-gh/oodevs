@@ -68,8 +68,7 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport()
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , bHasChanged_              ( true )
-    , transportedPions_         ()
-    , rWeightTransported_       ( 0. )
+    , rWeightTransported_       ( 0 )
 {
     // NOTHING
 }
@@ -83,8 +82,7 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
     , bHasChanged_              ( true )
-    , transportedPions_         ()
-    , rWeightTransported_       ( 0. )
+    , rWeightTransported_       ( 0 )
 {
     // NOTHING
 }
@@ -98,10 +96,6 @@ PHY_RoleAction_Transport::~PHY_RoleAction_Transport()
     Cancel();
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::serialize
 // Created: JVT 2005-03-30
@@ -114,10 +108,6 @@ void PHY_RoleAction_Transport::serialize( Archive& file, const unsigned int )
     file & rWeightTransported_;
     file & transportedPions_;
 }
-
-// =============================================================================
-// LOADING
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::Load
@@ -159,7 +149,7 @@ double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
     double rWeightLoaded = 0.;
     bool bTransportedByAnother = false;
 
-    for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightLoaded < rWeightToLoad; ++it )
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightLoaded < rWeightToLoad; ++it )
     {
         MIL_Agent_ABC&  pion          = *it->first;
         sTransportData& transportData =  it->second;
@@ -222,14 +212,13 @@ int PHY_RoleAction_Transport::Unload( MT_Vector2D* position )
 double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload, MT_Vector2D* position )
 {
     double rWeightUnloaded = 0.;
-    for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightUnloaded < rWeightToUnload ; )
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightUnloaded < rWeightToUnload; )
     {
-        if( it->second.rTransportedWeight_ <= 0. )
+        if( it->second.rTransportedWeight_ <= 0 )
         {
             ++it;
             continue;
         }
-
         const double rTmpWeight = std::min( rWeightToUnload - rWeightUnloaded, it->second.rTransportedWeight_ );
         it->second.rTransportedWeight_ -= rTmpWeight;
         rWeightUnloaded                += rTmpWeight;
@@ -246,10 +235,6 @@ double PHY_RoleAction_Transport::DoUnload( const double rWeightToUnload, MT_Vect
     return rWeightUnloaded;
 }
 
-// =============================================================================
-// TRANSPORTER STATE MODIFICATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::NotifyComposanteChanged
 // Created: NLD 2005-01-04
@@ -263,7 +248,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
     if( rWeightDamaged == 0 )
         return;
 
-    for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0.; ++it )
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0.; ++it )
     {
         if( it->second.rTransportedWeight_ )
         {
@@ -388,7 +373,7 @@ void PHY_RoleAction_Transport::MagicLoadPion( MIL_Agent_ABC& transported, bool b
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
 {
-    IT_TransportedPionMap it = transportedPions_.find( &transported );
+    auto it = transportedPions_.find( &transported );
     if( it == transportedPions_.end() )
         return;
 
@@ -406,7 +391,7 @@ void PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::Cancel()
 {
-    for( IT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it)
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it)
     {
         it->first->Apply(&TransportNotificationHandler_ABC::CancelTransport, *owner_);
         it->second.rTransportedWeight_ = 0;
@@ -446,15 +431,11 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Transport::IsLoaded( const MIL_Agent_ABC& transported ) const
 {
-    CIT_TransportedPionMap it = transportedPions_.find( const_cast< MIL_Agent_ABC* >( &transported ) );
+    auto it = transportedPions_.find( const_cast< MIL_Agent_ABC* >( &transported ) );
     if( it == transportedPions_.end() || it->second.rRemainingWeight_ > 0. )
         return false;
     return true;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::SendFullState
@@ -570,7 +551,7 @@ bool PHY_RoleAction_Transport::IsTransporting() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Transport::RemainingWeight( MIL_Agent_ABC& pion ) const
 {
-    CIT_TransportedPionMap it = transportedPions_.find( &pion );
+    auto it = transportedPions_.find( &pion );
     if( it == transportedPions_.end() )
         return 0;
     return it->second.rRemainingWeight_;

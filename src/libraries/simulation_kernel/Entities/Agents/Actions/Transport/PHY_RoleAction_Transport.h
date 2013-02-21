@@ -16,6 +16,7 @@
 #include "TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
+#include "tools/Map.h"
 
 namespace client
 {
@@ -62,9 +63,7 @@ public:
         }
     };
 
-    typedef std::map< MIL_Agent_ABC*, sTransportData > T_TransportedPionMap;
-    typedef T_TransportedPionMap::iterator             IT_TransportedPionMap;
-    typedef T_TransportedPionMap::const_iterator       CIT_TransportedPionMap;
+    typedef tools::Map< MIL_Agent_ABC*, sTransportData > T_TransportedPionMap;
     //@}
 
 public:
@@ -161,11 +160,11 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion*       owner_;
-    E_State               nState_;
-    bool                  bHasChanged_;
-    bool                  bLoadUnloadHasBeenUpdated_;
-    T_TransportedPionMap  transportedPions_;
-    double              rWeightTransported_;
+    E_State              nState_;
+    bool                 bHasChanged_;
+    bool                 bLoadUnloadHasBeenUpdated_;
+    T_TransportedPionMap transportedPions_;
+    double               rWeightTransported_;
     //@}
 };
 
