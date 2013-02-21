@@ -12,6 +12,7 @@
 
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
+#include "tools/Map.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
@@ -99,10 +100,10 @@ private:
     //@}
 
 private:
-    typedef std::map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
-    typedef std::map< SupplyRecipient_ABC*, T_Requests >                                    T_RecipientRequests;
-    typedef std::map< SupplySupplier_ABC*, boost::shared_ptr< SupplyConsign_ABC > >         T_Consigns;
-    typedef std::map< SupplyRecipient_ABC*, T_PointVector >                                 T_RecipientPaths;
+    typedef tools::Map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
+    typedef tools::Map< SupplyRecipient_ABC*, T_Requests >                                    T_RecipientRequests;
+    typedef tools::Map< SupplySupplier_ABC*, boost::shared_ptr< SupplyConsign_ABC > >         T_Consigns;
+    typedef tools::Map< SupplyRecipient_ABC*, T_PointVector >                                 T_RecipientPaths;
 
 private:
     boost::shared_ptr< SupplyRequestBuilder_ABC > builder_;

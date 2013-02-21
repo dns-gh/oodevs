@@ -101,10 +101,10 @@ void SupplyRequestContainer::ResetConsign()
 // -----------------------------------------------------------------------------
 void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, boost::shared_ptr< SupplyResource_ABC > resource, double quantity )
 {
-    boost::shared_ptr< SupplyRequest_ABC >& supplyRequest = requests_[ &recipient ][ &resource->GetCategory() ];
-    if( !supplyRequest.get() )
-        supplyRequest.reset( new SupplyRequest( resource->GetCategory() ) );
-    supplyRequest->AddResource( resource, pion, quantity );
+    boost::shared_ptr< SupplyRequest_ABC >& request = requests_[ &recipient ][ &resource->GetCategory() ];
+    if( !request )
+        request.reset( new SupplyRequest( resource->GetCategory() ) );
+    request->AddResource( resource, pion, quantity );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,31 +131,29 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
 
     Prepare();
     builder_->Process( *this );
-    BOOST_FOREACH( T_RecipientRequests::value_type& recipient, requests_ )
-        BOOST_FOREACH( T_Requests::value_type& request, recipient.second )
+    BOOST_FOREACH( const auto& recipient, requests_ )
+        BOOST_FOREACH( const auto& request, recipient.second )
             dispatcher.Dispatch( *recipient.first, *request.second );
     if( !dispatcher.AllowSupply() )
         return false;
 
     bool mandatoryRequestsFullySatisfied = true;
-    BOOST_FOREACH( T_RecipientRequests::value_type& recipientRequest, requests_ )
-    {
-        BOOST_FOREACH( T_Requests::value_type& requestData, recipientRequest.second )
+    BOOST_FOREACH( const auto& recipient, requests_ )
+        BOOST_FOREACH( const auto& requestData, recipient.second )
         {
-            boost::shared_ptr< SupplyRequest_ABC > request = requestData.second;
+            const boost::shared_ptr< SupplyRequest_ABC >& request = requestData.second;
             SupplySupplier_ABC* supplier = request->GetSupplier();
             if( supplier )
             {
                 boost::shared_ptr< SupplyConsign_ABC >& consign = consigns_[ supplier ];
-                if( !consign.get() )
+                if( !consign )
                     consign.reset( new SupplyConsign( *supplier, *this ) );
-                consign->AddRequest( *recipientRequest.first, request );
+                consign->AddRequest( *recipient.first, request );
             }
             else if( !request->IsComplementary() )
                 mandatoryRequestsFullySatisfied = false;
         }
-    }
-    BOOST_FOREACH( T_Consigns::value_type& data, consigns_ )
+    BOOST_FOREACH( const auto& data, consigns_ )
         data.second->Activate();
     return mandatoryRequestsFullySatisfied;
 }
@@ -372,17 +370,16 @@ void SupplyRequestContainer::serialize( MIL_CheckPointInArchive& archive, const 
 // -----------------------------------------------------------------------------
 void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
 {
+    size_t requestsSize = requests_.size();
     archive << boost::serialization::base_object< SupplyRequestParameters_ABC >( *this );
     archive << builder_;
     archive << dispatcher_;
-
-    size_t requestsSize = requests_.size();
     archive << requestsSize;
     for( auto it = requests_.begin(); it != requests_.end(); ++it )
     {
-        archive << it->first;
         T_Requests request = it->second;
         size_t requestSize = request.size();
+        archive << it->first;
         archive << requestSize;
         for( auto requestIt = request.begin(); requestIt != request.end(); ++requestIt )
         {
@@ -391,9 +388,9 @@ void SupplyRequestContainer::serialize( MIL_CheckPointOutArchive& archive, const
             archive << requestIt->second;
         }
     }
+    size_t transportersSize = transporters_.size();
     archive << consigns_;
     archive << transportersProvider_;
-    size_t transportersSize = transporters_.size();
     archive << transportersSize;
     for( auto it = transporters_.begin(); it != transporters_.end(); ++it )
     {
