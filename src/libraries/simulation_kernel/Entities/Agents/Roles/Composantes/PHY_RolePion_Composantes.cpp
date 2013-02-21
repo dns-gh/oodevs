@@ -51,6 +51,7 @@
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Map.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
@@ -1075,7 +1076,7 @@ void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) const
 {
-    typedef std::map< std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* >, unsigned int > T_LoanCountMap;
+    typedef tools::Map< std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* >, unsigned int > T_LoanCountMap;
 
     // Lent composantes
     {
