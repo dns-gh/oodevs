@@ -80,10 +80,10 @@ public:
     //@{
     template< typename Algorithm > const Algorithm& Execute( Algorithm& algorithm );
 
-    BOOST_PP_REPEAT( 2, CALL_ROLE_DECL, l )
-    BOOST_PP_REPEAT( 2, CALL_ROLE_DECL_CONST, l )
-    BOOST_PP_REPEAT( 2, CALL_ROLE_RETVAL_DECL, l )
-    BOOST_PP_REPEAT( 2, CALL_ROLE_RETVAL_DECL_CONST, l )
+    BOOST_PP_REPEAT( 5, CALL_ROLE_DECL, l )
+    BOOST_PP_REPEAT( 5, CALL_ROLE_DECL_CONST, l )
+    BOOST_PP_REPEAT( 5, CALL_ROLE_RETVAL_DECL, l )
+    BOOST_PP_REPEAT( 5, CALL_ROLE_RETVAL_DECL_CONST, l )
     //@}
 };
 

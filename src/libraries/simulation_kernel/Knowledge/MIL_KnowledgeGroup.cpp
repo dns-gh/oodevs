@@ -1072,7 +1072,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             for( auto itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
-                if( pion.GetRole< PHY_RolePion_Communications >().CanReceive() )
+                if( pion.CallRole( &PHY_RoleInterface_Communications::CanReceive, false ) )
                 {
                     boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
                     pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
@@ -1113,7 +1113,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
             {
                 MIL_AgentPion& pion = **itPion;
                  // Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
-                if( pion.GetRole< PHY_RolePion_Communications >().CanEmit() )
+                if( pion.CallRole( &PHY_RoleInterface_Communications::CanEmit, false ) )
                 {
                     boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
                     pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );

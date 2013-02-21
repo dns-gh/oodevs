@@ -114,7 +114,7 @@ void DEC_AgentFunctions::SelfDecontaminate( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::ActivateBlackout( MIL_Agent_ABC& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Communications >().ActivateBlackout();
+    callerAgent.CallRole( &PHY_RoleInterface_Communications::ActivateBlackout );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void DEC_AgentFunctions::ActivateBlackout( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Communications >().ActivatePartialBlackout();
+    callerAgent.CallRole( &PHY_RoleInterface_Communications::ActivatePartialBlackout );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::DeactivateBlackout( MIL_Agent_ABC& callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Communications >().DeactivateBlackout();
+    callerAgent.CallRole( &PHY_RoleInterface_Communications::DeactivateBlackout );
 }
 
 // -----------------------------------------------------------------------------
@@ -1241,7 +1241,7 @@ void DEC_AgentFunctions::DisableCrowdEffect( const DEC_Decision_ABC* pAgent, boo
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsJammed( DEC_Decision_ABC* pAgent )
 {
-    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsJammed();
+    return pAgent && pAgent->GetPion().CallRole( &PHY_RolePion_Communications::IsJammed, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -1250,7 +1250,7 @@ bool DEC_AgentFunctions::IsJammed( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInEmissionBlackout( DEC_Decision_ABC* pAgent )
 {
-    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsInEmissionBlackout();
+    return pAgent && pAgent->GetPion().CallRole( &PHY_RolePion_Communications::IsInEmissionBlackout, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1259,7 +1259,7 @@ bool DEC_AgentFunctions::IsInEmissionBlackout( DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInReceptionBlackout( DEC_Decision_ABC* pAgent )
 {
-    return pAgent && pAgent->GetPion().GetRole< PHY_RolePion_Communications >().IsInReceptionBlackout();
+    return pAgent && pAgent->GetPion().CallRole( &PHY_RolePion_Communications::IsInReceptionBlackout, false );
 }
 
 // -----------------------------------------------------------------------------

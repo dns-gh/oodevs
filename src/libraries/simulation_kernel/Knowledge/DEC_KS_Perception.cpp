@@ -359,6 +359,9 @@ void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
 {
     assert( pBlackBoard_ );
 
+    if( !pBlackBoard_->GetPion().RetrieveRole< PHY_RoleInterface_Perceiver >() )
+        return;
+
     pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecutePerceptions();
 
     for( auto it = externalPerceptions_.begin(); it != externalPerceptions_.end(); ++it )

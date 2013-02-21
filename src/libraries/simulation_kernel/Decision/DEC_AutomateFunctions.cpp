@@ -91,7 +91,7 @@ namespace
         MIL_AgentPion* pionPC = callerAutomate.GetPionPC();
         if( !pionPC )
             return 0;
-        if( communicationFilter && !pionPC->GetRole< PHY_RolePion_Communications >().CanEmit() )
+        if( communicationFilter && !pionPC->CallRole( &PHY_RolePion_Communications::CanEmit, false ) )
             return 0;
         return pionPC;
     }
@@ -122,9 +122,10 @@ namespace
         for( auto it = pions.begin(); it != pions.end(); ++it )
         {
             MIL_AgentPion* pCurPion = *it;
-            if( communicationFilter && !pCurPion->GetRole< PHY_RolePion_Communications >().CanReceive() )
+            if( communicationFilter && !pCurPion->CallRole( &PHY_RoleInterface_Communications::CanReceive, false ) )
                 continue;
-            result.push_back( &pCurPion->GetDecision() );
+            if( pCurPion->RetrieveRole< DEC_Decision_ABC >() )
+                result.push_back( &pCurPion->GetDecision() );
         }
     }
 }

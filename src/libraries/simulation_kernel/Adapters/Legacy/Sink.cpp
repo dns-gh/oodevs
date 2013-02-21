@@ -128,7 +128,7 @@ void Sink::Clean()
         MIL_AgentPion* pion = it->second;
         assert( pion );
         pion->Clean();
-        if( pion->IsMarkedForDestruction() && !pion->GetRole< DEC_RolePion_Decision >().IsUsedByDIA() )
+        if( pion->IsMarkedForDestruction() && !pion->CallRole( &DEC_RolePion_Decision::IsUsedByDIA, false) )
         {
             it = elements_.erase( it );
             delete pion;
@@ -252,7 +252,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
         Initialize( pion, vPosTmp );
     }
     pion.ReadOverloading( xis );
-    pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
+    pion.CallRole( &PHY_RolePion_Composantes::ReadOverloading, xis ); // Equipments + Humans
     return &pion;
 }
 
@@ -288,8 +288,8 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 void Sink::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 {
-    pion.GetRole< PHY_RoleInterface_Location >().Move( vPosition, MT_Vector2D( 0., 1. ), 0. );
-    pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( vPosition );
+    pion.CallRole( &PHY_RoleInterface_Location::Move, vPosition, MT_Vector2D( 0., 1. ), 0. );
+    pion.CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, vPosition );
 }
 
 // -----------------------------------------------------------------------------

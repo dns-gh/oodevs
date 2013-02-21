@@ -513,11 +513,12 @@ void DEC_KnowledgeAgentFunctions::ForceRadioSilence( boost::shared_ptr< DEC_Know
 {
     if( !pKnowledge )
         throw MASA_EXCEPTION( "invalid parameter." );
-    PHY_RoleInterface_Communications& role = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Communications >();
-    if( silence )
-        role.ActivateBlackout  ();
-    else
-        role.DeactivateBlackout();
+    PHY_RoleInterface_Communications* role = pKnowledge->GetAgentKnown().RetrieveRole< PHY_RoleInterface_Communications >();
+    if( role )
+        if( silence )
+            role->ActivateBlackout  ();
+        else
+            role->DeactivateBlackout();
 }
 
 // -----------------------------------------------------------------------------

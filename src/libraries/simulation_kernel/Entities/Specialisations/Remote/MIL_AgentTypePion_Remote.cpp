@@ -11,6 +11,11 @@
 #include "MIL_AgentTypePion_Remote.h"
 #include "MIL_AgentPion_Remote.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
+#include "Entities/Agents/RoleExtender_ABC.h"
+
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Adapters/RoleAdapterInterface.h"
 
 MIL_AgentTypePion_Remote::MIL_AgentTypePion_Remote( const std::string& strName, const std::string& strType, xml::xistream& xis )
     : MIL_AgentTypePion( strName, strType, xis )
@@ -40,7 +45,24 @@ MIL_AgentPion* MIL_AgentTypePion_Remote::InstanciatePion( MIL_Automate& automate
     return retval;
 }
 
-void MIL_AgentTypePion_Remote::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ) const
+namespace
+{
+    template< typename Role >
+    void RegisterRoleExt( MIL_AgentPion& pion, RoleExtender_ABC& ext )
+    {
+        boost::shared_ptr< RoleExtender_ABC::RoleFactory_ABC > fact( ext.GetFactory< Role >() );
+        if( fact.get() )
+            fact->RegisterRole( pion );
+    }
+}
+
+void MIL_AgentTypePion_Remote::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const
 {
     pion.RegisterRole( *new PHY_RolePion_UrbanLocation( pion ) );
+    if( ext )
+    {
+        RegisterRoleExt< PHY_RoleInterface_Location >( pion, *ext );
+        RegisterRoleExt< PHY_RoleInterface_Composantes >( pion, *ext );
+        RegisterRoleExt< sword::RoleAdapterInterface >( pion, *ext );
+    }
 }

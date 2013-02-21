@@ -482,6 +482,9 @@ void MIL_AgentPion::NotifySendHeadquarters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision( float duration )
 {
+    if( !RetrieveRole< DEC_Decision_ABC >() )
+        return;
+
     if( markedForDestruction_ )
     {
         if( !brainDeleted_ )
@@ -520,40 +523,34 @@ void MIL_AgentPion::UpdatePhysicalState()
     try
     {
         const bool bIsDead = IsDead();
-        GetRole< dotation::PHY_RolePion_Dotations >().Update( bIsDead );
-        GetRole< human::PHY_RolePion_Humans >().Update( bIsDead );
-        GetRole< PHY_RolePion_Composantes >().Update( bIsDead );
-        GetRole< PHY_RolePion_Posture >().Update( bIsDead );
-        GetRole< PHY_RolePion_Reinforcement >().Update( bIsDead );
-        GetRole< PHY_RoleInterface_Location >().Update( bIsDead );
-        GetRole< nbc::PHY_RolePion_NBC >().Update( bIsDead );
-        GetRole< PHY_RolePion_Communications >().Update( bIsDead );
-        GetRole< PHY_RolePion_HumanFactors >().Update( bIsDead );
-        GetRole< transport::PHY_RolePion_Transported >().Update( bIsDead );
-        GetRole< surrender::PHY_RolePion_Surrender >().Update( bIsDead );
-        GetRole< refugee::PHY_RolePion_Refugee >().Update( bIsDead );
-        GetRole< PHY_RolePion_Population >().Update( bIsDead );
-        GetRole< PHY_RoleInterface_Perceiver >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
-        GetRole< transport::PHY_RoleAction_Loading >().Update( bIsDead );
-        GetRole< transport::PHY_RoleAction_Transport >().Update( bIsDead );
-        GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Update( bIsDead );
-        GetRole< PHY_RoleAction_Objects >().Update( bIsDead );
-        GetRole< moving::PHY_RoleAction_InterfaceMoving >().Update( bIsDead );
-        GetRole< PHY_RoleAction_InterfaceFlying >().Update( bIsDead );
-        GetRole< firing::PHY_RoleAction_DirectFiring >().Update( bIsDead );
-        GetRole< firing::PHY_RoleAction_IndirectFiring >().Update( bIsDead );
-        GetRole< PHY_RoleAction_FolkInfluence >().Update( bIsDead );
-        GetRole< PHY_RoleAction_MovingUnderground >().Update( bIsDead );
-        GetRole< PHY_RoleInterface_Deployment >().Update( bIsDead );
-        PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >(); //@TODO add update to new role interface
-        if( role )
-            role->Update( bIsDead );
-        PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
-        if( role2 )
-            role2->Update( bIsDead );
-        PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
-        if( role3 )
-            role3->Update( bIsDead );
+        CallRole( &dotation::PHY_RolePion_Dotations::Update, bIsDead );
+        CallRole( &human::PHY_RolePion_Humans::Update, bIsDead );
+        CallRole( &PHY_RolePion_Composantes::Update, bIsDead );
+        CallRole( &PHY_RolePion_Posture::Update, bIsDead );
+        CallRole( &PHY_RolePion_Reinforcement::Update, bIsDead );
+        CallRole( &PHY_RoleInterface_Location::Update, bIsDead );
+        CallRole( &nbc::PHY_RolePion_NBC::Update, bIsDead );
+        CallRole( &PHY_RolePion_Communications::Update, bIsDead );
+        CallRole( &PHY_RolePion_HumanFactors::Update, bIsDead );
+        CallRole( &transport::PHY_RolePion_Transported::Update, bIsDead );
+        CallRole( &surrender::PHY_RolePion_Surrender::Update, bIsDead );
+        CallRole( &refugee::PHY_RolePion_Refugee::Update, bIsDead );
+        CallRole( &PHY_RolePion_Population::Update, bIsDead );
+        CallRole( &PHY_RoleInterface_Perceiver::Update, bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
+        CallRole( &transport::PHY_RoleAction_Loading::Update, bIsDead );
+        CallRole( &transport::PHY_RoleAction_Transport::Update, bIsDead );
+        CallRole( &crowdtransport::PHY_RoleAction_CrowdTransport::Update, bIsDead );
+        CallRole( &PHY_RoleAction_Objects::Update, bIsDead );
+        CallRole( &moving::PHY_RoleAction_InterfaceMoving::Update, bIsDead );
+        CallRole( &PHY_RoleAction_InterfaceFlying::Update, bIsDead );
+        CallRole( &firing::PHY_RoleAction_DirectFiring::Update, bIsDead );
+        CallRole( &firing::PHY_RoleAction_IndirectFiring::Update, bIsDead );
+        CallRole( &PHY_RoleAction_FolkInfluence::Update, bIsDead );
+        CallRole( &PHY_RoleAction_MovingUnderground::Update, bIsDead );
+        CallRole( &PHY_RoleInterface_Deployment::Update, bIsDead );
+        CallRole( &PHY_RoleInterface_Maintenance::Update, bIsDead );  //@TODO add update to new role interface
+        CallRole( &PHY_RoleInterface_Medical::Update, bIsDead );
+        CallRole( &PHY_RoleInterface_Supply::Update, bIsDead );
     }
     catch( const std::exception& e )
     {
@@ -580,8 +577,8 @@ void MIL_AgentPion::UpdateNetwork()
         return;
     try
     {
-        GetRole< network::NET_RolePion_Dotations >().SendChangedState();
-        GetRole< network::NET_RolePion_Dotations >().Clean();
+        CallRole( &network::NET_RolePion_Dotations::SendChangedState, 0 );
+        CallRole( &network::NET_RolePion_Dotations::Clean );
         if( bHasChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() )
         {
             client::UnitAttributes msg;
@@ -606,7 +603,7 @@ void MIL_AgentPion::UpdateNetwork()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const
 {
-    GetRole< PHY_RolePion_Composantes >().PreprocessRandomBreakdowns( nEndDayTimeStep );
+    CallRole( &PHY_RolePion_Composantes::PreprocessRandomBreakdowns, nEndDayTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -615,42 +612,34 @@ void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) c
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Clean()
 {
-    GetRole< PHY_RoleInterface_Location >().Clean();
-    GetRole< PHY_RoleInterface_Perceiver >().Clean();
-    GetRole< dotation::PHY_RolePion_Dotations >().Clean();
-    GetRole< human::PHY_RolePion_Humans >().Clean();
-    GetRole< PHY_RolePion_Composantes >().Clean();
-    GetRole< PHY_RolePion_Posture >().Clean();
-    GetRole< PHY_RolePion_Reinforcement >().Clean();
-    GetRole< nbc::PHY_RolePion_NBC >().Clean();
-    GetRole< PHY_RolePion_Communications >().Clean();
-    GetRole< PHY_RolePion_HumanFactors >().Clean();
-    GetRole< surrender::PHY_RoleInterface_Surrender >().Clean();
-    GetRole< refugee::PHY_RolePion_Refugee >().Clean();
-    GetRole< PHY_RolePion_Population >().Clean();
-    GetRole< transport::PHY_RoleInterface_Transported >().Clean();
-    GetRole< transport::PHY_RoleAction_Transport >().Clean();
-    GetRole< crowdtransport::PHY_RoleAction_CrowdTransport >().Clean();
-    GetRole< transport::PHY_RoleAction_Loading >().Clean();
-    GetRole< PHY_RoleAction_Objects >().Clean();
-    GetRole< moving::PHY_RoleAction_InterfaceMoving >().Clean();
-    GetRole< PHY_RoleAction_InterfaceFlying >().Clean();
-    GetRole< firing::PHY_RoleAction_DirectFiring >().Clean();
-    GetRole< firing::PHY_RoleAction_IndirectFiring >().Clean();
-    DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
-    if( roleDec )
-        roleDec->Clean();
-    GetRole< PHY_RoleAction_FolkInfluence >().Clean();
-    GetRole< PHY_RoleAction_MovingUnderground >().Clean();
-    PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Add an interface for role with clean, update
-    if( role )
-        role->Clean();
-    PHY_RoleInterface_Medical* role2 = RetrieveRole< PHY_RoleInterface_Medical >();
-    if( role2 )
-        role2->Clean();
-    PHY_RoleInterface_Supply* role3 = RetrieveRole< PHY_RoleInterface_Supply >();
-    if( role3 )
-        role3->Clean();
+    CallRole( &PHY_RoleInterface_Location::Clean );
+    CallRole( &PHY_RoleInterface_Perceiver::Clean );
+    CallRole( &dotation::PHY_RolePion_Dotations::Clean );
+    CallRole( &human::PHY_RolePion_Humans::Clean );
+    CallRole( &PHY_RolePion_Composantes::Clean );
+    CallRole( &PHY_RolePion_Posture::Clean );
+    CallRole( &PHY_RolePion_Reinforcement::Clean );
+    CallRole( &nbc::PHY_RolePion_NBC::Clean );
+    CallRole( &PHY_RolePion_Communications::Clean );
+    CallRole( &PHY_RolePion_HumanFactors::Clean );
+    CallRole( &surrender::PHY_RoleInterface_Surrender::Clean );
+    CallRole( &refugee::PHY_RolePion_Refugee::Clean );
+    CallRole( &PHY_RolePion_Population::Clean );
+    CallRole( &transport::PHY_RoleInterface_Transported::Clean );
+    CallRole( &transport::PHY_RoleAction_Transport::Clean );
+    CallRole( &crowdtransport::PHY_RoleAction_CrowdTransport::Clean );
+    CallRole( &transport::PHY_RoleAction_Loading::Clean );
+    CallRole( &PHY_RoleAction_Objects::Clean );
+    CallRole( &moving::PHY_RoleAction_InterfaceMoving::Clean );
+    CallRole( &PHY_RoleAction_InterfaceFlying::Clean );
+    CallRole( &firing::PHY_RoleAction_DirectFiring::Clean );
+    CallRole( &firing::PHY_RoleAction_IndirectFiring::Clean );
+    CallRole( &DEC_RolePion_Decision::Clean );
+    CallRole( &PHY_RoleAction_FolkInfluence::Clean );
+    CallRole( &PHY_RoleAction_MovingUnderground::Clean );
+    CallRole( &PHY_RoleInterface_Maintenance::Clean );//@TODO Add an interface for role with clean, update
+    CallRole( &PHY_RoleInterface_Medical::Clean );
+    CallRole( &PHY_RoleInterface_Supply::Clean );
 }
 
 // -----------------------------------------------------------------------------
@@ -700,13 +689,13 @@ MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
 {
-    if( GetRole< PHY_RolePion_Communications >().CanEmit() )
+    if( CallRole( &PHY_RoleInterface_Communications::CanEmit, true ) )
     {
         if( ! pAutomate_ )
             throw MASA_EXCEPTION( MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
         return pAutomate_->GetKnowledgeGroup();
     }
-    return GetRole< PHY_RolePion_Communications >().GetKnowledgeGroup();
+    return CallRole( &PHY_RolePion_Communications::GetKnowledgeGroup, boost::shared_ptr< MIL_KnowledgeGroup >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -863,9 +852,9 @@ void MIL_AgentPion::OnReceiveDeleteUnit()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 {
-    GetRole< PHY_RoleAction_MovingUnderground >().GetOutFromUndergroundNetwork();
-    GetRole< PHY_RoleInterface_Location >().MagicMove( vNewPos );
-    GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
+    CallRole( &PHY_RoleAction_MovingUnderground::GetOutFromUndergroundNetwork );
+    CallRole( &PHY_RoleInterface_Location::MagicMove, vNewPos );
+    CallRole( &PHY_RolePion_UrbanLocation::MagicMove, vNewPos );
     CancelCurrentMission();
 }
 

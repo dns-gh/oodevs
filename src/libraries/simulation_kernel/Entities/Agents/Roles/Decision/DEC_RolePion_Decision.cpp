@@ -916,7 +916,7 @@ bool DEC_RolePion_Decision::IsDecontaminationFinished() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsJammed() const
 {
-    return GetPion().GetRole< PHY_RolePion_Communications >().IsJammed();
+    return GetPion().CallRole( &PHY_RolePion_Communications::IsJammed, false );
 }
 
 // -----------------------------------------------------------------------------

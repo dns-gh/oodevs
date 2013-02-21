@@ -114,6 +114,8 @@ DEC_Knowledge_ObjectCollision& DEC_KS_ObjectInteraction::GetKnowledgeObjectColli
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::Talk( int /*currentTimeStep*/ )
 {
+    if( !pBlackBoard_->GetPion().RetrieveRole< PHY_RoleInterface_Perceiver >() )
+        return;
     pBlackBoard_->GetPion().GetRole< PHY_RoleInterface_Perceiver >().ExecuteCollisions();
 
     // Interaction with objects

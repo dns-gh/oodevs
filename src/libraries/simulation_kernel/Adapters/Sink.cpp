@@ -466,19 +466,19 @@ namespace
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
     {
-        entity[ "is-deployed" ] = ! pion.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
-        entity[ "is-prisoner" ] = pion.GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner();
-        entity[ "is-surrendered" ] = pion.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered();
-        entity[ "is-transported" ] = pion.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
+        entity[ "is-deployed" ] = ! pion.CallRole( &PHY_RoleInterface_Deployment::IsUndeployed, true );
+        entity[ "is-prisoner" ] = pion.CallRole( &surrender::PHY_RoleInterface_Surrender::IsPrisoner, false );
+        entity[ "is-surrendered" ] = pion.CallRole( &surrender::PHY_RoleInterface_Surrender::IsSurrendered, false );
+        entity[ "is-transported" ] = pion.CallRole( &transport::PHY_RoleInterface_Transported::IsTransported, false );
         entity[ "is-dead" ] = pion.IsDead();
-        entity[ "is-underground" ] = pion.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground();
-        entity[ "can-emit" ] = pion.GetRole< PHY_RoleInterface_Communications >().CanEmit();
+        entity[ "is-underground" ] = pion.CallRole( &PHY_RoleAction_MovingUnderground::IsUnderground, false );
+        entity[ "can-emit" ] = pion.CallRole( &PHY_RoleInterface_Communications::CanEmit, true );
         entity[ "danger/x" ] = pion.GetOrderManager().GetDirDanger().rX_;
         entity[ "danger/y" ] = pion.GetOrderManager().GetDirDanger().rY_;
         core::Model& movement = entity[ "movement" ];
-        movement[ "max-slope" ] = pion.GetRole< RoleAction_Moving >().GetMaxSlope();
-        movement[ "has-resources" ] = pion.GetRole< RoleAction_Moving >().HasResources();
-        movement[ "can-move" ] = pion.GetRole< RoleAction_Moving >().CanMove();
+        movement[ "max-slope" ] = pion.CallRole( &moving::PHY_RoleAction_InterfaceMoving::GetMaxSlope, 1.0 );
+        movement[ "has-resources" ] = pion.CallRole( &RoleAction_Moving::HasResources, false );
+        movement[ "can-move" ] = pion.CallRole( &RoleAction_Moving::CanMove, false );
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         UpdatePerceptions( entity[ "perceptions/notifications" ] );
         core::Model& components = entity[ "components" ];
@@ -627,7 +627,7 @@ void Sink::StopCommand( std::size_t command )
 MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position )
 {
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
-    pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
+    pion.CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, position );
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -726,7 +726,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
     CreateRoles( chainExt, vPosTmp );
     MIL_AgentPion& pion = Configure( *agents_.Create( type, automate, xis, &chainExt ), vPosTmp );
     pion.ReadOverloading( xis );
-    pion.GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
+    pion.CallRole( &PHY_RolePion_Composantes::ReadOverloading, xis ); // Equipments + Humans
     return &pion;
 }
 
