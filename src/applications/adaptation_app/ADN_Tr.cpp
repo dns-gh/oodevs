@@ -257,6 +257,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "LocationComposite",     QT_TRANSLATE_NOOP("ADN_Tr", "Location composite" ),     eMissionParameterTypeLocationComposite ),
     T_ConverterMissionParameterType( "ResourceNetworkNode",   QT_TRANSLATE_NOOP("ADN_Tr", "Resource network node" ),  eMissionParameterTypeResourceNetworkNode ),
     T_ConverterMissionParameterType( "ResourceNetworkType",   QT_TRANSLATE_NOOP("ADN_Tr", "Resource network type" ),  eMissionParameterTypeResourceNetworkType ),
+    T_ConverterMissionParameterType( "Stage",                 QT_TRANSLATE_NOOP("ADN_Tr", "Stage" ),                  eMissionParameterTypeStage ),
 
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };

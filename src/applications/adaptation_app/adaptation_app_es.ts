@@ -5285,6 +5285,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Fragmentary Orders</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

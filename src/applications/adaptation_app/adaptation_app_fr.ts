@@ -5293,6 +5293,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Fragmentary Orders</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Stage</source>
+        <translation>Phase</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

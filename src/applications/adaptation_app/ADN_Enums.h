@@ -395,8 +395,9 @@ enum E_MissionParameterType
     eMissionParameterTypeLocationComposite      = 25,
     eMissionParameterTypeResourceNetworkNode    = 26,
     eMissionParameterTypeResourceNetworkType    = 27,
+    eMissionParameterTypeStage                  = 28,
 
-    eNbrMissionParameterType                    = 28
+    eNbrMissionParameterType                    = 29
 };
 
 enum E_ConstructorType
