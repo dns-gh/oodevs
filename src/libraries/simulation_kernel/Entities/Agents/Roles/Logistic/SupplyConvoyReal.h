@@ -16,8 +16,8 @@
 
 class MIL_AgentPion;
 
-namespace logistic {
-
+namespace logistic
+{
 // =============================================================================
 /** @class  SupplyConvoyReal
     @brief  SupplyConvoyReal
@@ -93,6 +93,7 @@ private:
 };
 
 } // end namespace logistic
+
 BOOST_CLASS_EXPORT_KEY( logistic::SupplyConvoyReal )
 
 #endif // __SupplyConvoyReal_h_

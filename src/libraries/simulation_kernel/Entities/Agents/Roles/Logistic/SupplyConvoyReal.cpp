@@ -62,10 +62,6 @@ SupplyConvoyReal::~SupplyConvoyReal()
     }
 }
 
-// =============================================================================
-// Operations
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal::Setup
 // Created: NLD 2011-08-01
@@ -75,7 +71,7 @@ unsigned SupplyConvoyReal::Setup()
     if( !convoyPion_ )
     {
         convoyPion_ = transportersProvider_->SupplyCreateConvoyPion( *SupplyConvoyConfig::convoyAgentType_, shared_from_this() );
-        BOOST_FOREACH( T_Conveyors::value_type& data, conveyors_ )
+        BOOST_FOREACH( const T_Conveyors::value_type& data, conveyors_ )
             data.second->LendTo( *convoyPion_ );
         convoyPion_->GetOrderManager().OnReceiveMission( *SupplyConvoyConfig::convoyMissionType_ );
     }
@@ -124,10 +120,6 @@ unsigned SupplyConvoyReal::MoveToTransportersProvider()
     return ReturnTimeRemainingForAction( eMoveToTransportersProvider );
 }
 
-// =============================================================================
-// Events
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal::NotifyMovedToSupplier
 // Created: NLD 2011-08-01
@@ -164,7 +156,7 @@ void SupplyConvoyReal::NotifyMovedToSupplyRecipient()
 // -----------------------------------------------------------------------------
 void SupplyConvoyReal::NotifyTransporterDestroyed( PHY_ComposantePion& transporter )
 {
-    T_Conveyors::const_iterator it = conveyors_.find( &transporter );
+    auto it = conveyors_.find( &transporter );
     if( it != conveyors_.end() )
         it->second->Destroy( *eventsObserver_ );
 }
@@ -178,10 +170,6 @@ void SupplyConvoyReal::NotifyConvoyEndMission()
     eventsObserver_->OnConvoyEndMission();
 }
 
-// =============================================================================
-// Algorithms
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal::NotifyMovedToSupplyRecipient
 // Created: NLD 2011-08-01
@@ -190,10 +178,6 @@ void SupplyConvoyReal::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
     algorithm.AddModifier( SupplyConvoyConfig::coefSpeedModificator_( static_cast< double >( conveyors_.size() ) ), false );
 }
-
-// =============================================================================
-// Accessors
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoyReal::GetCurrentAction

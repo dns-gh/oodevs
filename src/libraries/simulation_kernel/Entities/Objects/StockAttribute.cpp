@@ -190,7 +190,7 @@ void StockAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: StockAttribute::Send
+// Name: StockAttribute::SendUpdate
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
 bool StockAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
@@ -205,7 +205,7 @@ bool StockAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: StockAttribute::OnMagicActionUpdate
+// Name: StockAttribute::OnUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void StockAttribute::OnUpdate( const sword::ObjectAttributes& asn )
@@ -218,7 +218,7 @@ void StockAttribute::OnUpdate( const sword::ObjectAttributes& asn )
 }
 
 // -----------------------------------------------------------------------------
-// Name: StockAttribute::UpdateConstruction
+// Name: StockAttribute::IsFull
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 bool StockAttribute::IsFull() const

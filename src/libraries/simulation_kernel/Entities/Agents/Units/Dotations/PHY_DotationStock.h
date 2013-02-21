@@ -44,7 +44,6 @@ public:
     const PHY_DotationCategory& GetCategory() const;
           double              GetValue   () const;
           double              GetCapacity() const;
-          bool                IsFull() const;
           bool                IsEmpty() const;
     //@}
 

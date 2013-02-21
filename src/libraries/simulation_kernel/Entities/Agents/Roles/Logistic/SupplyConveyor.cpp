@@ -81,8 +81,10 @@ bool SupplyConveyor::CanTransport( const PHY_DotationCategory& dotationCategory 
 // -----------------------------------------------------------------------------
 double SupplyConveyor::Convoy( SupplyConvoyEventsObserver_ABC& eventsObserver, const PHY_DotationCategory& dotationCategory, double quantity )
 {
+    if( weightCapacity_ <= 0 || volumeCapacity_ <= 0 )
+        return 0;
     if( !composante_->GetType().CanTransportStock( dotationCategory ) )
-        return 0.;
+        return 0;
 
     double volumeToConvoy = quantity * dotationCategory.GetVolume();
     double weightToConvoy = quantity * dotationCategory.GetWeight();
@@ -109,15 +111,6 @@ double SupplyConveyor::Convoy( SupplyConvoyEventsObserver_ABC& eventsObserver, c
     resourcesConvoyed_[ &dotationCategory ] += quantityConvoyed;
     eventsObserver.OnResourceAssignedToConvoy( dotationCategory, quantityConvoyed );
     return quantityConvoyed;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyConveyor::IsFull
-// Created: NLD 2011-07-25
-// -----------------------------------------------------------------------------
-bool SupplyConveyor::IsFull() const
-{
-    return weightCapacity_ <= 0. || volumeCapacity_ <= 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +165,7 @@ unsigned SupplyConveyor::ApproximateTravelTime( const MT_Vector2D& startPos, con
 // -----------------------------------------------------------------------------
 double SupplyConveyor::Supply( const PHY_DotationCategory& dotationCategory, double quantity )
 {
-    T_Resources::iterator it = resourcesConvoyed_.find( &dotationCategory );
+    auto it = resourcesConvoyed_.find( &dotationCategory );
     if( it != resourcesConvoyed_.end() )
     {
         double tmp = std::min( quantity, it->second );
@@ -188,7 +181,7 @@ double SupplyConveyor::Supply( const PHY_DotationCategory& dotationCategory, dou
 // -----------------------------------------------------------------------------
 void SupplyConveyor::Destroy( SupplyConvoyEventsObserver_ABC& eventsObserver )
 {
-    BOOST_FOREACH( const T_Resources::value_type& data, resourcesConvoyed_ )
+    BOOST_FOREACH( const auto& data, resourcesConvoyed_ )
         eventsObserver.OnResourceRemovedFromConvoy( *data.first, data.second );
     resourcesConvoyed_.clear();
 }
@@ -199,18 +192,18 @@ void SupplyConveyor::Destroy( SupplyConvoyEventsObserver_ABC& eventsObserver )
 // -----------------------------------------------------------------------------
 void SupplyConveyor::serialize( MIL_CheckPointInArchive& archive, const unsigned int )
 {
+    size_t resourcesSize;
     archive >> boost::serialization::base_object< SupplyConveyor_ABC >( *this );
     archive >> composante_;
     archive >> pion_;
     archive >> weightCapacity_;
     archive >> volumeCapacity_;
-    size_t resourcesSize;
     archive >> resourcesSize;
     for( size_t i = 0; i < resourcesSize; ++i )
     {
         unsigned int dotationId;
-        archive >> dotationId;
         double value;
+        archive >> dotationId;
         archive >> value;
         resourcesConvoyed_[ PHY_DotationType::FindDotationCategory( dotationId ) ] = value;
     }
@@ -223,18 +216,18 @@ void SupplyConveyor::serialize( MIL_CheckPointInArchive& archive, const unsigned
 // -----------------------------------------------------------------------------
 void SupplyConveyor::serialize( MIL_CheckPointOutArchive& archive, const unsigned int )
 {
+    size_t resourcesSize = resourcesConvoyed_.size();
     archive << boost::serialization::base_object< SupplyConveyor_ABC >( *this );
     archive << composante_;
     archive << pion_;
     archive << weightCapacity_;
     archive << volumeCapacity_;
-    size_t resourcesSize = resourcesConvoyed_.size();
     archive << resourcesSize;
     for( auto it = resourcesConvoyed_.begin(); it != resourcesConvoyed_.end(); ++it )
     {
         unsigned int dotationId = it->first->GetMosID();
-        archive << dotationId;
         double value = it->second;
+        archive << dotationId;
         archive << value;
     }
     archive << borrower_;

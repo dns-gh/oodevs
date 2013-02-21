@@ -15,6 +15,7 @@
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
+#include "tools/Map.h"
 
 class PHY_ComposantePion;
 class MIL_CheckPointInArchive;
@@ -75,7 +76,7 @@ public:
 protected:
     //! @name Types
     //@{
-    typedef std::map< PHY_ComposantePion*, boost::shared_ptr< SupplyConveyor_ABC > > T_Conveyors;
+    typedef tools::Map< PHY_ComposantePion*, boost::shared_ptr< SupplyConveyor_ABC > > T_Conveyors;
 
     enum E_Action
     {

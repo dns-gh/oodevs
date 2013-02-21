@@ -12,6 +12,7 @@
 
 #include "SupplyConveyor_ABC.h"
 #include <boost/serialization/export.hpp>
+#include "tools/Map.h"
 
 class PHY_ComposantePion;
 class MIL_AgentPion;
@@ -39,7 +40,6 @@ public:
     //! @name Operations
     //@{
     virtual double   Convoy               ( SupplyConvoyEventsObserver_ABC& eventsObserver, const PHY_DotationCategory& dotationCategory, double quantity );
-    virtual bool     IsFull               () const;
     virtual bool     IsEmpty              () const;
     virtual void     LendTo               ( MIL_AgentPion& convoyPion );
     virtual unsigned ApproximateTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
@@ -52,15 +52,15 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< const PHY_DotationCategory*, double > T_Resources;
-    //@}
-
-private:
     //! @name Tools
     //@{
     void UndoLend();
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef tools::Map< const PHY_DotationCategory*, double > T_Resources;
     //@}
 
 private:

@@ -73,10 +73,6 @@ SupplyConvoy::~SupplyConvoy()
     // NOTHING
 }
 
-// =============================================================================
-// Operations
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyConvoy::CreateConveyor
 // Created: NLD 2011-07-25
@@ -101,12 +97,7 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
 {
     // Fill the previously used conveyors
     for( auto it = conveyors_.begin(); it != conveyors_.end() && quantity > 0.; ++it )
-    {
-        SupplyConveyor_ABC& conveyor = *it->second;
-        if( conveyor.IsFull() )
-            continue;
-        quantity -= conveyor.Convoy( *eventsObserver_, dotationCategory, quantity );
-    }
+        quantity -= it->second->Convoy( *eventsObserver_, dotationCategory, quantity );
 
     // Allocate new conveyors
     if( autoAllocateNewTransporters_ )
