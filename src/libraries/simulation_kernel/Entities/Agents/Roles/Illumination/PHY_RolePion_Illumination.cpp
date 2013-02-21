@@ -12,8 +12,7 @@
 #include "PHY_RolePion_Illumination.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
-#include "Entities/MIL_Entity_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include <boost/serialization/set.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
@@ -40,6 +39,23 @@ PHY_RolePion_Illumination::~PHY_RolePion_Illumination()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Illumination::Update
+// Created: JSR 2013-02-20
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Illumination::Update( bool /*bIsDead*/ )
+{
+    if( target_ && target_->IsMarkedForDestruction() )
+        NotifyStopIlluminate();
+    for( auto it = illuminators_.begin(); it != illuminators_.end(); )
+    {
+        if( ( *it )->IsMarkedForDestruction() )
+            it = illuminators_.erase( it );
+        else
+            ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Illumination::IsIlluminating
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
@@ -52,7 +68,7 @@ bool PHY_RolePion_Illumination::IsIlluminating() const
 // Name: PHY_RolePion_Illumination::NotifyStartIlluminating
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Illumination::NotifyStartIlluminate( const MIL_Entity_ABC& entity )
+void PHY_RolePion_Illumination::NotifyStartIlluminate( const MIL_Agent_ABC& entity )
 {
     target_ = &entity;
 }
@@ -90,7 +106,7 @@ bool PHY_RolePion_Illumination::IsDefinitevelyIlluminated() const
 // Name: PHY_RolePion_Illumination::NotifyStartIlluminatedBy
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Illumination::NotifyStartIlluminatedBy( const MIL_Entity_ABC& entity )
+void PHY_RolePion_Illumination::NotifyStartIlluminatedBy( const MIL_Agent_ABC& entity )
 {
     illuminators_.insert( &entity );
 }
@@ -99,7 +115,7 @@ void PHY_RolePion_Illumination::NotifyStartIlluminatedBy( const MIL_Entity_ABC& 
 // Name: PHY_RolePion_Illumination::NotifyStopIlluminatedBy
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Illumination::NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity )
+void PHY_RolePion_Illumination::NotifyStopIlluminatedBy( const MIL_Agent_ABC& entity )
 {
     illuminators_.erase( &entity );
     if( illuminators_.empty() )
@@ -139,7 +155,7 @@ void PHY_RolePion_Illumination::NotifyHitByIndirectFire()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    ar >>boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
+    ar >>boost::serialization::base_object< PHY_RoleInterface_Illumination >( *this );
     ar >> bIlluminatedDefinitely_;
     ar >> bHit_;
     ar >> target_;
@@ -152,7 +168,7 @@ void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const unsigne
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Illumination::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
-    ar << boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
+    ar << boost::serialization::base_object< PHY_RoleInterface_Illumination >( *this );
     ar << bIlluminatedDefinitely_;
     ar << bHit_;
     ar << target_;

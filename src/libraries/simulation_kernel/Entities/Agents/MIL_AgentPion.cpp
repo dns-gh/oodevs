@@ -548,9 +548,11 @@ void MIL_AgentPion::UpdatePhysicalState()
         CallRole( &PHY_RoleAction_FolkInfluence::Update, bIsDead );
         CallRole( &PHY_RoleAction_MovingUnderground::Update, bIsDead );
         CallRole( &PHY_RoleInterface_Deployment::Update, bIsDead );
+        CallRole( &PHY_RoleInterface_Illumination::Update, bIsDead );
         CallRole( &PHY_RoleInterface_Maintenance::Update, bIsDead );  //@TODO add update to new role interface
         CallRole( &PHY_RoleInterface_Medical::Update, bIsDead );
         CallRole( &PHY_RoleInterface_Supply::Update, bIsDead );
+
     }
     catch( const std::exception& e )
     {

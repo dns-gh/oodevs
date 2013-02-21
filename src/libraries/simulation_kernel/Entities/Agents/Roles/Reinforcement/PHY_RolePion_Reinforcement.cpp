@@ -153,10 +153,17 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
 {
     if( pPionReinforced_ )
     {
-        if( bIsDead )
+        if( bIsDead || pPionReinforced_->IsMarkedForDestruction() )
             CancelReinforcement();
         else
             owner_->Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pPionReinforced_ );
+    }
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); )
+    {
+        if( ( *it )->IsMarkedForDestruction() )
+            it = reinforcements_.erase( it );
+        else
+            ++it;
     }
     if( HasChanged() )
         owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );

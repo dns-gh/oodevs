@@ -35,14 +35,16 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Update( bool bIsDead );
+
     virtual bool IsIlluminating() const;
-    virtual void NotifyStartIlluminate( const MIL_Entity_ABC& entity );
+    virtual void NotifyStartIlluminate( const MIL_Agent_ABC& entity );
     virtual void NotifyStopIlluminate();
 
     virtual bool IsIlluminated() const;
     virtual bool IsDefinitevelyIlluminated() const;
-    virtual void NotifyStartIlluminatedBy( const MIL_Entity_ABC& entity );
-    virtual void NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity );
+    virtual void NotifyStartIlluminatedBy( const MIL_Agent_ABC& entity );
+    virtual void NotifyStopIlluminatedBy( const MIL_Agent_ABC& entity );
     virtual void NotifyDefinitelyIlluminated();
 
     virtual bool IsUnderIndirectFire() const;
@@ -59,10 +61,10 @@ public:
 private:
     //! @name Member data
     //@{
-    std::set< const MIL_Entity_ABC* > illuminators_;
-    bool                              bIlluminatedDefinitely_;
-    bool                              bHit_;
-    const MIL_Entity_ABC*             target_;
+    std::set< const MIL_Agent_ABC* > illuminators_;
+    bool bIlluminatedDefinitely_;
+    bool bHit_;
+    const MIL_Agent_ABC* target_;
     //@}
 };
 

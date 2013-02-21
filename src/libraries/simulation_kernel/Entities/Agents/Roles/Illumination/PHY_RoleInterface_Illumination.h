@@ -13,7 +13,7 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class MIL_Entity_ABC;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  PHY_RoleInterface_Illumination
@@ -38,14 +38,17 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Update( bool bIsDead ) = 0;
+
+
     virtual bool IsIlluminating() const = 0;
-    virtual void NotifyStartIlluminate( const MIL_Entity_ABC& entity ) = 0;//action state can be sufficient
+    virtual void NotifyStartIlluminate( const MIL_Agent_ABC& entity ) = 0;//action state can be sufficient
     virtual void NotifyStopIlluminate() = 0;
 
     virtual bool IsIlluminated() const = 0;
     virtual bool IsDefinitevelyIlluminated() const = 0;
-    virtual void NotifyStartIlluminatedBy( const MIL_Entity_ABC& entity ) = 0;
-    virtual void NotifyStopIlluminatedBy( const MIL_Entity_ABC& entity ) = 0;
+    virtual void NotifyStartIlluminatedBy( const MIL_Agent_ABC& entity ) = 0;
+    virtual void NotifyStopIlluminatedBy( const MIL_Agent_ABC& entity ) = 0;
     virtual void NotifyDefinitelyIlluminated() = 0;
 
     virtual bool IsUnderIndirectFire() const = 0;
