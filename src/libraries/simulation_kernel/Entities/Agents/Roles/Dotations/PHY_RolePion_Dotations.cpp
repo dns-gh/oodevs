@@ -51,11 +51,10 @@ using namespace dotation;
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 PHY_RolePion_Dotations::PHY_RolePion_Dotations()
-    : owner_                     ( 0 )
-    , pCurrentConsumptionMode_   ( 0 )
-    , pPreviousConsumptionMode_  ( 0 )
-    , reservedConsumptions_      ()
-    , pDotations_                ( 0 )
+    : owner_                   ( 0 )
+    , pCurrentConsumptionMode_ ( 0 )
+    , pPreviousConsumptionMode_( 0 )
+    , pDotations_              ( 0 )
 {
     // NOTHING
 }
@@ -65,11 +64,10 @@ PHY_RolePion_Dotations::PHY_RolePion_Dotations()
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
-    : owner_                     ( &pion )
-    , pCurrentConsumptionMode_   ( 0 )
-    , pPreviousConsumptionMode_  ( 0 )
-    , reservedConsumptions_      ()
-    , pDotations_                ( 0 )
+    : owner_                   ( &pion )
+    , pCurrentConsumptionMode_ ( 0 )
+    , pPreviousConsumptionMode_( 0 )
+    , pDotations_              ( 0 )
 {
     pDotations_ = new PHY_DotationGroupContainer( *this, MIL_AgentServer::GetWorkspace().GetSettings().GetValue< bool >( "infinite-dotation" ) );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_, 0 );
@@ -97,15 +95,11 @@ void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
          >> owner_ 
          >> pDotations_;
-
     unsigned int nID;
     file >> nID;
     pCurrentConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
-
     file >> nID;
     pPreviousConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
-
-    file >> reservedConsumptions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,8 +114,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigne
          << owner_
          << pDotations_
          << current
-         << previous
-         << reservedConsumptions_;
+         << previous;
 }
 
 // -----------------------------------------------------------------------------

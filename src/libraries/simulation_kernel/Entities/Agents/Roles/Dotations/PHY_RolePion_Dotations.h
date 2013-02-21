@@ -138,7 +138,6 @@ private:
     PHY_DotationGroupContainer*                pDotations_;
     const PHY_ConsumptionType*                 pCurrentConsumptionMode_;
     const PHY_ConsumptionType*                 pPreviousConsumptionMode_;
-    std::map< const PHY_Dotation*, double >    reservedConsumptions_;
     std::vector< const PHY_DotationCategory* > forbiddenDotations_;
     //@}
 };
