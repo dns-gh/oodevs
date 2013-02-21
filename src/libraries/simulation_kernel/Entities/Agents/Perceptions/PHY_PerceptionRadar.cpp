@@ -169,7 +169,7 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
         for( auto itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
             const PHY_RadarType& radarType = **itRadar;
-            IT_RadarDataMap itRadarData = radarData_.find( &radarType );
+            auto itRadarData = radarData_.find( &radarType );
             if( itRadarData == radarData_.end() )
                 itRadarData  = radarData_.insert( std::make_pair( &radarType, PHY_PerceptionRadarData( radarType ) ) ).first;
             itRadarData->second.Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos, detectionComputerFactory );

@@ -51,13 +51,11 @@ private:
     void TransfertPerception();
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::pair< unsigned int, double > T_PerceptionParameterPair;
-
     typedef std::map< const void*, T_PerceptionParameterPair > T_PerceptionTickMap;
-    typedef T_PerceptionTickMap::const_iterator               CIT_PerceptionTickMap;
-    typedef T_PerceptionTickMap::iterator                      IT_PerceptionTickMap;
     //@}
 
 private:

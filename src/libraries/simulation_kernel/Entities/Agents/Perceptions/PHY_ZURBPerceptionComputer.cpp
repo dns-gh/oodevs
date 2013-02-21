@@ -75,11 +75,9 @@ const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const 
             ComputePerceptionPolygon( bestSensorParameters.identificationDist_, polygon );
             if( roll_ < role.ComputeRatioPionInside( polygon, roll_ ) )
                 return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::identified_ );
-            else
-                return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::recognized_ );
+            return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::recognized_ );
         }
-        else
-            return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::detected_ );;
+        return GetLevelWithDelay( bestSensorParameters.delay_, PHY_PerceptionLevel::detected_ );
     }
     return PHY_PerceptionLevel::notSeen_;
 }

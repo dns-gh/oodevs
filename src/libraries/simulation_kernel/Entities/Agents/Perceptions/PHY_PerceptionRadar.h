@@ -59,16 +59,10 @@ public:
 private:
     //! @name
     //@{
-    typedef std::vector< PHY_PerceptionRadarData::T_ZoneSet >   T_RadarZonesVector;
-    typedef T_RadarZonesVector::const_iterator                  CIT_RadarZonesVector;
-    typedef std::vector< bool >                                 T_RadarOnUnitPositionVector;
-    typedef T_RadarOnUnitPositionVector::const_iterator         CIT_RadarOnUnitPositionVector;
-
+    typedef std::vector< PHY_PerceptionRadarData::T_ZoneSet >         T_RadarZonesVector;
+    typedef std::vector< bool >                                       T_RadarOnUnitPositionVector;
     typedef std::map< const PHY_RadarType*, PHY_PerceptionRadarData > T_RadarDataMap;
-    typedef T_RadarDataMap::iterator                                  IT_RadarDataMap;
-
-    typedef std::map< int, const TER_Localisation* > T_RadarIdMap;
-    typedef T_RadarIdMap::iterator                   IT_RadarIdMap;
+    typedef std::map< int, const TER_Localisation* >                  T_RadarIdMap;
     //@}
 
 private:

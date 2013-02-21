@@ -28,6 +28,9 @@ class MIL_PopulationFlow;
 class PHY_PerceptionSurfaceAgent
 {
 public:
+    typedef std::map< const void*, unsigned int > T_PerceptionTickMap;
+
+public:
     //! @name Constructors/Destructor
     //@{
              PHY_PerceptionSurfaceAgent();
@@ -51,7 +54,7 @@ public:
     const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const;
     double ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const;
     void AddDirection( const MT_Vector2D& vDir );
-    void TransfertPerception( std::map< const void*, std::pair< unsigned int, double > > urbanPerceptionMap ) const;
+    void TransfertPerception( const T_PerceptionTickMap& urbanPerceptionMap ) const;
 
     virtual void FinalizePerception();
     //@}
@@ -60,7 +63,7 @@ public:
     //@{
     bool IsInitialized();
     const std::string& GetSensorTypeName() const; // LTO
-    std::map< const void*, unsigned int > GetTargetsPerception() const;
+    T_PerceptionTickMap GetTargetsPerception() const;
     //@}
 
     //! @name Operators
@@ -76,11 +79,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Sector >         T_SectorVector;
-    typedef T_SectorVector::const_iterator CIT_SectorVector;
-
-    typedef std::map< const void*, unsigned int > T_PerceptionTickMap;
-    typedef T_PerceptionTickMap::const_iterator CIT_PerceptionTickMap;
+    typedef std::vector< MT_Sector > T_SectorVector;
     //@}
 
     //! @name Tools

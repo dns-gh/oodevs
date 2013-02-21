@@ -53,11 +53,10 @@ PHY_PerceptionView::~PHY_PerceptionView()
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MT_Vector2D& vPoint ) const
 {
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-
     if( bIsEnabled_ )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
         {
             const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, vPoint );
             if( currentLevel > *pBestLevel )
@@ -90,20 +89,20 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
         return result;
     else
     {
-        CIT_PerceptionTickMap it = perceptionsUnderway_.find( &target );
         unsigned int tick = 0;
-        double roll = 0.f;
+        double roll = 0;
+        auto it = perceptionsUnderway_.find( &target );
         if( it != perceptionsUnderway_.end() )
         {
             tick = it->second.first;
             roll = it->second.second;
         }
         else
-            roll = static_cast< double >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
-        perceptionsBuffer_[ &target ] = std::pair< unsigned int, double >( tick + 1, roll );
+            roll = MIL_Random::rand_ii( MIL_Random::ePerception );
+        perceptionsBuffer_[ &target ] = std::make_pair( tick + 1, roll );
         PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), roll, tick );
         const PHY_PerceptionLevel& urbanResult = computer.ComputePerception( target );
-        return result < urbanResult ? result : urbanResult;
+        return std::min( result, urbanResult );
     }
 }
 
@@ -116,17 +115,14 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
     if( bIsEnabled_ )
     {
         bool civiliansEncountered = false;
-        for ( TER_Agent_ABC::CIT_AgentPtrVector itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
+        for( auto itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-
             if( agent.BelongsTo( *perceiver_.GetKnowledgeGroup() ) )
                 continue;
-
             std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( agent ) );
             perceiver_.GetPion().Execute( *detectionComputer );
             agent.Execute( *detectionComputer );
-
             if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent ) )
                 perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
             else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
@@ -141,14 +137,14 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
 
 namespace
 {
-    template< typename Sensors, typename Functor >
-     const PHY_PerceptionLevel& ComputeKnowledge( PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Object& knowledge,
+    template< typename Object, typename Sensors, typename Functor >
+     const PHY_PerceptionLevel& ComputeKnowledge( PHY_RoleInterface_Perceiver& perceiver, const Object& object,
                                                   const MT_Vector2D& position, const Sensors& sensors, Functor perceptionComputer )
      {
         const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
         for( auto it = sensors.begin(); it != sensors.end(); ++it )
         {
-             const PHY_PerceptionLevel& currentLevel = perceptionComputer( it, position, knowledge, perceiver );
+             const PHY_PerceptionLevel& currentLevel = perceptionComputer( it, position, object, perceiver );
              if( currentLevel > *pBestLevel )
              {
                 pBestLevel = &currentLevel;
@@ -158,17 +154,41 @@ namespace
         }
         return *pBestLevel;
      }
+    template< typename Sensors, typename Functor >
+    const PHY_PerceptionLevel& Compute( PHY_RoleInterface_Perceiver& perceiver, const MIL_Object_ABC& object,
+                                        const Sensors& sensors, const MT_Vector2D& position, bool bIsEnabled, Functor perceptionComputer )
+    {
+        if( !bIsEnabled || !object().CanBePerceived() )
+            return PHY_PerceptionLevel::notSeen_;
+        if( object.IsUniversal() )
+            return PHY_PerceptionLevel::identified_;
+        if( perceiver.IsIdentified( object ) )
+            return PHY_PerceptionLevel::identified_;
+        return ComputeKnowledge( perceiver, object, position, sensors, perceptionComputer );
+    }
 
      const PHY_PerceptionLevel& ComputeKnowledgeObject( PHY_RoleInterface_Perceiver::T_SurfaceObjectMap::const_iterator it,
                                                         const DEC_Knowledge_Object& knowledge, PHY_RoleInterface_Perceiver& perceiver )
      {
          return it->second.ComputePerception( perceiver, knowledge );
      }
-     const PHY_PerceptionLevel& ComputeKnowledgeDisaster( PHY_RoleInterface_Perceiver::T_DisasterDetectors::const_iterator it,
-                                                          const MT_Vector2D& position, const DEC_Knowledge_Object& knowledge )
+    const PHY_PerceptionLevel& ComputeObject( PHY_RoleInterface_Perceiver::T_SurfaceObjectMap::const_iterator it,
+                                              const MIL_Object_ABC& object, PHY_RoleInterface_Perceiver& perceiver )
+    {
+        return it->second.ComputePerception( perceiver, object );
+    }
+
+    const PHY_PerceptionLevel& ComputeKnowledgeDisaster( PHY_RoleInterface_Perceiver::T_DisasterDetectors::const_iterator it,
+                                                         const MT_Vector2D& position, const DEC_Knowledge_Object& knowledge )
      {
          return (*it)->ComputePerception( position, knowledge );
      }
+
+    const PHY_PerceptionLevel& ComputeDisaster( PHY_RoleInterface_Perceiver::T_DisasterDetectors::const_iterator it,
+                                                const MT_Vector2D& position, const MIL_Object_ABC& object )
+    {
+        return (*it)->ComputePerception( position, object );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -181,60 +201,15 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Obje
     {
         const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
         const MT_Vector2D& position = location.GetPosition();
-
         const PHY_PerceptionLevel& objectLevel = ::ComputeKnowledge( perceiver_, knowledge, position, perceiver_.GetSurfacesObject(),
                                                                      boost::bind( &ComputeKnowledgeObject, _1, _3, _4 ) );
         if( objectLevel.IsBestLevel() )
             return objectLevel;
-
         const PHY_PerceptionLevel& disasterLevel = ::ComputeKnowledge( perceiver_, knowledge, position, perceiver_.GetDisasterDetectors(),
                                                                        boost::bind( &ComputeKnowledgeDisaster, _1, _2, _3 ) );
-
         return disasterLevel > objectLevel ? disasterLevel : objectLevel;
     }
-
     return PHY_PerceptionLevel::notSeen_;
-}
-
-namespace
-{
-    template< typename Sensors, typename Functor >
-    const PHY_PerceptionLevel& Compute( PHY_RoleInterface_Perceiver& perceiver, const MIL_Object_ABC& object,
-                                        const Sensors& sensors, const MT_Vector2D& position, bool bIsEnabled, Functor perceptionComputer )
-    {
-        if( !bIsEnabled || !object().CanBePerceived() )
-            return PHY_PerceptionLevel::notSeen_;
-
-        if( object.IsUniversal() )
-            return PHY_PerceptionLevel::identified_;
-
-        if( perceiver.IsIdentified( object ) )
-            return PHY_PerceptionLevel::identified_;
-
-        const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
-        for( auto it = sensors.begin(); it != sensors.end(); ++it )
-        {
-            const PHY_PerceptionLevel& currentLevel = perceptionComputer( it, object, position, perceiver );
-            if( currentLevel > *pBestLevel )
-            {
-                pBestLevel = &currentLevel;
-                if( pBestLevel->IsBestLevel() )
-                    return *pBestLevel;
-            }
-        }
-        return *pBestLevel;
-    }
-
-    const PHY_PerceptionLevel& ComputeDisaster( PHY_RoleInterface_Perceiver::T_DisasterDetectors::const_iterator it,
-                                                const MIL_Object_ABC& object, const MT_Vector2D& position )
-    {
-        return (*it)->ComputePerception( position, object );
-    }
-    const PHY_PerceptionLevel& ComputeObject( PHY_RoleInterface_Perceiver::T_SurfaceObjectMap::const_iterator it,
-                                              const MIL_Object_ABC& object, PHY_RoleInterface_Perceiver& perceiver )
-    {
-        return it->second.ComputePerception( perceiver, object );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -247,15 +222,14 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
     {
         const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
         const MT_Vector2D& position = location.GetPosition();
-        for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
+        for( auto it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
-            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
                 perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
             else
                 perceiver_.NotifyPerception( object, ::Compute( perceiver_, object, perceiver_.GetSurfacesObject(),
-                                                                position, bIsEnabled_, boost::bind( &ComputeObject, _1, _2, _4 ) ) );
+                                                                position, bIsEnabled_, boost::bind( &ComputeObject, _1, _3, _4 ) ) );
         }
     }
 }
@@ -270,15 +244,14 @@ void PHY_PerceptionView::ExecuteCollisions( const TER_Object_ABC::T_ObjectVector
     {
         const PHY_RoleInterface_Location& location = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >();
         const MT_Vector2D& position = location.GetPosition();
-        for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
+        for( auto it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
-            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-
+            MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             // disaster detection
             if( object.Retrieve< DisasterCapacity >() && object.IsInside( position ) )
             {
                 const PHY_PerceptionLevel& level = ::Compute( perceiver_, object, perceiver_.GetDisasterDetectors(),
-                    position, bIsEnabled_, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
+                                                              position, bIsEnabled_, boost::bind( &ComputeDisaster, _1, _2, _3 ) );
                 if( level > PHY_PerceptionLevel::notSeen_ )
                     perceiver_.NotifyPerception( object, position, location.GetDirection() );
             }
@@ -299,7 +272,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationFlow
           double                    rBestCost    = std::numeric_limits< double >::min();
 
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
         const double                    rCost   = surface.ComputePerceptionAccuracy( perceiver_, flow );
@@ -356,7 +329,7 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConc
 
     const PHY_PerceptionLevel* pBestLevel = &PHY_PerceptionLevel::notSeen_;
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
         const PHY_PerceptionLevel& currentLevel = itSurface->second.ComputePerception( perceiver_, target );
         if( currentLevel > *pBestLevel )
@@ -421,7 +394,7 @@ void PHY_PerceptionView::FinalizePerception()
     if( !perceiver_.GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
     {
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
             const_cast< PHY_PerceptionSurfaceAgent& >( itSurface->second ).FinalizePerception();
     }
     else
@@ -443,27 +416,29 @@ void PHY_PerceptionView::TransfertPerception()
         perceptionsBuffer_.clear();
         perceptionsUnderway_.clear();
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
         {
-            std::map< const void*, unsigned int > perceptionMap = itSurface->second.GetTargetsPerception();
-            for( std::map< const void*, unsigned int >::const_iterator it = perceptionMap.begin(); it != perceptionMap.end(); ++it )
+            PHY_PerceptionSurfaceAgent::T_PerceptionTickMap perceptions = itSurface->second.GetTargetsPerception();
+            for( auto it = perceptions.begin(); it != perceptions.end(); ++it )
             {
-                T_PerceptionTickMap::iterator it2 = perceptionsBuffer_.find( it->first );
+                const double random = MIL_Random::rand_ii( MIL_Random::ePerception );
+                auto it2 = perceptionsBuffer_.find( it->first );
                 if( it2 != perceptionsBuffer_.end() )
-                    perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, double >( std::max( it2->second.first, it->second ), MIL_Random::rand_ii( MIL_Random::ePerception )  );
+                    it2->second = std::make_pair( std::max( it2->second.first, it->second ), random );
                 else
-                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, double >( it->second, MIL_Random::rand_ii( MIL_Random::ePerception ) );
+                    perceptionsBuffer_[ it->first ] = std::make_pair( it->second, random );
             }
         }
-
         wasInCity_ = true;
     }
     else if( !isInCity && wasInCity_ )
     {
+        PHY_PerceptionSurfaceAgent::T_PerceptionTickMap perceptions;
+        for( auto it = perceptionsUnderway_.begin(); it != perceptionsUnderway_.end(); ++it )
+            perceptions[ it->first ] = it->second.first;
         const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
-        for( PHY_RoleInterface_Perceiver::IT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
-            itSurface->second.TransfertPerception( perceptionsUnderway_ );
+        for( auto itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+            itSurface->second.TransfertPerception( perceptions );
         wasInCity_ = false;
     }
-
 }

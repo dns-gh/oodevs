@@ -50,12 +50,9 @@ public:
 
     typedef std::pair< const PHY_SensorTypeAgent*, double /*height*/ >  T_SurfaceAgentKeyPair;
     typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
-    typedef T_SurfaceAgentMap::const_iterator                           CIT_SurfaceAgentMap;
-    typedef T_SurfaceAgentMap::const_iterator                            IT_SurfaceAgentMap;
 
     typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >  T_SurfaceObjectKeyPair;
     typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
-    typedef T_SurfaceObjectMap::const_iterator                            CIT_SurfaceObjectMap;
 
     typedef std::vector< const PHY_SensorTypeDisaster* > T_DisasterDetectors;
 

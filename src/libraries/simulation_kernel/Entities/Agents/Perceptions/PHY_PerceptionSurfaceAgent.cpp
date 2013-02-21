@@ -94,16 +94,13 @@ void PHY_PerceptionSurfaceAgent::AddDirection( const MT_Vector2D& vDir )
 // Name: PHY_PerceptionSurfaceAgent::IsInside
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-inline
 bool PHY_PerceptionSurfaceAgent::IsInside( const MT_Vector2D& vPoint ) const
 {
     assert( pSensorType_ );
-
     if( vOrigin_.SquareDistance( vPoint ) <= pSensorType_->GetSquareProximityDistance() )
         return true;
-
-    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-        if( itSector->IsInSector( vPoint ) )
+    for( auto it = sectors_.begin(); it != sectors_.end(); ++it )
+        if( it->IsInSector( vPoint ) )
             return true;
     return false;
 }
@@ -144,8 +141,8 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::GetLevelWithDelay( const 
     int delay = pSensorType_->GetDelay();
     if( delay && level > PHY_PerceptionLevel::notSeen_ )
     {
-        CIT_PerceptionTickMap it = perceptionsUnderway_.find( target );
         int tick = 0;
+        auto it = perceptionsUnderway_.find( target );
         if( it != perceptionsUnderway_.end() )
             tick = it->second;
         perceptionsBuffer_[ target ] = tick + 1;
@@ -164,7 +161,6 @@ void PHY_PerceptionSurfaceAgent::FinalizePerception()
     perceptionsUnderway_ = perceptionsBuffer_;
     perceptionsBuffer_.clear();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent::ComputePerception
@@ -226,7 +222,6 @@ bool PHY_PerceptionSurfaceAgent::IsInitialized()
 const std::string& PHY_PerceptionSurfaceAgent::GetSensorTypeName() const
 {
     assert( pSensorType_ );
-
     return pSensorType_->GetType().GetName();
 }
 
@@ -234,18 +229,16 @@ const std::string& PHY_PerceptionSurfaceAgent::GetSensorTypeName() const
 // Name: PHY_PerceptionSurfaceAgent::TransfertPerception
 // Created: SLG 2010-05-07
 // -----------------------------------------------------------------------------
-void PHY_PerceptionSurfaceAgent::TransfertPerception( std::map< const void*, std::pair< unsigned int, double > > urbanPerceptionMap ) const
+void PHY_PerceptionSurfaceAgent::TransfertPerception( const T_PerceptionTickMap& urbanPerceptionMap ) const
 {
-    perceptionsBuffer_.clear();
-    for( std::map< const void*, std::pair< unsigned int, double > >::const_iterator it = urbanPerceptionMap.begin(); it != urbanPerceptionMap.end(); ++it )
-        perceptionsBuffer_[ it->first ] = it->second.first;
+    perceptionsBuffer_ = urbanPerceptionMap;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent::GetTargetsPerception
 // Created: SLG 2010-05-07
 // -----------------------------------------------------------------------------
-std::map< const void*, unsigned int > PHY_PerceptionSurfaceAgent::GetTargetsPerception() const
+PHY_PerceptionSurfaceAgent::T_PerceptionTickMap PHY_PerceptionSurfaceAgent::GetTargetsPerception() const
 {
     return perceptionsUnderway_;
 }
