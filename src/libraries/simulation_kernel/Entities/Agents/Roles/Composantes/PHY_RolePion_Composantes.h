@@ -22,6 +22,7 @@
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 #include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
+#include "tools/Map.h"
 
 class MIL_Injury_ABC;
 
@@ -293,7 +294,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
-    typedef std::map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
+    typedef tools::Map< const MIL_Agent_ABC*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
     //@}
 
 protected:

@@ -274,7 +274,7 @@ namespace
     bool IsLoanedEquipment( const PHY_ComposantePion& composante, const PHY_RolePion_Composantes::T_LoanMap& loanMap )
     {
         for( auto it = loanMap.begin(); it != loanMap.end(); ++it )
-            if( boost::find( it->second, &composante ) != it->second.end() )
+            if( boost::range::find( it->second, &composante ) != it->second.end() )
                 return true;
         return false;
     }
