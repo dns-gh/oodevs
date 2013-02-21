@@ -72,11 +72,7 @@ void Stages::ReadStage( xml::xistream& xis )
     if( !key.empty() && !translation.empty() )
     {
         if( stages_.find( key ) != stages_.end() )
-        {
-            std::stringstream str;
-            str << "Stage already registered [key,value]: [" << key << "," << translation << "]";
-            throw MASA_EXCEPTION( str.str() );
-        }
+            std::cout << "Warning: Stage " << key << " translation is already registered. '" << stages_[ key ] << "' will become '" << translation << "'." << std::endl;
         stages_[ key ] = translation;
     }
 }
