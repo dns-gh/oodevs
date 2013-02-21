@@ -264,14 +264,12 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                         continue;
                     if( observerAgent.GetRole< PHY_RoleInterface_Perceiver >().IsFireObserver() )
                     {
-                        typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
+                        typedef std::vector< boost::tuple< std::string, unsigned int, unsigned int, unsigned int > > T_Content;
                         T_Content content;
                         fireResult.GetDamages( target ).Serialize( content );
-                        for( T_Content::const_iterator it = content.begin(); it != content.end(); ++it )
-                        {
+                        for( auto it = content.begin(); it != content.end(); ++it )
                             MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, target.GetID(),
-                                                                   (*it).get< 0 >(), (*it).get< 1 >(), (*it).get< 2 >(), (*it).get< 3 > () );
-                        }
+                                                   it->get< 0 >(), it->get< 1 >(), it->get< 2 >(), it->get< 3 >() );
                     }
                 }
             }
