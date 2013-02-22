@@ -158,14 +158,6 @@ bool MIL_LivingAreaBlock::CanMove() const
     return !( confined_ || outsideAngry_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingAreaBlock::IsUsableForMotivation
-// Created: JSR 2011-03-29
-// -----------------------------------------------------------------------------
-bool MIL_LivingAreaBlock::IsUsableForMotivation( const std::string& motivation ) const
-{
-    return !evacuated_ && GetProportion( motivation ) != 0.f;
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::IsAlerted
@@ -242,9 +234,10 @@ namespace
 // -----------------------------------------------------------------------------
 unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation ) const
 {
-    auto it = PHY_AccomodationType::GetAccomodations().find( motivation );
+    const PHY_AccomodationType::T_AccomodationMap& accomodations = PHY_AccomodationType::GetAccomodations();
+    auto it = accomodations.find( motivation );
     if( it != PHY_AccomodationType::GetAccomodations().end() )
-        return GetNominalOccupation( motivation, it->second );
+        return GetNominalOccupation( motivation, it->second, accomodations );
     return 0u;
 }
 
@@ -252,10 +245,10 @@ unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motiv
 // Name: MIL_LivingAreaBlock::GetNominalOccupation
 // Created: LDC 2011-05-10
 // -----------------------------------------------------------------------------
-unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation ) const
+unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation, const PHY_AccomodationType::T_AccomodationMap& accomodations ) const
 {
     if( accomodation )
-        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * accomodation->GetNominalCapacity() );
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation, accomodations ) * accomodation->GetNominalCapacity() );
     return 0u;
 }
 
@@ -265,9 +258,10 @@ unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motiv
 // -----------------------------------------------------------------------------
 unsigned int MIL_LivingAreaBlock::GetMaxOccupation( const std::string& motivation ) const
 {
-    auto it = PHY_AccomodationType::GetAccomodations().find( motivation );
-    if( it != PHY_AccomodationType::GetAccomodations().end() )
-        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * it->second->GetMaxCapacity() );
+    const PHY_AccomodationType::T_AccomodationMap& accomodations = PHY_AccomodationType::GetAccomodations();
+    auto it = accomodations.find( motivation );
+    if( it != accomodations.end() )
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation, accomodations ) * it->second->GetMaxCapacity() );
     return 0u;
 }
 
@@ -279,9 +273,10 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
 {
     unsigned long blockTmp = persons;
     std::string firstAccommodation;
-    for( auto accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end() && blockTmp > 0; ++accommodation )
+    const PHY_AccomodationType::T_AccomodationMap& accommodations = PHY_AccomodationType::GetAccomodations();
+    for( auto accommodation = accommodations.begin(); accommodation != accommodations.end() && blockTmp > 0; ++accommodation )
     {
-        float proportion = GetProportion( accommodation->first );
+        float proportion = GetProportion( accommodation->first, accommodations );
         if( proportion > 0 )
         {
             if( firstAccommodation.empty() )
@@ -310,8 +305,9 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
     if( totalPerson == 0 )
         return 0;
     int blockOccupation = 0;
-    for( auto accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end(); ++accommodation )
-        blockOccupation += GetNominalOccupation( accommodation->first, accommodation->second );
+    const PHY_AccomodationType::T_AccomodationMap& accomodations = PHY_AccomodationType::GetAccomodations();
+    for( auto accommodation = accomodations.begin(); accommodation != accomodations.end(); ++accommodation )
+        blockOccupation += GetNominalOccupation( accommodation->first, accommodation->second, accomodations );
     int totalPopulation = urbanObject_->GetTotalInhabitants() - totalPerson;
     return static_cast< float >( std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) ) );
 }
@@ -320,7 +316,7 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
 // Name: MIL_LivingAreaBlock::GetProportion
 // Created: JSR 2011-03-23
 // -----------------------------------------------------------------------------
-float MIL_LivingAreaBlock::GetProportion( const std::string& motivation ) const
+float MIL_LivingAreaBlock::GetProportion( const std::string& motivation, const PHY_AccomodationType::T_AccomodationMap& accommodations ) const
 {
     const UrbanPhysicalCapacity* pPhysical = urbanObject_->Retrieve< UrbanPhysicalCapacity >();
     if( !pPhysical )
@@ -330,7 +326,8 @@ float MIL_LivingAreaBlock::GetProportion( const std::string& motivation ) const
     {
         float sum = 0;
         for( auto it = motivations.begin(); it != motivations.end(); ++it )
-            sum += it->second;
+            if( accommodations.find( it->first ) != accommodations.end() )
+                sum += it->second;
         return 1 - sum;
     }
     auto it = motivations.find( motivation );

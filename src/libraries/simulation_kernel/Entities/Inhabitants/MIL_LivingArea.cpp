@@ -211,9 +211,10 @@ float MIL_LivingArea::ComputeOccupationFactor() const
 void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const
 {
     // $$$$ JSR 2011-03-22: à vérifier pour la satisfaction
+    const PHY_AccomodationType::T_AccomodationMap& accomodations = PHY_AccomodationType::GetAccomodations();
     BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
-        for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
-            occupations[ it->first ] += block->GetNominalOccupation( it->first, it->second );
+        for( auto it = accomodations.begin(); it != accomodations.end(); ++it )
+            occupations[ it->first ] += block->GetNominalOccupation( it->first, it->second, accomodations );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,20 +401,6 @@ void MIL_LivingArea::Clean()
     currentStartingState_.clear();
     finalBlocks_.clear();
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::GetBlockUsage
-// Created: LGY 2011-01-21
-// -----------------------------------------------------------------------------
-MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motivation ) const
-{
-    T_Blocks blocks;
-    BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
-        if( block->IsUsableForMotivation( motivation ) )
-            blocks.push_back( block );
-    return blocks;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::Alert
 // Created: BCI 2011-02-01

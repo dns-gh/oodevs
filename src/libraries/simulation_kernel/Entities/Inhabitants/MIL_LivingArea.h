@@ -108,7 +108,6 @@ private:
     //! @name Helpers
     //@{
     void ReadUrbanBlock( xml::xistream& xis );
-    T_Blocks GetBlockUsage( const std::string& motivation ) const;
     const T_Blocks GetNonConfinedBlocks() const;
     void Clean();
     unsigned int ComputeStartingBlocks();
