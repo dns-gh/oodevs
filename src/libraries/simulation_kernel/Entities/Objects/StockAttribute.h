@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "tools/Map.h"
 #include <boost/serialization/export.hpp>
 
 namespace sword
@@ -99,25 +100,21 @@ public:
 
 private:
     //! @name Types
-    // <Dotation, <current, max>>
     //@{
     struct StockDotation
     {
         StockDotation()
-            : maxStock_( 0  )
-            , stock_( 0 )
+            : maxStock_( 0 )
+            , stock_   ( 0 )
         {}
-
         double stock_;
         double maxStock_;
     };
-    typedef std::map< const PHY_DotationCategory*, StockDotation > StockDotations;
-    //@}
 
 private:
     //! @name Member data
     //@{
-    StockDotations stockDotations_;
+    tools::Map< const PHY_DotationCategory*, StockDotation > stockDotations_;
     //@}
 };
 

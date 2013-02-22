@@ -139,7 +139,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) co
     std::size_t size = stockDotations_.size();
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << size;
-    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
         ar << it->first->GetName()
            << it->second.stock_ << it->second.maxStock_;
@@ -153,7 +153,7 @@ void StockAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) co
 void StockAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "stock" );
-    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
         xos << xml::start( "resource" )
             << xml::attribute( "type", it->first->GetName() )
@@ -170,7 +170,7 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void StockAttribute::Send( sword::ObjectAttributeStock& attribute ) const
 {
-    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
         sword::StockResource* resource = attribute.add_resources();
         resource->mutable_resource()->set_id( it->first->GetMosID() );
@@ -223,7 +223,7 @@ void StockAttribute::OnUpdate( const sword::ObjectAttributes& asn )
 // -----------------------------------------------------------------------------
 bool StockAttribute::IsFull() const
 {
-    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
         if( it->second.stock_ < it->second.maxStock_ )
             return false;
     return true;
@@ -235,7 +235,7 @@ bool StockAttribute::IsFull() const
 // -----------------------------------------------------------------------------
 bool StockAttribute::IsEmpty() const
 {
-    for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
+    for( auto it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
         if( it->second.stock_ > 0 )
             return false;
     return true;
@@ -264,7 +264,7 @@ double StockAttribute::Supply( const PHY_DotationCategory& category, double quan
 // -----------------------------------------------------------------------------
 double StockAttribute::Distribute( const PHY_DotationCategory& category, double quantity )
 {
-    StockDotations::iterator it = stockDotations_.find( &category );
+    auto it = stockDotations_.find( &category );
     if( it == stockDotations_.end() )
         return 0;
     double& oldStock = it->second.stock_;
@@ -285,7 +285,7 @@ double StockAttribute::Distribute( const PHY_DotationCategory& category, double 
 // -----------------------------------------------------------------------------
 bool StockAttribute::CanDistribute( const PHY_DotationCategory& category ) const
 {
-    StockDotations::const_iterator it = stockDotations_.find( &category );
+    auto it = stockDotations_.find( &category );
     if( it == stockDotations_.end() )
         return false;
     else
@@ -298,7 +298,7 @@ bool StockAttribute::CanDistribute( const PHY_DotationCategory& category ) const
 // -----------------------------------------------------------------------------
 bool StockAttribute::CanBeSuppliedWith( const PHY_DotationCategory& category ) const
 {
-    StockDotations::const_iterator it = stockDotations_.find( &category );
+    auto it = stockDotations_.find( &category );
     if( it == stockDotations_.end() )
         return false;
     else
