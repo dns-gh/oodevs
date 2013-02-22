@@ -17,6 +17,15 @@
 
 using namespace tools;
 
+BOOST_AUTO_TEST_CASE( map_inserts_value )
+{
+    tools::Map< int, int > map;
+    int& i = map[ 0 ];
+    BOOST_CHECK_EQUAL( 0, i );
+    i = 3;
+    BOOST_CHECK_EQUAL( 3, map[ 0 ] );
+}
+
 BOOST_AUTO_TEST_CASE( map_clear_removes_all_elements )
 {
     tools::Map< int, int > map;

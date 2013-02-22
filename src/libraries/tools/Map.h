@@ -42,9 +42,12 @@ public:
         typedef mapped_type second_type;
 
         value_type()
+            : first ()
+            , second()
         {}
         explicit value_type( const first_type& f )
-            : first( f )
+            : first ( f )
+            , second()
         {}
         value_type( const std::pair< first_type, second_type >& p )
             : first ( p.first )
@@ -94,7 +97,7 @@ public:
         : v_( begin, end )
     {}
 
-    mapped_type& operator[]( key_type k )
+    mapped_type& operator[]( const key_type& k )
     {
         return v_.get< 1 >().insert( value_type( k ) ).first->second;
     }
