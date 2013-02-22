@@ -10,11 +10,12 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePion_Remote.h"
 #include "MIL_AgentPion_Remote.h"
-#include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/RoleExtender_ABC.h"
 
+#include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Network/NET_RolePion_Dotations.h"
 #include "Adapters/RoleAdapterInterface.h"
 
 MIL_AgentTypePion_Remote::MIL_AgentTypePion_Remote( const std::string& strName, const std::string& strType, xml::xistream& xis )
@@ -59,6 +60,7 @@ namespace
 void MIL_AgentTypePion_Remote::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const
 {
     pion.RegisterRole( *new PHY_RolePion_UrbanLocation( pion ) );
+    pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );
     if( ext )
     {
         RegisterRoleExt< PHY_RoleInterface_Location >( pion, *ext );
