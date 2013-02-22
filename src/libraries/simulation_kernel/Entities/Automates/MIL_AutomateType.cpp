@@ -101,7 +101,7 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     xis >> xml::attribute( "name", strName )
         >> xml::attribute( "type", strType );
 
-    CIT_AutomateTypeAllocatorMap itAutomateAllocator = automateTypeAllocators_.find( strType );
+    auto itAutomateAllocator = automateTypeAllocators_.find( strType );
     if( itAutomateAllocator == automateTypeAllocators_.end() )
         xis.error( "Unknown automate type" );
 
@@ -243,7 +243,7 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 
     for( auto it = composition_.begin(); it != composition_.end(); ++it )
     {
-        const sCompositionBounds& bounds   = it->second;
+        const sCompositionBounds& bounds = it->second;
         const unsigned int& nRealNbr = currentComposition[ it->first ];
         if( bounds.nMin_ > nRealNbr || bounds.nMax_ < nRealNbr )
             return false;
@@ -284,7 +284,7 @@ void MIL_AutomateType::RegisterFunctions( sword::Brain& /*brain*/, MIL_Automate&
 // -----------------------------------------------------------------------------
 const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& strName )
 {
-    CIT_AutomateTypeMap it = automateTypes_.find( strName );
+    auto it = automateTypes_.find( strName );
     return it == automateTypes_.end() ? 0 : it->second;
 }
 
@@ -294,8 +294,10 @@ const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& s
 // -----------------------------------------------------------------------------
 const MIL_AutomateType* MIL_AutomateType::FindAutomateType( unsigned int nID )
 {
-    CIT_AutomateTypeMap it = std::find_if( automateTypes_.begin(), automateTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_AutomateType::GetID ), std::select2nd< T_AutomateTypeMap::value_type >() ) ) );
-    return it == automateTypes_.end() ? 0 : it->second;
+    for( auto it = automateTypes_.begin(); it != automateTypes_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -319,7 +321,7 @@ const DEC_Model_ABC& MIL_AutomateType::GetModel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::GetMosID
+// Name: MIL_AutomateType::GetID
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
 unsigned int MIL_AutomateType::GetID() const

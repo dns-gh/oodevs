@@ -92,22 +92,20 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_AutomateType* > T_AutomateTypeMap;
-    typedef T_AutomateTypeMap::const_iterator              CIT_AutomateTypeMap;
 
     typedef const MIL_AutomateType* (*T_AutomateTypeAllocator)( const std::string& strName, xml::xistream& xis );
-
     typedef std::map< std::string, T_AutomateTypeAllocator > T_AutomateTypeAllocatorMap;
-    typedef T_AutomateTypeAllocatorMap::const_iterator     CIT_AutomateTypeAllocatorMap;
 
     struct sCompositionBounds
     {
-        sCompositionBounds() : nMin_( 0 ), nMax_( 0 ) {}
-
+        sCompositionBounds()
+            : nMin_( 0 )
+            , nMax_( 0 )
+        {}
         unsigned int nMin_;
         unsigned int nMax_;
     };
     typedef std::map< const MIL_AgentType_ABC*, sCompositionBounds > T_CompositionMap;
-    typedef T_CompositionMap::const_iterator                         CIT_CompositionMap;
     //@}
 
 private:
