@@ -480,7 +480,7 @@ double PHY_WeaponType::GetMaxRangeToDirectFire() const
 // -----------------------------------------------------------------------------
 const PHY_WeaponType* PHY_WeaponType::FindWeaponType( const std::string& strLauncher, const std::string& strAmmunition )
 {
-    CIT_WeaponTypeMap it = weaponTypes_.find( std::make_pair( strLauncher, strAmmunition ) );
+    auto it = weaponTypes_.find( std::make_pair( strLauncher, strAmmunition ) );
     if( it == weaponTypes_.end() )
         return 0;
     return it->second;

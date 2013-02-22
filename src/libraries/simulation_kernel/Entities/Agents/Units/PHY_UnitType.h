@@ -15,6 +15,7 @@
 #include "Postures/PostureTime_ABC.h"
 #include "Dotations/PHY_DotationCapacities.h"
 #include "MT_Tools/MT_Scipio_enum.h"
+#include "tools/Map.h"
 
 namespace xml
 {
@@ -37,7 +38,7 @@ class PHY_UnitType : public posture::PostureTime_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_HumanRank*, unsigned int > T_CommanderRepartitionMap;
+    typedef tools::Map< const PHY_HumanRank*, unsigned int > T_CommanderRepartitionMap;
     //@}
 
 public:
@@ -84,7 +85,7 @@ private:
         bool bCanBePartOfConvoy_;
         unsigned int nNbrHumanInCrew_;
     };
-    typedef std::map< const PHY_ComposanteTypePion*, sComposanteTypeData > T_ComposanteTypeMap;
+    typedef tools::Map< const PHY_ComposanteTypePion*, sComposanteTypeData > T_ComposanteTypeMap;
     typedef std::vector< std::pair< unsigned int, unsigned int > > T_PostureTimesVector;
     typedef std::map< const PHY_DotationLogisticType*, double > T_StockLogisticThresholdRatios;
     //@}

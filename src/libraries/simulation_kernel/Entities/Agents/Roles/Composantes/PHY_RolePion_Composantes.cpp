@@ -185,9 +185,9 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int )
         {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
+            std::size_t n;
+            file >> n;
+            while( n-- )
             {
                 sword::EquipmentType nID;
                 int equipment;
@@ -233,24 +233,24 @@ void PHY_RolePion_Composantes::DistributeCommanders()
     // Répartition des officiers
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     MIL_Random::random_shuffle( composantes );
-    const PHY_UnitType::T_CommanderRepartitionMap& commanderRepartition = owner_->GetType().GetUnitType().GetCommanderRepartition();
-    for( auto it = commanderRepartition.begin(); it != commanderRepartition.end(); ++it )
+    const PHY_UnitType::T_CommanderRepartitionMap& repartition = owner_->GetType().GetUnitType().GetCommanderRepartition();
+    for( auto it = repartition.begin(); it != repartition.end(); ++it )
     {
         const PHY_HumanRank& rank = *it->first;
-        unsigned int nNbr = it->second;
-        bool bStopRepartition = false;
-        while( nNbr && !bStopRepartition )
+        unsigned int n = it->second;
+        bool stop = false;
+        while( n && !stop )
         {
-            bStopRepartition = true;
-            for( auto it = composantes.begin(); it != composantes.end() && nNbr; ++it )
-                if( (**it).ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
+            stop = true;
+            for( auto it = composantes.begin(); it != composantes.end() && n; ++it )
+                if( (*it)->ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
                 {
-                    bStopRepartition = false;
-                    --nNbr;
+                    stop = false;
+                    --n;
                 }
         }
-        if( nNbr )
-            MT_LOG_WARNING_MSG( "Agent " << owner_->GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );
+        if( n )
+            MT_LOG_WARNING_MSG( "Agent " << owner_->GetID() << " - Not enough humans in crew to distribute commanders : " << n << " " << rank.GetName() << " remaining" );
     }
 }
 
