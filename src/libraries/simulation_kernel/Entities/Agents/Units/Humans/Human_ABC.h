@@ -53,7 +53,7 @@ public:
     virtual void ForceMentalDisease() = 0;
     virtual void CancelLogisticRequests() = 0;
     virtual void SetState( const PHY_HumanWound& newWound, bool mentalDisease, bool contaminated ) = 0;
-    //@}*/
+    //@}
 
     //! @name Accessors
     //@{

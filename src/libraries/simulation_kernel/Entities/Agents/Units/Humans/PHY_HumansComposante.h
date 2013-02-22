@@ -71,6 +71,7 @@ public:
     void ChangeHumanState( sword::MissionParameters& msg );
     void ChangeHumanSize( unsigned int newHumanSize );
     void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove );
+    virtual void CancelLogisticRequests();
 
     double GetOperationalState() const;
     bool IsViable() const;

@@ -2048,6 +2048,16 @@ bool PHY_RolePion_Composantes::CanEvacuateCasualties() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CancelLogisticRequests
+// Created: JSR 2013-02-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::CancelLogisticRequests()
+{
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+        ( *it )->CancelLogisticRequests();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::IsUnderIndirectFire
 // Created: LMT 2012-06-13
 // -----------------------------------------------------------------------------

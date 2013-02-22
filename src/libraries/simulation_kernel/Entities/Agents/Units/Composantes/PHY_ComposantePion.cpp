@@ -1576,6 +1576,15 @@ void PHY_ComposantePion::DeleteMaintenanceState()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CancelLogisticRequests
+// Created: JSR 2013-02-22
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::CancelLogisticRequests()
+{
+    pHumans_->CancelLogisticRequests();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetRole
 // Created: NLD 2005-03-09
 // -----------------------------------------------------------------------------

@@ -539,3 +539,13 @@ void PHY_HumansComposante::RemoveHealthyHumans( const PHY_HumanRank& rank, unsig
             it = humans_.erase( it );
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::CancelLogisticRequests
+// Created: JSR 2013-02-22
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::CancelLogisticRequests()
+{
+    for( auto it = humans_.begin(); it != humans_.end(); ++it )
+        ( *it )->CancelLogisticRequests();
+}

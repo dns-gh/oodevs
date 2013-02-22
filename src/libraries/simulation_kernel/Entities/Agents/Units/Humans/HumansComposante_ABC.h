@@ -63,6 +63,7 @@ public:
     virtual void ChangeHumanState( sword::MissionParameters& msg ) = 0;
     virtual void ChangeHumanSize( unsigned int newHumanSize ) = 0;
     virtual void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove ) = 0;
+    virtual void CancelLogisticRequests() = 0;
 
     virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;

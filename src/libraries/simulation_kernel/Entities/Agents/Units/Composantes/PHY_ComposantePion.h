@@ -111,6 +111,7 @@ public:
 
     unsigned int ApproximateTravelTime( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
     void DeleteMaintenanceState();
+    void CancelLogisticRequests();
     //@}
 
     //! @name Logistic - Medical

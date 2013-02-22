@@ -836,6 +836,7 @@ void MIL_AgentPion::DeleteUnit()
     GetRole< PHY_RoleInterface_Location >().RemoveFromPatch();
     GetRole< PHY_RolePion_Composantes >().RetrieveAllLentComposantes();
     GetRole< PHY_RolePion_Composantes >().ReturnAllBorrowedComposantes();
+    GetRole< PHY_RolePion_Composantes >().CancelLogisticRequests();
     GetRole< transport::PHY_RoleAction_Transport >().Cancel();
 
     if( pAutomate_ )
