@@ -2110,6 +2110,14 @@ PNG (*.png)</translation>
         <source>Remove File</source>
         <translation>Enlever fichier</translation>
     </message>
+    <message>
+        <source>Existing file found</source>
+        <translation>Fichier existant trouvé</translation>
+    </message>
+    <message>
+        <source>The file you want to copy already exists in the base, your file will be renamed</source>
+        <translation>LE fichier que vous voulez ajouter existe déja dans la base, il sera donc renommé</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_DescriptionParameter</name>
@@ -2671,8 +2679,60 @@ PNG (*.png)</translation>
         <translation>Montrer / Cacher l&apos;aide</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; :      set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; :      set text in italic&lt;br/&gt;__text__ :   set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
-        <translation>&gt;&lt;b&gt;Aide à l&apos;édition des fiches mission&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : ajouter une image dans le texte&lt;br/&gt;&quot;&quot;texte&quot;&quot; : mets le text en gras&lt;br/&gt;&apos;&apos;texte&apos;&apos; : mets le texte en italique&lt;br/&gt;__text__ : souligne le texte&lt;br/&gt; espace*espace : ajouter un element de list au  texte( le niveau de profondeur dans la liste est indiqué par le nombre d&apos;espaces avant l&apos;étoile )</translation>
+        <source>&lt;img alt=&quot;image&quot;/&gt;</source>
+        <translation>>&lt;img alt=&quot;image&quot;/&gt;</translation>
+    </message>
+    <message>
+        <source>$$image.jpg$$</source>
+        <translation>$$image.jpg$$</translation>
+    </message>
+    <message>
+        <source> * text1</source>
+        <translation> * texte1</translation>
+    </message>
+    <message>
+        <source>&lt;ul&gt;&lt;li&gt;text1&lt;/li&gt;&lt;/ul&gt;</source>
+        <translatio>&lt;ul&gt;&lt;li&gt;texte1&lt;/li&gt;&lt;/ul&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;ul&gt;&lt;ul&gt;&lt;li&gt;text2&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;</source>
+        <translation>&lt;ul&gt;&lt;ul&gt;&lt;li&gt;texte2&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;</translation>
+    </message>
+    <message>
+        <source>a &quot;&quot;bold&quot;&quot; text </source>
+        <translation>un texte &quot;&quot;gras&quot;&quot;</translation>
+    </message>
+    <message>
+        <source>a &lt;b&gt;bold&lt;/b&gt; text </source>
+        <translation>un texte &lt;b&gt;gras&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;italic text&lt;/i&gt;</source>
+        <translation>&lt;i&gt;un texte italique&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <source>an __underligned__ text </source>
+        <translation>un texte __souligné__</translation>
+    </message>
+    <message>
+        <source>an &lt;u&gt;underlined&lt;/u&gt; text </source>
+        <translation>un texte &lt;u&gt;souligné&lt;/u&gt; text </translation>
+    </message>
+    <message>
+        <source>  * text2</source>
+        <translation>  * texte 2</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Result&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Résultat&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Wiki synthax&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Synthaxe Wiki&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>&apos;&apos;italic text&apos;&apos;</source>
+        <translation>&apos;&apos;une texte italisque&apos;&apos;</translation>
     </message>
 </context>
 <context>

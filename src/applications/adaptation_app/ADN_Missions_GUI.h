@@ -90,7 +90,7 @@ private:
     ADN_Missions_Data& data_;
     ADN_HtmlViewer* missionViewers_[ 4 ];
     QCheckBox* availableState_;
-    QLabel* helpPanel_[ 4 ];
+    QGroupBox* helpPanel_[ 4 ];
     QSignalMapper* generateMapper_;
     QSignalMapper* helpMapper_;
     QSignalMapper* missionChangedMapper_;

@@ -121,6 +121,17 @@ namespace
         layout->addWidget( label );
         layout->addWidget( textEdit );
     }
+
+    class SelectableLabel : public QLabel
+    {
+    public:
+        SelectableLabel( const QString& text )
+            : QLabel( text )
+        {
+            setTextInteractionFlags( Qt::TextSelectableByMouse );
+        }
+        ~SelectableLabel(){}
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -210,17 +221,30 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         builder.PushSubName( "description-tab" );
 
         QPushButton* helpButton = new QPushButton( tr( "Show / Hide Help" ) );
-        helpPanel_[ eMissionType ] = new QLabel( tr( "<b>Mission sheets edition Help</b><br/>"
-            "$$image.jpg$$ : add image in text<br/>"
-            "\"\"text\"\" :      set text in bold<br/>"
-            "\'\'text\'\' :      set text in italic<br/>"
-            "__text__ :   set text underlined<br/>"
-            " space*space : add list element to text"
-            "( the level in the list is indicated by the number"
-            " of space before the star )") );
-        helpButton->setFixedSize( helpButton->sizeHint() );
+        helpPanel_[ eMissionType ] = new QGroupBox();
+        helpPanel_[ eMissionType ]->setStyleSheet( "QLabel { border : 1px ridge gray; }" );
         helpPanel_[ eMissionType ]->setVisible( false );
-        helpPanel_[ eMissionType ]->setStyleSheet( "QLabel { background-color : white }" );
+        helpPanel_[ eMissionType ]->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Minimum );
+
+        QGridLayout* subHelpLayout = new QGridLayout( helpPanel_[ eMissionType ] );
+        subHelpLayout->addWidget( new QLabel( tr( "<b>Wiki synthax</b>" ) ), 0, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "<b>Result</b>" ) ), 0, 1, 1, 1 );
+        subHelpLayout->addWidget( new SelectableLabel( tr( "$$image.jpg$$" ) ), 1, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "<img alt=\"image\"/>" ) ), 1, 1, 1, 1 );
+        subHelpLayout->addWidget( new SelectableLabel( tr( "a \"\"bold\"\" text " ) ), 2, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "a <b>bold</b> text " ) ), 2, 1, 1, 1 );
+        subHelpLayout->addWidget( new SelectableLabel( tr( "\'\'italic text\'\'" ) ), 3, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "<i>italic text</i>" ) ), 3, 1, 1, 1 );
+        subHelpLayout->addWidget( new SelectableLabel( tr( "an __underligned__ text " ) ), 4, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "an <u>underlined</u> text " ) ), 4, 1, 1, 1 );
+        subHelpLayout->addWidget( new SelectableLabel( tr( " * text1" ) ), 5, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "<ul><li>text1</li></ul>" ) ), 5, 1, 1, 1 );
+        subHelpLayout->addWidget( new SelectableLabel( tr( "  * text2" ) ), 6, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "<ul><ul><li>text2</li></ul></ul>" ) ), 6, 1, 1, 1 );
+        subHelpLayout->setSpacing( 1 );
+        subHelpLayout->setMargin( 1 );
+
+        helpButton->setFixedSize( helpButton->sizeHint() );
         connect( helpButton, SIGNAL( clicked() ), helpMapper_, SLOT( map() ) );
         helpMapper_->setMapping( helpButton, eMissionType );
 

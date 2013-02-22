@@ -2103,6 +2103,14 @@ PNG (*.png)
         <source>Remove File</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Existing file found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you want to copy already exists in the base, your file will be renamed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_DescriptionParameter</name>
@@ -2664,7 +2672,59 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Mission sheets edition Help&lt;/b&gt;&lt;br/&gt;$$image.jpg$$ : add image in text&lt;br/&gt;&quot;&quot;text&quot;&quot; :      set text in bold&lt;br/&gt;&apos;&apos;text&apos;&apos; :      set text in italic&lt;br/&gt;__text__ :   set text underlined&lt;br/&gt; space*space : add list element to text( the level in the list is indicated by the number of space before the star )</source>
+        <source>&lt;img alt=&quot;image&quot;/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>$$image.jpg$$</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> * text1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;ul&gt;&lt;li&gt;text1&lt;/li&gt;&lt;/ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;ul&gt;&lt;ul&gt;&lt;li&gt;text2&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a &quot;&quot;bold&quot;&quot; text </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a &lt;b&gt;bold&lt;/b&gt; text </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;italic text&lt;/i&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an __underligned__ text </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an &lt;u&gt;underlined&lt;/u&gt; text </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>  * text2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Result&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Wiki synthax&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;&apos;italic text&apos;&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
