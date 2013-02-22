@@ -12,10 +12,10 @@
 #ifndef __PHY_Composante_ABC_h_
 #define __PHY_Composante_ABC_h_
 
+#include "tools/Map.h"
 #include <vector>
 
 class PHY_ComposanteType_ABC;
-class WoundEffects_ABC;
 
 // =============================================================================
 // @class  PHY_Composante_ABC
@@ -36,7 +36,7 @@ public:
         unsigned int nNbrLent_;
     };
 
-    typedef std::map< const PHY_ComposanteType_ABC*, T_ComposanteUse > T_ComposanteUseMap;
+    typedef tools::Map< const PHY_ComposanteType_ABC*, T_ComposanteUse > T_ComposanteUseMap;
     //@}
 
     //! @name Constructors/Destructor

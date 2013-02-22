@@ -41,6 +41,7 @@ class PHY_RoleInterface_Composantes;
 class PHY_Sensor;
 class PHY_Weapon;
 class PHY_HumanWound;
+class WoundEffects_ABC;
 
 namespace firing
 {
