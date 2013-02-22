@@ -79,7 +79,7 @@ MIL_LimaFunction::~MIL_LimaFunction()
 // -----------------------------------------------------------------------------
 const MIL_LimaFunction* MIL_LimaFunction::Find( const sword::PhaseLineOrder::Function& asn )
 {
-    CIT_LimaFunctionMap it = limaFunctions_.find( asn );
+    auto it = limaFunctions_.find( asn );
     if( it == limaFunctions_.end() )
         return 0;
     return it->second;

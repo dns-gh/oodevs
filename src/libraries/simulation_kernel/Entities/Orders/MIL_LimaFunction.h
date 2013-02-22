@@ -64,7 +64,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< sword::PhaseLineOrder::Function, const MIL_LimaFunction* > T_LimaFunctionMap;
-    typedef T_LimaFunctionMap::const_iterator                       CIT_LimaFunctionMap;
     //@}
 
     //! @name Types

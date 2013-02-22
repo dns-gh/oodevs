@@ -12,6 +12,8 @@
 #ifndef __MIL_AutomateMRT_h_
 #define __MIL_AutomateMRT_h_
 
+#include "tools/Map.h"
+
 class MIL_AgentPion;
 class MIL_Fuseau;
 class MIL_Mission_ABC;
@@ -40,11 +42,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< MIL_AgentPion*, boost::shared_ptr< MIL_Mission_ABC > > T_MissionPionMap;
-    typedef T_MissionPionMap::const_iterator                                 CIT_MissionPionMap;
-
-    typedef std::map< MIL_AgentPion*, MIL_Fuseau* > T_FuseauPionMap;
-    typedef T_FuseauPionMap::const_iterator         CIT_FuseauPionMap;
+    typedef tools::Map< MIL_AgentPion*, boost::shared_ptr< MIL_Mission_ABC > > T_MissionPionMap;
+    typedef std::map< MIL_AgentPion*, boost::shared_ptr< MIL_Fuseau > > T_FuseauPionMap;
     //@}
 
 private:

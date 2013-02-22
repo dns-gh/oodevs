@@ -17,9 +17,7 @@
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
 MIL_AutomateMRT::MIL_AutomateMRT()
-    : bActivated_  ( false )
-    , missionsPion_()
-    , fuseauxPion_ ()
+    : bActivated_( false )
 {
     // NOTHING
 }
@@ -39,7 +37,7 @@ MIL_AutomateMRT::~MIL_AutomateMRT()
 //-----------------------------------------------------------------------------
 void MIL_AutomateMRT::SetMissionForPion( MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    missionsPion_.insert( std::pair< MIL_AgentPion*, const boost::shared_ptr< MIL_Mission_ABC > >( &pion, mission ) );
+    missionsPion_.insert( std::make_pair( &pion, mission ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -50,11 +48,7 @@ void MIL_AutomateMRT::SetFuseauForPion( MIL_AgentPion& pion, MIL_Fuseau& fuseau 
 {
     if( IsActivated() )
         return;
-
-    MIL_Fuseau*& pFuseau = fuseauxPion_[ &pion ];
-    if( pFuseau )
-        delete pFuseau;
-    pFuseau = &fuseau;
+    fuseauxPion_[ &pion ].reset( &fuseau );
 }
 
 //-----------------------------------------------------------------------------
@@ -65,10 +59,9 @@ const MIL_Fuseau* MIL_AutomateMRT::GetFuseauForPion( MIL_AgentPion& pion ) const
 {
     if( IsActivated() )
         return 0;
-
-    CIT_FuseauPionMap it = fuseauxPion_.find( &pion );
+    auto it = fuseauxPion_.find( &pion );
     if( it != fuseauxPion_.end() )
-        return it->second;
+        return it->second.get();
     return 0;
 }
 
@@ -79,23 +72,18 @@ const MIL_Fuseau* MIL_AutomateMRT::GetFuseauForPion( MIL_AgentPion& pion ) const
 void MIL_AutomateMRT::Activate()
 {
     assert( !bActivated_ );
-
     // Affectation des fuseaux à chaque mission pion
     for( auto it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
     {
-        MIL_AgentPion&   pion    = *it->first;
-        boost::shared_ptr< MIL_Mission_ABC > mission = it->second;
-
+        MIL_AgentPion& pion = *it->first;
         const MIL_Fuseau* pFuseau = GetFuseauForPion( pion );
         if( pFuseau )
-            mission->AffectFuseau( *pFuseau );
-        pion.GetOrderManager().ReplaceMission( mission );
+            it->second->AffectFuseau( *pFuseau );
+        pion.GetOrderManager().ReplaceMission( it->second );
     }
     missionsPion_.clear();
-    bActivated_ = true;
-    for( auto it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
-        delete it->second;
     fuseauxPion_.clear();
+    bActivated_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,10 +96,7 @@ void MIL_AutomateMRT::Cancel()
     for( auto it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
         it->second->Stop( it->second );
     missionsPion_.clear();
-
-    for( auto it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
-        delete it->second;
-    fuseauxPion_ .clear();
+    fuseauxPion_.clear();
 }
 
 //-----------------------------------------------------------------------------
