@@ -71,13 +71,13 @@ namespace serialization
     void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const unsigned int )
     {
         std::size_t size = map.size();
-        for( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
+        for( auto it = map.begin(); it != map.end(); ++it )
         {
             if( !it->first )
                 --size;
         }
         file << size;
-        for( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
+        for( auto it = map.begin(); it != map.end(); ++it )
         {
             if( !it->first )
                 continue;
@@ -228,13 +228,9 @@ double PHY_DotationGroup::Consume( const PHY_DotationCategory& category, double 
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float range, bool permanent ) const
 {
-    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); ++it )
-    {
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         if( it->first->IsIlluminating( range, permanent ) )
-        {
             return it->first;
-        }
-    }
     return 0;
 }
 
@@ -245,13 +241,9 @@ const PHY_DotationCategory* PHY_DotationGroup::GetIlluminationDotations( float r
 float PHY_DotationGroup::GetIlluminatingRange() const
 {
     float rangeMax = 0.0;
-    for( T_DotationMap::const_iterator it = dotations_.begin(); it != dotations_.end(); ++it )
-    {
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         if( it->first->GetIlluminatingRange( ) > rangeMax )
-        {
             rangeMax = it->first->GetIlluminatingRange( );
-        }
-    }
     return rangeMax;
 }
 
@@ -398,10 +390,8 @@ void PHY_DotationGroup::NotifyCaptured()
 void PHY_DotationGroup::NotifyReleased()
 {
     assert( pType_ );
-
     if( pType_ == PHY_DotationType::ration_ )
         return;
-
     for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->NotifyReleased();
 }
@@ -412,7 +402,7 @@ void PHY_DotationGroup::NotifyReleased()
 // -----------------------------------------------------------------------------
 PHY_Dotation* PHY_DotationGroup::GetDotation( const PHY_DotationCategory& dotationCategory ) const
 {
-    CIT_DotationMap it = dotations_.find( &dotationCategory );
+    auto it = dotations_.find( &dotationCategory );
     if( it == dotations_.end() )
         return 0;
     return it->second;

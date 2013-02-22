@@ -299,7 +299,7 @@ void PHY_DotationGroupContainer::ChangeDotation( const PHY_DotationCategory& cat
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations( float range, bool permanent ) const
 {
-    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
     {
         const PHY_DotationCategory* dotation = it->second->GetIlluminationDotations( range, permanent );
         if( dotation )
@@ -314,12 +314,12 @@ const PHY_DotationCategory* PHY_DotationGroupContainer::GetIlluminationDotations
 // -----------------------------------------------------------------------------
 double PHY_DotationGroupContainer::GetFuelDotationNumber() const
 {
-    const PHY_DotationGroup* pGroup = GetDotationGroup( *PHY_DotationType::carburant_ );
     double ret = 0;
+    const PHY_DotationGroup* pGroup = GetDotationGroup( *PHY_DotationType::carburant_ );
     if( pGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = pGroup->GetDotations();
-        for( PHY_DotationGroup::CIT_DotationMap it = dotations.begin(); it != dotations.end(); ++it )
+        for( auto it = dotations.begin(); it != dotations.end(); ++it )
             ret += it->second->GetValue();
     }
     return ret;
@@ -332,12 +332,8 @@ double PHY_DotationGroupContainer::GetFuelDotationNumber() const
 float PHY_DotationGroupContainer::GetIlluminatingRange() const
 {
     float rangeMax = 0;
-    for( T_DotationGroupMap::const_iterator it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-    {
-        float range = it->second->GetIlluminatingRange( );
-        if( range > rangeMax )
-            rangeMax = range;
-    }
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+        rangeMax = std::max( rangeMax, it->second->GetIlluminatingRange() );
     return rangeMax;
 }
 
@@ -467,16 +463,13 @@ void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) co
 {
     std::size_t nNbrDotations = 0;
     for( auto itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
-    {
-        const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
-        nNbrDotations += dotations.size();
-    }
+        nNbrDotations += itDotationGroup->second->GetDotations().size();
     if( nNbrDotations == 0 )
         return;
     for( auto itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
-        for( PHY_DotationGroup::CIT_DotationMap it = dotations.begin(); it != dotations.end(); ++it )
+        for( auto it = dotations.begin(); it != dotations.end(); ++it )
         {
             const PHY_Dotation& dotation = *it->second;
             sword::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_resource_dotations()->add_elem();

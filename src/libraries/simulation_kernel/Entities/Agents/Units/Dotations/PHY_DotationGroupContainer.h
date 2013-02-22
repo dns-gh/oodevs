@@ -11,6 +11,7 @@
 #define __PHY_DotationGroupContainer_h_
 
 #include <boost/serialization/export.hpp>
+#include "tools/Map.h"
 #include "tools/Set.h"
 
 namespace client
@@ -116,7 +117,7 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationType*, PHY_DotationGroup* > T_DotationGroupMap;
+    typedef tools::Map< const PHY_DotationType*, PHY_DotationGroup* > T_DotationGroupMap;
     //@}
 
 private:

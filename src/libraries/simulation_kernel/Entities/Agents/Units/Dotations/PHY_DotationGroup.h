@@ -13,6 +13,7 @@
 #define __PHY_DotationGroup_h_
 
 #include "MIL.h"
+#include "tools/Map.h"
 
 namespace xml
 {
@@ -37,15 +38,14 @@ class PHY_DotationGroup : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, PHY_Dotation* >   T_DotationMap;
-    typedef T_DotationMap::const_iterator                          CIT_DotationMap;
+    typedef tools::Map< const PHY_DotationCategory*, PHY_Dotation* > T_DotationMap;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer, bool bInfiniteDotations );
-     PHY_DotationGroup();
+             PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer, bool bInfiniteDotations );
+             PHY_DotationGroup();
     virtual ~PHY_DotationGroup();
     //@}
 

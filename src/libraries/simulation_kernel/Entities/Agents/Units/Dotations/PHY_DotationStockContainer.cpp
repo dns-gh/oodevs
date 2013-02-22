@@ -306,30 +306,26 @@ namespace
         double rVolume_;
         double rWeight_;
     };
-    typedef std::map < const PHY_DotationNature*, T_StockData > T_NatureStockData;
-    typedef T_NatureStockData::const_iterator                   CIT_NatureStockData;
+    typedef tools::Map< const PHY_DotationNature*, T_StockData > T_NatureStockData;
 
-    class sStockChecker : public OnComponentFunctor_ABC
+    class StockChecker : public OnComponentFunctor_ABC
     {
-        public :
-            void operator() ( PHY_ComposantePion& composante )
+    public:
+        void operator() ( PHY_ComposantePion& composante )
+        {
+            const PHY_DotationNature* pStockTransporterNature = composante.GetType().GetStockTransporterNature();
+            if( /*!composante.GetType().CanBePartOfConvoy() && */pStockTransporterNature )
             {
-                const PHY_DotationNature* pStockTransporterNature = composante.GetType().GetStockTransporterNature();
-
-                if( /*!composante.GetType().CanBePartOfConvoy() && */pStockTransporterNature )
-                {
-                    T_StockData& stockData = stockCapacities_[ pStockTransporterNature ];
-
-                    double rWeight = 0.;
-                    double rVolume = 0.;
-                    composante.GetType().GetStockTransporterCapacity( rWeight, rVolume );
-
-                    stockData.rVolume_ += rVolume;
-                    stockData.rWeight_ += rWeight;
-                }
+                T_StockData& stockData = stockCapacities_[ pStockTransporterNature ];
+                double rWeight = 0.;
+                double rVolume = 0.;
+                composante.GetType().GetStockTransporterCapacity( rWeight, rVolume );
+                stockData.rVolume_ += rVolume;
+                stockData.rWeight_ += rWeight;
             }
+        }
 
-            T_NatureStockData stockCapacities_;
+        T_NatureStockData stockCapacities_;
     };
 }
 
@@ -345,14 +341,12 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     {
         const PHY_DotationStock&    dotationStock    = *it->second;
         const PHY_DotationCategory& dotationCategory = dotationStock.GetCategory();
-
         T_StockData& stockData = stocksByNatures[ &dotationCategory.GetNature() ];
         stockData.rVolume_ += dotationStock.GetValue() * dotationCategory.GetVolume();
         stockData.rWeight_ += dotationStock.GetValue() * dotationCategory.GetWeight();
     }
 
-    sStockChecker stockChecker;
-
+    StockChecker stockChecker;
     assert( pRoleSupply_ );//@TODO MGD stock pion and not role
     MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( pRoleSupply_->GetPion() );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
@@ -361,12 +355,10 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     for( auto it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
     {
         const T_StockData& stock = it->second;
-
         const T_StockData& stockCapacity = stockChecker.stockCapacities_[ it->first ];
-
         if( stock.rVolume_ > stockCapacity.rVolume_ || stock.rWeight_ > stockCapacity.rWeight_ )
         {
-            MIL_Report::PostEvent<MIL_Agent_ABC>( pRoleSupply_->GetPion(), report::eRC_DepassementCapaciteStockage );
+            MIL_Report::PostEvent< MIL_Agent_ABC >( pRoleSupply_->GetPion(), report::eRC_DepassementCapaciteStockage );
             return;
         }
     }
