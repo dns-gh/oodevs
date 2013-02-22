@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Converter.h"
 #include "MT_Tools/MT_String.h"
 #include "tools/Resolver.h"
+#include "tools/Map.h"
 #include <boost/shared_ptr.hpp>
 
 namespace sword
@@ -64,7 +65,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_KnowledgeGroupMap;
-    typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
     //@}
 
 public:
@@ -172,9 +172,12 @@ private:
     //@}
 
 private:
+    typedef tools::Map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
+
+private:
     //! @name Member data
     //@{
-    const unsigned int nID_;
+    unsigned int nID_;
     std::string strName_;
     E_Diplomacy nType_;
     T_DiplomacyMap diplomacies_;
