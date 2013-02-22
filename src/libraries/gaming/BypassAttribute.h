@@ -31,7 +31,7 @@ class BypassAttribute : public kernel::BypassAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             BypassAttribute( kernel::Controller& controller );
+             BypassAttribute( kernel::Controller& controller, bool hasSinglePointPos = false );
     virtual ~BypassAttribute();
     //@}
 
@@ -65,6 +65,7 @@ private:
     //@{
     kernel::Controller& controller_;
     int nBypassConstructionPercentage_;
+    bool hasSinglePointPos_;
     //@}
 };
 

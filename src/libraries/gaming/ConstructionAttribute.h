@@ -34,7 +34,7 @@ class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver );
+             ConstructionAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, bool singlePointPos = false );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -71,6 +71,7 @@ private:
     kernel::DotationType*                              construction_;
     kernel::OptionalValue< int >                       nConstructionPercentage_;
     kernel::OptionalValue< unsigned int >              nDotationConstruction_;
+    bool hasSinglePointPos_;
     //@}
 };
 

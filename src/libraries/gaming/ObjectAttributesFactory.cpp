@@ -39,11 +39,14 @@
 #include "StaticModel.h"
 #include "TeamsModel.h"
 #include "PropagationAttribute.h"
+#include "LocationPositions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Point.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory constructor
@@ -96,6 +99,19 @@ void ObjectAttributesFactory::Register( kernel::ObjectKnowledge_ABC& entity, con
     }
 }
 
+namespace
+{
+    bool HasSinglePoint( kernel::Entity_ABC& entity )
+    {
+        const LocationPositions* pPositions = dynamic_cast< const LocationPositions* >( entity.Retrieve< kernel::Positions >() );
+        if( !pPositions )
+            return false;
+        if( pPositions && pPositions->GetLocation() )
+            return ( dynamic_cast< const kernel::Point* >( pPositions->GetLocation() ) != nullptr );
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory::Register
 // Created: LGY 2012-11-21
@@ -109,13 +125,13 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
         entity.Attach< kernel::LodgingAttribute_ABC >( *new LodgingAttribute( controllers_.controller_, model_.agents_ ) );
 
     if( attributes.has_construction() && entity.Retrieve< kernel::ConstructionAttribute_ABC >() == 0 )
-        entity.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
+        entity.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_, HasSinglePoint( entity ) ) );
 
     if( attributes.has_mine() && entity.Retrieve< kernel::MineAttribute_ABC >() == 0 )
         entity.Attach< kernel::MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
     if( attributes.has_bypass() && entity.Retrieve< kernel::BypassAttribute_ABC >() == 0 )
-        entity.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
+        entity.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_, HasSinglePoint( entity ) ) );
 
     if( attributes.has_obstacle() && entity.Retrieve< kernel::ObstacleAttribute_ABC >() == 0 )
         entity.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );

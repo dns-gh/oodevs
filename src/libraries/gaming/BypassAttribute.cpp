@@ -23,9 +23,10 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( Controller& controller )
+BypassAttribute::BypassAttribute( Controller& controller, bool hasSinglePointPos /*= false*/ )
     : controller_( controller )
     , nBypassConstructionPercentage_ ( 0 )
+    , hasSinglePointPos_( hasSinglePointPos )
 {
     // NOTHING
 }
@@ -110,7 +111,7 @@ void BypassAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor() * 200.f ), nBypassConstructionPercentage_ / 100.f );
+            tools.DrawLife( where - geometry::Vector2f( 0.f, tools.GetAdaptiveZoomFactor( !hasSinglePointPos_ ) * 200.f ), nBypassConstructionPercentage_ / 100.f, hasSinglePointPos_ );
         glPopAttrib();
     }
 }
