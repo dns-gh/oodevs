@@ -61,7 +61,7 @@ void PathType::Initialize()
 // Created: JDY 03-04-14
 //-----------------------------------------------------------------------------
 PathType::PathType( E_PathType nType, const std::string& strName )
-    : nPathType_( nType   )
+    : nPathType_( nType )
     , strName_  ( strName )
 {
     // NOTHING
@@ -82,7 +82,7 @@ PathType::~PathType()
 // -----------------------------------------------------------------------------
 const PathType* PathType::Find( const std::string& strName )
 {
-    CIT_PathTypeMap it = pathTypes_.find ( strName );
+    auto it = pathTypes_.find ( strName );
     if( it == pathTypes_.end() )
         return 0;
     return it->second;

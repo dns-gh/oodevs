@@ -42,7 +42,6 @@ public:
     static const PathType nbc_;
 
     typedef std::map< std::string, const PathType* > T_PathTypeMap;
-    typedef T_PathTypeMap::const_iterator              CIT_PathTypeMap;
     //@}
 
 public:
@@ -57,7 +56,7 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int         GetID  () const;
+    unsigned int       GetID  () const;
     const std::string& GetName() const;
     //@}
 
@@ -82,16 +81,25 @@ private:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
              PathType( E_PathType nType, const std::string& strName );
     virtual ~PathType();
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     const E_PathType  nPathType_;
     const std::string strName_;
+    //@}
 
 private:
+    //! @name Static member data
+    //@{
     static T_PathTypeFromIDVector pathTypesFromID_;
     static T_PathTypeMap          pathTypes_;
+    //@}
 };
 
 }

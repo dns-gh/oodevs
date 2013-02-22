@@ -37,7 +37,7 @@ struct Agent_PathClass::LoadingWrapper
 void Agent_PathClass::CheckRulesExistence()
 {
     const PathType::T_PathTypeMap& types = PathType::GetPathTypes();
-    for( PathType::CIT_PathTypeMap it = types.begin(); it != types.end(); ++it )
+    for( auto it = types.begin(); it != types.end(); ++it )
     {
         const std::string& strTypeName = it->second->GetName();
         if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, false ) ) ) == rules_.end() )
@@ -61,6 +61,16 @@ void Agent_PathClass::Initialize( xml::xistream& xis, const std::vector< unsigne
             >> xml::list( "rule", loader, &LoadingWrapper::ReadUnitRule, dangerousObjects )
         >> xml::end;
     CheckRulesExistence();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent_PathClass::Terminate
+// Created: SLI 2013-02-22
+// -----------------------------------------------------------------------------
+void Agent_PathClass::Terminate()
+{
+    for( auto it = rules_.begin(); it != rules_.end(); ++it )
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------

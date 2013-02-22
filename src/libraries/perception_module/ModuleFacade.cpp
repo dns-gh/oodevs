@@ -106,6 +106,8 @@ ModuleFacade::ModuleFacade( const wrapper::View& model )
 // -----------------------------------------------------------------------------
 ModuleFacade::~ModuleFacade()
 {
+    RadarType::Terminate();
+    SensorType::Terminate();
     RadarClass::Terminate();
     PerceptionLevel::Terminate();
 }

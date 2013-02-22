@@ -36,6 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ModuleFacade( const wrapper::View& model );
+            ~ModuleFacade();
     //@}
 
     //! @name Operations

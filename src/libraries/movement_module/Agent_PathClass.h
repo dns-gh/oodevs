@@ -42,7 +42,8 @@ class Agent_PathClass
 public:
     //! @name Manager
     //@{
-    static       void                 Initialize  ( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
+    static       void             Initialize  ( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects );
+    static       void             Terminate   ();
     static const Agent_PathClass& GetPathClass( const PathType& pathType, const wrapper::View& entity );
     //@}
 
@@ -124,11 +125,9 @@ private:
     //! @name Types
     //@{
     typedef std::vector< double >                              T_ObjectCosts;
-
     typedef std::pair< bool /*bFlying*/, bool /*, bAutonomous*/> T_BooleanPair;
     typedef std::pair< std::string, T_BooleanPair >              T_RuleType;
     typedef std::map< T_RuleType, Agent_PathClass* >         T_Rules;
-
     typedef std::map< unsigned int, double >  T_PopulationAttitudeCosts;
     //@}
 

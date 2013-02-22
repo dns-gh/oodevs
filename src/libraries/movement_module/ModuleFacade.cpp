@@ -212,6 +212,15 @@ ModuleFacade::ModuleFacade( const wrapper::View& model )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModuleFacade destructor
+// Created: SLI 2013-02-22
+// -----------------------------------------------------------------------------
+ModuleFacade::~ModuleFacade()
+{
+    Agent_PathClass::Terminate();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModuleFacade::RegisterPathWalker
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
