@@ -12,6 +12,7 @@
 #ifndef __PHY_BreakdownType_h_
 #define __PHY_BreakdownType_h_
 
+#include "tools/Map.h"
 #include "MT_Tools/MT_GaussianRandom.h"
 #include "MT_Tools/MT_String.h"
 
@@ -32,8 +33,7 @@ class PHY_BreakdownType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, unsigned int > T_PartMap;
-    typedef T_PartMap::const_iterator                           CIT_PartMap;
+    typedef tools::Map< const PHY_DotationCategory*, unsigned int > T_PartMap;
     //@}
 
 public:

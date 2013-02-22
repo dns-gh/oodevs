@@ -392,17 +392,15 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( owner_.GetAlgorithms().dotationComputerFactory_->Create() );
     owner_.Execute( *dotationComputer );//@TODO MGD move execute for all computer in factories create
     const PHY_BreakdownType::T_PartMap& parts = breakdown.GetNeededParts();
-    for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
-    {
+    for( auto it = parts.begin(); it != parts.end(); ++it )
         if( dotationComputer->GetDotationValue( *it->first ) < it->second )
             return false;
-    }
-    for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
+    for( auto it = parts.begin(); it != parts.end(); ++it )
     {
 //        unsigned int nOut = (unsigned int)roleDotations.ConsumeDotation( *it->first, it->second );
 //        assert( nOut == it->second );
-        double nDotation = it->second;
-        owner_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *it->first, nDotation );
+        double dotation = it->second;
+        owner_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *it->first, dotation );
     }
     return true;
 }
@@ -611,7 +609,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_Mainte
     owner_.Execute( *dotationComputer );
 
     const PHY_BreakdownType::T_PartMap& parts = composanteState.GetComposanteBreakdown().GetNeededParts();
-    for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
+    for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         // Parts never available ...
         if( dotationComputer->GetDotationCapacity( *it->first ) <= 0. )
