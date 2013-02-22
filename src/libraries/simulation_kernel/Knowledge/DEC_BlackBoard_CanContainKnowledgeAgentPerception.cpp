@@ -34,49 +34,8 @@ DEC_BlackBoard_CanContainKnowledgeAgentPerception::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeAgentPerception::~DEC_BlackBoard_CanContainKnowledgeAgentPerception()
 {
-    while( !unitKnowledgePerceptionMap_.empty() )
-        DestroyKnowledgeAgentPerception( *unitKnowledgePerceptionMap_.begin()->second );
-}
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first
-                     << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Agent_ABC* pAgent;
-
-                file >> pAgent;
-                file >> map[ pAgent ];
-            }
-        }
-    }
+    while( !perceptions_.empty() )
+        DestroyKnowledgeAgentPerception( *perceptions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +44,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> unitKnowledgePerceptionMap_;
+    file >> perceptions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,12 +53,8 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << unitKnowledgePerceptionMap_;
+    file << perceptions_;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::CreateKnowledgeAgentPerception
@@ -108,7 +63,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutA
 DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception::CreateKnowledgeAgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
 {
     DEC_Knowledge_AgentPerception* pKnowledge = new DEC_Knowledge_AgentPerception( agentPerceiving, agentPerceived );//$$ RAM
-    if( ! unitKnowledgePerceptionMap_.insert( std::make_pair( &agentPerceived, pKnowledge ) ).second )
+    if( ! perceptions_.insert( std::make_pair( &agentPerceived, pKnowledge ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
@@ -119,7 +74,7 @@ DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge )
 {
-    if( unitKnowledgePerceptionMap_.erase( &knowledge.GetAgentPerceived() ) != 1 )
+    if( perceptions_.erase( &knowledge.GetAgentPerceived() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
@@ -145,9 +100,9 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::CleanDeletedAgentKnowled
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception* DEC_BlackBoard_CanContainKnowledgeAgentPerception::GetKnowledgeAgentPerception( const MIL_Agent_ABC& associatedAgent ) const
 {
-    auto itKnowledge = unitKnowledgePerceptionMap_.find( &associatedAgent );
-    if( itKnowledge != unitKnowledgePerceptionMap_.end() )
-        return itKnowledge->second;
+    auto it = perceptions_.find( &associatedAgent );
+    if( it != perceptions_.end() )
+        return it->second;
     else
         return 0;
 }

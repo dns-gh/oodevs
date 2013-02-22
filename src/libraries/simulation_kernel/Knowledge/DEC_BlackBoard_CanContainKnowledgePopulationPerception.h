@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include "tools/Map.h"
 
 class DEC_Knowledge_PopulationPerception;
 class MIL_Agent_ABC;
@@ -24,15 +25,6 @@ class MIL_Population;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgePopulationPerception : private boost::noncopyable
 {
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Population*, DEC_Knowledge_PopulationPerception* > T_KnowledgePopulationPerceptionMap;
-    typedef T_KnowledgePopulationPerceptionMap::iterator                           IT_KnowledgePopulationPerceptionMap;
-    typedef T_KnowledgePopulationPerceptionMap::const_iterator                     CIT_KnowledgePopulationPerceptionMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,10 +53,10 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulationPerception( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgePopulationPerceptionMap itKnowledge = knowledgePopulationPerceptionMap_.begin(); itKnowledge != knowledgePopulationPerceptionMap_.end(); )
+        for( auto it = perceptions_.begin(); it != perceptions_.end(); )
         {
-            DEC_Knowledge_PopulationPerception& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_PopulationPerception& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }
@@ -72,10 +64,10 @@ public:
     template < class BinaryFunction, class Parameter >
     void ApplyOnKnowledgesPopulationPerception( BinaryFunction& fct, Parameter param ) const
     {
-        for( CIT_KnowledgePopulationPerceptionMap itKnowledge = knowledgePopulationPerceptionMap_.begin(); itKnowledge != knowledgePopulationPerceptionMap_.end(); )
+        for( auto it = perceptions_.begin(); it != perceptions_.end(); )
         {
-            DEC_Knowledge_PopulationPerception& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_PopulationPerception& knowledge = *it->second;
+            ++it;
             fct( knowledge, param );
         }
     }
@@ -84,7 +76,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgePopulationPerceptionMap knowledgePopulationPerceptionMap_;
+    tools::Map< const MIL_Population*, DEC_Knowledge_PopulationPerception* > perceptions_;
     //@}
 };
 

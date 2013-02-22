@@ -33,8 +33,8 @@ DEC_BlackBoard_CanContainKnowledgePopulationPerception::DEC_BlackBoard_CanContai
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationPerception::~DEC_BlackBoard_CanContainKnowledgePopulationPerception()
 {
-    while( !knowledgePopulationPerceptionMap_.empty() )
-        DestroyKnowledgePopulationPerception( *knowledgePopulationPerceptionMap_.begin()->second );
+    while( !perceptions_.empty() )
+        DestroyKnowledgePopulationPerception( *perceptions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::load( MIL_CheckPoin
     {
         MIL_Population* pPopulation;
         file >> pPopulation;
-        file >> knowledgePopulationPerceptionMap_[ pPopulation ];
+        file >> perceptions_[ pPopulation ];
     }
 }
 
@@ -59,9 +59,9 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::load( MIL_CheckPoin
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    std::size_t size = knowledgePopulationPerceptionMap_.size();
+    std::size_t size = perceptions_.size();
     file << size;
-    for( auto it = knowledgePopulationPerceptionMap_.begin(); it != knowledgePopulationPerceptionMap_.end(); ++it )
+    for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
     {
         file << it->first
              << it->second;
@@ -75,7 +75,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
 DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived )
 {
     DEC_Knowledge_PopulationPerception* pKnowledge = new DEC_Knowledge_PopulationPerception( agentPerceiving, populationPerceived );//$$ RAM
-    if( ! knowledgePopulationPerceptionMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
+    if( ! perceptions_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
@@ -86,7 +86,7 @@ DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulation
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge )
 {
-    if( knowledgePopulationPerceptionMap_.erase( &knowledge.GetPopulationPerceived() ) != 1 )
+    if( perceptions_.erase( &knowledge.GetPopulationPerceived() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
@@ -97,9 +97,9 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePop
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception* DEC_BlackBoard_CanContainKnowledgePopulationPerception::GetKnowledgePopulationPerception( const MIL_Population& associatedPopulation ) const
 {
-    CIT_KnowledgePopulationPerceptionMap itKnowledge = knowledgePopulationPerceptionMap_.find( &associatedPopulation );
-    if( itKnowledge != knowledgePopulationPerceptionMap_.end() )
-        return itKnowledge->second;
+    auto it = perceptions_.find( &associatedPopulation );
+    if( it != perceptions_.end() )
+        return it->second;
     else
         return 0;
 }

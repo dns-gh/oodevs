@@ -941,8 +941,8 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
     try
     {
         const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& groups = knowledgeGroupFactory_->GetElements();
-        for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = groups.begin(); it != groups.end(); ++it )
-            (it->second)->UpdateKnowledgeGroup();
+        for( auto it = groups.begin(); it != groups.end(); ++it )
+            it->second->UpdateKnowledgeGroup();
     }
     catch( const std::exception& e )
     {
@@ -1525,7 +1525,7 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
     // Transfer composante
     PHY_RolePion_Composantes& pSource = pion.GetRole< PHY_RolePion_Composantes >();
     PHY_RolePion_Composantes& pTarget = borrower->GetRole< PHY_RolePion_Composantes >();
-    for( std::map< unsigned int, int >::const_iterator it = composantesMap.begin(); it != composantesMap.end(); ++it )
+    for( auto it = composantesMap.begin(); it != composantesMap.end(); ++it )
         pSource.GiveComposante( it->first, it->second, pTarget );
 }
 
@@ -2336,13 +2336,13 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroup( u
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned int nID )
 {
     boost::shared_ptr< MIL_KnowledgeGroup > pCurKG = knowledgeGroupFactory_->Find( nID );
-    if ( pCurKG.get() )
+    if( pCurKG )
         return pCurKG;
     std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > > elements = knowledgeGroupFactory_->GetElements();
-    for( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    for( auto it = elements.begin(); it != elements.end(); ++it )
     {
-        boost::shared_ptr< MIL_KnowledgeGroup > pKG = (it->second)->FindKnowledgeGroup( nID );
-        if ( pKG.get() )
+        boost::shared_ptr< MIL_KnowledgeGroup > pKG = it->second->FindKnowledgeGroup( nID );
+        if( pKG )
             return pKG;
     }
     return boost::shared_ptr< MIL_KnowledgeGroup >();

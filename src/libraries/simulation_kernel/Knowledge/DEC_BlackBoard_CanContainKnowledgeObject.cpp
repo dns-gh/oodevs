@@ -309,7 +309,7 @@ bool DEC_BlackBoard_CanContainKnowledgeObject::HasObjectsAtInteractionHeightCach
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight )
 {
-    std::map< double, T_KnowledgeObjectVector >::const_iterator it = obstacleCache_.find( rHeight );
+    auto it = obstacleCache_.find( rHeight );
     if( it != obstacleCache_.end() )
         container = it->second;
 }

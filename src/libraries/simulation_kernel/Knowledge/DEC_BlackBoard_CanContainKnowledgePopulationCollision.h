@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include "tools/Map.h"
 
 class DEC_Knowledge_PopulationCollision;
 class MIL_Population;
@@ -27,14 +28,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgePopulationCollision : private boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Population*, DEC_Knowledge_PopulationCollision* > T_KnowledgePopulationCollisionMap;
-    typedef T_KnowledgePopulationCollisionMap::iterator                           IT_KnowledgePopulationCollisionMap;
-    typedef T_KnowledgePopulationCollisionMap::const_iterator                     CIT_KnowledgePopulationCollisionMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -65,10 +58,10 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulationCollision( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.begin(); itKnowledge != knowledgePopulationCollisionMap_.end(); )
+        for( auto it = collisions_.begin(); it != collisions_.end(); )
         {
-            DEC_Knowledge_PopulationCollision& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_PopulationCollision& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }
@@ -77,7 +70,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgePopulationCollisionMap   knowledgePopulationCollisionMap_;
+    tools::Map< const MIL_Population*, DEC_Knowledge_PopulationCollision* > collisions_;
     //@}
 };
 

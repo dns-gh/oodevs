@@ -33,8 +33,8 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::DEC_BlackBoard_CanContain
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContainKnowledgePopulationCollision()
 {
-    while( !knowledgePopulationCollisionMap_.empty() )
-        DestroyKnowledgePopulationCollision( *knowledgePopulationCollisionMap_.begin()->second );
+    while( !collisions_.empty() )
+        DestroyKnowledgePopulationCollision( *collisions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPoint
     {
         MIL_Population* pPopulation;
         file >> pPopulation;
-        file >> knowledgePopulationCollisionMap_[ pPopulation ];
+        file >> collisions_[ pPopulation ];
     }
 }
 
@@ -59,9 +59,9 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPoint
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    std::size_t size = knowledgePopulationCollisionMap_.size();
+    std::size_t size = collisions_.size();
     file << size;
-    for( auto it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
+    for( auto it = collisions_.begin(); it != collisions_.end(); ++it )
     {
         file << it->first
              << it->second;
@@ -75,7 +75,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
 DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision( const MIL_Agent_ABC& agent, MIL_Population& population )
 {
     DEC_Knowledge_PopulationCollision* pKnowledge = new DEC_Knowledge_PopulationCollision( agent, population );//$$ RAM
-    if( ! knowledgePopulationCollisionMap_.insert( std::make_pair( &population, pKnowledge ) ).second )
+    if( ! collisions_.insert( std::make_pair( &population, pKnowledge ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
@@ -86,7 +86,7 @@ DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationC
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::DestroyKnowledgePopulationCollision( DEC_Knowledge_PopulationCollision& knowledge )
 {
-    if( knowledgePopulationCollisionMap_.erase( &knowledge.GetPopulation() ) != 1 )
+    if( collisions_.erase( &knowledge.GetPopulation() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
@@ -97,11 +97,10 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::DestroyKnowledgePopu
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationCollision* DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgePopulationCollision( const MIL_Population& associatedPopulation ) const
 {
-    CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.find( &associatedPopulation );
-    if( itKnowledge != knowledgePopulationCollisionMap_.end() )
-        return itKnowledge->second;
-    else
-        return 0;
+    auto it = collisions_.find( &associatedPopulation );
+    if( it != collisions_.end() )
+        return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,9 +109,9 @@ DEC_Knowledge_PopulationCollision* DEC_BlackBoard_CanContainKnowledgePopulationC
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulationCollision( T_KnowledgePopulationCollisionVector& container ) const
 {
-    container.clear(); container.reserve( knowledgePopulationCollisionMap_.size() );
-    for( CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.begin(); itKnowledge != knowledgePopulationCollisionMap_.end(); ++itKnowledge )
-        container.push_back( itKnowledge->second );
+    container.clear(); container.reserve( collisions_.size() );
+    for( auto it = collisions_.begin(); it != collisions_.end(); ++it )
+        container.push_back( it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,5 +120,5 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulat
 // -----------------------------------------------------------------------------
 bool DEC_BlackBoard_CanContainKnowledgePopulationCollision::HasCollision() const
 {
-    return !knowledgePopulationCollisionMap_.empty();
+    return !collisions_.empty();
 }

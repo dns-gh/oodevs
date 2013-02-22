@@ -70,7 +70,6 @@ void DEC_KS_UrbanKnowledgeSynthetizer::Prepare()
 // Name: DEC_KS_UrbanKnowledgeSynthetizer::GetKnowledgeToUpdate
 // Created: MGD 2009-12-05
 // -----------------------------------------------------------------------------
-inline
 boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKnowledgeToUpdate( const MIL_UrbanObject_ABC& objectKnown ) const
 {
     assert( pBlackBoard_ );
@@ -86,7 +85,6 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKn
 // Name: DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception
 // Created: MGD 2009-12-05
 // -----------------------------------------------------------------------------
-inline
 void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception( const DEC_Knowledge_UrbanPerception& perception )
 {
     const MIL_UrbanObject_ABC* urbanObject = dynamic_cast< MIL_UrbanObject_ABC* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( perception.GetUrbanPerceivedId() ) );

@@ -32,7 +32,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKnowledgeUrbanPerception()
 {
-    for( auto it = knowledgeUrbanPerceptionMap_.begin(); it != knowledgeUrbanPerceptionMap_.end(); ++it )
+    for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
         delete it->second;
 }
 
@@ -42,7 +42,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKno
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> knowledgeUrbanPerceptionMap_;
+    file >> perceptions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << knowledgeUrbanPerceptionMap_;
+    file << perceptions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutA
 // -----------------------------------------------------------------------------
 DEC_Knowledge_UrbanPerception* DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const MIL_UrbanObject_ABC& objectPerceived )
 {
-    DEC_Knowledge_UrbanPerception*& knowledge = knowledgeUrbanPerceptionMap_[ objectPerceived.GetID() ];
+    DEC_Knowledge_UrbanPerception*& knowledge = perceptions_[ objectPerceived.GetID() ];
     if( knowledge )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     else
@@ -74,8 +74,8 @@ DEC_Knowledge_UrbanPerception* DEC_BlackBoard_CanContainKnowledgeUrbanPerception
 // -----------------------------------------------------------------------------
 DEC_Knowledge_UrbanPerception* DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const MIL_UrbanObject_ABC& associatedUrban ) const
 {
-    auto itKnowledge = knowledgeUrbanPerceptionMap_.find( associatedUrban.GetID() );
-    if( itKnowledge != knowledgeUrbanPerceptionMap_.end() )
-        return itKnowledge->second;
+    auto it = perceptions_.find( associatedUrban.GetID() );
+    if( it != perceptions_.end() )
+        return it->second;
     return 0;
 }

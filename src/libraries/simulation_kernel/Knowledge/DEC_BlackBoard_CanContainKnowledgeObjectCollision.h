@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include "tools/Map.h"
 
 class DEC_Knowledge_ObjectCollision;
 class MIL_Object_ABC;
@@ -27,14 +28,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeObjectCollision : private boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Object_ABC*, DEC_Knowledge_ObjectCollision* > T_KnowledgeObjectCollisionMap;
-    typedef T_KnowledgeObjectCollisionMap::iterator                               IT_KnowledgeObjectCollisionMap;
-    typedef T_KnowledgeObjectCollisionMap::const_iterator                         CIT_KnowledgeObjectCollisionMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,13 +54,13 @@ public:
     void                           GetKnowledgesObjectCollision( T_KnowledgeObjectCollisionVector& container ) const;
     DEC_Knowledge_ObjectCollision* GetKnowledgeObjectCollision ( const MIL_Object_ABC& objectCollision ) const;
 
-    template < class UnaryFunction >
+    template< class UnaryFunction >
     void ApplyOnKnowledgesObjectCollision( UnaryFunction& fct ) const
     {
-        for( CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.begin(); itKnowledge != knowledgeObjectCollisionMap_.end(); )
+        for( auto it = collisions_.begin(); it != collisions_.end(); )
         {
-            DEC_Knowledge_ObjectCollision& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_ObjectCollision& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }
@@ -76,7 +69,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeObjectCollisionMap knowledgeObjectCollisionMap_;
+    tools::Map< const MIL_Object_ABC*, DEC_Knowledge_ObjectCollision* > collisions_;
     //@}
 };
 

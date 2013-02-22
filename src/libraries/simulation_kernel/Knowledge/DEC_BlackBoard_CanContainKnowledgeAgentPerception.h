@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include "tools/Map.h"
 
 class DEC_Knowledge_AgentPerception;
 class MIL_Agent_ABC;
@@ -26,12 +27,6 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeAgentPerception : private boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_AgentPerception* > T_KnowledgeAgentPerceptionMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,10 +56,10 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgentPerception( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
+        for( auto it = perceptions_.begin(); it != perceptions_.end(); )
         {
-            DEC_Knowledge_AgentPerception& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_AgentPerception& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }
@@ -72,10 +67,10 @@ public:
     template < class BinaryFunction, class Parameter >
     void ApplyOnKnowledgesAgentPerception( BinaryFunction& fct, Parameter param ) const
     {
-        for( auto itKnowledge = unitKnowledgePerceptionMap_.begin(); itKnowledge != unitKnowledgePerceptionMap_.end(); )
+        for( auto it = perceptions_.begin(); it != perceptions_.end(); )
         {
-            DEC_Knowledge_AgentPerception& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_AgentPerception& knowledge = *it->second;
+            ++it;
             fct( knowledge, param );
         }
     }
@@ -84,7 +79,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeAgentPerceptionMap unitKnowledgePerceptionMap_;
+    tools::Map< const MIL_Agent_ABC*, DEC_Knowledge_AgentPerception* > perceptions_;
     //@}
 };
 

@@ -50,22 +50,22 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrbanPerception( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); ++itKnowledge )
-            fct( *itKnowledge->second );
+        for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
+            fct( *it->second );
     }
 
     template < class BinaryFunction, class Parameter >
     void ApplyOnKnowledgesUrbanPerception( BinaryFunction& fct, Parameter param ) const
     {
-        for( auto itKnowledge = knowledgeUrbanPerceptionMap_.begin(); itKnowledge != knowledgeUrbanPerceptionMap_.end(); ++itKnowledge )
-            fct( *itKnowledge->second, param );
+        for( auto it = perceptions_.begin(); it != perceptions_.end(); ++it )
+            fct( *it->second, param );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::map< unsigned int, DEC_Knowledge_UrbanPerception* > knowledgeUrbanPerceptionMap_;
+    std::map< unsigned int, DEC_Knowledge_UrbanPerception* > perceptions_;
     //@}
 };
 

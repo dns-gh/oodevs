@@ -34,49 +34,8 @@ DEC_BlackBoard_CanContainKnowledgeObjectCollision::DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObjectCollision::~DEC_BlackBoard_CanContainKnowledgeObjectCollision()
 {
-    while( !knowledgeObjectCollisionMap_.empty() )
-        DestroyKnowledgeObjectCollision( *knowledgeObjectCollisionMap_.begin()->second );
-}
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
-        {
-            const std::size_t size = map.size();
-            file << size;
-            for( DEC_BlackBoard_CanContainKnowledgeObjectCollision::CIT_KnowledgeObjectCollisionMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Object_ABC* pObject;
-
-                file >> pObject;
-                file >> map[ pObject ];
-            }
-        }
-    }
+    while( !collisions_.empty() )
+        DestroyKnowledgeObjectCollision( *collisions_.begin()->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +44,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> knowledgeObjectCollisionMap_;
+    file >> collisions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +53,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << knowledgeObjectCollisionMap_;
+    file << collisions_;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +63,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutA
 DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM
-    if( ! knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
+    if( ! collisions_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
@@ -115,7 +74,7 @@ DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge )
 {
-    if( knowledgeObjectCollisionMap_.erase( &knowledge.GetObject() ) != 1 )
+    if( collisions_.erase( &knowledge.GetObject() ) != 1 )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
@@ -126,11 +85,10 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::DestroyKnowledgeObjectCo
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectCollision* DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgeObjectCollision( const MIL_Object_ABC& associatedObject ) const
 {
-    CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.find( &associatedObject );
-    if( itKnowledge != knowledgeObjectCollisionMap_.end() )
-        return itKnowledge->second;
-    else
-        return 0;
+    auto it = collisions_.find( &associatedObject );
+    if( it != collisions_.end() )
+        return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +97,7 @@ DEC_Knowledge_ObjectCollision* DEC_BlackBoard_CanContainKnowledgeObjectCollision
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::GetKnowledgesObjectCollision( T_KnowledgeObjectCollisionVector& container ) const
 {
-    container.clear(); container.reserve( knowledgeObjectCollisionMap_.size() );
-    for( CIT_KnowledgeObjectCollisionMap itKnowledge = knowledgeObjectCollisionMap_.begin(); itKnowledge != knowledgeObjectCollisionMap_.end(); ++itKnowledge )
-        container.push_back( itKnowledge->second );
+    container.clear(); container.reserve( collisions_.size() );
+    for( auto it = collisions_.begin(); it != collisions_.end(); ++it )
+        container.push_back( it->second );
 }
