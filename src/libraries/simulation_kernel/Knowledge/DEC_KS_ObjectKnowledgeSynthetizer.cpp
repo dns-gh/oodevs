@@ -102,7 +102,6 @@ void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectPerception( co
 // Name: DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-inline
 void DEC_KS_ObjectKnowledgeSynthetizer::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
 {
     GetKnowledgeToUpdate( collision.GetObject() )->Update( collision );

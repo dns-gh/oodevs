@@ -134,43 +134,6 @@ MIL_Army::~MIL_Army()
     delete pKnowledgeBlackBoard_;
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        // T_DiplomacyMap
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-        template< typename Archive >
-        void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first
-                     << it->second;
-            }
-        }
-        template< typename Archive >
-        void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Army* pArmy;
-                file >> pArmy;
-                file >> map[ pArmy ];
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::load
 // Created: LDC 2010-02-22
@@ -821,8 +784,7 @@ MIL_Army_ABC::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy 
     auto it = diplomacies_.find( &otherArmy );
     if( it == diplomacies_.end() )
         return eUnknown;
-    else
-        return it->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
