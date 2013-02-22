@@ -732,7 +732,7 @@
     </target>
 
     <target name="build" description="build everything">
-        <cmake_build target="all"/>
+        <cmake_build/>
     </target>
 
     <target name="unit_test">
