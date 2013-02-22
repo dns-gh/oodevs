@@ -200,6 +200,7 @@ void EquipmentTransferDialog::InitializeEquipments()
     if( !equipments )
         throw MASA_EXCEPTION( "Cannot find Equipments extension.");
     equipmentTable_->clearContents();
+    equipmentTable_->setRowCount( 0 );
     equipmentIdMap_.clear();
     tools::Iterator< const Equipment& > it = equipments->CreateIterator();
     int row = 0;
