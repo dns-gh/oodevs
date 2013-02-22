@@ -126,7 +126,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::multimap< const MIL_Automate*, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
+    typedef std::multimap< unsigned int, PHY_MedicalEvacuationAmbulance* > T_EvacuationAmbulancesMMap;
 
     typedef std::vector< const PHY_MedicalCollectionAmbulance* > T_CollectionAmbulancesSet;
 

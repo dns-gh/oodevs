@@ -212,7 +212,7 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     if( !consign.HasValidHumanState() )
         return 0;
     const MIL_Automate& humanAutomate = consign.GetHumanState().GetAutomate();
-    auto range = evacuationAmbulances_.equal_range( &humanAutomate );
+    auto range = evacuationAmbulances_.equal_range( humanAutomate.GetID() );
     for( auto it = range.first; it != range.second; ++it )
     {
         PHY_MedicalEvacuationAmbulance& ambulance = *it->second;
@@ -229,7 +229,7 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
     PHY_MedicalEvacuationAmbulance* pAmbulance = new PHY_MedicalEvacuationAmbulance( *this, *pCompAmbulance );
     if( ! pAmbulance->RegisterHuman( consign ) )
         MT_LOG_ERROR_MSG( __FUNCTION__ << ": Register failed" );
-    evacuationAmbulances_.insert( std::make_pair( &humanAutomate, pAmbulance ) );
+    evacuationAmbulances_.insert( std::make_pair( humanAutomate.GetID(), pAmbulance ) );
     return pAmbulance;
 }
 
