@@ -58,7 +58,6 @@ PHY_DotationConsumptions::~PHY_DotationConsumptions()
 {
     for( auto it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
         delete it->second;
-    dotationConsumptions_.clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,8 @@
 #ifndef __PHY_DotationConsumptions_h_
 #define __PHY_DotationConsumptions_h_
 
+#include "tools/Map.h"
+
 namespace xml
 {
     class xistream;
@@ -30,8 +32,7 @@ class PHY_DotationConsumptions : private boost::noncopyable
 public:
     //! @name types
     //@{
-    typedef std::map< const PHY_DotationCategory*, double > T_ConsumptionValue;
-    typedef T_ConsumptionValue::const_iterator             CIT_ConsumptionValue;
+    typedef tools::Map< const PHY_DotationCategory*, double > T_ConsumptionValue;
     //@}
 
 public:
@@ -51,8 +52,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, PHY_DotationConsumption* > T_DotationConsumptionMap;
-    typedef T_DotationConsumptionMap::const_iterator                        CIT_DotationConsumptionMap;
+    typedef tools::Map< const PHY_DotationCategory*, PHY_DotationConsumption* > T_DotationConsumptionMap;
     //@}
 
 private:

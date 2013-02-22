@@ -287,7 +287,6 @@ void PHY_RolePion_Dotations::RollbackConsumptionMode()
 // -----------------------------------------------------------------------------
 class sConsumptionTimeExpectancy : public ::OnComponentFunctor_ABC
 {
-
 public:
     sConsumptionTimeExpectancy( const PHY_ConsumptionType& consumptionMode )
         : consumptionMode_ ( consumptionMode )
@@ -303,17 +302,13 @@ public:
     double GetNbrTicksForConsumption( const PHY_DotationGroupContainer& dotations ) const
     {
         double rNbrTicks = std::numeric_limits< double >::max();
-
-        for ( PHY_DotationConsumptions::CIT_ConsumptionValue it = consumptions_.begin(); it != consumptions_.end(); ++it )
+        for ( auto it = consumptions_.begin(); it != consumptions_.end(); ++it )
         {
             assert( it->first );
             assert( it->second > 0. );
-
             const double rCurrentDotationValue = dotations.GetValue( *it->first );
-
             rNbrTicks = std::min( rNbrTicks, rCurrentDotationValue / it->second );
         }
-
         return rNbrTicks;
     }
 
@@ -321,7 +316,6 @@ private:
     const PHY_ConsumptionType&                         consumptionMode_;
           PHY_DotationConsumptions::T_ConsumptionValue consumptions_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::PHY_RolePion_Dotations::GetMaxTimeForConsumption
@@ -346,10 +340,6 @@ const PHY_ConsumptionType& PHY_RolePion_Dotations::GetConsumptionMode() const
         return PHY_ConsumptionType::engineStopped_;
     return *pPreviousConsumptionMode_;
 }
-
-// =============================================================================
-// LOGISTIC - SUPPLY
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2
