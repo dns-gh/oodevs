@@ -110,6 +110,14 @@ BOOST_AUTO_TEST_CASE( map_supports_swap )
     tools::Map< int, int >().swap( map );
 }
 
+BOOST_AUTO_TEST_CASE( map_is_comparable )
+{
+    tools::Map< int, int > map1 = boost::assign::map_list_of( 1, 1 );
+    tools::Map< int, int > map2 = boost::assign::map_list_of( 1, 2 );
+    BOOST_CHECK( map1 == map1 );
+    BOOST_CHECK( map1 != map2 );
+}
+
 BOOST_AUTO_TEST_CASE( map_is_serializable )
 {
     std::stringstream s;

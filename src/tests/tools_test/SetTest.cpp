@@ -111,6 +111,14 @@ BOOST_AUTO_TEST_CASE( set_supports_swap )
     BOOST_CHECK_EQUAL( 0u, set.size() );
 }
 
+BOOST_AUTO_TEST_CASE( set_is_comparable )
+{
+    tools::Set< int > set1 = boost::assign::list_of( 1 );
+    tools::Set< int > set2 = boost::assign::list_of( 2 );
+    BOOST_CHECK( set1 == set1 );
+    BOOST_CHECK( set1 != set2 );
+}
+
 BOOST_AUTO_TEST_CASE( set_is_serializable )
 {
     std::stringstream s;

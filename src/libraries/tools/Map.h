@@ -54,6 +54,14 @@ public:
         {
             return std::make_pair( first, second );
         }
+        bool operator==( const value_type& rhs ) const
+        {
+            return first == rhs.first && second == rhs.second;
+        }
+        bool operator!=( const value_type& rhs ) const
+        {
+            return !(*this_ == rhs);
+        }
         template< class Archive >
         void serialize( Archive& archive, const unsigned int /*version*/ )
         {
@@ -149,6 +157,15 @@ public:
     void swap( Map& rhs )
     {
         v_.swap( rhs.v_ );
+    }
+
+    bool operator==( const Map& rhs ) const
+    {
+        return v_ == rhs.v_;
+    }
+    bool operator!=( const Map& rhs ) const
+    {
+        return v_ != rhs.v_;
     }
 
     template< class Archive >

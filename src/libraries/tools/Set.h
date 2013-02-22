@@ -113,12 +113,6 @@ public:
         v_.swap( rhs.v_ );
     }
 
-    template< class Archive >
-    void serialize( Archive& archive, const unsigned int /*version*/ )
-    {
-        archive & v_;
-    }
-
     bool operator==( const Set& rhs ) const
     {
         return v_ == rhs.v_;
@@ -126,6 +120,12 @@ public:
     bool operator!=( const Set& rhs ) const
     {
         return v_ != rhs.v_;
+    }
+
+    template< class Archive >
+    void serialize( Archive& archive, const unsigned int /*version*/ )
+    {
+        archive & v_;
     }
 
 private:
