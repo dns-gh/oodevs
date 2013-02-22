@@ -118,5 +118,4 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, xml::xistream&
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
     InitializeModel               ( xis );
-    InitializeDiaFunctions        ();
 }

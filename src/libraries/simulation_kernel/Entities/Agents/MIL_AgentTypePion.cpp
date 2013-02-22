@@ -198,7 +198,6 @@ MIL_AgentTypePion::MIL_AgentTypePion( const std::string& strName, const std::str
     InitializeRapFor              ( xis );
     InitializeDistancesAvantPoints( xis );
     InitializeModel               ( xis );
-    InitializeDiaFunctions        ();
 }
 
 // -----------------------------------------------------------------------------
@@ -313,19 +312,6 @@ void MIL_AgentTypePion::InitializeModel( xml::xistream& xis )
     if( !pModel_ )
         xis.error( "Unknown pawn model " + strModel );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::InitializeDiaFunctions
-// Created: NLD 2004-08-19
-// -----------------------------------------------------------------------------
-void MIL_AgentTypePion::InitializeDiaFunctions()
-{
-    // NOTHING
-}
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InstanciatePion

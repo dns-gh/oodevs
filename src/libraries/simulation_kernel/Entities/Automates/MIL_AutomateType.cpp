@@ -155,9 +155,7 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, xml::xistream& x
         >> xml::list( "unit", *this, &MIL_AutomateType::ReadUnit );
     if( !pTypePC_ )
         xis.error( "No command-post defined for automat type: " + strName_ );
-
-    InitializeModel       ( xis );
-    InitializeDiaFunctions();
+    InitializeModel( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,16 +229,12 @@ void MIL_AutomateType::InitializeModel( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 {
-    typedef std::map< const MIL_AgentType_ABC*, unsigned int > T_CounterMap;
-    typedef T_CounterMap::const_iterator               CIT_CounterMap;
-
-    T_CounterMap currentComposition;
+    std::map< const MIL_AgentType_ABC*, unsigned int > currentComposition;
     const MIL_Automate::T_PionVector& pions = automate.GetPions();
 
     for( auto it = pions.begin(); it != pions.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
-
         const MIL_AgentType_ABC& pionType = pion.GetType();
         ++currentComposition[ &pionType ];
         if( composition_.find( &pionType ) == composition_.end() )
@@ -250,26 +244,12 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
     for( auto it = composition_.begin(); it != composition_.end(); ++it )
     {
         const sCompositionBounds& bounds   = it->second;
-        const unsigned int&               nRealNbr = currentComposition[ it->first ];
-
+        const unsigned int& nRealNbr = currentComposition[ it->first ];
         if( bounds.nMin_ > nRealNbr || bounds.nMax_ < nRealNbr )
             return false;
     }
-
     return true;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateType::InitializeDiaFunctions
-// Created: NLD 2004-10-14
-// -----------------------------------------------------------------------------
-void MIL_AutomateType::InitializeDiaFunctions()
-{
-}
-
-// =============================================================================
-// INSTANCIATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::InstanciateAutomate

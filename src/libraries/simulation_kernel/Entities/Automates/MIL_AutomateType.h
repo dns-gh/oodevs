@@ -113,9 +113,9 @@ private:
 private:
     //! @name Init
     //@{
-    void InitializeModel       ( xml::xistream& xis );
-    void InitializeDiaFunctions();
+    void InitializeModel( xml::xistream& xis );
     //@}
+
     //! @name Helpers
     //@{
     struct LoadingWrapper;

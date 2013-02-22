@@ -114,7 +114,6 @@ private:
     void InitializeRapFor              ( xml::xistream& xis );
     void InitializeDistancesAvantPoints( xml::xistream& xis );
     void InitializeModel               ( xml::xistream& xis );
-    void InitializeDiaFunctions        ();
     //@}
     //! @name Helpers
     //@{
