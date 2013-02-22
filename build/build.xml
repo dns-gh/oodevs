@@ -710,7 +710,7 @@
         <update name="zlib"/>
     </target>
 
-    <target name="configure" description="update packages and decisional" depends="update,deploy-application-data,generate-license"/>
+    <target name="configure" depends="update,deploy-application-data,generate-license" description="update packages and decisional"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
@@ -726,12 +726,12 @@
     </target>
 
     <target name="cmake.configure">
-        <cmake_configure input="${root.dir}/build" 
+        <cmake_configure input="${root.dir}/build"
             configuration="release"
             version="${version.version}"/>
     </target>
 
-    <target name="build">
+    <target name="build" description="build everything">
         <cmake_build target="all"/>
     </target>
 
@@ -746,7 +746,7 @@
         ,data_migrations_test
         ,exercises_test
         ,scripts_test
-        "/>
+        " description="build and run all tests"/>
 
     <target name="all" depends="configure,check,cmake.configure,build,test,documentation,package"/>
 
