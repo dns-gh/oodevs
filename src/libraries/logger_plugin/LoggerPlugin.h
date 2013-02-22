@@ -61,6 +61,7 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
+    virtual void Close();
     //@}
 
 private:

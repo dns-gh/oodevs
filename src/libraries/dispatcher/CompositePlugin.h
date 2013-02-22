@@ -103,6 +103,12 @@ public:
         for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->Update();
     }
+
+    virtual void Close()
+    {
+        for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
+            (*it)->Close();
+    }
     //@}
 
 private:

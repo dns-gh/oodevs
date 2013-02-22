@@ -56,13 +56,7 @@ ActionsLogger::ActionsLogger( const tools::SessionConfig& config,
 // -----------------------------------------------------------------------------
 ActionsLogger::~ActionsLogger()
 {
-    try
-    {
-        Commit();
-    }
-    catch( ... )
-    {
-    }
+    // NOTHING
 }
 
 namespace
@@ -212,6 +206,21 @@ void ActionsLogger::Log( const sword::CrowdOrder& message )
 void ActionsLogger::Log( const sword::FragOrder& message )
 {
     LogAction( message, &Content::mutable_frag_order );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::Close
+// Created: LDC 2013-02-21
+// -----------------------------------------------------------------------------
+void ActionsLogger::Close()
+{
+    try
+    {
+        Commit();
+    }
+    catch( ... )
+    {
+    }
 }
 
 namespace

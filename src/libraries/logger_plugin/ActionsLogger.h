@@ -78,6 +78,7 @@ public:
     void Log( const sword::AutomatOrder& message );
     void Log( const sword::CrowdOrder& message );
     void Log( const sword::FragOrder& message );
+    void Close();
     //@}
 
     //! @name Checkpoint

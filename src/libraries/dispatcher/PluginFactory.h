@@ -66,6 +66,7 @@ public:
     //@{
     void Register( PluginFactory_ABC& factory );
     void Instanciate();
+    void Close();
     //@}
 
 private:

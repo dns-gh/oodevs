@@ -41,6 +41,7 @@ public:
 
     virtual void Register( dispatcher::Services& ) {}
     virtual void Update() {}
+    virtual void Close() {}
     //@}
 };
 

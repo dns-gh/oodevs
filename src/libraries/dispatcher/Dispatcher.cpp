@@ -65,6 +65,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
 // -----------------------------------------------------------------------------
 Dispatcher::~Dispatcher()
 {
+    factory_->Close();
     google::protobuf::ShutdownProtobufLibrary();
 }
 
