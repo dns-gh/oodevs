@@ -1786,6 +1786,10 @@ Voulez-vous le supprimer?</translation>
         <source>Terrain profile to unit</source>
         <translation>Coupe de terrain jusqu&apos;à cette unité</translation>
     </message>
+    <message>
+        <source>Observation height</source>
+        <translation>Hauteur d'observation</translation>
+    </message>
 </context>
 <context>
     <name>gui::TrafficabilityPrototype_ABC</name>

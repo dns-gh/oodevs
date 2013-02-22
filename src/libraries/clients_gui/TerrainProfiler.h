@@ -54,8 +54,7 @@ private slots:
     void SetToPosition();
     void SetFromUnitPosition();
     void SetToUnitPosition();
-    void SliderChanged( int value );
-    void SpinboxChanged( int value );
+    void SpinboxChanged();
     //@}
 
 private:
@@ -73,7 +72,7 @@ private:
     virtual void showEvent( QShowEvent* e );
     virtual void hideEvent( QHideEvent* e );
     virtual QSize sizeHint () const;
-    void SetFromPosition( const geometry::Point2f& point, float height = 2.f );
+    void SetFromPosition( const geometry::Point2f& point );
     void SetToPosition( const geometry::Point2f& point );
     void UpdateView();
     //@}
@@ -90,7 +89,6 @@ private:
     float candidateHeight_;
     geometry::Point2f from_;
     geometry::Point2f to_;
-    QSlider* height_;
     QSpinBox* heightValue_;
     //@}
 };

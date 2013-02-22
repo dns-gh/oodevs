@@ -1781,6 +1781,10 @@ Do you want to remove it?</source>
         <source>Terrain profile to unit</source>
         <translation type="unfinished">الشخصية التضاريس لوحدة</translation>
     </message>
+    <message>
+        <source>Observation height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::TrafficabilityPrototype_ABC</name>
