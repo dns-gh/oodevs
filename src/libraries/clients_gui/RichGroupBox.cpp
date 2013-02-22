@@ -24,6 +24,7 @@ RichGroupBox::RichGroupBox( QWidget* parent )
     , originalLightColor_( palette().color( QPalette::Light ) )
 {
     connect( timer_, SIGNAL( timeout() ), SLOT( OnBlink() ) );
+    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ RichGroupBox::RichGroupBox( const QString& title, QWidget* parent )
     , originalLightColor_( palette().color( QPalette::Light ) )
 {
     connect( timer_, SIGNAL( timeout() ), SLOT( OnBlink() ) );
+    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
 }
 
 // -----------------------------------------------------------------------------

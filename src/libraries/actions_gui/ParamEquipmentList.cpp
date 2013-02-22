@@ -59,6 +59,7 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
     QGridLayout* layout = new QGridLayout( group_ );
     {
         baseList_ = new QListWidget( parent );
+        baseList_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
         baseList_->setSortingEnabled( true );
         baseList_->sortItems( Qt::AscendingOrder );
         tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
@@ -88,6 +89,7 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
     }
     {
         list_ = new QListWidget( parent );
+        list_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
         if( maintenance )
         {
             std::vector< const kernel::EquipmentType* > priorities = maintenance->GetPriorities();
