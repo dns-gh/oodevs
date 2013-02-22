@@ -11,6 +11,7 @@
 #define __MIL_UrbanObject_h_
 
 #include "MIL_UrbanObject_ABC.h"
+#include "tools/Map.h"
 
 namespace sword
 {
@@ -139,18 +140,17 @@ private:
     //! @name Types
     //@{
     typedef std::vector< MIL_LivingArea* > T_LivingAreas;
-    typedef T_LivingAreas::iterator       IT_LivingAreas;
-
     typedef std::map< std::string, unsigned int > T_Motivations;
-    typedef T_Motivations::iterator              IT_Motivations;
-    typedef T_Motivations::const_iterator       CIT_Motivations;
-
-    typedef std::map< MIL_LivingArea*, T_Motivations > T_Inhabitants;
-    typedef T_Inhabitants::const_iterator            CIT_Inhabitants;
+    typedef tools::Map< MIL_LivingArea*, T_Motivations > T_Inhabitants;
 
     struct UrbanColor
     {
-        UrbanColor() : red_( 200 ), green_( 200 ), blue_( 200 ), alpha_( 0.7f ) {}
+        UrbanColor()
+            : red_( 200 )
+            , green_( 200 )
+            , blue_( 200 )
+            , alpha_( 0.7f )
+        {}
         unsigned short red_;
         unsigned short green_;
         unsigned short blue_;

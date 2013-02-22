@@ -646,7 +646,7 @@ unsigned int MIL_UrbanObject::GetTotalInhabitants() const
 {
     unsigned int ret = 0;
     for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
-        for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+        for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             ret += it2->second;
     return ret;
 }
@@ -659,7 +659,7 @@ unsigned int MIL_UrbanObject::GetTotalInhabitantsForMotivation( const std::strin
 {
     unsigned int ret = 0;
     for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
-        for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+        for( auto it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             if( it2->first == motivation )
                 ret += it2->second;
     return ret;
@@ -732,7 +732,7 @@ void MIL_UrbanObject::OnReceiveSetEvacuated( const sword::MissionParameter_Value
     if( attribute.list_size() > 1 )
     {
         bool evacuated = attribute.list( 1 ).booleanvalue();
-        for( IT_LivingAreas it = livingAreas_.begin(); it != livingAreas_.end(); ++it )
+        for( auto it = livingAreas_.begin(); it != livingAreas_.end(); ++it )
             ( *it )->SetEvacuated( evacuated, this );
     }
 }

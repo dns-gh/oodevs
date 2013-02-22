@@ -103,7 +103,7 @@ void UrbanPhysicalCapacity::SendFullState( sword::UrbanAttributes& message ) con
     msg.set_occupation( static_cast< float >( occupation_ ) );
     msg.set_trafficability( static_cast< float >( trafficability_ ) );
     msg.set_parking_floors( parkingFloors_ );
-    for( std::map< std::string, float >::const_iterator it = motivations_.begin(); it != motivations_.end(); ++it )
+    for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
     {
         sword::UrbanUsage& usage = *message.add_usages();
         usage.set_role( it->first );
@@ -209,7 +209,7 @@ void UrbanPhysicalCapacity::WriteUrban( xml::xostream& xos ) const
                 << xml::attribute( "parking-floors", parkingFloors_ )
             << xml::end
             << xml::start( "usages" );
-            for( std::map< std::string, float >::const_iterator it = motivations_.begin(); it != motivations_.end(); ++it )
+            for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
             {
                 xos << xml::start( "usage" )
                         << xml::attribute( "type", it->first )
