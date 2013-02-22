@@ -89,7 +89,7 @@ void DelayCapacity::Register( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void DelayCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract )
 {
-    CIT_AgentMap it = agentInsideMap_.find( &agent );
+    auto it = agentInsideMap_.find( &agent );
     if( it != agentInsideMap_.end() )
         canInteract &= object.GetAttribute< DelayAttribute >().IsOverDelay( it->second );
 }
@@ -100,9 +100,9 @@ void DelayCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Age
 // -----------------------------------------------------------------------------
 void DelayCapacity::PreprocessAgent( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    IT_AgentMap it = agentInsideMap_.find( &agent );
+    auto it = agentInsideMap_.find( &agent );
     if( it == agentInsideMap_.end() )
-        agentInsideMap_.insert( std::make_pair( &agent, 0 ) );
+        agentInsideMap_[ &agent ] = 0;
     else
         it->second++;
 }

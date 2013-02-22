@@ -53,16 +53,9 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_Agent_ABC* , int > T_AgentMap;
-    typedef T_AgentMap::iterator                  IT_AgentMap;
-    typedef T_AgentMap::const_iterator           CIT_AgentMap;
-    //@}
-
     //! @name Members
     //@{
-    T_AgentMap agentInsideMap_;
+    std::map< const MIL_Agent_ABC* , int > agentInsideMap_;
     //@}
 };
 

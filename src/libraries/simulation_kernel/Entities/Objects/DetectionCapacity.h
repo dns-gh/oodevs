@@ -55,12 +55,6 @@ public:
     void ReadAcquisitionTime( xml::xistream& xis );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< MIL_Agent_ABC*, int > T_AgentMap;
-    typedef T_AgentMap::const_iterator    CIT_AgentMap;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -70,10 +64,10 @@ private:
 private:
     //! @name Members
     //@{
-        float rDetectionTime_; // LTO
-        float rRecognitionTime_; // LTO
-        float rIdentificationTime_; // LTO
-        T_AgentMap agentInsideMap_;
+    float rDetectionTime_; // LTO
+    float rRecognitionTime_; // LTO
+    float rIdentificationTime_; // LTO
+    std::map< MIL_Agent_ABC*, int > agentInsideMap_;
     //@}
 
 };
