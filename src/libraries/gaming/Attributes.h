@@ -41,7 +41,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Attributes : public kernel::Attributes_ABC
+class Attributes : public kernel::Extension_ABC
+                 , public kernel::Displayable_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
                  , public gui::Drawable_ABC
                  , public kernel::Aggregatable_ABC

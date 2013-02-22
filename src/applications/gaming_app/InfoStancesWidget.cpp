@@ -166,7 +166,7 @@ void InfoStancesWidget::NotifySelected( const kernel::Entity_ABC* entity )
         hide();
         if( !selected_ )
             return;
-        if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+        if( const Attributes* attributes = selected_->Retrieve< Attributes >() )
             Update( *attributes );
     }
 }
@@ -175,10 +175,10 @@ void InfoStancesWidget::NotifySelected( const kernel::Entity_ABC* entity )
 // Name: InfoStancesWidget::NotifyUpdated
 // Created: SBO 2007-03-01
 // -----------------------------------------------------------------------------
-void InfoStancesWidget::NotifyUpdated( const kernel::Attributes_ABC& extension )
+void InfoStancesWidget::NotifyUpdated( const Attributes& extension )
 {
-    if( selected_ && selected_->Retrieve< kernel::Attributes_ABC >() == &extension )
-        Update( static_cast< const Attributes& >( extension ) );
+    if( selected_ && selected_->Retrieve< Attributes >() == &extension )
+        Update( extension );
 }
 
 // -----------------------------------------------------------------------------

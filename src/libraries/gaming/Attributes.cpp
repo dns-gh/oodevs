@@ -271,7 +271,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         }
     }
 
-    controller_.Update( *(Attributes_ABC*)this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,10 +20,11 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class Attributes_ABC;
     class Displayer_ABC;
     class Positions;
 }
+
+class Attributes;
 
 // =============================================================================
 /** @class  InfoSummariesWidget
@@ -35,7 +36,7 @@ class InfoSummariesWidget : public Q3VBox
                           , public tools::Observer_ABC
                           , public tools::SelectionObserver< kernel::Entity_ABC >
                           , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                          , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
+                          , public tools::ElementObserver_ABC< Attributes >
                           , public tools::ElementObserver_ABC< kernel::Positions >
                           , public tools::ElementObserver_ABC< kernel::ConstructionAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::MineAttribute_ABC >
@@ -71,7 +72,7 @@ private:
     virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
-    virtual void NotifyUpdated( const kernel::Attributes_ABC& extension );
+    virtual void NotifyUpdated( const Attributes& extension );
     virtual void NotifyUpdated( const kernel::Positions& extension );
 
     virtual void NotifyUpdated( const kernel::ConstructionAttribute_ABC& extension )     { UpdateDisplayIfNeeded< kernel::ConstructionAttribute_ABC >( extension ); }

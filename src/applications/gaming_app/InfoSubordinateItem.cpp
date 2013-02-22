@@ -61,9 +61,9 @@ QVariant InfoSubordinateItem::data( int role ) const
 // Name: InfoSubordinateItem::NotifyUpdated
 // Created: SBO 2007-02-23
 // -----------------------------------------------------------------------------
-void InfoSubordinateItem::NotifyUpdated( const kernel::Attributes_ABC& attributes )
+void InfoSubordinateItem::NotifyUpdated( const Attributes& attributes )
 {
-    if( &attributes == GetEntity().Retrieve< kernel::Attributes_ABC >() )
+    if( &attributes == GetEntity().Retrieve< Attributes >() )
     {
         int opState = static_cast< const Attributes& >( attributes ).nRawOpState_;
         if( opState != oldRawState_ )

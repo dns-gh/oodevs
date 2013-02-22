@@ -446,7 +446,7 @@ namespace
     // $$$$ SBO 2007-03-08: temporary, surrendered status should be also present on Automat attributes...
     bool IsSurrendered( const kernel::Entity_ABC& entity )
     {
-        if( const Attributes* attr = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
+        if( const Attributes* attr = entity.Retrieve< Attributes >() )
             if( attr->surrenderedTo_ )
                 return true;
         if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )

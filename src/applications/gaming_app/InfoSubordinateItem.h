@@ -17,13 +17,14 @@ namespace kernel
 {
     class Entity_ABC;
     class Controllers;
-    class Attributes_ABC;
 }
 
 namespace gui
 {
     class EntitySymbols;
 }
+
+class Attributes;
 
 // =============================================================================
 /** @class  InfoSubordinateItem
@@ -33,7 +34,7 @@ namespace gui
 // =============================================================================
 class InfoSubordinateItem : public QListWidgetItem
                           , public tools::Observer_ABC
-                          , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
+                          , public tools::ElementObserver_ABC< Attributes >
                           , private boost::noncopyable
 {
 public:
@@ -52,7 +53,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const kernel::Attributes_ABC& attributes );
+    virtual void NotifyUpdated( const Attributes& attributes );
     //@}
 
 private:

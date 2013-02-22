@@ -23,7 +23,6 @@ public:                                                                         
 
 namespace kernel
 {
-    DECLARE_EXTENSION( Attributes_ABC )
     DECLARE_EXTENSION( LogisticLinks_ABC )
     DECLARE_EXTENSION( HumanFactors_ABC )
 }

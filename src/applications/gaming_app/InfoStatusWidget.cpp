@@ -242,7 +242,7 @@ void InfoStatusWidget::NotifySelected( const kernel::Entity_ABC* entity )
         gotoParent_->setDisabled( !hierarchies || !parent || !profile_.IsVisible( *parent ) );
         if( hierarchies )
             SetIcon();
-        if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+        if( const Attributes* attributes = selected_->Retrieve< Attributes >() )
         {
             SetLifeBar( *attributes );
             SetName( attributes );
@@ -404,13 +404,12 @@ void InfoStatusWidget::SetReinforcements( const Reinforcements& reinforcements )
 // Name: InfoStatusWidget::NotifyUpdated
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void InfoStatusWidget::NotifyUpdated( const kernel::Attributes_ABC& element )
+void InfoStatusWidget::NotifyUpdated( const Attributes& element )
 {
-    if( !selected_ || selected_->Retrieve< kernel::Attributes_ABC >() != &element )
+    if( !selected_ || selected_->Retrieve< Attributes >() != &element )
         return;
-    const Attributes& attributes = static_cast< const Attributes& >( element );
-    SetLifeBar( attributes );
-    SetName( &attributes );
+    SetLifeBar( element );
+    SetName( &element );
 }
 
 // -----------------------------------------------------------------------------

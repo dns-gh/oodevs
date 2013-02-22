@@ -114,13 +114,9 @@ namespace logistic_helpers
                 while( it.HasMoreElements() )
                 {
                     const Entity_ABC& child = it.NextElement();
-                    auto pAttributes = child.Retrieve< kernel::Attributes_ABC >();
-                    if( pAttributes )
-                    {
-                        auto attributes = dynamic_cast< const Attributes* >( pAttributes );
-                        if( attributes && attributes->isPC_ )
-                            return child.Retrieve< kernel::Positions >();
-                    }
+                    auto pAttributes = child.Retrieve< Attributes >();
+                    if( pAttributes && pAttributes->isPC_ )
+                        return child.Retrieve< kernel::Positions >();
                 }
             }
             return 0;

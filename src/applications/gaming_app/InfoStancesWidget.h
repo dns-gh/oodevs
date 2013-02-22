@@ -18,7 +18,6 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class Attributes_ABC;
 }
 
 class Attributes;
@@ -32,7 +31,7 @@ class Attributes;
 class InfoStancesWidget : public Q3VBox
                         , public tools::Observer_ABC
                         , public tools::SelectionObserver< kernel::Entity_ABC >
-                        , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
+                        , public tools::ElementObserver_ABC< Attributes >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,7 +50,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    virtual void NotifyUpdated( const kernel::Attributes_ABC& extension );
+    virtual void NotifyUpdated( const Attributes& extension );
     void Update( const Attributes& attributes );
     virtual QSize sizeHint() const;
     //@}

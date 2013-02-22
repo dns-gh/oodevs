@@ -38,7 +38,7 @@ namespace
         {
             QItemDelegate::paint( painter, option, index );
             if( const kernel::Entity_ABC* entity = index.model()->data( index, Qt::UserRole + 1 ).value< const kernel::Entity_ABC* >() )
-                if( const Attributes* attributes = static_cast< const Attributes* >( entity->Retrieve< kernel::Attributes_ABC >() ) )
+                if( const Attributes* attributes = entity->Retrieve< Attributes >() )
                     DrawLife( painter, attributes->nRawOpState_, option.rect );
         }
     private:

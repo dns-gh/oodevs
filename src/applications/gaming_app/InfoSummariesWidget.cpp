@@ -10,10 +10,10 @@
 #include "gaming_app_pch.h"
 #include "InfoSummariesWidget.h"
 #include "SummariesDisplayer.h"
-#include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "gaming/Attributes.h"
 
 using namespace kernel;
 
@@ -84,9 +84,9 @@ void InfoSummariesWidget::NotifyUpdated( const Entity_ABC& entity )
 // Name: InfoSummariesWidget::NotifyUpdated
 // Created: SBO 2007-02-28
 // -----------------------------------------------------------------------------
-void InfoSummariesWidget::NotifyUpdated( const Attributes_ABC& extension )
+void InfoSummariesWidget::NotifyUpdated( const Attributes& extension )
 {
-    if( !selected_ || ( selected_->Retrieve< Attributes_ABC >() != &extension ) )
+    if( !selected_ || ( selected_->Retrieve< Attributes >() != &extension ) )
         return;
     extension.DisplayInSummary( *display_ );
 }

@@ -195,7 +195,7 @@ void CommunicationTreeView::drawRow( QPainter* painter, const QStyleOptionViewIt
     {
         if( const kernel::Agent_ABC* agent = dataModel_.GetDataFromItem< const kernel::Agent_ABC >( *item ) )
         {
-            if( const Attributes* attributes = static_cast< const Attributes* >( agent->Retrieve< kernel::Attributes_ABC >() ) )
+            if( const Attributes* attributes = agent->Retrieve< Attributes >() )
             {
                 if( attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
                     painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() ) );

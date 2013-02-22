@@ -142,7 +142,7 @@ void InfoEventsWidget::NotifySelected( const kernel::Entity_ABC* entity )
         Reset();
         if( selected_ )
         {
-            if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+            if( const Attributes* attributes = selected_->Retrieve< Attributes >() )
                 SetAttributes( *attributes );
             if( const Contaminations* contaminations = selected_->Retrieve< Contaminations >() )
                 SetContaminations( *contaminations );
@@ -154,12 +154,11 @@ void InfoEventsWidget::NotifySelected( const kernel::Entity_ABC* entity )
 // Name: InfoEventsWidget::NotifyUpdated
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void InfoEventsWidget::NotifyUpdated( const kernel::Attributes_ABC& element )
+void InfoEventsWidget::NotifyUpdated( const Attributes& element )
 {
-    if( !selected_ || selected_->Retrieve< kernel::Attributes_ABC >() != &element )
+    if( !selected_ || selected_->Retrieve< Attributes >() != &element )
         return;
-    const Attributes& humans = static_cast< const Attributes& >( element );
-    SetAttributes( humans );
+    SetAttributes( element );
 }
 
 // -----------------------------------------------------------------------------
