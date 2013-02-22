@@ -10,6 +10,9 @@
 #include "gaming_pch.h"
 
 #include "Surface.h"
+#include "Attributes.h"
+#include "UrbanModel.h"
+#include "UrbanBlockDetectionMap.h"
 #include "VisionMap.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -20,8 +23,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
-#include "UrbanModel.h"
-#include "UrbanBlockDetectionMap.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -42,7 +43,7 @@ Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, cons
     sectors_.reserve( message.directions().elem_size() );
     for( int i = 0; i < message.directions().elem_size(); ++i )
         sectors_.push_back( Sector( origin_, message.directions().elem( i ).heading(), sensorType_.GetAngle() ) );
-    distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent );
+    distanceModificator_ = elongation_ * agent.Get< Attributes >().GetDistanceModificator( sensorType_ );
     maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 }
 

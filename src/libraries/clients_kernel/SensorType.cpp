@@ -8,6 +8,7 @@
 #include "Agent_ABC.h"
 #include "Architecture_ABC.h"
 #include "Object_ABC.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -19,7 +20,6 @@ using namespace kernel;
 SensorType::SensorType( const std::string& name, xml::xistream& xis )
     : strName_             ( name )
     , postureSourceFactors_( eNbrUnitPosture, 0. )
-    , weatherFactors_      ( eNbrWeatherType, 0. )
 {
     InitializeAngle    ( xis );
     InitializeDistances( xis );
@@ -27,6 +27,7 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     xis >> xml::start( "distance-modifiers" );
     InitializeEnvironnementFactors( xis );
     InitializeUrbanBlockMaterialFactors( xis );
+    InitializePostureSourceFactors( xis );
     xis >> xml::end;
 }
 
@@ -51,6 +52,17 @@ void SensorType::InitializeEnvironnementFactors( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SensorType::InitializePostureSourceFactors
+// Created: NLD 2004-09-10
+// -----------------------------------------------------------------------------
+void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
+{
+    xis >> xml::start( "source-posture-modifiers" )
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadPostureFactor )    
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SensorType::ReadEnvironnementFactor
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
@@ -65,6 +77,37 @@ void SensorType::ReadEnvironnementFactor( xml::xistream& xis )
         factorInTown_ = value;
     else if( type == "Sol" )
         factorInGround_ = value;
+}
+
+namespace
+{
+    std::map< std::string, unsigned int > postureMap;
+    void InitPostureMap()
+    {
+        if( postureMap.empty() )
+        {
+            postureMap[ "Mouvement" ] = 0;
+            postureMap[ "MouvementDiscret" ] = 1; 
+            postureMap[ "Arret" ] = 2;
+            postureMap[ "PosteReflexe"] = 3;
+            postureMap[ "Poste" ] = 4;
+            postureMap[ "PosteAmenage" ] = 5;
+            postureMap[ "PostePrepareGenie" ] = 6;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::ReadPostureFactor
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+void SensorType::ReadPostureFactor( xml::xistream& xis )
+{
+    std::string type; float value;
+    xis >> xml::attribute( "type", type )
+        >> xml::attribute( "value", value );
+    InitPostureMap();
+    postureSourceFactors_[ postureMap[ type ] ] = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,25 +176,6 @@ void SensorType::ReadDistance( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SensorType::GetPostureSourceFactor
-// Created: NLD 2004-09-10
-// -----------------------------------------------------------------------------
-float SensorType::GetPostureSourceFactor( const Agent_ABC& /*agent*/ ) const
-{
-    return 1.f;
-//    return agent.Get< Attributes_ABC >().ComputePostureFactor( postureSourceFactors_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SensorType::GetDistanceModificator
-// Created: NLD 2004-12-02
-// -----------------------------------------------------------------------------
-float SensorType::GetDistanceModificator( const Agent_ABC& agent ) const
-{
-    return GetPostureSourceFactor( agent );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SensorType::GetMaxDistance
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
@@ -211,6 +235,15 @@ std::string SensorType::GetName() const
 float SensorType::GetAngle() const
 {
     return rAngle_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< float > SensorType::GetPostureSourceFactors
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+const std::vector< float >& SensorType::GetPostureSourceFactors() const
+{
+    return postureSourceFactors_;
 }
 
 // -----------------------------------------------------------------------------

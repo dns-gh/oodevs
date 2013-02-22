@@ -32,6 +32,7 @@ public:
     //@{
     std::string GetName () const;
     float   GetAngle() const;
+    const std::vector< float >& GetPostureSourceFactors() const;
     //@}
 
     //! @name Operations
@@ -41,8 +42,6 @@ public:
     float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
-
-    float GetDistanceModificator( const Agent_ABC& agent ) const;
     //@}
 
 private:
@@ -64,14 +63,15 @@ private:
     //@{
     void InitializeDistances                ( xml::xistream& xis );
     void InitializeEnvironnementFactors     ( xml::xistream& xis );
+    void InitializePostureSourceFactors     ( xml::xistream& xis );
     void ReadEnvironnementFactor            ( xml::xistream& xis );
+    void ReadPostureFactor                  ( xml::xistream& xis );
     void InitializeUrbanBlockMaterialFactors( xml::xistream& xis );
     void ReadUrbanBlockMaterialFactor       ( xml::xistream& xis );
     void InitializeAngle                    ( xml::xistream& xis );
     void ReadDistance                       ( xml::xistream& xis );
 
-    float GetPostureSourceFactor            ( const Agent_ABC& agent ) const;
-    float ComputeEnvironmentFactor         ( bool inForest, bool inTown, bool inGround ) const;
+    float ComputeEnvironmentFactor          ( bool inForest, bool inTown, bool inGround ) const;
     bool ComputeUrbanExtinction             ( float& skyRock, float distance, const boost::optional< std::string >& material ) const;
     //@}
 
@@ -88,7 +88,6 @@ private:
 
     // Modificateurs
     T_FactorVector postureSourceFactors_;
-    T_FactorVector weatherFactors_;
 
     T_MaterialFactorMap urbanBlockFactors_;
 

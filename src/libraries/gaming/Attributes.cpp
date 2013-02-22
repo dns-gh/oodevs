@@ -19,6 +19,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/SensorType.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
 #include "Tools.h"
@@ -343,6 +344,15 @@ float Attributes::ComputePostureFactor( const std::vector< float >& factors ) co
 {
     const float ratio = 0.01f * nPostureCompletionPourcentage_;
     return factors.at( nOldPosture_ ) * ( 1.f - ratio ) + factors.at( nCurrentPosture_ ) * ratio;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::GetDistanceModificator
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+float Attributes::GetDistanceModificator( const kernel::SensorType& sensorType ) const
+{
+    return ComputePostureFactor( sensorType.GetPostureSourceFactors() );
 }
 
 // -----------------------------------------------------------------------------

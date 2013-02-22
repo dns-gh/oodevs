@@ -27,12 +27,13 @@ namespace sword
 
 namespace kernel
 {
-    class Controller;
     class Displayer_ABC;
+    class Controller;
     class CoordinateConverter_ABC;
-    class PropertiesDictionary;
-    class Team_ABC;
     class Entity_ABC;
+    class PropertiesDictionary;
+    class SensorType;
+    class Team_ABC;
 }
 
 // =============================================================================
@@ -61,7 +62,7 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     float ComputePostureFactor( const std::vector< float >& factors ) const; // $$$$ AGE 2006-04-19: move in Postures ?
-    const std::map< std::string, std::string >& GetExtensions() const;
+    float GetDistanceModificator( const kernel::SensorType& ) const;
     //@}
 
 private:

@@ -20,6 +20,7 @@
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
@@ -171,7 +172,10 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
     if( HasChanged() )
+    {
         owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------
