@@ -76,47 +76,6 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
     }
 }
 
-// =============================================================================
-// CHECKPOINT
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                boost::shared_ptr< DEC_Knowledge_Object > tmp = it->second;
-                file << it->first;
-                file << tmp;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Object_ABC* pObject;
-                file >> pObject;
-                file >> map[ pObject ];
-            }
-        }
-    }
-}
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::load
 // Created: JVT 2005-03-23
@@ -207,10 +166,10 @@ void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedF
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    auto itKnowledge = objectMap_.find( &objectKnown );
-    if( itKnowledge == objectMap_.end() )
+    auto it = objectMap_.find( &objectKnown );
+    if( it == objectMap_.end() )
         return boost::shared_ptr< DEC_Knowledge_Object >();
-    return itKnowledge->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -228,9 +187,9 @@ const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& DEC_BlackB
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledgeObject( const MIL_Object_ABC& objectKnown ) const
 {
-    auto itKnowledge = objectMap_.find( &objectKnown );
-    if( itKnowledge != objectMap_.end() )
-        return itKnowledge->second.get();
+    auto it = objectMap_.find( &objectKnown );
+    if( it != objectMap_.end() )
+        return it->second.get();
     return 0;
 }
 
@@ -241,8 +200,8 @@ DEC_Knowledge_Object* DEC_BlackBoard_CanContainKnowledgeObject::RetrieveKnowledg
 void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeObjectVector& outContainer ) const
 {
     outContainer.reserve( knowledgeObjectFromIDMap_.size() );
-    for( auto itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); ++itKnowledge )
-        outContainer.push_back( itKnowledge->second );
+    for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
+        outContainer.push_back( it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,8 +210,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgesObject( T_KnowledgeO
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromID( unsigned int nMosID ) const
 {
-    auto itKnowledge = knowledgeObjectFromIDMap_.find( nMosID );
-    return itKnowledge == knowledgeObjectFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Object >() : itKnowledge->second;
+    auto it = knowledgeObjectFromIDMap_.find( nMosID );
+    return it == knowledgeObjectFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Object >() : it->second;
 }
 
 // -----------------------------------------------------------------------------

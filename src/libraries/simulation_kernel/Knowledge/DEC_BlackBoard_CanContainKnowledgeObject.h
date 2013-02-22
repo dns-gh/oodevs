@@ -93,10 +93,10 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesObject( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
+        for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); )
         {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = itKnowledge->second;
-            ++itKnowledge;
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
+            ++it;
             fct( knowledge );
         }
     }
@@ -104,10 +104,10 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesObjectRef( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = knowledgeObjectFromIDMap_.begin(); itKnowledge != knowledgeObjectFromIDMap_.end(); )
+        for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); )
         {
-            DEC_Knowledge_Object& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_Object& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }

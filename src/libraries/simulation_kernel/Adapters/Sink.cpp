@@ -374,9 +374,7 @@ namespace
     void UpdateAgentKnowledgeGroupBlackBoard(
         core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
-        typedef DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::value_type T_Agent;
-        const DEC_BlackBoard_CanContainKnowledgeAgent& blackboard = group.GetKnowledge().GetKnowledgeAgentContainer();
-        BOOST_FOREACH( const T_Agent& agent, blackboard.GetKnowledgeAgents() )
+        BOOST_FOREACH( const auto& agent, group.GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgents() )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agent.second;
             UpdateAgentKnowledge( entities[ knowledge->GetAgentKnown().GetID() ], knowledges[ "agents" ][ knowledge->GetID() ], knowledge );
@@ -385,13 +383,8 @@ namespace
     }
     void UpdateObjectKnowledgeGroupBlackBoard( core::Model& knowledges, const MIL_KnowledgeGroup& group )
     {
-        typedef DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap::value_type T_Object;
-        const DEC_BlackBoard_CanContainKnowledgeObject& blackboard = group.GetKnowledgeObjectContainer();
-        BOOST_FOREACH( const T_Object& object, blackboard.GetKnowledgeObjects() )
-        {
-            boost::shared_ptr< DEC_Knowledge_Object > knowledge = object.second;
-            UpdateObjectKnowledge( knowledges[ "objects" ][ knowledge->GetID() ], knowledge );
-        }
+        BOOST_FOREACH( const auto& object, group.GetKnowledgeObjectContainer().GetKnowledgeObjects() )
+            UpdateObjectKnowledge( knowledges[ "objects" ][ object.second->GetID() ], object.second );
     }
     void UpdateKnowledgeGroup(
         core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, boost::shared_ptr< MIL_KnowledgeGroup > group )
