@@ -17,8 +17,8 @@
 // Name: MIL_FloodEffectManipulator constructor
 // Created: JSR 2011-01-11
 // -----------------------------------------------------------------------------
-MIL_FloodEffectManipulator::MIL_FloodEffectManipulator( const std::map< const PHY_HumanWound*, double >& map )
-    : map_( map )
+MIL_FloodEffectManipulator::MIL_FloodEffectManipulator( const T_HumanWounds& wounds )
+    : wounds_( wounds )
 {
     // NOTHING
 }
@@ -48,13 +48,12 @@ void MIL_FloodEffectManipulator::ApplyWound( Human_ABC& human ) const
 const PHY_HumanWound& MIL_FloodEffectManipulator::GetRandomWound() const
 {
     const double rRand = 1. - MIL_Random::rand_ii( MIL_Random::eWounds );
-    double rSumFactors = 0.;
-    for( std::map< const PHY_HumanWound*, double >::const_iterator it = map_.begin(); it != map_.end(); ++it )
+    double rSumFactors = 0;
+    for( auto it = wounds_.begin(); it != wounds_.end(); ++it )
     {
-        const PHY_HumanWound& wound = *it->first;
         rSumFactors += it->second;
         if( rSumFactors >= rRand )
-            return wound;
+            return *it->first;
     }
     return PHY_HumanWound::notWounded_;
 }

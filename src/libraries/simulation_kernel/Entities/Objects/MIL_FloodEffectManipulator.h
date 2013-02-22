@@ -11,6 +11,7 @@
 #define __MIL_FloodEffectManipulator_h_
 
 #include "Entities/Agents/Units/Humans/WoundEffects_ABC.h"
+#include "tools/Map.h"
 
 class PHY_HumanWound;
 
@@ -23,9 +24,12 @@ class PHY_HumanWound;
 class MIL_FloodEffectManipulator : public WoundEffects_ABC
 {
 public:
+    typedef tools::Map< const PHY_HumanWound*, double > T_HumanWounds;
+
+public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FloodEffectManipulator( const std::map< const PHY_HumanWound*, double >& map );
+    explicit MIL_FloodEffectManipulator( const T_HumanWounds& wounds );
     virtual ~MIL_FloodEffectManipulator();
     //@}
 
@@ -43,7 +47,7 @@ private:
 private:
     //! @name Data Members
     //@{
-    const std::map< const PHY_HumanWound*, double >& map_;
+    const T_HumanWounds& wounds_;
     //@}
 };
 

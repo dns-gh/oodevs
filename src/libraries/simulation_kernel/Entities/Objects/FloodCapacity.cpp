@@ -76,7 +76,7 @@ void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> size;
     std::string type;
     double percentage;
-    for( unsigned int i = 0; i < size; ++i )
+    for( std::size_t i = 0; i < size; ++i )
     {
         file >> type
              >> percentage;

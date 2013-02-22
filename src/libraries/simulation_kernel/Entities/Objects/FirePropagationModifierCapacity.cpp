@@ -56,7 +56,7 @@ FirePropagationModifierCapacity::~FirePropagationModifierCapacity()
 // -----------------------------------------------------------------------------
 FirePropagationModifierCapacity::FirePropagationModifierCapacity( const FirePropagationModifierCapacity& other )
     : burningCells_( other.burningCells_ )
-    , modifiers_( other.modifiers_ )
+    , modifiers_   ( other.modifiers_ )
 {
     // NOTHING
 }
@@ -121,7 +121,7 @@ void FirePropagationModifierCapacity::ReadModifier( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void FirePropagationModifierCapacity::Modify( const MIL_FireClass& fireClass, int& ignitionThreshold, int& maxCombustionEnergy ) const
 {
-    ModifierMap::const_iterator it = modifiers_.find( &fireClass );
+    auto it = modifiers_.find( &fireClass );
     if( it != modifiers_.end() )
     {
         ignitionThreshold = std::max( ignitionThreshold, it->second.ignitionThreshold_ );

@@ -82,8 +82,7 @@ private:
     //! @name Member data
     //@{
     MIL_BurningCells& burningCells_;
-    typedef std::map< const MIL_FireClass*, Modifier > ModifierMap;
-    ModifierMap modifiers_;
+    std::map< const MIL_FireClass*, Modifier > modifiers_;
     MIL_Object_ABC* pObject_;
     //@}
 };

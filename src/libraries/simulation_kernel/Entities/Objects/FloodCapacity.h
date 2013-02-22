@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
+#include "tools/Map.h"
 
 namespace xml
 {
@@ -50,13 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< const PHY_HumanWound*, double > T_InjuryMap;
-    typedef T_InjuryMap::const_iterator             CIT_InjuryMap;
-    //@}
-
-private:
     //! @name Helpers
     //@{
     void ReadInjury( xml::xistream& xis );
@@ -72,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_InjuryMap injuries_;
+    tools::Map< const PHY_HumanWound*, double > injuries_;
     //@}
 };
 

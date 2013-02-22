@@ -28,7 +28,6 @@ class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class MIL_Time_ABC;
 class MIL_BurnEffectManipulator;
-class MIL_FloodEffectManipulator;
 class MIL_DisasterEffectManipulator;
 class PHY_InjuredHuman;
 class PHY_AttritionData;
