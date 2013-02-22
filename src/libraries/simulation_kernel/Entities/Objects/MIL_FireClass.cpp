@@ -121,11 +121,9 @@ void MIL_FireClass::ReadWeatherEffect( xml::xistream& xis )
     WeatherEffect effect;
     xis >> xml::attribute( "weather", weather )
         >> xml::attribute( "heat-decrease-rate", effect.heatDecreaseRate_ );
-
     const weather::PHY_Precipitation* pWeather = weather::PHY_Precipitation::FindPrecipitation( weather );
     if( !pWeather )
         throw MASA_EXCEPTION( "Unknown weather " + weather );
-
     weatherEffects_.insert( std::make_pair( pWeather, effect ) );
 }
 
@@ -194,10 +192,9 @@ void MIL_FireClass::Terminate()
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-
 const MIL_FireClass* MIL_FireClass::Find( const std::string& strName )
 {
-    CIT_FireClassMap it = classes_.find( strName );
+    auto it = classes_.find( strName );
     if( it == classes_.end() )
         return 0;
     return it->second;
@@ -295,11 +292,10 @@ const PHY_UrbanAttritionData& MIL_FireClass::GetUrbanAttritionData() const
 // -----------------------------------------------------------------------------
 int MIL_FireClass::GetWeatherDecreateRate( const weather::PHY_Precipitation& precipitation ) const
 {
-    T_WeatherEffectMap::const_iterator it = weatherEffects_.find( &precipitation );
+    auto it = weatherEffects_.find( &precipitation );
     if( it != weatherEffects_.end() )
         return it->second.heatDecreaseRate_;
-    else
-        return 0;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -309,14 +305,12 @@ int MIL_FireClass::GetWeatherDecreateRate( const weather::PHY_Precipitation& pre
 const PHY_HumanWound* MIL_FireClass::ChooseRandomWound() const
 {
     const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds );
-
-    double rSumFactors = 0.;
-    for( T_InjuryMap::const_iterator it = injuries_.begin(); it != injuries_.end(); ++it )
+    double rSumFactors = 0;
+    for( auto it = injuries_.begin(); it != injuries_.end(); ++it )
     {
-        const PHY_HumanWound* pWound = it->first;
         rSumFactors += it->second.percentage_;
         if( rSumFactors >= rRand )
-            return pWound;
+            return it->first;
     }
     return 0;
 }

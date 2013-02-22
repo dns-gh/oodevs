@@ -10,6 +10,7 @@
 #ifndef __MIL_FireClass_h_
 #define __MIL_FireClass_h_
 
+#include "tools/Map.h"
 #include "MT_Tools/MT_String.h"
 #include <spatialcontainer/TerrainData.h>
 
@@ -78,7 +79,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_FireClass* > T_FireClassMap;
-    typedef T_FireClassMap::const_iterator              CIT_FireClassMap;
 
     struct ExtinguisherAgentEffect
     {
@@ -97,7 +97,7 @@ private:
     {
         double percentage_;
     };
-    typedef std::map< const PHY_HumanWound*, Injury > T_InjuryMap;
+    typedef tools::Map< const PHY_HumanWound*, Injury > T_InjuryMap;
 
     struct Surface
     {

@@ -105,7 +105,7 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
 void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
 {
     std::string injuryType = xis.attribute< std::string >( "category" );
-    CIT_HumanWoundMap it = humanWounds_.find( injuryType );
+    auto it = humanWounds_.find( injuryType );
     if( it != humanWounds_.end() )
     {
         const PHY_HumanWound& wound = *it->second;
@@ -205,10 +205,10 @@ PHY_HumanWound::~PHY_HumanWound()
 const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound()
 {
     const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds );
-    double rSumFactors = 0.;
-    for( CIT_HumanWoundMap itWound = humanWounds_.begin(); itWound != humanWounds_.end(); ++itWound )
+    double rSumFactors = 0;
+    for( auto it = humanWounds_.begin(); it != humanWounds_.end(); ++it )
     {
-        const PHY_HumanWound& state = *itWound->second;
+        const PHY_HumanWound& state = *it->second;
         rSumFactors += state.GetWoundedFactor();
         if( rSumFactors >= rRand )
             return state;
@@ -311,7 +311,7 @@ const PHY_HumanWound::T_HumanWoundMap& PHY_HumanWound::GetHumanWounds()
 // -----------------------------------------------------------------------------
 const PHY_HumanWound* PHY_HumanWound::Find( const std::string& strName )
 {
-    CIT_HumanWoundMap it = humanWounds_.find( strName );
+    auto it = humanWounds_.find( strName );
     return it == humanWounds_.end() ? 0 : it->second;
 }
 
@@ -321,7 +321,7 @@ const PHY_HumanWound* PHY_HumanWound::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_HumanWound* PHY_HumanWound::Find( sword::EnumHumanWound nAsnID )
 {
-    CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
+    auto it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumHumanWound >(), nAsnID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetAsnID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
     return it == humanWounds_.end() ? 0 : it->second;
 }
 
@@ -331,7 +331,7 @@ const PHY_HumanWound* PHY_HumanWound::Find( sword::EnumHumanWound nAsnID )
 // -----------------------------------------------------------------------------
 const PHY_HumanWound* PHY_HumanWound::Find( unsigned int nID )
 {
-    CIT_HumanWoundMap it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
+    auto it = std::find_if( humanWounds_.begin(), humanWounds_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_HumanWound::GetID ), std::select2nd< T_HumanWoundMap::value_type >() ) ) );
     return it == humanWounds_.end() ? 0 : it->second;
 }
 
