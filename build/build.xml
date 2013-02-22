@@ -94,8 +94,8 @@
                 <arg value="--root-dir=${data.dir}"/>
                 <arg value="--exercise=@{exercise}"/>
                 <arg value="--session=@{session}"/>
-                <arg value="--simulation-port=${test.portnumber}"/>
-                <arg value="--dispatcher-port=${test.portnumber2}"/>
+                <arg value="--simulation-address=${test.portnumber}"/>
+                <arg value="--dispatcher-address=${test.portnumber2}"/>
                 <arg value="--test"/>
                 <args/>
             </exec>
@@ -323,7 +323,7 @@
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
-            <arg value="--dispatcher-port=${test.portnumber}"/>
+            <arg value="--dispatcher-address=${test.portnumber}"/>
             <arg value="--test"/>
         </check-app>
         <check-app app="launcher_app">
@@ -336,7 +336,7 @@
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
-            <arg value="--dispatcher-port=${test.portnumber}"/>
+            <arg value="--dispatcher-address=${test.portnumber}"/>
             <arg value="--test"/>
         </check-app>
     </target>
