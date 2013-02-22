@@ -26,6 +26,7 @@ namespace sword
 
 namespace kernel
 {
+    class Agent_ABC;
     class Controller;
 }
 
@@ -44,6 +45,8 @@ class Explosions : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< sword::Explosion >
                  , public kernel::Updatable_ABC< sword::StopUnitFire >
                  , public kernel::Updatable_ABC< sword::StopCrowdFire >
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< kernel::Agent_ABC >
                  , private boost::noncopyable
 {
 public:
@@ -56,17 +59,15 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::deque< AgentFireResult* >  T_AgentFires;
-    typedef T_AgentFires::const_iterator  CIT_AgentFires;
-
-    typedef std::deque< PopulationFireResult* >  T_PopulationFires;
-    typedef T_PopulationFires::const_iterator  CIT_PopulationFires;
+    typedef std::deque< AgentFireResult* > T_AgentFires;
+    typedef std::deque< PopulationFireResult* > T_PopulationFires;
     //@}
 
     //! @name Operations
     //@{
     const T_AgentFires& GetAgentExplosions() const;
     const T_PopulationFires& GetPopulationExplosions() const;
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
     //@}
 
 private:

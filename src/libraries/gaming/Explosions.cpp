@@ -12,6 +12,7 @@
 #include "AgentFireResult.h"
 #include "FireResultFactory.h"
 #include "PopulationFireResult.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
 
@@ -25,7 +26,7 @@ Explosions::Explosions( Controller& controller, FireResultFactory& factory )
     : controller_( controller )
     , factory_( factory )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Explosions::Explosions( Controller& controller, FireResultFactory& factory )
 // -----------------------------------------------------------------------------
 Explosions::~Explosions()
 {
+    controller_.Unregister( *this );
     for( auto it = agentExplosions_.begin(); it != agentExplosions_.end(); ++it )
         delete *it;
     for( auto it = populationExplosions_.begin(); it != populationExplosions_.end(); ++it )
@@ -56,6 +58,41 @@ const Explosions::T_AgentFires& Explosions::GetAgentExplosions() const
 const Explosions::T_PopulationFires& Explosions::GetPopulationExplosions() const
 {
     return populationExplosions_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Explosions::NotifyDeleted
+// Created: JSR 2013-02-21
+// -----------------------------------------------------------------------------
+void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
+{
+    bool changed = false;
+    for( auto it = agentExplosions_.begin(); it != agentExplosions_.end(); )
+    {
+        AgentFireResult*& result = *it;
+        if( &result->target_ == &agent || result->firer_ == &agent )
+        {
+            changed = true;
+            delete result;
+            it = agentExplosions_.erase( it );
+        }
+        else
+            ++it;
+    }
+    for( auto it = populationExplosions_.begin(); it != populationExplosions_.end(); )
+    {
+        PopulationFireResult*& result = *it;
+        if( result->firer_ == &agent )
+        {
+            changed = true;
+            delete result;
+            it = populationExplosions_.erase( it );
+        }
+        else
+            ++it;
+    }
+    if( changed )
+        controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

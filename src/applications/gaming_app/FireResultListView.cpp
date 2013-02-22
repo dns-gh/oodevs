@@ -262,14 +262,16 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
 {
     if( selected_ && selected_->Retrieve< Explosions >() == &results )
     {
-        const int count = GetCount( results.GetAgentExplosions() ) + GetCount( results.GetPopulationExplosions() );
+        const Explosions::T_AgentFires& agentFires = results.GetAgentExplosions();
+        const Explosions::T_PopulationFires& popFires = results.GetPopulationExplosions();
+        const int count = GetCount( agentFires ) + GetCount( popFires );
         setHeaderHidden( count == 0 );
         SetNumberOfChildren( invisibleRootItem(), count );
         int row = 0;
-        for( Explosions::CIT_AgentFires it = results.GetAgentExplosions().begin(); it != results.GetAgentExplosions().end(); ++it )
+        for( auto it = agentFires.begin(); it != agentFires.end(); ++it )
             if( *it )
                 Display( **it, topLevelItem( row++ ) );
-        for( Explosions::CIT_PopulationFires it = results.GetPopulationExplosions().begin(); it != results.GetPopulationExplosions().end(); ++it )
+        for( auto it = popFires.begin(); it != popFires.end(); ++it )
             if( *it )
                 Display( **it, topLevelItem( row++ ) );
     }
