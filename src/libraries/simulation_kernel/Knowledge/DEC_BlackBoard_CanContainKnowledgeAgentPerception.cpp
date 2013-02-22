@@ -85,10 +85,10 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPer
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::CleanDeletedAgentKnowledges()
 {
-    for( auto it = unitKnowledgePerceptionMap_.begin(); it != unitKnowledgePerceptionMap_.end(); )
+    for( auto it = perceptions_.begin(); it != perceptions_.end(); )
     {
         if( it->first->IsMarkedForDestruction() )
-            it = unitKnowledgePerceptionMap_.erase( it );
+            it = perceptions_.erase( it );
         else
             ++it;
     }
