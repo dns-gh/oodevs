@@ -110,7 +110,7 @@ void LogisticLink::WriteQuotas( xml::xostream& xos ) const
     if( quotas_.empty() )
         return;
     xos << xml::start( "quotas" );
-    for( T_DotationQuotas::const_iterator it = quotas_.begin(); it != quotas_.end(); ++it )
+    for( auto it = quotas_.begin(); it != quotas_.end(); ++it )
     {
        const PHY_DotationCategory& dotation = *it->first;
        xos << xml::start( "resource" )
@@ -129,7 +129,7 @@ double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory,
 {
     if( useQuotas_ )
     {
-        T_DotationQuotas::iterator it = quotas_.find( &dotationCategory );
+        auto it = quotas_.find( &dotationCategory );
         if( it == quotas_.end() )
             quantity = 0;
         else
@@ -172,7 +172,7 @@ void LogisticLink::ReturnQuota( const PHY_DotationCategory& dotationCategory, do
 {
     if( useQuotas_ )
     {
-        T_DotationQuotas::iterator it = quotas_.find( &dotationCategory );
+        auto it = quotas_.find( &dotationCategory );
         if( it != quotas_.end() )
             it->second.quota_ += quantity;
     }
@@ -214,7 +214,7 @@ void LogisticLink::SendQuotas( unsigned int context ) const
     superior_->Serialize( *message().mutable_supplier() );
 
     sword::SeqOfDotationQuota& msgQuotas = *message().mutable_quotas();
-    for( T_DotationQuotas::const_iterator it = quotas_.begin(); it != quotas_.end(); ++it )
+    for( auto it = quotas_.begin(); it != quotas_.end(); ++it )
     {
         sword::DotationQuota& dotQuota = *msgQuotas.add_elem();
         dotQuota.mutable_resource()->set_id( it->first->GetMosID() );
@@ -277,7 +277,7 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for( LogisticLink::T_DotationQuotas::const_iterator it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 unsigned int id = it->first->GetMosID();
                 file << id

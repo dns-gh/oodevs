@@ -12,17 +12,20 @@
 
 #include "MIL.h"
 #include "LogisticLink_ABC.h"
+#include "tools/Map.h"
 
 class PHY_DotationCategory;
 class MIL_AutomateLOG;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
-namespace sword {
+namespace sword
+{
     class MissionParameter;
 }
 
-namespace logistic {
+namespace logistic
+{
     class LogisticHierarchyOwner_ABC;
 
 // =============================================================================
@@ -94,7 +97,7 @@ public:
         }
     };
 
-    typedef std::map< const PHY_DotationCategory*, sDotationQuota > T_DotationQuotas;
+    typedef tools::Map< const PHY_DotationCategory*, sDotationQuota > T_DotationQuotas;
     //@}
 
 private:
