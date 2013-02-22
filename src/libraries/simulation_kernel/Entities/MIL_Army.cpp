@@ -177,68 +177,19 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    MIL_DictionaryExtensions* pExtensions;
-    MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Army_ABC >( *this );
-    file >> const_cast< std::string& >( strName_ );
-    file >> const_cast< unsigned int& >( nID_ );
+    file >> strName_;
+    file >> nID_;
     file >> nType_;
     file >> diplomacies_;
-    file >> pExtensions;
-    file >> pColor;
-    {
-        std::size_t nNbr;
-        file >> nNbr;
-        while( nNbr-- )
-        {
-            unsigned long index;
-            file >> index;
-            file >> knowledgeGroups_[ index ];
-        }
-    }
-    {
-        std::size_t nNbr;
-        file >> nNbr;
-        while( nNbr-- )
-        {
-            unsigned long index;
-            file >> index;
-            file >> tools::Resolver< MIL_Population >::elements_[ index ];
-        }
-    }
-    {
-        std::size_t nNbr;
-        file >> nNbr;
-        while( nNbr-- )
-        {
-            unsigned long index;
-            file >> index;
-            file >> tools::Resolver< MIL_Inhabitant >::elements_[ index ];
-        }
-    }
-    {
-        std::size_t nNbr;
-        file >> nNbr;
-        while( nNbr-- )
-        {
-            unsigned long index;
-            file >> index;
-            file >> tools::Resolver< MIL_Formation >::elements_[ index ];
-        }
-    }
-    {
-        std::size_t nNbr;
-        file >> nNbr;
-        while( nNbr-- )
-        {
-            unsigned long index;
-            file >> index;
-            file >> tools::Resolver< MIL_Object_ABC >::elements_[ index ];
-        }
-    }
+    file >> pExtensions_;
+    file >> pColor_;
+    file >> knowledgeGroups_;
+    file >> tools::Resolver< MIL_Population >::elements_;
+    file >> tools::Resolver< MIL_Inhabitant >::elements_;
+    file >> tools::Resolver< MIL_Formation >::elements_;
+    file >> tools::Resolver< MIL_Object_ABC >::elements_;
     file >> pKnowledgeBlackBoard_;
-    pExtensions_.reset( pExtensions );
-    pColor_.reset( pColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,60 +198,18 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
-    const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Army_ABC >( *this );
-    file << const_cast< std::string& >( strName_ );
-    file << const_cast< unsigned int& >( nID_ );
+    file << strName_;
+    file << nID_;
     file << nType_;
     file << diplomacies_;
-    file << pExtensions;
-    file << pColor;
-    {
-        std::size_t size = knowledgeGroups_.size();
-        file << size;
-        for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        {
-            file << it->first
-                 << it->second;
-        }
-    }
-    {
-        std::size_t size = tools::Resolver< MIL_Population >::elements_.size();
-        file << size;
-        for( std::map< unsigned long, MIL_Population* >::const_iterator it = tools::Resolver< MIL_Population >::elements_.begin(); it != tools::Resolver< MIL_Population >::elements_.end(); ++it )
-        {
-            file << it->first
-                << it->second;
-        }
-    }
-    {
-        std::size_t size = tools::Resolver< MIL_Inhabitant >::elements_.size();
-        file << size;
-        for( std::map< unsigned long, MIL_Inhabitant* >::const_iterator it = tools::Resolver< MIL_Inhabitant >::elements_.begin(); it != tools::Resolver< MIL_Inhabitant >::elements_.end(); ++it )
-        {
-            file << it->first
-                 << it->second;
-        }
-    }
-    {
-        std::size_t size = tools::Resolver< MIL_Formation >::elements_.size();
-        file << size;
-        for( std::map< unsigned long, MIL_Formation* >::const_iterator it = tools::Resolver< MIL_Formation >::elements_.begin(); it != tools::Resolver< MIL_Formation >::elements_.end(); ++it )
-        {
-            file << it->first
-                 << it->second;
-        }
-    }
-    {
-        std::size_t size = tools::Resolver< MIL_Object_ABC >::elements_.size();
-        file << size;
-        for( std::map< unsigned long, MIL_Object_ABC* >::const_iterator it = tools::Resolver< MIL_Object_ABC >::elements_.begin(); it != tools::Resolver< MIL_Object_ABC >::elements_.end(); ++it )
-        {
-            file << it->first
-                 << it->second;
-        }
-    }
+    file << pExtensions_;
+    file << pColor_;
+    file << knowledgeGroups_;
+    file << tools::Resolver< MIL_Population >::elements_;
+    file << tools::Resolver< MIL_Inhabitant >::elements_;
+    file << tools::Resolver< MIL_Formation >::elements_;
+    file << tools::Resolver< MIL_Object_ABC >::elements_;
     file << pKnowledgeBlackBoard_;
 }
 
