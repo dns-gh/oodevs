@@ -12,6 +12,8 @@
 #ifndef __PHY_DotationCapacities_h_
 #define __PHY_DotationCapacities_h_
 
+#include "tools/Map.h"
+
 namespace xml
 {
     class xistream;
@@ -45,7 +47,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, PHY_DotationCapacity* > T_DotationCapacityMap;
+    typedef tools::Map< const PHY_DotationCategory*, PHY_DotationCapacity* > T_DotationCapacityMap;
     //@}
 
 private:
