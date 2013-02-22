@@ -94,7 +94,7 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
 void MIL_InhabitantType::ReadConsumption( xml::xistream& xis )
 {
     const PHY_ResourceNetworkType* resource = PHY_ResourceNetworkType::Find( xis.attribute< std::string >( "type" ) );
-    if( resource == 0)
+    if( !resource )
         xis.error( "Unknown resource network type" );
     consumptions_[ resource ] = xis.attribute< double >( "need" );
 }

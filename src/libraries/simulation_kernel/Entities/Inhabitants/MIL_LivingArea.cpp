@@ -125,12 +125,12 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis )
 void MIL_LivingArea::DistributeHumans( unsigned long population )
 {
     float area = 0;
-    for( IT_Blocks it = blocks_.begin(); it != blocks_.end(); ++it )
+    for( auto it = blocks_.begin(); it != blocks_.end(); ++it )
         area += ( *it )->GetObject().GetLivingSpace() * GetStructuralState( ( *it )->GetObject() );
     population_ = population;
     std::sort( blocks_.begin(), blocks_.end(), boost::bind( &CompareLivingSpace< MIL_LivingAreaBlock >, _1, _2 ) );
     unsigned long tmp = population_;
-    for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
+    for( auto it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
         float ratio = ( *it )->GetObject().GetLivingSpace() * GetStructuralState( ( *it )->GetObject() ) / area;
         unsigned long person = static_cast< unsigned long >( ratio * population_ );
@@ -267,8 +267,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
     // destinations
     unsigned int nominalRemaining = 0;
     unsigned int maximalRemaining = 0;
-    typedef std::map< MIL_LivingAreaBlock*, std::pair< unsigned int, unsigned int > > T_FreeSpaces;
-    T_FreeSpaces blocksFreeSpaces;
+    std::map< MIL_LivingAreaBlock*, std::pair< unsigned int, unsigned int > > blocksFreeSpaces;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
     {
         if( !block->CanMove() || block->IsEvacuated() )
@@ -287,28 +286,28 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
     }
     if( movingNumber <= nominalRemaining )
     {
-        for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
+        for( auto it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
             finalBlocks_[ it->first ].first = static_cast< float >( it->second.first ) / nominalRemaining;
     }
     else if( movingNumber <= maximalRemaining )
     {
-        for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
+        for( auto it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
             finalBlocks_[ it->first ].first = static_cast< float >( it->second.second ) / maximalRemaining;
     }
     else
     {
         if( maximalRemaining == 0 )
         {
-            for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
-                for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
+            for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+                for( auto itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
                     itMotivation->second = 0;
         }
         else
         {
             float ratio = static_cast< float >( maximalRemaining ) / movingNumber;
             movingNumber = maximalRemaining;
-            for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
-                for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
+            for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+                for( auto itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
                 {
                     unsigned int person = static_cast< unsigned int >( ratio * itMotivation->second + 1.f );
                     person = std::min( it->first->GetMaxOccupation( itMotivation->first ), std::min( movingNumber, person ) );
@@ -316,7 +315,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
                     movingNumber -= person;
                 }
             assert( movingNumber == 0 );
-            for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
+            for( auto it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
                 finalBlocks_[ it->first ].first = static_cast< float >( it->second.second ) / maximalRemaining;
         }
 
@@ -337,7 +336,7 @@ void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
         return;
     unsigned int totalLeaving = 0;
     for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
-        for( CIT_PersonsPerAccomodation accomodation = it->second.begin(); accomodation != it->second.end(); ++accomodation )
+        for( auto accomodation = it->second.begin(); accomodation != it->second.end(); ++accomodation )
         {
             unsigned int leaving = static_cast< unsigned int >( static_cast< float >( accomodation->second ) / occurence );
             totalLeaving += leaving;
@@ -366,7 +365,7 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
         return;
     unsigned int totalLeaving = 0;
     for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
-        for( CIT_PersonsPerAccomodation accomodation = it->second.begin(); accomodation != it->second.end(); ++accomodation )
+        for( auto accomodation = it->second.begin(); accomodation != it->second.end(); ++accomodation )
         {
             unsigned int leaving = currentStartingState_[ it->first ][ accomodation->first ];
             totalLeaving += leaving;
@@ -397,11 +396,7 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::Clean()
 {
-    for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
-        it->second.clear();
     startingBlocks_.clear();
-    for( IT_BlockCompositions it = currentStartingState_.begin(); it != currentStartingState_.end(); ++it )
-        it->second.clear();
     currentStartingState_.clear();
     finalBlocks_.clear();
 }
@@ -631,11 +626,11 @@ unsigned int MIL_LivingArea::ComputeStartingBlocks()
 unsigned int MIL_LivingArea::ComputeEvacuatedPeople()
 {
     int evacuated = 0;
-    for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+    for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
     {
         if( !it->first->IsEvacuated() || it->first->GetTotalNumberOfPersons() == 0 )
             continue;
-        for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
+        for( auto itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
         {
             int oldToMove = itMotivation->second;
             itMotivation->second = it->first->GetPersonsForAccomodation( itMotivation->first );
@@ -679,6 +674,6 @@ void MIL_LivingArea::ForceEvacuation( const std::string& motivation )
         }
     }
 
-    for( std::map< MIL_LivingAreaBlock*, unsigned int >::const_iterator it = freeSpaces.begin(); it != freeSpaces.end(); ++it )
+    for( auto it = freeSpaces.begin(); it != freeSpaces.end(); ++it )
         finalBlocks_[ it->first ].second = static_cast< float >( it->second ) / forcedMaximalRemaining;
 }

@@ -35,8 +35,9 @@ protected:
     //@{
     void Clean();
     bool SendSupplyNeededReport();
+
     friend class boost::serialization::access;
-    template < typename Archive > void serialize( Archive& archive, const unsigned int )
+    template< typename Archive > void serialize( Archive& archive, const unsigned int )
     {
         archive & boost::serialization::base_object< logistic::SupplyRecipient_ABC >( *this );
     }

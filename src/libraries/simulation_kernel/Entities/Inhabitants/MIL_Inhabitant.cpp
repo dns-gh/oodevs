@@ -265,12 +265,12 @@ void MIL_Inhabitant::UpdateState()
         pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
         const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
         MIL_LivingArea::T_Blocks angryBlocks;
-        for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
+        for( auto it = consumptions.begin(); it != consumptions.end(); ++it )
         {
             float satisfaction = pLivingArea_->Consume( *it->first, static_cast< unsigned int >( it->second ), angryBlocks );
             pSatisfactions_->SetResourceSatisfaction( *it->first, satisfaction );
         }
-        std::map< std::string, unsigned int > occupations;
+        MIL_LivingArea::T_PersonsPerAccomodation occupations;
         pLivingArea_->GetUsagesOccupation( occupations );
         pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
         pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );

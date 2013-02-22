@@ -11,6 +11,7 @@
 #define __MIL_InhabitantType_h_
 
 #include "MT_Tools/MT_String.h"
+#include "tools/Map.h"
 #include <memory>
 
 namespace xml
@@ -34,8 +35,7 @@ class MIL_InhabitantType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_ResourceNetworkType*, double > T_ConsumptionsMap;
-    typedef T_ConsumptionsMap::const_iterator                CIT_ConsumptionsMap;
+    typedef tools::Map< const PHY_ResourceNetworkType*, double > T_ConsumptionsMap;
     //@}
 
 public:

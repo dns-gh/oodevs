@@ -68,26 +68,18 @@ MIL_InhabitantSatisfactions::~MIL_InhabitantSatisfactions()
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    std::size_t size;
     file >> healthNeed_
          >> health_
          >> safety_
          >> lodging_
-         >> size;
-    std::string motivation;
-    float satisfaction;
-    for( unsigned int i = 0; i < size; ++i )
-    {
-        file >> motivation
-             >> satisfaction;
-        motivations_[ motivation ] = satisfaction;
-    }
+         >> motivations_;
+    std::size_t size;
     file >> size;
-    unsigned int id;
-    for( unsigned int i = 0; i < size; ++i )
+    for( std::size_t i = 0; i < size; ++i )
     {
-        file >> id
-             >> satisfaction;
+        unsigned int id;
+        float satisfaction;
+        file >> id >> satisfaction;
         if( const PHY_ResourceNetworkType* resource = PHY_ResourceNetworkType::Find( id ) )
             resources_[ resource ] = satisfaction;
     }
@@ -99,22 +91,17 @@ void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    std::size_t size = motivations_.size();
     file << healthNeed_
          << health_
          << safety_
          << lodging_
-         << size;
-    for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
-        file << it->first
-             << it->second;
-    size = resources_.size();
+         << motivations_;
+    std::size_t size = resources_.size();
     file << size;
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         unsigned int id = it->first->GetId();
-        file << id
-             << it->second;
+        file << id << it->second;
     }
 }
 
@@ -230,7 +217,7 @@ void MIL_InhabitantSatisfactions::SetLodgingSatisfaction( float occupationFactor
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::ComputeMotivationSatisfactions( const std::map< std::string, unsigned int >& occupations, unsigned long living )
 {
-    for( std::map< std::string, unsigned int >::const_iterator it = occupations.begin(); it != occupations.end(); ++it )
+    for( auto it = occupations.begin(); it != occupations.end(); ++it )
     {
          float satisfaction = living == 0 ? 0 : std::min( 1.f, static_cast< float >( it->second ) / living );
          if( motivations_.find( it->first ) != motivations_.end() && motivations_[ it->first ] != satisfaction )

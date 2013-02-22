@@ -11,6 +11,7 @@
 #define __MIL_InhabitantSatisfactions_h_
 
 #include "MIL.h"
+#include "tools/Map.h"
 
 namespace client
 {
@@ -64,10 +65,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, float >  T_Motivations;
-    typedef T_Motivations::const_iterator CIT_Motivations;
-
-    typedef std::map< const PHY_ResourceNetworkType*, float > T_Resources;
-    typedef T_Resources::const_iterator                     CIT_Resources;
+    typedef tools::Map< const PHY_ResourceNetworkType*, float > T_Resources;
     //@}
 
 private:

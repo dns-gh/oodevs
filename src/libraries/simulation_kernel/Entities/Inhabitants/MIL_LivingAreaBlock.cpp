@@ -242,7 +242,7 @@ namespace
 // -----------------------------------------------------------------------------
 unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation ) const
 {
-    PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().find( motivation );
+    auto it = PHY_AccomodationType::GetAccomodations().find( motivation );
     if( it != PHY_AccomodationType::GetAccomodations().end() )
         return GetNominalOccupation( motivation, it->second );
     return 0u;
@@ -265,7 +265,7 @@ unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motiv
 // -----------------------------------------------------------------------------
 unsigned int MIL_LivingAreaBlock::GetMaxOccupation( const std::string& motivation ) const
 {
-    PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().find( motivation );
+    auto it = PHY_AccomodationType::GetAccomodations().find( motivation );
     if( it != PHY_AccomodationType::GetAccomodations().end() )
         return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * it->second->GetMaxCapacity() );
     return 0u;
@@ -279,7 +279,7 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
 {
     unsigned long blockTmp = persons;
     std::string firstAccommodation;
-    for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end() && blockTmp > 0; ++accommodation )
+    for( auto accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end() && blockTmp > 0; ++accommodation )
     {
         float proportion = GetProportion( accommodation->first );
         if( proportion > 0 )
@@ -310,7 +310,7 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
     if( totalPerson == 0 )
         return 0;
     int blockOccupation = 0;
-    for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end(); ++accommodation )
+    for( auto accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end(); ++accommodation )
         blockOccupation += GetNominalOccupation( accommodation->first, accommodation->second );
     int totalPopulation = urbanObject_->GetTotalInhabitants() - totalPerson;
     return static_cast< float >( std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) ) );
@@ -329,11 +329,11 @@ float MIL_LivingAreaBlock::GetProportion( const std::string& motivation ) const
     if( motivation == defaultAccomodation_ )
     {
         float sum = 0;
-        for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
+        for( auto it = motivations.begin(); it != motivations.end(); ++it )
             sum += it->second;
         return 1 - sum;
     }
-    std::map< std::string, float >::const_iterator it = motivations.find( motivation );
+    auto it = motivations.find( motivation );
     if( it == motivations.end() )
         return 0.f;
     return it->second;
@@ -378,7 +378,7 @@ unsigned int MIL_LivingAreaBlock::IncreasePeopleWhenMoving( const std::string& m
     else
     {
         remaining = number;
-        for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end() && remaining > 0; ++accommodation )
+        for( auto accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end() && remaining > 0; ++accommodation )
             remaining = IncreasePeopleWhenMoving( accommodation->first, remaining, livingArea );
     }
     hasChanged_ = true;

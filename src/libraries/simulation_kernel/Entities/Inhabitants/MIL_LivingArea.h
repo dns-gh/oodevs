@@ -12,8 +12,8 @@
 
 #include "MIL.h"
 #include "MIL_LivingArea_ABC.h"
+#include "tools/Map.h"
 #include <vector>
-#include <map>
 
 namespace xml
 {
@@ -43,13 +43,10 @@ class TER_Localisation;
 class MIL_LivingArea : public MIL_LivingArea_ABC
 {
 public:
-    // $$$$ _RC_ JSR 2011-03-24: à passer en private
     //! @name Types
     //@{
-    // $$$$ _RC_ JSR 2011-03-24: mettre un std::set avec la fonction de comparaison?
     typedef std::vector< MIL_LivingAreaBlock* > T_Blocks;
-    typedef T_Blocks::iterator                 IT_Blocks;
-    typedef T_Blocks::const_iterator          CIT_Blocks;
+    typedef std::map< std::string, unsigned int > T_PersonsPerAccomodation;
     //@}
 
 public:
@@ -79,7 +76,7 @@ public:
     void SendFullState( client::PopulationUpdate& msg ) const;
     void UpdateNetwork( client::PopulationUpdate& msg ) const;
     float ComputeOccupationFactor() const;
-    void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
+    void GetUsagesOccupation( T_PersonsPerAccomodation& occupations ) const;
     void Alert( const TER_Localisation& localisation, bool status = true );
     bool IsAlerted( const TER_Localisation& localisation ) const;
     bool IsConfined( const TER_Localisation& localisation ) const;
@@ -101,20 +98,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, unsigned int >      T_PersonsPerAccomodation;
-    typedef T_PersonsPerAccomodation::iterator        IT_PersonsPerAccomodation;
-    typedef T_PersonsPerAccomodation::const_iterator CIT_PersonsPerAccomodation;
+    typedef tools::Map< MIL_LivingAreaBlock*, T_PersonsPerAccomodation > T_BlockCompositions;
 
-    typedef std::map< MIL_LivingAreaBlock*, T_PersonsPerAccomodation > T_BlockCompositions;
-    typedef T_BlockCompositions::iterator                             IT_BlockCompositions;
-    typedef T_BlockCompositions::const_iterator                      CIT_BlockCompositions;
-
-    typedef std::pair< float, float > T_Ratios;
+    typedef tools::Map< MIL_LivingAreaBlock*, std::pair< float, float > > T_FinalBlockRatios;
     // 1er float -> ratio de gens à bouger vers la motivation courante, 2nd float -> ratio pour les autres motivations
-
-    typedef std::map< MIL_LivingAreaBlock*, T_Ratios > T_FinalBlockRatios;
-    typedef T_FinalBlockRatios::iterator              IT_FinalBlockRatios;
-    typedef T_FinalBlockRatios::const_iterator       CIT_FinalBlockRatios;
     //@}
 
 private:
