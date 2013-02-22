@@ -42,6 +42,7 @@ KnowledgeGroupFactory::KnowledgeGroupFactory()
 // -----------------------------------------------------------------------------
 KnowledgeGroupFactory::~KnowledgeGroupFactory()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -93,14 +94,7 @@ void KnowledgeGroupFactory::save( MIL_CheckPointOutArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    std::size_t nNbr;
-    file >> nNbr;
-    while( nNbr-- )
-    {
-        unsigned long index;
-        file >> index;
-        file >> elements_[ index ];
-    }
+    file >> elements_;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,11 +103,5 @@ void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void KnowledgeGroupFactory_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    std::size_t size = elements_.size();
-    file << size;
-    for ( std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        file << it->first
-             << it->second;
-    }
+    file << elements_;
 }

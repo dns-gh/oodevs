@@ -69,47 +69,6 @@ DEC_BlackBoard_CanContainKnowledgeAgent::~DEC_BlackBoard_CanContainKnowledgeAgen
         DestroyKnowledgeAgent( *unitKnowledgeFromIDMap_.begin()->second );
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int )
-        {
-            const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type size = map.size();
-            file << size;
-            for( auto it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first
-                     << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int )
-        {
-            DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_Agent_ABC*       pAgent;
-                file >> pAgent;
-                file >> map[ pAgent ];
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::load
 // Created: JVT 2005-04-06
@@ -120,8 +79,8 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
          >> nLastCacheUpdateTick_;
     file >> realAgentMap_;
     file >> previousAgentMap_;
-    for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
-        unitKnowledgeFromIDMap_[ itKnowledge->second->GetID() ] = itKnowledge->second;
+    for( auto it = realAgentMap_.begin(); it != realAgentMap_.end(); ++it )
+        unitKnowledgeFromIDMap_[ it->second->GetID() ] = it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +144,9 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::UpdateQueriesCache()
     assert( pKnowledgeGroup_ );
     const MIL_Army_ABC& army = pKnowledgeGroup_->GetArmy();
 
-    for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
+    for( auto it = realAgentMap_.begin(); it != realAgentMap_.end(); ++it )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = itKnowledge->second;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = it->second;
 
         if( knowledge->IsRefugee() )
             refugeesContainer_.push_back( knowledge );
@@ -242,8 +201,8 @@ bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( unsigned int nID ) const
 {
-    auto itKnowledge = unitKnowledgeFromIDMap_.find( nID );
-    return itKnowledge == unitKnowledgeFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Agent >() : itKnowledge->second;
+    auto it = unitKnowledgeFromIDMap_.find( nID );
+    return it == unitKnowledgeFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Agent >() : it->second;
 }
 
 // -----------------------------------------------------------------------------

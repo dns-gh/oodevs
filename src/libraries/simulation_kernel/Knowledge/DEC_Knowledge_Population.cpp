@@ -253,7 +253,7 @@ void DEC_Knowledge_Population::UpdateRelevance()
 bool DEC_Knowledge_Population::Clean()
 {
     bDecStateUpdated_ = false;
-    for( IT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); )
     {
         DEC_Knowledge_PopulationConcentration* pKnowledge = it->second;
         if( pKnowledge->Clean() )
@@ -264,7 +264,7 @@ bool DEC_Knowledge_Population::Clean()
         else
             ++ it;
     }
-    for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
+    for( auto it = flows_.begin(); it != flows_.end(); )
     {
         DEC_Knowledge_PopulationFlow* pKnowledge = it->second;
         if( pKnowledge->Clean() )

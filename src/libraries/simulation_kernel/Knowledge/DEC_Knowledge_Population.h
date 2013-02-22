@@ -120,12 +120,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
-    typedef T_ConcentrationMap::iterator                                    IT_ConcentrationMap;
-    typedef T_ConcentrationMap::const_iterator                             CIT_ConcentrationMap;
-
     typedef std::map< unsigned int, DEC_Knowledge_PopulationFlow* > T_FlowMap;
-    typedef T_FlowMap::iterator                                    IT_FlowMap;
-    typedef T_FlowMap::const_iterator                             CIT_FlowMap;
     //@}
 
 private:

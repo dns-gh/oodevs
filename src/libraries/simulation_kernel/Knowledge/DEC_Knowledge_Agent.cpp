@@ -51,8 +51,7 @@ MIL_IDManager DEC_Knowledge_Agent::idManager_;
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Agent_ABC& agentKnown, double rRelevance )
-    : DEC_Knowledge_ABC()
-    , pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
+    : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
     , pKnowledgeGroup_               ( knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
     , nID_                           ( idManager_.GetFreeId() )
@@ -70,7 +69,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
     , bMaxPerceptionLevelUpdated_    ( false )
     , bCriticalIntelligenceUpdated_  ( false )
     , bPerceptionDistanceHacked_     ( false )
-    , rLastRelevanceSent_            ( 0. )
+    , rLastRelevanceSent_            ( 0 )
 {
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -84,17 +83,14 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     : DEC_Knowledge_ABC()
-    , nID_                           ()
+    , nID_                           ( 0 )
     , pArmyKnowing_                  ( 0 )
     , pAgentKnown_                   ( 0 )
-    , dataDetection_                 ()
-    , dataRecognition_               ()
-    , dataIdentification_            ()
-    , nTimeLastUpdate_               ()
+    , nTimeLastUpdate_               ( 0 )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
-    , rRelevance_                    ()
+    , rRelevance_                    ( 0 )
     , nTimeExtrapolationEnd_         ( -1 )
     , bLocked_                       ( false )
     , bValid_                        ( true )
@@ -104,7 +100,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , bMaxPerceptionLevelUpdated_    ( true )
     , bCriticalIntelligenceUpdated_  ( false )
     , bPerceptionDistanceHacked_     ( false )
-    , rLastRelevanceSent_            ( 0. )
+    , rLastRelevanceSent_            ( 0 )
 {
     // NOTHING
 }
@@ -124,7 +120,7 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        inline void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int nVersion )
+        void serialize( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion);
         }
@@ -133,13 +129,12 @@ namespace boost
         {
             std::size_t size = map.size();
             file << size;
-            for( DEC_Knowledge_Agent::CIT_PerceptionAutomateSourceMap it = map.begin(); it != map.end(); ++it )
+            for( auto it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first;
                 unsigned id = it->second->GetID();
                 file << id;
             }
-
         }
         template < typename Archive >
         void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& g, const unsigned int )
@@ -167,10 +162,10 @@ namespace boost
 void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ );
+         >> pArmyKnowing_;
     file >> pKnowledgeGroup_;
     file >> pAgentKnown_
-         >> const_cast< unsigned int& >( nID_ )
+         >> nID_
          >> dataDetection_
          >> dataRecognition_
          >> dataIdentification_
@@ -196,8 +191,6 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bValid_
          >> bCriticalIntelligenceUpdated_
          >> bPerceptionDistanceHacked_;
-    if( rRelevance_ < 0. || rRelevance_ > 1. )
-        throw MASA_EXCEPTION( "Relevance: major-component not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,7 +291,6 @@ void DEC_Knowledge_Agent::Extrapolate()
 // Name: DEC_Knowledge_Agent PerceptionSources
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-inline
 void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerception& perception )
 {
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
@@ -309,12 +301,12 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
     assert( pAgentKnown_ );
     if( pAgentKnown_->BelongsTo( *automateSource.GetKnowledgeGroup() ) )
         return;
-    IT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.find( &automateSource );
+    auto it = perceptionLevelPerAutomateMap_.find( &automateSource );
     if( it == perceptionLevelPerAutomateMap_.end() )
         perceptionLevelPerAutomateMap_.insert( std::make_pair( &automateSource, &perception.GetCurrentPerceptionLevel() ) );
     else
         it->second = &std::max( *it->second, perception.GetCurrentPerceptionLevel() );
-    IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
+    auto it2 = perceptionLevelPerAgentMap_.find( &pionSource );
     if( it2 == perceptionLevelPerAgentMap_.end() )
         perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
     else
@@ -444,7 +436,8 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate&
 void DEC_Knowledge_Agent::SendChangedState()
 {
     const bool bPerceptionPerAutomateUpdated = ( previousPerceptionLevelPerAutomateMap_ != perceptionLevelPerAutomateMap_ );
-    if( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_ || bRelevanceUpdated_ || bPerceptionPerAutomateUpdated || bCriticalIntelligenceUpdated_
+    if( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_
+         || bRelevanceUpdated_ || bPerceptionPerAutomateUpdated || bCriticalIntelligenceUpdated_
          || dataDetection_.HasChanged() || dataRecognition_.HasChanged() || dataIdentification_.HasChanged() ) )
         return;
     client::UnitKnowledgeUpdate asnMsg;
@@ -982,11 +975,10 @@ const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel() cons
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
 {
-    CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
-    if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
-        return *( itPerceptionLevel->second );
-    else
-        return PHY_PerceptionLevel::notSeen_;
+    auto it = perceptionLevelPerAgentMap_.find( &pion );
+    if( it != perceptionLevelPerAgentMap_.end() )
+        return *it->second;
+    return PHY_PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------

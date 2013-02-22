@@ -16,6 +16,7 @@
 #include "DEC_Knowledge_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include "tools/Map.h"
 
 class MIL_Population;
 class MIL_PopulationConcentration;
@@ -30,18 +31,6 @@ class DEC_Knowledge_Population;
 // =============================================================================
 class DEC_Knowledge_PopulationPerception : public DEC_Knowledge_ABC
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::map< const MIL_PopulationConcentration*, DEC_Knowledge_PopulationConcentrationPerception* > T_ConcentrationMap;
-    typedef T_ConcentrationMap::iterator                                                                    IT_ConcentrationMap;
-    typedef T_ConcentrationMap::const_iterator                                                             CIT_ConcentrationMap;
-
-    typedef std::map< const MIL_PopulationFlow*, DEC_Knowledge_PopulationFlowPerception* > T_FlowMap;
-    typedef T_FlowMap::iterator                                                           IT_FlowMap;
-    typedef T_FlowMap::const_iterator                                                    CIT_FlowMap;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -93,8 +82,8 @@ private:
     //@{
     const MIL_Agent_ABC*  pAgentPerceiving_;
     MIL_Population* pPopulationPerceived_;
-    T_ConcentrationMap concentrations_;
-    T_FlowMap flows_;
+    tools::Map< const MIL_PopulationConcentration*, DEC_Knowledge_PopulationConcentrationPerception* > concentrations_;
+    tools::Map< const MIL_PopulationFlow*, DEC_Knowledge_PopulationFlowPerception* > flows_;
     bool bAttacker_;
     //@}
 };

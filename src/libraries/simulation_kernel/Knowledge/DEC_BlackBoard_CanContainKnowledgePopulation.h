@@ -13,6 +13,7 @@
 #define __DEC_BlackBoard_CanContainKnowledgePopulation_h_
 
 #include "MIL.h"
+#include "tools/Map.h"
 #include <boost/shared_ptr.hpp>
 
 class DEC_Knowledge_Population;
@@ -25,11 +26,10 @@ class KnowledgesVisitor_ABC;
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgePopulation : private boost::noncopyable
 {
-
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Population*, boost::shared_ptr< DEC_Knowledge_Population > > T_KnowledgePopulationMap;
+    typedef tools::Map< const MIL_Population*, boost::shared_ptr< DEC_Knowledge_Population > > T_KnowledgePopulationMap;
     //@}
 
 public:
@@ -64,10 +64,10 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulation( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = knowledgePopulationMap_.begin(); itKnowledge != knowledgePopulationMap_.end(); )
+        for( auto it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); )
         {
-            DEC_Knowledge_Population& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_Population& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }

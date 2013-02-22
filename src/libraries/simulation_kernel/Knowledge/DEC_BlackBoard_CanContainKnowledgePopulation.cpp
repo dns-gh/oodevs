@@ -45,14 +45,7 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    std::size_t nNbr;
-    file >> nNbr;
-    while( nNbr-- )
-    {
-        MIL_Population* pPopulation;
-        file >> pPopulation;
-        file >> knowledgePopulationMap_[ pPopulation ];
-    }
+    file >> knowledgePopulationMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,13 +54,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const std::size_t size = knowledgePopulationMap_.size();
-    file << size;
-    for( auto it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
-    {
-        file << it->first;
-        file << it->second;
-    }
+    file << knowledgePopulationMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,11 +86,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( D
 boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( unsigned int nID ) const
 {
     for( auto it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
-    {
-        const boost::shared_ptr< DEC_Knowledge_Population >& knowledge = it->second;
-        if( knowledge->GetID() == nID )
-            return knowledge;
-    }
+        if( it->second->GetID() == nID )
+            return it->second;
     return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
@@ -113,9 +97,9 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledge
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulation( const MIL_Population& associatedPopulation ) const
 {
-    auto itKnowledge = knowledgePopulationMap_.find( &associatedPopulation );
-    if( itKnowledge != knowledgePopulationMap_.end() )
-        return itKnowledge->second;
+    auto it = knowledgePopulationMap_.find( &associatedPopulation );
+    if( it != knowledgePopulationMap_.end() )
+        return it->second;
     return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
@@ -143,4 +127,5 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::Accept( KnowledgesVisitor_ABC
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& /*subGroup*/ )
 {
+    // NOTHING
 }

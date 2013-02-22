@@ -317,7 +317,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetCiviliansInZone( T_ConstKnowledg
     const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& knowledges = pKnowledgeAgentContainer_->GetKnowledgeAgents();
     for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = (*it).second;
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = it->second;
         if( knowledge->IsCivilian() && zone.IsInside( knowledge->GetPosition() ) )
             container.push_back( knowledge );
     }

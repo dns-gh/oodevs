@@ -27,10 +27,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationPerception )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived )
-    : DEC_Knowledge_ABC()
-    , pAgentPerceiving_    ( &agentPerceiving )
+    : pAgentPerceiving_    ( &agentPerceiving )
     , pPopulationPerceived_( &populationPerceived )
-    , bAttacker_( false )
+    , bAttacker_           ( false )
 {
     // NOTHING
 }
@@ -40,10 +39,9 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception()
-    : DEC_Knowledge_ABC()
-    , pAgentPerceiving_    ( 0 )
+    : pAgentPerceiving_    ( 0 )
     , pPopulationPerceived_( 0 )
-    , bAttacker_( false )
+    , bAttacker_           ( false )
 {
     // NOTHING
 }
@@ -57,84 +55,14 @@ DEC_Knowledge_PopulationPerception::~DEC_Knowledge_PopulationPerception()
     // NOTHING
 }
 
-namespace boost
-{
-    namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( DEC_Knowledge_PopulationPerception::CIT_ConcentrationMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first
-                     << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_PopulationConcentration* pConcentration;
-                file >> pConcentration;
-                file >> map[ pConcentration ];
-            }
-        }
-
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for( DEC_Knowledge_PopulationPerception::CIT_FlowMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first
-                     << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-            file >> nNbr;
-            while( nNbr-- )
-            {
-                MIL_PopulationFlow* pFlow;
-                file >> pFlow;
-                file >> map[ pFlow ];
-            }
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
+    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         >> pAgentPerceiving_
          >> pPopulationPerceived_
          >> concentrations_
          >> flows_
@@ -198,7 +126,7 @@ void DEC_Knowledge_PopulationPerception::Update( MIL_PopulationFlow& flowPerceiv
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationPerception::Clean()
 {
-    for( IT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); )
     {
         DEC_Knowledge_PopulationConcentrationPerception* pKnowledge = it->second;
         if( pKnowledge->Clean() )
@@ -207,9 +135,9 @@ bool DEC_Knowledge_PopulationPerception::Clean()
             it = concentrations_.erase( it );
         }
         else
-            ++ it;
+            ++it;
     }
-    for( IT_FlowMap it = flows_.begin(); it != flows_.end(); )
+    for( auto it = flows_.begin(); it != flows_.end(); )
     {
         DEC_Knowledge_PopulationFlowPerception* pKnowledge = it->second;
         if( pKnowledge->Clean() )
@@ -218,7 +146,7 @@ bool DEC_Knowledge_PopulationPerception::Clean()
             it = flows_.erase( it );
         }
         else
-            ++ it;
+            ++it;
     }
     return concentrations_.empty() && flows_.empty();
 }
@@ -229,7 +157,7 @@ bool DEC_Knowledge_PopulationPerception::Clean()
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationPerception::IsIdentified( const MIL_PopulationConcentration& concentration )
 {
-    CIT_ConcentrationMap it = concentrations_.find( &concentration );
+    auto it = concentrations_.find( &concentration );
     if( it == concentrations_.end() )
         return false;
     return it->second->IsIdentified();

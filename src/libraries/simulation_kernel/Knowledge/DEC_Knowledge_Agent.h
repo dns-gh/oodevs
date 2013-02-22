@@ -16,9 +16,10 @@
 #include "DEC_Knowledge_AgentDataDetection.h"
 #include "DEC_Knowledge_AgentDataRecognition.h"
 #include "DEC_Knowledge_AgentDataIdentification.h"
+#include "Tristate.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
-#include "Tristate.h"
+#include "tools/Map.h"
 #include <boost/shared_ptr.hpp>
 
 namespace sword
@@ -158,13 +159,8 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionAutomateSourceMap;
-    typedef T_PerceptionAutomateSourceMap::iterator                    IT_PerceptionAutomateSourceMap;
-    typedef T_PerceptionAutomateSourceMap::const_iterator             CIT_PerceptionAutomateSourceMap;
-
+    typedef tools::Map< const MIL_Automate*, const PHY_PerceptionLevel* > T_PerceptionAutomateSourceMap;
     typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::iterator                        IT_PerceptionAgentSourceMap;
-    typedef T_PerceptionAgentSourceMap::const_iterator                 CIT_PerceptionAgentSourceMap;
     //@}
 
 private:
@@ -193,10 +189,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_Army_ABC* pArmyKnowing_;
+    MIL_Army_ABC* pArmyKnowing_;
     boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup_;
     MIL_Agent_ABC* pAgentKnown_;
-    const unsigned int nID_;
+    unsigned int nID_;
     DEC_Knowledge_AgentDataDetection dataDetection_;
     DEC_Knowledge_AgentDataRecognition dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;

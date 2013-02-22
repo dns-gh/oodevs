@@ -129,7 +129,13 @@ public:
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
 
     template< typename T >
-    const T* RetrieveAttribute() const;
+    const T* RetrieveAttribute() const
+    {
+        const DEC_Knowledge_ObjectAttributeProxy_ABC< T >* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< T > >();
+        if( !pAttr )
+            return 0;
+        return pAttr->GetAttribute();
+    }
     //@}
 
 protected:
@@ -164,7 +170,14 @@ private:
     void UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     bool UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
-    template< typename Functor> void UpdateAttributes( Functor functor );
+
+    template< typename Functor>
+    void UpdateAttributes( Functor functor )
+    {
+        for( auto it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
+            if( *it && functor( *it ) )
+                NotifyAttributeUpdated( eAttr_Attributes );
+    }
     //@}
 
     //! @name Internal network senders
@@ -184,9 +197,7 @@ private:
     //! @name Types
     //@{
     typedef tools::Set< MIL_Automate* > T_PerceptionSourceSet;
-
     typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
-
     typedef std::set< const MIL_AgentType_ABC* > T_AgentTypeSet;
     //@}
 
@@ -222,25 +233,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Object )
-
-// =============================================================================
-// Implementation
-// =============================================================================
-template< typename Functor>
-void DEC_Knowledge_Object::UpdateAttributes( Functor functor )
-{
-    for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
-        if( *it && functor( *it ) )
-            NotifyAttributeUpdated( eAttr_Attributes );
-}
-
-template< typename T >
-const T* DEC_Knowledge_Object::RetrieveAttribute() const
-{
-    const DEC_Knowledge_ObjectAttributeProxy_ABC< T >* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< T > >();
-    if( !pAttr )
-        return 0;
-    return pAttr->GetAttribute();
-}
 
 #endif // __DEC_Knowledge_Object_h_

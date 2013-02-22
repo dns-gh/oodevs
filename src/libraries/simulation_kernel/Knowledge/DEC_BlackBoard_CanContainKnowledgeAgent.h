@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
+#include "tools/Map.h"
 
 class DEC_Knowledge_Agent;
 class MIL_Agent_ABC;
@@ -28,7 +29,7 @@ class DEC_BlackBoard_CanContainKnowledgeAgent : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_Agent_ABC*, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentMap;
+    typedef tools::Map< const MIL_Agent_ABC*, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentMap;
     //@}
 
 public:
@@ -66,30 +67,30 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
+        for( auto it = realAgentMap_.begin(); it != realAgentMap_.end(); )
         {
-            DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_Agent& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }
     template < class UnaryFunction >
     void ApplyOnPreviousKnowledgesAgent( UnaryFunction& fct ) const
     {
-        for( auto itKnowledge = previousAgentMap_.begin(); itKnowledge != previousAgentMap_.end(); )
+        for( auto it = previousAgentMap_.begin(); it != previousAgentMap_.end(); )
         {
-            DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_Agent& knowledge = *it->second;
+            ++it;
             fct( knowledge );
         }
     }
     template < class BinaryFunction >
     void ApplyOnKnowledgesAgent( BinaryFunction& fct, int currentTimeStep ) const
     {
-        for( auto itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); )
+        for( auto it = realAgentMap_.begin(); it != realAgentMap_.end(); )
         {
-            DEC_Knowledge_Agent& knowledge = *itKnowledge->second;
-            ++itKnowledge;
+            DEC_Knowledge_Agent& knowledge = *it->second;
+            ++it;
             fct( knowledge, currentTimeStep );
         }
     }

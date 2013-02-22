@@ -280,7 +280,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
 
     // Attributes
     std::vector< DEC_Knowledge_IObjectAttributeProxy* > attributes;
-    for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
+    for( auto it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
         if( *it )
             attributes.push_back( *it );
     file << attributes;
@@ -1026,9 +1026,9 @@ E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
 {
-    auto itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
-    if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
-        return *( itPerceptionLevel->second );
+    auto it = perceptionLevelPerAgentMap_.find( &pion );
+    if( it != perceptionLevelPerAgentMap_.end() )
+        return *it->second;
     return PHY_PerceptionLevel::notSeen_;
 }
 
