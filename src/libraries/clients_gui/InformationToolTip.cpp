@@ -23,7 +23,7 @@ namespace
     void DrawFrame( QPainter& painter, const QRect& rect )
     {
         painter.setPen( Qt::black );
-        painter.drawRect( rect );
+        painter.drawRect( rect.adjusted( 0, 0, -1, -1 ) );
     }
 }
 
@@ -396,7 +396,7 @@ void InformationToolTip::paintEvent( QPaintEvent * /*event*/ )
     {
         QPainter p( this );
         QPoint pos = QCursor::pos();
-        if( QApplication::activeWindow()->width() < QApplication::activeWindow()->mapFromGlobal( pos ).x() + image_.width() )
+        if( QApplication::desktop()->width() < pos.x() + image_.width() )
             pos.setX( pos.x() - image_.width() );
         move( pos + QPoint( 0, 20 ) ); //mouse shape default size
         p.drawImage( 0, 0, image_ );
@@ -413,6 +413,6 @@ void InformationToolTip::Show()
     if( !isVisible() && !image_.isNull() && QApplication::activeWindow() && !QApplication::activePopupWidget() )
     {
         setVisible( true );
-        QTimer::singleShot( 5000, this, SLOT( Hide() ) );
+        QTimer::singleShot( 10000, this, SLOT( Hide() ) );
     }
 }
