@@ -2692,7 +2692,7 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>&lt;ul&gt;&lt;li&gt;text1&lt;/li&gt;&lt;/ul&gt;</source>
-        <translatio>&lt;ul&gt;&lt;li&gt;texte1&lt;/li&gt;&lt;/ul&gt;</translation>
+        <translation>&lt;ul&gt;&lt;li&gt;texte1&lt;/li&gt;&lt;/ul&gt;</translation>
     </message>
     <message>
         <source>&lt;ul&gt;&lt;ul&gt;&lt;li&gt;text2&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;</source>
