@@ -67,13 +67,11 @@ private:
 BOOST_CLASS_EXPORT_KEY( AgentFactory )
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const AgentFactory* factory, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, AgentFactory* factory, const unsigned int /*version*/ )
 {
-    const MIL_IDManager* const idManager = &factory->idManager_;
-    const MissionController_ABC* const missionController = &factory->missionController_;
-    archive << idManager
-            << missionController
-            << algorithmsFactories_;
+    archive << &factory->idManager_
+            << &factory->missionController_
+            << &factory->algorithmsFactories_;
 }
 
 template< typename Archive >
