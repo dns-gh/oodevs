@@ -8,8 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
-#include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanWound.h"

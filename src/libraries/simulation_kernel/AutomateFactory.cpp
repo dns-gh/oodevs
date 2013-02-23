@@ -42,6 +42,7 @@ AutomateFactory::AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause
 AutomateFactory::~AutomateFactory()
 {
     DeleteAll();
+    delete logger_;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +76,6 @@ MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned in
 {
     MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, logger_, context, extensions );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
-
     return automate;
 }
 
