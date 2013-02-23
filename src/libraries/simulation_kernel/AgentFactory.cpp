@@ -10,12 +10,13 @@
 #include "simulation_kernel_pch.h"
 #include "AgentFactory.h"
 #include "MissionController_ABC.h"
+#include "AlgorithmsFactories.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -30,6 +31,18 @@ AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& mis
     : idManager_          ( idManager )
     , missionController_  ( missionController )
     , algorithmsFactories_( new AlgorithmsFactories() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory constructor
+// Created: MCO 2013-02-22
+// -----------------------------------------------------------------------------
+AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, std::auto_ptr< AlgorithmsFactories > algorithmsFactories )
+    : idManager_          ( idManager )
+    , missionController_  ( missionController )
+    , algorithmsFactories_( algorithmsFactories )
 {
     // NOTHING
 }

@@ -29,6 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController );
+             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, std::auto_ptr< AlgorithmsFactories > algorithmsFactories );
     virtual ~AgentFactory();
     //@}
 
@@ -45,7 +46,6 @@ public:
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-
     //@}
 
 private:
@@ -72,7 +72,8 @@ void save_construct_data( Archive& archive, const AgentFactory* factory, const u
     const MIL_IDManager* const idManager = &factory->idManager_;
     const MissionController_ABC* const missionController = &factory->missionController_;
     archive << idManager
-            << missionController;
+            << missionController
+            << algorithmsFactories_;
 }
 
 template< typename Archive >
@@ -80,9 +81,11 @@ void load_construct_data( Archive& archive, AgentFactory* factory, const unsigne
 {
     MIL_IDManager* idManager;
     MissionController_ABC* missionController;
+    std::auto_ptr< AlgorithmsFactories > algorithmsFactories;
     archive >> idManager
-            >> missionController;
-    ::new( factory )AgentFactory( *idManager, *missionController );
+            >> missionController
+            >> algorithmsFactories;
+    ::new( factory )AgentFactory( *idManager, *missionController, algorithmsFactories );
 }
 
 #endif // __AgentFactory_h_
