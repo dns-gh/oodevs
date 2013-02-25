@@ -87,6 +87,7 @@ public:
     virtual void ForceEnabled( bool enabled );
     virtual void EnsureIsEnabled();
     virtual bool IsVisible() const;
+    virtual bool IsPickable() const;
     //@}
 
     //! @name ReadOnly management // $$$$ ABR 2012-05-24: Factorize this to tools::ReadOnlyModable and use it on HierarchyListView_ABC

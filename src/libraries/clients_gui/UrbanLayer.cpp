@@ -87,8 +87,11 @@ void UrbanLayer::Paint( Viewport_ABC& viewport )
     // dessin des blocs urbains
     EntityLayer< kernel::UrbanObject_ABC >::Paint( viewport );
     // dessin des extensions(en deux temps pour les afficher par dessus les blocs)
-    DrawExtensionsFunctor functor( viewport, tools_, controllers_.options_.GetOption( "Infra", true ).To< bool >() );
-    Apply( functor );
+    if( !tools_.IsPickingMode() )
+    {
+        DrawExtensionsFunctor functor( viewport, tools_, controllers_.options_.GetOption( "Infra", true ).To< bool >() );
+        Apply( functor );
+    }
 }
 
 // -----------------------------------------------------------------------------

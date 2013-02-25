@@ -40,19 +40,15 @@ LocationsLayer::~LocationsLayer()
 // -----------------------------------------------------------------------------
 void LocationsLayer::Paint( Viewport_ABC& viewport )
 {
-    if( !tools_.IsPickingMode() )
-    {
-        glPushAttrib( GL_CURRENT_BIT );
-            glColor4f( 0, 0, 0, 1 ); // $$$$ SBO 2007-03-28: hard coded, put color in preferences
-            for( auto it = locations_.begin(); it != locations_.end(); ++it )
-                if( viewport.IsVisible( *it ) )
-                {
-                    tools_.DrawCross( *it );
-                    tools_.DrawSvg( "flag.svg", *it );
-                }
-        glPopAttrib();
-    }
-
+    glPushAttrib( GL_CURRENT_BIT );
+        glColor4f( 0, 0, 0, 1 ); // $$$$ SBO 2007-03-28: hard coded, put color in preferences
+        for( auto it = locations_.begin(); it != locations_.end(); ++it )
+            if( viewport.IsVisible( *it ) )
+            {
+                tools_.DrawCross( *it );
+                tools_.DrawSvg( "flag.svg", *it );
+            }
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

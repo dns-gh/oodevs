@@ -231,7 +231,20 @@ std::string Layer::GetCurrentPass() const
 // -----------------------------------------------------------------------------
 bool Layer::ShouldDrawPass() const
 {
-    return passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos;
+    bool pickingMode = false;
+    if( currentWidget_ )
+        pickingMode = currentWidget_->IsPickingMode();
+    return ( passes_.empty() || GetCurrentPass().empty() || passes_.find( GetCurrentPass() ) != std::string::npos )
+        && ( !pickingMode || ( pickingMode && IsPickable() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::IsPickable
+// Created: LGY 2013-02-25
+// -----------------------------------------------------------------------------
+bool Layer::IsPickable() const
+{
+    return false;
 }
 
 // -----------------------------------------------------------------------------
