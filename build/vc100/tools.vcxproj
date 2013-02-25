@@ -105,6 +105,7 @@
     <ClCompile Include="..\..\src\libraries\tools\ExerciseSettings.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IpcQueue.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Path.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ThreadPool.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -156,6 +157,7 @@
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h" />
     <ClInclude Include="..\..\src\libraries\tools\Map.h" />
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Path.h" />
     <ClInclude Include="..\..\src\libraries\tools\Set.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
