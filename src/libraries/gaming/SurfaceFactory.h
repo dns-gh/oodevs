@@ -25,6 +25,7 @@ namespace sword
     class VisionCone;
 }
 
+class MeteoModel;
 class Surface;
 class VisionMap;
 class UrbanBlockDetectionMap;
@@ -40,7 +41,7 @@ class SurfaceFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, const UrbanBlockDetectionMap& urbanModelMap );
+             SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, const UrbanBlockDetectionMap& urbanModelMap, const MeteoModel& meteoModel );
     virtual ~SurfaceFactory();
     //@}
 
@@ -64,6 +65,7 @@ private:
     const kernel::DetectionMap& map_;
     const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver_;
     const UrbanBlockDetectionMap& urbanModelMap_;
+    const MeteoModel& meteoModel_;
     //@}
 };
 

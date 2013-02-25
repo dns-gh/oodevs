@@ -100,10 +100,10 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , urbanBlockDetectionMap_  ( *new UrbanBlockDetectionMap( controllers, static_.detection_ ) )
     , resourceNetwork_         ( *new ResourceNetworkModel( controllers, *this, static_ ) )
     , urbanObjects_            ( *new UrbanModel( controllers, resourceNetwork_, static_ ) )
-    , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_ ) )
     , symbolsFactory_          ( *new kernel::SymbolFactory() )
     , notes_                   ( *new NotesModel( controllers.controller_ ))
     , meteo_                   ( *new MeteoModel( static_.coordinateConverter_, simulation, controllers.controller_ ) )
+    , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
 {

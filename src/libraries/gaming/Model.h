@@ -147,10 +147,10 @@ public:
     UrbanBlockDetectionMap& urbanBlockDetectionMap_;
     ResourceNetworkModel& resourceNetwork_;
     UrbanModel& urbanObjects_;
-    SurfaceFactory& surfaceFactory_;
     kernel::SymbolFactory& symbolsFactory_;
     NotesModel& notes_;
     MeteoModel& meteo_;
+    SurfaceFactory& surfaceFactory_;
     FloodProxy& floodProxy_;
     Publisher_ABC& publisher_;
     //@}

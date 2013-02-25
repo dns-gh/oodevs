@@ -172,7 +172,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
+    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_, controllers_.controller_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dictionary ) );

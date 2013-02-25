@@ -11,8 +11,9 @@
 
 #include "Surface.h"
 #include "Attributes.h"
-#include "UrbanModel.h"
+#include "MeteoModel.h"
 #include "UrbanBlockDetectionMap.h"
+#include "UrbanModel.h"
 #include "VisionMap.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -31,7 +32,7 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap )
+Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap, const MeteoModel& meteoModel )
     : map_( map )
     , origin_( converter.ConvertToXY( message.origin() ) )
     , height_( message.height() + agent.Get< Positions >().GetHeight() )
@@ -39,6 +40,7 @@ Surface::Surface( const Agent_ABC& agent, const sword::VisionCone& message, cons
     , elongation_( elongation )
     , distanceModificator_( 1 )
     , urbanModelMap_( urbanModelMap )
+    , meteoModel_( meteoModel )
 {
     sectors_.reserve( message.directions().elem_size() );
     for( int i = 0; i < message.directions().elem_size(); ++i )
@@ -150,16 +152,16 @@ bool Surface::IsInSector( const geometry::Point2f& point ) const
 E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
 {
     gui::VisionLine line( map_, origin_, point, height_ );
-    float skyrock = std::numeric_limits< float >::infinity();
-    while( ! line.IsDone() && skyrock > 0 )
+    float startEnergy = std::numeric_limits< float >::infinity();
+    while( ! line.IsDone() && startEnergy > 0 )
     {
         line.Increment();
-        if( skyrock == std::numeric_limits< float >::infinity() )
-            skyrock = sensorType_.ComputeExtinction( distanceModificator_,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ) );
+        if( startEnergy == std::numeric_limits< float >::infinity() )
+            startEnergy = sensorType_.ComputeExtinction( distanceModificator_,
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
         else
-            skyrock = sensorType_.ComputeExtinction( distanceModificator_, skyrock,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ) );
+            startEnergy = sensorType_.ComputeExtinction( distanceModificator_, startEnergy,
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ), meteoModel_.GetMeteo( line.CurrentPoint() ) );
     }
-    return sensorType_.InterpreteNRJ( skyrock );
+    return sensorType_.InterpreteNRJ( startEnergy );
 }

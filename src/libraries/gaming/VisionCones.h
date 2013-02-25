@@ -13,6 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -27,6 +28,7 @@ namespace sword
     class UnitAttributes;
 }
 
+class MeteoModel;
 class Surface;
 class SurfaceFactory;
 class VisionMap;
@@ -41,11 +43,13 @@ class VisionCones : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< sword::UnitVisionCones >
                   , public kernel::Updatable_ABC< sword::UnitAttributes >
                   , public gui::Drawable_ABC
+                  , public tools::Observer_ABC
+                  , public tools::ElementObserver_ABC< MeteoModel >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionCones( const kernel::Agent_ABC& agent, SurfaceFactory& factory, kernel::Workers& workers );
+             VisionCones( const kernel::Agent_ABC& agent, SurfaceFactory& factory, kernel::Workers& workers, kernel::Controller& controller );
     virtual ~VisionCones();
     //@}
 
@@ -53,6 +57,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
     virtual void DrawFill( const gui::Viewport_ABC& viewport ) const;
+    virtual void NotifyUpdated( const MeteoModel& model );
     //@}
 
 private:
@@ -84,6 +89,7 @@ private:
     const kernel::Agent_ABC& agent_;
     SurfaceFactory& factory_;
     kernel::Workers& workers_;
+    kernel::Controller& controller_;
     bool needUpdating_;
     Updater* current_;
     VisionMap* map_;

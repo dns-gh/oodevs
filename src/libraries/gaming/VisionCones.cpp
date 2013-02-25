@@ -84,16 +84,17 @@ private:
 // Name: VisionCones constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers )
+VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers, kernel::Controller& controller )
     : agent_           ( agent )
     , factory_         ( factory )
     , workers_         ( workers )
+    , controller_      ( controller )
     , map_             ( factory_.CreateVisionMap() )
     , needUpdating_    ( true )
     , current_         ( 0 )
     , elongationFactor_( 1.f )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +103,7 @@ VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Worke
 // -----------------------------------------------------------------------------
 VisionCones::~VisionCones()
 {
+    controller_.Unregister( *this );
     CancelCurrent();
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
@@ -196,6 +198,15 @@ void VisionCones::DrawFill( const gui::Viewport_ABC& viewport ) const
 {
     for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
         (*it)->DrawFill( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::NotifyUpdated
+// Created: JSR 2013-02-25
+// -----------------------------------------------------------------------------
+void VisionCones::NotifyUpdated( const MeteoModel& )
+{
+    Invalidate();
 }
 
 // -----------------------------------------------------------------------------

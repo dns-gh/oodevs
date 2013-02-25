@@ -8,6 +8,9 @@
 #include "Agent_ABC.h"
 #include "Architecture_ABC.h"
 #include "Object_ABC.h"
+#include "meteo/Meteo.h"
+#include "meteo/PHY_Precipitation.h"
+#include "meteo/PHY_Lighting.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -28,6 +31,8 @@ SensorType::SensorType( const std::string& name, xml::xistream& xis )
     InitializeEnvironnementFactors( xis );
     InitializeUrbanBlockMaterialFactors( xis );
     InitializePostureSourceFactors( xis );
+    InitializePrecipitationFactors( xis );
+    InitializeLightingFactors( xis );
     xis >> xml::end;
 }
 
@@ -60,6 +65,58 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
     xis >> xml::start( "source-posture-modifiers" )
             >> xml::list( "distance-modifier", *this, &SensorType::ReadPostureFactor )    
         >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::InitializePrecipitationFactors
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+void SensorType::InitializePrecipitationFactors( xml::xistream& xis )
+{
+    xis >> xml::start( "precipitation-modifiers" )
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadPrecipitationModifier ) 
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::InitializeLightingFactors
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+void SensorType::InitializeLightingFactors( xml::xistream& xis )
+{
+    xis >> xml::start( "visibility-modifiers" )
+            >> xml::list( "distance-modifier", *this, &SensorType::ReadLightingModifier ) 
+        >> xml::end;
+}
+
+namespace
+{
+    void ReadStringFloatModifier( xml::xistream& xis, std::map< std::string, float >& map )
+    {
+        std::string type;
+        float value;
+        xis >> xml::attribute( "type", type )
+            >> xml::attribute( "value", value );
+        map[ type ] = value;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::ReadLightingModifier
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+void SensorType::ReadLightingModifier( xml::xistream& xis )
+{
+    ReadStringFloatModifier( xis, lightingFactors_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::ReadPrecipitationModifier
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+void SensorType::ReadPrecipitationModifier( xml::xistream& xis )
+{
+    ReadStringFloatModifier( xis, precipitationFactors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,17 +263,34 @@ float SensorType::ComputeEnvironmentFactor( bool inForest, bool inTown, bool inG
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material ) const
+float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const
 {
     bool bIsAroundBU = false;
-    bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material );
-    if( rCurrentNRJ > 0 && !material )
+    bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material, weather );
+    if( rCurrentNRJ > 0 && !bIsAroundBU )
     {
-        rDistanceModificator *= ComputeEnvironmentFactor( inForest, inTown, inGround );
+        rDistanceModificator *= ComputeEnvironmentFactor( inForest, inTown, inGround ) * GetWeatherModifier( weather );
         return rDistanceModificator <= 1e-8 ? -1.f : rCurrentNRJ - distance / rDistanceModificator;
     }
     else
         return rCurrentNRJ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SensorType::GetWeatherModifier
+// Created: LDC 2013-02-22
+// -----------------------------------------------------------------------------
+float SensorType::GetWeatherModifier( const weather::Meteo* weather  ) const
+{
+    if( !weather )
+        return 1.f;
+    const weather::PHY_Precipitation& precipitation = weather->GetPrecipitation();
+    auto precipitationFactorIt =  precipitationFactors_.find( precipitation.GetName() );
+    float precipitationFactor = ( precipitationFactorIt != precipitationFactors_.end() ) ? precipitationFactorIt->second : 1.f;
+    const weather::PHY_Lighting& lighting = weather->GetLighting();
+    auto lightingIt = lightingFactors_.find( lighting.GetName() );
+    float lightingFactor = ( lightingIt != lightingFactors_.end() ) ? lightingIt->second : 1.f;
+    return precipitationFactor * lightingFactor;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,9 +324,9 @@ const std::vector< float >& SensorType::GetPostureSourceFactors() const
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material ) const
+float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather ) const
 {
-    return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, material );
+    return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, material, weather );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,14 +348,14 @@ E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 // Name: SensorType::ComputeUrbanExtinction
 // Created: SLG 2010-03-10
 // -----------------------------------------------------------------------------
-bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const boost::optional< std::string >& material ) const
+bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const boost::optional< std::string >& material, const weather::Meteo* weather  ) const
 {
     bool bIsAroundBU = false;
     if( material )
     {
         bIsAroundBU = true;
-        float rDistanceModificator = urbanBlockFactors_.find( *material )->second;
-        rDistanceModificator <= 1e-8 ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ - distance / rDistanceModificator ;
+        float rDistanceModificator = urbanBlockFactors_.find( *material )->second * GetWeatherModifier( weather );
+        rVisionNRJ = rDistanceModificator <= 1e-8 ? -1 : rVisionNRJ - distance / rDistanceModificator ;
     }
     return bIsAroundBU;
 }
