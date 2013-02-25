@@ -3133,6 +3133,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Delete unit</source>
         <translation>Supprimer l&apos;unité</translation>
     </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Confirmation</translation>
+    </message>
+    <message>
+        <source>Delete &apos;%1&apos;?</source>
+        <translation>Supprimer &apos;%1&apos;?</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

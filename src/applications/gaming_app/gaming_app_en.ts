@@ -3125,6 +3125,14 @@ This data can&apos;t be projected.</source>
         <source>Delete unit</source>
         <translation>Delete unit</translation>
     </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Confirmation</translation>
+    </message>
+    <message>
+        <source>Delete &apos;%1&apos;?</source>
+        <translation>Delete &apos;%1&apos;?</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>
