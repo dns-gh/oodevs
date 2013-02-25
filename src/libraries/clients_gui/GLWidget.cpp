@@ -135,7 +135,7 @@ void GlWidget::paintGL( const geometry::Point2f& point )
     {
         setAutoUpdate( false );
         // width and height of the picking region
-        const unsigned int delta = std::max( 1u, static_cast< unsigned int >( Pixels() ) );
+        const unsigned int delta = std::max( 1u, static_cast< unsigned int >( 5.f * Pixels() ) );
         const geometry::Rectangle2f viewport = geometry::Rectangle2f( geometry::Point2f( point.X() - delta , point.Y() - delta ),
                                                                       geometry::Point2f( point.X() + delta, point.Y() + delta ) );
         for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
