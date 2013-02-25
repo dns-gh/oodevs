@@ -35,23 +35,24 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     , layer_      ( layer )
 {
     {
-        Q3HBox* box = new Q3HBox( this );
-        {
-            Q3VBox* vbox = new Q3VBox( box );
-            height_ = new QSlider( -100, 0, 1, 2, Qt::Vertical, vbox );
-            height_->setTickmarks( QSlider::TicksRight );
-            height_->setTickInterval( 10 );
-            heightValue_ = new RichSpinBox( vbox, 0, 100, 1 );
+        QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
+        heightValue_ = new RichSpinBox( 0, 0 );
+        heightValue_->setFixedSize( 100, 30 );
+        heightValue_->setLineStep( 50 );
             heightValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::meters.AsString() ) );
-            vbox->setMaximumWidth( 50 );
-        }
+
+        QWidget* box = new QWidget( this );
         profile_ = new TerrainProfile( box, detection );
+        QGridLayout* layout = new QGridLayout( box );
+        layout->addWidget( heightLabel, 1, 3, 1, 1, Qt::AlignLeft );
+        layout->addWidget( heightValue_, 2, 3, 1, 1, Qt::AlignLeft );
+        layout->addWidget( profile_, 0, 0, 32, 32 );
         setWidget( box );
-        connect( height_, SIGNAL( valueChanged( int ) ), SLOT( SliderChanged( int ) ) );
-        connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged( int ) ) );
+        connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged() ) );
     }
     setFloating( true );
     setProperty( "notAppropriate", QVariant( true ) );
+    setVisible( false );
     controllers_.Update( *this );
 }
 
@@ -97,11 +98,7 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
 // -----------------------------------------------------------------------------
 void TerrainProfiler::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 {
-    const short maxValue = detection_.MaximumElevation() + 100;
-    height_->setRange( -maxValue, 0 );
-    heightValue_->setRange( 0, maxValue );
-    height_->setValue( 2 );
-    heightValue_->setValue( 2 );
+    heightValue_->setValue( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +125,7 @@ void TerrainProfiler::SetToPosition()
 // -----------------------------------------------------------------------------
 void TerrainProfiler::SetFromUnitPosition()
 {
-    SetFromPosition( candidateUnitPoint_, candidateHeight_ );
+    SetFromPosition( candidateUnitPoint_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,10 +141,9 @@ void TerrainProfiler::SetToUnitPosition()
 // Name: TerrainProfiler::SetFromPosition
 // Created: SBO 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainProfiler::SetFromPosition( const geometry::Point2f& point, float height /* = 2.f*/ )
+void TerrainProfiler::SetFromPosition( const geometry::Point2f& point )
 {
     from_ = point;
-    height_->setValue( ( int )height );
     layer_.SetFromPosition( from_ );
     UpdateView();
 }
@@ -170,7 +166,7 @@ void TerrainProfiler::SetToPosition( const geometry::Point2f& point )
 void TerrainProfiler::UpdateView()
 {
     if( !to_.IsZero() && !from_.IsZero() )
-        profile_->Update( from_, to_, float( -height_->value() ) );
+        profile_->Update( from_, to_, float( heightValue_->value() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,26 +188,11 @@ void TerrainProfiler::hideEvent( QHideEvent* /*e*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainProfiler::SliderChanged
-// Created: SBO 2010-04-02
-// -----------------------------------------------------------------------------
-void TerrainProfiler::SliderChanged( int value )
-{
-    heightValue_->blockSignals( true );
-    heightValue_->setValue( -value );
-    heightValue_->blockSignals( false );
-    UpdateView();
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainProfiler::SpinboxChanged
 // Created: SBO 2010-04-02
 // -----------------------------------------------------------------------------
-void TerrainProfiler::SpinboxChanged( int value )
+void TerrainProfiler::SpinboxChanged()
 {
-    height_->blockSignals( true );
-    height_->setValue( -value );
-    height_->blockSignals( false );
     UpdateView();
 }
 
