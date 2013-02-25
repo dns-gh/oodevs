@@ -124,7 +124,7 @@ using namespace kernel;
 
 namespace
 {
-    void AddToolBar( QMainWindow& mainWindow, gui::RichToolBar* toolBar, int hiddenModes = eModes_None, int visibleModes = eModes_None, bool visibleByDefault = false )
+    void AddToolBar( QMainWindow& mainWindow, gui::RichToolBar* toolBar, int hiddenModes = eModes_None, int visibleModes = eModes_None, bool visibleByDefault = true )
     {
         mainWindow.addToolBar( toolBar );
         toolBar->SetModes( hiddenModes, visibleModes, visibleByDefault );
@@ -232,13 +232,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     // Tool bars
-    AddToolBar( *this, new SIMControlToolbar( this, controllers, network, network_.GetMessageMgr(), dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default, true );
+    AddToolBar( *this, new SIMControlToolbar( this, controllers, network, network_.GetMessageMgr(), dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
     AddToolBar( *this, new EventToolbar( this, controllers, *pProfile_ ), eModes_Default );
     AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ), eModes_Default );
     addToolBarBreak();
-    AddToolBar( *this, new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_None, true );
+    AddToolBar( *this, new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_None );
     AddToolBar( *this, new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ), eModes_Default );
 
     // Help
@@ -263,6 +263,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
     planifName_ = tr( "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
+    resize( 800, 600 );
     // Read settings
     controllers_.LoadOptions( eModes_Gaming );
     controllers_.modes_.LoadGeometry( eModes_Gaming );

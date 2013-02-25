@@ -87,8 +87,9 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Clock
     {
         gui::RichDockWidget* clockWnd = new ClockDock( parent, controllers, simulation, *scheduler_ );
-        clockWnd->SetModes( eModes_Default );
+        clockWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, clockWnd );
+        clockWnd->setFloating( true );
     }
     // Properties
     {
@@ -103,10 +104,10 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         missionPanel_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::LeftDockWidgetArea, missionPanel_ );
     }
-    // Agent list panel
+    // Orbat panel
     {
         orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, automatsLayer, formationLayer, model.actions_, staticModel, simulation, entitySymbols );
-        orbatDockWidget_->SetModes( eModes_Default );
+        orbatDockWidget_->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }
     // AfterAction
@@ -204,13 +205,13 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Logger
     {
         loggerPanel_ = new gui::Logger( parent, controllers, simulation, "./Debug/Gaming.log" );
-        loggerPanel_->SetModes( eModes_None, eModes_None, true );
+        loggerPanel_->SetModes( eModes_None, eModes_Default );
         parent->addDockWidget( Qt::BottomDockWidgetArea, loggerPanel_ );
     }
     // Info
     {
         gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, *displayExtractor_, staticModel, model.actions_, simulation );
-        infoWnd->SetModes( eModes_Default );
+        infoWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
     }
 

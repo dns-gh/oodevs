@@ -158,7 +158,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->SetModes( eModes_None, eModes_All, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );
-    toolBar->SetModes( eModes_Default );
+    toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
 
@@ -180,7 +180,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     subMenu = new kernel::ContextMenu( menu );
     toolBar = new gui::RichToolBar( controllers, pParent, "logistics toolbar" );
-    toolBar->SetModes( eModes_Default );
+    toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Logistics toolbar" ) );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
@@ -197,7 +197,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     subMenu = new kernel::ContextMenu( menu );
     toolBar = new gui::RichToolBar( controllers, pParent, "terrain toolbar" );
-    toolBar->SetModes( eModes_Default );
+    toolBar->SetModes( eModes_Default, eModes_None, true );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Terrain toolbar" ) );
     AddSubMenu3( toolBar, subMenu, tools::translate( "Menu", "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
