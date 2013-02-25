@@ -396,8 +396,11 @@ void InformationToolTip::paintEvent( QPaintEvent * /*event*/ )
     {
         QPainter p( this );
         QPoint pos = QCursor::pos();
-        if( QApplication::desktop()->screenGeometry( QApplication::desktop()->screenNumber( pos ) ).width() < pos.x() + image_.width() )
+        QRect screen = QApplication::desktop()->screenGeometry( QApplication::desktop()->screenNumber( pos ) );
+        if( screen.left() + screen.width() < pos.x() + image_.width() )
             pos.setX( pos.x() - image_.width() );
+        if( screen.top() + screen.height() < pos.y() + image_.height() )
+            pos.setY( pos.y() - image_.height() );
         move( pos + QPoint( 0, 20 ) ); //mouse shape default size
         p.drawImage( 0, 0, image_ );
         setFixedSize( image_.width(), image_.height() );
