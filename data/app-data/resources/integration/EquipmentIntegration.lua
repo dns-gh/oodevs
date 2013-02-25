@@ -508,20 +508,26 @@ integration.desactivateInjuredSorting = function( self )
 end
 
 integration.activateLogisticChains = function( self )
-    if integration.isLogisticTypeUnit( ) then
+    if integration.isLogisticTypeUnit() then
         DEC_Sante_ActiverChaine()
         DEC_Maintenance_ActiverChaine()
         DEC_Ravitaillement_ActiverChaine()
         DEC_Sante_ActiverFonctionSoin()
+        return true
+    else
+        return false
     end
 end
 
 integration.desactivateLogisticChains = function( self )
-    if integration.isLogisticTypeUnit( ) then
+    if integration.isLogisticTypeUnit() then
         DEC_Sante_DesactiverChaine()
         DEC_Maintenance_DesactiverChaine()
         DEC_Ravitaillement_DesactiverChaine()
         DEC_Sante_DesactiverFonctionSoin()
+        return true
+    else
+        return false
     end
 end
 
