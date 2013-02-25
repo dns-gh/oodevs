@@ -75,7 +75,7 @@
   </xs:complexType>
   <xs:simpleType name="ExtendableList">
     <xs:restriction base="xs:string">
-      <xs:pattern value="(party|formation|automat|unit|crowd|population)(;(party|formation|automat|unit|crowd|population))*"/>
+      <xs:pattern value="(party|formation|automat|unit|crowd|population|object)(;(party|formation|automat|unit|crowd|population|object))*"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="AttributeType">
