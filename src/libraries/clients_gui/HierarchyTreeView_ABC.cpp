@@ -194,6 +194,8 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
 void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const
 {
     // TODO Move following to preparation or gui reimplementation, no ghost on gaming ... or not, all color could also be handle here (log missing, tacticaly destroyed, etc.), options are permissive for that, and it anticipate a gaming/prepa merge
+    if( !index.isValid() )
+        return;
     QStandardItem* item = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( index ) );
     if( item && item->data( Roles::MimeTypeRole ).isValid() )
     {

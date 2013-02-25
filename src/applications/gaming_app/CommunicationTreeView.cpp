@@ -189,6 +189,8 @@ void CommunicationTreeView::OnChangeKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void CommunicationTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const
 {
+    if( !index.isValid() )
+        return;
     QStandardItem* item = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( index ) );
     if( item && item->data( gui::Roles::MimeTypeRole).isValid() &&
         item->data( gui::Roles::MimeTypeRole).toString() == typeid( kernel::Agent_ABC ).name() )

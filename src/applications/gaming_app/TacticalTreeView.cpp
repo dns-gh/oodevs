@@ -84,6 +84,8 @@ void TacticalTreeView::NotifyUpdated( const kernel::AutomatDecisions_ABC& /*deci
 // -----------------------------------------------------------------------------
 void TacticalTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const
 {
+    if( !index.isValid() )
+        return;
     QStandardItem* item = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( index ) );
     if( item && item->data( gui::Roles::MimeTypeRole).isValid() &&
         item->data( gui::Roles::MimeTypeRole).toString() == typeid( kernel::Agent_ABC ).name() )
