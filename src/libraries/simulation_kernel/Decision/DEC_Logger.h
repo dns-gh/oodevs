@@ -10,9 +10,9 @@
 #ifndef DEC_Logger_h
 #define DEC_Logger_h
 
-#include "DEC_Logger_ABC.h"
-#include "MT_Tools/MT_Logger.h"
-#include <typeinfo>
+#include <string>
+#include <boost/noncopyable.hpp>
+#include <boost/serialization/export.hpp>
 
 namespace sword
 {
@@ -22,26 +22,39 @@ namespace sword
 */
 // Created: SLI 2013-02-07
 // =============================================================================
-template< typename T >
-class DEC_Logger : public DEC_Logger_ABC
+class DEC_Logger : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Logger()
-    {}
-    virtual ~DEC_Logger() {}
+             DEC_Logger();
+    explicit DEC_Logger( const std::string& type );
+    virtual ~DEC_Logger();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Log( const char* name, unsigned int identifier )
+    void Log( const char* name, unsigned int identifier );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    template< typename Archive >
+    void serialize( Archive& archive, const unsigned int )
     {
-        MT_LOG_INFO_MSG( "DEC_CALL " << typeid( T ).name() << " " << identifier << " " << name );
+        archive & type_;
     }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string type_;
     //@}
 };
 
 }
+
+BOOST_CLASS_EXPORT_KEY( sword::DEC_Logger )
 
 #endif // DEC_Logger_h

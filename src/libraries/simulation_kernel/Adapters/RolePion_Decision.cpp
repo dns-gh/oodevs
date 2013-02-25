@@ -65,15 +65,18 @@ namespace sword
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::RolePion_Decision* role, const unsigned int /*version*/ )
     {
+        MIL_AgentPion* pion = role->pEntity_;
         const core::Model* model = &role->model_;
         const sword::Sink* sink = &role->sink_;
         unsigned int gcPause = role->gcPause_;
         unsigned int gcMult = role->gcMult_;
-        archive << role->pEntity_
+        sword::DEC_Logger* logger = role->logger_;
+        archive << pion
                 << model
                 << sink
                 << gcPause
-                << gcMult;
+                << gcMult
+                << logger;
     }
 
     template< typename Archive >
@@ -84,12 +87,14 @@ namespace sword
         Sink* sink;
         unsigned int gcPause;
         unsigned int gcMult;
+        DEC_Logger* logger;
         archive >> pion
                 >> model
                 >> sink
                 >> gcPause
-                >> gcMult;
-        ::new( role )sword::RolePion_Decision( *pion, *model, gcPause, gcMult, 0, *sink );  // $$$$ JSR 2013-02-18: todo serialize logger
+                >> gcMult
+                >> logger;
+        ::new( role )sword::RolePion_Decision( *pion, *model, gcPause, gcMult, logger, *sink );
     }
 }
 
@@ -129,7 +134,7 @@ DECLARE_HOOK( GetAmmunitionForIndirectFire, int, ( const SWORD_Model* model, con
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------
-RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, Sink& sink )
+RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, Sink& sink )
     : DEC_RolePion_Decision( pion, gcPause, gcMult, logger )
     , sink_ ( sink )
     , model_( model )

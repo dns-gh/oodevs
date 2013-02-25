@@ -11,10 +11,11 @@
 #define __AutomateFactory_h_
 
 #include "AutomateFactory_ABC.h"
+#include "Checkpoints/SerializationTools.h"
 
 namespace sword
 {
-    class DEC_Logger_ABC;
+    class DEC_Logger;
 }
 
 class MIL_IDManager;
@@ -50,6 +51,7 @@ private:
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const AutomateFactory* factory, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ );
+    AutomateFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
     //@}
 
 private:
@@ -57,8 +59,7 @@ private:
     //@{
     unsigned int gcPause_;
     unsigned int gcMult_;
-    bool logEnabled_;
-    sword::DEC_Logger_ABC* logger_;
+    std::auto_ptr< sword::DEC_Logger > logger_;
     MIL_IDManager& idManager_;
     //@}
 };
@@ -72,20 +73,21 @@ void save_construct_data( Archive& archive, const AutomateFactory* factory, cons
     archive << idManager
             << factory->gcPause_
             << factory->gcMult_
-            << factory->logEnabled_;
+            << factory->logger_;
 }
+
 template< typename Archive >
 void load_construct_data( Archive& archive, AutomateFactory* factory, const unsigned int /*version*/ )
 {
     MIL_IDManager* idManager;
     unsigned int gcPause;
     unsigned int gcMult;
-    bool logEnabled;
+    std::auto_ptr< sword::DEC_Logger > logger;
     archive >> idManager
             >> gcPause
             >> gcMult
-            >> logEnabled;
-    ::new( factory )AutomateFactory( *idManager, gcPause, gcMult, logEnabled );
+            >> logger;
+    ::new( factory )AutomateFactory( *idManager, gcPause, gcMult, logger );
 }
 
 #endif // __AutomateFactory_h_

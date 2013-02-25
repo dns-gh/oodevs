@@ -2670,6 +2670,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StageParameter.cpp">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger.cpp">
+      <Filter>Source Files\Decision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5458,9 +5461,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentTypePion_Remote.h">
       <Filter>Source Files\Entities\Specialisations\Remote</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger_ABC.h">
-      <Filter>Source Files\Decision</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger.h">
       <Filter>Source Files\Decision</Filter>

@@ -31,7 +31,7 @@
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Decision/DEC_TerrainFunctions.h"
-#include "Decision/DEC_Logger_ABC.h"
+#include "Decision/DEC_Logger.h"
 #include "DEC_ResourceNetwork.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -1582,7 +1582,7 @@ namespace
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
                   const std::string& includePath, const std::string& brainFile, bool isMasalife,
-                  const std::string& type, bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger )
+                  const std::string& type, bool reload, const std::string& integrationDir, sword::DEC_Logger* logger )
 {
     const std::string& idx = isMasalife ? type : brainFile;
     pArchetypeBrain = brainTable[idx];

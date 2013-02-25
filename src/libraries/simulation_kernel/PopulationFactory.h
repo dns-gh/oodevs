@@ -12,6 +12,7 @@
 
 #include "PopulationFactory_ABC.h"
 #include "MIL_AgentServer.h"
+#include "CheckPoints/SerializationTools.h"
 
 class MissionController_ABC;
 
@@ -48,6 +49,7 @@ private:
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ );
+    PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
     //@}
 
 private:
@@ -56,8 +58,7 @@ private:
     MissionController_ABC& missionController_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    const bool logEnabled_;
-    sword::DEC_Logger_ABC* logger_;
+    std::auto_ptr< sword::DEC_Logger > logger_;
     //@}
 };
 
@@ -70,7 +71,7 @@ void save_construct_data( Archive& archive, const PopulationFactory* factory, co
     archive << missionController
             << factory->gcPause_
             << factory->gcMult_
-            << factory->logEnabled_;
+            << factory->logger_;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ )
@@ -78,12 +79,12 @@ void load_construct_data( Archive& archive, PopulationFactory* factory, const un
     MissionController_ABC* missionController;
     unsigned int gcPause;
     unsigned int gcMult;
-    bool logEnabled;
+    std::auto_ptr< sword::DEC_Logger > logger;
     archive >> missionController
             >> gcPause
             >> gcMult
-            >> logEnabled;
-    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, logEnabled );
+            >> logger;
+    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult, logger );
 }
 
 #endif // __PopulationFactory_h_

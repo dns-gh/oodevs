@@ -106,7 +106,7 @@
     {
         typedef typename boost::function< R( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS,P) ) > function_type;
         typedef typename function_type::result_type result_type;
-        ProfilerProxy( DEC_Logger_ABC* logger, const char* const name, MT_Profiler& profiler, const function_type& f, directia::brain::Brain* brain )
+        ProfilerProxy( DEC_Logger* logger, const char* const name, MT_Profiler& profiler, const function_type& f, directia::brain::Brain* brain )
             : logger_  ( logger )
             , name_    ( name )
             , profiler_( &profiler )
@@ -123,7 +123,7 @@
             MT_ProfilerGuard guard( *profiler_ );
             return f_( BOOST_PP_ENUM_PARAMS(BRAIN_NUM_ARGS, t) );
         }
-        DEC_Logger_ABC* logger_;
+        DEC_Logger* logger_;
         const char* name_;
         MT_Profiler* profiler_;
         function_type f_;

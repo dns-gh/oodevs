@@ -18,11 +18,10 @@ namespace propagation
     class ElevationGetter_ABC;
 }
 
-class SinkRoleExtender;
-
 namespace sword
 {
-class DEC_Logger_ABC;
+    class DEC_Logger;
+    class SinkRoleExtender;
 
 namespace legacy
 {
@@ -63,9 +62,9 @@ public:
 
     //! @name Factory
     //@{
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext );
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext );
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext );
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext );
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext );
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext );
 
     virtual std::auto_ptr< propagation::FloodModel_ABC > CreateFloodModel() const;
     //@}
@@ -89,6 +88,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger );
     MIL_AgentPion& Configure( MIL_AgentPion& pion );
     void CreateRoles( SinkRoleExtender& ext );
 
@@ -102,8 +102,7 @@ private:
     AgentFactory_ABC& factory_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    sword::DEC_Logger_ABC* decLogger_;
-    const bool logEnabled_;
+    std::auto_ptr< sword::DEC_Logger > decLogger_;
     //@}
 };
 }

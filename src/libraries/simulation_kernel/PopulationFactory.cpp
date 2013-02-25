@@ -27,11 +27,24 @@ PopulationFactory::PopulationFactory( MissionController_ABC& missionController, 
     : gcPause_          ( gcPause )
     , gcMult_           ( gcMult )
     , missionController_( missionController )
-    , logEnabled_       ( logEnabled )
-    , logger_           ( logEnabled_ ? new sword::DEC_Logger< MIL_Population >() : 0)
+    , logger_           ( logEnabled ? new sword::DEC_Logger( "Population" ) : 0 )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFactory constructor
+// Created: SLI 2013-02-22
+// -----------------------------------------------------------------------------
+PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger )
+    : gcPause_          ( gcPause )
+    , gcMult_           ( gcMult )
+    , missionController_( missionController )
+    , logger_           ( logger )
+{
+    // NOTHING
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: PopulationFactory destructor
@@ -51,7 +64,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
     const MIL_PopulationType* pType = MIL_PopulationType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, logger_ );
+    MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_, logger_.get() );
     Register( population.GetID(), population );
     population.Register( missionController_ );
     return population;
@@ -66,7 +79,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
         throw MASA_EXCEPTION( "Unknown population type" );
-    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, logger_, context );
+    MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_, logger_.get(), context );
     Register( population.GetID(), population );
     if( pUrbanObject )
         populationFromUrbanObjectResolver_.Register( pUrbanObject, population );

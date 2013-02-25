@@ -21,6 +21,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "CheckPoints/SerializationTools.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "Tools/MIL_Tools.h"
 #include <boost/functional/factory.hpp>
@@ -61,7 +62,7 @@ namespace legacy
         archive << factory
                 << sink->gcPause_
                 << sink->gcMult_
-                << sink->logEnabled_
+                << sink->decLogger_
                 << elements;
     }
 
@@ -71,14 +72,14 @@ namespace legacy
         AgentFactory_ABC* factory;
         unsigned int gcPause;
         unsigned int gcMult;
-        bool logEnabled;
+        std::auto_ptr< sword::DEC_Logger > logger;
         Sink::T_Elements elements;
         archive >> factory
                 >> gcPause
                 >> gcMult
-                >> logEnabled
+                >> logger
                 >> elements;
-        ::new( sink )Sink( *factory, gcPause, gcMult, logEnabled );
+        ::new( sink )Sink( *factory, gcPause, gcMult, logger );
         sink->elements_ = elements;
     }
 }
@@ -93,8 +94,21 @@ Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult
     , factory_   ( factory )
     , gcPause_   ( gcPause )
     , gcMult_    ( gcMult )
-    , logEnabled_( logEnabled )
-    , decLogger_ ( logEnabled ? new DEC_Logger< MIL_AgentPion >() : 0 )
+    , decLogger_ ( logEnabled ? new DEC_Logger( "Pion" ) : 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink constructor
+// Created: SLI 2013-02-22
+// -----------------------------------------------------------------------------
+Sink::Sink( AgentFactory_ABC& factory, unsigned int gcPause, unsigned int gcMult, std::auto_ptr< sword::DEC_Logger > logger )
+    : pElevation_( new ElevationGetter() )
+    , factory_   ( factory )
+    , gcPause_   ( gcPause )
+    , gcMult_    ( gcMult )
+    , decLogger_ ( logger )
 {
     // NOTHING
 }
@@ -220,11 +234,15 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     return pion;
 }
 
-void Sink::CreateRoles( SinkRoleExtender& ext )
+// -----------------------------------------------------------------------------
+// Name: Sink::CreateRoles
+// Created: AHC 2013-02-22
+// -----------------------------------------------------------------------------
+void Sink::CreateRoles( sword::SinkRoleExtender& ext )
 {
     ext.AddFactory( boost::function< sword::legacy::NullRoleAdapter*(MIL_AgentPion &) >( boost::bind( boost::factory< sword::legacy::NullRoleAdapter* >() ) ) );
     ext.AddFactory( boost::function< sword::legacy::RolePion_Decision*(MIL_AgentPion &) >( 
-        boost::bind( boost::factory< sword::legacy::RolePion_Decision* >() ,_1, gcPause_, gcMult_, decLogger_ ) ) );
+        boost::bind( boost::factory< sword::legacy::RolePion_Decision* >() ,_1, gcPause_, gcMult_, decLogger_.get() ) ) );
 
     ext.AddFactory( boost::function< moving::PHY_RoleAction_Moving*(MIL_AgentPion &) >( boost::bind( boost::factory< moving::PHY_RoleAction_Moving* >() ,_1 ) ) );
     ext.AddFactory( boost::function< PHY_RolePion_Location*(MIL_AgentPion &) >( boost::bind( boost::factory< PHY_RolePion_Location* >() ,_1 ) ) );
@@ -237,7 +255,7 @@ void Sink::CreateRoles( SinkRoleExtender& ext )
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext )
 {
     if( MIL_AgentPion* pPion = Find( xis.attribute< unsigned long >( "id" ) ) )
         throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
@@ -260,7 +278,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext )
 {
     SinkRoleExtender chainExt( ext );
     CreateRoles( chainExt );
@@ -273,7 +291,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::Create
 // Created: SLI 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext )
+MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext )
 {
     SinkRoleExtender chainExt( ext );
     CreateRoles( chainExt );

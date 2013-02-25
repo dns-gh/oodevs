@@ -87,7 +87,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
     : MIL_Entity_ABC         ( xis )
     , pType_                 ( &type )
     , nID_                   ( nID )
@@ -144,7 +144,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name,
-                            unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, unsigned int context, const MIL_DictionaryExtensions& extensions )
+                            unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context, const MIL_DictionaryExtensions& extensions )
     : MIL_Entity_ABC         ( name )
     , pType_                 ( &type )
     , nID_                   ( nID )
@@ -306,7 +306,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // Name: MIL_Automate::Initialize
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
+void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
 {
     xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
     unsigned int nKnowledgeGroup;

@@ -11,7 +11,7 @@
 #define SWORD_BRAIN_H
 
 #include "MT_Tools/MT_ProfilerGuard.h"
-#include "DEC_Logger_ABC.h"
+#include "DEC_Logger.h"
 #include "DEC_Decision_ABC.h"
 #include <directia/tools/binders/ScriptRef.h>
 #define private public
@@ -54,8 +54,8 @@ class Brain : boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    Brain( const std::string& config, DEC_Logger_ABC* logger );
-    Brain( Brain& parent, DEC_Logger_ABC* logger );
+    Brain( const std::string& config, DEC_Logger* logger );
+    Brain( Brain& parent, DEC_Logger* logger );
     ~Brain() {}
     //@}
 
@@ -100,7 +100,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DEC_Logger_ABC* logger_;
+    DEC_Logger* logger_;
     std::auto_ptr< directia::brain::Brain > brain_;
     static T_Profilers profilers_;
     //@}

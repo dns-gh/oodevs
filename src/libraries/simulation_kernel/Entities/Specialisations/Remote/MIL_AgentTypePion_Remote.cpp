@@ -49,15 +49,15 @@ MIL_AgentPion* MIL_AgentTypePion_Remote::InstanciatePion( MIL_Automate& automate
 namespace
 {
     template< typename Role >
-    void RegisterRoleExt( MIL_AgentPion& pion, RoleExtender_ABC& ext )
+    void RegisterRoleExt( MIL_AgentPion& pion, sword::RoleExtender_ABC& ext )
     {
-        boost::shared_ptr< RoleExtender_ABC::RoleFactory_ABC > fact( ext.GetFactory< Role >() );
+        boost::shared_ptr< sword::RoleExtender_ABC::RoleFactory_ABC > fact( ext.GetFactory< Role >() );
         if( fact.get() )
             fact->RegisterRole( pion );
     }
 }
 
-void MIL_AgentTypePion_Remote::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const
+void MIL_AgentTypePion_Remote::RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const
 {
     pion.RegisterRole( *new PHY_RolePion_UrbanLocation( pion ) );
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );

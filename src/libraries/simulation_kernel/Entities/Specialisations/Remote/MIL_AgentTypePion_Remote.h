@@ -25,7 +25,7 @@ public:
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis ) const;
     virtual MIL_AgentPion* InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const;
 
-    virtual void RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const;
+    virtual void RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const;
     //@}
 };
 

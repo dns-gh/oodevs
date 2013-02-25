@@ -336,7 +336,7 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const
+void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const
 {
     const bool bIsAutonomous = pion.IsAutonomous();
     pion.RegisterRole( *new network::NET_RolePion_Dotations( pion ) );

@@ -255,7 +255,7 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger ) const
 {
     return *new MIL_Automate( *this, nID, parent, xis, gcPause, gcMult, logger );
 }
@@ -264,7 +264,7 @@ MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entit
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC&  parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, unsigned int context, const MIL_DictionaryExtensions& extensions ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC&  parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context, const MIL_DictionaryExtensions& extensions ) const
 {
     return *new MIL_Automate( *this, nID, parent, knowledgeGroup, name, gcPause, gcMult, logger, context, extensions );
 }

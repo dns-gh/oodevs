@@ -27,7 +27,7 @@ class PHY_RoePopulation;
 
 namespace sword
 {
-    class DEC_Logger_ABC;
+    class DEC_Logger;
 }
 
 // =============================================================================
@@ -37,7 +37,7 @@ namespace sword
 class DEC_AutomateDecision : public DEC_Decision< MIL_Automate >
 {
 public:
-             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
+             DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
     virtual ~DEC_AutomateDecision();
 
     //! @name CheckPoints
@@ -176,7 +176,8 @@ void save_construct_data( Archive& archive, const DEC_AutomateDecision* role, co
 {
     archive << role->pEntity_
             << role->gcPause_
-            << role->gcMult_;
+            << role->gcMult_
+            << role->logger_;
 }
 
 template< typename Archive >
@@ -185,10 +186,12 @@ void load_construct_data( Archive& archive, DEC_AutomateDecision* role, const un
     MIL_Automate* automate;
     unsigned int gcPause;
     unsigned int gcMult;
+    sword::DEC_Logger* logger;
     archive >> automate
             >> gcPause
-            >> gcMult;
-    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, 0 );  // $$$$ JSR 2013-02-18: todo serialize logger
+            >> gcMult
+            >> logger;
+    ::new( role )DEC_AutomateDecision( *automate, gcPause, gcMult, logger );
 }
 
 #endif // __DEC_AutomateDecision_h_

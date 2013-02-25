@@ -24,7 +24,7 @@ namespace xml
 namespace sword
 {
     class Brain;
-    class DEC_Logger_ABC;
+    class DEC_Logger;
 }
 
 class DEC_Model_ABC;
@@ -55,8 +55,8 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger ) const;
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, unsigned int context, const MIL_DictionaryExtensions& extensions ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context, const MIL_DictionaryExtensions& extensions ) const;
     //@}
 
     //! @name Accessors

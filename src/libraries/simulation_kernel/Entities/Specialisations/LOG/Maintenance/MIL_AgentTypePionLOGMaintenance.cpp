@@ -59,7 +59,7 @@ MIL_AgentPion* MIL_AgentTypePionLOGMaintenance::InstanciatePion( MIL_Automate& a
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in AgentFactory
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOGMaintenance::RegisterRoles( MIL_AgentPion& pion, RoleExtender_ABC* ext ) const
+void MIL_AgentTypePionLOGMaintenance::RegisterRoles( MIL_AgentPion& pion, sword::RoleExtender_ABC* ext ) const
 {
     MIL_AgentTypePion::RegisterRoles( pion, ext );
     pion.RegisterRole( *new PHY_RolePionLOG_Maintenance( static_cast< MIL_AgentPionLOG_ABC& >( pion ) ) );//@TODO remove cast when AgentPionLOG will be deleted

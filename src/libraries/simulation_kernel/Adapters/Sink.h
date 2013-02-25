@@ -27,11 +27,10 @@ namespace core
     class Facade;
 }
 
-class SinkRoleExtender;
-
 namespace sword
 {
-class DEC_Logger_ABC;
+    class DEC_Logger;
+    class SinkRoleExtender;
 
 // =============================================================================
 /** @class  Sink
@@ -103,7 +102,7 @@ private:
     //@{
     Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
           std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult,
-          bool logEnabled, const std::vector< unsigned int >& dangerousObjects );
+          std::auto_ptr< sword::DEC_Logger > logger, const std::vector< unsigned int >& dangerousObjects );
     //@}
 
     //! @name Helpers
@@ -121,8 +120,7 @@ private:
     const PopulationFactory_ABC& populations_;
     const unsigned int gcPause_;
     const unsigned int gcMult_;
-    DEC_Logger_ABC* decLogger_;
-    bool logEnabled_;
+    std::auto_ptr< sword::DEC_Logger > decLogger_;
     const std::vector< unsigned int > dangerousObjects_;
     xml::xistringstream modules_;
     std::auto_ptr< core::Logger_ABC > logger_;

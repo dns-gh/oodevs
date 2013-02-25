@@ -15,6 +15,8 @@
 
 #include <map>
 
+namespace sword
+{
 /// =============================================================================
 /// @class SinkRoleExtender
 /// @brief SinkRoleExtender
@@ -29,6 +31,8 @@ public:
     SinkRoleExtender( RoleExtender_ABC* chain );
     //@}
 
+    //! @name Operations
+    //@{
     template< typename Role >
     void AddFactory( boost::function< Role*( MIL_AgentPion& ) > func )
     {
@@ -41,8 +45,7 @@ public:
         indexes_.push_back( idx );
     }
     virtual void RegisterRoles( MIL_AgentPion& pion );
-
-protected:
+    //@}
 
 private:
     //! @name Types
@@ -66,5 +69,7 @@ private:
     std::vector< std::size_t > indexes_;
     //@}
 };
+
+}
 
 #endif // SWORD_SINKROLEEXTENDER_H

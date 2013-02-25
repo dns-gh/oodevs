@@ -44,7 +44,7 @@ class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
 {
 
 public:
-             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
+             DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
     virtual ~DEC_RolePion_Decision();
 
     //! @name CheckPoints
@@ -257,11 +257,14 @@ BOOST_CLASS_EXPORT_KEY( DEC_RolePion_Decision )
 template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_RolePion_Decision* role, const unsigned int /*version*/ )
 {
+    MIL_AgentPion* pion = role->pEntity_;
     const unsigned int gcPause = role->gcPause_;
     const unsigned int gcMult = role->gcMult_;
-    archive << role->pEntity_
+    sword::DEC_Logger* logger = role->logger_;
+    archive << pion
             << gcPause
-            << gcMult;
+            << gcMult
+            << logger;
 }
 
 template< typename Archive >
@@ -270,10 +273,12 @@ void load_construct_data( Archive& archive, DEC_RolePion_Decision* role, const u
     MIL_AgentPion* pion;
     unsigned int gcPause;
     unsigned int gcMult;
+    sword::DEC_Logger* logger;
     archive >> pion
             >> gcPause
-            >> gcMult;
-    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult, 0 ); // $$$$ JSR 2013-02-18: todo serialize logger
+            >> gcMult
+            >> logger;
+    ::new( role )DEC_RolePion_Decision( *pion, gcPause, gcMult, logger );
 }
 
 #endif // __DEC_RolePion_Decision_h_

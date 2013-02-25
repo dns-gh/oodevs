@@ -265,10 +265,6 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
                                        MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
@@ -279,7 +275,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
-    , nRandomBreakdownsNextTimeStep_( 0  )
+    , nRandomBreakdownsNextTimeStep_( 0 )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
     , rPionsDecisionTime_           ( 0 )

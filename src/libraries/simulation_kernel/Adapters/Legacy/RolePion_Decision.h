@@ -28,7 +28,7 @@ class RolePion_Decision : public DEC_RolePion_Decision
 public:
     //! @name Constructors/Destructor
     //@{
-             RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, DEC_Logger_ABC* logger );
+             RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, DEC_Logger* logger );
     virtual ~RolePion_Decision();
     //@}
 

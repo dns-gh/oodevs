@@ -17,6 +17,8 @@
 class MIL_AgentPion;
 class Role_ABC;
 
+namespace sword
+{
 // Allows storing role factories for later use
 // The registered factories can be applied either:
 // - on a per role basis, using the GetFactory method
@@ -71,5 +73,6 @@ protected:
     //@}
 };
 
+}
 
 #endif // SWORD_ROLEEXTENDER_ABC_H_

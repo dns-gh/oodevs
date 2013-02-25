@@ -22,7 +22,7 @@ namespace client
 
 namespace sword
 {
-    class DEC_Logger_ABC;
+    class DEC_Logger;
 }
 
 class MIL_Mission_ABC;
@@ -35,7 +35,7 @@ class DEC_PopulationDecision : public DEC_Decision< MIL_Population >
 {
 
 public:
-             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
+             DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
     virtual ~DEC_PopulationDecision();
 
     //! @name CheckPoints
@@ -114,7 +114,8 @@ void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, 
 {
     archive << role->pEntity_
             << role->gcPause_
-            << role->gcMult_;
+            << role->gcMult_
+            << role->logger_;
 }
 
 template< typename Archive >
@@ -123,10 +124,12 @@ void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const 
     MIL_Population* population;
     unsigned int gcPause;
     unsigned int gcMult;
+    sword::DEC_Logger* logger;
     archive >> population
             >> gcPause
-            >> gcMult;
-    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult, 0 );  // $$$$ JSR 2013-02-18: todo serialize logger
+            >> gcMult
+            >> logger;
+    ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult, logger );
 }
 
 #endif // __DEC_PopulationDecision_h_

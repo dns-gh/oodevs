@@ -35,11 +35,14 @@ namespace legacy
     template< typename Archive >
     void save_construct_data( Archive& archive, const sword::legacy::RolePion_Decision* role, const unsigned int /*version*/ )
     {
+        MIL_AgentPion* pion = role->pEntity_;
         unsigned int gcPause = role->gcPause_;
         unsigned int gcMult = role->gcMult_;
-        archive << role->pEntity_
+        sword::DEC_Logger* logger = role->logger_;
+        archive << pion
                 << gcPause
-                << gcMult;
+                << gcMult
+                << logger;
     }
 
     template< typename Archive >
@@ -48,10 +51,12 @@ namespace legacy
         MIL_AgentPion* pion;
         unsigned int gcPause;
         unsigned int gcMult;
+        sword::DEC_Logger* logger;
         archive >> pion
                 >> gcPause
-                >> gcMult;
-        ::new( role )sword::legacy::RolePion_Decision( *pion, gcPause, gcMult, 0 );  // $$$$ JSR 2013-02-18: todo serialize logger
+                >> gcMult
+                >> logger;
+        ::new( role )sword::legacy::RolePion_Decision( *pion, gcPause, gcMult, logger );
     }
 }
 }
@@ -60,7 +65,7 @@ namespace legacy
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------
-RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
+RolePion_Decision::RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
     : DEC_RolePion_Decision( pion, gcPause, gcMult, logger )
 {
     RegisterFunctions();

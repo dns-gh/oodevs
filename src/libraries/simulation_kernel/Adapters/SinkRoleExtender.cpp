@@ -12,12 +12,22 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MT_Tools/MT_Logger.h"
 
+using namespace sword;
+
+// -----------------------------------------------------------------------------
+// Name: SinkRoleExtender constructor
+// Created: AHC 2013-02-07
+// -----------------------------------------------------------------------------
 SinkRoleExtender::SinkRoleExtender( RoleExtender_ABC* chain )
     : chain_( chain )
 {
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: SinkRoleExtender:::RegisterRoles
+// Created: AHC 2013-02-07
+// -----------------------------------------------------------------------------
 void SinkRoleExtender::RegisterRoles( MIL_AgentPion& pion )
 {
     if( chain_ )

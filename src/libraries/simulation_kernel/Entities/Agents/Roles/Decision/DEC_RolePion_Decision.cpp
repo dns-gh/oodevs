@@ -31,7 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_RolePion_Decision )
 // Name: DEC_RolePion_Decision constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
+DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
     : DEC_Decision( pion, gcPause, gcMult, logger )
     , nForceRatioState_         ( eForceRatioStateNone )
     , nRulesOfEngagementState_  ( eRoeStateFreeFire )

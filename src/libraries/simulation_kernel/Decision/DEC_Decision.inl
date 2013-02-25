@@ -23,7 +23,7 @@
 // Created: LDC 2009-02-27
 // -----------------------------------------------------------------------------
 template< class T >
-DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger )
+DEC_Decision< T >::DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
     : pEntity_   ( &entity )
     , gcPause_   ( gcPause)
     , gcMult_    ( gcMult )
@@ -51,7 +51,7 @@ namespace DEC_DecisionImpl
     bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
                       boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath,
                       const std::string& brainFile, bool isMasalife, const std::string& type,
-                      bool reload, const std::string& integrationDir, sword::DEC_Logger_ABC* logger );
+                      bool reload, const std::string& integrationDir, sword::DEC_Logger* logger );
 }
 
 namespace directia

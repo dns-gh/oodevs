@@ -17,7 +17,10 @@ class MIL_AgentTypePion;
 class MIL_Automate;
 class MT_Vector2D;
 
-class RoleExtender_ABC;
+namespace sword
+{
+    class RoleExtender_ABC;
+}
 
 namespace xml
 {
@@ -41,9 +44,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, RoleExtender_ABC* ext ) = 0;
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, RoleExtender_ABC* ext ) = 0;
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, RoleExtender_ABC* ext ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis, sword::RoleExtender_ABC* ext ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, sword::RoleExtender_ABC* ext ) = 0;
+    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, sword::RoleExtender_ABC* ext ) = 0;
     //@}
 
     //! @name CheckPoint

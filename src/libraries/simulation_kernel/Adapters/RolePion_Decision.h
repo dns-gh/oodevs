@@ -32,7 +32,7 @@ class RolePion_Decision : public DEC_RolePion_Decision
 public:
     //! @name Constructors/Destructor
     //@{
-             RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger, Sink& sink );
+             RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, Sink& sink );
     virtual ~RolePion_Decision();
     //@}
 

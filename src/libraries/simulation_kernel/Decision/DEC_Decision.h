@@ -21,7 +21,7 @@ class MIL_Mission_ABC;
 
 namespace sword
 {
-    class DEC_Logger_ABC;
+    class DEC_Logger;
 }
 
 // =============================================================================
@@ -37,7 +37,7 @@ class DEC_Decision : public DEC_Decision_ABC
 public:
     //! @name Constructor
     //@{
-             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger_ABC* logger );
+             DEC_Decision( T& entity, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger );
     virtual ~DEC_Decision();
     //@}
 
@@ -203,13 +203,13 @@ protected:
     unsigned int                    gcMult_;
     unsigned int                    nDIARef_;
     const DEC_Model_ABC*            model_;
+    sword::DEC_Logger*              logger_;
     //@}
 
 private:
     //!@name Data
     //@{
-    sword::DEC_Logger_ABC* logger_;
-    boost::shared_ptr< sword::Brain > pBrain_;
+    boost::shared_ptr< sword::Brain >  pBrain_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     bool                               isMasalife_;
     //@}

@@ -50,9 +50,12 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     TER_Localisation localisation_;
     unsigned int nSchedule_;
     bool bFlag_;
+    //@}
 };
 
 #include "DEC_Objective.inl"
