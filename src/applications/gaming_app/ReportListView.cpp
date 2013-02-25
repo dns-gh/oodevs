@@ -232,9 +232,10 @@ void ReportListView::NotifyUpdated( const Reports& reports )
 
     reportModel_.removeRows( 0, reportModel_.rowCount() );
 
-    tools::Iterator< const Report& > iterator = reports.CreateIterator();
-    while( iterator.HasMoreElements() )
-        reportModel_.appendRow( GetItems( iterator.NextElement() ) );
+    const Reports::T_TextReports& textReports = reports.GetReports();
+    for( auto it = textReports.begin(); it != textReports.end(); ++it )
+        reportModel_.appendRow( GetItems( *it->second ) );
+
     const Reports::T_Reports& traces = reports.GetTraces();
     for( size_t i = 0; i < traces.size(); ++i )
         reportModel_.appendRow(  GetItems( *traces[ i ] ) );
@@ -250,6 +251,7 @@ void ReportListView::NotifyCreated( const Report& report )
         return;
     if( toDisplay_.find( report.GetType() ) == toDisplay_.end() )
         return;
+    std::string text = report.GetMessage();
     reportModel_.appendRow( GetItems( report)  );
 }
 

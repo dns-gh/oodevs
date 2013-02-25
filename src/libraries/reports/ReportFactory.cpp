@@ -23,6 +23,7 @@
 #include "tools/ExerciseConfig.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
@@ -111,11 +112,11 @@ QDateTime ReportFactory::GetTime( const sword::DateTime& d ) const
 // Name: ReportFactory::CreateReport
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const sword::Report& message ) const
+boost::shared_ptr< Report > ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const sword::Report& message ) const
 {
     ReportTemplate* report = Find( message.type().id() );
     if( !report )
-        return 0;
+        return boost::shared_ptr< Report >();
     Report::E_Type type = Report::eRC;
     if( message.category() == sword::Report::information )
         type = Report::eMessage;
@@ -123,7 +124,7 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const swor
         type = Report::eEvent;
     else if( message.category() == sword::Report::warning )
         type = Report::eWarning;
-    return new Report( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
+    return boost::make_shared< Report >( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
 }
 
 // -----------------------------------------------------------------------------

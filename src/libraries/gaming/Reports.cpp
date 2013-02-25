@@ -35,7 +35,7 @@ Reports::Reports( const Entity_ABC& agent, Controller& controller, const ReportF
 // -----------------------------------------------------------------------------
 Reports::~Reports()
 {
-    tools::Resolver< Report >::Clear();
+    reports_.clear();
     for( auto it = traces_.begin(); it != traces_.end(); ++it )
         delete *it;
     traces_.clear();
@@ -48,12 +48,13 @@ Reports::~Reports()
 void Reports::DoUpdate( const sword::Report& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
-    if( !Find( message.report().id() ) )
+    const unsigned int id =  message.report().id();
+    if( reports_.find( id ) == reports_.end() )
     {
-        Report* report = reportFactory_.CreateReport( agent_, message );
+        boost::shared_ptr< Report > report = reportFactory_.CreateReport( agent_, message );
         if( report )
         {
-            Register( message.report().id(), *report );
+            reports_[ id ] = report;
             controller_.Create( *report );
         }
     }
@@ -65,7 +66,7 @@ void Reports::DoUpdate( const sword::Report& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const sword::InvalidateReport& message )
 {
-    Delete( message.report().id() );
+    reports_.erase( message.report().id() );
     controller_.Update( *this );
 }
 
@@ -87,7 +88,7 @@ void Reports::DoUpdate( const sword::Trace& message )
 // -----------------------------------------------------------------------------
 void Reports::Clear()
 {
-    tools::Resolver< Report >::Clear();
+    reports_.clear();
     ClearTraces();
 }
 
@@ -97,7 +98,8 @@ void Reports::Clear()
 // -----------------------------------------------------------------------------
 void Reports::MarkAsRead()
 {
-    Apply( boost::bind( &Report::Read, _1 ) );
+    for( auto it = reports_.begin(); it != reports_.end(); ++it )
+        it->second->Read();
     std::for_each( traces_.begin(), traces_.end(), boost::bind( &Report::Read, _1 ) );
 }
 
@@ -120,12 +122,19 @@ void Reports::ClearTraces()
 void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     unsigned int displayed = 0;
-    for( T_Elements::const_iterator it = elements_.begin(); it != elements_.end() && displayed++ < 5; ++it )
-        if( const Report* report = it->second )
-            report->DisplayInTooltip( displayer );
+    for( auto it = reports_.begin(); it != reports_.end() && displayed++ < 5; ++it )
+        it->second->DisplayInTooltip( displayer );
 }
 
 const Reports::T_Reports& Reports::GetTraces() const
 {
     return traces_;
+}
+// -----------------------------------------------------------------------------
+// Name: Reports::GetReports
+// Created: LGY 2013-02-25
+// -----------------------------------------------------------------------------
+const Reports::T_TextReports& Reports::GetReports() const
+{
+    return reports_;
 }

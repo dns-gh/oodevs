@@ -13,7 +13,8 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "tools/Resolver.h"
+#include "tools/Map.h"
+#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {
@@ -40,14 +41,19 @@ class ReportFactory;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Reports : public kernel::Extension_ABC
-              , public tools::Resolver< Report >
               , public kernel::Updatable_ABC< sword::Report >
               , public kernel::Updatable_ABC< sword::InvalidateReport >
               , public kernel::Updatable_ABC< sword::Trace >
               , public kernel::Displayable_ABC
 {
 public:
+    //! @name Types
+    //@{
     typedef std::vector< Report* >      T_Reports;
+
+    typedef boost::shared_ptr< Report > T_TextReport;
+    typedef tools::Map< unsigned int, T_TextReport > T_TextReports;
+    //@}
 
     //! @name Constructors/Destructor
     //@{
@@ -60,18 +66,13 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
     const T_Reports& GetTraces() const;
+    const T_TextReports& GetReports() const;
     void Clear();
     void ClearTraces();
     void MarkAsRead();
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef T_Reports::iterator        IT_Reports;
-    typedef T_Reports::const_iterator CIT_Reports;
-    //@}
-
     //! @name Copy/Assignment
     //@{
     Reports( const Reports& );            //!< Copy constructor
@@ -92,6 +93,7 @@ private:
     kernel::Controller& controller_;
     const ReportFactory& reportFactory_;
     T_Reports traces_;
+    T_TextReports reports_;
     //@}
 };
 

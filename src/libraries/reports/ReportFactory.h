@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "protocol/Simulation.h"
+#include <boost/shared_ptr.hpp>
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #include <QtCore/qdatetime.h>
@@ -69,7 +70,7 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void Purge();
 
-    Report* CreateReport( const kernel::Entity_ABC& agent, const sword::Report& asnMsg ) const;
+    boost::shared_ptr< Report > CreateReport( const kernel::Entity_ABC& agent, const sword::Report& asnMsg ) const;
     Report* CreateTrace ( const kernel::Entity_ABC& agent, const sword::Trace& asnMsg ) const;
     std::string FormatReport( const sword::Report& asn ) const;
     QDateTime GetTime( const sword::DateTime& d ) const;
