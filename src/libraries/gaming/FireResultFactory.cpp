@@ -72,6 +72,8 @@ const kernel::Entity_ABC* FireResultFactory::GetFirer( const sword::StopCrowdFir
 // -----------------------------------------------------------------------------
 AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer )
 {
+    if( model_.agents_.FindAgent( message.target().id() ) == 0 )
+        return 0;
     return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime(), firer );
 }
 
@@ -81,5 +83,7 @@ AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamag
 // -----------------------------------------------------------------------------
 PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer )
 {
+    if( model_.agents_.FindPopulation( message.target().id() ) == 0 )
+        return 0;
     return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime(), firer );
 }

@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: AgentFireResult constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver,  const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time, const kernel::Entity_ABC* firer )
+AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver, const QDateTime& time, const kernel::Entity_ABC* firer )
     : target_( resolver.Get( message.target().id() ) )
     , firer_( firer )
     , time_( time )
