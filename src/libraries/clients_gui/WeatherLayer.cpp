@@ -72,13 +72,19 @@ bool WeatherLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
 {
     if( mouse->button() == Qt::LeftButton && isEditing_ )
     {
-        if( topLeft_ != geometry::Point2f( 0, 0 ) )
+        if( !firstPointSet_ )
         {
+            topLeft_ = point;
+            firstPointSet_ = true;
+        }
+        else
+        {
+            bottomRight_ = point;
             currentMeteoLocal_->SetPosition( topLeft_, point );
             currentMeteoLocal_->SetModified( true );
-        }
         eventStrategy_.ReleaseExclusiveFocus();
         isEditing_ = false;
+        }
         return true;
     }
     return false;
