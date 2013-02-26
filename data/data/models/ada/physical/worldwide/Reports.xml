@@ -675,11 +675,11 @@
   <report category="operational" id="455" message="No stock available at logistic superior for %1">
     <parameter type="ResourceType"/>
   </report>
-  <report category="operational" id="503" message="En attente de l'ordre de conduite poursuivre convoi"/>
-  <report category="operational" id="504" message="Seulement %1 interventions prises en compte par manque de munitions">
+  <report category="operational" id="503" message="Waiting for a frag order"/>
+  <report category="operational" id="504" message="Not enough ammunition : only %1 interventions will be processed">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="506" message="La foule : %1 devient %2">
+  <report category="operational" id="506" message="Crowd: %1 is becoming %2">
     <parameter type="CrowdKnowledge"/>
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
@@ -688,8 +688,9 @@
       <value id="3" name="agressive"/>
     </parameter>
   </report>
-  <report category="operational" id="507" message="Détérioration de blocs urbains par la foule : %1">
+  <report category="operational" id="507" message="Urban block damaged by crowd : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
+  <report category="operational" id="508" message="Impossible Indirect Fire : unit neutralized"/>
 </reports>
-<!-- signature="3602747155" -->
+<!-- signature="0583406497" -->

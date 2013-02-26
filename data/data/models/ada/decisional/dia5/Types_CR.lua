@@ -471,4 +471,5 @@ eRC_AttenteOrdrePoursuivreConvoi = 503
 eRC_TirIndirectLessInterventionType = 504
 eRC_CloseCrowdAttitudeChanged = 506
 eRC_CloseCrowdUrbanDestruction = 507
-eNbr = 508
+eRC_AgentNeutralizedIndirectFireImpossible = 508
+eNbr = 509

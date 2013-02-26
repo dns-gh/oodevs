@@ -50,7 +50,7 @@ rootnode
              self.isMoving = true
              end
         end
-        if self.positionSurete and DEC_Agent_EstNeutralise() then
+        if self.positionSurete and integration.isAgentNeutralized() then
             Activate( skill.links.moveTo, 10, { entities = {CreateKnowledge( integration.ontology.types.point, self.positionSurete )} } )
         end
         

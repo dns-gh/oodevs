@@ -691,5 +691,6 @@
   <report category="operational" id="507" message="Détérioration de blocs urbains par la foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
+  <report category="operational" id="508" message="Tir impossible : pion neutralisé"/>
 </reports>
-<!-- signature="2657726300" -->
+<!-- signature="3081402571" -->
