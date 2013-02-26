@@ -262,15 +262,19 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                     //only take those observers belonging to same army as firer:
                     if( pFirer && observingPion.GetArmy().GetID() != pFirer->GetArmy().GetID() )
                         continue;
-                    if( observingPion.GetRole< PHY_RoleInterface_Perceiver >().IsFireObserver() )
+                    PHY_RoleInterface_Perceiver& perceiver = observingPion.GetRole< PHY_RoleInterface_Perceiver >();
+                    if( perceiver.IsFireObserver() )
                     {
-                        typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
-                        T_Content content;
-                        fireResult.GetDamages( target ).Serialize( content );
-                        for( T_Content::const_iterator it = content.begin(); it != content.end(); ++it )
+                        if( perceiver.GetPerception( (*itobserver)->GetPosition(), vTargetPosition ) > 0 )
                         {
-                            MIL_Report::PostEvent( observingPion, MIL_Report::eRC_FireObserver, target.GetID(),
-                                                                   (*it).get< 0 >(), (*it).get< 1 >(), (*it).get< 2 >(), (*it).get< 3 > () );
+                            typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
+                            T_Content content;
+                            fireResult.GetDamages( target ).Serialize( content );
+                            for( T_Content::const_iterator it = content.begin(); it != content.end(); ++it )
+                            {
+                                MIL_Report::PostEvent( observingPion, MIL_Report::eRC_FireObserver, target.GetID(),
+                                                                       (*it).get< 0 >(), (*it).get< 1 >(), (*it).get< 2 >(), (*it).get< 3 > () );
+                            }
                         }
                     }
                 }
