@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<sic-version>
+  <sicf>
+    <version revision="0" name="2.5_Rev_A"/>
+    <version revision="1" name="2.6_Rev_C"/>
+  </sicf> 
+  <sir>
+    <version revision="0" name="XP_2009_SSI"/>
+    <version revision="1" name="2013"/>
+  </sir> 
+  <atlas>
+    <version revision="0" name="2.0.20"/>
+    <version revision="1" name="2.0.22"/>
+  </atlas> 
+  <dqp-manager>
+    <version revision="0" name="2.1.3"/>
+    <version revision="1" name="2.1.4"/>
+  </dqp-manager> 
+</sic-version>
