@@ -270,7 +270,6 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
         Initialize( pion, vPosTmp );
     }
     pion.ReadOverloading( xis );
-    pion.CallRole( &PHY_RolePion_Composantes::ReadOverloading, xis ); // Equipments + Humans
     return &pion;
 }
 

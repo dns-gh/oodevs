@@ -366,6 +366,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
+    CallRole( &PHY_RolePion_Composantes::ReadOverloading, xis ); // Equipments + Humans
     CallRole( &dotation::PHY_RoleInterface_Dotations::ReadOverloading, xis );
     CallRole( &PHY_RoleInterface_HumanFactors::ReadOverloading, xis );
     CallRole( &PHY_RoleInterface_Supply::ReadOverloading, xis );
