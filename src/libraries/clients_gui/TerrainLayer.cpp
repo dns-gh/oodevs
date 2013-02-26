@@ -295,12 +295,3 @@ TerrainData TerrainLayer::Pick( int x, int y )
         return noVBOlayer_->PickTerrain( x, y );
     return TerrainData();
 }
-
-// -----------------------------------------------------------------------------
-// Name: TerrainLayer::IsPickable
-// Created: LGY 2013-02-25
-// -----------------------------------------------------------------------------
-bool TerrainLayer::IsPickable() const
-{
-    return true;
-}

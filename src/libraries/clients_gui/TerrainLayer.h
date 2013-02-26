@@ -58,7 +58,6 @@ public:
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     virtual void Reset();
     virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual bool IsPickable() const;
     TerrainData Pick( int x, int y );
     //@}
 

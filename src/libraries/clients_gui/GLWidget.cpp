@@ -1116,7 +1116,7 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
     if( hits != -1 && hits != 0 )
     {
         // Avoid first element
-        for( int i = 1; i < hits; i++ )
+        for( int i = 0; i < hits; i++ )
         {
             unsigned int index = buff[ i * 4 + 3 ];
             if( index < picking_.size() )
