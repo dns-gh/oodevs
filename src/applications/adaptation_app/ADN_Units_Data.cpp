@@ -455,8 +455,10 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
         pCopy->vComposantes_.AddItem( (*itComposante)->CreateCopy() );
 
     for( uint i = 0; i < vPostures_.size(); ++i )
+    {
         pCopy->vPostures_[ i ]->timeToActivate_ = vPostures_[ i ]->timeToActivate_.GetData();
-
+        pCopy->vPostures_[ i ]->timeToDeactivate_ = vPostures_[ i ]->timeToDeactivate_.GetData();
+    }
     for( T_PointInfos_Vector::iterator itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
         pCopy->vPointInfos_.AddItem( (*itPoint)->CreateCopy() );
 
