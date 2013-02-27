@@ -53,7 +53,7 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
     list_ = new QTreeView( parent );
     list_->setRootIsDecorated( true );
     list_->setEditTriggers( 0 );
-    model_.setColumnCount( 2 );
+    model_.setColumnCount( 1 );
     list_->setModel( &model_ );
     list_->setHeaderHidden( true );
     list_->setSelectionMode( QAbstractItemView::MultiSelection );
@@ -65,7 +65,6 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
         const kernel::DotationType& type = it.NextElement();
         AddItem( type.GetCategoryDisplay().c_str(), type.GetName().c_str(), type.GetId() );
     }
-    list_->hideColumn( 1 );
     connect( list_, SIGNAL( clicked( const QModelIndex& ) ), SLOT( Clicked( const QModelIndex& ) ) );
     layout->addWidget( list_ );
     return group_;
@@ -78,15 +77,18 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 void ParamDotationTypeList::Clicked( const QModelIndex& index )
 {
     QStandardItem* item = index.isValid()? model_.itemFromIndex( index ): 0 ;
-    if ( item )
+    if( item )
     {
-        QStandardItem* child = item ? item->child( 0 ) : 0;
-        bool selected = child ? !list_->selectionModel()->isSelected( child->index() ) : false;
-        if( selected )
-            list_->expand( index );
-        for( int row = 0 ; row < item->rowCount();  ++row )
-            list_->selectionModel()->select( item->child( row )->index(), selected? QItemSelectionModel::Select : QItemSelectionModel::Deselect );
-
+        QStandardItem* child = item->child( 0 );
+        if( child )
+        {
+            //list_->selectionModel()->select( index, QItemSelectionModel::Deselect );
+            bool selected = !list_->selectionModel()->isSelected( child->index() );
+            if( selected )
+                list_->expand( index );
+            for( int row = 0 ; row < item->rowCount(); ++row )
+                list_->selectionModel()->select( item->child( row )->index(), selected ? QItemSelectionModel::Select : QItemSelectionModel::Deselect );
+        }
     }
 }
 
@@ -94,7 +96,7 @@ void ParamDotationTypeList::Clicked( const QModelIndex& index )
 // Name: ParamDotationTypeList::AddItem
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
-void ParamDotationTypeList::AddItem( const QString& parent, const QString& child, unsigned id )
+void ParamDotationTypeList::AddItem( const QString& parent, const QString& child, unsigned int id )
 {
     QList< QStandardItem* > parentItemList = model_.findItems( parent ); 
     QStandardItem* parentItem;
@@ -105,13 +107,10 @@ void ParamDotationTypeList::AddItem( const QString& parent, const QString& child
         model_.appendRow( parentItem );
     }
     else
-    {
         parentItem = parentItemList[ 0 ];
-    }
-    QList< QStandardItem* > list;
-    list.append( new QStandardItem( child ) );
-    list.append( new QStandardItem( QString::number( id ) ) );
-    parentItem->appendRow( list );
+    QStandardItem* item = new QStandardItem( child );
+    item->setData( id );
+    parentItem->appendRow( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,11 +124,13 @@ void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) 
     std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
     if( IsChecked() )
     {
-        for( int row = 0; row < model_.rowCount(); ++row )
+        QModelIndexList selection = list_->selectionModel()->selection().indexes();
+        for( auto it = selection.begin(); it != selection.end(); ++it )
         {
-            if( list_->selectionModel()->isSelected( model_.item( row )->index() ) )
+            QStandardItem* item = model_.itemFromIndex( *it );
+            if( item->data().isValid() )
             {
-                const unsigned id = model_.item( row, 1 )->text().toUInt();
+                const unsigned id = item->data().toUInt();
                 param->AddParameter( *new actions::parameters::DotationType( parameter_, id, resolver_ ) );
             }
         }
