@@ -75,6 +75,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , globalZoom_  ( -1.f )
     , pickingMode_ ( false )
     , tesselator_  ( 0 )
+    , selectionBuffer_( 1024 )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -1067,13 +1068,9 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
 {
     pickingMode_ = true;
 
-    GLuint buff[ 128 ] = { 0 };
-    GLint hits, view[ 4 ];
+    std::fill( selectionBuffer_.begin(), selectionBuffer_.end(), 0 );
     // This choose the buffer where store the values for the selection data
-    glSelectBuffer( sizeof( buff ) / sizeof( *buff ), buff );
-
-    // This retrieves info about the viewport
-    glGetIntegerv( GL_VIEWPORT, view );
+    glSelectBuffer( (GLsizei) selectionBuffer_.size(), &selectionBuffer_[ 0 ] );
 
     // Switching in selection mode
     glRenderMode( GL_SELECT );
@@ -1100,7 +1097,7 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
     glPopMatrix();
 
     // get number of objects drawed in that area and return to render mode
-    hits = glRenderMode( GL_RENDER );
+    GLint hits = glRenderMode( GL_RENDER );
 
     // -1 means one hit record and your buffer had an overflow.
     if( hits != -1 && hits != 0 )
@@ -1108,9 +1105,9 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
         // Avoid first element
         for( int i = 0; i < hits; i++ )
         {
-            unsigned int index = buff[ i * 4 + 3 ];
+            unsigned int index = selectionBuffer_[ i * 4 + 3 ];
             if( index < picking_.size() )
-                selection.push_back( picking_.at( buff[ i * 4 + 3 ] ) );
+                selection.push_back( picking_.at( selectionBuffer_[ i * 4 + 3 ] ) );
         }
     }
     glMatrixMode( GL_MODELVIEW );

@@ -186,6 +186,7 @@ private:
     float globalZoom_;
     GLUtesselator* tesselator_;
     T_ObjectsPicking picking_;
+    std::vector< unsigned int > selectionBuffer_;
     //@}
 };
 
