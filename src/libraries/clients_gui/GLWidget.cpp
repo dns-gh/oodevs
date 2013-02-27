@@ -622,7 +622,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
     gluTessBeginPolygon( tesselator_, NULL );
     gluTessBeginContour( tesselator_ );
 
-    for( int i = 0; i< footprint.size(); i++ )
+    for( size_t i = 0; i< footprint.size(); i++ )
         gluTessVertex( tesselator_, (GLdouble*)&footprint[ i ], (GLdouble*)&footprint[ i ] );
 
     gluTessEndContour( tesselator_ );
