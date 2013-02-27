@@ -41,6 +41,10 @@ MIL_SupplyManager::~MIL_SupplyManager()
 // -----------------------------------------------------------------------------
 void MIL_SupplyManager::NotifySuperiorNotAvailable( const T_Requesters& requesters )
 {
+    // The previous/currentReportNotifications dance ensures reports are
+    // sent only upon SuperiorAvailable -> NotAvailable transitions and not
+    // at each following tick, for a given requester. Assuming Clean()
+    // is called once per tick.
     for( auto it = requesters.begin(); it != requesters.end(); ++it )
     {
         if( std::find( previousReportNotifications_.begin(), previousReportNotifications_.end(), *it ) == previousReportNotifications_.end() )
