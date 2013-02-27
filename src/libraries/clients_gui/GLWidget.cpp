@@ -32,6 +32,26 @@ bool GlWidget::passLess::operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rh
     return names_.find( lhs->GetName() ) < names_.find( rhs->GetName() );
 }
 
+namespace
+{
+    void vertexCallback( GLvoid* vertex )
+    {
+        glVertex3dv( (GLdouble*) vertex );
+    }
+    void beginCallback( GLenum which )
+    {
+        glBegin( which );
+    }
+    void endCallback()
+    {
+        glEnd();
+    }
+    void errorCallback( GLenum /*errno*/ )
+    {
+        // NOTHING
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
@@ -53,7 +73,8 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , SymbolSize_  ( 3.f )
     , globalPixel_ ( -1.f )
     , globalZoom_  ( -1.f )
-    , pickingMode_( false )
+    , pickingMode_ ( false )
+    , tesselator_  ( 0 )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -66,6 +87,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
 // -----------------------------------------------------------------------------
 GlWidget::~GlWidget()
 {
+    gluDeleteTess( tesselator_ );
     glDeleteLists( circle_, 1 );
 }
 
@@ -86,6 +108,10 @@ void GlWidget::initializeGL()
     glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
     bMulti_ = gl::HasMultiTexturing();
+    tesselator_ = gluNewTess();
+    gluTessCallback( tesselator_, GLU_TESS_VERTEX, (void (__stdcall *)(void))vertexCallback );
+    gluTessCallback( tesselator_, GLU_TESS_BEGIN,  (void (__stdcall *)(void))beginCallback );
+    gluTessCallback( tesselator_, GLU_TESS_END,    (void (__stdcall *)(void))endCallback );
 }
 
 // -----------------------------------------------------------------------------
@@ -559,17 +585,31 @@ void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
     glDisable( GL_LINE_STIPPLE );
 }
 
+namespace
+{
+    std::vector< geometry::Point3d > Convert( const std::vector< geometry::Point2f >& vertices )
+    {
+        std::vector< geometry::Point3d > result;
+        for( std::size_t i = 0; i< vertices.size(); i++ )
+            result.push_back( geometry::Point3d( vertices[ i ].X(), vertices[ i ].Y(), 0. ) );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawDecoratedPolygon
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
-                                     const std::string& name, unsigned int fontHeight, unsigned int height, bool selected ) const
+                                     const std::string& name, unsigned int fontHeight, unsigned int /*height*/, bool selected ) const
 {
     // TODO renommer en DrawUrbanBlock?
-    const T_PointVector& footprint = polygon.Vertices();
-    if( footprint.empty() )
+    const T_PointVector& vertices = polygon.Vertices();
+    if( vertices.empty() )
         return;
+
+    std::vector< geometry::Point3d > footprint = Convert( vertices );
+
     float color[ 4 ];
     color[ 0 ] = static_cast< float >( urbanColor.Red() ) / 255.f;
     color[ 1 ] = static_cast< float >( urbanColor.Green() ) / 255.f;
@@ -579,81 +619,31 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
         color[ 3 ] *= 0.6f;
     glColor4fv( color );
 
-    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&footprint.front()) );
-    glEnable( GL_STENCIL_TEST );
-    glEnable( GL_LINE_SMOOTH );
-    // PASS 1: draw to stencil buffer only
-    // The reference value will be written to the stencil buffer plane if test passed
-    // The stencil buffer is initially set to all 0s.
-    glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE ); // disable writing to color buffer
-    glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
-    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( footprint.size() ) );
-    glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
-    glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
-    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( footprint.size() ) );
-    glDisable( GL_STENCIL_TEST );
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        if( height == 0)
-        {
-            if( selected )
-            {
-                UpdateStipple();
-                glLineWidth( 1.5 );
-                color[ 0 ] = 1.f - color[ 0 ];
-                color[ 1 ] = 1.f - color[ 1 ];
-                color[ 2 ] = 1.f - color[ 2 ];
-                color[ 3 ] = 0.5f;
-            }
-            else
-                color[ 3 ] = urbanColor.Alpha();
-            glColor4fv( color );
-            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-            glDisable( GL_LINE_STIPPLE );
-        }
-        else
-        {
-            glLineWidth( 1 );
-            color[ 3 ] = urbanColor.Alpha() * 0.2f;
-            glColor4fv( color );
-            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-            //calculating roof geometry:
-            Point2f* roofPoints = new Point2f[ footprint.size() ];
-            float factor = rZoom_ * height;
-            for( unsigned int i = 0 ; i < footprint.size() ; ++i )
-            {
-                const Point2f& point = footprint[ i ];
-                roofPoints[ i ].Set( point.X() + ( point.X() - center_.X() ) * factor, point.Y() + ( point.Y() - center_.Y() ) * factor );
-            }
-            //drawing faces:
-            glBegin( GL_QUAD_STRIP );
-                for( unsigned int i = 0 ; i < footprint.size() ; ++i )
-                {
-                    glVertex2fv( reinterpret_cast< const GLfloat* >( &footprint[ i ] ) );
-                    glVertex2fv( reinterpret_cast< const GLfloat* >( roofPoints + i ) );
-                }
-                glVertex2fv( reinterpret_cast< const GLfloat* >( &footprint[ 0 ] ) );
-                glVertex2fv( reinterpret_cast< const GLfloat* >( roofPoints ) );
-            glEnd();
-            if( selected )
-            {
-                UpdateStipple();
-                glLineWidth( 1.5 );
-                color[ 0 ] = 1.f - color[ 0 ];
-                color[ 1 ] = 1.f - color[ 1 ];
-                color[ 2 ] = 1.f - color[ 2 ];
-                color[ 3 ] = 0.9f;
-            }
-            else
-                color[ 3 ] = urbanColor.Alpha();
-            glColor4fv( color );
-            glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( roofPoints ) );
-            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
-            glDisable( GL_LINE_STIPPLE );
-            delete [] roofPoints;
-        }
-    glPopAttrib();
+    gluTessBeginPolygon( tesselator_, NULL );
+    gluTessBeginContour( tesselator_ );
+
+    for( int i = 0; i< footprint.size(); i++ )
+        gluTessVertex( tesselator_, (GLdouble*)&footprint[ i ], (GLdouble*)&footprint[ i ] );
+
+    gluTessEndContour( tesselator_ );
+    gluTessEndPolygon( tesselator_ );
+
+    if( selected )
+    {
+        UpdateStipple();
+        glLineWidth( 1.5 );
+        color[ 0 ] = 1.f - color[ 0 ];
+        color[ 1 ] = 1.f - color[ 1 ];
+        color[ 2 ] = 1.f - color[ 2 ];
+        color[ 3 ] = 0.5f;
+        glColor4fv( color );
+    }
+
+    DrawLines( vertices );
+
+    if( selected )
+        glDisable( GL_LINE_STIPPLE );
+
     if( !name.empty() )
         const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
 }

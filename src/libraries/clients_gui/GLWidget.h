@@ -184,6 +184,7 @@ private:
     bool pickingMode_;
     float globalPixel_;
     float globalZoom_;
+    GLUtesselator* tesselator_;
     T_ObjectsPicking picking_;
     //@}
 };
