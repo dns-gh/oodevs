@@ -540,7 +540,7 @@ namespace
 {
     bool compare_ghosts ( const Ghost_ABC* ghost1, const Ghost_ABC* ghost2 )
     {
-        return ghost1->GetType().toAscii().constData() < ghost2->GetType().toAscii().constData();
+        return ghost1->GetType() < ghost2->GetType();
     }
 }
 
