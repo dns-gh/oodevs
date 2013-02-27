@@ -37,10 +37,11 @@ Propagation::Propagation( const std::string& file, const PropagationManager& man
         {
             const float value = values[ i * colsCount + j ];
             QColor color = disasterType.GetColor( value );
-            rgba[ rowOffset + 4 * j ]       = static_cast< char >( color.red() );
-            rgba[ rowOffset + 4 * j + 1 ]   = static_cast< char >( color.green() );
-            rgba[ rowOffset + 4 * j + 2 ]   = static_cast< char >( color.blue() );
-            rgba[ rowOffset + 4 * j + 3 ]   = static_cast< char >( value > 0.f ? 255 : 0 );
+            bool valid = color.isValid();
+            rgba[ rowOffset + 4 * j ]       = valid ? static_cast< char >( color.red() ) : 0u;
+            rgba[ rowOffset + 4 * j + 1 ]   = valid ? static_cast< char >( color.green() ) : 0u;
+            rgba[ rowOffset + 4 * j + 2 ]   = valid ? static_cast< char >( color.blue() ) : 0u;
+            rgba[ rowOffset + 4 * j + 3 ]   = valid ? static_cast< char >( value > 0.f ? 255u : 0u ) : 0u;
         }
     }
 
