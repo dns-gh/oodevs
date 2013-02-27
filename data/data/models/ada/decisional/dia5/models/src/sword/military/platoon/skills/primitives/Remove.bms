@@ -67,6 +67,10 @@ node "removeElement"
        Feedback( self.feedbacks.failed, { element = additionalParams.element } )
     end,
 
+    elementFailed = function( self, params, additionalParams )
+       self.arrived = true
+    end,
+
     create = function( self )
         self.eTypeIti = eTypeItiDeminage
         if self.params.avoidObstacles then
