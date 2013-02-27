@@ -16,7 +16,6 @@
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
@@ -380,69 +379,6 @@ void DEC_PerceptionFunctions::EnableSensors( MIL_Agent_ABC& callerAgent )
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSensors();
 }
 
-namespace
-{
-    class SensorFunctor : private boost::noncopyable
-    {
-    public:
-        SensorFunctor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
-            : perceiver_( perceiver )
-            , point_    ( point )
-            , target_   ( target )
-            , energy_   ( 0 )
-        {}
-        ~SensorFunctor()
-        {}
-        void operator()( const PHY_Sensor& sensor )
-        {
-            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
-            if( sensorTypeAgent )
-                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_, sensor.GetHeight() ) );
-        }
-        double GetEnergy() const
-        {
-            return energy_;
-        }
-    private:
-        const MIL_Agent_ABC& perceiver_;
-        const MT_Vector2D& point_;
-        const MT_Vector2D& target_;
-        double energy_;
-    };
-
-    class Functor : public OnComponentFunctor_ABC
-    {
-    public:
-        Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
-            : perceiver_( perceiver )
-            , transport_( perceiver.RetrieveRole< transport::PHY_RoleAction_Loading >() )
-            , point_    ( point )
-            , target_   ( target )
-            , energy_   ( 0 )
-        {}
-        ~Functor()
-        {}
-        void operator()( PHY_ComposantePion& composante )
-        {
-            if( !composante.CanPerceive( transport_ ) )
-                return;
-            SensorFunctor dataFunctor( perceiver_, point_, target_ );
-            composante.ApplyOnSensors( dataFunctor );
-            energy_ = std::max( energy_, dataFunctor.GetEnergy() );
-        }
-        double GetEnergy() const
-        {
-            return energy_;
-        }
-    private:
-        const MIL_Agent_ABC& perceiver_;
-        const transport::PHY_RoleAction_Loading* transport_;
-        const MT_Vector2D& point_;
-        const MT_Vector2D& target_;
-        double energy_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::GetPerception
 // Created: LMT 2010-07-02
@@ -451,10 +387,7 @@ double DEC_PerceptionFunctions::GetPerception( const MIL_AgentPion& callerAgent,
 {
     if( !pTarget || !pPoint )
         return 0.;
-    Functor dataFunctor( callerAgent, *pPoint, *pTarget );
-    std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-    const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );
-    return dataFunctor.GetEnergy();
+    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetPerception( *pPoint, *pTarget );
 }
 
 // -----------------------------------------------------------------------------

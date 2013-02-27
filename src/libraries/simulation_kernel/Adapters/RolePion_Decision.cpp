@@ -21,12 +21,13 @@
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -114,7 +115,6 @@ DECLARE_HOOK( PathGetLastPointOfPath, void, ( size_t path, MT_Vector2D* point ) 
 DECLARE_HOOK( GetPerceptionId, int, () )
 DECLARE_HOOK( IsPointVisible, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) )
 DECLARE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
-DECLARE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
 
 // fire
 DECLARE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) )
@@ -745,10 +745,11 @@ namespace
         const core::Model& entity = model[ "entities" ][ agent->GetPion().GetID() ];
         return GET_HOOK( AgentHasRadar )( core::Convert( &entity ), typeRadar );
     }
-    double GetPerception( const MIL_AgentPion& pion, const core::Model& model, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget )
+    double GetPerception( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget )
     {
-        const core::Model& entity = model[ "entities" ][ pion.GetID() ];
-        return GET_HOOK( GetPerception )( core::Convert( &entity ), pPoint.get(), pTarget.get() );
+        if( !pPoint || !pTarget )
+            return 0.;
+        return pion.GetRole< PHY_RoleInterface_Perceiver >().GetPerception( *pPoint, *pTarget );
     }
     bool HasNoDelayedPerceptions( const MIL_AgentPion& pion )
     {
@@ -794,7 +795,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void( const TER_Localisation* ) >             ( "DEC_Connaissances_IdentifierToutesUnitesDansZone", &IdentifyAllAgentsInZone, _1 );
     RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &IsPointVisible, boost::ref( GetPion() ), boost::ref( model_ ), _1 ) ) );
     RegisterFunction( "DEC_Agent_ARadar", boost::function< bool( const DEC_Decision_ABC*, int ) >( boost::bind( &AgentHasRadar, boost::cref( model_ ), _1, _2 ) ) );
-    RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &GetPerception, boost::cref( GetPion() ), boost::cref( model_ ), _1, _2 ) ) );
+    RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &GetPerception, boost::cref( GetPion() ), _1, _2 ) ) );
     // ALAT
     RegisterCommand< int( const TER_Localisation* ) >              ( "DEC_ALAT_ActiverReconnaissance", &EnableAlatLocalizedDetection, "alat/reco", _1 );
     RegisterCommand< void() >                                      ( "DEC_ALAT_DesactiverReconnaissance", &DisableLocalizedDetection, "alat/reco", 0u ); // $$$$ _RC_ SLI 2012-07-12: no perception id

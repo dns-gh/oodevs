@@ -61,6 +61,7 @@ DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
 DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const SWORD_Model* knowledgeObject ) )
 DECLARE_HOOK( GetPerceptionId, int, () )
+DECLARE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver constructor
@@ -926,4 +927,13 @@ void RolePion_Perceiver::DisablePerceptionUponRequest()
 bool RolePion_Perceiver::CanPerceive( const MIL_ObjectType_ABC& /*objectType*/ ) const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::GetPerception
+// Created: LDC 2013-02-26
+// -----------------------------------------------------------------------------
+double RolePion_Perceiver::GetPerception( const MT_Vector2D & from, const MT_Vector2D& to ) const
+{
+    return GET_HOOK( GetPerception )( core::Convert( entity_ ), &from, &to );
 }

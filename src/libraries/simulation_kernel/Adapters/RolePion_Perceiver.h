@@ -155,6 +155,7 @@ public:
     virtual bool IsFireObserver() const;
 
     virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
+    double GetPerception( const MT_Vector2D &, const MT_Vector2D& ) const;
     //@}
 
     //! @name Network

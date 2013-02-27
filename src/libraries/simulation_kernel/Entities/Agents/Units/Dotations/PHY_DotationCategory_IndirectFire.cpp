@@ -262,14 +262,18 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                     //only take those observers belonging to same army as firer:
                     if( pFirer && observerAgent.GetArmy().GetID() != pFirer->GetArmy().GetID() )
                         continue;
-                    if( observerAgent.GetRole< PHY_RoleInterface_Perceiver >().IsFireObserver() )
+                    PHY_RoleInterface_Perceiver& perceiver = observerAgent.GetRole< PHY_RoleInterface_Perceiver >();
+                    if( perceiver.IsFireObserver() )
                     {
-                        typedef std::vector< boost::tuple< std::string, unsigned int, unsigned int, unsigned int > > T_Content;
-                        T_Content content;
-                        fireResult.GetDamages( target ).Serialize( content );
-                        for( auto it = content.begin(); it != content.end(); ++it )
-                            MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, target.GetID(),
-                                                   it->get< 0 >(), it->get< 1 >(), it->get< 2 >(), it->get< 3 >() );
+                        if( perceiver.GetPerception( (*itobserver)->GetPosition(), vTargetPosition ) > 0 )
+                        {
+                            typedef std::vector< boost::tuple< std::string, unsigned int ,unsigned int, unsigned int > > T_Content;
+                            T_Content content;
+                            fireResult.GetDamages( target ).Serialize( content );
+                            for( auto it = content.begin(); it != content.end(); ++it )
+                                MIL_Report::PostEvent( observerAgent, report::eRC_FireObserver, target.GetID(),
+                                                       it->get< 0 >(), it->get< 1 >(), it->get< 2 >(), it->get< 3 >() );
+                        }
                     }
                 }
             }

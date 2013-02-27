@@ -1594,3 +1594,79 @@ bool PHY_RolePion_Perceiver::CanPerceive( const MIL_ObjectType_ABC& objectType )
         return true;
     return false;
 }
+
+namespace
+{
+    class SensorFunctor : private boost::noncopyable
+    {
+    public:
+        SensorFunctor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+            : perceiver_( perceiver )
+            , point_    ( point )
+            , target_   ( target )
+            , energy_   ( 0 )
+        {}
+        ~SensorFunctor()
+        {}
+        void operator()( const PHY_Sensor& sensor )
+        {
+            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
+            if( sensorTypeAgent )
+                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_, sensor.GetHeight() ) );
+        }
+        double GetEnergy() const
+        {
+            return energy_;
+        }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MT_Vector2D& point_;
+        const MT_Vector2D& target_;
+        double energy_;
+    };
+
+    class Functor : public OnComponentFunctor_ABC
+    {
+    public:
+        Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+            : perceiver_( perceiver )
+            , transport_( perceiver.RetrieveRole< transport::PHY_RoleAction_Loading >() )
+            , point_    ( point )
+            , target_   ( target )
+            , energy_   ( 0 )
+        {}
+        ~Functor()
+        {}
+        void operator()( PHY_ComposantePion& composante )
+        {
+            if( !composante.CanPerceive( transport_ ) )
+                return;
+            SensorFunctor dataFunctor( perceiver_, point_, target_ );
+            composante.ApplyOnSensors( dataFunctor );
+            energy_ = std::max( energy_, dataFunctor.GetEnergy() );
+        }
+        double GetEnergy() const
+        {
+            return energy_;
+        }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const transport::PHY_RoleAction_Loading* transport_;
+        const MT_Vector2D& point_;
+        const MT_Vector2D& target_;
+        double energy_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::GetPerception
+// Created: LDC 2013-02-26
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_Vector2D& to ) const
+{
+    Functor dataFunctor( *owner_, from, to );
+    std::auto_ptr< OnComponentComputer_ABC > dataComputer( owner_->GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    const_cast< MIL_Agent_ABC& >( *owner_ ).Execute( *dataComputer );
+    return dataFunctor.GetEnergy();
+}
+
