@@ -142,7 +142,6 @@
     </indicator>
   </function>
 
-  <!-- AJOUTS FPO TESTES -->
   <function name="Humans killed">
   <descriptions>
       <description name="Humans killed" lang="en">
@@ -184,10 +183,10 @@
     </function>
 
   <function name="Injured humans">
-  <descriptions>
-    <description name="Injured humans" lang="en">
-      <![CDATA[Injured humans for a unit list.]]>
-    </description>
+    <descriptions>
+      <description name="Injured humans" lang="en">
+        <![CDATA[Injured humans for a unit list.]]>
+      </description>
       <description name="Personnel blessé" lang="fr">
         <![CDATA[Personnel blessé pour une liste d'unités.]]>
       </description>
@@ -196,10 +195,90 @@
       <parameter name="Units" type="unit list"/>
     </parameters>
     <indicator>
-        <extract function='humans' states='wounded' ranks='officer,sub-officer,troopers' id='humans'/>
-        <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
-        <reduce type='int' function='sum' input='domained' id='sum'/>
-        <result function='plot' input='sum' type='int'/>
+      <extract function='humans' states='wounded' ranks='officer,sub-officer,troopers' id='humans'/>
+      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
+      <reduce type='int' function='sum' input='domained' id='sum'/>
+      <result function='plot' input='sum' type='int'/>
+    </indicator>
+  </function>
+
+  <function name="Injured humans U1">
+    <descriptions>
+      <description name="Injured humans U1" lang="en">
+        <![CDATA[Injured humans with U1 level for a unit list.]]>
+      </description>
+      <description name="Personnel blessé U1" lang="fr">
+        <![CDATA[Personnel blessé de niveau U1 pour une liste d'unités.]]>
+      </description>
+    </descriptions>
+    <parameters>
+      <parameter name="Units" type="unit list"/>
+    </parameters>
+    <indicator>
+      <extract function='humans' states='wounded-u1' ranks='officer,sub-officer,troopers' id='humans'/>
+      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
+      <reduce type='int' function='sum' input='domained' id='sum'/>
+      <result function='plot' input='sum' type='int'/>
+    </indicator>
+  </function>
+  
+  <function name="Injured humans U2">
+    <descriptions>
+      <description name="Injured humans U2" lang="en">
+        <![CDATA[Injured humans with U2 level for a unit list.]]>
+      </description>
+      <description name="Personnel blessé U2" lang="fr">
+        <![CDATA[Personnel blessé de niveau U2 pour une liste d'unités.]]>
+      </description>
+    </descriptions>
+    <parameters>
+      <parameter name="Units" type="unit list"/>
+    </parameters>
+    <indicator>
+      <extract function='humans' states='wounded-u2' ranks='officer,sub-officer,troopers' id='humans'/>
+      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
+      <reduce type='int' function='sum' input='domained' id='sum'/>
+      <result function='plot' input='sum' type='int'/>
+    </indicator>
+  </function>
+  
+  <function name="Injured humans U3">
+    <descriptions>
+      <description name="Injured humans U3" lang="en">
+        <![CDATA[Injured humans with U3 level for a unit list.]]>
+      </description>
+      <description name="Personnel blessé U3" lang="fr">
+        <![CDATA[Personnel blessé de niveau U3 pour une liste d'unités.]]>
+      </description>
+    </descriptions>
+    <parameters>
+      <parameter name="Units" type="unit list"/>
+    </parameters>
+    <indicator>
+      <extract function='humans' states='wounded-u3' ranks='officer,sub-officer,troopers' id='humans'/>
+      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
+      <reduce type='int' function='sum' input='domained' id='sum'/>
+      <result function='plot' input='sum' type='int'/>
+    </indicator>
+  </function>
+
+  <function name="Injured humans UE">
+    <descriptions>
+      <description name="Injured humans UE" lang="en">
+        <![CDATA[Injured humans with UE level for a unit list.]]>
+      </description>
+      <description name="Personnel blessé UE" lang="fr">
+        <![CDATA[Personnel blessé de niveau UE pour une liste d'unités.]]>
+      </description>
+    </descriptions>
+    <parameters>
+      <parameter name="Units" type="unit list"/>
+    </parameters>
+    <indicator>
+      <extract function='humans' states='wounded-ue' ranks='officer,sub-officer,troopers' id='humans'/>
+      <transform function='domain' type='int' select='${Units}' input='humans' id='domained'/>
+      <reduce type='int' function='sum' input='domained' id='sum'/>
+      <result function='plot' input='sum' type='int'/>
     </indicator>
   </function>
 
@@ -217,10 +296,10 @@
       <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-        <extract function='equipments' states='available' id='1' equipments='${Equipment}'/>
-        <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
-        <reduce type='int' function='sum' input='2' id='3'/>
-        <result function='plot' input='3' type='int'/>
+      <extract function='equipments' states='available' id='1' equipments='${Equipment}'/>
+      <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
+      <reduce type='int' function='sum' input='2' id='3'/>
+      <result function='plot' input='3' type='int'/>
     </indicator>
   </function>
 
@@ -238,10 +317,10 @@
       <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-        <extract function='equipments' states='unavailable' id='1' equipments='${Equipment}'/>
-        <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
-        <reduce type='int' function='sum' input='2' id='3'/>
-        <result function='plot' input='3' type='int'/>
+      <extract function='equipments' states='unavailable' id='1' equipments='${Equipment}'/>
+      <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
+      <reduce type='int' function='sum' input='2' id='3'/>
+      <result function='plot' input='3' type='int'/>
     </indicator>
     </function>
 
