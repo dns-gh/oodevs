@@ -58,7 +58,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreEditor( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
-                          const ::StaticModel& staticModel, const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                          const ::StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreEditor();
     //@}
 

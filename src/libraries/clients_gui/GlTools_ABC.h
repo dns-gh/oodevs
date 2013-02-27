@@ -102,7 +102,7 @@ public:
     virtual void DrawRectangle    ( const T_PointVector& points ) const = 0;
     virtual void DrawPolygon      ( const T_PointVector& points ) const = 0;
     virtual void DrawSelectedPolygon( const T_PointVector& points ) const = 0;
-    virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, unsigned int height, bool selected ) const = 0;
+    virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected ) = 0;
     virtual void DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected ) const = 0;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const = 0;

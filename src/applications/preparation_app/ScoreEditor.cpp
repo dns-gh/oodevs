@@ -124,7 +124,7 @@ namespace
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
-                          const ::StaticModel& staticModel, const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+                          const ::StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : QDialog( parent, "ScoreEditor" )
     , model_( model )
     , current_( 0 )

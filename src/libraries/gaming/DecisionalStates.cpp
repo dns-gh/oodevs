@@ -75,7 +75,7 @@ void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
 // Name: DecisionalStates::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) )
     {

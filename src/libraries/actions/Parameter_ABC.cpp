@@ -90,7 +90,7 @@ bool Parameter_ABC::IsOptional() const
 // Name: Parameter_ABC::Draw
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Parameter_ABC::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     geometry::Point2f point = GetPosition();
     point = point.IsZero() ? where : point;

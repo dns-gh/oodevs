@@ -55,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
-                                 const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                                 gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariablesList();
     //@}
 

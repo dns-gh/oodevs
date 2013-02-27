@@ -166,7 +166,7 @@ bool UrbanPositions::IsSelected() const
 // Name: UrbanPositions::Draw
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
-void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
 {
     if( !viewport.IsHotpointVisible() && ( level_ == eUrbanLevelBlock || !polygon_.IsEmpty() ) )
         return;
@@ -181,7 +181,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
             if( zoom <= 0.0007f )
                 nameSize = static_cast< unsigned int >( nameSize * zoom * 1600 );
         }
-        tools.DrawDecoratedPolygon( polygon_, object_.Get< kernel::UrbanColor_ABC >(), name, nameSize, 0, selected_ );
+        tools.DrawDecoratedPolygon( polygon_, object_.Get< kernel::UrbanColor_ABC >(), name, nameSize, selected_ );
     }
     else
     {
@@ -223,7 +223,7 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 // Name: UrbanPositions::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void UrbanPositions::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void UrbanPositions::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

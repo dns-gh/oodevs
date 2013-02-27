@@ -146,7 +146,7 @@ void GhostPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: GhostPositions::Draw
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-void GhostPositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void GhostPositions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );

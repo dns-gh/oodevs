@@ -77,7 +77,7 @@ Location::~Location()
 // Name: Location::Draw
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-void Location::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Location::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     LocationBase::Draw( where, viewport, tools );
     Parameter< QString >::Draw( where, viewport, tools );

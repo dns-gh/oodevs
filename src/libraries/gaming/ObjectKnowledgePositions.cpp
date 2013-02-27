@@ -48,7 +48,7 @@ void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& mes
 // Name: ObjectKnowledgePositions::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
         tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.ShouldDisplay(), dynamic_cast< const kernel::Point* >( location ) != nullptr );
@@ -58,7 +58,7 @@ void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const g
 // Name: ObjectKnowledgePositions::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ObjectKnowledgePositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

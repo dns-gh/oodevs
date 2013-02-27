@@ -74,7 +74,7 @@ DirectFire::~DirectFire()
 // Name: DirectFire::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !position_.IsZero() && viewport.IsVisible( geometry::Rectangle2f( where, position_ ) ))
     {

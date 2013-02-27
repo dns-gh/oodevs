@@ -181,7 +181,7 @@ namespace
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& , const gui::GlTools_ABC& tools ) const
+void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
     tools.DrawDisc( position_, radius_ );
     glPushAttrib( GL_CURRENT_BIT );

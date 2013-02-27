@@ -305,7 +305,7 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( aggregated_
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ )

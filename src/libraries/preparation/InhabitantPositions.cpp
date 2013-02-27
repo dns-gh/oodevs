@@ -242,7 +242,7 @@ bool InhabitantPositions::IsAggregated() const
 // Name: InhabitantPositions::Draw
 // Created: JSR 2011-01-13
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
+void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
@@ -253,7 +253,7 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::V
 // Name: InhabitantPositions::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void InhabitantPositions::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

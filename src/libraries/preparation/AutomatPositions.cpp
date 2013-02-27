@@ -134,7 +134,7 @@ void AutomatPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: AutomatPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void AutomatPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );

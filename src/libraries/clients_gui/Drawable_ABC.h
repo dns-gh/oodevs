@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
-    virtual void Pick( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
+    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const = 0;
+    virtual void Pick( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, GlTools_ABC& /*tools*/ ) const
     {
         // NOTHING
     }

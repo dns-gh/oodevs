@@ -64,7 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const gui::GlTools_ABC& tools_;
+    gui::GlTools_ABC& tools_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;

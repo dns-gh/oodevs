@@ -69,7 +69,7 @@ void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, k
 // Name: MaintenanceStates::Draw
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void LogisticBaseStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();

@@ -128,7 +128,7 @@ void Paths::UpdatePathfind()
 // Name: Paths::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Paths::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Paths::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     const bool displayPath    = viewport.IsVisible( plannedBox_ )  && tools.ShouldDisplay( "Paths" );
     const bool displayOldPath = viewport.IsVisible( previousBox_ ) && tools.ShouldDisplay( "OldPaths" );

@@ -57,7 +57,7 @@ class ScoreVariableCreationWizard : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariableCreationWizard();
     //@}
 
@@ -100,7 +100,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const gui::GlTools_ABC& tools_;
+    gui::GlTools_ABC& tools_;
     actions::gui::InterfaceBuilder_ABC& builder_;
     QLineEdit* name_;
     QPushButton* ok_;

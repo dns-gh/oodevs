@@ -60,7 +60,7 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     geometry::Point2f GetPosition() const;
-    void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
 
     void CommitTo( std::string& content ) const;
     void CommitTo( sword::Location& message ) const;

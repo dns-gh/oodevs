@@ -71,7 +71,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
+    void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
     //@}

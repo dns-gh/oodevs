@@ -27,7 +27,7 @@ Q_DECLARE_METATYPE( const Score_ABC* )
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
-                      const StaticModel& staticModel, const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+                      const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : Q3VBox       ( parent )
     , controllers_( controllers )
     , model_      ( model )

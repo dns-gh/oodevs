@@ -16,7 +16,7 @@
 // Name: ActionsLayer constructor
 // Created: SBO 2010-04-30
 // -----------------------------------------------------------------------------
-ActionsLayer::ActionsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools )
+ActionsLayer::ActionsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools )
     : controllers_( controllers )
     , tools_( tools )
     , current_( controllers_ )

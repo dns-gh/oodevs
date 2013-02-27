@@ -38,7 +38,7 @@ class ActionsLayer : public gui::Layer
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsLayer( kernel::Controllers& controllers, const gui::GlTools_ABC& tools );
+             ActionsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools );
     virtual ~ActionsLayer();
     //@}
 
@@ -57,7 +57,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const gui::GlTools_ABC& tools_;
+    gui::GlTools_ABC& tools_;
     kernel::SafePointer< actions::Action_ABC > current_;
     //@}
 };

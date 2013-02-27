@@ -112,7 +112,7 @@ void Formation::InitializeSymbol() const
 // Name: Formation::Draw
 // Created: LGY 2011-03-04
 // -----------------------------------------------------------------------------
-void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsVisible( where ) )
     {
@@ -126,7 +126,7 @@ void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
 // Name: Formation::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Formation::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Formation::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

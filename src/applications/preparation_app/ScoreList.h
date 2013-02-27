@@ -68,7 +68,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreList( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
-                        const StaticModel& staticModel, const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+                        const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreList();
     //@}
 

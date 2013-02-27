@@ -170,7 +170,7 @@ void LogSupplyConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::Disp
 // Name: LogSupplyConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !pLogHandlingEntity_ || !tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;

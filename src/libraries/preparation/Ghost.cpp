@@ -164,7 +164,7 @@ void Ghost::InitializeSymbol() const
 // Name: Ghost::Draw
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {
@@ -178,7 +178,7 @@ void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 // Name: Ghost::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Ghost::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Ghost::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

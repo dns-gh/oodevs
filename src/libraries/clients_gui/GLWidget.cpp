@@ -15,6 +15,7 @@
 #include "clients_kernel/UrbanColor_ABC.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
+#include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <iterator>
 #include <ctime>
@@ -588,12 +589,13 @@ void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
 
 namespace
 {
-    std::vector< geometry::Point3d > Convert( const std::vector< geometry::Point2f >& vertices )
+    void Fill( std::vector< std::vector< GLdouble > >& geometry, const std::vector< geometry::Point2f >& vertices )
     {
-        std::vector< geometry::Point3d > result;
         for( std::size_t i = 0; i< vertices.size(); i++ )
-            result.push_back( geometry::Point3d( vertices[ i ].X(), vertices[ i ].Y(), 0. ) );
-        return result;
+        {
+            const geometry::Point2f& point = vertices[ i ];
+            geometry[ i ] = boost::assign::list_of( point.X() )( point.Y() )( 0. );
+        }
     }
 }
 
@@ -602,14 +604,19 @@ namespace
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
-                                     const std::string& name, unsigned int fontHeight, unsigned int /*height*/, bool selected ) const
+                                     const std::string& name, unsigned int fontHeight, bool selected )
 {
     // TODO renommer en DrawUrbanBlock?
     const T_PointVector& vertices = polygon.Vertices();
-    if( vertices.empty() )
+    const std::size_t size = vertices.size();
+
+    if( size == 0u )
         return;
 
-    std::vector< geometry::Point3d > footprint = Convert( vertices );
+    if( size > urbanGeometryBuffer_.size() )
+        urbanGeometryBuffer_.resize( size );
+
+    Fill( urbanGeometryBuffer_, vertices );
 
     float color[ 4 ];
     color[ 0 ] = static_cast< float >( urbanColor.Red() ) / 255.f;
@@ -623,8 +630,8 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
     gluTessBeginPolygon( tesselator_, NULL );
     gluTessBeginContour( tesselator_ );
 
-    for( size_t i = 0; i< footprint.size(); i++ )
-        gluTessVertex( tesselator_, (GLdouble*)&footprint[ i ], (GLdouble*)&footprint[ i ] );
+    for( size_t i = 0; i< vertices.size(); i++ )
+        gluTessVertex( tesselator_, (GLdouble*)&urbanGeometryBuffer_[ i ][ 0 ], (GLdouble*)&urbanGeometryBuffer_[ i ][ 0 ] );
 
     gluTessEndContour( tesselator_ );
     gluTessEndPolygon( tesselator_ );

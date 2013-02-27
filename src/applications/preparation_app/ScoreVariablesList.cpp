@@ -30,10 +30,10 @@
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScoreVariablesList::ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
-                                        const gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+                                        gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : Q3VBox( parent )
     , tools_( tools )
-    , wizard_( new ScoreVariableCreationWizard( this, controllers, tools_, builder ) )
+    , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
     , list_( new QTreeWidget( this) )
     , parser_( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
 {

@@ -71,7 +71,7 @@ void Speeds::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 // Name: Speeds::Draw
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Speeds::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Speeds::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2007-12-17: borner la speed_ ou mettre un log
     const float factor = 10.f;

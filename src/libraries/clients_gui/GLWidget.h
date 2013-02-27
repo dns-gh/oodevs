@@ -75,7 +75,7 @@ public:
     virtual void DrawRectangle    ( const T_PointVector& points ) const;
     virtual void DrawPolygon      ( const T_PointVector& points ) const;
     virtual void DrawSelectedPolygon( const T_PointVector& points ) const;
-    virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, unsigned int height, bool selected ) const;
+    virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected );
     virtual void DrawConvexDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int fontHeight, bool selected ) const;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;    
@@ -145,6 +145,9 @@ private:
 
     typedef std::map< QFont, int, sFontLess > T_Fonts;
     typedef T_Fonts::const_iterator         CIT_Fonts;
+
+    typedef std::vector< GLdouble > T_Points;
+    typedef std::vector< T_Points > T_Geometry;;
     //@}
 
     //! @name Helpers
@@ -187,6 +190,7 @@ private:
     GLUtesselator* tesselator_;
     T_ObjectsPicking picking_;
     std::vector< unsigned int > selectionBuffer_;
+    T_Geometry urbanGeometryBuffer_;
     //@}
 };
 

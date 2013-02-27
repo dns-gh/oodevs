@@ -64,7 +64,7 @@ void AgentDetections::NotifyDeleted( const kernel::Agent_ABC& agent )
 // Name: AgentDetections::Draw
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , const gui::GlTools_ABC& tools ) const
+void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() )
         return;

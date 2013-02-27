@@ -42,7 +42,7 @@ namespace
 // -----------------------------------------------------------------------------
 ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const ::StaticModel& staticModel, const tools::ExerciseConfig& config,
-                          const gui::GlTools_ABC& tools)
+                          gui::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
     , builder_( new actions::gui::InterfaceBuilder( controllers, layer, staticModel ) )
     , model_  ( model )
@@ -55,7 +55,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, Sco
     grid->setRowStretch( 0, 4 );
     {
         Q3GroupBox* box = new Q3HGroupBox( tr( "Scores" ), this );
-        scores_ = new ScoreList( box, controllers, model, config, staticModel, tools_, *builder_ );
+        scores_ = new ScoreList( box, controllers, model, config, staticModel, tools, *builder_ );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );

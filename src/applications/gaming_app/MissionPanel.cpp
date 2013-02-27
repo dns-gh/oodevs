@@ -53,7 +53,7 @@ using namespace kernel;
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
-                            const gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+                            gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
                             const tools::ExerciseConfig& config )
     : gui::RichDockWidget      ( controllers, pParent, "mission" )

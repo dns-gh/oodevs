@@ -116,7 +116,7 @@ void LocationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;

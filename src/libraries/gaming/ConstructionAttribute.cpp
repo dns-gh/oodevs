@@ -118,7 +118,7 @@ void ConstructionAttribute::UpdateData( const T& message )
 // Name: ConstructionAttribute::Draw
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ConstructionAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( nConstructionPercentage_.IsSet() && viewport.IsVisible( where ) )
     {

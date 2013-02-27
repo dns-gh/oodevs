@@ -198,7 +198,7 @@ namespace
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , const gui::GlTools_ABC& tools ) const
+void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_LINE_BIT );
         glLineWidth( 10.f );

@@ -110,7 +110,7 @@ void ObstacleAttribute::UpdateData( const T& message )
 // Name: ObstacleAttribute::Draw
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( obstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {

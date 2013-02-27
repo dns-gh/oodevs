@@ -117,7 +117,7 @@ void Agent::InitializeSymbol() const
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
     {
@@ -131,7 +131,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 // Name: Agent::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Agent::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

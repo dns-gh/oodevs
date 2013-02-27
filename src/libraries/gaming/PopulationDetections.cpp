@@ -73,7 +73,7 @@ void PopulationDetections::DoUpdate( const sword::CrowdFlowDetection& message )
 // Name: PopulationDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void PopulationDetections::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void PopulationDetections::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "VisionLines" ) )
     {

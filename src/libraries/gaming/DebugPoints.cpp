@@ -50,7 +50,7 @@ void DebugPoints::DoUpdate( const sword::DebugPoints& message )
 // Name: DebugPoints::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void DebugPoints::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void DebugPoints::Draw( const geometry::Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "DebugPoints" ) )
     {

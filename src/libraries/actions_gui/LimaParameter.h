@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
-    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const ::gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 

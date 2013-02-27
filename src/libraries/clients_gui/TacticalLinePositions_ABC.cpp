@@ -119,7 +119,7 @@ geometry::Rectangle2f TacticalLinePositions_ABC::GetBoundingBox() const
 // Name: TacticalLinePositions_ABC::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
 {
     if( pointList_.empty() || !viewport.IsVisible( boundingBox_ ) )
         return;
@@ -138,7 +138,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
 // Name: TacticalLinePositions_ABC::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void TacticalLinePositions_ABC::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void TacticalLinePositions_ABC::Pick( const geometry::Point2f& where, const Viewport_ABC& viewport, GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

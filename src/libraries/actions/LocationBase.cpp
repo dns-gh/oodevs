@@ -225,7 +225,7 @@ geometry::Point2f LocationBase::GetPosition() const
 // Name: LocationBase::Draw
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void LocationBase::Draw( const geometry::Point2f&, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     const bool isPoint = !points_.empty() && boundingBox_.IsEmpty();
     if( points_.empty() || ( ! viewport.IsVisible( boundingBox_ ) && !isPoint ) )

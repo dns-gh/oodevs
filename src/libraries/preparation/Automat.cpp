@@ -62,7 +62,7 @@ Automat::~Automat()
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( where ) )
     {
@@ -76,7 +76,7 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 // Name: Automat::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

@@ -48,7 +48,7 @@
 DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, const kernel::Profile_ABC& profile,
                                   gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                                   const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                                  gui::ParametersLayer& paramLayer, const gui::GlTools_ABC& tools, gui::GlSelector& selector )
+                                  gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, profile );

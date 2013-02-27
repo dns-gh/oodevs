@@ -64,7 +64,7 @@ void CommandPostAttributes::CreateDictionary( kernel::PropertiesDictionary& dict
 // Name: CommandPostAttributes::Draw
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( commandPost_ )
     {

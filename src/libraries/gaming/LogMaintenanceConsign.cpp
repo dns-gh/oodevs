@@ -120,7 +120,7 @@ void LogMaintenanceConsign::Display( LogConsignDisplayer_ABC& displayer, kernel:
 // Name: LogMaintenanceConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;

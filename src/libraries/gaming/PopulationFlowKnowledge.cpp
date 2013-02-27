@@ -146,7 +146,7 @@ namespace
 // Name: PopulationFlowKnowledge::Draw
 // Created: SBO 2007-02-27
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !viewport.IsVisible( boundingBox_ ) )
         return;
@@ -173,7 +173,7 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewpor
 // Name: PopulationFlowKnowledge::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void PopulationFlowKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

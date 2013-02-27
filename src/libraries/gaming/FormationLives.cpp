@@ -41,7 +41,7 @@ FormationLives::~FormationLives()
 // Name: FormationLives::Draw
 // Created: LGY 2011-03-09
 // -----------------------------------------------------------------------------
-void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !IsAggregated( formation_ ) && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
         tools.DrawLife( where, GetLife(), 4.f );

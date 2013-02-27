@@ -201,7 +201,7 @@ void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
 // Name: MissionInterface_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Draw( const gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
+void MissionInterface_ABC::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
 {
     for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {

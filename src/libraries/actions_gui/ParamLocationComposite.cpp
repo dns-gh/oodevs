@@ -120,7 +120,7 @@ void ParamLocationComposite::RegisterIn( kernel::ActionController& controller )
 // Name: ParamLocationComposite::Draw
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void ParamLocationComposite::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ParamLocationComposite::Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( selectedParam_ )
         selectedParam_->Draw( point, viewport, tools );

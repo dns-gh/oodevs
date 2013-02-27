@@ -51,7 +51,7 @@ void LogisticLink::Update( const sword::SeqOfDotationQuota& message, const tools
 // Name: LogisticLink::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLink::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
+void LogisticLink::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
     tools.DrawCurvedArrow( where, logistic_helpers::GetLogisticPosition( superior_ ), 0.3f );
 }

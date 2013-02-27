@@ -61,7 +61,7 @@ public:
     //@{
              ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
-                          const gui::GlTools_ABC& tools );
+                          gui::GlTools_ABC& tools );
     virtual ~ScoreDialog();
     //@}
 

@@ -167,7 +167,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // Name: Inhabitant::Draw
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, const gui::GlTools_ABC& tools ) const
+void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
@@ -178,7 +178,7 @@ void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*view
 // Name: Inhabitant::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Inhabitant::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void Inhabitant::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
 }

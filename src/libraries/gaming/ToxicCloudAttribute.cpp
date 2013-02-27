@@ -131,7 +131,7 @@ void ToxicCloudAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message 
 // Name: ToxicCloudAttribute::Draw
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& /*tools*/ ) const
+void ToxicCloudAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& /*tools*/ ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || cloud_.empty() )
         return;
