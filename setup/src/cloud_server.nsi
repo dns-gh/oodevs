@@ -93,6 +93,7 @@ Section $(^Name)
     File "${SWORD}\log4cxx.dll"
     File "${SWORD}\lua-${PLATFORM}-mt-5_1_4.dll"
     File "${SWORD}\plugin_communication_${PLATFORM}-mt.plugin"
+    File "${SWORD}\plugin_devtools_${PLATFORM}-mt-4_6.plugin"
     File "${SWORD}\plugin_errorhandler_${PLATFORM}-mt-4_6.plugin"
     File "${SWORD}\plugin_eventmanager_${PLATFORM}-mt-4_6.plugin"
     File "${SWORD}\plugin_knowledge_${PLATFORM}-mt.plugin"
