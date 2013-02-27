@@ -279,7 +279,7 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
 //-----------------------------------------------------------------------------
 const ElevationGrid::sCell& PHY_RawVisionData::operator () ( unsigned int col, unsigned int row ) const
 {
-    return pElevationGrid_->GetCell( GetCol( col ), GetRow( row ) );
+    return pElevationGrid_->GetCell( col, row );
 }
 
 //-----------------------------------------------------------------------------
