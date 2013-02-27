@@ -92,7 +92,6 @@ public:
 
 private:
     void ReadArchive( xml::xistream& input );
-    void ReadFragOrder( xml::xistream& input );
     void ReadMission( xml::xistream& input, T_Mission_Vector& missions, E_MissionType modelType );
     void WriteArchive( xml::xostream& output );
     void MoveMissionSheetsToObsolete( std::string file );

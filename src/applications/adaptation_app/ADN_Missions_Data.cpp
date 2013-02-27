@@ -147,10 +147,42 @@ QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text 
     ADN_Missions_ABC* mission = FindMission( index, text.toStdString() );
     if( mission )
     {
-        mission->WriteMissionSheet( missionDir, tempFileName );
+        mission->WriteMissionSheet( missionDir, tempFileName, index );
         mission->needSheetSaving_ = true;
     }
     return QString( missionDir.c_str() ) + "/" + QString( tempFileName.c_str() ) + ".html";
+}
+
+namespace
+{
+    void CopyImageToTempDir( E_MissionType modelType )
+    {
+        //get mission dir
+        const std::string& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+            + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
+        std::string tempDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( modelType ).toStdString();
+        //copy images in temp directory for image temp save
+        if( bfs::exists( missionPath + "/Images" ) )
+        {
+            if( bfs::exists( tempDir ) )
+                 ADN_Tools::CleanDirectoryContent( tempDir, false );
+            ADN_Tools::CopyDirToDir( missionPath + "/Images", tempDir, false, true );
+        }
+        else
+            bfs::create_directories( tempDir );
+    }
+
+    void CopyImageFromTempDir( E_MissionType type )
+    {
+        const std::string& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+        std::string tempDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( type ).toStdString();
+        //copy images from temp directory for image temp reset
+        if( bfs::exists( tempDir ) )
+        {
+            ADN_Tools::CleanDirectoryContent( missionPath + "/Images", false );
+            ADN_Tools::CopyDirToDir( tempDir, missionPath + "/Images", false, true );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -170,24 +202,17 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
                 >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), eMissionType_Population ) )
             >> xml::end
             >> xml::start( "fragorders" )
-                >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
+                >> xml::list( "fragorder", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( fragOrders_ ), eMissionType_FragOrder ) )
             >> xml::end
           >> xml::end;
     unitMissions_.CheckValidity();
     automatMissions_.CheckValidity();
     populationMissions_.CheckValidity();
     fragOrders_.CheckValidity();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::ReadFragOrder
-// Created: AGE 2007-08-16
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
-{
-    std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-    spNew->ReadArchive( xis, ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( eMissionType_FragOrder )  );
-    fragOrders_.AddItem( spNew.release() );
+    CopyImageToTempDir( eMissionType_Pawn );
+    CopyImageToTempDir( eMissionType_Automat );
+    CopyImageToTempDir( eMissionType_Population );
+    CopyImageToTempDir( eMissionType_FragOrder );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,11 +221,22 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, E_MissionType modelType )
 {
-    std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
-    const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    spNew->ReadArchive( xis, drawings, ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType ) );
-    missions.AddItem( spNew.release() );
+    const std::string& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
+                                   + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
+
+    if( modelType == eMissionType_FragOrder )
+    {
+        std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
+        spNew->ReadArchive( xis, missionPath );
+        missions.AddItem( spNew.release() );
+    }
+    else
+    {
+        std::auto_ptr< ADN_Missions_Mission > spNew( new ADN_Missions_Mission( xis.attribute< unsigned int >( "id" ) ) );
+        ADN_Drawings_Data& drawings = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
+        spNew->ReadArchive( xis, drawings, missionPath );
+        missions.AddItem( spNew.release() );
+    }
 }
 
 namespace
@@ -211,7 +247,7 @@ namespace
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->RenameDifferentNamedMissionSheet( missionDir );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteMissionSheet( missionDir, missions[i]->strName_.GetData() );
+            missions[i]->WriteMissionSheet( missionDir, missions[i]->strName_.GetData(), type );
     }
 
     void WriteMissions( xml::xostream& output, const std::string& name, E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
@@ -258,6 +294,12 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     //move mission sheets to obsolete directory when mission is deleted
     for( IT_StringList it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
        MoveMissionSheetsToObsolete( *it );
+
+    //save Images in temp directory
+    CopyImageFromTempDir( eMissionType_Pawn );
+    CopyImageFromTempDir( eMissionType_Automat );
+    CopyImageFromTempDir( eMissionType_Population );
+    CopyImageFromTempDir( eMissionType_FragOrder );
 
     output << xml::end;
 }

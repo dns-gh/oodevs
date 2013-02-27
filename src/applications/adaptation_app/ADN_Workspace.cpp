@@ -381,26 +381,6 @@ bool ADN_Workspace::ShowSymbols() const
 
 namespace
 {
-    void CopyFiles( const bfs::path& from, const bfs::path& to, bool forceCopy )
-    {
-        if( !bfs::exists( to ) )
-            bfs::create_directories( to );
-        bfs::directory_iterator end;
-        for( bfs::directory_iterator it( from ); it != end; ++it )
-        {
-            if( bfs::is_directory( *it ) )
-            {
-                bfs::path dest( to / it->path().filename() );
-                CopyFiles( *it, dest, forceCopy );
-            }
-            else
-            {
-                if( forceCopy || !bfs::exists( to / it->path().filename() ) )
-                    bfs::copy_file( *it, to / it->path().filename(), bfs::copy_option::overwrite_if_exists );
-            }
-        }
-    }
-
     class TempDirectory : private boost::noncopyable
     {
     public:
@@ -516,11 +496,11 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
 
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
-    CopyFiles( tempDirectory.GetDirectory(), dirInfos.GetWorkingDirectory().GetData(), true );
+    ADN_Tools::CopyDirToDir( tempDirectory.GetDirectory(), dirInfos.GetWorkingDirectory().GetData(), true, true );
 
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
-        CopyFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ), false );
+        ADN_Tools::CopyDirToDir( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ), true, false );
 
     // Unzip symbols.pak if not already in the working directory
     if( !bfs::exists( dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() ) )

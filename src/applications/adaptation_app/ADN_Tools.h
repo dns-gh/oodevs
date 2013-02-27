@@ -20,6 +20,14 @@ namespace xml
     class xostream;
 }
 
+namespace boost
+{
+    namespace filesystem
+    {
+        class path;
+    }
+}
+
 template< typename T > class ADN_Type_Vector_ABC;
 
 enum E_UnitPosture;
@@ -69,6 +77,8 @@ namespace ADN_Tools
 
     void CreatePathToFile( const std::string& strFilePath );
     bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
+    void CopyDirToDir( const boost::filesystem::path& pathFrom, const boost::filesystem::path& pathTo, bool recursive, bool forceCopy );
+    void CleanDirectoryContent( const boost::filesystem::path& dir, bool recursive );
 
     std::string Scriptify( const std::string& strFieldName );
     std::string ComputePostureScriptName( E_UnitPosture nPosture );

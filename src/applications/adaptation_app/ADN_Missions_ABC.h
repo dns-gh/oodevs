@@ -72,7 +72,7 @@ public:
     bool IsFileInAttachmentList( const std::string& fileName );
     void ReadMissionSheet( const std::string& missionDir );
     void RenameDifferentNamedMissionSheet( const std::string& missionDir );
-    bool WriteMissionSheet( const std::string& missionDir, std::string fileName );
+    bool WriteMissionSheet( const std::string& missionDir, std::string fileName, int type );
     bool IsEmptyMissionSheet();
     bool IsEmptyParameterList();
 

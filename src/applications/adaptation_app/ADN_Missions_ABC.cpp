@@ -250,7 +250,7 @@ void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const std::string& miss
 // Name: ADN_Missions_ABC::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-bool ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir, std::string fileName )
+bool ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir, std::string fileName, int type )
 {
     std::string filePath = std::string( missionDir + "/" + fileName );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
@@ -287,6 +287,11 @@ bool ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir, std::st
         //mission sheet html creation
         xml::xifstream xisXML( filePath + ".xml" );
         xsl::xstringtransform xst( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
+        if( fileName == "tempMissionSheet" )
+        {
+            std::string parameterValue = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( type ).toStdString() + "/";
+            xst.parameter( "imageDirectory", parameterValue );
+        }
         xst << xisXML;
         std::fstream fileStream( tools::FromUtf8ToLocalCharset( filePath + ".html" ), std::ios::out | std::ios::trunc );
         fileStream << xst.str();

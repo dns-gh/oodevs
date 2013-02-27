@@ -19,6 +19,9 @@
 #include <sys/stat.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem.hpp>
+
+namespace bfs = boost::filesystem;
 
 namespace ADN_Tools
 {
@@ -47,6 +50,54 @@ bool CopyFileToFile( const std::string& strSrc, const std::string& strDest )
 {
     CreatePathToFile( strDest );
     return ::CopyFile( strSrc.c_str(), strDest.c_str(), false ) != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::CopyDirToDir
+// Created: NPT 2013-02-26
+// -----------------------------------------------------------------------------
+void CopyDirToDir( const bfs::path& pathFrom, const bfs::path& pathTo, bool recursive, bool forceCopy )
+{
+    if( !bfs::exists( pathTo ) )
+        bfs::create_directories( pathTo );
+    bfs::directory_iterator end;
+    for( bfs::directory_iterator it( pathFrom ); it != end; ++it )
+    {
+        if( recursive && bfs::is_directory( *it ) )
+        {
+            bfs::path dest( pathTo / it->path().filename() );
+            CopyDirToDir( *it, dest, recursive, forceCopy );
+        }
+        else
+        {
+            if( forceCopy || !bfs::exists( pathTo / it->path().filename() ) )
+                bfs::copy_file( *it, pathTo / it->path().filename(), bfs::copy_option::overwrite_if_exists );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tools::CleanDirContent
+// Created: NPT 2013-02-26
+// -----------------------------------------------------------------------------
+void CleanDirectoryContent( const boost::filesystem::path& dir, bool recursive )
+{
+    if( !bfs::exists( dir ) )
+        return;
+    bfs::directory_iterator end;
+    for( bfs::directory_iterator it( dir ); it != end; ++it )
+    {
+        if( recursive && bfs::is_directory( *it ) )
+        {
+             CleanDirectoryContent( *it, recursive );
+             bfs::remove( *it );
+        }
+        else
+        {
+            if( bfs::exists( it->path().filename() ) )
+                bfs::remove( *it );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -57,11 +57,10 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         );
     if( fileName.isEmpty() )
         return;
-    std::string imageDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                         + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType_ ) + "/Images";
+    std::string imageDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( missionType_ ).toStdString() + "/";
     if( !bfs::is_directory( imageDir ) )
         bfs::create_directory( imageDir );
-    std::string newFileName = imageDir + "/" + QFileInfo( fileName ).fileName().toStdString(); 
+    std::string newFileName = imageDir + QFileInfo( fileName ).fileName().toStdString(); 
     if( fileName != QString( newFileName.c_str() ) )
     {
         if( bfs::exists( newFileName ) )
@@ -75,7 +74,7 @@ void ADN_ListView_DescriptionAttachment::AddFile()
             int i = 1;
             while( bfs::exists( tempFileName ) )
             {
-                tempFileName = imageDir + "/" + QString( QFileInfo( newFileName.c_str() ).completeBaseName() + QString::number( i ) + "." + QFileInfo( newFileName.c_str() ).suffix() ).toStdString();
+                tempFileName = imageDir + QString( QFileInfo( newFileName.c_str() ).completeBaseName() + QString::number( i ) + "." + QFileInfo( newFileName.c_str() ).suffix() ).toStdString();
                 i++;
             }
             newFileName = tempFileName;
@@ -94,9 +93,8 @@ void ADN_ListView_DescriptionAttachment::AddFile()
 void ADN_ListView_DescriptionAttachment::RemoveFile()
 {
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    std::string imageDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType_ ) + "/Images";
-    bfs::path imagePath = imageDir + "/" + GetModel().item( currentIndex().row() )->text().toStdString();
+    std::string imageDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( missionType_ ).toStdString() + "/";
+    bfs::path imagePath = imageDir + GetModel().item( currentIndex().row() )->text().toStdString();
     if( bfs::exists( imagePath ) )
         bfs::remove( imagePath );
     if( connector )

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xsi:noNamespaceSchemaLocation="schemas\5.2.0\physical/missionSheets.xsd">
+<xsl:stylesheet version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:param name="imageDirectory" select="'Images/'"/>
     <xsl:output method="html" indent="yes" encoding="utf-8"/>
     <xsl:template match="mission-sheet">
         <html>
@@ -69,7 +70,7 @@
         </u>
     </xsl:template>
     <xsl:template match="link">
-        <img alt="{child::text/text()}" src="Images/{child::text/text()}"/>
+        <img alt="{child::text/text()}" src="{$imageDirectory}{child::text/text()}"></img>
     </xsl:template>
     <xsl:template match="parameters">
         <td>
