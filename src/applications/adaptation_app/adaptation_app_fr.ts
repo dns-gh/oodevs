@@ -2680,7 +2680,7 @@ PNG (*.png)</translation>
     </message>
     <message>
         <source>&lt;img alt=&quot;image&quot;/&gt;</source>
-        <translation>>&lt;img alt=&quot;image&quot;/&gt;</translation>
+        <translation>&gt;&lt;img alt=&quot;image&quot;/&gt;</translation>
     </message>
     <message>
         <source>$$image.jpg$$</source>
@@ -4545,6 +4545,10 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Name</source>
         <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Display</source>
+        <translation>Affichage</translation>
     </message>
 </context>
 <context>

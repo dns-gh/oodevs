@@ -112,6 +112,7 @@ public:
         ADN_Type_String color_;
         ADN_Type_String name_;
         ADN_Type_Double threshold_;
+        ADN_Type_Bool display_;
         //@}
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< ConcentrationThresholdInfos >, ConcentrationThresholdInfosVector )

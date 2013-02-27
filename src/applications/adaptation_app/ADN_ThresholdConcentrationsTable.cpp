@@ -25,7 +25,8 @@ ADN_ThresholdConcentrationsTable::ADN_ThresholdConcentrationsTable( const QStrin
     QStringList horizontalHeaders;
     horizontalHeaders << tools::translate( "ADN_ThresholdConcentrationsTable", "Name" )
                       << tools::translate( "ADN_ThresholdConcentrationsTable", "Color" )
-                      << tools::translate( "ADN_ThresholdConcentrationsTable", "Threshold" );
+                      << tools::translate( "ADN_ThresholdConcentrationsTable", "Threshold" )
+                      << tools::translate( "ADN_ThresholdConcentrationsTable", "Display" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
@@ -33,6 +34,8 @@ ADN_ThresholdConcentrationsTable::ADN_ThresholdConcentrationsTable( const QStrin
     delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddColorEditOnColumn( 1 );
     delegate_.AddDoubleSpinBoxOnColumn( 2, 0., std::numeric_limits< double >::max(), 1, 5 );
+    delegate_.AddCheckBoxOnColumn( 3 );
+
     proxyModel_.setDynamicSortFilter( true );
     proxyModel_.sort( 2, Qt::AscendingOrder );
     setSortingEnabled( false );
@@ -60,6 +63,7 @@ void ADN_ThresholdConcentrationsTable::AddRow( int row, void* data )
     AddItem( row, 0, data, &pEventInfos->name_, ADN_StandardItem::eString, Qt::ItemIsEditable );
     AddItem( row, 1, data, &pEventInfos->color_, ADN_StandardItem::eColor, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pEventInfos->threshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pEventInfos->display_, ADN_StandardItem::eBool, Qt::ItemIsUserCheckable );
 }
 
 // -----------------------------------------------------------------------------

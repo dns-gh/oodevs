@@ -161,6 +161,7 @@ ADN_Disasters_Data::ConcentrationThresholdInfos::ConcentrationThresholdInfos()
     : threshold_( 0. )
     , color_    ( "0x000000" )
     , name_     ( "" )
+    , display_  ( true )
 {
     // NOTHING
 }
@@ -184,6 +185,7 @@ ADN_Disasters_Data::ConcentrationThresholdInfos* ADN_Disasters_Data::Concentrati
     pCopy->color_ = color_.GetData();
     pCopy->threshold_ = threshold_.GetData();
     pCopy->name_ = name_.GetData();
+    pCopy->display_ = display_.GetData();
     return pCopy;
 }
 
@@ -195,6 +197,8 @@ void ADN_Disasters_Data::ConcentrationThresholdInfos::ReadArchive( xml::xistream
 {
     input >> xml::attribute( "value", threshold_ )
           >> xml::attribute( "color", color_ )
+          >> xml::optional
+            >> xml::attribute( "display", display_ )
           >> xml::optional
             >> xml::attribute( "name", name_ );
 }
@@ -208,6 +212,9 @@ void ADN_Disasters_Data::ConcentrationThresholdInfos::WriteArchive( xml::xostrea
     output << xml::start( "threshold" )
                << xml::attribute( "value", threshold_ )
                << xml::attribute( "color", color_ );
+    if( !display_.GetData() )
+    output << xml::attribute( "display", display_ );
+
     if( !name_.GetData().empty() )
         output     << xml::attribute( "name", name_ );
     output << xml::end;

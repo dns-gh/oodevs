@@ -4539,6 +4539,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Name</source>
         <translation>Name</translation>
     </message>
+    <message>
+        <source>Display</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Tools</name>

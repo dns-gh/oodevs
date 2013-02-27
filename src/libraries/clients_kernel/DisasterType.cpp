@@ -40,9 +40,12 @@ DisasterType::~DisasterType()
 // -----------------------------------------------------------------------------
 void DisasterType::ReadContaminationThresholds( xml::xistream& xis )
 {
-    std::string color = xis.attribute< std::string >( "color" );
-    boost::replace_all( color, "0x", "#" );
-    color_[ xis.attribute< double > ( "value" ) ] = QColor( color.c_str() );
+    if( xis.attribute< bool >( "display", true ) )
+    {
+        std::string color = xis.attribute< std::string >( "color" );
+        boost::replace_all( color, "0x", "#" );
+        color_[ xis.attribute< double > ( "value" ) ] = QColor( color.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
