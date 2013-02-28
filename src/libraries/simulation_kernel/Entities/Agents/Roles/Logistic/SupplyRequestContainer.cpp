@@ -155,6 +155,12 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
         }
     BOOST_FOREACH( const auto& data, consigns_ )
         data.second->Activate();
+    std::vector< SupplySupplier_ABC* > consignsToRemove;
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
+        if( it->second->GrantsNothing() )
+            consignsToRemove.push_back( it->first );
+    for( auto it = consignsToRemove.begin(); it != consignsToRemove.end(); ++it ) 
+        consigns_.erase( *it );
     return mandatoryRequestsFullySatisfied;
 }
 

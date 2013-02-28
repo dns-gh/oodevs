@@ -53,6 +53,7 @@ public:
     virtual bool ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     virtual bool ResetConsignsForProvider( const MIL_Agent_ABC& pion );
     virtual void ResetConsign();
+    virtual bool GrantsNothing() const;
     //@}
 
     //! @name TEST

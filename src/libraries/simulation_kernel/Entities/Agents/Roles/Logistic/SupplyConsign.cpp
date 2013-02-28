@@ -238,6 +238,18 @@ void SupplyConsign::ResetConsign()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyConsign::GrantsNothing
+// Created: LDC 2013-02-28
+// -----------------------------------------------------------------------------
+bool SupplyConsign::GrantsNothing() const
+{
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
+        if( it->second != 0. )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConsign::SetState
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
