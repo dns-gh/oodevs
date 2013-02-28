@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
-#include "tools/Map.h"
+#include <map>
 
 class DEC_Knowledge_UrbanPerception;
 class MIL_Agent_ABC;
@@ -66,7 +66,7 @@ public:
 private:
     //! @name Member data
     //@{
-    tools::Map< unsigned int, DEC_Knowledge_UrbanPerception* > perceptions_;
+    std::map< unsigned int, DEC_Knowledge_UrbanPerception* > perceptions_;
     //@}
 };
 
