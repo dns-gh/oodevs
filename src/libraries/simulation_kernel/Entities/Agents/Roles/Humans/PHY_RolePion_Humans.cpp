@@ -380,6 +380,7 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 {
+    message().mutable_human_dotations();
     for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = *it;
