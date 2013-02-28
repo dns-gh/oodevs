@@ -1592,6 +1592,13 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::SelectionMenu</name>
+    <message>
+        <source>And %1 more elements...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::StatusBar</name>
     <message>
         <source>---</source>

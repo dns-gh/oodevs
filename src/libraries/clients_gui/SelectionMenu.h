@@ -61,6 +61,7 @@ private:
     //! @name Helpers
     //@{
     bool GenerateIcons();
+    void FilterElement( const Layer_ABC::T_LayerElements& extractedElements );
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     //@}
@@ -78,6 +79,7 @@ private:
     std::auto_ptr< QMouseEvent > mouseEvent_;
     geometry::Point2f point_;
     gui::GlWidget* parent_;
+    unsigned int moreElements_;
     //@}
 };
 

@@ -44,6 +44,7 @@ namespace
     {
         return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
     }
+    static const unsigned int MAX_ELEMENT = 16u;
 }
 
 // -----------------------------------------------------------------------------
@@ -327,6 +328,13 @@ void SelectionMenu::GenerateMenu()
         }
     }
 
+    if( moreElements_!= 0u )
+    {
+        QAction* action = menu.addAction( tr( "And %1 more elements..." ).arg( QString::number( moreElements_ ) ) );
+        action->setEnabled( false );
+        action->setFont( QFont( "Arial", -1, -1, true ) );
+    }
+
     if( QAction* resultingAction = menu.exec( mouseEvent_->globalPos() ) )
     {
         const QString actionText = resultingAction->text();
@@ -351,6 +359,7 @@ void SelectionMenu::GenerateMenu()
         }
     }
     icons_.clear();
+    moreElements_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +378,53 @@ void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElement
         return;
     }
 
-    extractedElements_ = extractedElements;
+    FilterElement( extractedElements );
     point_ = point;
     GenerateMenu();                                                                         // Several elements extracted, menu way
+}
+
+namespace
+{
+    std::size_t GetEntityCount( const Layer_ABC::T_LayerElements& extractedElements )
+    {
+        std::size_t count = 0u;
+        for( auto extractedPair = extractedElements.begin(); extractedPair != extractedElements.end(); ++extractedPair )
+            count += extractedPair->second.size();
+        return count;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::FilterElement
+// Created: LGY 2013-02-28
+// -----------------------------------------------------------------------------
+void SelectionMenu::FilterElement( const Layer_ABC::T_LayerElements& extractedElements )
+{
+    std::size_t total = GetEntityCount( extractedElements );
+    if( total <= MAX_ELEMENT )
+        extractedElements_ = extractedElements;
+    else
+    {
+        unsigned int count = 0u;
+        std::size_t index = 0u;
+        Layer_ABC::T_LayerElements filteredElements;
+        while( count < MAX_ELEMENT )
+        {
+            for( auto extractedPair = extractedElements.begin(); extractedPair != extractedElements.end(); ++extractedPair )
+            {
+                Layer_ABC* layer = extractedPair->first;
+                const kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
+                if( !layer )
+                    continue;
+                if( entities.size() > index )
+                {
+                    filteredElements[ layer ].push_back( entities.at( index ) );
+                    ++count;
+                }
+            }
+            ++index;
+        }
+        extractedElements_ = filteredElements;
+        moreElements_ = static_cast< unsigned int > ( total ) - MAX_ELEMENT;
+    }
 }
