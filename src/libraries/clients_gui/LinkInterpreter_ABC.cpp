@@ -98,10 +98,9 @@ bool LinkInterpreter_ABC::InterpreteId( const Q3Url& url )
 // -----------------------------------------------------------------------------
 bool LinkInterpreter_ABC::InterpreteEntity( const kernel::Entity_ABC& entity, const QString& action )
 {
+    entity.Activate( actions_ );
     if( action == "select" )
-        entity.Select( actions_ );
-    else
-        entity.Activate( actions_ );
+        actions_.SetSelected( entity, false );
     return true;
 }
 

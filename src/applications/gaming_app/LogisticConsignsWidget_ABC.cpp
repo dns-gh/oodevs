@@ -54,7 +54,7 @@ namespace
     void NotifyLink( const QString& url, const QModelIndex& index, QTreeWidget& widget, kernel::DisplayExtractor_ABC& extractor )
     {
         widget.selectionModel()->setCurrentIndex( index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
-        extractor.NotifyLinkClicked( url );
+        extractor.NotifyLinkClicked( url + "#select" );
     }
 }
 
