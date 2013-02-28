@@ -19,11 +19,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class ParametersLayer;
-}
-
 namespace actions
 {
     namespace gui

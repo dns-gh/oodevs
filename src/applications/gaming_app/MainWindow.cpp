@@ -78,7 +78,6 @@
 #include "clients_gui/SelectionMenu.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/HighlightColorModifier.h"
-#include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/TerrainLayer.h"

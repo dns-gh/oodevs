@@ -26,11 +26,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class ParametersLayer;
-}
-
 class AfterActionModel;
 class AfterActionRequest;
 class IndicatorPlotFactory;
