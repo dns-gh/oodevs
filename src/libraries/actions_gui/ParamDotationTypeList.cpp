@@ -82,7 +82,6 @@ void ParamDotationTypeList::Clicked( const QModelIndex& index )
         QStandardItem* child = item->child( 0 );
         if( child )
         {
-            //list_->selectionModel()->select( index, QItemSelectionModel::Deselect );
             bool selected = !list_->selectionModel()->isSelected( child->index() );
             if( selected )
                 list_->expand( index );
