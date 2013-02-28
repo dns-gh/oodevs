@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/serialization/export.hpp>
 
 namespace sword

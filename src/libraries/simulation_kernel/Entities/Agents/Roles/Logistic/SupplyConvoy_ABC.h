@@ -10,7 +10,7 @@
 #ifndef __SupplyConvoy_ABC_h_
 #define __SupplyConvoy_ABC_h_
 
-#include "tools/Map.h"
+#include <tools/Map.h>
 
 class PHY_DotationCategory;
 class MIL_Agent_ABC;

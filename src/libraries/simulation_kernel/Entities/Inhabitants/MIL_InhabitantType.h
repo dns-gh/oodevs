@@ -11,7 +11,7 @@
 #define __MIL_InhabitantType_h_
 
 #include "MT_Tools/MT_String.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <memory>
 
 namespace xml

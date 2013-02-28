@@ -13,7 +13,7 @@
 #define __DEC_BlackBoard_CanContainKnowledgePopulation_h_
 
 #include "MIL.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/shared_ptr.hpp>
 
 class DEC_Knowledge_Population;

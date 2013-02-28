@@ -37,9 +37,9 @@
 #include "wrapper/Hook.h"
 #include "wrapper/Event.h"
 #include "wrapper/Effect.h"
-#include "tools/Map.h"
 #include <module_api/Log.h>
 #include <geometry/Types.h>
+#include <tools/Map.h>
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>

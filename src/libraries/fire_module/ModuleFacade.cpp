@@ -15,6 +15,7 @@
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <map>
 
 using namespace sword;
 using namespace sword::fire;

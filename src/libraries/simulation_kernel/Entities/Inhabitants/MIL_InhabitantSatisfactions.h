@@ -11,7 +11,7 @@
 #define __MIL_InhabitantSatisfactions_h_
 
 #include "MIL.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 
 namespace client
 {

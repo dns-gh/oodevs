@@ -11,7 +11,7 @@
 #define __AnimatorAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "tools/Set.h"
+#include <tools/Set.h>
 #include <boost/serialization/export.hpp>
 
 namespace xml

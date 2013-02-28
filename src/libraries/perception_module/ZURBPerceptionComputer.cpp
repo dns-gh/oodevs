@@ -11,11 +11,11 @@
 #include "PerceptionLevel.h"
 #include "SensorType.h"
 #include "SensorTypeAgent.h"
-#include "tools/Set.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
 #include <tools/Exception.h>
+#include <tools/Set.h>
 #include <boost/foreach.hpp>
 #include <limits>
 

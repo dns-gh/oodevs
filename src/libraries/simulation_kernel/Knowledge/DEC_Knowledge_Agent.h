@@ -19,7 +19,7 @@
 #include "Tristate.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/shared_ptr.hpp>
 
 namespace sword

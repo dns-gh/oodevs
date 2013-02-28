@@ -16,8 +16,8 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceAgent.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionSurfaceObject.h"
-#include "tools/Set.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
+#include <tools/Set.h>
 
 namespace client
 {

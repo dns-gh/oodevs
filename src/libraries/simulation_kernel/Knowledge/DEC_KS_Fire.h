@@ -13,7 +13,7 @@
 #define __DEC_KS_Fire_h_
 
 #include "DEC_KnowledgeSource_ABC.h"
-#include "tools/Set.h"
+#include <tools/Set.h>
 
 class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_AgentPion;

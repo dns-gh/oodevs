@@ -10,7 +10,7 @@
 #ifndef __MIL_ObjectInteraction_h_
 #define __MIL_ObjectInteraction_h_
 
-#include "tools/Set.h"
+#include <tools/Set.h>
 #include <boost/serialization/split_member.hpp>
 #include <boost/noncopyable.hpp>
 #include <algorithm>

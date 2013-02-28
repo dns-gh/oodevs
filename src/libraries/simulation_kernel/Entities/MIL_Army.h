@@ -15,8 +15,8 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_Converter.h"
 #include "MT_Tools/MT_String.h"
-#include "tools/Resolver.h"
-#include "tools/Map.h"
+#include <tools/Resolver.h>
+#include <tools/Map.h>
 #include <boost/shared_ptr.hpp>
 
 namespace sword

@@ -12,7 +12,7 @@
 #ifndef __MIL_AutomateMRT_h_
 #define __MIL_AutomateMRT_h_
 
-#include "tools/Map.h"
+#include <tools/Map.h>
 
 class MIL_AgentPion;
 class MIL_Fuseau;

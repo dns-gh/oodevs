@@ -10,9 +10,9 @@
 #ifndef __MIL_FireClass_h_
 #define __MIL_FireClass_h_
 
-#include "tools/Map.h"
 #include "MT_Tools/MT_String.h"
 #include <spatialcontainer/TerrainData.h>
+#include <tools/Map.h>
 
 namespace xml
 {

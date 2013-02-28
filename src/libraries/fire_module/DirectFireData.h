@@ -11,10 +11,9 @@
 #define fire_module_DirectFireData_h
 
 #include "ComponentWeapons.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/noncopyable.hpp>
 #include <vector>
-#include <map>
 
 namespace sword
 {

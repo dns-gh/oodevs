@@ -12,7 +12,7 @@
 #ifndef __PHY_DotationCapacities_h_
 #define __PHY_DotationCapacities_h_
 
-#include "tools/Map.h"
+#include <tools/Map.h>
 
 namespace xml
 {

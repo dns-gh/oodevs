@@ -12,7 +12,7 @@
 #ifndef __PHY_FireDamages_Agent_h_
 #define __PHY_FireDamages_Agent_h_
 
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/tuple/tuple.hpp>
 
 namespace sword

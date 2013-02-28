@@ -12,7 +12,7 @@
 
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyRequestParameters_ABC.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;

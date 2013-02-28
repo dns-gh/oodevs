@@ -12,9 +12,9 @@
 #ifndef __PHY_DotationStockContainer_h_
 #define __PHY_DotationStockContainer_h_
 
+#include <tools/Map.h>
+#include <tools/Set.h>
 #include <boost/serialization/export.hpp>
-#include "tools/Map.h"
-#include "tools/Set.h"
 
 namespace client
 {

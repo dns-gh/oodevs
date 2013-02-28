@@ -12,9 +12,9 @@
 #ifndef __PHY_BreakdownType_h_
 #define __PHY_BreakdownType_h_
 
-#include "tools/Map.h"
 #include "MT_Tools/MT_GaussianRandom.h"
 #include "MT_Tools/MT_String.h"
+#include <tools/Map.h>
 
 namespace xml
 {

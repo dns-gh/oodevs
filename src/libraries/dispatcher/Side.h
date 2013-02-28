@@ -13,8 +13,8 @@
 #include "Team_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "protocol/SimulationSenders.h"
-#include "tools/Resolver.h"
-#include "tools/Map.h"
+#include <tools/Resolver.h>
+#include <tools/Map.h>
 
 namespace sword
 {

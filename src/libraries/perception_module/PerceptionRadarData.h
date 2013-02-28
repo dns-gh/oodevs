@@ -11,8 +11,8 @@
 #define SWORD_PERCEPTION_PERCEPTION_RADAR_DATA_H
 
 #include "Perception_ABC.h"
-#include "tools/Set.h"
 #include <module_api/Model.h>
+#include <tools/Set.h>
 #include <boost/noncopyable.hpp>
 #include <map>
 

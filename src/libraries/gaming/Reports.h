@@ -13,7 +13,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 #include <boost/shared_ptr.hpp>
 
 namespace kernel

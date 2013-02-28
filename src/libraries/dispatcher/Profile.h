@@ -11,7 +11,7 @@
 #define __Profile_h_
 
 #include "Profile_ABC.h"
-#include "tools/Set.h"
+#include <tools/Set.h>
 
 namespace sword
 {

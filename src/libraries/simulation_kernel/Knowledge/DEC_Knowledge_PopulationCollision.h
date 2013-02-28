@@ -13,7 +13,7 @@
 #define __DEC_Knowledge_PopulationCollision_h_
 
 #include "DEC_Knowledge_ABC.h"
-#include "tools/Set.h"
+#include <tools/Set.h>
 
 class MIL_Population;
 class MIL_PopulationFlow;

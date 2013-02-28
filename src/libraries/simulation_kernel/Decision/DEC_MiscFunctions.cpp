@@ -22,7 +22,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "tools/Set.h"
+#include <tools/Set.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator

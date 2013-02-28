@@ -136,14 +136,12 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\tools_test\FileMigrationTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\IpcQueueTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\LoggerTest.cpp" />
-    <ClCompile Include="..\..\src\tests\tools_test\MapTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\MessageObserverTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\MT_InterpolatedFunctionTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\RealFileLoaderTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\SchemaVersionExtractorTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\SchemaWriterTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\ServerNetworkerTest.cpp" />
-    <ClCompile Include="..\..\src\tests\tools_test\SetTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\tools_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>

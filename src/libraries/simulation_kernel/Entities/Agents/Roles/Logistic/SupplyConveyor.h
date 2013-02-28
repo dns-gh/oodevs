@@ -12,7 +12,7 @@
 
 #include "SupplyConveyor_ABC.h"
 #include <boost/serialization/export.hpp>
-#include "tools/Map.h"
+#include <tools/Map.h>
 
 class PHY_ComposantePion;
 class MIL_AgentPion;

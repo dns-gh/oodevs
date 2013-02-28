@@ -17,9 +17,9 @@
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_IObjectAttributeProxy.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "tools/Extendable.h"
-#include "tools/Set.h"
 #include "Tools/MIL_IDManager.h"
+#include <tools/Extendable.h>
+#include <tools/Set.h>
 
 namespace sword
 {

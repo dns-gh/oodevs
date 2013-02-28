@@ -22,7 +22,7 @@
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 #include "Entities/Agents/Units/WoundEffectsHandler_ABC.h"
-#include "tools/Map.h"
+#include <tools/Map.h>
 
 class MIL_Injury_ABC;
 

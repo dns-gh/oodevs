@@ -16,7 +16,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
-#include "tools/Set.h"
+#include <tools/Set.h>
 
 namespace sword
 {
