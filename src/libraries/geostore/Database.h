@@ -10,6 +10,7 @@
 #ifndef __Database_h_
 #define __Database_h_
 
+#include "GeometryType.h"
 #include <boost/noncopyable.hpp>
 #include <boost/smart_ptr.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
@@ -43,7 +44,7 @@ public:
     ~Database();
     //@}
 
-    void AddLayer( std::string layer, int geomType, const std::vector< TerrainObject* >& features );
+    void AddLayer( std::string layer, GeometryType geomType, const std::vector< TerrainObject* >& features );
 
     const T_GeoTables& GetTables() const;
 

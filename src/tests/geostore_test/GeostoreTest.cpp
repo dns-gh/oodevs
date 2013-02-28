@@ -27,16 +27,18 @@ namespace
     struct Fixture
     {
         Fixture()
-            : terrain( BOOST_RESOLVE( "terrain" ) )
+            : terrain ( BOOST_RESOLVE( "terrain" ) )
+            , database( terrain / "Graphics/geostore.sqlite" )
         {
-            bfs::remove( terrain / "Graphics/geostore.sqlite" );
+            bfs::remove( database );
         }
         ~Fixture()
         {
             boost::system::error_code error;
-            bfs::remove( terrain / "Graphics/geostore.sqlite", error );
+            bfs::remove( database, error );
         }
         bfs::path terrain;
+        bfs::path database;
         SpatialIndexer indexer;
     };
 }
@@ -50,7 +52,10 @@ BOOST_FIXTURE_TEST_CASE( CreateDatabase_Test, Fixture )
 BOOST_FIXTURE_TEST_CASE( LoadDatabase_Test, Fixture )
 {
     geostore::GeoStoreManager( terrain, indexer );
+    const std::time_t t = bfs::last_write_time( database );
     geostore::GeoStoreManager( terrain, indexer );
+    BOOST_CHECK_MESSAGE( t == bfs::last_write_time( database ),
+        "file time differs, likely because the database has been re-created instead of loaded" );
 }
 
 BOOST_FIXTURE_TEST_CASE( UrbanBlockAutoGeneration_Test, Fixture )

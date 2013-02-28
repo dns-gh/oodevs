@@ -13,16 +13,35 @@
 
 using namespace geostore;
 
+namespace
+{
+    GeometryType Convert( const std::string& type )
+    {
+        // see geometry_type et https://www.gaia-gis.it/fossil/libspatialite/wiki?name=switching-to-4.0
+        switch( boost::lexical_cast< int >( type ) )
+        {
+            case 1:
+                return Point;
+            case 2:
+                return LineString;
+            case 3:
+                return Polygon;
+            default:
+                throw MASA_EXCEPTION( "invalid geometry type" );
+        }
+    }
+}
+
 GeoTable::GeoTable( sqlite3* db, const std::string& name )
     : Table( db, name )
 {
-    Table::T_ResultSet results = ExecuteQuery( "SELECT type FROM geometry_columns WHERE f_table_name='" + GetName() + "'" );
+    Table::T_ResultSet results = ExecuteQuery( "SELECT geometry_type FROM geometry_columns WHERE f_table_name='" + GetName() + "'" );
     if( results.empty() )
         throw MASA_EXCEPTION( "Could not load table " + GetName() );
-    SetGeometryType( results.back().back() );
+    SetGeometryType( Convert( results.back().back() ) );
 }
 
-GeoTable::GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features )
+GeoTable::GeoTable( sqlite3* db, const std::string& name, GeometryType geomType, const std::vector< TerrainObject* >& features )
     : Table( db, name )
 {
     ExecuteQuery(
@@ -32,26 +51,17 @@ GeoTable::GeoTable( sqlite3* db, const std::string& name, int geomType, const st
     Fill( features );
 }
 
-GeoTable::GeometryType GeoTable::GetGeometryType() const
+void GeoTable::SetGeometryType( GeometryType geomType )
+{
+    geometryType_ = geomType;
+}
+
+geostore::GeometryType GeoTable::GetGeometryType() const
 {
     return geometryType_;
 }
 
-void GeoTable::SetGeometryType( const std::string& name )
-{
-    if( "POLYGON" == name )
-        geometryType_ = Polygon;
-    else if( "LINESTRING" == name )
-        geometryType_ = LineString;
-    else
-        throw MASA_EXCEPTION( "Invalid geometry name." );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoTable::AddGeometryColumn
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
-void GeoTable::AddGeometryColumn( int geomType )
+void GeoTable::AddGeometryColumn( GeometryType geomType )
 {
     std::stringstream query;
     query << "SELECT AddGeometryColumn( '" << GetName() << "', 'geom', 4326, '";
@@ -59,21 +69,19 @@ void GeoTable::AddGeometryColumn( int geomType )
     {
     case Point:
         query << "POINT";
-        geometryType_ = Point;
         break;
     case Polygon:
         query << "POLYGON";
-        geometryType_ = Polygon;
         break;
     case LineString:
         query << "LINESTRING";
-        geometryType_ = LineString;
         break;
     default:
         throw MASA_EXCEPTION( "invalid geometry type" );
     }
     query << "', 2 )";
     ExecuteQuery( query.str() );
+    SetGeometryType( geomType );
 }
 
 namespace
@@ -101,10 +109,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable::CreatePolygonGeometry
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
 std::vector< GeometryCollection > GeoTable::CreatePolygonGeometry( const TerrainObject& shape )
 {
     std::vector< GeometryCollection > result;
@@ -112,15 +116,11 @@ std::vector< GeometryCollection > GeoTable::CreatePolygonGeometry( const Terrain
         return result;
     AddPolygon( shape, result );
     geodata::Primitive_ABC::T_Vector innerRing = shape.GetSubPrimitives();
-    for( geodata::Primitive_ABC::CIT_Vector it = innerRing.begin(); it != innerRing.end(); ++it )
+    for( auto it = innerRing.begin(); it != innerRing.end(); ++it )
         AddPolygon( **it, result );
     return result;
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable::CreateLineGeometry
-// Created: AME 2010-07-19
-// -----------------------------------------------------------------------------
 std::vector< GeometryCollection > GeoTable::CreateLineGeometry( const TerrainObject& shape )
 {
     std::vector< GeometryCollection > result;
@@ -132,10 +132,6 @@ std::vector< GeometryCollection > GeoTable::CreateLineGeometry( const TerrainObj
     return result;
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable::Fill
-// Created: AME 2010-07-20
-// -----------------------------------------------------------------------------
 void GeoTable::Fill( const std::vector< TerrainObject* >& features )
 {
     ExecuteQuery( "BEGIN" );
@@ -177,10 +173,6 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
     ExecuteQuery( "ANALYZE " + GetName() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable::CreateGeometry
-// Created: AME 2010-07-20
-// -----------------------------------------------------------------------------
 std::vector< GeometryCollection > GeoTable::CreateGeometry( const TerrainObject& shape )
 {
     switch( geometryType_ )
@@ -196,10 +188,6 @@ std::vector< GeometryCollection > GeoTable::CreateGeometry( const TerrainObject&
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoTable::GetFeaturesIntersectsWith
-// Created: AME 2010-07-21
-// -----------------------------------------------------------------------------
 GeometryCollection GeoTable::GetFeaturesIntersectingWith( GeometryCollection poly ) const
 {
     GeometryCollection result = 0;

@@ -52,6 +52,9 @@
     <ClInclude Include="..\..\src\libraries\geostore\GeometryCollection.h">
       <Filter>Source Files\Structure</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\GeometryType.h">
+      <Filter>Source Files\Structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\geostore\geostore_pch.cpp">

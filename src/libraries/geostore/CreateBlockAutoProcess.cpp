@@ -118,7 +118,7 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( GeometryCollection footpr
         if( it->first == "urban" || it->first == "building" )
             continue;
 
-        if( it->second->GetGeometryType() == GeoTable::Polygon ) // Aggregation des surfaces;
+        if( it->second->GetGeometryType() == geostore::Polygon ) // Aggregation des surfaces;
         {
             GeometryCollection inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( footprint ) );
             if( !inter )
@@ -134,7 +134,7 @@ void CreateBlockAutoProcess::ExtractTerrainComponents( GeometryCollection footpr
                     areas = merged;
             }
         }
-        else if( it->second->GetGeometryType() == GeoTable::LineString ) 
+        else if( it->second->GetGeometryType() == geostore::LineString ) 
         {
             GeometryCollection inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectingWith( footprint ) );
             if( !inter )

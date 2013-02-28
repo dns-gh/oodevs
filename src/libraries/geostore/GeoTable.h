@@ -10,6 +10,7 @@
 #ifndef __GeoTable_h_
 #define __GeoTable_h_
 
+#include "GeometryType.h"
 #include "GeometryCollection.h"
 #include "Table.h"
 #include <vector>
@@ -27,17 +28,10 @@ namespace geostore
 class GeoTable : private Table
 {
 public:
-    enum GeometryType
-    {
-        Point       = 0,
-        Polygon     = 1,
-        LineString  = 2,
-    };
-
     //! @name Constructors/Destructor
     //@{
     GeoTable( sqlite3* db, const std::string& name );
-    GeoTable( sqlite3* db, const std::string& name, int geomType, const std::vector< TerrainObject* >& features );
+    GeoTable( sqlite3* db, const std::string& name, GeometryType geomType, const std::vector< TerrainObject* >& features );
     //@}
 
     //! @name Operations
@@ -52,9 +46,9 @@ private:
     std::vector< GeometryCollection > CreatePolygonGeometry( const TerrainObject& shape );
     std::vector< GeometryCollection > CreateLineGeometry( const TerrainObject& shape );
     std::vector< GeometryCollection > CreateGeometry( const TerrainObject& shape );
-    void SetGeometryType( const std::string& name );
+    void SetGeometryType( GeometryType type );
     void Fill( const std::vector< TerrainObject* >& features );
-    void AddGeometryColumn( int geomType );
+    void AddGeometryColumn( GeometryType geomType );
     //@}
 
 private:
