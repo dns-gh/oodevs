@@ -688,13 +688,6 @@
     </message>
 </context>
 <context>
-    <name>GhostsLayer</name>
-    <message>
-        <source>Ghosts</source>
-        <translation>Fantômes</translation>
-    </message>
-</context>
-<context>
     <name>GhostsPanel</name>
     <message>
         <source>Name:</source>

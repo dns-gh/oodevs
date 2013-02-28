@@ -17,7 +17,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, GlTools_ABC& tools,
                                   ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile, tr( "Inhabitants" ), Layer_ABC::eInhabitants )
+    : EntityLayer< kernel::Inhabitant_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Inhabitants )
 {
     // NOTHING
 }

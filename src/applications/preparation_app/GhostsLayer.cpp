@@ -30,7 +30,7 @@
 // -----------------------------------------------------------------------------
 GhostsLayer::GhostsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                           gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile )
-    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, tr( "Ghosts" ), Layer_ABC::eGhosts )
+    : gui::EntityLayer< kernel::Ghost_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Ghosts )
     , model_            ( model )
     , selectedGhost_    ( controllers )
     , selectedAutomat_  ( controllers )

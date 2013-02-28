@@ -25,7 +25,7 @@
 TeamLayer::TeamLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
                      const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
                      const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager )
-    : gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile, tr( "Party" ), Layer_ABC::eParties )
+    : gui::EntityLayer< kernel::Team_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Parties )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )

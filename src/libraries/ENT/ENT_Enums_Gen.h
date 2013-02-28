@@ -10,6 +10,23 @@
 #ifndef __ENT_Enums_Gen_h_
 #define __ENT_Enums_Gen_h_
 
+enum E_LayerTypes
+{
+    eLayerTypes_Agent,
+    eLayerTypes_Objects,
+    eLayerTypes_Automats,
+    eLayerTypes_Formations,
+    eLayerTypes_Populations,
+    eLayerTypes_UrbanObjects,
+    eLayerTypes_TacticalLines,
+    eLayerTypes_Ghosts,
+    eLayerTypes_Fog,
+    eLayerTypes_Parties,
+    eLayerTypes_Drawers,
+    eLayerTypes_Knowledges,
+    eLayerTypes_Inhabitants
+};
+
 enum E_LocationType
 {
     eLocationType_Circle,

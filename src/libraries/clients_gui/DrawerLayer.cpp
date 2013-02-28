@@ -23,7 +23,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerLayer::DrawerLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, tr( "Drawings" ), Layer_ABC::eDrawers )
+    : EntityLayer< kernel::Drawing_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Drawers )
     , parameters_( parameters )
     , tools_     ( tools )
     , selected_  ( 0 )

@@ -51,8 +51,8 @@ public:
         meters
     };
 
-    typedef std::pair< unsigned int, Layer_ABC::E_LayerTypes > T_ObjectPicking;
-    typedef std::vector< T_ObjectPicking >                     T_ObjectsPicking;
+    typedef std::pair< unsigned int, E_LayerTypes > T_ObjectPicking;
+    typedef std::vector< T_ObjectPicking >          T_ObjectsPicking;
     //@}
 
 public:

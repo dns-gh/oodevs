@@ -26,7 +26,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 FormationLayer::FormationLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                                 View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile, tr( "Formations" ), Layer_ABC::eFormations )
+    : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Formations )
     , strategy_( strategy )
     , selected_( controllers )
 {

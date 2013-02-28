@@ -28,7 +28,7 @@ public:
     // ConvertFrom functions
     static const std::string& ConvertFromLocationType( E_LocationType, E_Conversion = eToSim );
     static const std::string& ConvertFromDotationFamily( E_DotationFamily, E_Conversion = eToSim );
-	static const std::string& ConvertFromAmmunitionType( E_AmmunitionType, E_Conversion = eToSim );
+    static const std::string& ConvertFromAmmunitionType( E_AmmunitionType, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomacy( E_Diplomacy, E_Conversion = eToSim );
     static const std::string& ConvertFromForceRatioStatus( E_ForceRatioStatus, E_Conversion = eToSim );
@@ -62,6 +62,7 @@ public:
     static const std::string& ConvertFromNbcState( E_NbcState, E_Conversion = eToSim );
     static const std::string& ConvertFromModes( E_Modes, E_Conversion = eToSim );
     static const std::string& ConvertFromAgentNbcSuit( E_AgentNbcSuit, E_Conversion = eToSim );
+    static const std::string& ConvertFromLayerType( E_LayerTypes, E_Conversion = eToTr );
 
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
@@ -100,6 +101,7 @@ public:
     static E_NbcState ConvertToNbcState( const std::string& );
     static E_Modes ConvertToModes( const std::string& );
     static E_AgentNbcSuit ConvertToAgentNbcSuit( const std::string& );
+    static E_LayerTypes ConvertToLayerType( const std::string& );
 
 private:
     // Typedefs
@@ -139,6 +141,7 @@ private:
     typedef ENT_Tr::converter<E_NbcState> T_ConverterNbcState;
     typedef ENT_Tr::converter<E_Modes> T_ConverterModes;
     typedef ENT_Tr::converter<E_AgentNbcSuit> T_ConverterAgentNbcSuit;
+    typedef ENT_Tr::converter<E_LayerTypes> T_ConverterLayerTypes;
 
     // Converters
     static T_ConverterLocationType LocationTypeConverter_ [];
@@ -177,6 +180,7 @@ private:
     static T_ConverterNbcState NbcStateConverter_ [];
     static T_ConverterModes ModesConverter_ [];
     static T_ConverterAgentNbcSuit AgentNbcSuitConverter_ [];
+    static T_ConverterLayerTypes LayerTypesConverter_ [];
 };
 
 #endif // __ENT_Tr_Gen_h_

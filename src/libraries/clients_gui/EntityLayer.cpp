@@ -25,6 +25,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;
@@ -34,7 +35,7 @@ using namespace gui;
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
-                                 const Profile_ABC& profile, const QString& name, E_LayerTypes type )
+                                 const Profile_ABC& profile, E_LayerTypes type )
     : controllers_( controllers )
     , profile_    ( profile )
     , tools_      ( tools )
@@ -43,7 +44,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, 
     , infoTooltip_( 0 )
     , tooltiped_  ( controllers )
     , selected_   ( controllers )
-    , name_       ( name )
+    , name_       ( ENT_Tr::ConvertFromLayerType( type ).c_str() )
     , type_       ( type )
 {
     // NOTHING
@@ -333,7 +334,7 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
 
 namespace
 {
-    bool IsInLayerSelection(  const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectsPicking& selection, Layer_ABC::E_LayerTypes type )
+    bool IsInLayerSelection(  const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectsPicking& selection, E_LayerTypes type )
     {
         for( auto it = selection.begin(); it != selection.end(); ++it )
             if( entity.GetId() == it->first && type == it->second )

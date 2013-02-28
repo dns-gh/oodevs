@@ -51,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityLayerBase( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                              View_ABC& view, const kernel::Profile_ABC& profile, const QString& name, E_LayerTypes type );
+                              View_ABC& view, const kernel::Profile_ABC& profile, E_LayerTypes type );
     virtual ~EntityLayerBase();
     //@}
 
@@ -152,7 +152,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                          View_ABC& view, const kernel::Profile_ABC& profile, const QString& name, E_LayerTypes type );
+                          View_ABC& view, const kernel::Profile_ABC& profile, E_LayerTypes type );
     virtual ~EntityLayer();
     //@}
 

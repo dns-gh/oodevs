@@ -807,13 +807,6 @@ Raison: %3
     </message>
 </context>
 <context>
-    <name>FogLayer</name>
-    <message>
-        <source>Fog</source>
-        <translation>Brouillard</translation>
-    </message>
-</context>
-<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>
@@ -1325,13 +1318,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Create Knowledge Group</source>
         <translation>Création d&apos;un groupe de connaissance</translation>
-    </message>
-</context>
-<context>
-    <name>KnowledgeLayer</name>
-    <message>
-        <source>Knowledges</source>
-        <translation>Connaissances</translation>
     </message>
 </context>
 <context>
@@ -2924,13 +2910,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
-    </message>
-</context>
-<context>
-    <name>TeamLayer</name>
-    <message>
-        <source>Party</source>
-        <translation>Camp</translation>
     </message>
 </context>
 <context>

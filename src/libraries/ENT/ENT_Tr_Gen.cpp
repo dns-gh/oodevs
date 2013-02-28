@@ -422,6 +422,24 @@ ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
     T_ConverterAgentNbcSuit( "", "", (E_AgentNbcSuit)-1 )
 };
 
+ENT_Tr::T_ConverterLayerTypes ENT_Tr::LayerTypesConverter_[] =
+{
+    T_ConverterLayerTypes( "units",          QT_TRANSLATE_NOOP( "ENT_Tr", "Units" ),          eLayerTypes_Agent ),
+    T_ConverterLayerTypes( "objects",        QT_TRANSLATE_NOOP( "ENT_Tr", "Objects" ),        eLayerTypes_Objects ),
+    T_ConverterLayerTypes( "automata",       QT_TRANSLATE_NOOP( "ENT_Tr", "Automata" ),       eLayerTypes_Automats ),
+    T_ConverterLayerTypes( "formations",     QT_TRANSLATE_NOOP( "ENT_Tr", "Formations" ),     eLayerTypes_Formations ),
+    T_ConverterLayerTypes( "crowds",         QT_TRANSLATE_NOOP( "ENT_Tr", "Crowds" ),         eLayerTypes_Populations ),
+    T_ConverterLayerTypes( "urban_blocks",   QT_TRANSLATE_NOOP( "ENT_Tr", "Urban blocks" ),   eLayerTypes_UrbanObjects ),
+    T_ConverterLayerTypes( "tactical_lines", QT_TRANSLATE_NOOP( "ENT_Tr", "Tactical lines" ), eLayerTypes_TacticalLines ),
+    T_ConverterLayerTypes( "ghosts",         QT_TRANSLATE_NOOP( "ENT_Tr", "Ghosts" ),         eLayerTypes_Ghosts ),
+    T_ConverterLayerTypes( "fog",            QT_TRANSLATE_NOOP( "ENT_Tr", "Fog" ),            eLayerTypes_Fog ),
+    T_ConverterLayerTypes( "parties",        QT_TRANSLATE_NOOP( "ENT_Tr", "Parties" ),        eLayerTypes_Parties ),
+    T_ConverterLayerTypes( "drawings",       QT_TRANSLATE_NOOP( "ENT_Tr", "Drawings" ),       eLayerTypes_Drawers ),
+    T_ConverterLayerTypes( "knowledges",     QT_TRANSLATE_NOOP( "ENT_Tr", "Knowledges" ),     eLayerTypes_Knowledges ),
+    T_ConverterLayerTypes( "inhabitants",    QT_TRANSLATE_NOOP( "ENT_Tr", "Inhabitants" ),    eLayerTypes_Inhabitants ),
+    T_ConverterLayerTypes( "", "", (E_LayerTypes)-1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -464,6 +482,7 @@ void ENT_Tr::InitTranslations()
     InitTr( NbcStateConverter_, "ENT_Tr" );
     InitTr( ModesConverter_, "ENT_Tr" );
     InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
+    InitTr( LayerTypesConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -788,7 +807,15 @@ const std::string& ENT_Tr::ConvertFromModes( E_Modes nValue, E_Conversion nConve
 const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( AgentNbcSuitConverter_, nValue, nConverterType );
+}
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromLayerType
+// Created: LGY 2013-02-27
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( LayerTypesConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1113,4 +1140,13 @@ E_Modes ENT_Tr::ConvertToModes( const std::string& strName )
 E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( AgentNbcSuitConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertToLayerType
+// Created: LGY 2013-02-27
+// -----------------------------------------------------------------------------
+E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( LayerTypesConverter_, strName );
 }

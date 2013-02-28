@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 FogLayer::FogLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                     gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, tr( "Fog" ), Layer_ABC::eFog )
+    : gui::EntityLayerBase( controllers, tools, strategy, view, profile, eLayerTypes_Fog )
     , controllers_( controllers )
     , texture_( 0 )
 {

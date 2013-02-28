@@ -29,7 +29,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, tr( "Urban blocks" ), Layer_ABC::eUrbanObjects )
+    : EntityLayer< kernel::UrbanObject_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_UrbanObjects )
     , view_          ( view )
     , controllers_   ( controllers )
 {

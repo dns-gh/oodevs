@@ -863,5 +863,53 @@
         <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ghosts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parties</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

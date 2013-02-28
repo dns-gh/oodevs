@@ -863,5 +863,53 @@
         <source>Replay</source>
         <translation>Rejeu</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation>Automates</translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation>Formations</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
+    </message>
+    <message>
+        <source>Tactical lines</source>
+        <translation>Lignes tactiques</translation>
+    </message>
+    <message>
+        <source>Ghosts</source>
+        <translation>Fantômes</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
+    <message>
+        <source>Knowledges</source>
+        <translation>Connaissances</translation>
+    </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Parties</source>
+        <translation>Camp</translation>
+    </message>
 </context>
 </TS>

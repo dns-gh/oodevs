@@ -805,13 +805,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>FogLayer</name>
-    <message>
-        <source>Fog</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>
@@ -1323,13 +1316,6 @@ Reason: %3
     <message>
         <source>Create Knowledge Group</source>
         <translation type="unfinished">إنشاء مجموعة المعارف</translation>
-    </message>
-</context>
-<context>
-    <name>KnowledgeLayer</name>
-    <message>
-        <source>Knowledges</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2918,13 +2904,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Change superior</source>
         <translation type="unfinished">تغير عليا</translation>
-    </message>
-</context>
-<context>
-    <name>TeamLayer</name>
-    <message>
-        <source>Party</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -12,6 +12,7 @@
 
 #include <graphics/MapLayer_ABC.h>
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
 
 namespace gui
@@ -36,23 +37,6 @@ public:
     //@{
     typedef std::vector< Layer_ABC* >                                                T_Layers;
     typedef std::map< Layer_ABC*, kernel::GraphicalEntity_ABC::T_GraphicalEntities > T_LayerElements;
-
-    enum E_LayerTypes
-    {
-        eAgent,
-        eObjects,
-        eAutomats,
-        eFormations,
-        ePopulations,
-        eUrbanObjects,
-        eTacticalLines,
-        eGhosts,
-        eFog,
-        eParties,
-        eDrawers,
-        eKnowledges,
-        eInhabitants
-    };
 
     typedef std::pair< unsigned int, E_LayerTypes > T_ObjectPicking;
     typedef std::vector< T_ObjectPicking >          T_ObjectsPicking;

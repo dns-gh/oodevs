@@ -23,7 +23,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
                           const Profile_ABC& profile )
-    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view, profile, tr( "Units" ), Layer_ABC::eAgent )
+    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Agent )
 {
     // NOTHING
 }
