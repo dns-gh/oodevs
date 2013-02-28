@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Assert.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Converter.h">
       <Filter>Source Files</Filter>
     </ClInclude>

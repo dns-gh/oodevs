@@ -91,7 +91,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Assert.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Converter.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FormatString.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Profiler.h" />

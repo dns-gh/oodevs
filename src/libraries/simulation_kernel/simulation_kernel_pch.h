@@ -25,15 +25,12 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
 #include <xeumeuleu/xml.hpp>
-
+#include <cassert>
 #include <vector>
 #include <list>
 #include <map>
 #include <set>
 
 #include <tools/Exception.h>
-
-//$$$ DEGUEU
-#include "MT_Tools/MT_Assert.h"
 
 #endif // __MIL_pch_h_

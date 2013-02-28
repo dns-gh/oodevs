@@ -12,7 +12,6 @@
 #ifndef __MT_Random_h_
 #define __MT_Random_h_
 
-#include "MT_Assert.h"
 #include <boost/noncopyable.hpp>
 #include <vector>
 

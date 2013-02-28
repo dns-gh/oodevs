@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "MT_Profiler.h"
-#include "MT_Assert.h"
 #include <windows.h>
+#include <cassert>
 
 namespace
 {
