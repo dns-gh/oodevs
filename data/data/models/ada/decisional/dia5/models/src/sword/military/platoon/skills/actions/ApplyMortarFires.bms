@@ -5,7 +5,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.indirectFire, skill.links.dismount, skill.nodes.CR_ReceiveFireOrder },
+    connections = { skill.links.indirectFire, skill.links.dismount, skill.nodes.CR },
 
     done = function( self, params, additionnalParams )
         if additionnalParams.state == "hasFire" then
@@ -47,32 +47,37 @@ rootnode
             self.order = integration.query.getFirstFireOrder()
         end
         
-        -- Apply fire when supporting allies who need help and not self commanding
-        if not self.selfCommanding then
-            self.dangerousEnemies = integration.query.getEnemiesToIndirectFireWhenSupport( self.platoonsToSupport )
-            self.automaticTarget = integration.findEnemyToMortarIndirectFire( self.dangerousEnemies ) -- unit should be unload to have result
-        end
-        if self.order or ( self.dangerousEnemies and #self.dangerousEnemies > 0 ) then --Need to dismount before firing
-            if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
-                Activate( skill.links.dismount, 1 )
+        if integration.isAgentNeutralized() then
+            integration.sendfireAvailable(false)
+            Activate( skill.nodes.CR, 1, {RC = eRC_AgentNeutralizedIndirectFireImpossible } )
+        else
+            -- Apply fire when supporting allies who need help and not self commanding
+            if not self.selfCommanding then
+                self.dangerousEnemies = integration.query.getEnemiesToIndirectFireWhenSupport( self.platoonsToSupport )
+                self.automaticTarget = integration.findEnemyToMortarIndirectFire( self.dangerousEnemies ) -- unit should be unload to have result
             end
-        end
-        
-        if self.order then  --Apply fire when received frago
-            if meKnowledge:isDismounted() then
-                integration.sendfireAvailable(true)
-                Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
-                Activate( skill.links.indirectFire, 1, self.order )
+            if self.order or ( self.dangerousEnemies and #self.dangerousEnemies > 0 ) then --Need to dismount before firing
+                if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
+                    Activate( skill.links.dismount, 1 )
+                end
             end
-        end
-        
-        if self.automaticTarget and self.automaticTarget:isValid() then --Apply fire to support allies automatically
-            if meKnowledge:isDismounted() then
-                self.dotation = integration.munitionPourTirIndirect( self.automaticTarget:getPosition() )
-                if integration.hasDotation( self.dotation ) then
+            
+            if self.order then  --Apply fire when received frago
+                if meKnowledge:isDismounted() then
                     integration.sendfireAvailable(true)
                     Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
-                    Activate( skill.links.indirectFire, 1, { entities = { self.automaticTarget }, interventionType = 1, munition = self.dotation } )
+                    Activate( skill.links.indirectFire, 1, self.order )
+                end
+            end
+            
+            if self.automaticTarget and self.automaticTarget:isValid() then --Apply fire to support allies automatically
+                if meKnowledge:isDismounted() then
+                    self.dotation = integration.munitionPourTirIndirect( self.automaticTarget:getPosition() )
+                    if integration.hasDotation( self.dotation ) then
+                        integration.sendfireAvailable(true)
+                        Activate( skill.nodes.CR, 1, {RC = eRC_ReceptionOrdreDeFeu } )
+                        Activate( skill.links.indirectFire, 1, { entities = { self.automaticTarget }, interventionType = 1, munition = self.dotation } )
+                    end
                 end
             end
         end
@@ -83,9 +88,12 @@ rootnode
     end,
 }
 
-node "CR_ReceiveFireOrder"
-{ 
+-- **************************************************************************** 
+-- CR
+-- ****************************************************************************
+node "CR"
+{
     create = function( self )
-        meKnowledge:RC( eRC_ReceptionOrdreDeFeu )
+        meKnowledge:RC( self.params.RC )
     end
 }
