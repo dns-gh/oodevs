@@ -24,7 +24,6 @@ namespace kernel
 
 namespace gui
 {
-    class ParametersLayer;
     class PanelStack_ABC;
     class ShapeHandler_ABC;
 }
