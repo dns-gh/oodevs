@@ -72,6 +72,7 @@ public:
     bool IsTimesUndefined() const;
     bool IsActivable() const;
     bool IsActivated() const;
+    bool HasBeenActivated() const;
     void Activate();
     void Deactivate();
     //@}
@@ -88,6 +89,7 @@ private:
     //@{
     sword::ObstacleType_DemolitionTargetType obstacle_;
     bool bActivated_;
+    bool hasBeenActivated_;
     int activationTime_;
     int activityTime_;
     unsigned int creationTime_;

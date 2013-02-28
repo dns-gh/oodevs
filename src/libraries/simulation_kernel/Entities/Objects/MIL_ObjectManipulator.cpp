@@ -293,7 +293,7 @@ bool MIL_ObjectManipulator::CanBeBypassed() const
 bool MIL_ObjectManipulator::CanBePerceived() const
 {
     const ObstacleAttribute* obstacle = object_.RetrieveAttribute< ObstacleAttribute >();
-    if( obstacle && !obstacle->IsActivated() )
+    if( obstacle && !obstacle->HasBeenActivated() )
         return false;
     return !object_.IsMarkedForDestruction(); // && object_.GetCapacity< InvisibleCapacity >(); // TODO return object_.GetAttribute< >;
 }

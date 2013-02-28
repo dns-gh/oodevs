@@ -48,6 +48,7 @@ namespace
 ObstacleAttribute::ObstacleAttribute()
     : obstacle_      ( sword::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_    ( false )
+    , hasBeenActivated_( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
@@ -62,6 +63,7 @@ ObstacleAttribute::ObstacleAttribute()
 ObstacleAttribute::ObstacleAttribute( bool reserved )
     : obstacle_      ( GetDemolitionTargetType( reserved ) )
     , bActivated_    ( false )
+    , hasBeenActivated_( false )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
@@ -76,6 +78,7 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     : obstacle_      ( ExtractObstacle( xis.attribute< std::string >( "type", std::string() ) ) )
     , bActivated_    ( xis.attribute< bool >( "activated", false ) )
+    , hasBeenActivated_( bActivated_ )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
@@ -97,6 +100,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attributes )
     : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
+    , hasBeenActivated_( bActivated_ )
     , activationTime_( attributes.list( 3 ).quantity() )
     , activityTime_  ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
@@ -122,6 +126,7 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & obstacle_
          & bActivated_
+         & hasBeenActivated_
          & activationTime_
          & activityTime_
          & creationTime_;
@@ -209,6 +214,15 @@ bool ObstacleAttribute::IsActivated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::HasBeenActivated
+// Created: JSR 2013-02-28
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::HasBeenActivated() const
+{
+    return hasBeenActivated_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::Activate
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
@@ -217,6 +231,7 @@ void ObstacleAttribute::Activate()
     if( !bActivated_ )
     {
         bActivated_ = true;
+        hasBeenActivated_ = true;
         NotifyAttributeUpdated( eOnUpdate );
     }
 }
@@ -316,6 +331,7 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 {
     obstacle_ = rhs.obstacle_;
     bActivated_ = rhs.bActivated_;
+    hasBeenActivated_ = rhs.hasBeenActivated_;
     activationTime_ = rhs.activationTime_;
     activityTime_ = rhs.activityTime_;
     creationTime_ = rhs.creationTime_;
@@ -331,6 +347,7 @@ void ObstacleAttribute::OnUpdate( const sword::MissionParameter_Value& attribute
     if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).booleanvalue() )
     {
         bActivated_ = attribute.list( 2 ).booleanvalue();
+        hasBeenActivated_ = hasBeenActivated_ || bActivated_;
         NotifyAttributeUpdated( eOnUpdate );
     }
 }
@@ -346,10 +363,15 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
         NotifyAttributeUpdated( eOnUpdate );
         obstacle_ = rhs.obstacle_;
     }
-    if( bActivated_ != rhs.bActivated_ )
+    if( bActivated_ != rhs.hasBeenActivated_ )
     {
         NotifyAttributeUpdated( eOnUpdate );
-        bActivated_ = rhs.bActivated_;
+        bActivated_ = rhs.hasBeenActivated_; // we keep the knowledge activated
+    }
+    if( hasBeenActivated_ != rhs.hasBeenActivated_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        hasBeenActivated_ = rhs.hasBeenActivated_;
     }
     if( activationTime_ != rhs.activationTime_ )
     {

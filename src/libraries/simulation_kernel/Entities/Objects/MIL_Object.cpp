@@ -26,6 +26,7 @@
 #include "UniversalCapacity.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -184,6 +185,24 @@ void MIL_Object::Finalize()
         (*it)->Finalize( *this );
 }
 
+namespace
+{
+    const ObstacleAttribute* GetKnownObstacleAttribute( const MIL_Object& object, const MIL_Agent_ABC* agent )
+    {
+        const ObstacleAttribute* obstacle = object.RetrieveAttribute< ObstacleAttribute >();
+        if( !obstacle || !agent )
+            return obstacle;
+        bool sameSide = ( object.GetArmy() == &agent->GetArmy() );
+        if( sameSide )
+            return obstacle;
+        if( boost::shared_ptr< MIL_KnowledgeGroup > kg = agent->GetKnowledgeGroup() )
+            if( boost::shared_ptr< DEC_Knowledge_Object > knowledge = kg->ResolveKnowledgeObject( object ) )
+                if( const ObstacleAttribute* knownObstacle = knowledge->RetrieveAttribute< ObstacleAttribute >() )
+                    return knownObstacle;
+        return obstacle;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Object::CanInteractWith
 // Created: LDC 2009-03-03
@@ -192,11 +211,11 @@ bool MIL_Object::CanInteractWith( const MIL_Entity_ABC& entity ) const
 {
     if( !MIL_Object_ABC::CanInteractWith( entity ) )
         return false;
-    const ObstacleAttribute* obstacle = RetrieveAttribute< ObstacleAttribute >();
+    const MIL_Agent_ABC* agent = dynamic_cast< const MIL_Agent_ABC* >( &entity );
+    const ObstacleAttribute* obstacle = GetKnownObstacleAttribute( *this, agent );
     if( obstacle && !obstacle->IsActivated() )
         return false;
     bool canInteract = true;
-    const MIL_Agent_ABC* agent = dynamic_cast< const MIL_Agent_ABC* >( &entity );
     if( agent )
     {
         for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
