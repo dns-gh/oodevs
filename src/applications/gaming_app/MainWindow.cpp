@@ -293,7 +293,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
 {
     gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), picker );
-    gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
+    gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation );
     gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( dockContainer_->GetMissionPanel() );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
     gui::Layer& elevation2d          = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );

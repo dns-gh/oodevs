@@ -9,13 +9,22 @@
 
 #include "gaming_app_pch.h"
 #include "AgentsLayer.h"
+#include "actions/Action_ABC.h"
+#include "actions/ActionsModel.h"
+#include "actions/ActionTasker.h"
+#include "actions/ActionTiming.h"
+#include "clients_gui/DragAndDropHelpers.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
     : gui::AgentsLayer( controllers, tools, strategy, view, profile )
+    , selected_( controllers )
+    , actionsModel_( actionsModel )
+    , simulation_( simulation )
 {
     // NOTHING
 }
@@ -27,4 +36,55 @@ AgentsLayer::AgentsLayer( kernel::Controllers& controllers, gui::GlTools_ABC& to
 AgentsLayer::~AgentsLayer()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::CanDrop
+// Created: JSR 2013-02-28
+// -----------------------------------------------------------------------------
+bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
+{
+    return selected_ && ( dnd::HasData< const kernel::AgentType >( event ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleDropEvent
+// Created: JSR 2013-02-28
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
+{
+    if( !selected_ )
+        return false;
+    if( const kernel::AgentType* droppedItem = dnd::FindData< kernel::AgentType >( event ) )
+    {
+        RequestCreation( point, *droppedItem );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::NotifySelectionChanged
+// Created: JSR 2013-02-28
+// -----------------------------------------------------------------------------
+void AgentsLayer::NotifySelectionChanged( const std::vector< const kernel::Agent_ABC* >& elements )
+{
+    selected_ = elements.size() == 1 ? elements.front() : 0;
+    gui::AgentsLayer::NotifySelectionChanged( elements );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::RequestCreation
+// Created: JSR 2013-02-28
+// -----------------------------------------------------------------------------
+void AgentsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
+{
+    const kernel::Entity_ABC* parent = selected_->Get< kernel::TacticalHierarchies >().GetSuperior();
+    if( !parent )
+        return;
+    actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( type, point, *parent );
+    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new actions::ActionTasker( parent, false ) );
+    action->Polish();
+    actionsModel_.Publish( *action, 0 );
 }

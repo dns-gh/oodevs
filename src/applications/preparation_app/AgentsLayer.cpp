@@ -21,6 +21,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/LogisticLevel.h"
@@ -122,6 +123,7 @@ bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) con
            ( dnd::HasData< kernel::Automat_ABC >( event ) && selectedAutomat_ ) ||
            ( dnd::HasData< kernel::Formation_ABC >( event ) && selectedFormation_ ) ||
            ( dnd::HasData< AgentPositions >( event ) && selectedAgent_ ) ||
+           ( dnd::HasData< kernel::AgentType >( event ) && selectedAgent_) ||
            ( dnd::HasData< kernel::AgentType >( event ) && selectedAutomat_ ) ||
            ( dnd::HasData<  kernel::AutomatType >( event ) && ( selectedFormation_ ) ) ||
            IsValidTemplate( event );
@@ -213,14 +215,25 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         return true;
     }
     const kernel::AgentType* agentType = dnd::FindData< kernel::AgentType >( event );
-    if( agentType && selectedAutomat_ )
+    if( agentType && ( selectedAutomat_ || selectedAgent_ ) )
     {
-        if( !IsValid( *selectedAutomat_, *agentType ) )
+        kernel::Automat_ABC* automat = 0;
+        if( selectedAutomat_ )
+            automat = selectedAutomat_.ConstCast();
+        else
         {
-            QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ), tools::translate( "AgentsLayer", "Logistic units can not be placed under a non logistic automat" ) );
-            return false;
+            const kernel::Entity_ABC* tmp = selectedAgent_->Get< kernel::TacticalHierarchies >().GetSuperior();
+            automat = static_cast< kernel::Automat_ABC* >( const_cast< kernel::Entity_ABC* >( tmp ) );
         }
-        model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *agentType, point );
+        if( automat )
+        {
+            if( !IsValid( *automat, *agentType ) )
+            {
+                QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ), tools::translate( "AgentsLayer", "Logistic units can not be placed under a non logistic automat" ) );
+                return false;
+            }
+            model_.agents_.CreateAgent( *automat, *agentType, point );
+        }
         return true;
     }
     const kernel::AutomatType* automatType = dnd::FindData< kernel::AutomatType >( event );
