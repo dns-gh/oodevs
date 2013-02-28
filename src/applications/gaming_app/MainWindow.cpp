@@ -278,8 +278,8 @@ MainWindow::~MainWindow()
 {
     process_->kill();
     controllers_.Unregister( *this );
-    glProxy_.reset();
     dockContainer_.reset();
+    glProxy_.reset();
     selector_.reset();
 }
 
