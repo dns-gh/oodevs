@@ -511,7 +511,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisasters( const MIL_Age
 {
     T_KnowledgeObjectDiaIDVector disasters;
     T_KnowledgeObjectDiaIDVector objects;
-    callerAgent.GetArmy().GetKnowledge().GetObjects( objects );
+    callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjects( objects );
     for( auto it = objects.begin(); it != objects.end(); ++it )
         if( *it )
         {
