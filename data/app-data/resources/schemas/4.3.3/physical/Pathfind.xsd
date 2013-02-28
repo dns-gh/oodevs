@@ -8,6 +8,7 @@
           <xs:complexType>
             <xs:attribute name="distance-threshold" type="xs:nonNegativeInteger" use="required"/>
             <xs:attribute name="max-calculation-time" type="T_Time" use="required"/>
+            <xs:attribute name="max-end-connections" type="xs:nonNegativeInteger" use="required"/>
           </xs:complexType>
         </xs:element>
         <xs:element name="unit-rules">
