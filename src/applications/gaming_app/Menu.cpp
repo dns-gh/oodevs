@@ -187,7 +187,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Real time actions" ), MAKE_ICON( realtimelog )              , controllers.options_, "RealTimeLogistic" );
     {
-        CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Resource networks" ), MakePixmap( "logistic_links" ), controllers.options_, "ResourceNetworks" );
+        CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Resource networks" ), MakePixmap( "resource_networks" ), controllers.options_, "ResourceNetworks" );
         composite.AddItem( tools::translate( "Menu", "On" ), 0 );
         composite.AddItem( tools::translate( "Menu", "Off" ), 1 );
         composite.AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );

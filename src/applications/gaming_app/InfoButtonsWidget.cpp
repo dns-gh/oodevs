@@ -49,7 +49,7 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     AddButton< InfoMedicalDialog >    ( MakePixmap( "health"      ), controllers, factory, extractor );
     AddButton< InfoMaintenanceDialog >( MakePixmap( "maintenance" ), controllers, factory, extractor );
     AddButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor );
-    AddButton< InfoFuneralDialog >    ( MakePixmap( "supply"      ), controllers, extractor );
+    AddButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor );
 }
 
 // -----------------------------------------------------------------------------

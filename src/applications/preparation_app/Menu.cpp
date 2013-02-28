@@ -130,7 +130,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
         resourceMenu->AddItem( tools::translate( "Menu", "Off" ), 1 );
         resourceMenu->AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
         resourceMenu->AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
-        subMenu->insertItem( MakePixmap( "logistic_links" ), tools::translate( "Menu", "Resource networks" ), resourceMenu );
+        subMenu->insertItem( MakePixmap( "resource_networks" ), tools::translate( "Menu", "Resource networks" ), resourceMenu );
         menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
         subMenu = new kernel::ContextMenu( menu );
