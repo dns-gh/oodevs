@@ -282,8 +282,7 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
     local checkpoint = integration.obtenirObjetProcheDe( localisation, 
                         eTypeObjectCheckpoint, 10 )
     if checkpoint == nil then -- need to create a checkpoint object
-        DEC_MagicGetOrCreateObject( 
-                eTypeObjectCheckpoint, localisation )
+        DEC_MagicGetOrCreateObject( eTypeObjectCheckpoint, localisation )
         end
         meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
     end
@@ -292,10 +291,13 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
 end
 
 integration.doFiltration = function( bodySearchStrength, blockingStrength, position )
+    -- Activate filtration capability on retreived object 
     meKnowledge.localisationForFilterCrowd = meKnowledge.localisationForFilterCrowd or DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     meKnowledge.checkPointForFilterCrowd = meKnowledge.checkPointForFilterCrowd or integration.obtenirObjetProcheDe( meKnowledge.localisationForFilterCrowd, eTypeObjectCheckpoint, 10 )
-    integration.setBodySearchIntensity( bodySearchStrength , position, meKnowledge.checkPointForFilterCrowd )
     integration.changeCrowdDensity( blockingStrength, meKnowledge.checkPointForFilterCrowd )
+    
+    -- Crowds disarmament on retreived object 
+    integration.setBodySearchIntensity( bodySearchStrength , position, meKnowledge.checkPointForFilterCrowd )
 end
 
 integration.changeCrowdDensity = function( blockingStrength, checkpoint ) -- A appeler une seule fois.
@@ -318,6 +320,10 @@ integration.setBodySearchIntensity = function( bodySearchStrength, position, che
             DEC_Agent_ChangerNombreIndividuArmeDansFoule( crowd, ( 100 - bodySearchStrength ) / 100 )
         end
     end
+end
+
+integration.disarmCrowd = function( crowd, nbrToDisarmPerTick ) -- Appeler à chaque tic
+    DEC_Agent_ChangerNombreIndividuArmeDansFoule( crowd.source, nbrToDisarmPerTick )
 end
 
 integration.destroyInstantlyCheckpointOn = function( position )

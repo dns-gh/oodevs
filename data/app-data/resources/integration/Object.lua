@@ -57,12 +57,32 @@ integration.getPlannedObjectNearestBorderPosition = function( object, distance )
     if distance == nil then
         distance = 20 -- meters
     end
+
+    object.getPlannedObjectNearestBorderPosition = object.getPlannedObjectNearestBorderPosition or {}
+    if not next( object.getPlannedObjectNearestBorderPosition ) then
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_GenObject_Localisation( object.source ) , distance )
+        local roadsIntersections = integration.findRoadIntersectionWithZone( localisation )
+        if not next( roadsIntersections ) then -- no road around the object
+            object.getPlannedObjectNearestBorderPosition = { DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation ) }
+        else
+            object.getPlannedObjectNearestBorderPosition = roadsIntersections
+        end
+    end
+    return object.getPlannedObjectNearestBorderPosition
+
+
+
+    --[[
+    if distance == nil then
+        distance = 20 -- meters
+    end
     object.getPlannedObjectNearestBorderPosition = object.getPlannedObjectNearestBorderPosition or nil
     if object.getPlannedObjectNearestBorderPosition == nil then
         local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_GenObject_Localisation( object.source ) , distance )
         object.getPlannedObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
     end
     return object.getPlannedObjectNearestBorderPosition
+    ]]
 end
 
 

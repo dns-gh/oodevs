@@ -54,12 +54,16 @@ function integration.getCrowdsInArea( area )
     return allRes
 end
 
-function integration.getNearbyTerrorists()
-    local terrorists = DEC_Connaissances_TerroristsAProximite( 600 )    
+function integration.getNearbyTerrorists( distance )
+    local minDistance = distance
+    if minDistance == nil then -- not issued
+        minDistance = 600
+    end
+    local terrorists = DEC_Connaissances_TerroristsAProximite( minDistance )    
     local newResult = {}
     local nTerrorists = #terrorists
     for i = 1, nTerrorists do
-        local terrorist = terrorists[i]
+        local terrorist = terrorists[ i ]
         if not exists( newResult, terrorist ) then
             newResult[ #newResult + 1 ] = CreateKnowledge( integration.ontology.types.agentKnowledge, terrorist )
         end
