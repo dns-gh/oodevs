@@ -1506,7 +1506,7 @@
       <ph target-posture="PostePrepareGenie" value="1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="00010018" codeLFRIL="" codeNNO="1111110020018" id="69" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010018" codeLFRIL="" codeNNO="1111110020018" id="69" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="1000" package-volume="0.001" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="CombattantProtege" repairable-with-evacuation="0.25" repairable-without-evacuation="0.2"/>
@@ -2560,6 +2560,7 @@
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9140 14 507 3290" id="117" id-nature="2" name="F-63 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 310 5441" id="118" id-nature="2" name="F-57 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 209 3957" id="119" id-nature="1" name="F-35 1" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1111110020046" id="148" id-nature="3" name="Batterie" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1375 14 235 7101" id="120" id-nature="3" name="PETD 500 G T ID M 1" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2613,4 +2614,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="146" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="147" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="2831230089" -->
+<!-- signature="0225406428" -->
