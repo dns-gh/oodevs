@@ -17,14 +17,14 @@
 #include "preparation/GhostModel.h"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/AgentType.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/StandardModel.h"
 
@@ -152,10 +152,14 @@ namespace
 {
     bool IsValid( const kernel::Automat_ABC& automat, const kernel::AgentType& type )
     {
-        if( ( type.IsTC2() || type.IsLogisticSupply() || type.IsLogisticMaintenance() ||  type.IsLogisticMedical() )
-            && automat.GetLogisticLevel() == kernel::LogisticLevel::none_ )
-             return false;
-        return true;
+        if( ( type.IsTC2() || type.IsLogisticSupply() || type.IsLogisticMaintenance() ||  type.IsLogisticMedical() ) )
+        {
+            const kernel::AutomatType& automatType = automat.GetType();
+            if( automatType.HasLogistics() || automatType.IsTC2() )
+                return true;
+            else
+                return false;
+        }return true;
     }
 }
 
