@@ -89,6 +89,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         gui::RichDockWidget* clockWnd = new ClockDock( parent, controllers, simulation, *scheduler_ );
         clockWnd->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, clockWnd );
+        clockWnd->setVisible( false );
         clockWnd->setFloating( true );
     }
     // Properties
