@@ -23,8 +23,9 @@ using namespace kernel;
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::Controller& controller )
+ObstacleAttribute::ObstacleAttribute( kernel::Controller& controller, bool singlePointPos /*= false*/ )
     : controller_( controller )
+    , hasSinglePointPos_( singlePointPos )
 {
     // NOTHING
 }
@@ -114,10 +115,14 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const gui::Viewpor
 {
     if( obstacleActivated_.IsSet() && viewport.IsVisible( where ) )
     {
+        float zoomFactor = tools.GetAdaptiveZoomFactor( !hasSinglePointPos_ );
+        geometry::Point2f offsetPoint = where + geometry::Vector2f( zoomFactor * 250.f, zoomFactor * 150.f );
+
         // $$$$ SBO 2007-05-04: hard coded icon positions
         glPushAttrib( GL_CURRENT_BIT );
             glColor3f( 1, 1, 1 );
-            tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated, where + geometry::Vector2f( tools.GetAdaptiveZoomFactor() * 250.f, tools.GetAdaptiveZoomFactor() * 150.f ), 150.f );
+            tools.DrawIcon( obstacleActivated_ ? xpm_activated : xpm_not_activated
+                          , offsetPoint, 150.f, hasSinglePointPos_? gui::GlTools_ABC::pixels : gui::GlTools_ABC::meters );
         glPopAttrib();
     }
 }

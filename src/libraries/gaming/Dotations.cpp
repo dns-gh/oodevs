@@ -145,7 +145,7 @@ void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
 void Dotations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( bEmptyGasTank_ && viewport.IsHotpointVisible() )
-        tools.DrawIcon( xpm_gas, where, 150.f );
+        tools.DrawIcon( xpm_gas, where, 150.f, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

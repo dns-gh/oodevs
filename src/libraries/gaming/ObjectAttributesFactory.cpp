@@ -134,7 +134,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
         entity.Attach< kernel::BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_, HasSinglePoint( entity ) ) );
 
     if( attributes.has_obstacle() && entity.Retrieve< kernel::ObstacleAttribute_ABC >() == 0 )
-        entity.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
+        entity.Attach< kernel::ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_, HasSinglePoint( entity ) ) );
 
     if( attributes.has_life_time() && entity.Retrieve< kernel::TimeLimitedAttribute_ABC >() == 0 )
         entity.Attach< kernel::TimeLimitedAttribute_ABC >( *new TimeLimitedAttribute( controllers_.controller_ ) );

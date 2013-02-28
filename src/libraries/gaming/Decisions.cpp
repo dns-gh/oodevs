@@ -114,7 +114,7 @@ const Mission* Decisions::GetCurrentMission() const
 void Decisions::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !CanBeOrdered() && viewport.IsVisible( where ) )
-        tools.DrawIcon( xpm_cadenas, where, 150.f );
+        tools.DrawIcon( xpm_cadenas, where, 150.f, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

@@ -315,15 +315,15 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
     glPushAttrib( GL_CURRENT_BIT );
     glColor3f( 1, 1, 1 );
     if( bDead_ )
-        tools.DrawIcon( xpm_skull, where, 150.f );
+        tools.DrawIcon( xpm_skull, where, 150.f, gui::GlTools_ABC::pixels );
     if( bRadioEmitterSilence_ )
-        tools.DrawIcon( xpm_silence_radio_outgoing, where, 150.f );
+        tools.DrawIcon( xpm_silence_radio_outgoing, where, 150.f, gui::GlTools_ABC::pixels );
     if( bRadarEnabled_ )
-        tools.DrawIcon( xpm_radars_on, where, 150.f );
+        tools.DrawIcon( xpm_radars_on, where, 150.f, gui::GlTools_ABC::pixels );
     if( bCommJammed_ )
-        tools.DrawIcon( xpm_brouillage, where, 150.f );
+        tools.DrawIcon( xpm_brouillage, where, 150.f, gui::GlTools_ABC::pixels );
     if( bUnderground_ )
-        tools.DrawIcon( xpm_underground, where, 150.f );
+        tools.DrawIcon( xpm_underground, where, 150.f, gui::GlTools_ABC::pixels );
     glPopAttrib();
 }
 

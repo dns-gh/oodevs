@@ -32,7 +32,7 @@ class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObstacleAttribute( kernel::Controller& controller );
+             ObstacleAttribute( kernel::Controller& controller, bool singlePointPos = false );
     virtual ~ObstacleAttribute();
     //@}
 
@@ -71,6 +71,7 @@ private:
     kernel::OptionalValue< bool >                   obstacleActivated_;
     kernel::OptionalValue< unsigned int >           activationTime_;
     kernel::OptionalValue< unsigned int >           activityTime_;
+    bool hasSinglePointPos_;
     //@}
 };
 

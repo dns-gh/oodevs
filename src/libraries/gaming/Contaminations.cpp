@@ -115,5 +115,5 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 void Contaminations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( contaminated_ && viewport.IsHotpointVisible() )
-        tools.DrawIcon( xpm_nbc, where, 150.f );
+        tools.DrawIcon( xpm_nbc, where, 150.f, gui::GlTools_ABC::pixels );
 }

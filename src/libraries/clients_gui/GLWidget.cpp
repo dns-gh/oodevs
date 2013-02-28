@@ -967,12 +967,9 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* =
 {
     if( size < 0 )
         size = 32 * Pixels();
-    else if( unit == pixels )
-        size *= Pixels();
 
-    size *= 0.7f;
-    float factor = GetAdaptiveZoomFactor( false );
-    size *= factor;
+    float factor = GetAdaptiveZoomFactor( unit != GlTools_ABC::pixels );
+    size *= 0.7f * factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );
         glEnable( GL_TEXTURE_2D );
