@@ -1999,6 +1999,22 @@ This data can&apos;t be projected.</translation>
         <source>Safety</source>
         <translation>Safety</translation>
     </message>
+    <message>
+        <source>Wounded U1</source>
+        <translation>Wounded U1</translation>
+    </message>
+    <message>
+        <source>Wounded U2</source>
+        <translation>Wounded U2</translation>
+    </message>
+    <message>
+        <source>Wounded U3</source>
+        <translation>Wounded U3</translation>
+    </message>
+    <message>
+        <source>Wounded UE</source>
+        <translation>Wounded UE</translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>

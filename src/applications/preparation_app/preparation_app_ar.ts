@@ -1996,6 +1996,22 @@ This data can&apos;t be projected.</source>
         <source>Safety</source>
         <translation type="unfinished">سلامة</translation>
     </message>
+    <message>
+        <source>Wounded U1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded U2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded U3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded UE</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>

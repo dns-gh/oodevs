@@ -1996,6 +1996,22 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unfavorable</source>
         <translation>Défavorable</translation>
     </message>
+    <message>
+        <source>Wounded U1</source>
+        <translation>Blessé U1</translation>
+    </message>
+    <message>
+        <source>Wounded U2</source>
+        <translation>Blessé U2</translation>
+    </message>
+    <message>
+        <source>Wounded U3</source>
+        <translation>Blessé U3</translation>
+    </message>
+    <message>
+        <source>Wounded UE</source>
+        <translation>Blessé UE</translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>
