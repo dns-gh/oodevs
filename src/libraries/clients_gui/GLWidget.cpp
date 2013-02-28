@@ -1073,6 +1073,9 @@ void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVaria
 // -----------------------------------------------------------------------------
 void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
 {
+    if( !extent_.IsInside( point ) )
+        return;
+
     pickingMode_ = true;
 
     std::fill( selectionBuffer_.begin(), selectionBuffer_.end(), 0 );
