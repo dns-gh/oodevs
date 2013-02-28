@@ -10,6 +10,8 @@
 #ifndef __kernel_ResourceNetworkType_h_
 #define __kernel_ResourceNetworkType_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -24,7 +26,7 @@ namespace kernel
 */
 // Created: JSR 2010-09-10
 // =============================================================================
-class ResourceNetworkType
+class ResourceNetworkType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,13 +39,7 @@ public:
     //@{
     const std::string& GetName() const;
     void GetColor( float& red, float& green, float& blue ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceNetworkType( const ResourceNetworkType& );            //!< Copy constructor
-    ResourceNetworkType& operator=( const ResourceNetworkType& ); //!< Assignment operator
+    unsigned int GetDefaultProduction() const;
     //@}
 
 private:
@@ -51,6 +47,7 @@ private:
     //@{
     std::string name_;
     float red_, green_, blue_;
+    unsigned int defaultProduction_;
     //@}
 };
 

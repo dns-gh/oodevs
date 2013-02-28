@@ -503,7 +503,7 @@ void ResourceLinksDialog_ABC::OnCreateNode( int resourceId )
         const ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
-            resourceNetwork.FindOrCreateResourceNode( resource.GetName() );
+            resourceNetwork.FindOrCreateResourceNode( resource.GetName(), resource.GetDefaultProduction() );
             controllers_.controller_.Update( resourceNetwork );
             break;
         }

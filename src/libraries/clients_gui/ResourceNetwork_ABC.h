@@ -98,12 +98,13 @@ public:
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const = 0;
     virtual void Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
-    virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource )
+    virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource, unsigned int defaultProduction = 0 )
     {
         auto it = resourceNodes_.find( resource );
         if( it == resourceNodes_.end() )
         {
             resourceNodes_[ resource ].resource_ = resource;
+            resourceNodes_[ resource ].production_ = defaultProduction;
             return resourceNodes_[ resource ];
         }
         return it->second;

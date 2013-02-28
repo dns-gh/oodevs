@@ -23,7 +23,10 @@ ResourceNetworkType::ResourceNetworkType( xml::xistream& xis )
     std::string strColor;
     unsigned int color;
     xis >> xml::start( "color" )
-        >> xml::attribute( "rgb", strColor )
+            >> xml::attribute( "rgb", strColor )
+        >> xml::end
+        >> xml::start( "defaults" )
+            >> xml::attribute( "production", defaultProduction_ )
         >> xml::end;
     std::stringstream colorStream( strColor );
     colorStream >> std::hex >> color;
@@ -59,4 +62,13 @@ void ResourceNetworkType::GetColor( float& red, float& green, float& blue ) cons
     red = red_;
     green = green_;
     blue = blue_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkType::GetDefaultProduction
+// Created: JSR 2013-02-27
+// -----------------------------------------------------------------------------
+unsigned int ResourceNetworkType::GetDefaultProduction() const
+{
+    return defaultProduction_;
 }
