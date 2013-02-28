@@ -89,17 +89,10 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, Profile* > T_ProfileMap;
-    typedef T_ProfileMap::const_iterator    CIT_ProfileMap;
-    //@}
-
-private:
     const Config& config_;
     Model& model_;
     ClientPublisher_ABC& clients_;
-    T_ProfileMap profiles_;
+    std::map< std::string, Profile* > profiles_;
     std::auto_ptr< tools::SchemaWriter > pSchemaWriter_;
 };
 

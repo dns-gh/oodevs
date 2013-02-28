@@ -135,12 +135,12 @@ void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& contain
 
 namespace
 {
-    template< typename L, typename B, typename C >
-    void SetRights( const L& source, std::set< const B* >& list, const tools::Resolver_ABC< C >& model )
+    template< typename L, typename B, typename R >
+    void SetRights( const L& source, B& list, const R& resolver )
     {
         list.clear();
         for( int i = 0; i < source.elem_size(); ++i )
-            if( const B* entity = model.Find( source.elem(i).id() ) )
+            if( const B::value_type entity = resolver.Find( source.elem(i).id() ) )
                 list.insert( entity );
     }
 }
@@ -280,10 +280,10 @@ bool Profile::CheckRights( const sword::ChatTarget& source, const sword::ChatTar
 
 namespace
 {
-    template< typename List, typename Entity >
-    void Serialize( List& message, const std::set< const Entity* >& list )
+    template< typename List, typename Container >
+    void Serialize( List& message, const Container& c )
     {
-        for( std::set< const Entity* >::const_iterator it = list.begin(); it != list.end(); ++it )
+        for( auto it = c.begin(); it != c.end(); ++it )
             message.add_elem()->set_id( (*it)->GetId() );
     }
 }

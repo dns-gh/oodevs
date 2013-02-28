@@ -101,11 +101,8 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< Client > > T_Clients;
-    typedef T_Clients::iterator                                 IT_Clients;
-    typedef T_Clients::const_iterator                          CIT_Clients;
 
     typedef std::set< ClientBroadcaster_ABC* > T_Broadcasters;
-    typedef T_Broadcasters::const_iterator   CIT_Broadcasters;
     //@}
 
 private:

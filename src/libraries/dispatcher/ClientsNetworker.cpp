@@ -106,7 +106,7 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link, dispatcher::Profile_ABC& /*profile*/ )
 {
-    CIT_Clients it = clients_.find( link );
+    auto it = clients_.find( link );
     if( it != clients_.end() )
         it->second->Activate();
 }
@@ -117,7 +117,7 @@ void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_AB
 // -----------------------------------------------------------------------------
 void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/, const std::string& link )
 {
-    CIT_Clients it = clients_.find( link );
+    auto it = clients_.find( link );
     if( it != clients_.end() )
         it->second->Deactivate();
 }
@@ -143,7 +143,7 @@ void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sen
 void ClientsNetworker::Unregister( const std::string& link )
 {
     MT_LOG_INFO_MSG( "Publisher unregistered for client '" << link << "'" );
-    IT_Clients it = clients_.find( link );
+    auto it = clients_.find( link );
     if( it != clients_.end() )
     {
         plugin_.NotifyClientLeft( *it->second, it->first );
@@ -184,7 +184,7 @@ void ClientsNetworker::ConnectionError( const std::string& link, const std::stri
 {
     MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
     ServerNetworker::ConnectionError( link, reason );
-    IT_Clients it = clients_.find( link );
+    auto it = clients_.find( link );
     if( it != clients_.end() && it->second )
     {
         plugin_.NotifyClientLeft( *it->second, it->first );
@@ -322,7 +322,7 @@ Profile_ABC& ClientsNetworker::GetProfile( const std::string& )
 // -----------------------------------------------------------------------------
 ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
 {
-    CIT_Clients it = clients_.find( link );
+    auto it = clients_.find( link );
     if( it == clients_.end() || !it->second )
         throw MASA_EXCEPTION( link + " is not a valid client" );
     return *it->second;
@@ -335,7 +335,7 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
 void ClientsNetworker::OnNewTick()
 {
     std::vector< std::string > errors;
-    for( IT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+    for( auto it = clients_.begin(); it != clients_.end(); ++it )
     {
         if( false == it->second->HasAnsweredSinceLastTick() )
             errors.push_back( it->first );

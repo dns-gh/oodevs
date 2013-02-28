@@ -11,7 +11,7 @@
 #define __Profile_h_
 
 #include "Profile_ABC.h"
-#include <set>
+#include "tools/Set.h"
 
 namespace sword
 {
@@ -89,10 +89,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< const kernel::Automat_ABC* > T_AutomatSet;
-    typedef std::set< const kernel::Team_ABC* > T_SideSet;
-    typedef std::set< const kernel::Formation_ABC* > T_FormationSet;
-    typedef std::set< const kernel::Population_ABC* > T_PopulationSet;
+    typedef tools::Set< const kernel::Automat_ABC* > T_AutomatSet;
+    typedef tools::Set< const kernel::Team_ABC* > T_SideSet;
+    typedef tools::Set< const kernel::Formation_ABC* > T_FormationSet;
+    typedef tools::Set< const kernel::Population_ABC* > T_PopulationSet;
     //@}
 
 private:

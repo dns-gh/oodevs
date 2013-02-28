@@ -24,7 +24,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -97,8 +96,8 @@ void ProfileManager::Save( const std::string& path )
     xml::xofstream xos( filename );
     xos << xml::start( "profiles" );
     pSchemaWriter_->WriteExerciseSchema( xos, "profiles" );
-    BOOST_FOREACH( const T_ProfileMap::value_type& profile, profiles_ )
-        profile.second->SerializeProfile( xos );
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
+        it->second->SerializeProfile( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +176,7 @@ void ProfileManager::Reset()
 // -----------------------------------------------------------------------------
 Profile* ProfileManager::Authenticate( const std::string& strName, const std::string& strPassword ) const
 {
-    CIT_ProfileMap it = profiles_.find( strName );
+    auto it = profiles_.find( strName );
     if( it == profiles_.end() )
     {
         MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' doesn't exists" );
@@ -262,7 +261,7 @@ sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::Pr
 // -----------------------------------------------------------------------------
 sword::ProfileDestructionRequestAck_ErrorCode ProfileManager::Destroy( const sword::ProfileDestructionRequest& message )
 {
-    T_ProfileMap::iterator it = profiles_.find( message.login() );
+    auto it = profiles_.find( message.login() );
     if( it == profiles_.end() )
         return sword::ProfileDestructionRequestAck::invalid_profile;
     delete it->second;
@@ -292,7 +291,7 @@ void ProfileManager::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 void ProfileManager::SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite )
 {
-    T_ProfileMap::iterator it = profiles_.find( profile );
+    auto it = profiles_.find( profile );
     if( it != profiles_.end() )
         it->second->SetRight( model_.Automats().Get( automat ), readonly, readwrite );
 }
