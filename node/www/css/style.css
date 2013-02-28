@@ -29,8 +29,8 @@ body{padding-top:60px;padding-bottom:40px;}
 .node_header a{margin-left:24px;}
 .read_only{color:inherit !important;background-color:inherit;cursor:text;border:0;margin-top:1px;}
 .footer{text-align:center;}
-.navbar .brand{cursor:default;}
-.navbar .brand:hover{color:inherit;}
+.navbar .brand{cursor:default;color:#999;}
+.navbar .brand:hover{color:#999;}
 .pull-right .label{float:left;margin-top:11px;}
 .sub_header td{padding-top:24px;font-weight:bold;border-top:0;}
 .ufirst{text-transform:capitalize;}

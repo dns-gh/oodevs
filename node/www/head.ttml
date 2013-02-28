@@ -16,7 +16,7 @@
         user.[[ $k ]] = "[[ $v ]]";
         [[ end ]]
     </script>
-    <link rel="stylesheet" href="css/bootstrap-2.1.1.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-2.3.0.min.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <!--[if IE ]>
     <link rel="stylesheet" type="text/css" href="css/iexplore.css" />
