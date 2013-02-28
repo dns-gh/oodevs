@@ -136,9 +136,9 @@ struct Metadata
         return Metadata( FromJson( fs.ReadFile( root / GetFilename() ) ) );
     }
 
-    void Save( const FileSystem_ABC& fs, const Path& root ) const
+    void Save( const FileSystem_ABC& fs, const Path& root, bool force ) const
     {
-        if( !discard_ )
+        if( force || !discard_ )
             fs.WriteFile( root / GetFilename(), ToJson( GetProperties() ) );
     }
 
@@ -146,14 +146,14 @@ struct Metadata
     {
         tomb_ = tomb;
         if( IsLinked() )
-            Save( fs, root );
+            Save( fs, root, false );
         TryKill( async, fs, root );
     }
 
     void Reinstall( const FileSystem_ABC& fs, const Path& root )
     {
         tomb_.clear();
-        Save( fs, root );
+        Save( fs, root, false );
     }
 
     bool IsInstalled() const
@@ -375,7 +375,7 @@ struct Item : Package_ABC::Item_ABC
         const Path root = root_ / GetSuffix();
         const std::string checksum = fs.Checksum( root, IsItemFile( root ), read );
         meta_.Finalize( checksum, read );
-        meta_.Save( fs, root_ );
+        meta_.Save( fs, root_, false );
     }
 
     static bool Copy( const FileSystem_ABC& fs, const Path& path, const Path& dst )
@@ -407,7 +407,7 @@ struct Item : Package_ABC::Item_ABC
             fs.MakePaths( sub );
             fs.CopyDirectory( root_ / GetSuffix(), sub );
         }
-        meta_.Save( fs, output );
+        meta_.Save( fs, output, true );
         if( old )
             old->Uninstall( async, fs, tomb );
         operand( output );
