@@ -106,7 +106,7 @@ void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    for( T_Diplomacies::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
+    for( auto it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         client::ChangeDiplomacy asn;
         asn().mutable_party1()->set_id( GetId() );

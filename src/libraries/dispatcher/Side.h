@@ -14,6 +14,7 @@
 #include "clients_kernel/Karma.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/Resolver.h"
+#include "tools/Map.h"
 
 namespace sword
 {
@@ -80,7 +81,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Team_ABC*, sword::EnumDiplomacy > T_Diplomacies;
+    typedef tools::Map< const kernel::Team_ABC*, sword::EnumDiplomacy > T_Diplomacies;
     //@}
 
 private:

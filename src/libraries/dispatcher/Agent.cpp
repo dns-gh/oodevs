@@ -507,7 +507,7 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
         message().set_app6symbol( app6Symbol_ );
     if( level_ != eNatureLevel_None )
         message().set_level( sword::EnumNatureLevel( level_ ) );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
         entry->set_name( it->first );
@@ -607,7 +607,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             for( tools::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( *asn().mutable_lent_equipments()->add_elem() );
         }
-        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        for( auto it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {
             sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
             entry->set_name( it->first );
@@ -856,7 +856,7 @@ bool Agent::IsMounted() const
 // -----------------------------------------------------------------------------
 bool Agent::GetExtension( const std::string& key, std::string& result ) const
 {
-    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    auto it = extensions_.find( key );
     if( it == extensions_.end() )
         return false;
     result = it->second;

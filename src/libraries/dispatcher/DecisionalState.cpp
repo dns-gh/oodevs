@@ -40,7 +40,7 @@ DecisionalState::~DecisionalState()
 // -----------------------------------------------------------------------------
 void DecisionalState::Clear()
 {
-    for( std::map< std::string, std::string >::iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
+    for( auto it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
         it->second.clear();
 }
 
@@ -59,7 +59,7 @@ void DecisionalState::Update( const sword::DecisionalState& message )
 // -----------------------------------------------------------------------------
 void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
 {
-    for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
+    for( auto it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {
         client::DecisionalState message;
         model_.SetToTasker( *message().mutable_source(), id );
