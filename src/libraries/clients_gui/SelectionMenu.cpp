@@ -57,6 +57,7 @@ SelectionMenu::SelectionMenu( EntitySymbols& entitySymbols, ColorStrategy& color
     , drawingTypes_( drawingTypes )
     , tools_( tools )
     , parent_( 0 )
+    , moreElements_( 0u )
 {
     // NOTHING
 }
