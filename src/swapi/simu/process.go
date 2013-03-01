@@ -38,10 +38,12 @@ type SimProcess struct {
 }
 
 func (sim *SimProcess) Kill() {
-	sim.tailch <- 1
-	sim.quitAll.Wait()
-	sim.cmd.Process.Kill()
-	sim.cmd.Wait()
+	if sim != nil {
+		sim.tailch <- 1
+		sim.quitAll.Wait()
+		sim.cmd.Process.Kill()
+		sim.cmd.Wait()
+	}
 }
 
 func (sim *SimProcess) GetLogPath() string {
