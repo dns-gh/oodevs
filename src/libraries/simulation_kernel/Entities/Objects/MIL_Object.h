@@ -132,7 +132,7 @@ private:
     //@}
 
 private:
-    MIL_ObjectManipulator_ABC& manipulator_;
+    std::auto_ptr< MIL_ObjectManipulator_ABC > manipulator_;
     T_InteractiveCapacities interactives_;
     T_StructuralStateNotifiers structuralStateNotifiers_;
     T_Capacities capacities_;

@@ -29,7 +29,7 @@ namespace
             || type == eProfileNoRole || type == eNoOrbat || type == eSignature
             || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
             || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks
-            || type == eCityAreaLimitExceeded;
+            || type == eCityAreaLimitExceeded || type == eImpossibleObjectCreation;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -130,6 +130,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eSignature ] = "%1";
     errorDescriptions_[ eUnitOutsideMap ] = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
     errorDescriptions_[ eCityAreaLimitExceeded ] = tools::translate( "ModelConsistencyDialog", "City area exceeds %1 km²" );
+    errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
     errorDescriptions_[ eOthers ] = "%1";
 }
 

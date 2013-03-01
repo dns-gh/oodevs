@@ -40,7 +40,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int forcedId )
     : MIL_Object_ABC( army, type, forcedId )
-    , manipulator_( *new MIL_ObjectManipulator( *this ) )
+    , manipulator_( new MIL_ObjectManipulator( *this ) )
     , xAttrToUpdate_( 0 )
 {
     // NOTHING
@@ -51,7 +51,7 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsi
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object()
-    : manipulator_( *new MIL_ObjectManipulator( *this ) )
+    : manipulator_( new MIL_ObjectManipulator( *this ) )
     , xAttrToUpdate_( 0 )
 {
     // NOTHING
@@ -467,7 +467,7 @@ void MIL_Object::Update( unsigned int time )
 // -----------------------------------------------------------------------------
 const MIL_ObjectManipulator_ABC& MIL_Object::operator()() const
 {
-    return manipulator_;
+    return *manipulator_;
 }
 
 // -----------------------------------------------------------------------------
@@ -476,7 +476,7 @@ const MIL_ObjectManipulator_ABC& MIL_Object::operator()() const
 // -----------------------------------------------------------------------------
 MIL_ObjectManipulator_ABC& MIL_Object::operator()()
 {
-    return manipulator_;
+    return *manipulator_;
 }
 
 // -----------------------------------------------------------------------------

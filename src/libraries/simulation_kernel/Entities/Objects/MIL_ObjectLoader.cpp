@@ -161,12 +161,12 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
     TER_Localisation location;
     location.Read( xis );
     // $$$$ SBO 2009-06-08: Check geometry constraint
-    Object* object = new Object( xis, *it->second, army, &location );
+    std::auto_ptr< Object > object( new Object( xis, *it->second, army, &location ) );
     xis >> xml::optional >> xml::start( "attributes" )
             >> xml::list( *this, &MIL_ObjectLoader::ReadAttributes, *object )
         >> xml::end;
     object->Finalize();
-    return object;
+    return object.release();
 }
 
 // -----------------------------------------------------------------------------

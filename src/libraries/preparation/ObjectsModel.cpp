@@ -91,7 +91,7 @@ void ObjectsModel::CreateObject( xml::xistream& xis, const kernel::Team_ABC& tea
     }
     catch( std::exception& e )
     {
-        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+        model.AppendLoadingError( eImpossibleObjectCreation, std::string( e.what() ) );
     }
 }
 

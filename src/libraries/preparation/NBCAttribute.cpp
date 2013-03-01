@@ -56,9 +56,7 @@ NBCAttribute::~NBCAttribute()
 // -----------------------------------------------------------------------------
 void NBCAttribute::ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents )
 {
-    std::string type;
-    xis >> xml::attribute( "type", type );
-    AddAgent( nbcAgents.Get( type ) );
+    AddAgent( nbcAgents.Get( xis.attribute< std::string >( "type" ) ) );
 }
 
 // -----------------------------------------------------------------------------

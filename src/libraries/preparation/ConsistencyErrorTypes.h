@@ -64,6 +64,7 @@ enum E_ConsistencyCheck
     eSignature,
     eCityAreaLimitExceeded,
     eUnitOutsideMap,
+    eImpossibleObjectCreation,
     eOthers,
     eOthersMask,
 };
