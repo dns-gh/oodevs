@@ -34,6 +34,7 @@
     </target>
 
     <target name="test">
+        <go cmd="vet"/>
         <go cmd="test">
             <arg value="--application=${run.dir}/simulation_app.exe"/>
             <arg value="--root-dir=${data.dir}"/>
