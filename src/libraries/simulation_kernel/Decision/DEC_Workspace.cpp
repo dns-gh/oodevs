@@ -157,7 +157,8 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
 void DEC_Workspace::InitializeDIA( MIL_Config& config )
 {
     //DIA4
-    config.GetLoader().LoadFile( config.GetDecisionalFile(), boost::bind( &DEC_Workspace::LoadDIA, this, boost::ref( config ), _1 ) );
+    std::auto_ptr< xml::xistream > xis( new xml::xifstream( config.GetDecisionalFile() ) );
+    LoadDIA( config, *xis );
     config.AddFileToCRC( config.GetDecisionalFile() );
 }
 
