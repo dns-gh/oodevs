@@ -261,7 +261,7 @@ bool GhostsLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
         if( const GhostPositions* pos = static_cast< const GhostPositions* >( selectedGhost_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
@@ -322,9 +322,9 @@ void GhostsLayer::MultipleSelect( const std::vector< const kernel::Formation_ABC
 // Name: GhostsLayer::IsEligibleForDrag
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-bool GhostsLayer::IsEligibleForDrag( const geometry::Point2f& point )
+bool GhostsLayer::IsEligibleForDrag()
 {
-    return selectedGhost_ && IsInSelection( *selectedGhost_, point );
+    return selectedGhost_ && IsInSelection( *selectedGhost_ );
 }
 
 // -----------------------------------------------------------------------------

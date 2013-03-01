@@ -198,7 +198,7 @@ void ObjectsLayer::NotifySelectionChanged( const std::vector< const kernel::Obje
 // -----------------------------------------------------------------------------
 bool ObjectsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->button() == Qt::LeftButton && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
+    if( event->button() == Qt::LeftButton && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
         if( const ObjectPositions* pos = static_cast< const ObjectPositions* >( selected_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
@@ -212,7 +212,7 @@ bool ObjectsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
 // Name: ObjectsLayer::IsEligibleForDrag
 // Created: JSR 2011-12-22
 // -----------------------------------------------------------------------------
-bool ObjectsLayer::IsEligibleForDrag( const geometry::Point2f& point ) const
+bool ObjectsLayer::IsEligibleForDrag() const
 {
-    return selected_ && IsInSelection( *selected_, point );
+    return selected_ && IsInSelection( *selected_ );
 }

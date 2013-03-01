@@ -44,7 +44,7 @@ private:
     //@{
     virtual void NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
-    bool IsEligibleForDrag( const geometry::Point2f& point ) const;
+    bool IsEligibleForDrag() const;
     //@}
 
 private:

@@ -211,12 +211,7 @@ void CircularEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( !mouse ||
-        Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
-        ( mouse->buttons() & mouse->button() ) == 0 ||                                                      // mouse release
-        ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
-        ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
-         ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                     // metrics mode
+    if( !mouse )
         return;
 
 
@@ -230,6 +225,13 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
             continue;
         ( *it )->ExtractElements( extractedElements, selection );
     }
+
+    if(  Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                      // a layer has return true
+        ( mouse->buttons() & mouse->button() ) == 0 ||                                                      // mouse release
+        ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
+        ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
+        ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                      // metrics mode
+        return;
 
     if( default_ && extractedElements.size() == 0 )                                                         // No element extracted
     {

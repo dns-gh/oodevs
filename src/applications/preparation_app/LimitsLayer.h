@@ -57,7 +57,7 @@ private:
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
 
     float Precision( const geometry::Point2f& point ) const;
-    bool IsEligibleForDrag( const geometry::Point2f& point ) const;
+    bool IsEligibleForDrag() const;
     //@}
 
 private slots:

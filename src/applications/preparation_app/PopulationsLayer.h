@@ -56,7 +56,7 @@ private:
     virtual void AfterSelection();
     virtual void MultipleSelect( const std::vector< const kernel::Entity_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Population_ABC* >& elements );
-    bool IsEligibleForDrag( const geometry::Point2f& point );
+    bool IsEligibleForDrag();
     //@}
 
 private:

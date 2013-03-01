@@ -181,7 +181,7 @@ bool LimitsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& )
 // -----------------------------------------------------------------------------
 bool LimitsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->button() == Qt::LeftButton && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
+    if( event->button() == Qt::LeftButton && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
         if( const TacticalLinePositions* pos = static_cast< const TacticalLinePositions* >( selected_->Retrieve< kernel::Positions >() ) )
         {
             dragPoint_ = point;
@@ -194,7 +194,7 @@ bool LimitsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
 // Name: LimitsLayer::IsEligibleForDrag
 // Created: ABR 2013-02-01
 // -----------------------------------------------------------------------------
-bool LimitsLayer::IsEligibleForDrag( const geometry::Point2f& point ) const
+bool LimitsLayer::IsEligibleForDrag() const
 {
-    return selected_ && IsInSelection( *selected_, point );
+    return selected_ && EntityLayerBase::IsInSelection( *selected_ );
 }

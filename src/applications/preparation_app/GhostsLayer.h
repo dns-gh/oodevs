@@ -61,7 +61,7 @@ private:
     virtual void MultipleSelect( const std::vector< const kernel::Automat_ABC* >& elements );
     virtual void MultipleSelect( const std::vector< const kernel::Formation_ABC* >& elements );
     virtual void SetAlpha( float alpha );
-    bool IsEligibleForDrag( const geometry::Point2f& point );
+    bool IsEligibleForDrag();
     //@}
 
 private:

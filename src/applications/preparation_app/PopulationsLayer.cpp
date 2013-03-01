@@ -190,7 +190,7 @@ void PopulationsLayer::MultipleSelect( const std::vector< const kernel::Populati
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
         if( const PopulationPositions* pos = static_cast< const PopulationPositions* >( selectedPopulation_->Retrieve< kernel::Positions >() ) )
         {
             draggingPoint_ = point;
@@ -204,7 +204,7 @@ bool PopulationsLayer::HandleMousePress( QMouseEvent* event, const geometry::Poi
 // Name: PopulationsLayer::IsEligibleForDrag
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
-bool PopulationsLayer::IsEligibleForDrag( const geometry::Point2f& point )
+bool PopulationsLayer::IsEligibleForDrag()
 {
-    return selectedPopulation_ && IsInSelection( *selectedPopulation_, point );
+    return selectedPopulation_ && IsInSelection( *selectedPopulation_ );
 }

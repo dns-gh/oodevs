@@ -322,7 +322,7 @@ bool AgentsLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag( point ) )
+    if( ( event->button() & Qt::LeftButton ) != 0 && event->buttons() != Qt::NoButton && IsEligibleForDrag() )
     {
         if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< kernel::Positions >() ) )
         {
@@ -338,7 +338,7 @@ bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
 // Name: AgentsLayer::IsEligibleForDrag
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
-bool AgentsLayer::IsEligibleForDrag( const geometry::Point2f& point ) const
+bool AgentsLayer::IsEligibleForDrag() const
 {
-    return selectedAgent_ && IsInSelection( *selectedAgent_, point );
+    return selectedAgent_ && IsInSelection( *selectedAgent_ );
 }

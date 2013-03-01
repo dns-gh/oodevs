@@ -240,6 +240,15 @@ bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::P
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayer::IsInSelection
+// Created: LGY 2013-03-01
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::IsInSelection( const kernel::Entity_ABC& entity ) const
+{
+    return selection_.find( entity.GetId() ) != selection_.end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::IsInside
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
@@ -349,11 +358,15 @@ namespace
 // -----------------------------------------------------------------------------
 void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection )
 {
+    selection_.clear();
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         const kernel::Entity_ABC& entity = **it;
         if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, type_ ) )
+        {
             extractedElement[ this ].push_back( &entity );
+            selection_.insert( entity.GetId() );
+        }
     }
 }
 
