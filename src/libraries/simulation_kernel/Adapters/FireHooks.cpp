@@ -169,7 +169,7 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyPh hook implementation : " << dotation );
             return false;
         }
-        const double protection = GET_PION( target ).GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( *category );
+        const double protection = GET_ROLE( target, PHY_RoleInterface_ActiveProtection ).GetPHModifier( *category );
         return GET_ROLE( firer, PHY_RoleInterface_HumanFactors ).ModifyPH( rPh * protection );
     }
     DEFINE_HOOK( GetPhModificator, 3, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) )
@@ -180,8 +180,8 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown launcher type in GetPhModificator hook implementation : " << launcher );
             return 0;
         }
-        const PHY_RoleInterface_Posture& firerPosture  = GET_ROLE( firer, PHY_RoleInterface_Posture );
-        const PHY_RoleInterface_Posture& targetPosture = GET_PION( target ).GetRole< PHY_RoleInterface_Posture >();
+        const PHY_RoleInterface_Posture& firerPosture  = GET_CHILD_DATA( firer, "posture", PHY_RoleInterface_Posture );
+        const PHY_RoleInterface_Posture& targetPosture = GET_CHILD_DATA( target, "posture", PHY_RoleInterface_Posture );
         return type->GetPHModificator( firerPosture, targetPosture ) * firerPosture.GetElongationFactor();
     }
     DEFINE_HOOK( GetPhModificator2, 1, double, ( const char* launcher ) )

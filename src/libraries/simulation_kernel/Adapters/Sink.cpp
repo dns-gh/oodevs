@@ -40,15 +40,16 @@
 #include "AlatMonitoringEventListener.h"
 #include "FlyingShellPerceptionEventListener.h"
 #include "PopulationFactory_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
-#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
@@ -328,6 +329,7 @@ namespace
     void UpdateAgentKnowledge( core::Model& entity, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
     {
         knowledge[ "data" ].SetUserData( agent );
+        knowledge[ "posture/data" ].SetUserData( &agent->GetAgentKnown().GetRole< PHY_RoleInterface_Posture >() );
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
         knowledge[ "is-dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];

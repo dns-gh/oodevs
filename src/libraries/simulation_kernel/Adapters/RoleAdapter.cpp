@@ -13,6 +13,7 @@
 #include "Sink.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -21,6 +22,7 @@
 #include <core/Model.h>
 #include <core/UserData.h>
 #include <boost/make_shared.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/optional.hpp>
 
 using namespace sword;
@@ -34,6 +36,7 @@ namespace
     void Initialize( core::Model& entity, MIL_AgentPion& pion )
     {
         entity[ "data" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
+        entity[ "posture/data" ].SetUserData( &pion.GetRole< PHY_RoleInterface_Posture >() );
         entity[ "movement/speed" ] = 0;
         entity[ "movement/direction/x" ] = 0;
         entity[ "movement/direction/y" ] = 1;
@@ -249,7 +252,7 @@ void RoleAdapter::save( Archive& a, const unsigned int ) const
 // -----------------------------------------------------------------------------
 void RoleAdapter::SendChangedState() const
 {
-    std::for_each( senders_.begin(), senders_.end(), boost::bind( &network::NetworkMessageSender_ABC::SendChangedState, _1 ) );
+    boost::for_each( senders_, boost::mem_fn( &network::NetworkMessageSender_ABC::SendChangedState ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,5 +261,5 @@ void RoleAdapter::SendChangedState() const
 // -----------------------------------------------------------------------------
 void RoleAdapter::SendFullState( unsigned int context ) const
 {
-    std::for_each( senders_.begin(), senders_.end(), boost::bind( &network::NetworkMessageSender_ABC::SendFullState, _1, context ) );
+    boost::for_each( senders_, boost::bind( &network::NetworkMessageSender_ABC::SendFullState, _1, context ) );
 }

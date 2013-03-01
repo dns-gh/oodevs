@@ -13,5 +13,6 @@
 #define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
 #define GET_PION( node ) GET_DATA( node, MIL_AgentPion )
 #define GET_ROLE( node, role ) GET_PION( node ).GetRole< role >()
+#define GET_CHILD_DATA( node, child, data ) (*core::Convert( node ))[ child "/data" ].GetUserData< data >()
 
 #endif // SWORD_HELPERS_H
