@@ -10,8 +10,8 @@
 #ifndef __MIL_UrbanCache_h_
 #define __MIL_UrbanCache_h_
 
-#include <map> // ??
 #include <spatialcontainer/SpatialContainer.h>
+#include <map>
 
 class MIL_UrbanObject_ABC;
 class MT_Vector2D;
