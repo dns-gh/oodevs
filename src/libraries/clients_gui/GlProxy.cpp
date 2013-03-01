@@ -430,9 +430,9 @@ void GlProxy::DrawCell( const geometry::Point2f& center ) const
 // Name: GlProxy::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/ ) const
+void GlProxy::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/, bool fixedSize /*= true*/ ) const
 {
-    tools_->DrawSvg( svg, center, ratio );
+    tools_->DrawSvg( svg, center, ratio, fixedSize );
 }
 
 // -----------------------------------------------------------------------------

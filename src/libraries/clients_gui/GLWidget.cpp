@@ -440,10 +440,20 @@ unsigned short GlWidget::StipplePattern( int factor /* = 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
-    if( size < 0 )
-        size = 10.f * Pixels();
-    else if( unit == pixels )
-        size *= GetAdaptiveZoomFactor( false );;
+    if( unit == pixels )
+    {
+        if( size < 0 )
+            size = 100.f;
+        if( unit == pixels )
+            size *= GetAdaptiveZoomFactor( false );
+    }
+    else
+    {        
+        if( size < 0 )
+            size = 10.f * Pixels();
+        else
+            size *= GetAdaptiveZoomFactor();
+    }
 
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
@@ -1010,13 +1020,14 @@ void GlWidget::DrawCell( const geometry::Point2f& center ) const
 // Name: GlWidget::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/ ) const
+void GlWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/, bool fixedSize /*= true*/ ) const
 {
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), 0 );
     if( ratio != 1 )
         glScalef( ratio, ratio, ratio );
-    Base().DrawSvg( svg, viewport_, windowWidth_, windowHeight_ );
+
+    Base().DrawSvg( svg, fixedSize? Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 5000, 5000 ) ) : viewport_, windowWidth_, windowHeight_ );
     glPopMatrix();
 }
 

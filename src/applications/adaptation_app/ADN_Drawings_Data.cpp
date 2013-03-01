@@ -75,7 +75,7 @@ namespace
         virtual void DrawIcon         ( const char**, const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawImage        ( const QImage&, const geometry::Point2f& ) const {}
         virtual void DrawCell         ( const geometry::Point2f& ) const {}
-        virtual void DrawSvg          ( const std::string&, const geometry::Point2f&, float ) const {}
+        virtual void DrawSvg          ( const std::string&, const geometry::Point2f&, float, bool ) const {}
         virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool, bool ) const {}
         virtual void DrawApp6SymbolFixedSize( const std::string&, const geometry::Point2f&, float) const {}
         virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking& ) {};

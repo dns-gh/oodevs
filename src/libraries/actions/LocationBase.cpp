@@ -257,7 +257,7 @@ void LocationBase::Draw( const gui::GlTools_ABC& tools ) const
     if( points_.size() > 1 )
         tools.DrawLines( points_ );
     else
-        tools.DrawCross( points_.front(), GL_CROSSSIZE );
+        tools.DrawCross( points_.front(), GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
 // -----------------------------------------------------------------------------

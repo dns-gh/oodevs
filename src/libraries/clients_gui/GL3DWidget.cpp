@@ -604,7 +604,7 @@ void Gl3dWidget::DrawCell( const Point2f& center ) const
 // Name: Gl3dWidget::DrawSvg
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/ ) const
+void Gl3dWidget::DrawSvg( const std::string& svg, const geometry::Point2f& center, float ratio /* = 1.f*/, bool /*fixedSize = true*/ ) const
 {
     glPushMatrix();
     glTranslatef( center.X(), center.Y(), ElevationAt( center ) );

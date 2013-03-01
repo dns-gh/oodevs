@@ -82,7 +82,7 @@ void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
     {
         glPushAttrib( GL_LINE_BIT );
             glLineWidth( 3.f );
-            tools.DrawArrow( where, where + direction_ * 50.f * tools.Pixels() );
+            tools.DrawArrow( where, where + direction_ * 50.f * tools.Pixels(), -1.f, gui::GlTools_ABC::pixels );
         glPopAttrib();
     }
 }

@@ -80,13 +80,13 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport
     if( viewport.IsHotpointVisible() && tools.ShouldDisplay( "DecisionalState" ) )
     {
         if( drawSauvegarde_ )
-            tools.DrawSvg( "sauvegarde.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
+            tools.DrawSvg( "sauvegarde.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
         if( drawEclairage_ )
-            tools.DrawSvg( "eclairage.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
+            tools.DrawSvg( "eclairage.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
         if( draw1stEchelon_ )
-            tools.DrawSvg( "1stechelon.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
+            tools.DrawSvg( "1stechelon.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
         if( drawEtatOps_ )
-            tools.DrawSvg( "opstatehs.svg", where, ratio_ * tools.GetAdaptiveZoomFactor() );
+            tools.DrawSvg( "opstatehs.svg", where, ratio_ * tools.GetAdaptiveZoomFactor( false ) );
     }
 }
 

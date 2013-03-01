@@ -56,7 +56,7 @@ void TerrainProfilerLayer::Paint( Viewport_ABC& viewport )
             {
                 glColor4f( 0, 1, 0, 1 );
                 tools_.DrawCross( from_ );
-                tools_.DrawSvg( "flag.svg", from_ );
+                tools_.DrawSvg( "flag.svg", from_, tools_.GetAdaptiveZoomFactor( false ) );
             }
             if( from_ != notSet && to_ != notSet )
             {
@@ -71,7 +71,7 @@ void TerrainProfilerLayer::Paint( Viewport_ABC& viewport )
             {
                 glColor4f( 0, 0, 1, 1 );
                 tools_.DrawCross( to_ );
-                tools_.DrawSvg( "flag.svg", to_ );
+                tools_.DrawSvg( "flag.svg", to_, tools_.GetAdaptiveZoomFactor( false ) );
             }
         glPopAttrib();
     }

@@ -46,7 +46,7 @@ void LocationsLayer::Paint( Viewport_ABC& viewport )
             if( viewport.IsVisible( *it ) )
             {
                 tools_.DrawCross( *it );
-                tools_.DrawSvg( "flag.svg", *it );
+                tools_.DrawSvg( "flag.svg", *it, tools_.GetAdaptiveZoomFactor( false ) );
             }
     glPopAttrib();
 }

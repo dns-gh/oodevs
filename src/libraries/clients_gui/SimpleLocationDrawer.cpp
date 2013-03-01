@@ -95,5 +95,5 @@ void SimpleLocationDrawer::VisitCircle( const geometry::Point2f& center, float r
 void SimpleLocationDrawer::VisitPoint( const geometry::Point2f& point )
 {
     if( !point.IsZero() )
-        tools_.DrawCross( point );
+        tools_.DrawCross( point, -1.f, GlTools_ABC::pixels );
 }
