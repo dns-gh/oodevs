@@ -1,0 +1,45 @@
+<project name="gosword" default="all">
+
+    <property environment="env"/>
+    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <var name="repositories" value="${repositories},${sword.repository}"/>
+    <property name="sword_branch" value="trunk"/>
+
+    <target name="update">
+        <update name="golang"/>
+        <update name="goprotobuf"/>
+        <update name="protobuf"/>
+        <update name="sword" 
+                version="Defense/releases/internal/${sword_branch}"
+                package="protobuf-dev"
+                todir="${src.dir}/sword"/>
+    </target>
+
+    <target name="proto">
+        <go_proto input="${src.dir}/sword"/>
+    </target>
+
+    <target name="build">
+        <go cmd="install"/>
+    </target>
+
+    <target name="test">
+        <go cmd="test"/>
+            <!--arg value="-test.v=true"/>
+        </go-->
+    </target>
+
+    <target name="package">
+        <go_package/>
+    </target>
+
+    <target name="all" depends="update,proto,build,test,package"/>
+
+    <!-- helper targets -->
+    <target name="fmt">
+        <go cmd="fmt"/>
+    </target>    
+
+</project>
