@@ -15,7 +15,7 @@ func Assert(t *testing.T, pred bool, msg string) {
 
 func AssertEqual(t *testing.T, expected, value string) {
 	if expected != value {
-		t.Fatalff("%v != %v", expected, value)
+		t.Fatalf("%v != %v", expected, value)
 	}
 }
 
