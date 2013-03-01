@@ -63,38 +63,37 @@ PHY_ActionMove::~PHY_ActionMove()
 bool PHY_ActionMove::UpdateObjectsToAvoid()
 {
     T_KnowledgeObjectVector knowledges;
+    T_KnowledgeObjectVector newKnowledges;
     MIL_PathObjectFilter filter;
     pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion_, filter );
-    for( auto it = knowledges.begin(); it != knowledges.end(); )
+    for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
         double cost = pMainPath_->GetPathClass().GetObjectCost( (*it)->GetType() );
-        if( 0. == cost )
-            it = knowledges.erase( it );
-        else
-            ++it;
+        if( 0. != cost )
+            newKnowledges.push_back( *it );
     }
-    if( knowledges != objectsToAvoid_ )
+    if( newKnowledges != objectsToAvoid_ )
     {
-        objectsToAvoid_ = knowledges;
+        objectsToAvoid_ = newKnowledges;
         geometrySignatures_.clear();
-        for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
+        for( auto it = newKnowledges.begin(); it != newKnowledges.end(); ++it )
             geometrySignatures_.push_back( (*it)->GetLocalisation() );
         return true;
     }
     else
     {
         bool modified = false;
-        for( int i = 0; i < knowledges.size(); ++i )
+        for( int i = 0; i < newKnowledges.size(); ++i )
         {
-            if( geometrySignatures_[i] != knowledges[i]->GetLocalisation() )
+            if( geometrySignatures_[i] != newKnowledges[i]->GetLocalisation() )
             {
-                geometrySignatures_[i] = knowledges[i]->GetLocalisation();
+                geometrySignatures_[i] = newKnowledges[i]->GetLocalisation();
                 modified = true;
             }
         }
         if( modified )
         {
-            objectsToAvoid_ = knowledges;
+            objectsToAvoid_ = newKnowledges;
             return true;
         }
     }
