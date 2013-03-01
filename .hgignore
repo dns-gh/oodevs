@@ -1,0 +1,6 @@
+^(bin|dist|include|out|run|lib|pkg)/
+^src/sword/
+
+syntax: glob
+*.pb.go
+build/build.local.properties
