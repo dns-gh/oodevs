@@ -19,8 +19,30 @@ public:
     //@{
     MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
     MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
+    MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPion_Remote();
     //@}
+    //! @name CheckPoints
+    //@{
+    template<class Archive>
+    void serialize( Archive & ar, const unsigned int file_version )
+    {
+        boost::serialization::void_cast_register< MIL_AgentPion_Remote, MIL_AgentPion >( static_cast< MIL_AgentPion_Remote* >( NULL ), static_cast< MIL_AgentPion* >( NULL ) );
+        boost::serialization::split_member(ar, *this, file_version);
+    }
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+
+    virtual void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Serialization
+    //@{
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( MIL_AgentPion_Remote )
+    //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_AgentPion_Remote )
 
 #endif // __MIL_AgentPion_Remote_h_

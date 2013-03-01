@@ -1881,3 +1881,102 @@ void MIL_AgentPion::SetExtensions( const MIL_DictionaryExtensions& ext )
 {
     pExtensions_.reset( new MIL_DictionaryExtensions( ext ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetExtensions
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+MIL_DictionaryExtensions* const MIL_AgentPion::GetExtensions() const
+{
+    return pExtensions_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetColor
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetColor( std::auto_ptr< MIL_Color > color )
+{
+    pColor_ = color;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetColor
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+MIL_Color* const MIL_AgentPion::GetColor() const
+{
+    return pColor_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetLevel
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+const std::string& MIL_AgentPion::GetLevel() const
+{
+    return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetLevel
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetLevel( const std::string& level )
+{
+    level_ = level;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetSymbol
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+const std::string& MIL_AgentPion::GetSymbol() const
+{
+    return app6Symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetSymbol
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetSymbol( const std::string& symbol )
+{
+    app6Symbol_ = symbol;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetAffinities
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+MIL_AffinitiesMap* const MIL_AgentPion::GetAffinities() const
+{
+    return pAffinities_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetAffinities
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetAffinities( std::auto_ptr< MIL_AffinitiesMap > affinities )
+{
+    pAffinities_ = affinities;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetKnowledge
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetKnowledge( DEC_KnowledgeBlackBoard_AgentPion* knowledge )
+{
+    pKnowledgeBlackBoard_ = knowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetAutomate
+// Created: AHC 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetAutomate( MIL_Automate* automate )
+{
+    pAutomate_ = automate;
+}

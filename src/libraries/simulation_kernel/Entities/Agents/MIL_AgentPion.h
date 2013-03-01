@@ -214,6 +214,22 @@ private:
     template< typename Archive > friend void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int version );
     //@}
 
+protected:
+    //! @name Accessors
+    //@{
+    void SetColor( std::auto_ptr< MIL_Color > color );
+    MIL_Color* const GetColor() const;
+    const std::string& GetLevel() const;
+    void SetLevel( const std::string& level );
+    MIL_DictionaryExtensions* const GetExtensions() const;
+    const std::string& GetSymbol() const;
+    void SetSymbol( const std::string& symbol );
+    MIL_AffinitiesMap* const GetAffinities() const;
+    void SetAffinities( std::auto_ptr< MIL_AffinitiesMap > affinities );
+    void SetKnowledge( DEC_KnowledgeBlackBoard_AgentPion* knowledge );
+    void SetAutomate( MIL_Automate* automate );
+    //@}
+
 private:
     //! @name Member data
     //@{

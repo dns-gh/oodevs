@@ -56,7 +56,12 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    template<class Archive>
+    void serialize( Archive & ar, const unsigned int file_version )
+    {
+        boost::serialization::void_cast_register< PHY_RolePion_UrbanLocation, PHY_RoleInterface_UrbanLocation >( static_cast< PHY_RolePion_UrbanLocation* >( NULL ), static_cast< PHY_RoleInterface_UrbanLocation* >( NULL ) );
+        boost::serialization::split_member(ar, *this, file_version);
+    }
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
