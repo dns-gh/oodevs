@@ -58,6 +58,7 @@ enum E_ConsistencyCheck
     eSignature,
     eUnitOutsideMap,
     eOthers,
+    eImpossibleObjectCreation,
     eOthersMask,
 };
 

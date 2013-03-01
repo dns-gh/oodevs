@@ -41,6 +41,7 @@
 #include "DisasterAttribute.h"
 #include "UndergroundAttribute.h"
 #include "AltitudeModifierAttribute.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -250,13 +251,13 @@ void ObjectFactory::Initialize()
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC& team, const QString& name, const Location_ABC& location )
 {
-    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ );
+    std::auto_ptr< Object > result( new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ ) );
     result->Attach< Positions >( *new ObjectPositions( controllers_.controller_, staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
     const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
     // Attributes are commited by ObjectPrototype
     result->Polish();
-    return result;
+    return result.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -265,7 +266,7 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
 // -----------------------------------------------------------------------------
 Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& team, const kernel::ObjectType& type )
 {
-    Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ );
+    std::auto_ptr< Object > result( new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ ) );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, controllers_.controller_, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
@@ -274,7 +275,7 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
         >> xml::end;
     const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
     result->Polish();
-    return result;
+    return result.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,5 +286,14 @@ void ObjectFactory::ReadAttributes( const std::string& attr, xml::xistream& xis,
 {
     if( ! factory_.get() )
         Initialize();
-    factory_->Create( attr, object, dico, xis );
+    try
+    {
+        factory_->Create( attr, object, dico, xis );
+    }
+    catch( std::exception& e )
+    {
+        std::string error = std::string( object.GetName().toAscii().constData() ) + " (" +
+            staticModel_.coordinateConverter_.ConvertToMgrs( object.Get< Positions >().GetPosition() ) + ") : " + e.what();
+        throw std::exception( error.c_str() );
+    }
 }

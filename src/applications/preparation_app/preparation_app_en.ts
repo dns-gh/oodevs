@@ -1442,6 +1442,10 @@ This data can&apos;t be projected.</translation>
         <source>Entity &apos;%1&apos; is outside the map. It will be repositioned to the origin.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The following object is invalid and will be deleted at next save: %1</source>
+        <translation>The following object is invalid and will be deleted at next save: %1</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

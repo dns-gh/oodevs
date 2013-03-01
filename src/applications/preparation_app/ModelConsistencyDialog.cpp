@@ -27,7 +27,8 @@ namespace
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
             || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
-            || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks || type == eSignature;
+            || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks || type == eSignature
+            || type == eImpossibleObjectCreation;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -121,6 +122,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found" );
     errorDescriptions_[ eSignature ]                       = "%1";
     errorDescriptions_[ eUnitOutsideMap ]                  = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
+    errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 
