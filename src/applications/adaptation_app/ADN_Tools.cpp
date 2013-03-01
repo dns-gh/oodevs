@@ -87,14 +87,17 @@ void CleanDirectoryContent( const boost::filesystem::path& dir, bool recursive )
     bfs::directory_iterator end;
     for( bfs::directory_iterator it( dir ); it != end; ++it )
     {
-        if( recursive && bfs::is_directory( *it ) )
+        if( bfs::is_directory( *it ) )
         {
-             CleanDirectoryContent( *it, recursive );
-             bfs::remove( *it );
+             if( recursive )
+             {
+                 CleanDirectoryContent( *it, recursive );
+                 bfs::remove( *it );
+             }
         }
         else
         {
-            if( bfs::exists( it->path().filename() ) )
+            if( bfs::exists( it->path() ) )
                 bfs::remove( *it );
         }
     }
