@@ -34,9 +34,10 @@
     </target>
 
     <target name="test">
-        <go cmd="test"/>
-            <!--arg value="-test.v=true"/>
-        </go-->
+        <go cmd="test">
+            <arg value="--application=${run.dir}/simulation_app.exe"/>
+            <arg value="--root-dir=${data.dir}"/>
+        </go>
     </target>
 
     <target name="package">
