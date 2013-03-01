@@ -2,6 +2,7 @@ package simu
 
 import (
 	"flag"
+	"fmt"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -10,7 +11,7 @@ import (
 
 func TestSimOpts(t *testing.T) {
 	opts := SimOpts{}
-	opts.DataDir = "data/dir"
+	opts.RootDir = "data/dir"
 	opts.ExerciseName = "exercisename"
 
 	d := opts.GetExerciseDir()
@@ -30,6 +31,8 @@ func TestDelayedStartupFailure(t *testing.T) {
 	opts.DataDir = rootdir
 	opts.ExerciseName = "worldwide/Egypt"
 	opts.ConnectTimeout = 20 * time.Second
+	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort)
+	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
 
 	exDir := opts.GetExerciseDir()
 	session := CreateDefaultSession()
@@ -52,10 +55,13 @@ func TestDelayedStartupFailure(t *testing.T) {
 
 var application string
 var rootdir string
+var testPort int
 
 func init() {
 	flag.StringVar(&application, "application", "",
 		"path to simulation_app executable")
 	flag.StringVar(&rootdir, "root-dir", "",
 		"path to simulation root directory")
+	flag.IntVar(&testPort, "test-port", 35000,
+		"base port for spawned simulations")
 }

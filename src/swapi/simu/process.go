@@ -21,13 +21,19 @@ type SimOpts struct {
 	SessionName  string
 	ExerciseName string
 
+	// Network address:port of dispatcher server, default to session if empty.
+	DispatcherAddr string
+
+	// Network address:port of simulation server, default to session if empty.
+	SimulationAddr string
+
 	// Delay after which the simulation process will be terminated if the
 	// startup function fails to connect to its dispatcher server.
 	ConnectTimeout time.Duration
 }
 
 func (o *SimOpts) GetExerciseDir() string {
-	return filepath.Join(o.DataDir, "exercises", o.ExerciseName)
+	return filepath.Join(o.RootDir, "exercises", o.ExerciseName)
 }
 
 type SimProcess struct {
@@ -155,12 +161,21 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		return nil, err
 	}
 
-	cmd := exec.Command(opts.Executable,
-		"--root-dir="+opts.RootDir,
-		"--data-dir="+opts.DataDir,
-		"--exercise="+opts.ExerciseName,
-		"--session="+opts.SessionName,
-		"--verbose")
+	args := []string{
+		"--root-dir=" + opts.RootDir,
+		"--data-dir=" + opts.DataDir,
+		"--exercise=" + opts.ExerciseName,
+		"--session=" + opts.SessionName,
+		"--verbose",
+	}
+	if len(opts.DispatcherAddr) > 0 {
+		args = append(args, "--dispatcher-address="+opts.DispatcherAddr)
+	}
+	if len(opts.SimulationAddr) > 0 {
+		args = append(args, "--simulation-address="+opts.SimulationAddr)
+	}
+
+	cmd := exec.Command(opts.Executable, args...)
 	rundir := opts.RunDir
 	if rundir == nil {
 		p := filepath.Dir(opts.Executable)

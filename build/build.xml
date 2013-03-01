@@ -6,6 +6,7 @@
 
     <var name="repositories" value="${repositories},${sword.repository}"/>
     <property name="sword_branch" value="trunk"/>
+    <property name="test.port" value="35000"/>
 
     <target name="update">
         <update name="golang"/>
@@ -34,10 +35,12 @@
     </target>
 
     <target name="test">
+        <echo message="test.port=${test.port}"/>
         <go cmd="vet"/>
         <go cmd="test">
             <arg value="--application=${run.dir}/simulation_app.exe"/>
             <arg value="--root-dir=${data.dir}"/>
+            <arg value="--test-port=${test.port}"/>
         </go>
     </target>
 
