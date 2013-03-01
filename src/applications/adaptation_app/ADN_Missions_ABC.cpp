@@ -339,6 +339,24 @@ bool ADN_Missions_ABC::IsEmptyMissionSheet()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::NeedsSaving
+// Created: NPT 2013-03-01
+// -----------------------------------------------------------------------------
+bool ADN_Missions_ABC::NeedsSaving()
+{
+    return needSheetSaving_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::SetNeedsSaving
+// Created: NPT 2013-03-01
+// -----------------------------------------------------------------------------
+void ADN_Missions_ABC::SetNeedsSaving( bool saving )
+{
+    needSheetSaving_ = saving;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Missions_ABC::AddContextParameter
 // Created: ABR 2013-01-07
 // -----------------------------------------------------------------------------

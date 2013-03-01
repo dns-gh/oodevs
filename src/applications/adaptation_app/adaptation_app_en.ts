@@ -2656,10 +2656,6 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Visible behavior</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2725,6 +2721,10 @@ PNG (*.png)
     </message>
     <message>
         <source>&apos;&apos;italic text&apos;&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

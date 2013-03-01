@@ -75,6 +75,8 @@ public:
     bool WriteMissionSheet( const std::string& missionDir, std::string fileName, int type );
     bool IsEmptyMissionSheet();
     bool IsEmptyParameterList();
+    bool NeedsSaving();
+    void SetNeedsSaving( bool saving );
 
 private:
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );
@@ -95,6 +97,8 @@ public:
     ADN_Type_String descriptionComment_;
     ADN_Type_String descriptionMissionEnd_;
     T_MissionAttachment_Vector attachments_;
+
+private:
     bool needSheetSaving_;
     //@}
 };

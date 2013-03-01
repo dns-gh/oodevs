@@ -148,7 +148,7 @@ QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text 
     if( mission )
     {
         mission->WriteMissionSheet( missionDir, tempFileName, index );
-        mission->needSheetSaving_ = true;
+        mission->SetNeedsSaving( true );
     }
     return QString( missionDir.c_str() ) + "/" + QString( tempFileName.c_str() ) + ".html";
 }

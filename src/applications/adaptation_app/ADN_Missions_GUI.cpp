@@ -273,7 +273,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         QVBoxLayout* attachmentLayout = new QVBoxLayout( attachmentGroupBox );
         attachmentLayout->addWidget( attachmentListView );
 
-        QPushButton* generateButton = builder.AddWidget< QPushButton >( "preview", tr( "Preview" ) );
+        QPushButton* generateButton = builder.AddWidget< QPushButton >( "preview", tr( "Update Preview" ) );
         connect( generateButton, SIGNAL( clicked() ), generateMapper_, SLOT( map() ) );
         generateMapper_->setMapping( generateButton, eMissionType );
 
@@ -407,6 +407,6 @@ void ADN_Missions_GUI::OnHelpNeeded( int type )
 void ADN_Missions_GUI::OnChangeMission( int type )
 {
     if( ADN_Missions_ABC* mission = data_.FindMission( type, nameFields_[ type ]->text().toStdString() ) )
-        if ( mission->needSheetSaving_ )
+        if ( mission->NeedsSaving() )
             OnGenerate( type );
 }

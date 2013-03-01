@@ -2663,10 +2663,6 @@ PNG (*.png)</translation>
         <translation>Pieces jointes</translation>
     </message>
     <message>
-        <source>Preview</source>
-        <translation>Prévisualisation</translation>
-    </message>
-    <message>
         <source>Visible behavior</source>
         <translation>Comportement visible</translation>
     </message>
@@ -2733,6 +2729,10 @@ PNG (*.png)</translation>
     <message>
         <source>&apos;&apos;italic text&apos;&apos;</source>
         <translation>&apos;&apos;une texte italisque&apos;&apos;</translation>
+    </message>
+    <message>
+        <source>Update Preview</source>
+        <translation>Mise à jour Prévisualisation</translation>
     </message>
 </context>
 <context>
