@@ -127,10 +127,10 @@ void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 // Name: PropertiesPanel::NotifyUpdated
 // Created: LGY 2012-08-20
 // -----------------------------------------------------------------------------
-void PropertiesPanel::NotifyUpdated( const kernel::DictionaryUpdated& /*message*/ )
+void PropertiesPanel::NotifyUpdated( const kernel::DictionaryUpdated& message )
 {
-    if( selected_ )
-        showEvent( nullptr );
+    if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
+        model_->Update( message.GetEntry() );
 }
 
 // -----------------------------------------------------------------------------

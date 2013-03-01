@@ -154,7 +154,10 @@ void Equipments::Update( const std::vector< Equipment >& differences )
         {
             *equipment = *equipment + *it;
             if( equipment->Total() == 0 )
+            {
+                controller_.Delete( kernel::DictionaryUpdated( entity_, property_ + "/" + it->GetName() )  );
                 Remove( it->type_.GetId() );
+            }
         }
     }
     if( const kernel::Entity_ABC* superior = GetSuperior() )
@@ -191,11 +194,10 @@ void Equipments::SetSuperior( const kernel::Entity_ABC& automat )
 void Equipments::AddToDictionary( const Equipment& equipment )
 {
     const QString baseName = property_ + "/" + equipment.GetName() + "/";
-
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "Available" ), equipment.available_ );
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "Unavailable" ), equipment.unavailable_ );
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "Repairable" ), equipment.repairable_ );
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "On site fixable" ), equipment.onSiteFixable_ );
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "In maintenance" ), equipment.inMaintenance_ );
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "Prisoner" ), equipment.prisonners_ );
+    dico_.Register( entity_, baseName + tools::translate( "Equipments", "Available" ), equipment.available_ );
+    dico_.Register( entity_, baseName + tools::translate( "Equipments", "Unavailable" ), equipment.unavailable_ );
+    dico_.Register( entity_, baseName + tools::translate( "Equipments", "Repairable" ), equipment.repairable_ );
+    dico_.Register( entity_, baseName + tools::translate( "Equipments", "On site fixable" ), equipment.onSiteFixable_ );
+    dico_.Register( entity_, baseName + tools::translate( "Equipments", "In maintenance" ), equipment.inMaintenance_ );
+    dico_.Register( entity_, baseName + tools::translate( "Equipments", "Prisoner" ), equipment.prisonners_ );
 }
