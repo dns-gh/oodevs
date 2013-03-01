@@ -414,7 +414,7 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
 {
     const std::string prefix = "session.config.dispatcher.";
     tree.put( prefix + "network.<xmlattr>.client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) );
-    tree.put( prefix + "network.<xmlattr>.server", base + DISPATCHER_PORT );
+    tree.put( prefix + "network.<xmlattr>.server", "0.0.0.0:"   + boost::lexical_cast< std::string >( base + DISPATCHER_PORT ) );
     tree.put( prefix + "plugins.web_control.<xmlattr>.server", base + WEB_CONTROL_PORT );
     tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
     tree.put( prefix + "plugins.recorder.<xmlattr>.fragmentfreq", cfg.recorder.frequency );
