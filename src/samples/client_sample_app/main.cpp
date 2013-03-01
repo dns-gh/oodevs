@@ -9,7 +9,6 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include <tools/Exception.h>
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -57,7 +56,7 @@ namespace
         if( code )
             ss << code;
         WSACleanup();
-        throw MASA_EXCEPTION( ss.str() );
+        throw std::runtime_error( ss.str() );
     }
 
     // Initialize Winsock
@@ -149,7 +148,7 @@ namespace
                 if( send( socket_, reinterpret_cast< char* >( buffer ), static_cast< int >( message.GetCachedSize() ), 0 ) == SOCKET_ERROR )
                     Fail( "Failed to send message with error: ", WSAGetLastError() );
             }
-            catch( const std::exception& )
+            catch( std::exception& )
             {
                 closesocket( socket_ );
                 throw;
@@ -286,9 +285,9 @@ int main( int argc, const char** argv )
         // initialize winsocks network
         InitializeNetwork();
     }
-    catch( const std::exception& e )
+    catch( std::exception& e )
     {
-        std::cerr << tools::GetExceptionMsg( e ) << std::endl;
+        std::cerr << e.what() << std::endl;
         return EXIT_FAILURE;
     }
     // create client
@@ -316,9 +315,9 @@ int main( int argc, const char** argv )
         // cleanup winsocks
         WSACleanup();
     }
-    catch( const std::exception& e )
+    catch( std::exception& e )
     {
-        std::cerr << tools::GetExceptionMsg( e ) << std::endl;
+        std::cerr << e.what() << std::endl;
         client.Disconnect();
         return EXIT_FAILURE;
     }
