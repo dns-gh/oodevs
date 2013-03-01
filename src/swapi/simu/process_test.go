@@ -4,7 +4,6 @@ import (
 	"flag"
 	"path/filepath"
 	"strings"
-	"swapi/simu"
 	"testing"
 	"time"
 )
@@ -24,7 +23,7 @@ func TestSimOpts(t *testing.T) {
 // taking enough time to detect it that exec module does not pick it.
 // See the funcErr in Sim.log
 func TestDelayedStartupFailure(t *testing.T) {
-	opts := simu.SimOpts{}
+	opts := SimOpts{}
 	opts.Executable = application
 	opts.RootDir = rootdir
 	// Invalid data directory
@@ -33,15 +32,15 @@ func TestDelayedStartupFailure(t *testing.T) {
 	opts.ConnectTimeout = 20 * time.Second
 
 	exDir := opts.GetExerciseDir()
-	session := simu.CreateDefaultSession()
+	session := CreateDefaultSession()
 	session.EndTick = 4
 	session.Paused = false
-	sessionPath, err := simu.WriteNewSessionFile(session, exDir)
+	sessionPath, err := WriteNewSessionFile(session, exDir)
 	if err != nil {
 		t.Fatal("failed to write the session")
 	}
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
-	sim, err := simu.StartSim(&opts)
+	sim, err := StartSim(&opts)
 	defer sim.Kill()
 	if err == nil {
 		t.Fatalf("simulation should not have started")
