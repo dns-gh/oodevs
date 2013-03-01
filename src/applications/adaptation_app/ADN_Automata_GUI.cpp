@@ -152,7 +152,10 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
     ADN_Table* pTable = new ADN_CompositionTable( std::string( std::string( strClassName_ ) + "automata-compositions-consistency-table" ).c_str() );
     // Fill the table.
     int nRow = 0;
-    for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
+    ADN_Automata_Data::T_AutomatonInfosVector automats = data_.vAutomata_;
+    std::sort( automats.begin(), automats.end(), ADN_Tools::NameSort<ADN_Automata_Data::AutomatonInfos>() ); 
+
+    for( ADN_Automata_Data::IT_AutomatonInfosVector it = automats.begin(); it != automats.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
         pTable->setNumRows( std::max( pTable->numRows(), nRow + 1 ) );
@@ -244,11 +247,8 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                          .arg( nAutoNCOfficer )
                          .arg( nAutoTroops );
         pTable->AddItem( nRow, 0, nRowSpan, 1, &automaton, strText );
-        for( int i = 1; i < nRowSpan; ++i )
-            pTable->AddItem( nRow + i, 0, &automaton, strText );
         nRow += nRowSpan;
     }
-    pTable->Sort( 0, Qt::AscendingOrder );
     return pTable;
 }
 
