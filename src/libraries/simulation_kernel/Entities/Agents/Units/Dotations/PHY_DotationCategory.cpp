@@ -485,5 +485,5 @@ bool PHY_DotationCategory::IsSignificantChange( double newValue, double oldValue
     if( newValue == 0 )
         return true;
     double delta = std::abs( oldValue - newValue );
-    return ( delta/capacity ) >= 0.1;
+    return ( delta/capacity ) >= 0.05;
 }
