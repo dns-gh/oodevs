@@ -30,6 +30,7 @@ using namespace sword;
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAdapter )
 
 SWORD_USER_DATA_EXPORT( MIL_AgentPion* )
+SWORD_USER_DATA_EXPORT( PHY_RoleInterface_Posture* )
 
 namespace
 {
