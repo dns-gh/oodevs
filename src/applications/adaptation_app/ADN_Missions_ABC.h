@@ -13,7 +13,6 @@
 #include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
-#include "ADN_Drawings_Data.h"
 #include "ADN_Missions_Parameter.h"
 
 #include <boost/noncopyable.hpp>
