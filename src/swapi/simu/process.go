@@ -160,6 +160,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	if err != nil {
 		return nil, err
 	}
+	gamingServer := session.GamingServer
 
 	args := []string{
 		"--root-dir=" + opts.RootDir,
@@ -170,6 +171,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	if len(opts.DispatcherAddr) > 0 {
 		args = append(args, "--dispatcher-address="+opts.DispatcherAddr)
+		gamingServer = opts.DispatcherAddr
 	}
 	if len(opts.SimulationAddr) > 0 {
 		args = append(args, "--simulation-address="+opts.SimulationAddr)
@@ -201,7 +203,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	// socket, or succeeds. Fails in the two first cases.
 	netch := make(chan error)
 	procch := make(chan error)
-	go waitForNetwork(netch, session.GamingServer, connectTimeout)
+	go waitForNetwork(netch, gamingServer, connectTimeout)
 	go waitForExit(procch, sim.cmd.Process)
 	select {
 	case err := <-netch:
