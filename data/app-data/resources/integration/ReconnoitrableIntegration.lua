@@ -253,12 +253,12 @@ integration.startRensRecceArea = function( area )
         DEC_Perception_ActiverReconnaissanceLocalisation( area.source )
     perceptionReconnaissanceCallbacks[ area.recoAction ] = function( arg )
     end
-    meKnowledge:RC( eRC_DebutReconnaissanceZone )
+    meKnowledge:RC( eRC_DebutSurveillance )
     return true
 end
 integration.stopRensRecceArea  = function( area )
     DEC_Perception_DesactiverReconnaissanceLocalisation( area.recoAction )
-    meKnowledge:RC( eRC_FinReconnaissanceZone )
+    meKnowledge:RC( eRC_FinSurveillance )
     perceptionReconnaissanceCallbacks[ area.recoAction ] = nil
     return true
 end
