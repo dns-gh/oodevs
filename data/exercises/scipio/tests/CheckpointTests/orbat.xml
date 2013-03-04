@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.9.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party color="0x647dff" id="1051" name="BadGuys" type="friend">
       <objects>
@@ -277,7 +277,7 @@
           <attributes>
             <construction completion="1"/>
             <nbc-agents danger="0" state="liquid">
-              <nbc-agent type="HCN"/>
+              <nbc-agent type="C - ROTA HCN"/>
             </nbc-agents>
           </attributes>
         </object>
@@ -505,7 +505,7 @@
           <attributes>
             <construction completion="1"/>
             <nbc-agents danger="1" state="liquid">
-              <nbc-agent type="gaz sarin"/>
+              <nbc-agent type="C - Sarin"/>
             </nbc-agents>
           </attributes>
         </object>
@@ -666,14 +666,14 @@
           <automat color="0x647dff" engaged="true" id="1333" knowledge-group="1189" name="CIV . DPRE" nature="sfgpumr" type="CIV . DPRE">
             <unit color="0x647dff" command-post="true" id="1334" name="Refugies" position="31TBN8885903430" type="Refugies"/>
           </automat>
-          <automat color="0x647dff" engaged="true" id="1433" knowledge-group="1189" name="ASA . Batterie HAWK" nature="sfgpucdm" type="ASA . Section SATCP MISTRAL">
-            <unit color="0x647dff" command-post="true" id="1434" name="ASA . PC Batterie HAWK" position="31TBN9331002049" type="ASA . PC Section MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1435" name="ASA . Section de Tir HAWK" position="31TBN9379501534" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1436" name="ASA . Section de Tir HAWK" position="31TBN9327901050" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1437" name="ASA . Piece MISTRAL" position="31TBN9346501644" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1438" name="ASA . Piece MISTRAL" position="31TBN9355001592" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1439" name="ASA . Piece MISTRAL" position="31TBN9354701492" type="ASA . Piece MISTRAL"/>
-            <unit color="0x647dff" command-post="false" id="1440" name="ASA . Piece MISTRAL" position="31TBN9345801444" type="ASA . Piece MISTRAL"/>
+          <automat color="0x647dff" engaged="true" id="1453" knowledge-group="1189" name="ASA . Batterie HAWK" nature="sfgpucdm" type="ASA . Section SATCP MISTRAL NC1 30 T20/13">
+            <unit color="0x647dff" command-post="true" id="1454" name="ASA . PC Batterie HAWK" position="31TBN9331002049" type="ASA . PC Section MISTRAL NC1 30"/>
+            <unit color="0x647dff" command-post="false" id="1455" name="ASA . Section de Tir HAWK" position="31TBN9379501534" type="ASA . Piece MISTRAL T20/13"/>
+            <unit color="0x647dff" command-post="false" id="1456" name="ASA . Section de Tir HAWK" position="31TBN9327901050" type="ASA . Piece MISTRAL T20/13"/>
+            <unit color="0x647dff" command-post="false" id="1457" name="ASA . Piece MISTRAL" position="31TBN9346501644" type="ASA . Piece MISTRAL T20/13"/>
+            <unit color="0x647dff" command-post="false" id="1458" name="ASA . Piece MISTRAL" position="31TBN9355001592" type="ASA . Piece MISTRAL T20/13"/>
+            <unit color="0x647dff" command-post="false" id="1459" name="ASA . Piece MISTRAL" position="31TBN9354701492" type="ASA . Piece MISTRAL T20/13"/>
+            <unit color="0x647dff" command-post="false" id="1460" name="ASA . Piece MISTRAL" position="31TBN9345801444" type="ASA . Piece MISTRAL T20/13"/>
           </automat>
         </formation>
       </tactical>
@@ -700,7 +700,7 @@
           <subordinate id="1319"/>
           <subordinate id="1324"/>
           <subordinate id="1333"/>
-          <subordinate id="1433"/>
+          <subordinate id="1453"/>
         </logistic-base>
         <logistic-base id="1187">
           <subordinate id="1214"/>
@@ -866,7 +866,7 @@
     <party color="0x6ee6e6" id="1053" name="NeutralGuys" type="friend">
       <objects/>
       <tactical>
-        <formation color="0x6ee6e6" id="1211" level="ii" name="Formation [1211]" nature=""/>
+        <formation color="0x6ee6e6" id="1211" level="ii" name="Formation [1211]" nature="sfgpu"/>
       </tactical>
       <communication>
         <knowledge-group id="1213" name="Groupe de connaissance [1213]" type="Standard"/>
@@ -921,4 +921,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1379467062" -->
+<!-- signature="0950882065" -->
