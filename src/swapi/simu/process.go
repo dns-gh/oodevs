@@ -36,6 +36,18 @@ func (o *SimOpts) GetExerciseDir() string {
 	return filepath.Join(o.RootDir, "exercises", o.ExerciseName)
 }
 
+func (o *SimOpts) GetSessionDir() string {
+	return filepath.Join(o.GetExerciseDir(), "sessions", o.SessionName)
+}
+
+func (o *SimOpts) GetSimLogPath() string {
+	return filepath.Join(o.GetSessionDir(), "Sim.log")
+}
+
+func (o *SimOpts) GetDispatcherLogPath() string {
+	return filepath.Join(o.GetSessionDir(), "Dispatcher.log")
+}
+
 type SimProcess struct {
 	cmd        *exec.Cmd
 	tailch     chan int // terminate tail goroutine

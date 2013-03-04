@@ -22,15 +22,23 @@ func TestSimOpts(t *testing.T) {
 	}
 }
 
-// Test the simulation can be started successfully and ticks a bit.
-func TestSuccess(t *testing.T) {
+func MakeOpts() *SimOpts {
 	opts := SimOpts{}
 	opts.Executable = application
 	opts.RootDir = rootdir
 	opts.DataDir = rootdir
+	if len(rundir) > 0 {
+		opts.RunDir = &rundir
+	}
 	opts.ExerciseName = "worldwide/Egypt"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
+	return &opts
+}
+
+// Test the simulation can be started successfully and ticks a bit.
+func TestSuccess(t *testing.T) {
+	opts := MakeOpts()
 
 	exDir := opts.GetExerciseDir()
 	session := CreateDefaultSession()
@@ -41,7 +49,7 @@ func TestSuccess(t *testing.T) {
 		t.Fatal("failed to write the session")
 	}
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
-	sim, err := StartSim(&opts)
+	sim, err := StartSim(opts)
 	defer sim.Kill()
 	if err != nil {
 		t.Fatalf("simulation failed to start: %v", err)
@@ -56,14 +64,8 @@ func TestSuccess(t *testing.T) {
 // taking enough time to detect it that exec module does not pick it.
 // See the funcErr in Sim.log
 func TestDelayedStartupFailure(t *testing.T) {
-	opts := SimOpts{}
-	opts.Executable = application
-	opts.RootDir = rootdir
-	opts.DataDir = rootdir
-	opts.ExerciseName = "worldwide/Egypt"
+	opts := MakeOpts()
 	opts.ConnectTimeout = 20 * time.Second
-	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort)
-	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
 
 	exDir := opts.GetExerciseDir()
 	session := CreateDefaultSession()
@@ -86,7 +88,7 @@ func TestDelayedStartupFailure(t *testing.T) {
 	}
 
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
-	sim, err := StartSim(&opts)
+	sim, err := StartSim(opts)
 	defer sim.Kill()
 	if err == nil {
 		t.Fatalf("simulation should not have started")
@@ -101,6 +103,7 @@ func TestDelayedStartupFailure(t *testing.T) {
 
 var application string
 var rootdir string
+var rundir string
 var testPort int
 
 func init() {
@@ -108,6 +111,8 @@ func init() {
 		"path to simulation_app executable")
 	flag.StringVar(&rootdir, "root-dir", "",
 		"path to simulation root directory")
+	flag.StringVar(&rundir, "run-dir", "",
+		"path application run directory, default to application directory")
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
 }
