@@ -37,6 +37,25 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     // No parameters $$$
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC constructor
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC >& parent )
+    : type_             ( type )
+    , context_          ( parent ? parent->context_ : MIL_OrderContext( true ))
+    , knowledgeResolver_( knowledgeResolver )
+{
+    if( parent )
+    {
+        // $$$$ LMT 2010-04-19: set default to NullParameter
+        // Parameters will be filled by DIA $$$
+            // $$$$ LDC: TODO Fill parameters_ from DIA....
+        type.InitializeDefault( parameters_ );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
@@ -58,19 +77,6 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , knowledgeResolver_( knowledgeResolver )
 {
     FillParameters( context_.Length(), parameters );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC constructor
-// Created: NLD 2006-11-23
-// -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC > parent )
-    : type_             ( type )
-    , context_          ( parent->context_ )
-    , knowledgeResolver_( knowledgeResolver )
-{
-    type.InitializeDefault( parameters_ ); // $$$$ LMT 2010-04-19: set default to NullParameter
-    // Parameters will be filled by DIA $$$ // $$$$ LDC: TODO Fill parameters_ from DIA....
 }
 
 // -----------------------------------------------------------------------------

@@ -24,6 +24,7 @@
 #include "Network/NET_AsnException.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor
@@ -306,11 +307,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
 {
     if( !automate.GetOrderManager().IsMissionAvailable( missionType ) )
         return boost::shared_ptr< MIL_Mission_ABC >();
-    const boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
-    boost::shared_ptr< MIL_Mission_ABC > pAutomateMission(
-        pCurrentMission
-            ? new MIL_AutomateMission( missionType, automate, pCurrentMission )
-            : new MIL_AutomateMission( missionType, automate ) );
+    auto pAutomateMission = boost::make_shared< MIL_AutomateMission >(
+        missionType, automate, GetCurrentMission() );
     preparedMissions_.insert( pAutomateMission );
     return pAutomateMission;
 }

@@ -34,7 +34,7 @@ public:
     //@{
     explicit MIL_OrderContext( bool present = false );
              MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference );
-    explicit MIL_OrderContext( const MIL_OrderContext& rhs );
+             MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}
 
