@@ -1216,7 +1216,8 @@
   </automat>
   <automat decisional-model="Masalife.Automate.ASA" id="885" name="ASA . Batterie MISTRAL" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Batterie MISTRAL"/>
-    <unit max-occurs="3" min-occurs="3" type="ASA . Section MISTRAL"/>
+    <unit min-occurs="1" type="ASA . Section MISTRAL"/>
+    <unit type="ASA . Section MISTRAL T20/13"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="886" name="GLAISE - LOG . TC2 char" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - LOG . TC2 char"/>
@@ -1458,16 +1459,31 @@
   </automat>
   <automat decisional-model="Masalife.Automate.Milice" id="937" name="MILICE OXYDE" type="Automate MILICE">
     <unit command-post="true" min-occurs="1" type="MILICE OXYDE . PICK UP CDT AK47"/>
-    <unit type="MILICE OXYDE . PICK UP 14.5"/>
     <unit type="MILICE OXYDE . PICK UP AK47"/>
+    <unit type="MILICE OXYDE . PICK UP 14.5"/>
     <unit type="MILICE OXYDE . PICK UP CDT 14.5"/>
     <unit type="MILICE OXYDE . PICK UP CDT SA7"/>
     <unit type="MILICE OXYDE . PICK UP CDT ZU23/2"/>
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="938" name="ASA . Section SATCP MISTRAL" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Section MISTRAL"/>
+  <automat decisional-model="Masalife.Automate.ASA" id="938" name="ASA . Section SATCP MISTRAL NC1 40" type="Automate ASA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Section MISTRAL NC1 40"/>
     <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL"/>
   </automat>
+  <automat decisional-model="Masalife.Automate.ASA" id="939" name="ASA . Section SATCP MISTRAL NC1 30" type="Automate ASA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Section MISTRAL NC1 30"/>
+    <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.TRANS.BIA" id="940" name="ASA . PC Batterie MISTRAL" type="Automate TRANS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Batterie MISTRAL"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.ASA" id="941" name="ASA . Section SATCP MISTRAL NC1 30 T20/13" type="Automate ASA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Section MISTRAL NC1 30"/>
+    <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL T20/13"/>
+  </automat>
+  <automat decisional-model="Masalife.Automate.ASA" id="942" name="ASA . Section SATCP MISTRAL NC1 40 T20/13" type="Automate ASA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Section MISTRAL NC1 40"/>
+    <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL T20/13"/>
+  </automat>
 </automats>
-<!-- signature="3329195478" -->
+<!-- signature="0620066485" -->

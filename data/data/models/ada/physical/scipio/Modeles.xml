@@ -84,7 +84,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -132,7 +131,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -201,7 +199,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -250,7 +247,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -288,7 +284,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -328,7 +323,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -369,7 +363,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -410,7 +403,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -454,7 +446,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -534,7 +525,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -573,7 +563,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -634,7 +623,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -676,7 +664,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -716,7 +703,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -759,7 +745,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -806,7 +791,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -852,7 +836,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -902,7 +885,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -945,7 +927,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -988,7 +969,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1042,7 +1022,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1081,7 +1060,6 @@
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1118,7 +1096,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1167,7 +1144,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -1202,7 +1178,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1232,7 +1207,6 @@
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Activer Radar"/>
       </fragorders>
@@ -1282,7 +1256,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1313,10 +1286,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" masalife="false" name="Patrouille HAH">
@@ -1359,10 +1330,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Patrouille HAC">
@@ -1405,10 +1374,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
@@ -1449,10 +1416,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
@@ -1489,10 +1454,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
@@ -1528,10 +1491,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" masalife="false" name="Patrouille Tigre">
@@ -1575,10 +1536,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" masalife="false" name="Stations Horizon">
@@ -1609,7 +1568,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -1639,7 +1597,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -1678,10 +1635,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
@@ -1718,10 +1673,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
@@ -1763,10 +1716,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
@@ -1803,10 +1754,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
@@ -1835,10 +1784,8 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Traitement des eaux">
@@ -1878,7 +1825,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1907,6 +1853,7 @@
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Harceler"/>
+        <mission name="PION MELEE Barrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1930,7 +1877,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -1988,7 +1934,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2041,7 +1986,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2104,7 +2048,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2168,7 +2111,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2206,6 +2148,7 @@
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
+        <mission name="PION MELEE Barrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2229,7 +2172,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2307,7 +2249,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2383,7 +2324,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2430,7 +2370,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2484,7 +2423,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
       </fragorders>
@@ -2546,7 +2484,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
         <fragorder name="Embarquer"/>
@@ -2592,7 +2529,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2630,7 +2566,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2670,7 +2605,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2711,7 +2645,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2729,7 +2662,6 @@
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Convoi">
@@ -2763,7 +2695,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2805,7 +2736,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -2854,7 +2784,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         <fragorder name="Pion Transferer Remorqueurs"/>
@@ -2895,7 +2824,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -2936,7 +2864,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Pion Renforcer En Equipements"/>
         <fragorder name="Pion Transferer Equipements"/>
@@ -2975,7 +2902,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3022,7 +2948,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
         <fragorder name="Pion Transferer Equipements"/>
@@ -3070,7 +2995,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3109,7 +3033,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3148,7 +3071,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3187,7 +3109,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3226,7 +3147,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3268,7 +3188,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3308,7 +3227,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Pion Reprendre Aux Ordres Equipements"/>
         <fragorder name="Pion Transferer Equipements"/>
@@ -3367,7 +3285,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3408,7 +3325,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Pion Transferer Equipements"/>
         <fragorder name="Pion Renforcer En Equipements"/>
@@ -3447,7 +3363,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3480,7 +3395,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3511,7 +3425,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3542,7 +3455,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3573,7 +3485,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3612,7 +3523,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3645,7 +3555,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3680,7 +3589,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3718,7 +3626,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -3760,7 +3667,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3799,7 +3705,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -3847,7 +3752,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -3891,7 +3795,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -3924,7 +3827,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -3998,7 +3900,6 @@
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4031,7 +3932,6 @@
         <fragorder name="Autoriser Toutes Munitions"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4064,7 +3964,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4105,7 +4004,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4141,7 +4039,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4177,7 +4074,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4212,7 +4108,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4251,7 +4146,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4290,7 +4184,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4331,7 +4224,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4370,7 +4262,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Embarquer"/>
@@ -4403,7 +4294,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4435,7 +4325,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4470,7 +4359,6 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -4510,7 +4398,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -4551,7 +4438,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4594,7 +4480,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4637,7 +4522,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4676,7 +4560,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4704,7 +4587,6 @@
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4729,7 +4611,6 @@
         <fragorder name="Pion Observer"/>
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Activer Radar"/>
       </fragorders>
@@ -4769,7 +4650,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4814,7 +4694,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4857,7 +4736,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
@@ -4950,7 +4828,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5008,7 +4885,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5085,7 +4961,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5126,7 +5001,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5181,7 +5055,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5233,7 +5106,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5288,7 +5160,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5345,7 +5216,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5411,7 +5281,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5445,7 +5314,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5532,7 +5400,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5595,7 +5462,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5675,7 +5541,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5729,7 +5594,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5767,7 +5631,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5803,7 +5666,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5866,7 +5728,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5923,7 +5784,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -5978,7 +5838,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6042,7 +5901,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6081,7 +5939,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6127,7 +5984,6 @@
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6159,7 +6015,6 @@
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -6195,7 +6050,6 @@
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6232,7 +6086,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6256,7 +6109,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6294,7 +6146,6 @@
         <fragorder name="Poursuivre convoi"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6329,7 +6180,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6372,7 +6222,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6403,7 +6252,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6435,7 +6283,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6468,7 +6315,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6511,10 +6357,8 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" masalife="false" name="Sgpt Tigre">
@@ -6553,10 +6397,8 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
@@ -6585,10 +6427,8 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
@@ -6612,7 +6452,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6642,10 +6481,8 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" masalife="false" name="GLAISE ALFT Esc A et Reco">
@@ -6683,10 +6520,8 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
@@ -6728,7 +6563,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6821,7 +6655,6 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Deposer Unite Capturee"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
@@ -6849,7 +6682,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6873,7 +6705,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6897,7 +6728,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6923,7 +6753,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6948,7 +6777,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -6975,7 +6803,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -6996,7 +6823,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7024,7 +6850,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7059,7 +6884,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7095,7 +6919,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7128,7 +6951,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -7162,7 +6984,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
@@ -7193,7 +7014,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7220,7 +7040,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7251,7 +7070,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Arreter Silence Radio"/>
@@ -7283,7 +7101,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Arreter Silence Radio"/>
@@ -7340,7 +7157,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7366,7 +7182,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7395,7 +7210,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7430,7 +7244,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7465,7 +7278,6 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
@@ -7496,7 +7308,6 @@
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
@@ -7528,7 +7339,6 @@
         <fragorder name="S'arreter"/>
         <fragorder name="Passer En Silence Radio"/>
         <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Changer Regles Engagement Civils"/>
@@ -7541,34 +7351,52 @@
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
       <missions>
         <mission name="FOULES COMMUNES Faire Mouvement">
+          <fragorder name="Interrompre"/>
+          <fragorder name="Attendre"/>
+          <fragorder name="Poursuivre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="FOULES COMMUNES Suivre">
+          <fragorder name="Attendre"/>
+          <fragorder name="Interrompre"/>
+          <fragorder name="Poursuivre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="FOULES COMMUNES Se Faire Decontaminer">
+          <fragorder name="Attendre"/>
+          <fragorder name="Interrompre"/>
+          <fragorder name="Poursuivre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="FOULES Agresser">
+          <fragorder name="Attendre"/>
+          <fragorder name="Interrompre"/>
+          <fragorder name="Poursuivre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="FOULES Deteriorer">
+          <fragorder name="Poursuivre"/>
+          <fragorder name="Attendre"/>
+          <fragorder name="Interrompre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="FOULES Proteger">
+          <fragorder name="Attendre"/>
+          <fragorder name="Poursuivre"/>
+          <fragorder name="Interrompre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="FOULES Manifester">
+          <fragorder name="Poursuivre"/>
+          <fragorder name="Attendre"/>
+          <fragorder name="Interrompre"/>
           <fragorder name="Population Changer Attitude"/>
         </mission>
       </missions>
       <fragorders>
         <fragorder name="Population Changer Attitude"/>
-        <fragorder name="Attendre"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Poursuivre"/>
       </fragorders>
     </crowd>
   </crowd>
 </models>
-<!-- signature="4118699694" -->
+<!-- signature="0185855886" -->
