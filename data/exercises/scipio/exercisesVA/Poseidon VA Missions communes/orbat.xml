@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.9.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party color="0x647dff" id="1" name="Camp Ami" type="friend">
       <objects>
@@ -69,7 +69,7 @@
             <unit color="0x647dff" command-post="true" id="42" name="NRBC . PC deconta" position="29TNF3236052346" type="NRBC . PC deconta"/>
             <unit color="0x647dff" command-post="false" id="43" name="NRBC . Equipe decontamination" position="29TNF3269452371" type="NRBC . Equipe decontamination"/>
           </automat>
-          <automat color="0x647dff" engaged="false" id="46" knowledge-group="6" name="CIRCU [46]" nature="sfgpust" type="CIRCU . Escadron Transport Blinde">
+          <automat color="0x647dff" engaged="false" id="46" knowledge-group="6" name="CIRCU [46]" nature="sfgpust" type="TRAIN . Escadron Transport Blinde">
             <unit color="0x647dff" command-post="true" id="316" name="CIRCU . Peloton CDT ESC TRPT BLD" position="29TNF3304051070" type="TRAIN . Peloton CDT ESC TRPT BLD"/>
             <unit color="0x647dff" command-post="false" id="317" name="CIRCU . Peloton Transport Blindes CL50" position="29TNF3305751325" type="TRAIN . Peloton Transport Blindes CL50"/>
             <unit color="0x647dff" command-post="false" id="318" name="CIRCU . Peloton Transport Blindes CL100" position="29TNF3305151210" type="TRAIN . Peloton Transport Blindes CL100"/>
@@ -131,4 +131,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3551060149" -->
+<!-- signature="0588636534" -->
