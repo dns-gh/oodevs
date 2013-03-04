@@ -2,7 +2,7 @@
 <dis-mapping default-type="1 1 225 1 1 0 0" default-name="Char LECLERC" threshold="0 0 9 1 1 9 9">
     <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
     <!-- entities -->
-    <entry name="CCP 10M3 RAV SCANI1" dis="1 1 225 15 1 0 0"/>
+    <entry name="CCP 10M3 RAV SCANIA" dis="1 1 225 15 1 0 0"/>
     <entry name="TRM 4000 12.7" dis="1 1 225 14 1 0 0"/>
     <entry name="TRM 2000 12,7" dis="1 1 225 3 1 0 0"/>
     <entry name="Char AUF1" dis="1 1 225 4 1 0 0"/>
@@ -89,7 +89,7 @@
     <entry name="VLRA + PLATE FORME DE TIR MISTRAL" dis="1 1 225 4 1 0 4"/>
     <entry name="Eqp MISTRAL" dis="3 1 225 1 1 0 25"/>
     <entry name="Bombardier" dis="1 2 225 3 1 0 0"/>
-    <entry name="TBU15 CLD" dis="1 1 225 18 1 0 10"/>
+    <!--<entry name="TBU15 CLD" dis="1 1 225 18 1 0 10"/>-->
     <entry name="Terroriste IED" dis="3 1 102 1 1 0 1"/>
     <!--entry name="Theater High Altitude Aera Defense Device" dis="1 1 225 7 1 0 0"/-->
     <entry name="VAB RATAC" dis="1 1 225 7 1 0 1"/>
