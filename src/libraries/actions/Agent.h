@@ -51,7 +51,7 @@ public:
 private:
     //! @name Member data
     //@{
-    bool isKnowledge_;
+    const bool isKnowledge_;
     //@}
 };
 

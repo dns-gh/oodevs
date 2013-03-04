@@ -113,5 +113,7 @@ void Agent::Accept( ParameterVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 std::string Agent::SerializeType() const
 {
-    return std::string( "agent" );
+    if( isKnowledge_ )
+        return "agentknowledge";
+    return "agent";
 }
