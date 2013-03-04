@@ -301,11 +301,8 @@ bool ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir, std::st
         if( fileName == strName_.GetData() )
         {
             needSheetSaving_ = false;
-            if( bfs::exists( missionDir + "/tempMissionSheet" + ".xml" ) || bfs::exists( missionDir + "/tempMissionSheet" + ".html" ) )
-            {
-                bfs::remove( missionDir + "/tempMissionSheet" + ".html" );
-                bfs::remove( missionDir + "/tempMissionSheet" + ".xml" );
-            }
+            bfs::remove( missionDir + "/tempMissionSheet" + ".html" );
+            bfs::remove( missionDir + "/tempMissionSheet" + ".xml" );
         }
         return true;
     }
