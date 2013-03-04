@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>© %1 MASA Group</source>
-        <translation>>© %1 MASA Group</translation>
+        <translation>© %1 MASA Group</translation>
     </message>
 </context>
 <context>
