@@ -28,7 +28,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     DEC_RolePion_Decision decision( *fixture.pPion_, 100, 100, false );
-    decision.Reload();
+    decision.Reload( true );
 }
 
 // -----------------------------------------------------------------------------
